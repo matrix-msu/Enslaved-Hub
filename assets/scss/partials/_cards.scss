@@ -1,0 +1,39 @@
+.column{
+    height: auto;
+    padding: 100px 0;
+    width: 100%;
+
+    .cardwrap{
+        margin: 0 auto;
+        max-width: 1000px;
+
+        .row{
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            flex-wrap: wrap;
+            list-style-type: none;
+            margin: 50px 0 0 0;
+            padding: 0;
+
+            li{
+                margin-bottom: 20px;
+                width: 41%;
+
+                .cards{
+                    border: 2px solid rgba(13,18,48,0.1);
+                    box-shadow: 0 2px 3px 0 rgba(30,30,30,0.05);
+                    background-color: $base-light;
+                    color: $base-dark;
+                    cursor: pointer;
+                    height: 200px;
+                    padding: 20px;
+                    position: relative;
+                    transition: border 0.3s ease, box-shadow 0.3s ease;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+.main{
+    height: auto;
+    width: 100%;
+    background-color: $base-dark;
+
+    .middlewrap{
+        color: $base-light;
+        margin: 0 auto;
+        max-width: 1000px;
+        position: static;
+        padding-top: 109px;
+        padding-bottom: 66px;
+        font-size: 28px;
+    }
+}
