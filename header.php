@@ -1,4 +1,3 @@
-<!-- Author: Drew Schineller-->
 <?php
 require_once('config.php');
 globaljsvars;

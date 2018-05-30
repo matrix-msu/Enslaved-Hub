@@ -1,6 +1,6 @@
 .info{
     height: auto;
-    padding: 70px 0 0;
+    padding: 70px 0 20px; //add side padding at certain width
     width: 100%;
 
     .infowrap{
@@ -12,17 +12,179 @@
             line-height: 32px;
             position: relative;
             text-align: left;
-            font-size: 20px;
+            font-size: 18px;
         }
     }
 }
 
 .storycard{
+    //padding: 100px 0 0 0;
+
+    .cardheader-wrap{
+        
+        .column-header{
+            color: $base-dark;
+            font-size: 38px;
+            float: left;
+            margin-right: 58px;
+            margin-bottom: 0;
+        }
+    }
+
+    #all-header{
+
+        .header-search{
+
+            .column-header{
+                margin-bottom: 30px;
+            }
+        }
+    }
 
     .cardwrap{
 
-        .column-header{
+        .sort-stories{
+            
+            .sort-stories-text{
+                font-size: 20px;
+                color: $base-dark;
+            }
+            
+            ul {
+                background: $base-light;
+                box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+                color: $base-dark;
+                display: none;
+                list-style: none;
+                margin: 10px auto 0;
+                padding: 20px;
+                position: absolute;
+                left: -861px;
+                right: 0;
+                width: fit-content;
+                z-index: 1;
+                li {
+                    cursor: pointer;
+                    font-size: 14px;
+                    line-height: 15px;
+                    padding: 5px 3px;
+                }
+                li:hover {
+                    color: $sub-base;
+                }
 
+                ul#submenu {
+                    margin-bottom: 20px;
+                }
+
+            }
+
+            #submenu.show{
+                display: block;
+            }
+
+            span {
+                cursor: pointer;
+                img {
+                    transition: 400ms;                
+                }
+                img.show {
+                    transform: rotate(-180deg);
+                }
+            }
         }
+
+        .row{
+
+            li{
+
+                .cards{
+
+                    p{
+                        -webkit-line-clamp: 3;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.search{
+    float: right;
+    position: relative;
+
+    form{
+
+        .search-field{
+            border: 1px solid #CED0D2;
+            border-radius: 100px;
+            box-shadow: 0 4px 36px 0 rgba(0,0,0,0.05);
+            color: $base-dark;
+            font-size: 16px;
+            font-family: aleoregular;
+            margin: 0;
+            outline: none;
+            padding-left: 20px;
+            transition: border 0.3s ease;
+            height: 60px;
+            width: 380px;
+
+            &:hover{
+                border: 1px solid $base-dark;
+            }
+            &:focus-within{
+                    border: 1px solid $base-dark;   
+            }
+            
+            
+        }
+    }
+}
+
+@media screen and (max-width: 712px){
+    .storycard{
+
+        #all-header{
+            margin-bottom: 100px;
+        }
+
+        .cardheader-wrap{
+
+            .header-search{
+
+                .search{
+                    float: none;
+
+                    .search-field{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-width-400){
+    .info{
+
+        .infowrap{
+            padding: 0 4%;
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-max-width){
+
+    .middlewrap{
+        padding: 0 6%;
+    }
+
+    .infowrap{
+        padding: 0 6%;
+    }
+
+    ul#submenu{
+        margin-left: 6%;
+        left: 0;
     }
 }

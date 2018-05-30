@@ -1,7 +1,10 @@
 .main{
     height: auto;
     width: 100%;
-    background-color: $base-dark;
+    background-image: url(/~drew.schineller//enslaved/assets/images/StoryImg.jpg);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
 
     .middlewrap{
         color: $base-light;

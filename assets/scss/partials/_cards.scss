@@ -1,7 +1,18 @@
 .column{
     height: auto;
-    padding: 100px 0;
+    padding: 40px 0;
     width: 100%;
+
+    #feat-title{
+        margin-bottom: 0!important
+    }
+
+    .cardheader-wrap{
+        height: 60px;
+        margin: 0 auto;
+        max-width: 1000px;
+        margin-bottom: 20px;
+    }
 
     .cardwrap{
         margin: 0 auto;
@@ -15,25 +26,138 @@
             display: flex;
             flex-wrap: wrap;
             list-style-type: none;
-            margin: 50px 0 0 0;
+            margin: 32px 0 0 0;
             padding: 0;
 
             li{
-                margin-bottom: 20px;
-                width: 41%;
+                width: 47%; //card sizing
+                margin-bottom: 40px; //card placement for this and 2 child stylings
+                padding: 0;
+
+                a{
+                    color: inherit;
+                    text-decoration: none;
+                }
+
+                &:nth-child(2n-1){
+                    margin-right: 3%;
+                    background-image: url(/~drew.schineller//enslaved/assets/images/Rectangle7Copy.jpg);
+                    background-position: center;
+                    background-size: auto 130%;
+                    background-repeat: no-repeat;
+                }
+
+                &:nth-child(2n){
+                    margin-left: 3%;
+                    background-image: url(/~drew.schineller/enslaved/assets/images/Rectangle7.jpg);
+                    background-position: center;
+                    background-size: auto 130%;
+                    background-repeat: no-repeat;
+                }
 
                 .cards{
-                    border: 2px solid rgba(13,18,48,0.1);
+                    border: 3px solid rgba(13,18,48,0.1);
                     box-shadow: 0 2px 3px 0 rgba(30,30,30,0.05);
-                    background-color: $base-light;
-                    color: $base-dark;
+                    //background-color: $base-dark;
+                    color: $base-light;
                     cursor: pointer;
                     height: 200px;
                     padding: 20px;
                     position: relative;
                     transition: border 0.3s ease, box-shadow 0.3s ease;
+
+                    p{
+                        display: -webkit-box;
+                        font-size: 14px;
+                        margin-bottom: 22px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                    }
+
+                    .card-title{
+                        font-size: 26px;
+                        max-width: 280px;
+                    }
+
+                    .card-view-story{
+                        bottom: 15px;
+                        right: 15px;
+                        cursor: pointer;
+                        position: absolute;
+                        transition: color 0.3s ease;
+                        font-style: italic;
+
+                        .view-arrow{
+                            transform: rotate(270deg);
+                            float: right;
+                            margin-left: 10px;
+                            margin-top: 5px;
+                            height: 8px;
+                            width: 13px;
+                            background-image: url(/~drew.schineller/enslaved/assets/images/Arrow.svg);
+                            background-repeat: no-repeat;
+                            transition: color 0.3s ease;
+                            
+                        }
+                    }
+
+                    &:hover{
+                        border: 3px solid $sub-base;
+                        box-shadow: 0 12px 13px 0 rgba(30,30,30,0.05);
+
+                        .card-view-story{
+                            color: $sub-base;
+
+                            .view-arrow{
+                                background-image: url(/~drew.schineller/enslaved/assets/images/Arrow_colored.svg);
+                            }
+                        }
+                    }
                 }
             }
         }
+    }
+}
+
+@media screen and (max-width: $mobile-width-400){
+    .column{
+        padding: 50px 0;
+
+        .cardwrap, .cardheader-wrap{
+            padding: 0 4%;
+
+            /*.column-header{
+                font-size: 30px;
+            }*/
+        }
+
+    }
+}
+
+@media screen and (max-width: $mobile-card-breakpoint-2){
+    .column{
+
+        .cardwrap{
+
+            .row{
+
+                li{
+                    width: 100%;
+                    
+                    &:nth-child(n){
+                        margin-left: 0;
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-max-width){
+    .cardwrap, .cardheader-wrap{
+        padding: 0 6%;
     }
 }

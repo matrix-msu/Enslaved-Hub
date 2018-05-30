@@ -1,8 +1,8 @@
-<!-- Author: Drew Schineller-->
+<!-- Page author: Drew Schineller-->
 <?php include 'header.php';?>
 <!-- Stories page-->
 <!-- Heading image and title container-->
-<div class="container main">
+<div class="container main stories">
     <div class="container middlewrap">
         <h1>Stories</h1>
     </div>
@@ -15,17 +15,119 @@
 </div>
 <!-- featured stories container-->
 <div class="container column storycard">
-    <div class="container cardwrap">
+    <div class="container cardheader-wrap">
         <h2 class="column-header">Featured Stories</h2>
+    </div>
+    <div class="container cardwrap">
         <ul class="row">
             <li>
-                <a>
+                <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
-                        <p class="card-title">Title</p>
-                        <a class="card-view-story">View Story</a>
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullstory">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
             </li>
         </ul>
     </div>
 </div>
+<!-- all stories container-->
+<div class="container column storycard">
+    <div id="all-header" class="container cardheader-wrap">
+        <div class="container header-search">
+            <h2 class="column-header">All Stories</h2>
+            <div class="container search">
+                <form action="submit">
+                    <input class="search-field" type="text" name="searchbar" placeholder="Find a Story By Title or Keyword"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container cardwrap">
+        <div class="container sort-stories">
+            <span class="sort-stories-text">Sort Stories By <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"></span>
+            <ul id="submenu" class="sorting-menu">
+                <li>Alphabetical (A-Z)</li>
+                <li>Alphabetical (Z-A)</li>
+                <li>Newest to Oldest</li>
+                <li>Oldest to Newest</li>
+            </ul>
+        </div>
+        <ul class="row">
+            <li>
+                <a href="<?php echo BASE_URL?>fullstory">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullstory">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullstory">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullstory">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullstory">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullstory">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullstory">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullstory">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script src="<?php echo BASE_URL;?>assets/javascripts/stories.js"></script>

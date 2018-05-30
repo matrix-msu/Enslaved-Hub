@@ -7,4 +7,9 @@
     position: fixed;
     box-shadow: 0 5px 10px 0 rgba(13,18,48,0.16);
     background-color: rgba(18, 46, 70, .5);
+    
+    h1{
+        max-width: 1000px;
+        margin: 0 auto;
+    }
 }
