@@ -1,49 +1,6 @@
 .fullstory{
 
     .middlewrap{
-
-        .fullmap-selector{
-            margin-top: 90px;
-            width: 250px;
-            height: 32px;
-
-            .selector-story{
-                float: left;
-
-                .selector-story-text{
-                    color: rgba(255, 253, 251, 0.616);
-                    font-size: 18px;
-                    float: right;
-                }
-
-                img{
-                    margin-right: 10px;
-                    float: left;
-                }
-
-                #story-link{
-                    text-decoration: none;
-                    color: rgba(255, 253, 251, 0.616);
-                }
-            }
-
-            .selector-map{
-                border-bottom: 5px solid $sub-base;
-                float: right;
-
-                .selector-map-text{
-                    color: $base-light;
-                    padding-bottom: 26px;
-                    font-size: 18px;
-                    float: right;
-                }
-
-                img{
-                    margin-right: 10px;
-                    float:left;
-                }
-            }
-        }
     }
 }
 
@@ -51,13 +8,6 @@
     .fullstory{
 
         .middlewrap{
-
-            .fullmap-selector{
-
-                span.selector-map{
-                    padding-bottom: 11px;
-                }
-            }
         }
     }
 }

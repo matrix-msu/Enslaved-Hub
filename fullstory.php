@@ -7,18 +7,6 @@
         <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories // </span><span id="current-title">Featured Story Title Goes Here Like This</span></a></h4>
         <h1>Ibrahima Abd al-Rahman</h1>
         <h3>(18th/19th century)</h3>
-        <div class="full-selector">
-            <div class="selector-story">
-                <img id="story"src="<?php echo BASE_URL?>assets/images/Story.svg">
-                <span class="selector-story-text">Story</span>
-            </div>
-            <a id="map-link" href="<?php echo BASE_URL?>map">
-            <div class="selector-map">
-                <img id="map"src="<?php echo BASE_URL?>assets/images/MapDim.svg">
-                <span class="selector-map-text">Story Map</span>
-            </div>
-            </a>
-        </div>
     </div>
 </div>
 <!-- Main content (left/right columns)-->

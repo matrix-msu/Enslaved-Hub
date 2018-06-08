@@ -2,7 +2,7 @@
     background-image: url(/~drew.schineller//enslaved/assets/images/Rectangle7Copy.jpg);
 
     .middlewrap{
-        padding-bottom: 20px;
+        padding-bottom: 50px;
 
         .last-page-header{
             margin-bottom: 90px;
@@ -19,54 +19,6 @@
                     border-bottom: 3px solid $sub-base;
                     padding-bottom: 5px;
                 }
-            }
-        }
-
-        .full-selector{
-            margin-top: 90px;
-            width: 250px;
-            height: 32px;
-
-            .selector-story{
-                border-bottom: 5px solid $sub-base;
-                float: left;
-                .selector-story-text{
-                    font-size: 18px;
-                    padding-bottom: 26px;
-                    float: right;
-                }
-                img{
-                    margin-right: 10px;
-                    float: left;
-                }
-            }
-
-            .selector-map{
-                float: right;
-                .selector-map-text{
-                    color: rgba(255, 253, 251, 0.616);
-                    font-size: 18px;
-                    float: right;
-                }
-
-                #map-link{
-                    text-decoration: none;
-                    color: rgba(255, 253, 251, 0.616);
-                }
-
-                img{
-                    margin-right: 10px;
-                    float:left;
-                }
-            }
-        }
-
-        .full-selector.is-pointer-down{
-            .selector-story-text{
-                font-size: 18px;
-            }
-            .selector-map-text{
-                font-size: 18px;
             }
         }
     }
