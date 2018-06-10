@@ -1,0 +1,18 @@
+.main{
+    height: auto;
+    width: 100%;
+    background-image: url(/~drew.schineller//enslaved/assets/images/StoryImg.jpg);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .middlewrap{
+        color: $base-light;
+        margin: 0 auto;
+        max-width: 1000px;
+        position: static;
+        padding-top: 109px;
+        padding-bottom: 66px;
+        font-size: 28px;
+    }
+}

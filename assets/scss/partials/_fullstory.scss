@@ -1,0 +1,314 @@
+.fullstory{
+    background-image: url(/~drew.schineller//enslaved/assets/images/Rectangle7Copy.jpg);
+
+    .middlewrap{
+        padding-bottom: 50px;
+
+        .last-page-header{
+            margin-bottom: 90px;
+            
+            #last-page {
+                color: $base-light;
+                font-size: 17px;
+                font-weight: 500;
+                text-decoration: none;
+                span#previous-title{
+                    color: rgb(185, 184, 180);
+                }
+                span#current-title{
+                    border-bottom: 3px solid $sub-base;
+                    padding-bottom: 5px;
+                }
+            }
+        }
+    }
+}
+
+//Seperating the left and right sides
+.story-content {
+    margin: 0 auto;
+    max-width: 1000px;
+    padding: 65px 6% 0;
+    
+    .left-column, .right-column {
+		display:inline-block!important;
+	}
+	.left-column {
+        line-height: 2;
+        transition: 400ms;
+		width:60%;
+        
+		section {
+			margin-bottom:32px;
+            overflow: auto;
+            border-bottom: 2px solid rgba(37,52,73,0.1);
+            padding-bottom: 48px;
+
+            p{
+                font-size: 16px;
+                color: $base-dark;
+                margin-bottom: 30px;
+            }
+
+			p:last-child {
+				margin-bottom: 0!important;
+			}
+            
+            h3 {
+                font-size: 24px;
+                color: $base-dark;
+                margin-bottom: 24px;
+            }
+        }
+        
+        section.online-resources{
+            padding-bottom: 32px;
+
+            p{
+                font-size: 14px;
+                line-height: 20px;
+            }
+
+            span{
+                color: $sub-base;
+                text-decoration: underline;
+                font-weight: bold;
+            }
+        }
+
+        section.bibliography{
+            padding-bottom: 64px;
+            margin-bottom: 0;
+            border-bottom: none;
+
+            p{
+                font-size: 14px;
+                line-height: 20px;
+                margin-bottom: 25px;
+            }
+        }
+	}
+    .right-column {
+        float: right;
+		width:32%;
+        
+        .sliderwrap{
+            width: 100%;
+            height: auto;
+            position: relative;
+            //height: 392px;
+
+            .expand{
+                cursor: pointer;
+                position: absolute;
+                top: 1px;
+                right: 1px;
+                height: 40px;
+                width: 40px;
+                z-index: 2;
+                background-color: $base-light;
+                
+
+                img{
+                    margin: 12px;
+                }
+            }
+
+            .slider{
+                
+                background-color: $base-light;/*
+                background-image: url(/~drew.schineller/enslaved/assets/images/ibrahima.jpg);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;*/
+                border: 1px solid rgba(18, 46, 70, 0.1);
+                width: auto;
+                height: auto;
+
+                img{
+                    max-width: 100%;
+                    max-height: 360px;
+                }
+
+                .mySlides{
+                    margin: 0 auto;
+                    display: none;
+                }
+
+                .fade {
+                    -webkit-animation-name: fade;
+                    -webkit-animation-duration: 1.5s;
+                    animation-name: fade;
+                    animation-duration: 1.5s;
+                }
+                @-webkit-keyframes fade {
+                    from {opacity: .4} 
+                    to {opacity: 1}
+                }
+                @keyframes fade {
+                    from {opacity: .4} 
+                    to {opacity: 1}
+                }
+            }
+
+            .image-pagination{
+                height: 32px;
+                width: 100%;
+                position: relative;
+                display: block;
+
+                #prev-arrow, #next-arrow{
+                    cursor: pointer;
+                    position: absolute;
+                    bottom: 0;
+                }
+
+                #prev-arrow{
+                    left: 30px;
+                }
+
+                #next-arrow{
+                    transform: scaleX(-1);
+                    right: 30px;
+                }
+
+                .dotwrap{
+                    padding-top: 24px;
+
+                    .dot {
+                        cursor: pointer;
+                        height: 7px;
+                        width: 7px;
+                        margin: 0 4px;
+                        background-color: rgba(18,46,70,0.1);
+                        border-radius: 50%;
+                        display: inline-block;
+                        transition: background-color 0.6s ease;
+                    }
+                    
+                    .active, .dot:hover {
+                        background-color: #122E46;
+                    }
+                }
+            }
+        }
+        
+        .key-events{
+            margin-top: 65px;
+
+            .key-events-title{
+                font-size: 28px;
+                color: $base-dark;
+                margin-bottom: 30px;
+            }
+
+            .key-events-date{
+                font-size: 22px;
+                color: $base-dark;
+                margin-bottom: 20px;
+
+            }
+
+            .key-events-text{
+                color: $base-dark;
+                border-left: 2px solid rgba(37,52,73,0.1);
+                padding-left: 34px;
+                padding-bottom: 15px;
+                margin-left: 10px;
+                margin-bottom: 24px;
+                font-size: 15px;
+                line-height: 18px;
+            }
+
+            .key-events-text:last-child{
+                padding-bottom: 0;
+            }
+        }
+	}
+}
+
+.modal-view{
+    background: rgba(51, 51, 51, .7);
+    color: $base-dark;
+    display: none;
+    height: 100%;
+    width: 100%;
+    transition: 400ms;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+    z-index: 1001;
+
+    .modal-image{
+        height: 100%;
+        width: 100%;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}
+
+
+.related-card {
+    //margin-top: 85px;
+    border-top: 2px solid rgba(37,52,73,0.1);
+    padding-top: 64px;
+    padding-bottom: 80px;
+
+    .cardheader-wrap{
+        padding: 0;
+
+        .column-header{
+            color: $base-dark;
+            font-size: 38px;
+            float: left;
+            margin-bottom: 20px;
+        }
+    }
+
+    .cardwrap{
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 950px){
+	.story-content {
+		.left-column, .right-column {
+            float: none;
+			width:100%;
+		}
+		.left-column {
+            margin-right: 0;
+		}
+        .right-column {
+            margin-bottom: 60px;
+        }
+
+        .related-card{
+            margin-top: 0;
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-width-400){
+    .last-page-header{
+        margin-bottom: 0;
+        display: none;
+    }
+
+    .fullstory{
+
+        .middlewrap{
+
+            .full-selector{
+                
+                
+            }
+        }
+    }
+}
