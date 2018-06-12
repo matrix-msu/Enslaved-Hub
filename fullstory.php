@@ -119,6 +119,30 @@ else {
             <p class="key-events-text">Artemus Gaye, a seventh generation descendant of Abd al-Rahman, is born in Liberia. In the 1990s he flees Liberia during that nation’s civil war, finding refuge in America, where he has lectured on his ancestor’s legacy for our own times.</p> -->
         </div>
     </article>
+    <!-- Story Connections -->
+    <div class="story-connections">
+        <h2>Story Connections</h2>
+        <div class="categories">
+            <ul>
+                <li class="unselected selected" id="people"><div class="person-image"></div>10 People</li>
+                <li class="unselected" id="event"><div class="event-image"></div>3 Events</li>
+                <li class="unselected" id="place"><div class="place-image"></div>3 Places</li>
+                <li class="unselected" id="project"><div class="project-image"></div>2 Projects</li>
+                <li class="unselected" id="source"><div class="source-image"></div>15 Sources</li>
+            </ul>
+        </div>
+        <div class="connection-cards">
+            <ul class="connect-row">
+                <li>
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <h3>Firstname Lastname</h3>
+                    </div>
+                </li>
+            </ul>
+            <h4 class="load-more">Load More</h4>
+        </div>
+    </div>
     <!-- Related Stories-->
     <div class="container column related-card">
         <div class="container cardheader-wrap">
@@ -158,3 +182,4 @@ var result_array = <?php echo json_encode($images); ?>
 </script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/slider.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/modal.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>
