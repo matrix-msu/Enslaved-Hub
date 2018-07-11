@@ -1,5 +1,15 @@
 <!-- Page author: Drew Schineller-->
 <?php include 'header.php';?>
+<?php
+include 'functions/kora.php';
+$stories = getStories();
+$featured = [];
+foreach ($stories['records'][0] as $kid => $story) {
+    if (isset($story['Featured']) && $story['Featured']['value'] == true) {
+        $featured[$kid] = $story;
+    }
+}
+?>
 <!-- Stories page-->
 <!-- Heading image and title container-->
 <div class="container main stories">
@@ -18,9 +28,18 @@
     <div class="container cardheader-wrap">
         <h2 class="column-header">Featured Stories</h2>
     </div>
-    <div class="container cardwrap">
+    <div class="container cardwrap" id="featured">
         <ul class="row">
-            <li>
+            <?php
+            foreach ($featured as $kid => $story) {
+                echo '<li><a href="'.BASE_URL.'fullstory?kid='.$kid.'">';
+                echo '<div class="container cards">';
+                echo '<p class="card-title">'.$story['Title']['value'].'</p>';
+                echo '<h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>';
+                echo '</div></a></li>';
+            }
+            ?>
+            <!-- <li>
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
                         <p class="card-title">Title of Featured Story Goes Here Like This</p>
@@ -35,7 +54,7 @@
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>
@@ -51,7 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="container cardwrap">
+    <div class="container cardwrap" id="allStories">
         <div class="container sort-stories">
             <span class="sort-stories-text">Sort Stories By <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"></span>
             <ul id="submenu" class="sorting-menu">
@@ -62,7 +81,16 @@
             </ul>
         </div>
         <ul class="row">
-            <li>
+            <?php
+            foreach ($stories['records'][0] as $kid => $story) {
+                echo '<li><a href="'.BASE_URL.'fullstory?kid='.$kid.'">';
+                echo '<div class="container cards">';
+                echo '<p class="card-title">'.$story['Title']['value'].'</p>';
+                echo '<h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>';
+                echo '</div></a></li>';
+            }
+            ?>
+            <!-- <li>
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
                         <p class="card-title">Title of Featured Story Goes Here Like This</p>
@@ -125,7 +153,7 @@
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>
