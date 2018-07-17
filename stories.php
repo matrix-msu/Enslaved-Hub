@@ -5,7 +5,8 @@ include 'functions/kora.php';
 $stories = getStories();
 $featured = [];
 foreach ($stories['records'][0] as $kid => $story) {
-    if (isset($story['Featured']) && $story['Featured']['value'] == true) {
+    if (isset($story['Featured']) && $story['Featured']['value'] == 'TRUE') {
+        print_r($story['Featured']);
         $featured[$kid] = $story;
     }
 }
