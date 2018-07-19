@@ -23,9 +23,9 @@ $(".row li").click(function() {
 });
 
 $(document).ready(function(){ //limits number of featured stories to 6
-    var featStories = $('.feat .row li').size(); //number of featured stories
+    var featStories = $('#featured .row li').size(); //number of featured stories
     if (featStories > 6){
-        $('.feat .row li:gt(5)').remove();
+        $('#featured .row li:gt(5)').remove();
     }
 });
 
