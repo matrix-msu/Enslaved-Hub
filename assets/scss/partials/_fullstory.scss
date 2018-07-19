@@ -29,9 +29,17 @@
     margin: 0 auto;
     max-width: 1000px;
     padding: 65px 6% 0;
-    
+
+    .columnwrap{
+        border-bottom: 2px solid rgba(37,52,73,0.1);
+        overflow: auto;
+    }
+    a{
+        color: $sub-base;
+    }
     .left-column, .right-column {
-		display:inline-block!important;
+        display:inline-block!important;
+        padding-bottom: 64px;
 	}
 	.left-column {
         line-height: 2;
@@ -44,6 +52,9 @@
             border-bottom: 2px solid rgba(37,52,73,0.1);
             padding-bottom: 48px;
 
+            &:last-child{
+                padding-bottom: 0!important;
+            }
             p{
                 font-size: 16px;
                 color: $base-dark;
@@ -51,7 +62,7 @@
             }
 
 			p:last-child {
-				margin-bottom: 0!important;
+                margin-bottom: 0!important;
 			}
             
             h3 {
@@ -68,16 +79,9 @@
                 font-size: 14px;
                 line-height: 20px;
             }
-
-            span{
-                color: $sub-base;
-                text-decoration: underline;
-                font-weight: bold;
-            }
         }
 
         section.bibliography{
-            padding-bottom: 64px;
             margin-bottom: 0;
             border-bottom: none;
 
@@ -254,7 +258,7 @@
 }
 
 .story-connections{
-    border-top: 2px solid rgba(37,52,73,0.1);
+    border-bottom: 2px solid rgba(37,52,73,0.1);
     padding: 65px 0;
     width: 100%;
 
@@ -385,7 +389,7 @@
 
 .related-card {
     //margin-top: 85px;
-    border-top: 2px solid rgba(37,52,73,0.1);
+    //border-top: 2px solid rgba(37,52,73,0.1);
     padding-top: 64px;
     padding-bottom: 80px;
 

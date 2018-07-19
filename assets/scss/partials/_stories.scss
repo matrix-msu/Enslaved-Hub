@@ -109,6 +109,137 @@
     }
 }
 
+.pagiwrap{
+    margin: 0 auto 60px;
+    max-width: 1000px;
+    height: 138px;
+    .sort-pages{
+        p{
+            margin: 0;
+            margin-left: 20px;
+            float: left;
+            line-height: 138px;
+            color: #253449;
+            font-size: 14px;
+            cursor: pointer;
+            img {
+                transition: 400ms;                
+            }
+            img.show {
+                transform: rotate(-180deg);
+            }
+
+            span{
+
+            }
+        }
+        ul {
+            background: $base-light;
+            box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+            color: $base-dark;
+            display: none;
+            list-style: none;
+            margin: 80px auto 0;
+            padding: 20px;
+            position: absolute;
+            left: -861px;
+            right: 0;
+            width: fit-content;
+            z-index: 1;
+            li {
+                cursor: pointer;
+                font-size: 14px;
+                line-height: 15px;
+                padding: 5px 3px;
+            }
+            li:hover {
+                color: $sub-base;
+            }
+    
+            ul#submenu {
+                margin-bottom: 20px;
+            }
+    
+        }
+    
+        #submenu.show{
+            display: block;
+        }
+    }
+}
+
+#pagination {
+    margin: 30px auto;
+    padding: 30px 5%;
+    position: relative;
+    text-align: center;
+    transition: 400ms;
+    width: 240px;
+    float: right;
+    .align-left,
+    .align-right {
+        background-color: #FBF9F5;
+        transition: background-color .3s;
+        box-shadow: 0 5px 5px 0 rgba(0,0,0,0.03);
+        border: 1px solid rgb(158, 154, 149);
+        display: block;
+        cursor: pointer;
+        opacity: 1;
+        padding: 20px 16px;
+        position: absolute;
+        bottom: 13px;
+
+        #pagiLeftArrow, #pagiRightArrow{
+            height: 7px;
+            width: 13px;
+            background-image: url(../images/Arrow2.svg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
+    .align-left {
+        left: 0;
+        #pagiLeftArrow{
+            transform: rotate(90deg);
+            margin-right: 2px;
+        }
+    }
+    .align-right {
+        right: 0;
+        #pagiRightArrow{
+            transform: rotate(-90deg);
+            margin-left: 2px;
+        }
+    }
+    .align-left:hover,
+    .align-right:hover {
+        box-shadow: 0 2px 3px 0 rgba(0,0,0,0.03);
+        background-color: rgba(14, 49, 100, 0.4);
+    }
+
+    .page-numbers{
+        max-width: 280px;
+        margin: 0 auto;
+        span.active {
+            opacity: 1;
+            color: #253449;
+            padding: 2px 8px 4px;
+            border-radius: 22%;
+        }
+        span {
+            cursor: pointer;
+            font-family: aleoregular!important;
+            color: #323232;
+            margin: 0 2px;
+            font-size: 14px;
+            opacity: 0.3;
+        }
+        span:hover {
+            opacity: 1;
+        }
+    } 
+}
+
 .search{
     float: right;
     position: relative;
@@ -186,5 +317,22 @@
     ul#submenu{
         margin-left: 6%;
         left: 0;
+    }
+    .pagiwrap{
+        padding: 0 6%;
+    }
+}
+
+@media screen and (max-width: 880px) {
+    #pagination {
+        min-width: 320px;
+    }
+}
+
+@media screen and (max-width: 550px){
+    #pagination{
+        padding: 30px 7% 80px!important;
+        min-width: 220px!important;
+        width: 86%;
     }
 }

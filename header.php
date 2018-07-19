@@ -18,5 +18,19 @@ print globaljsvars;
     <body>
         <!-- Header/Navigation -->
         <header class="nav-header">
-            <h1>Enslaved</h1>
+            <div class="headerwrap">
+                <div class="leftnav">
+                    <h1>Enslaved</h1>
+                </div>
+                <div class="rightnav">
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a class="nav-link unselected" id="search" href="<?php echo BASE_URL;?>index">Search</a></li>
+                        <li class="nav-item"><a class="nav-link unselected" id="explore" href="<?php echo BASE_URL;?>index">Explore</a></li>
+                        <li class="nav-item"><a class="nav-link unselected" id="visualize" href="<?php echo BASE_URL;?>index">Visualize</a></li>
+                        <li class="nav-item"><a class="nav-link unselected" id="stories" href="<?php echo BASE_URL;?>index">Stories</a></li>
+                        <li class="nav-item"><a class="nav-link unselected" id="projects" href="<?php echo BASE_URL;?>index">Projects</a></li>
+                        <li class="nav-item"><a class="nav-link unselected" id="about" href="<?php echo BASE_URL;?>index">About</a></li>
+                    </ul>
+                </div>
+            </div>
         </header>
