@@ -39,14 +39,14 @@ foreach ($stories['records'][0] as $kid => $story) {
                 echo '</div></a></li>';
             }
             ?>
-            <li>
+            <!-- <li>
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
                         <p class="card-title">Title of Featured Story Goes Here Like This</p>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
-            </li>
+            </li> -->
             <!-- <li>
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
