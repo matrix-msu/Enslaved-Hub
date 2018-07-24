@@ -46,8 +46,8 @@ foreach ($stories['records'][0] as $kid => $story) {
                         <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
                         <p class="card-title">Title of Featured Story Goes Here Like This</p>
@@ -155,6 +155,31 @@ foreach ($stories['records'][0] as $kid => $story) {
                 </a>
             </li> -->
         </ul>
+    </div>
+    <div class="container pagiwrap">
+        <div class="container sort-pages">
+            <p><span>X</span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"/></p>
+            <ul id="submenu" class="pagenum-menu">
+                <li>8 Per Page</li>
+                <li>12 Per Page</li>
+                <li>16 Per Page</li>
+                <li>20 Per Page</li>
+            </ul>
+        </div>
+        <div id="pagination">
+            <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
+            <div class="page-numbers">
+                <span class="num pagi-first">1</span>
+                <span class="dotsLeft">...</span>
+                <span class="num one"></span>
+                <span class="num two"></span>
+                <span class="num three"></span>
+                <span class="num four"></span>
+                <span class="dotsRight">...</span>
+                <span class="num pagi-last">310</span>
+            </div>
+            <span id="pagiRight" class="align-right"><div id="pagiRightArrow"></div></span>
+        </div>
     </div>
 </div>
 

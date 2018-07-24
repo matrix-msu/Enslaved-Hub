@@ -3,13 +3,85 @@
     margin: 0;
     padding: 0;
     width: 100%;
+    height: 50px;
     z-index: 999;
     position: fixed;
     box-shadow: 0 5px 10px 0 rgba(13,18,48,0.16);
     background-color: rgba(18, 46, 70, .5);
+    //overflow: hidden;
     
-    h1{
+    .headerwrap{
         max-width: 1000px;
         margin: 0 auto;
+        .leftnav{
+            float: left;
+            a{
+                text-decoration: none;
+                color: #FFFFFF;
+                line-height: 50px;
+                font-size: 32px;
+                margin: 0;
+            }
+        }
+        .rightnav{
+            float: right;
+            .nav-menu{
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                line-height: 50px;
+            
+                .nav-item{
+                    display: inline;
+            
+                    .nav-link{
+                        color: #FFFFFF;
+                        cursor: pointer;
+                        font-size: 14px;
+                        margin-left: 20px;
+                        text-decoration: none;
+                        transition: 0.6s ease;
+            
+                        &:hover {
+                            color: $sub-base;
+                            transition: 0.6s ease;
+                        }
+                    }
+
+                    #search{
+                        border-right: 1px solid #FFFFFF;
+                        padding: 5px 20px 5px 0;
+
+                    }
+                    
+                    .selected{
+                        border-top: 2px solid $sub-base;
+                        opacity: 1;
+                        padding: 12px 3px;
+                    }
+
+                    // .drop-carat, drop-link{
+                    //     display: inline-block;
+                    // }
+            
+                    // .drop-carat{
+                    //     cursor: pointer;
+                    //     margin-left: 7px;
+                    //     // keeps the browse tag from shifting left after a click event
+                    //     img{
+                    //         width: 12px;
+                    //     }
+                    // }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-max-width){
+    .nav-header{
+        .headerwrap{
+            padding: 0 6%;
+        }
     }
 }
