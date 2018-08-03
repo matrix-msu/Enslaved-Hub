@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>table-Active</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Search-Results-ListTable" transform="translate(-893.000000, -492.000000)" stroke="#27AD88">
+            <g id="table-Active" transform="translate(893.000000, 492.000000)">
+                <rect id="Rectangle-14" x="0.5" y="0.5" width="18" height="18"></rect>
+                <path d="M1,6.5 L18,6.5" id="Line-2" stroke-linecap="square"></path>
+                <path d="M1,12.5 L18,12.5" id="Line-2" stroke-linecap="square"></path>
+                <path d="M6.5,1.25 L6.5,18.3931885" id="Line-3" stroke-linecap="square"></path>
+                <path d="M12.5,1.25 L12.5,18.3931885" id="Line-3" stroke-linecap="square"></path>
+            </g>
+        </g>
+    </g>
+</svg>

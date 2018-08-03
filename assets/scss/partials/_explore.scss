@@ -1,0 +1,113 @@
+.explore{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 70px 0;
+
+    .section-wrap{
+        clear: both;
+        overflow: hidden;
+
+        .section-info{
+            float: left;
+            max-width: 40%;
+            a{
+                text-decoration: none;
+                color: $base-dark;
+            }
+            h2{
+                font-size: 38px;
+                margin-bottom: 30px;
+                color: $base-dark;
+                display: inline-block;
+                padding-bottom: 10px;
+                border-bottom: 3px solid rgba(255, 255, 255, 0);
+                transition: border .3s ease;
+                img{
+                    transform: scaleX(-1);
+                    margin-left: 17px;
+                    margin-bottom: 5px;
+                    cursor: pointer;
+                }
+                &:hover{
+                    border-bottom: 3px solid $sub-base;
+                }
+            }
+            p{
+                color: $base-dark;
+                font-size: 16px;
+                line-height: 24px;
+            }
+        }
+        .section-content{
+            float: right;
+            width: 45%;
+            max-width: 380px;
+            .content-link{
+                width: 100%;
+                min-width: 220px;
+                display: inline-flex;
+                position: relative;
+                align-items: center;
+                margin-bottom: 15px;
+                cursor: pointer;
+                transition: border .3s ease;
+                padding-bottom: 15px;
+                border-bottom: 4px solid rgba(255, 255, 255, 0);
+                .icon{
+                    margin-right: 17px;
+                }
+                h3{
+                    font-size: 22px;
+                    line-height: 26px;
+                    color: $base-dark;
+                }
+                span{
+                    font-size: 20px;
+                    line-height: 26px;
+                    color: $base-dark;
+                    position: absolute;
+                    right: 30px;
+                    opacity: .47;
+                    transition: opacity .3s ease;
+                }
+                .arrow{
+                    transform: scaleX(-1);
+                    position: absolute;
+                    right: 0;
+                }
+
+                &:hover{
+                    border-bottom: 4px solid $sub-base;
+                    span{
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .explore{
+        .section-wrap{
+            margin-bottom: 70px;
+            .section-info{
+                max-width: 100%;
+                width: 100%;
+                float: none;
+                margin-bottom: 40px;
+            }
+            .section-content{
+                max-width: 100%;
+                width: 100%;
+                float: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-max-width){
+    .explore{
+        padding: 70px 6%;
+    }
+}

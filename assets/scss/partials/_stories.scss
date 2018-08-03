@@ -325,9 +325,13 @@
 }
 
 @media screen and (max-width: 550px){
+    .pagiwrap{
+        margin-bottom: 90px;
+    }
     #pagination{
-        padding: 30px 7% 80px!important;
+        padding: 20px 7% 80px!important;
         min-width: 220px!important;
+        margin: 0 auto;
         width: 86%;
     }
 }

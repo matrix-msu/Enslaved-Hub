@@ -4,7 +4,7 @@
     width: 100%;
 
     #feat-title{
-        margin-bottom: 0!important
+        margin-bottom: 0!important;
     }
 
     .cardheader-wrap{
@@ -41,7 +41,7 @@
 
                 &:nth-child(2n-1){
                     margin-right: 3%;
-                    background-image: url(/~drew.schineller//enslaved/assets/images/Rectangle7Copy.jpg);
+                    background-image: url(../images/Rectangle7Copy.jpg);
                     background-position: center;
                     background-size: auto 130%;
                     background-repeat: no-repeat;
@@ -49,14 +49,14 @@
 
                 &:nth-child(2n){
                     margin-left: 3%;
-                    background-image: url(/~drew.schineller/enslaved/assets/images/Rectangle7.jpg);
+                    background-image: url(../images/Rectangle7.jpg);
                     background-position: center;
                     background-size: auto 130%;
                     background-repeat: no-repeat;
                 }
 
                 .cards{
-                    border: 3px solid rgba(13,18,48,0.1);
+                    border: 3px solid rgba(13,18,48,0);
                     box-shadow: 0 2px 3px 0 rgba(30,30,30,0.05);
                     //background-color: $base-dark;
                     color: $base-light;
@@ -96,9 +96,9 @@
                             margin-top: 5px;
                             height: 8px;
                             width: 13px;
-                            background-image: url(/~drew.schineller/enslaved/assets/images/Arrow.svg);
+                            background-image: url(../images/Arrow.svg);
                             background-repeat: no-repeat;
-                            transition: color 0.3s ease;
+                            transition: background-image 0.3s ease;
                             
                         }
                     }
@@ -111,7 +111,7 @@
                             color: $sub-base;
 
                             .view-arrow{
-                                background-image: url(/~drew.schineller/enslaved/assets/images/Arrow_colored.svg);
+                                background-image: url(../images/Arrow_colored.svg);
                             }
                         }
                     }

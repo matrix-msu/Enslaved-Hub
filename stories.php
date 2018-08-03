@@ -12,7 +12,7 @@ foreach ($stories['records'][0] as $kid => $story) {
 ?>
 <!-- Stories page-->
 <!-- Heading image and title container-->
-<div class="container main stories">
+<div class="container header stories">
     <div class="container middlewrap">
         <h1>Stories</h1>
     </div>
@@ -39,14 +39,14 @@ foreach ($stories['records'][0] as $kid => $story) {
                 echo '</div></a></li>';
             }
             ?>
-            <!-- <li>
+            <li>
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
                         <p class="card-title">Title of Featured Story Goes Here Like This</p>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
-            </li> -->
+            </li>
             <!-- <li>
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
@@ -184,3 +184,6 @@ foreach ($stories['records'][0] as $kid => $story) {
 </div>
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/stories.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
+
+<?php include 'footer.php';?>
