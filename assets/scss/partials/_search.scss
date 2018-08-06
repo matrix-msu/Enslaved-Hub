@@ -1,0 +1,210 @@
+.header{
+    .middlewrap{
+        .search-title{
+            margin: 0 0 60px;
+            clear: both;
+            overflow: hidden;
+            transition: .2s;
+            h1{
+                float: left;
+            }
+            a{
+                text-decoration: none;
+                color: $base-light;
+            }
+            h3{
+                float: right;
+                font-size: 18px;
+                line-height: 56px;
+                transition: .2s;
+                .arrow{
+                    background-image: url(../images/Arrow.svg);
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    width: 13px;
+                    height: 13px;
+                    transform: rotate(-90deg);
+                    float: right;
+                    margin: 20px 0 0 10px;
+                    // margin: 0 0 2px 10px;
+                    transition: .2s;
+                }
+                &:hover{
+                    color: $sub-base;
+                    .arrow{
+                        background-image: url(../images/Arrow_colored.svg);
+                    }
+                }
+            }
+        }
+        .advanced-title{
+            margin: 0;
+        }
+        .heading-search{
+            h3{
+                font-size: 26px;
+            }
+        }
+        .last-page-header{
+            margin-bottom: 45px;
+            
+            #last-page {
+                color: $base-light;
+                font-size: 17px;
+                font-weight: 500;
+                text-decoration: none;
+                span#previous-title{
+                    color: rgb(185, 184, 180);
+                }
+                span#current-title{
+                    border-bottom: 3px solid $sub-base;
+                    padding-bottom: 5px;
+                }
+            }
+        }
+    }
+}
+
+.direct-search{
+    padding: 0;
+    max-width: 1000px;
+    margin: 0 auto;
+    .searchwrap{
+        margin: 75px 0;
+        h2{
+            font-size: 26px;
+            color: $base-dark;
+            margin-bottom: 30px;
+        }
+        form{
+
+            .search-section{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-bottom: 50px;
+                // align-items: flex-start;
+
+                .inputwrap{
+                    width: 47.5%;
+                    margin-bottom: 22px;
+                    
+                    input, label{
+                        display: block;
+                    }
+                    label{
+                        margin-bottom: 10px;
+                        color: $base-dark;
+                        font-size: 15px;
+                    }
+                    input,select{
+                        height: 60px;
+                        width: 100%;
+                        border: 1px solid #CED0D2;
+                        outline: none;
+                        background-color: #FFFDFB;
+                        box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+                        padding-left: 30px;
+                        font-size: 14px;
+                        font-family: aleoregular;
+                        color: $base-dark;
+                        transition: border 0.2s;
+        
+                        &:hover{
+                            border: 1px solid $sub-base;
+                        }
+                        &:focus-within{
+                            border: 1px solid $sub-base;
+                        }
+                        option[default] {
+                            display: none;
+                        }
+                        option{
+                            color: $base-dark;
+                            font-family: aleoregular;
+                        }
+                    }
+                    .date-select{
+                        width: 50%;
+                        margin-right: -5px;
+                    }
+                }
+            }
+            .buttonwrap{
+                width: 100%;
+                text-align: right;
+                button{
+                    cursor: pointer;
+                    height: 60px;
+                    width: 225px;
+                    border: none;
+                    color: $base-light;
+                    font-size: 20px;
+                    outline: none;
+                    font-family: aleoregular;
+                    border-radius: 100px;
+                    background: linear-gradient(to right, rgb(28, 72, 110),#0D2132);
+                    transition: border 0.2s;
+                    transition: .2s;
+                    
+                    &:hover{
+                        border: 2px solid $sub-base;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-max-width){
+    .direct-search{
+        padding: 0 6%;
+    }
+}
+@media screen and (max-width: 600px){
+    .direct-search{
+        .searchwrap{
+            form{
+                .search-section{
+                    .inputwrap{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 470px){
+    .header{
+        .middlewrap{
+            padding-bottom: 50px;
+            .search-title{
+                margin: 0 0 35px;
+                h1{
+                    margin-right: 50px;
+                }
+                h3{
+                    float: left;
+                }
+            }
+        }
+    }
+    .direct-search{
+        .searchwrap{
+            margin: 40px 0;
+        }
+    }
+}
+@media screen and (max-width: 350px){
+    .direct-search{
+        .searchwrap{
+            form{
+                .buttonwrap{
+                    button{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
