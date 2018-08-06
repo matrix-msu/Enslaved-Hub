@@ -26,9 +26,7 @@ else {
         if (isset($story['Title'])) {
             echo '<h1>'.$story['Title']['value'].'</h1>';
         }
-        echo "hello Jeff";
         ?>
-        
         <!-- <h1>Ibrahima Abd al-Rahman</h1>
         <h3>(18th/19th century)</h3> -->
     </div>
