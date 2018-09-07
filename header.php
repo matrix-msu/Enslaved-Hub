@@ -13,8 +13,13 @@ print globaljsvars;
         <title>Enslaved</title>
         <!-- stylesheet -->
         <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/stylesheets/style.css" type="text/css">
+        <!-- jquery / local scripts -->
         <script language="JavaScript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
         <script language="JavaScript" type ="text/javascript" src="<?php echo BASE_URL;?>assets/javascripts/header.js"></script>
+        <!-- select2 cdn links -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+        
     </head>
 
     <body>
@@ -37,11 +42,11 @@ print globaljsvars;
                             <span class="drop-carat"><img src="<?php echo BASE_URL;?>/assets/images/Arrow.svg"/></span>
                             <ul class="sub-list">
                                 <li class="subwrap" id="explore-sub">
-                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>">People</a>
-                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>">Events</a>
-                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>">Places</a>
-                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>">Projects</a>
-                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>">Sources</a>
+                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>explorePeople">People</a>
+                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>exploreEvents">Events</a>
+                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>explorePlaces">Places</a>
+                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>projects">Projects</a>
+                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>exploreSources">Sources</a>
                                 </li>
                             </ul>
                         </li>

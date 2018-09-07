@@ -86,7 +86,8 @@
             span {
                 cursor: pointer;
                 img {
-                    transition: 400ms;                
+                    transition: 400ms;
+                    margin-bottom: 3px;
                 }
                 img.show {
                     transform: rotate(-180deg);
@@ -309,10 +310,13 @@
         padding: 0 6%;
     }
 
-    ul#submenu{
-        margin-left: 6%;
-        left: 0;
+    .sort-stories{
+        ul#submenu{
+            margin-left: 6%;
+            left: 0;
+        }
     }
+    
     .pagiwrap{
         padding: 0 6%;
     }

@@ -157,7 +157,9 @@
 }
 
 @media screen and (max-width: $mobile-max-width){
-    .cardwrap, .cardheader-wrap{
-        padding: 0 6%;
+   .column{
+        .cardwrap, .cardheader-wrap{
+            padding: 0 6%;
+        }
     }
 }
