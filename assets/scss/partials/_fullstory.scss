@@ -14,11 +14,19 @@
                 text-decoration: none;
                 span#previous-title{
                     color: rgb(185, 184, 180);
+                    transition: color .3s;
+
+                    &:hover{
+                        color: #FBF9F5;
+                    }
                 }
-                span#current-title{
-                    border-bottom: 3px solid $sub-base;
-                    padding-bottom: 5px;
-                }
+            }
+            span#current-title{
+                color: $base-light;
+                font-size: 17px;
+                font-weight: 500;
+                border-bottom: 3px solid $sub-base;
+                padding-bottom: 5px;
             }
         }
     }
@@ -31,7 +39,7 @@
     padding: 65px 6% 0;
 
     .columnwrap{
-        border-bottom: 2px solid rgba(37,52,73,0.1);
+        border-bottom: 1px solid rgba(37,52,73,0.1);
         overflow: auto;
     }
     a{
@@ -258,9 +266,9 @@
 }
 
 .story-connections{
-    border-bottom: 2px solid rgba(37,52,73,0.1);
+    border-bottom: 1px solid rgba(37,52,73,0.1);
     padding: 65px 0;
-    width: 100%;
+    max-width: 1000px;
 
     h2{
         font-size: 30px;
@@ -356,7 +364,7 @@
                     img{
                         position: absolute;
                         top: 15px;
-                        left: 15px;
+                        left: 17px;
                     }
                     h3{
                         position: absolute;
@@ -364,7 +372,7 @@
                         font-size: 20px;
                         width: 122px;
                         bottom: 15px;
-                        left: .5em;
+                        left: 17px;
                         margin-right: 10px;
                     }
                 }

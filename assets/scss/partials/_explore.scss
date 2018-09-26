@@ -3,7 +3,7 @@
 .explore{
     max-width: 1000px;
     margin: 0 auto;
-    padding: 70px 0;
+    padding: 70px 6%;
 
     .section-wrap{
         clear: both;
@@ -118,16 +118,25 @@
     .explore{
         padding: 70px 6%;
     }
-    .explore-by{
-        padding: 60px 6% 50px;
-    }
 }
 
 //Explore subs
+.place-page{
+    background-image: url(../images/PlaceLanding.jpg);
+    background-position: center;
+}
+.event-page{
+    background-image: url(../images/EventLanding.jpg);
+    background-position: center;
+}
+.source-page{
+    background-image: url(../images/SourceLanding.jpg);
+    background-position: center;
+}
 .explore-by{
     max-width: 1000px;
     margin: 0 auto;
-    padding: 60px 0 50px;
+    padding: 60px 6% 80px;
     h1{
         color: $base-dark;
         font-size: 36px;
@@ -158,7 +167,7 @@
             cursor: pointer;
             margin-bottom: 30px;
             margin-right: 2%;
-            transition: .3s;
+            transition: border .3s, padding .3s;
 
             &:nth-child(3n){
                 margin-right: 0;
@@ -238,7 +247,7 @@
         }
     }
 }
-.featured-people{
+.explore-featured{
     padding: 0 6% 80px;
     margin: 0 auto;
     max-width: 1000px;
@@ -296,6 +305,27 @@
                 }
                 &:nth-child(4n){
                     margin-right: 0;
+                }
+            }
+        }
+        .events{
+            li{
+                .cards{
+                    background-image: url(../images/EventCard.jpg);
+                }
+            }
+        }
+        .places{
+            li{
+                .cards{
+                    background-image: url(../images/PlaceCard.jpg);
+                }
+            }
+        }
+        .sources{
+            li{
+                .cards{
+                    background-image: url(../images/SourceCard.jpg);
                 }
             }
         }
@@ -383,6 +413,7 @@
     .cardwrap{
         margin: 0 auto;
         max-width: 1000px;
+        padding: 0 6%;
 
         .row{
             display: -webkit-box;
@@ -457,13 +488,6 @@
                 // }
             }
         }
-    }
-}
-
-
-@media screen and (max-width: $mobile-max-width){
-    .explore-by{
-        padding: 80px 6%;
     }
 }
 

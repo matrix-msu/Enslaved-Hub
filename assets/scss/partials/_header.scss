@@ -13,6 +13,7 @@
     .headerwrap{
         max-width: 1000px;
         margin: 0 auto;
+        padding: 0 6%;
         .leftnav{
             float: left;
             a{
@@ -183,14 +184,6 @@
     }
     .right-section{
         margin-top: 10px;
-    }
-}
-
-@media screen and (max-width: $mobile-max-width){
-    .nav-header{
-        .headerwrap{
-            padding: 0 6%;
-        }
     }
 }
 

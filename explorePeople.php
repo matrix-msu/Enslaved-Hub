@@ -20,32 +20,34 @@
             <a href="<?php echo BASE_URL?>peopleSub">Gender<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub">Age Category<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Age Category<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub">Color<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Color<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub">Role Types<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Role Types<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub">Time<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Time<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub">Place<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Place<div id="arrow"></div></a>
         </li>
     </ul>
 </div>
 <!-- Featured People -->
-<div class="featured-people">
+<div class="explore-featured">
     <h2>Featured People</h2>
     <div class="connection-cards">
-        <ul class="connect-row">
+        <ul class="connect-row people">
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Firstname Lastname</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPerson">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <h3>Firstname Lastname</h3>
+                    </div>
+                </a>
             </li>
             <li>
                 <div class="cards">

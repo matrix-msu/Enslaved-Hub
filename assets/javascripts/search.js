@@ -166,12 +166,12 @@ function showModal(i) {
         setTimeout(function(){
             $('.modal-view').css('background', 'rgba(13, 18, 48, 0.7)');
             setTimeout(function(){
-                hidden_modals[i].childNodes[1].style.marginTop = "15px"
+                hidden_modals[i].childNodes[1].style.marginTop = "150px"
                 height = modalImage.innerHeight()
-                if (images) {
-                    $('.modal-wrap .arrow-left').css('opacity', '1');
-                    $('.modal-wrap .arrow-right').css('opacity', '1');
-                }
+                // if (images) {
+                //     $('.modal-wrap .arrow-left').css('opacity', '1');
+                //     $('.modal-wrap .arrow-right').css('opacity', '1');
+                // }
             }, 100);
         }, 100);
     }
@@ -240,7 +240,7 @@ var right_col = window.document.getElementsByClassName('right')
 var selected_items = []
 $('#available-cols').on('click', 'li', function (e) {
     e.stopPropagation()
-    $(this).css('background-color', 'rgba(39, 173, 136, 0.5)');
+    $(this).css('background-color', 'rgba(18, 46, 70, .16)');
     selected_items.push( $(this).html() );
 });
 
@@ -248,7 +248,7 @@ $('#available-cols').on('click', 'li', function (e) {
 var other_items = []
 $('#selected-cols').on('click', 'li', function (e) {
     e.stopPropagation()
-    $(this).css('background-color', 'rgba(39, 173, 136, 0.5)');
+    $(this).css('background-color', 'rgba(18, 46, 70, .16)');
     $(this).addClass('selected');
     other_items.push( $(this).html() );
 });
@@ -471,8 +471,8 @@ $("span.grid-view").click(function gridView (e) { // grid view
         $('tbody > tr').remove();
         $("#search-result-configure-download-row").hide();
         $("#search-result-table").hide();
-        $('span.view-toggle img.hide').show();
-        $('span.view-toggle img.show').hide();
+        $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
+        $('span.view-toggle .grid-icon').addClass('show'); //make the grid-icon active
         $('<div class="result-column"><div class="cardwrap"><ul class="row"></ul></div></div>').appendTo("div#search-result-wrap");
         result = parseInt(localStorage.getItem('display_amount'), 10)
         if (result) {
@@ -496,8 +496,8 @@ $("span.table-view").click(function tableView (e) { // table view
         window.localStorage.setItem('cards', cards)
         $('div.result-column').remove();
         $('div#search-result-table').show();
-        $('span.view-toggle img.hide').hide();
-        $('span.view-toggle img.show').show();
+        $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
+        $('span.view-toggle .table-icon').addClass('show'); //make the table-icon active
         $(this).addClass("show");
         $("span.grid-view").removeClass("show");
         $("#search-result-configure-download-row").show();

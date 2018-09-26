@@ -1,11 +1,12 @@
 .info{
     height: auto;
-    padding: 70px 0 20px; //add side padding at certain width
+    padding: 80px 0 20px; //add side padding at certain width
     width: 100%;
 
     .infowrap{
         margin: 0 auto;
         max-width: 1000px;
+        padding: 0 6%;
 
         p{
             color: $base-dark;
@@ -114,6 +115,7 @@
     margin: 0 auto 60px;
     max-width: 1000px;
     height: 138px;
+    padding: 0 6%;
     .sort-pages{
         p{
             margin: 0;
@@ -291,34 +293,13 @@
     }
 }
 
-@media screen and (max-width: $mobile-width-400){
-    .info{
-
-        .infowrap{
-            padding: 0 4%;
-        }
-    }
-}
-
 @media screen and (max-width: $mobile-max-width){
-
-    .middlewrap{
-        padding: 0 6%;
-    }
-
-    .infowrap{
-        padding: 0 6%;
-    }
 
     .sort-stories{
         ul#submenu{
             margin-left: 6%;
             left: 0;
         }
-    }
-    
-    .pagiwrap{
-        padding: 0 6%;
     }
 }
 

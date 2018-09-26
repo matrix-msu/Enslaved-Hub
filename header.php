@@ -62,15 +62,15 @@ print globaljsvars;
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link unselected" id="stories" href="<?php echo BASE_URL;?>stories">Stories</a></li>
-                        <li class="nav-item"><a class="nav-link unselected" id="projects" href="<?php echo BASE_URL;?>">Projects</a></li>
+                        <li class="nav-item"><a class="nav-link unselected" id="projects" href="<?php echo BASE_URL;?>projects">Projects</a></li>
                         <li class="nav-item drop-link">
-                            <a class="nav-link unselected" id="about" href="<?php echo BASE_URL;?>">About</a>
+                            <a class="nav-link unselected" id="about" href="<?php echo BASE_URL;?>about">About</a>
                             <span class="drop-carat"><img src="<?php echo BASE_URL;?>/assets/images/Arrow.svg"/></span>
                             <ul class="sub-list">
                                 <li class="subwrap" id="about-sub">
-                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>">Get Involved</a>
-                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>">Our Partners</a>
-                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>">Contact Us</a>
+                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>getInvolved">Get Involved</a>
+                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>ourPartners">Our Partners</a>
+                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>contactUs">Contact Us</a>
                                 </li>
                             </ul>
                         </li>

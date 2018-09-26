@@ -55,18 +55,26 @@
                 text-decoration: none;
                 span#previous-title{
                     color: rgb(185, 184, 180);
+                    transition: color .3s;
+
+                    &:hover{
+                        color: #FBF9F5;
+                    }
                 }
-                span#current-title{
-                    border-bottom: 3px solid $sub-base;
-                    padding-bottom: 5px;
-                }
+            }
+            span#current-title{
+                color: $base-light;
+                font-size: 17px;
+                font-weight: 500;
+                border-bottom: 3px solid $sub-base;
+                padding-bottom: 5px;
             }
         }
     }
 }
 
 .direct-search{
-    padding: 0;
+    padding: 0 6%;
     max-width: 1000px;
     margin: 0 auto;
     .searchwrap{
@@ -336,11 +344,6 @@
     }
 }
 
-@media screen and (max-width: $mobile-max-width){
-    .direct-search{
-        padding: 0 6%;
-    }
-}
 @media screen and (max-width: 600px){
     .direct-search{
         .searchwrap{
