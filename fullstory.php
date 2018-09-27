@@ -21,7 +21,7 @@ else {
 <!-- Heading image and title container-->
 <div class="container header fullstory">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories // </span><span id="current-title">Featured Story Title Goes Here Like This</span></a></h4>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories // </span></a><span id="current-title">Featured Story Title Goes Here Like This</span></h4>
         <?php
         if (isset($story['Title'])) {
             echo '<h1>'.$story['Title']['value'].'</h1>';

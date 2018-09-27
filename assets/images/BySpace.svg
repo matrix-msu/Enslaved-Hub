@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="104px" height="102px" viewBox="0 0 104 102" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>B9517D85-D01A-46EB-8429-A67EF783F3E5</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <filter x="-118.2%" y="-87.0%" width="336.4%" height="326.1%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="12" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="15" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.0710264264   0 0 0 0 0.180718126   0 0 0 0 0.274739583  0 0 0 0.539515399 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="BySpace" transform="translate(-71.000000, -33.000000)" stroke="#FBF9F5">
+            <g filter="url(#filter-1)" transform="translate(101.000000, 49.000000)">
+                <polygon id="Stroke-1" fill="#586B7C" points="0 5.5455256 14.5637434 0.566236811 29.1304101 5.79119448 43.7 0 43.7 40.3765794 29.1304101 45.3558682 14.5637434 40.1279145 0 46"></polygon>
+                <path d="M13.8,1.15 L13.8,40.5" id="Stroke-3"></path>
+                <path d="M28.75,5.75 L28.75,45.5" id="Stroke-5"></path>
+            </g>
+        </g>
+    </g>
+</svg>

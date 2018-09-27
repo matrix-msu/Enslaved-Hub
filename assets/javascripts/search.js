@@ -1,3 +1,62 @@
+// ~~~~~~~~~~~~~~~~~~~~~~ //
+//  Search Select Boxes   //
+// ~~~~~~~~~~~~~~~~~~~~~~ //
+
+$(document).ready(function() {
+    $('#status').select2({
+        placeholder: "Select Status"
+    });
+    $('#origin').select2({
+        placeholder: "Select Origin"
+    });
+    $('#sex').select2({
+        placeholder: "Select Sex"
+    });
+    $('#occupation').select2({
+        placeholder: "Select Occupation"
+    });
+    $('#type').select2({
+        placeholder: "Select Event Type"
+    });
+    $('#city').select2({
+        placeholder: "Select City"
+    });
+    $('#state').select2({
+        placeholder: "Select Province,State,Colony"
+    });
+    $('#region').select2({
+        placeholder: "Select Region"
+    });
+    $('#country').select2({
+        placeholder: "Select Country"
+    });
+    $('#country').select2({
+        placeholder: "Select Country"
+    });
+    $('.date-from').select2({
+        placeholder: "From"
+    });
+    $('.date-to').select2({
+        placeholder: "To"
+    });
+    // $('.s2-multiple').select2();
+    $('b[role="presentation"]').hide();
+    $('.select2-selection--multiple').append('<span class="select2-selection__arrow" role="presentation"></span>');
+
+    // $('.s2-multiple').on('select2:opening select2:closing', function( event ) {
+    //     var $searchfield = $(this).parent().find('.select2-search__field');
+    //     $searchfield.prop('disabled', true);
+    // });
+    $(".s2-multiple").on('select2:select', function(e){
+        var id = e.params.data.id;
+        var option = $(e.target).children('[value='+id+']');
+        option.detach();
+        $(e.target).append(option).change();
+      });
+});
+
+
+
 // ~~~~~~~~~~~~~~~~~~ //
 // Search Query Cards //
 // ~~~~~~~~~~~~~~~~~~ //
@@ -80,6 +139,10 @@ $('form').on('click', 'img.close', function () {
 // ~~~~~~~~~~~~~~~~~~~~~~ //
 
 
+// ~~~~~~~~~~~~~~~~~~~~~~ //
+//        Modals          //
+// ~~~~~~~~~~~~~~~~~~~~~~ //
+
 var modals = document.getElementsByClassName('modal')
 var hidden_modals = document.getElementsByClassName('modal-view')
 var modalImage = $('img.modal-img-view');
@@ -103,12 +166,12 @@ function showModal(i) {
         setTimeout(function(){
             $('.modal-view').css('background', 'rgba(13, 18, 48, 0.7)');
             setTimeout(function(){
-                hidden_modals[i].childNodes[1].style.marginTop = "15px"
+                hidden_modals[i].childNodes[1].style.marginTop = "150px"
                 height = modalImage.innerHeight()
-                if (images) {
-                    $('.modal-wrap .arrow-left').css('opacity', '1');
-                    $('.modal-wrap .arrow-right').css('opacity', '1');
-                }
+                // if (images) {
+                //     $('.modal-wrap .arrow-left').css('opacity', '1');
+                //     $('.modal-wrap .arrow-right').css('opacity', '1');
+                // }
             }, 100);
         }, 100);
     }
@@ -177,7 +240,7 @@ var right_col = window.document.getElementsByClassName('right')
 var selected_items = []
 $('#available-cols').on('click', 'li', function (e) {
     e.stopPropagation()
-    $(this).css('background-color', 'rgba(39, 173, 136, 0.5)');
+    $(this).css('background-color', 'rgba(18, 46, 70, .16)');
     selected_items.push( $(this).html() );
 });
 
@@ -185,7 +248,7 @@ $('#available-cols').on('click', 'li', function (e) {
 var other_items = []
 $('#selected-cols').on('click', 'li', function (e) {
     e.stopPropagation()
-    $(this).css('background-color', 'rgba(39, 173, 136, 0.5)');
+    $(this).css('background-color', 'rgba(18, 46, 70, .16)');
     $(this).addClass('selected');
     other_items.push( $(this).html() );
 });
@@ -302,6 +365,11 @@ if (window.document.getElementById('modal-image')) {
       }
     }
 }
+// ~~~~~~~~~~~~~~~~~~~~~~ //
+//      End Modals        //
+// ~~~~~~~~~~~~~~~~~~~~~~ //
+
+
 
 /////////////////////////////////////////////////////////////
 ///// SEARCH RESULTS
@@ -338,8 +406,8 @@ $(document).ready(function () {
 
 $(document).click(function () { // close things with clicked-off
     $('span.results-per-page').find("img:first").removeClass('show');
-    $('span.results-per-page').next().removeClass('show');
-    $('span.sort-by').next().removeClass('show');
+    $('span.results-per-page #sortmenu').removeClass('show');
+    $('span.sort-by #sortmenu').removeClass('show');
     $('span.sort-by').find("img:first").removeClass('show');
     if (window.innerWidth < 820 && filter) {
         $(".show-filter").trigger('click');
@@ -350,10 +418,10 @@ $('div.container.main').click(function (e) {
     e.stopPropagation();
 })
 
-$("span.align-center").click(function (e) { // toggle show/hide per-page submenu
+$(".sorting-dropdowns .align-center").click(function (e) { // toggle show/hide per-page submenu
     e.stopPropagation();
     $(this).find("img:first").toggleClass('show');
-    $(this).next().toggleClass('show');
+    $(this).find("#sortmenu").toggleClass('show');
 });
 
 $("ul.results-per-page li").click(function (e) { // set the per-page value
@@ -375,31 +443,49 @@ $("span.view-toggle").mouseenter(function () { // show tooltips on hover
     clearTimeout(timer)
 });
 
-var view
-var result
-result_array = []
-result_array.length = 11
+
+//Generates result cards
+var view;
+var result;
+result_array = [];
+result_array.length = 11;
+
+//These html elements are set as independent variables and arrays so instead of one long line it is more readable
+var card_name = 'Firstname Lastname';
+var card_icon = 'Person-light.svg';
+var card_content = '<div class="card-info"><p><span>Person Status: </span>Enslaved</p><p><span>Sex: </span>Unidentified</p><p><span>Age: </span>26</p><p><span>Birth Date: </span>11. 03. 1876</p><p><span>Death Date: </span>11. 03. 1901</p></div>';
+
+var connection_lists = [
+'<h1>10 Connected People</h1><ul><li>Person Name <div id="arrow"></div></li><li>Person Name is Longer<div id="arrow"></div></li><li>Person Name <div id="arrow"></div></li><li>Person Name is Longer<div id="arrow"></div></li><li>Person Name <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
+'<h1>10 Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
+'<h1>10 Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
+'<h1>10 Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>',
+'<h1>10 Connected Projects</h1><ul><li>Project Name <div id="arrow"></div></li><li>Project Name is Longer<div id="arrow"></div></li><li>Project Name <div id="arrow"></div></li><li>View All Project Connections <div id="arrow"></div></li></ul>'
+];
+
+var connections = '<div class="connections"><div class="card-icons"><img src="./assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="./assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="./assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="./assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="./assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div>';
+
 $("span.grid-view").click(function gridView (e) { // grid view
     e.stopPropagation()
     if (cards === false) {
         $('tbody > tr').remove();
         $("#search-result-configure-download-row").hide();
         $("#search-result-table").hide();
-        $('span.view-toggle img.hide').show();
-        $('span.view-toggle img.show').hide();
-        $('<div class="column"><div class="cardwrap"><ul class="row"></ul></div></div>').appendTo("div#search-result-wrap");
+        $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
+        $('span.view-toggle .grid-icon').addClass('show'); //make the grid-icon active
+        $('<div class="result-column"><div class="cardwrap"><ul class="row"></ul></div></div>').appendTo("div#search-result-wrap");
         result = parseInt(localStorage.getItem('display_amount'), 10)
         if (result) {
             result_array.length = result
         }
         $.each(result_array,function () {
-            $('<li><a><div class="container cards"><p class="card-title">Person Name or Narrative Title</p><p><span>Gender</span>: Male</p><p><span>Born</span>: fl.1845 Virginia, United States</p><p><span>Occupation</span>: Fugitive Slave, Slave Narrative, Occupation..</p><a class="card-learn-more">View Narrative</a></div></a></li>').appendTo("ul.row");
+            $('<li><div class="container card-image"><p>'+card_name+'</p><img src="./assets/images/'+card_icon+'"></div><div class="container cards">'+card_content+connections+'</div></li>').appendTo("ul.row");
         });
-        cards = true
-        view = 'grid'
-        window.localStorage.setItem('cards', cards)
-        window.localStorage.setItem('view', view)
-        $('div.column').css('padding', '0', 'margin-top', '-30px', 'margin-bottom', '-15px');
+        cards = true;
+        view = 'grid';
+        window.localStorage.setItem('cards', cards);
+        window.localStorage.setItem('view', view);
+        // $('div.result-column').css('padding', '0', 'margin-top', '-30px', 'margin-bottom', '-15px');
     }
 });
 
@@ -408,10 +494,10 @@ $("span.table-view").click(function tableView (e) { // table view
     if (cards === true) {
         cards = false
         window.localStorage.setItem('cards', cards)
-        $('div.column').remove();
+        $('div.result-column').remove();
         $('div#search-result-table').show();
-        $('span.view-toggle img.hide').hide();
-        $('span.view-toggle img.show').show();
+        $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
+        $('span.view-toggle .table-icon').addClass('show'); //make the table-icon active
         $(this).addClass("show");
         $("span.grid-view").removeClass("show");
         $("#search-result-configure-download-row").show();
@@ -486,7 +572,7 @@ $('div.filter-menu').click(function(e){
 
 function centerStuffWithFilter () {
     $("#searchResults").addClass("show");
-    if (window.innerWidth <= 820) {
+    if (window.innerWidth <= 920) {
         $('div#searchResults.show').css('width','');
         $("#searchResults").removeClass("show");
     } else {
@@ -496,6 +582,22 @@ function centerStuffWithFilter () {
     }
 }
 
+// Hides filter menu when window is resized below 820px
+// $(window).resize(function () {
+//     if (filter) {
+//         if(window.innerWidth <= 820){
+//             $(".show-filter").html('<img src="assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu');
+//             filter = !filter;
+//             $('div#searchResults').css('max-width', '');
+//             setTimeout(function () {
+//                 $(".filter-menu").removeClass("show");
+//                 $('div#searchResults').css('width','');
+//             $("#searchResults").removeClass("show");
+//             }, 50);
+//         }
+//     }
+// });
+
 $(window).resize(function () { // make main content responsive when filter is visible
     if (filter) {
         setTimeout(function () {
@@ -504,7 +606,41 @@ $(window).resize(function () { // make main content responsive when filter is vi
     }
 });
 
+//Main categories
+$("li.cat-cat").click(function () { // toggle show/hide filter-by submenus
+    $(this).find("span:first").toggleClass("show");
+    $(this).next().toggleClass("show");
+});
+
+//Sub categories
 $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
     $(this).find("span:first").toggleClass("show");
     $(this).next().toggleClass("show");
+});
+
+//Hover for the different connection icons on the result cards
+// $(document).ready(function(){
+//     var timer2
+//     $("div.card-icons").mouseenter(function () { // show icon-card info on hover
+//         var that = this;
+//         timer2 = setTimeout(function(){
+//             $('.connection-menu').removeClass('hovered');
+//             $(that).find('.connection-menu').addClass('hovered');
+//         }, 250);
+//     }).mouseleave(function() {
+//         $('.connection-menu').removeClass('hovered');
+//         clearTimeout(timer2);
+//     });
+// });
+
+//This fixes the issue of deleting and adding the elements back where the hover wasnt working
+$(document).on('mouseenter',"div.card-icons",function () { // show icon-card info on hover
+    var that = this;
+    timer2 = setTimeout(function(){
+        $('.connection-menu').removeClass('hovered');
+        $(that).find('.connection-menu').addClass('hovered');
+    }, 0);
+}).on('mouseleave',"div.card-icons",function() {
+    $('.connection-menu').removeClass('hovered');
+    clearTimeout(timer2);
 });

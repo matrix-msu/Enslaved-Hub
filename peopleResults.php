@@ -665,20 +665,15 @@
             <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span>
             <span class="view-modes">
                 <span class="grid-view view-toggle">
-                    <img class="grid-icon show" src="assets/images/List.svg" alt="grid view button">
+                    <img class="show" src="assets/images/grid-inActive.svg" alt="grid view button">
+                    <img class="hide" src="assets/images/grid-Active.svg" alt="grid view button">
                     <p class="tooltip">View Grid</p>
                 </span>
+                &nbsp;&nbsp;
                 <span class="table-view view-toggle">
-                    <img class="table-icon" src="assets/images/table-Active.svg" alt="table view button">
+                    <img class="hide" src="assets/images/table-inActive.svg" alt="table view button">
+                    <img class="show" src="assets/images/table-Active.svg" alt="table view button">
                     <p class="tooltip">View Table</p>
-                </span>
-                <span class="time-view view-toggle">
-                    <img class="time-icon" src="assets/images/time2.svg" alt="time view button">
-                    <p class="tooltip">View Time</p>
-                </span>
-                <span class="map-view view-toggle">
-                    <img class="map-icon" src="assets/images/map.svg" alt="map view button">
-                    <p class="tooltip">View Map</p>
                 </span>
             </span>
             <span class="sorting-dropdowns">
@@ -798,8 +793,8 @@
                     </div>
                 </div>
                 <div class="arrow-wrap">
-                    <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="add item">
-                    <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="remove item">
+                    <img src="<?php echo BASE_URL;?>assets/images/chevron-down-dark.svg" alt="add item">
+                    <img src="<?php echo BASE_URL;?>assets/images/chevron-down-dark.svg" alt="remove item">
                 </div>
                 <div class="right-col">
                     <p>Selected Columns</p>
@@ -812,8 +807,8 @@
                             <li class="right">Column Name5</li>
                             <li class="right">Column Name6</li>
                         </ul>
-                        <img class="down" src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="move down">
-                        <img class="up" src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="move up">
+                        <img class="down" src="<?php echo BASE_URL;?>assets/images/chevron-down-dark.svg" alt="move down">
+                        <img class="up" src="<?php echo BASE_URL;?>assets/images/chevron-down-dark.svg" alt="move up">
                     </div>
                 </div>
             </div>

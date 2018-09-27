@@ -12,8 +12,7 @@
         margin: 0 auto;
         max-width: 1000px;
         position: static;
-        padding-top: 110px;
-        padding-bottom: 70px;
+        padding: 110px 6% 70px;
         font-size: 28px;
         transition: 400ms;
 
@@ -155,7 +154,7 @@
 
         .section-info{
             float: left;
-            max-width: 40%;
+            max-width: 50%;
             a{
                 text-decoration: none;
                 color: $base-dark;
@@ -188,6 +187,10 @@
             float: right;
             width: 45%;
             max-width: 380px;
+
+            a{
+                text-decoration: none;
+            }
             .content-link{
                 width: 100%;
                 min-width: 220px;
@@ -196,13 +199,14 @@
                 align-items: center;
                 margin-bottom: 15px;
                 cursor: pointer;
-                transition: border .3s ease;
+                transition: all .3s ease;
                 padding-bottom: 15px;
                 border-bottom: 4px solid rgba(255, 255, 255, 0);
+                padding-left: 20px; //new
 
-                &:last-child{
-                    margin-bottom: 0;
-                }
+                // &:last-child{
+                //     margin-bottom: 0;
+                // }
 
                 .icon{
                     margin-right: 17px;
@@ -217,18 +221,19 @@
                     line-height: 26px;
                     color: $base-dark;
                     position: absolute;
-                    right: 30px;
+                    right: 70px;
                     opacity: .47;
                     transition: opacity .3s ease;
                 }
                 .arrow{
                     transform: scaleX(-1);
                     position: absolute;
-                    right: 0;
+                    right: 40px;
                 }
 
                 &:hover{
                     border-bottom: 4px solid $sub-base;
+                    box-shadow: 0 8px 11px 0 rgba(37,52,73,0.1);
                     span{
                         opacity: 1;
                     }
@@ -444,7 +449,7 @@
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 850px) {
     .header{
         .middlewrap{
             .heading-text{
