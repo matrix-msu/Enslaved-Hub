@@ -284,12 +284,18 @@
                 cursor: pointer;
                 display: inline-table;
                 font-size: 16px;
-                color: rgba(37, 52, 73, .25);
+                color: rgb(37, 52, 73);
+                opacity: .25;
                 padding-bottom: 20px;
                 padding-left: 40px;
                 margin-right: 45px;
                 margin-bottom: 20px;
                 position: relative;
+                transition: opacity .3s;
+
+                &:hover{
+                    opacity: 1;
+                }
                 div{
                     padding-right: 10px;
                     left: 0;
@@ -305,27 +311,27 @@
                 .event-image{
                     height: 25px;
                     width: 25px;
-                    background-image: url(../images/Event.svg);
+                    background-image: url(../images/Event-dark.svg);
                 }
                 .place-image{
                     height: 26px;
                     width: 23px;
-                    background-image: url(../images/Place.svg);
+                    background-image: url(../images/Place-dark.svg);
                 }
                 .project-image{
                     height: 24px;
                     width: 27px;
-                    background-image: url(../images/Project.svg);
+                    background-image: url(../images/Project-dark.svg);
                 }
                 .source-image{
                     height: 25px;
                     width: 22px;
-                    background-image: url(../images/Source.svg);
+                    background-image: url(../images/Source-dark.svg);
                 }
             }
             .selected{
                 border-bottom: 2px solid $sub-base;
-                color: rgba(37, 52, 73, 1);
+                opacity: 1;
             }
         }
     }
@@ -382,12 +388,20 @@
             }
         }
         .load-more{
-            cursor: pointer;
-            color: #122E46;
-            font-size: 18px;
-            text-align: center;
-            margin-top: 55px;
-            margin-right: 20px;
+            margin: 0 auto;
+            max-width: 140px;
+            h4{
+                cursor: pointer;
+                color: #122E46;
+                font-size: 18px;
+                text-align: center;
+                margin-top: 55px;
+                transition: color .3s;
+    
+                &:hover{
+                    color: $sub-base;
+                }
+            }
         }
         .loaded{
             display: none;
@@ -440,17 +454,6 @@
     .last-page-header{
         margin-bottom: 0;
         display: none;
-    }
-
-    .fullstory{
-
-        .middlewrap{
-
-            .full-selector{
-                
-                
-            }
-        }
     }
 }
 

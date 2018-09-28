@@ -36,52 +36,68 @@
     <div class="connection-cards">
         <ul class="connect-row places">
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
-                    <h3>Place Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPlace">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
+                        <h3>Place Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
-                    <h3>Place Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPlace">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
+                        <h3>Place Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
-                    <h3>Place Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPlace">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
+                        <h3>Place Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
-                    <h3>Place Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPlace">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
+                        <h3>Place Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
-                    <h3>Place Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPlace">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
+                        <h3>Place Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Place Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPlace">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
+                        <h3>Place Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Place Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPlace">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
+                        <h3>Place Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Place Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPlace">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Place-light.svg">
+                        <h3>Place Name</h3>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>

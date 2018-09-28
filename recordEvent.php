@@ -1,17 +1,17 @@
 <!-- Author: Drew Schineller-->
 <?php include 'header.php';?>
-<!-- Person Full Record page-->
+<!-- Event Full Record page-->
 <!-- Heading image and title container-->
-<div class="container header">
+<div class="container header event-page">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><span id="current-title">Firstname Lastname</span></h4>
-        <h1>Firstname Lastname</h1>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>exploreEvents"><span id="previous-title">Events // </span></a><span id="current-title">Event Name</span></h4>
+        <h1>Event Name</h1>
     </div>
 </div>
 <div class="jump-buttons">
     <div class="jumpwrap">
-        <button class="jump-button" id="timeline">Jump to Person Timeline</button>
-        <button class="jump-button" id="details">Jump to Person Details</button>
+        <!-- <button class="jump-button" id="timeline">Jump to Person Timeline</button> -->
+        <button class="jump-button" id="details">Jump to Event Details</button>
     </div>
 </div>
 <!-- info container-->
@@ -21,7 +21,7 @@
     </div>
 </div>
 <!-- Story Connections -->
-<div class="story-connections record-connections">
+<div class="story-connections record-connections source-event-connections">
     <div class="connectionwrap">
         <h2>Connections</h2>
         <div class="categories">
@@ -46,122 +46,80 @@
         </div>
     </div>
 </div>
-<!-- Timeline -->
-<div class="person-timeline">
-    <div class="timelinewrap">
-        <h2>Person Timeline</h2>
-    </div>
-</div>
 <!-- detail section -->
 <div class="detail-section">
     <div class="detailwrap">
         <div class="right-col">
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>exploreEvent">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Name</h3>
+                        <h3>Crew</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Firstname</p>
+                    <p class="detail-bottom">30</p>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>exploreEvent">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Surname</h3>
+                        <h3>Africans</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Lastname</p>
+                    <p class="detail-bottom">534</p>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>exploreEvent">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Alternate Name</h3>
+                        <h3>Event Type</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Firstname</p>
+                    <p class="detail-bottom">Voyage</p>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>exploreEvent">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Institutional / Corporate Name</h3>
+                        <h3>Rig</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Firstname</p>
+                    <p class="detail-bottom">Brig</p>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>exploreEvent">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Origin</h3>
+                        <h3>Captain</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Country</p>
+                    <p class="detail-bottom">Sarria, Francisco Antonio</p>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>exploreEvent">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Sex</h3>
+                        <h3>Flag</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Sex</p>
+                    <p class="detail-bottom">Spain, Spain / Uruguay</p>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>exploreEvent">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Age</h3>
+                        <h3>Africans Died</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Number</p>
+                    <p class="detail-bottom">46</p>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>exploreEvent">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Color</h3>
+                        <h3>Ship Name</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Lastname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Occupation</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Relationships</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Lastname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Role</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Contributing Project</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Lastname</p>
+                    <p class="detail-bottom">Negrito</p>
                 </div>
             </a>
         </div>
@@ -169,15 +127,7 @@
             <div class="card">
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
-                        <p class="card-title">The record of this person appears in the *Name of Project* Project</p>
-                        <h4 class="card-view-story">View Original Record <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </div>
-            <div class="card">
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">The record of this person appears in the *Name of Project* Project</p>
+                        <p class="card-title">The record of this event appears in the *Name of Project* Project</p>
                         <h4 class="card-view-story">View Original Record <div class="view-arrow"></h4>
                     </div>
                 </a>

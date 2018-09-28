@@ -50,46 +50,60 @@
                 </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Firstname Lastname</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPerson">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <h3>Firstname Lastname</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Firstname Lastname</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPerson">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <h3>Firstname Lastname</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Firstname Lastname</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPerson">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <h3>Firstname Lastname</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Firstname Lastname</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPerson">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <h3>Firstname Lastname</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Firstname Lastname</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPerson">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <h3>Firstname Lastname</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Firstname Lastname</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPerson">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <h3>Firstname Lastname</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
-                    <h3>Firstname Lastname</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordPerson">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <h3>Firstname Lastname</h3>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>

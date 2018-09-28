@@ -1,17 +1,17 @@
 <!-- Author: Drew Schineller-->
 <?php include 'header.php';?>
-<!-- Person Full Record page-->
+<!-- Place Full Record page-->
 <!-- Heading image and title container-->
-<div class="container header">
+<div class="container header place-page">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><span id="current-title">Firstname Lastname</span></h4>
-        <h1>Firstname Lastname</h1>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePlaces"><span id="previous-title">Places // </span></a><span id="current-title">Place Name</span></h4>
+        <h1>Place Name</h1>
     </div>
 </div>
 <div class="jump-buttons">
     <div class="jumpwrap">
-        <button class="jump-button" id="timeline">Jump to Person Timeline</button>
-        <button class="jump-button" id="details">Jump to Person Details</button>
+        <!-- <button class="jump-button" id="timeline">Jump to Person Timeline</button> -->
+        <button class="jump-button" id="details">Jump to Place Details</button>
     </div>
 </div>
 <!-- info container-->
@@ -46,122 +46,41 @@
         </div>
     </div>
 </div>
-<!-- Timeline -->
+<!-- Timeline (change to map) -->
 <div class="person-timeline">
     <div class="timelinewrap">
-        <h2>Person Timeline</h2>
+        <h2>Place Map</h2>
     </div>
 </div>
 <!-- detail section -->
 <div class="detail-section">
     <div class="detailwrap">
         <div class="right-col">
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>explorePlace">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Name</h3>
+                        <h3>Place Type</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Firstname</p>
+                    <p class="detail-bottom">Port</p>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>explorePlace">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Surname</h3>
+                        <h3>City</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Lastname</p>
+                    <p class="detail-bottom">Cabanas</p>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>explorePlace">
                 <div class="detail">
                     <div class="detail-top">
-                        <h3>Alternate Name</h3>
+                        <h3>Province</h3>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
                     </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Institutional / Corporate Name</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Origin</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Country</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Sex</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Sex</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Age</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Number</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Color</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Lastname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Occupation</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Relationships</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Lastname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Role</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Contributing Project</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Lastname</p>
+                    <p class="detail-bottom">Cuba</p>
                 </div>
             </a>
         </div>
@@ -169,15 +88,7 @@
             <div class="card">
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
-                        <p class="card-title">The record of this person appears in the *Name of Project* Project</p>
-                        <h4 class="card-view-story">View Original Record <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </div>
-            <div class="card">
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">The record of this person appears in the *Name of Project* Project</p>
+                        <p class="card-title">The record of this place appears in the *Name of Project* Project</p>
                         <h4 class="card-view-story">View Original Record <div class="view-arrow"></h4>
                     </div>
                 </a>
