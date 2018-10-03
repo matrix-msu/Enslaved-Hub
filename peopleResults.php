@@ -2,14 +2,13 @@
 <!-- Heading image and title container-->
 <div class="container header">
 	<div class="container middlewrap">
+    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub"><span id="previous-title">Gender // </span></a><span id="current-title">Male</span></h4>
         <div class="search-title">
-            <h1>Search</h1>
-            <a href="<?php echo BASE_URL;?>advancedSearch"><h3>Go To Advanced Search<div class="arrow"></div></h3></a>
+            <h1>Male</h1>
         </div>
         <div class="heading-search">
-            <h3>Search across 54,375,213 records from the Atlantic Slave Trade ...</h3>
             <form class="search-form">
-                <input class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
+                <input class="search-field main-search" type="text" name="searchbar" placeholder="Search Across 6,000 Male Results"/>
                 <div class="search-icon"></div>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
@@ -660,7 +659,7 @@
 
 
     <div id="searchResults">
-        <h2 class="showing-results">Showing 24 of 54,375,213 Results</h2>
+        <h2 class="showing-results">Showing 24 of 6,000 Results</h2>
         <div id="search-result-controls">
             <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span>
             <span class="view-modes">

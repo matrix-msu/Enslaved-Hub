@@ -1,73 +1,21 @@
-<!-- Page author: Drew Schineller-->
 <?php include 'header.php';?>
 <!-- Heading image and title container-->
-<div class="container header full-project">
-    <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>projects"><span id="previous-title">Projects // </span></a><span id="current-title">Project Name</span></h4>
-        <div class="project-headers">
-            <h1>Project Name</h1>
-            <h2><span>234</span> Resources</h2>
+<div class="container header place-page">
+	<div class="container middlewrap">
+    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePlaces"><span id="previous-title">Places // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub2"><span id="previous-title">Place Type // </span></a><span id="current-title">Port</span></h4>
+        <div class="search-title">
+            <h1>Port</h1>
         </div>
-    </div>
-</div>
-<div class="jump-buttons project-button">
-    <div class="jumpwrap">
-        <button class="jump-button" id="details">Jump to Person Details</button>
-    </div>
-</div>
-<!-- info container-->
-<div class="container info">
-    <div class="container infowrap">
-        <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur.</p>
-    </div>
-</div>
-<!-- affiliations -->
-<div class="affiliations">
-    <h2>Affiliations</h2>
-    <hr>
-    <div class="affiliates">
-        <img src="<?php echo BASE_URL;?>assets/images/bl_logo_100.png"/>
-        <img src="<?php echo BASE_URL;?>assets/images/MSU.svg"/>
-    </div>
-</div>
-<!-- project leads -->
-<div class="project-leads">
-    <div class="leadwrap">
-        <h2>Project Leads</h2>
-        <hr>
-        <div class="leads">
-            <div class="lead-card">
-                <div class="lead-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval2.jpg);"></div>
-                <div class="lead-text">
-                    <h3>Person Name</h3>
-                    <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
-                </div>
-            </div>
-            <div class="lead-card">
-                <div class="lead-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval3.jpg);"></div>
-                <div class="lead-text">
-                    <h3>Person Name</h3>
-                    <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
-                </div>
-            </div>
-            <div class="lead-card">
-                <div class="lead-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval4.jpg);"></div>
-                <div class="lead-text">
-                    <h3>Person Name</h3>
-                    <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
-                </div>
-            </div>
+        <div class="heading-search">
+            <form class="search-form">
+                <input class="search-field main-search" type="text" name="searchbar" placeholder="Search Across 6,000 Port Results"/>
+                <div class="search-icon"></div>
+                <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
+            </form>
         </div>
-    </div>
+  </div>
 </div>
-<!-- searchbar -->
-<form class="search-projects">
-    <input class="search-field main-search" type="text" name="searchbar" placeholder="Search through the Project's Resources here"/>
-    <div class="search-icon"></div>
-    <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
-</form>
 
-<!-- search result area -->
 <main class="search-results">
     <div class="filter-menu">
         <ul>
@@ -711,7 +659,7 @@
 
 
     <div id="searchResults">
-        <h2 class="showing-results">Showing 24 of 54,375,213 Results</h2>
+        <h2 class="showing-results">Showing 24 of 6,000 Results</h2>
         <div id="search-result-controls">
             <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span>
             <span class="view-modes">
@@ -872,13 +820,6 @@
         </div>
     </div>
 </div>
-
-<!-- main site link -->
-<div class="project-site">
-    <p>Visit the Project's main site at:</p>
-    <a href="#">project.past.matrix.msu.edu</a>
-</div>
-
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
