@@ -143,7 +143,7 @@ else {
                     </div>
                 </li>
             </ul>
-            <h4 class="load-more">Load More</h4>
+            <div class="load-more"><h4>Load More</h4></div>
         </div>
     </div>
     <!-- Related Stories-->

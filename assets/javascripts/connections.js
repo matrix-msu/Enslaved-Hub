@@ -13,48 +13,33 @@ $('li.unselected').click(function(){
     removeConnections();
     //People
     if($("#people").hasClass("selected")){
-        $(".person-image").css("background-image", "url(./assets/images/Person-dark.svg)");
         CARDT="Person";
         CARDA = 10;
         displayConnections(CARDT,CARDA);
-    }else{
-        $(".person-image").css("background-image", "url(./assets/images/Person.svg)");
     }
     //Events
     if($("#event").hasClass("selected")){
-        $(".event-image").css("background-image", "url(./assets/images/Event-dark.svg)");
         CARDT="Event";
         CARDA = 3;
         displayConnections(CARDT,CARDA);
-    }else{
-        $(".event-image").css("background-image", "url(./assets/images/Event.svg)");
     }
     //Places
     if($("#place").hasClass("selected")){
-        $(".place-image").css("background-image", "url(./assets/images/Place-dark.svg)");
         CARDT="Place";
         CARDA = 3;
         displayConnections(CARDT,CARDA);
-    }else{
-        $(".place-image").css("background-image", "url(./assets/images/Place.svg)");
     }
     //Projects
     if($("#project").hasClass("selected")){
-        $(".project-image").css("background-image", "url(./assets/images/Project-dark.svg)");
         CARDT="Project";
         CARDA = 2;
         displayConnections(CARDT,CARDA);
-    }else{
-        $(".project-image").css("background-image", "url(./assets/images/Project.svg)");
     }
     //Sources
     if($("#source").hasClass("selected")){
-        $(".source-image").css("background-image", "url(./assets/images/Source-dark.svg)");
         CARDT="Source";
         CARDA = 15;
         displayConnections(CARDT,CARDA);
-    }else{
-        $(".source-image").css("background-image", "url(./assets/images/Source.svg)");
     }
 });
 

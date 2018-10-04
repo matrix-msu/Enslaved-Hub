@@ -42,52 +42,68 @@
     <div class="connection-cards">
         <ul class="connect-row sources">
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
-                    <h3>Source Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordSource">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
+                        <h3>Source Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
-                    <h3>Source Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordSource">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
+                        <h3>Source Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
-                    <h3>Source Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordSource">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
+                        <h3>Source Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
-                    <h3>Source Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordSource">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
+                        <h3>Source Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
-                    <h3>Source Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordSource">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
+                        <h3>Source Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
-                    <h3>Source Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordSource">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
+                        <h3>Source Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
-                    <h3>Source Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordSource">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
+                        <h3>Source Name</h3>
+                    </div>
+                </a>
             </li>
             <li>
-                <div class="cards">
-                    <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
-                    <h3>Source Name</h3>
-                </div>
+                <a href="<?php echo BASE_URL?>recordSource">
+                    <div class="cards">
+                        <img src="<?php echo BASE_URL?>assets/images/Source-light.svg">
+                        <h3>Source Name</h3>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>

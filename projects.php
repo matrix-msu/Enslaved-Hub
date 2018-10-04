@@ -1,7 +1,7 @@
 <!-- Page author: Drew Schineller-->
 <?php include 'header.php';?>
 <!-- Heading image and title container-->
-<div class="container header stories">
+<div class="container header">
     <div class="container middlewrap">
         <h1>Projects</h1>
     </div>
@@ -35,65 +35,73 @@
     <div class="container cardwrap">
         <ul class="row">
             <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <p class="card-title">Title of Project Goes Here Like This</p>
+                        <h4 class="card-resources">234 Resources</h4>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <p class="card-title">Title of Project Goes Here Like This</p>
+                        <h4 class="card-resources">234 Resources</h4>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <p class="card-title">Title of Project Goes Here Like This</p>
+                        <h4 class="card-resources">234 Resources</h4>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <p class="card-title">Title of Project Goes Here Like This</p>
+                        <h4 class="card-resources">234 Resources</h4>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <p class="card-title">Title of Project Goes Here Like This</p>
+                        <h4 class="card-resources">234 Resources</h4>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <p class="card-title">Title of Project Goes Here Like This</p>
+                        <h4 class="card-resources">234 Resources</h4>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <p class="card-title">Title of Project Goes Here Like This</p>
+                        <h4 class="card-resources">234 Resources</h4>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <p class="card-title">Title of Project Goes Here Like This</p>
+                        <h4 class="card-resources">234 Resources</h4>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
                     </div>
                 </a>

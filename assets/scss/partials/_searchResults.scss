@@ -750,6 +750,27 @@ span.align-right.show {
         }
     }
 }
+@media screen and (max-width: 400px){
+    .result-column{
+        .cardwrap{
+            .row{
+                li{
+                    .cards{
+                        .connections{
+                            .card-icons{
+                                img{
+                                    padding-right: 4px;
+                                    height: 17px;
+                                    padding-top: 5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 #searchResults.show {
     margin-left: 290px!important;

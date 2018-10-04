@@ -1,0 +1,50 @@
+.full-project{
+    .middlewrap{
+        overflow: auto;
+        h1{
+            float: left;
+        }
+        h2{
+            float: right;
+            font-size: 26px;
+
+        }
+    }
+}
+
+.project-button{
+    padding: 0 6% 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+
+    .jumpwrap{
+        position: absolute;
+        top: -22px;
+        right: 6%;
+        width: unset;
+
+        .jump-button{
+            background-image: none;
+            width: 260px;
+
+            &:first-child{
+                margin: 0;
+            }
+        }
+        //FIX to flip background arrow without flipping text
+        .jump-button:before{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 255px;
+            top: -105px;
+            left: 100px;
+            background-image: url(../images/Arrow-dark.svg);
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
+    }
+}
