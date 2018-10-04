@@ -411,9 +411,8 @@
     }
 
     .cardwrap{
-        margin: 0 auto;
-        max-width: 1000px;
-        padding: 0 6%;
+        // margin: 0 auto;
+        // max-width: 1000px;
 
         .row{
             display: -webkit-box;
@@ -520,8 +519,8 @@
     }
 }
 
-@media screen and (max-width: 700px){
-    .featured-people{
+@media screen and (max-width: 760px){
+    .explore-featured{
         .connection-cards{
             .connect-row{
                 li{
@@ -539,8 +538,8 @@
         }
     }
 }
-@media screen and (max-width: 560px){
-    .featured-people{
+@media screen and (max-width: 580px){
+    .explore-featured{
         .connection-cards{
             .connect-row{
                 li{

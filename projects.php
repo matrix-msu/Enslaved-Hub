@@ -39,7 +39,7 @@
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
             </li>
@@ -48,7 +48,7 @@
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
             </li>
@@ -57,7 +57,7 @@
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
             </li>
@@ -66,7 +66,7 @@
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
             </li>
@@ -75,7 +75,7 @@
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
             </li>
@@ -84,7 +84,7 @@
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
             </li>
@@ -93,7 +93,7 @@
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
             </li>
@@ -102,7 +102,7 @@
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
                     </div>
                 </a>
             </li>
