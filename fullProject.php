@@ -12,7 +12,7 @@
 </div>
 <div class="jump-buttons project-button">
     <div class="jumpwrap">
-        <button class="jump-button" id="details">Jump to Person Details</button>
+        <button class="jump-button" id="details">Go to Project Site</button>
     </div>
 </div>
 <!-- info container-->
@@ -62,9 +62,11 @@
 </div>
 <!-- searchbar -->
 <form class="search-projects">
-    <input class="search-field main-search" type="text" name="searchbar" placeholder="Search through the Project's Resources here"/>
-    <div class="search-icon"></div>
-    <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
+    <div class="searchwrap">
+        <input class="search-field main-search" type="text" name="searchbar" placeholder="Search through the Project's Resources here"/>
+        <div class="search-icon"></div>
+        <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
+    </div>
 </form>
 
 <!-- search result area -->
@@ -882,5 +884,6 @@
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/fullProject.js"></script>
 
 <?php include 'footer.php';?>

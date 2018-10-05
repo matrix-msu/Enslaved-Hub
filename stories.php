@@ -66,6 +66,7 @@ foreach ($stories['records'][0] as $kid => $story) {
             <div class="container search">
                 <form action="submit">
                     <input class="search-field" type="text" name="searchbar" placeholder="Find a Story By Title or Keyword"/>
+                    <div class="search-icon"></div>
                 </form>
             </div>
         </div>

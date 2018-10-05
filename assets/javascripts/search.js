@@ -400,7 +400,12 @@ $(document).ready(function () {
         $('span.results-per-page > span').html(num_of_results);
         $('#searchResults-showing >span:first-child').html(num_of_results);
     }
-    $(".show-filter").trigger('click');
+    var pageURL = $(location).attr("href");
+    var urlLength = pageURL.length;
+    var testString = pageURL.substring(urlLength-13,urlLength);
+    if (testString == "searchResults"){
+        $(".show-filter").trigger('click');
+    }
     correctTableHeights()
 });
 
