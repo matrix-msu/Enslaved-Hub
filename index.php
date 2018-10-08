@@ -7,7 +7,7 @@
         <div class="heading-text">
             <div class="heading-title">
                 <h1>Enslaved: </h1>
-                <h2>People of the Slave Trade</h2>
+                <h2>People of the Historic Slave Trade</h2>
             </div>
             <p>Project Intro lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore, sed do eiusmod tempor incididunt ut labore. <a href="<?php echo BASE_URL?>about">Learn More</a></p>
         </div>
