@@ -243,6 +243,7 @@
     position: relative;
 
     form{
+        position: relative;
 
         .search-field{
             border: 1px solid #CED0D2;
@@ -254,6 +255,7 @@
             margin: 0;
             outline: none;
             padding-left: 20px;
+            padding-right: 60px;
             transition: border 0.3s ease;
             height: 60px;
             width: 380px;
@@ -264,8 +266,33 @@
             &:focus-within{
                     border: 1px solid $base-dark;   
             }
-            
-            
+        }
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #253449;
+            opacity: 1; /* Firefox */
+            font-style: italic;
+        }
+        
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #253449;
+            font-style: italic;
+        }
+        
+        ::-ms-input-placeholder { /* Microsoft Edge */
+            color: #253449;
+            font-style: italic;
+        }
+        
+        .search-icon{
+            cursor: pointer;
+            height: 60px;
+            width: 60px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-image: url(../images/Search-dark.svg);
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
         }
     }
 }
@@ -275,6 +302,12 @@
 
         #all-header{
             margin-bottom: 100px;
+
+            .header-search{
+                .column-header{
+                    float: none;
+                }
+            }
         }
 
         .cardheader-wrap{

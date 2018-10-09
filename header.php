@@ -45,7 +45,6 @@ print globaljsvars;
                                     <a class="nav-sublink" href="<?php echo BASE_URL;?>explorePeople">People</a>
                                     <a class="nav-sublink" href="<?php echo BASE_URL;?>exploreEvents">Events</a>
                                     <a class="nav-sublink" href="<?php echo BASE_URL;?>explorePlaces">Places</a>
-                                    <a class="nav-sublink" href="<?php echo BASE_URL;?>projects">Projects</a>
                                     <a class="nav-sublink" href="<?php echo BASE_URL;?>exploreSources">Sources</a>
                                 </li>
                             </ul>

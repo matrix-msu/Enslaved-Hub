@@ -26,12 +26,10 @@
     .jumpwrap{
         position: absolute;
         top: -22px;
-        right: 6%;
-        width: unset;
 
         .jump-button{
             background-image: none;
-            width: 260px;
+            font-style: italic;
 
             &:first-child{
                 margin: 0;
@@ -117,10 +115,11 @@
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-    
+            
             .lead-card{
                 overflow: auto;
                 margin-bottom: 30px;
+                cursor: pointer;
     
                 .lead-photo{
                     height: 92px;
@@ -134,11 +133,13 @@
                 }
                 .lead-text{
                     float: right;
-                    padding-top: 26px;
+                    padding-top: 20px;
     
                     h3{
                         font-size: 20px;
                         color: $base-dark;
+                        margin-bottom: 7px;
+                        text-decoration: none;
                     }
                     .view{
                         width: fit-content;
@@ -148,7 +149,6 @@
                             font-size: 15px;
                             font-style: italic;
                             transition: color 0.3s ease;
-                            cursor: pointer;
         
                             .view-arrow{
                                 transform: rotate(270deg);
@@ -163,15 +163,20 @@
                                 transition: background-image 0.3s ease;
                                 
                             }
-        
-                            &:hover{
+                        }
+                    }
+                }
+                &:hover{
+                    .lead-text{
+                        .view{
+                            a{
                                 color: $sub-base;
                                 .view-arrow{
                                     background-image: url(../images/Arrow_colored.svg);
                                 }
                             }
                         }
-                    }
+                    }   
                 }
             }
         }
@@ -182,64 +187,70 @@
     position: relative;
     max-width: 1000px;
     margin: 0 auto;
-    padding: 80px 6%;
-    
-    .search-field{
-        border: 1px solid #CED0D2;
-        border-radius: 100px;
-        box-shadow: 0 4px 36px 0 rgba(0,0,0,0.03);
-        color: #253449;
-        background-color: #FFFDFB;
-        font-size: 16px;
-        margin: 0;
-        outline: none;
-        padding: 0;
-        padding-left: 30px;
-        transition: border 0.2s;
-        height: 60px;
-        width: 100%;
-        padding-right: 60px;
+    padding: 80px 6% 40px;
 
-        &:hover{
-            border: 1px solid $sub-base;
-        }
-        &:focus-within{
-            border: 1px solid $sub-base;
-        }
-    }
-    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: #253449;
-        opacity: 1; /* Firefox */
-        font-style: italic;
-    }
-    
-    :-ms-input-placeholder { /* Internet Explorer 10-11 */
-        color: #253449;
-        font-style: italic;
-    }
-    
-    ::-ms-input-placeholder { /* Microsoft Edge */
-        color: #253449;
-        font-style: italic;
-    }
-    .search-icon{
-        cursor: pointer;
+    .searchwrap{
+        width: 100%;
         height: 60px;
-        width: 60px;
-        position: absolute;
-        right: 0;
-        top: 0;
-        background-image: url(../images/Search.svg);
-        background-repeat: no-repeat;
-        background-position: 50% 50%;
+        position: relative;
+
+        .search-field{
+            border: 1px solid #CED0D2;
+            border-radius: 100px;
+            box-shadow: 0 4px 36px 0 rgba(0,0,0,0.03);
+            color: #253449;
+            background-color: #FFFDFB;
+            font-size: 16px;
+            margin: 0;
+            outline: none;
+            padding: 0;
+            padding-left: 30px;
+            transition: border 0.2s;
+            height: 60px;
+            padding-right: 60px;
+            width: 100%;
+    
+            &:hover{
+                border: 1px solid $sub-base;
+            }
+            &:focus-within{
+                border: 1px solid $sub-base;
+            }
+        }
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #253449;
+            opacity: 1; /* Firefox */
+            font-style: italic;
+        }
+        
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #253449;
+            font-style: italic;
+        }
+        
+        ::-ms-input-placeholder { /* Microsoft Edge */
+            color: #253449;
+            font-style: italic;
+        }
+        .search-icon{
+            cursor: pointer;
+            height: 60px;
+            width: 60px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-image: url(../images/Search-dark.svg);
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+        }
+        // .search-close{
+        //     position: absolute;
+        //     right: 65px;
+        //     width: 16px;
+        //     top: 25px;
+        //     cursor: pointer;
+        // }
     }
-    // .search-close{
-    //     position: absolute;
-    //     right: 65px;
-    //     width: 16px;
-    //     top: 25px;
-    //     cursor: pointer;
-    // }
 }
 
 .project-site{
@@ -261,6 +272,7 @@
 
         &:hover{
             padding-bottom: 14px;
+            color: $sub-base;
         }
     }
 }
