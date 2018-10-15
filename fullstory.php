@@ -12,6 +12,13 @@ if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
             $images[] = $image['url'];
         }
     }
+    $caption = [];
+    if (isset($story['Caption'])) {
+        foreach ($story['Caption']['value'] as $cap) {
+            $caption[] = $cap;
+        }
+    }
+    // var_dump($caption);
 }
 else {
 
@@ -21,14 +28,24 @@ else {
 <!-- Heading image and title container-->
 <div class="container header fullstory">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories // </span></a><span id="current-title">Featured Story Title Goes Here Like This</span></h4>
+        <?php
+        $Featured_title = "Featured Story Title Goes Here Like This";
+        if (isset($story['Title'])) {
+            $Featured_title = $story['Title']['value'];
+        }
+        ?>
+        <!-- <h1>Ibrahima Abd al-Rahman</h1>
+        <h3>(18th/19th century)</h3> -->
+
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories // </span></a><span id="current-title"><?php echo $Featured_title; ?></span></h4>
+
         <?php
         if (isset($story['Title'])) {
             echo '<h1>'.$story['Title']['value'].'</h1>';
         }
         ?>
-        <!-- <h1>Ibrahima Abd al-Rahman</h1>
-        <h3>(18th/19th century)</h3> -->
+        <!-- <h2>Sub Title</h2> -->
+
     </div>
 </div>
 <!-- Main content (left/right columns)-->
@@ -87,6 +104,10 @@ else {
                 </div>
                 <div class="expand modal">
                     <img src="<?php echo BASE_URL?>assets/images/expand.svg">
+                </div>
+                <!-- <div class="cation" style="text-align: center; padding-top: 20px; opacity: 0.7;"> -->
+                <div class="caption">
+                    <p class="caption-text"><?php if(isset($caption[0])) echo $caption[0]; ?></p>
                 </div>
             </div>
 
@@ -181,7 +202,8 @@ else {
 </div>
 
 <script>
-var result_array = <?php echo json_encode($images); ?>
+var captions = <?php echo json_encode($caption); ?>;
+var result_array = <?php echo json_encode($images); ?>;
 </script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/slider.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/modal.js"></script>

@@ -17,7 +17,7 @@ function getStories() {
 
 function storyContent($kid) {
     $search = ['token' => token, 'form' => storyForm];
-    $search['fields'] = ['Title_16_23', 'Images_16_23', 'Text_16_23', 'Resources_16_23', 'Source_16_23', 'Timeline_16_23', 'Story_Associator_16_23'];
+    $search['fields'] = ['Title_16_23', 'Images_16_23', 'Caption_16_23', 'Text_16_23', 'Resources_16_23', 'Source_16_23', 'Timeline_16_23', 'Story_Associator_16_23'];
     $search['realnames'] = true;
     $query = [['search' => 'kid', 'kids' => [$kid]]];
     $search['query'] = $query;
