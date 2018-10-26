@@ -138,7 +138,6 @@ $('form').on('click', 'img.close', function () {
 // End Search Query Cards //
 // ~~~~~~~~~~~~~~~~~~~~~~ //
 
-
 // ~~~~~~~~~~~~~~~~~~~~~~ //
 //        Modals          //
 // ~~~~~~~~~~~~~~~~~~~~~~ //
@@ -222,6 +221,7 @@ $('.plus').click(function () {
     height = height + 50
     modalImage.css('height', height)
 });
+
 $('.minus').click(function () {
     modalImage.css('max-width', 'unset');
     height = height - 50

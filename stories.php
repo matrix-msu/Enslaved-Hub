@@ -2,8 +2,10 @@
 <?php include 'header.php';?>
 <?php
 include 'functions/kora.php';
-$stories = getStories();
+$stories = getStories(1,8);
 $featured = [];
+//will determine max number of stories
+$count = $stories["counts"]["global"];
 foreach ($stories['records'][0] as $kid => $story) {
     if (isset($story['Featured']) && $story['Featured']['value'] == 'TRUE') {
         $featured[$kid] = $story;
@@ -39,14 +41,6 @@ foreach ($stories['records'][0] as $kid => $story) {
                 echo '</div></a></li>';
             }
             ?>
-            <li>
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
-                    </div>
-                </a>
-            </li>
             <!-- <li>
                 <a href="<?php echo BASE_URL?>fullstory">
                     <div class="container cards">
@@ -81,90 +75,21 @@ foreach ($stories['records'][0] as $kid => $story) {
                 <li>Oldest to Newest</li>
             </ul>
         </div>
-        <ul class="row">
+        <ul class="row" id='AllStoriesContainer'>
             <?php
-            foreach ($stories['records'][0] as $kid => $story) {
-                echo '<li><a href="'.BASE_URL.'fullstory?kid='.$kid.'">';
-                echo '<div class="container cards">';
-                echo '<p class="card-title">'.$story['Title']['value'].'</p>';
-                echo '<h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>';
-                echo '</div></a></li>';
-            }
+            displayStories($stories);
+
             ?>
-            <!-- <li>
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </li> -->
         </ul>
     </div>
     <div class="container pagiwrap">
         <div class="container sort-pages">
             <p><span>X</span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"/></p>
             <ul id="submenu" class="pagenum-menu">
-                <li>8 Per Page</li>
-                <li>12 Per Page</li>
-                <li>16 Per Page</li>
-                <li>20 Per Page</li>
+                <li><span>8</span> Per Page</li>
+                <li><span>12</span> Per Page</li>
+                <li><span>16</span> Per Page</li>
+                <li><span>20</span> Per Page</li>
             </ul>
         </div>
         <div id="pagination">
@@ -177,7 +102,7 @@ foreach ($stories['records'][0] as $kid => $story) {
                 <span class="num three"></span>
                 <span class="num four"></span>
                 <span class="dotsRight">...</span>
-                <span class="num pagi-last">310</span>
+                <span class="num pagi-last"><?php echo($count); ?></span>
             </div>
             <span id="pagiRight" class="align-right"><div id="pagiRightArrow"></div></span>
         </div>

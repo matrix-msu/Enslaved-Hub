@@ -4,9 +4,14 @@
 
 var page = 1
 var _pages = $('span.pagi-last').html();
-var pages = parseInt(_pages)
+var pages = parseInt(_pages);
+var count = 8
+pages = Math.round(pages/count);
+console.log(pages);
 var num = document.getElementsByClassName('num')
+
 if (+page === 1) { // sets pagination on page load
+    $('span.pagi-last').html(pages);
     $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
     $('span.dotsLeft').hide();
     $('span.pagi-first').addClass('active');
@@ -27,7 +32,7 @@ $('span#pagiRight').click(function (e) {
 });
 $('span.dotsRight').click(function (e) {
     e.stopPropagation();
-    if (+pages - +page < 10) {
+    if (+page + 10 > pages) {
         page = +pages;
         paginate();
     } else {
@@ -148,4 +153,27 @@ function paginate () {
         $('span.num').removeClass('active');
         $('span.pagi-last').addClass('active');
     }
+    $.ajax({
+        url: BASE_URL+'ajax/stories.php',
+        method: 'POST',
+        data: {
+            page: page,
+            count: count
+        },
+        success: function(data){
+            $('#AllStoriesContainer').html("");
+            $('div#all-story-container').remove();
+            $('<div id="allStories" class="container column storycard"><ul class="row" id = AllStoriesContainer></ul></div>').appendTo("div#all-story-container");
+            data = JSON.parse(data);
+            for (var kid in data['records'][0]){
+                title =  (data['records'][0][kid]['Title'].value);
+                var html = '<li><a href="'+BASE_URL+'fullstory?kid='+kid+'">';
+                html += '<div class="container cards">';
+                html += '<p class="card-title">'+title+'</p>';
+                html += '<h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>';
+                html += '</div></a></li>';
+                $("#AllStoriesContainer").append(html);
+            }
+        },
+    })
 }
