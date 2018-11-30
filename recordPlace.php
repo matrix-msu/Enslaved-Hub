@@ -46,11 +46,9 @@
         </div>
     </div>
 </div>
-<!-- Timeline (change to map) -->
-<div class="person-timeline">
-    <div class="timelinewrap">
-        <h2>Place Map</h2>
-    </div>
+<!-- Large Map -->
+<div class="mapwrap">
+    <div id="map-large"></div>
 </div>
 <!-- detail section -->
 <div class="detail-section">
@@ -137,5 +135,6 @@
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/map.js"></script>
 
 <?php include 'footer.php';?>

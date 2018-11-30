@@ -19,7 +19,10 @@ print globaljsvars;
         <!-- select2 cdn links -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-        
+        <!-- leaflet -->
+        <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/leaflet/leaflet.css" />
+        <script src="<?php echo BASE_URL;?>assets/leaflet/leaflet.js"></script>
+
     </head>
 
     <body>
