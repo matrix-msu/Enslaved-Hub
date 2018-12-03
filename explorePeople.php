@@ -17,22 +17,22 @@
     <h1>Explore By</h1>
     <ul class="cards">
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub">Gender<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub/">Gender<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2">Age Category<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Age Category<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2">Color<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Color<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2">Role Types<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Role Types<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2">Time<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Time<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2">Place<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Place<div id="arrow"></div></a>
         </li>
     </ul>
 </div>
@@ -42,7 +42,7 @@
     <div class="connection-cards">
         <ul class="connect-row people">
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson">
+                <a href="<?php echo BASE_URL?>recordPerson/?item=Q503">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
                         <h3>Firstname Lastname</h3>
@@ -50,7 +50,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson">
+                <a href="<?php echo BASE_URL?>recordPerson/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
                         <h3>Firstname Lastname</h3>
@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson">
+                <a href="<?php echo BASE_URL?>recordPerson/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
                         <h3>Firstname Lastname</h3>
@@ -66,7 +66,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson">
+                <a href="<?php echo BASE_URL?>recordPerson/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
                         <h3>Firstname Lastname</h3>
@@ -74,7 +74,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson">
+                <a href="<?php echo BASE_URL?>recordPerson/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
                         <h3>Firstname Lastname</h3>
@@ -82,7 +82,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson">
+                <a href="<?php echo BASE_URL?>recordPerson/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
                         <h3>Firstname Lastname</h3>
@@ -90,7 +90,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson">
+                <a href="<?php echo BASE_URL?>recordPerson/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
                         <h3>Firstname Lastname</h3>
@@ -98,7 +98,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson">
+                <a href="<?php echo BASE_URL?>recordPerson/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
                         <h3>Firstname Lastname</h3>
@@ -113,7 +113,7 @@
     <h3>Find People</h3>
     <form class="search-form">
         <input class="search-field main-search" type="text" name="searchbar" placeholder="Start Searching for People By Name, Origin, Role, Etc."/>
-        <a href="<?php echo BASE_URL;?>search"><div class="search-icon"></div></a>
+        <a href="<?php echo BASE_URL;?>search/"><div class="search-icon"></div></a>
     </form>
 </div>
 <!-- Visualize People -->
@@ -122,7 +122,7 @@
     <div class="cardwrap">
         <ul class="row">
             <li id="byspace">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullstory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/BySpace.svg"/>
@@ -132,7 +132,7 @@
                 </a>
             </li>
             <li id="bytime">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullstory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByTime.svg"/>
@@ -142,7 +142,7 @@
                 </a>
             </li>
             <li id="bydata">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullstory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByData.svg"/>

@@ -82,7 +82,7 @@ $('.search-submit').click(function () {
     localStorage.setItem('searched_terms', search_term);
     // redirect to search results page, if not already there
     if (!location.href.match(/searchResults/)) {
-        location.href = "" + BASE_URL + "searchResults.php"
+        location.href = "" + BASE_URL + "searchresults/"
     }
     search_field.value = ''
     createCards (search_term)
@@ -113,7 +113,7 @@ var createCards = function (terms) {
 var setPositioning = function () {
     term_card = window.document.getElementsByClassName('searched-term')
     if (term_card.length != 0) {
-        search_field.placeholder = 'Add another search term here'   
+        search_field.placeholder = 'Add another search term here'
     } else {
         search_field.placeholder = 'Search for whatever it is you want in life'
     }
@@ -375,7 +375,7 @@ if (window.document.getElementById('modal-image')) {
 ///// SEARCH RESULTS
 ///////////////////////////////////////////////////////////////
 
-// jQuery's '.css' inserts css styles as inline-styles 
+// jQuery's '.css' inserts css styles as inline-styles
 // this can be problematic because it overwrites css styles applied in the stylesheet
 // $(element).css('style',''); unsets these inline styles
 
@@ -532,8 +532,8 @@ function correctTableHeights () {
         for (var i = 0; i < tr.length; i++) {
             // if row-height != first-cell-height OR if name-height != rowHeight
             // row height is flexable, so set that equal to the non-flexable element
-            if (tr[i].offsetHeight != td[i].offsetHeight) { 
-                var height = tr[i].offsetHeight                 
+            if (tr[i].offsetHeight != td[i].offsetHeight) {
+                var height = tr[i].offsetHeight
                 td[i].style.height = '' + height + ''
             //} else if ($('.td-name span')[i].offsetHeight != td[i].offsetHeight) {
             } else if ($('.td-name span')[i].offsetHeight > 13) {
@@ -543,7 +543,7 @@ function correctTableHeights () {
             }
         }
         window.setTimeout('correctTableHeights()', 1000*1) // function reloads itself every 1 seconds
-    }    
+    }
 }
 
 // filter handled below here
@@ -581,7 +581,7 @@ function centerStuffWithFilter () {
         $('div#searchResults.show').css('width','');
         $("#searchResults").removeClass("show");
     } else {
-        tableWidth = window.innerWidth - 330 
+        tableWidth = window.innerWidth - 330
         $('div#searchResults').css('max-width', '3000px');// remove max-width property
         $('div#searchResults.show').css('width', tableWidth); // apply width
     }

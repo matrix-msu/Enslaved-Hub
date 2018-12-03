@@ -5,7 +5,7 @@
     <div class="container middlewrap">
         <div class="search-title">
             <h1>Search</h1>
-            <a href="<?php echo BASE_URL;?>advancedSearch"><h3>Go To Advanced Search<div class="arrow"></div></h3></a>
+            <a href="<?php echo BASE_URL;?>advancedSearch/"><h3>Go To Advanced Search<div class="arrow"></div></h3></a>
         </div>
         <div class="heading-search">
             <h3>Search across 54,375,213 records from the Atlantic Slave Trade ...</h3>

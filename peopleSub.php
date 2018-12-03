@@ -3,7 +3,7 @@
 <!-- Heading image and title container-->
 <div class="container header stories">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><span id="current-title">Gender</span></h4>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><span id="current-title">Gender</span></h4>
         <h1>Gender</h1>
     </div>
 </div>
@@ -19,15 +19,20 @@
         </ul>
     </div>
     <ul class="cards">
-        <li>
-            <a href="<?php echo BASE_URL?>peopleResults">Male<div id="arrow"></div><span>6,000</span></a>
+      <?php foreach (sexTypes as $sex => $qvalue) {
+        echo '<li>
+            <a href="'.BASE_URL.'peopleResults/">'.$sex.'<div id="arrow"></div><span>'.counterOfGender(sexTypes[$sex]).'</span></a>
+             </li>';
+      }?>
+  <!--      <li>
+            <a href="<?php echo BASE_URL?>peopleResults">Male<div id="arrow"></div><span><?php echo counterOfGender(sexTypes['male']);?></span></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleResults">Female<div id="arrow"></div><span>6,000</span></a>
+            <a href="<?php echo BASE_URL?>peopleResults">Female<div id="arrow"></div><span><?php echo counterOfGender(sexTypes['female']);?></span></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleResults">Unidentified<div id="arrow"></div><span>6,000</span></a>
-        </li>
+            <a href="<?php echo BASE_URL?>peopleResults">Unidentified<div id="arrow"></div><span><?php echo counterOfGender(sexTypes['unknown sex']);?></span></a>
+        </li>-->
     </ul>
 </div>
 

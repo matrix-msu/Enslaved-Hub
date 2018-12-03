@@ -1,5 +1,5 @@
 <?php
-const properties = 
+const properties =
 ['subclass of' => 'P2',
 'instance of' => 'P3',
 'has quality' => 'P4',
@@ -31,7 +31,7 @@ const properties =
 'hasAgeCategory' => 'P32',
 'hasAgeValue' => 'P33',
 'hasAgentRecord' => 'P34',
-'wasDerivedFrom' => 'P35',
+'isDirectlyBasedOn' => 'P35',
 'hasTemporalExtent' => 'P36',
 'hasRaceRecord' => 'P37',
 'providesParticipantRole' => 'P38',
@@ -80,6 +80,8 @@ const properties =
 'hasGodChild' => 'P85',
 'hasECVO' => 'P86',
 'equivalent property' => 'P87',
-'closeMatch' => 'P88'];
+'closeMatch' => 'P88',
+'hasDescription'=>'P89',
+'hasEthnodescriptor'=>'P90'];
 
 ?>
