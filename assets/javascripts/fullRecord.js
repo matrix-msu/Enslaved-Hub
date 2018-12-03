@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     $('.jump-button#timeline').click(function(){
         // Figure out element to scroll to
-        var target = $('.person-timeline');
+        var target = $('.timelinewrap');
         //target = target.length ? target : $('[name=' + '.person-timeline'.slice(1) + ']');
         $('html, body').animate({ scrollTop: target.offset().top - 100 }, 1000);
         return false;
@@ -14,6 +14,5 @@ $(document).ready(function(){
         $('html, body').animate({ scrollTop: target.offset().top - 50 }, 1000);
         return false;
     });
-
     
 });

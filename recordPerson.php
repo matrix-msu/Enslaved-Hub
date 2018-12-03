@@ -1,11 +1,71 @@
 <!-- Author: Drew Schineller-->
-<?php include 'header.php';?>
+<?php 
+include 'header.php';
+
+// Replace with Kora 3 events
+$events = [
+    ['kid' => '1', 'title' => 'birth', 'description' => 'Person was born', 'year' => 1730],
+    ['kid' => '2', 'title' => 'event 1', 'description' => 'Example description 1', 'year' => 1739],
+    ['kid' => '3', 'title' => 'event 2', 'description' => 'Example description 2', 'year' => 1741],
+    ['kid' => '4', 'title' => 'event 3', 'description' => 'Example description 3', 'year' => 1745],
+    ['kid' => '5', 'title' => 'event 4', 'description' => 'Example description 4', 'year' => 1756],
+    ['kid' => '6', 'title' => 'event 5', 'description' => 'Example description 5', 'year' => 1756.5],
+    ['kid' => '7', 'title' => 'event 6', 'description' => 'Example description 6', 'year' => 1760],
+    ['kid' => '8', 'title' => 'event 7', 'description' => 'Example description 7', 'year' => 1763],
+    ['kid' => '9', 'title' => 'event 8', 'description' => 'Example description 8', 'year' => 1774],
+    ['kid' => '10', 'title' => 'event 9', 'description' => 'Example description 9', 'year' => 1789],
+    ['kid' => '11', 'title' => 'event 10', 'description' => 'Example description 10', 'year' => 1789.5],
+    ['kid' => '12', 'title' => 'event 11', 'description' => 'Example description 11', 'year' => 1794],
+    ['kid' => '13', 'title' => 'event 12', 'description' => 'Example description 12', 'year' => 1796],
+    ['kid' => '14', 'title' => 'event 13', 'description' => 'Example description 13', 'year' => 1799],
+    ['kid' => '15', 'title' => 'event 14', 'description' => 'Example description 14', 'year' => 1800],
+    ['kid' => '16', 'title' => 'event 15', 'description' => 'Example description 15', 'year' => 1801],
+    ['kid' => '17', 'title' => 'event 16', 'description' => 'Example description 16', 'year' => 1803],
+    ['kid' => '18', 'title' => 'event 17', 'description' => 'Example description 17', 'year' => 1804],
+    ['kid' => '19', 'title' => 'event 18', 'description' => 'Example description 18', 'year' => 1806],
+    ['kid' => '20', 'title' => 'event 19', 'description' => 'Example description 19', 'year' => 1807],
+  ];
+  
+  $timeline_event_dates = [];
+  foreach ($events as $event) {
+    // If there are months and days, put the year into decimal format
+    // Ex: March 6, 1805 = 1805.18
+    array_push($timeline_event_dates, $event['year']);
+  }
+  
+  $first_date = min($timeline_event_dates);
+  $final_date = max($timeline_event_dates);
+  $diff = $final_date - $first_date;
+  
+  if ($diff < 10) {
+      $increment = 1;
+  } elseif ($diff < 20) {
+      $increment = 2;
+  } elseif ($diff < 40) {
+      $increment = 5;
+  } elseif ($diff < 90) {
+      $increment = 10;
+  } else {
+      $increment = 20;
+  }
+  
+  // Hash starts at year that is divisible by incrememnt and before the first event
+  $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
+  $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
+  
+  $hashes = range($first_date_hash, $final_date_hash, $increment);
+  $hash_count = count($hashes);
+  $hash_range = end($hashes) - $hashes[0];
+?>
+
+
 <!-- Person Full Record page-->
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="container middlewrap">
         <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><span id="current-title">Firstname Lastname</span></h4>
         <h1>Firstname Lastname</h1>
+        <h2 class="date-range"><span>1840</span>-<span>1864</span></h2>
     </div>
 </div>
 <div class="jump-buttons">
@@ -20,6 +80,164 @@
         <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur.</p>
     </div>
 </div>
+<!-- detail section -->
+<div class="detail-section">
+    <div class="detailwrap">
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>NAME</h3>
+                <p class="detail-bottom">Firstname</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>SURNAME</h3>
+                <p class="detail-bottom">Lastname</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>ALTERNATE NAME</h3>
+                <p class="detail-bottom">Firstname</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>INSTITUTIONAL / CORPORATE NAME</h3>
+                <p class="detail-bottom">Firstname</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>ORIGIN</h3>
+                <p class="detail-bottom">Country</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>SEX</h3>
+                <p class="detail-bottom">Sex</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>AGE</h3>
+                <p class="detail-bottom">Number</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>COLOR</h3>
+                <p class="detail-bottom">Lastname</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>OCCUPATION</h3>
+                <p class="detail-bottom">Firstname</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>RELATIONSHIPS</h3>
+                <p class="detail-bottom">Lastname</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>ROLE</h3>
+                <p class="detail-bottom">Firstname</p>
+            </div>
+        </a>
+        <a href="<?php echo BASE_URL;?>explorePeople">
+            <div class="detail">
+                <h3>CONTRIBUTING PROJECT</h3>
+                <p class="detail-bottom">Lastname</p>
+            </div>
+        </a>
+    </div>
+</div>
+<!-- Timeline -->
+<main class="full-record">
+    <div class="timelinewrap">
+        <section class="fr-section timeline-section">
+        <h2 class="section-title">Person Timeline</h2>
+
+        <div class="timeline-info-container" kid="<?= $events[0]['kid'] ?>">
+            <div class="arrow-pointer-bottom"></div>
+            <div class="arrow-pointer-top"></div>
+
+            <div class="info-header">
+                <div class="info-select info-select-event active" data-select="event">
+                    <p>Event</p>
+                    <p class="large-text">Birth</p>
+                </div>
+                <div class="info-select info-select-place" data-select="place">
+                    <p>Place</p>
+                    <p class="large-text">Batendu</p>
+                </div>
+            </div>
+
+            <?php foreach($events as $index => $event) { ?>
+                <div class="event-info-<?= $event['kid'] ?> info <?= ($index == 0 ? 'active' : '') ?>">
+                    <div class="column">
+                        <p><span class="bold">Start Date:</span> 1804</p>
+                        <p><span class="bold">End Date:</span> N/A</p>
+                        <p><span class="bold">Age:</span> 0</p>
+                        <p><span class="bold">Status:</span> Free</p>
+                        <p><span class="bold">Age Category:</span> Infant</p>
+                        <p><span class="bold">Description</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div><div class="column">
+                        <p><span class="bold">Ocupation:</span> N/A</p>
+                        <p><span class="bold">Relationship:</span> Son - Kayawon</p>
+                        <p><span class="bold">Religion:</span> N/A</p>
+                        <p><span class="bold">Sources:</span> Koelle Polyglotta, 1</p>
+                        <p><span class="bold">Place:</span> Batendu</p>
+                        <p><span class="bold">Testing Kid:</span> <?= $event['kid'] ?></p>
+                    </div>
+                </div>
+                <div class="place-info-<?= $event['kid'] ?> info">
+                <div class="column">
+                    <p><span class="bold">Place Info:</span> Place Info</p>
+                    <p><span class="bold">Testing Kid:</span> <?= $event['kid'] ?></p>
+                </div>
+                </div>
+            <?php } ?>
+        </div>
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline">
+                <div class="line"></div>
+                <div class="hash-container" data-start="<?= $first_date_hash ?>" data-end="<?= $final_date_hash ?>">
+                <?php foreach ($hashes as $index => $year) { ?>
+                    <div class="hash" style="left:calc(<?= ($index / ($hash_count - 1)) * 100 ?>% - 14px)"><p><?= $year ?></p></div>
+                <?php } ?>
+                </div>
+                <div class="points-container">
+                <?php foreach ($events as $index => $event) {
+                    // Convert year, month, day into decimal form
+                    $left = ($event['year'] - $first_date_hash) * 100 / $hash_range;
+                    ?>
+
+                    <div class="event-point no-select <?= ($index == 0 ? 'active' : '') ?>"
+                    style="left:calc(<?= $left; ?>% - 5px)"
+                    data-kid="<?= $event['kid'] ?>"
+                    data-index="<?= $index ?>">
+                    <span class="event-title"><?= $event['title'] ?> - <?= $event['year'] ?></span>
+                    </div>
+                <?php } ?>
+                </div>
+            </div>
+            <div class="timeline-controls">
+                <div class="timeline-prev no-select"><img src="assets/images/chevron-down-dark.svg" alt="Previous Arrow"></div>
+                <div class="timeline-next no-select"><img src="assets/images/chevron-down-dark.svg" alt="Next Arrow"></div>
+            </div>
+        </div>
+    </section>
+    </div>
+</main>
 <!-- Story Connections -->
 <div class="story-connections record-connections">
     <div class="connectionwrap">
@@ -46,155 +264,24 @@
         </div>
     </div>
 </div>
-<!-- Timeline -->
-<div class="person-timeline">
-    <div class="timelinewrap">
-        <h2>Person Timeline</h2>
+<!-- Extra Info -->
+<div class="extra-info">
+    <div class="advanced-details">
+        <h2>Advanced Details</h2>
+        <p>To see a more granular provenance of this record, you can view it in the</p>
+        <a href="">Enslaved Database</a>
     </div>
-</div>
-<!-- detail section -->
-<div class="detail-section">
-    <div class="detailwrap">
-        <div class="right-col">
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Name</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Surname</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Lastname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Alternate Name</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Institutional / Corporate Name</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Origin</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Country</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Sex</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Sex</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Age</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Number</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Color</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Lastname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Occupation</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Relationships</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Lastname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Role</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Firstname</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePeople">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Contributing Project</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Lastname</p>
-                </div>
-            </a>
-        </div>
-        <div class="left-col">
-            <div class="card">
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">The record of this person appears in the *Name of Project* Project</p>
-                        <h4 class="card-view-story">View Original Record <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </div>
-            <div class="card">
-                <a href="<?php echo BASE_URL?>fullstory">
-                    <div class="container cards">
-                        <p class="card-title">The record of this person appears in the *Name of Project* Project</p>
-                        <h4 class="card-view-story">View Original Record <div class="view-arrow"></h4>
-                    </div>
-                </a>
-            </div>
-            <div class="copyright">
-                <h2>Copyright Info</h2>
-                <p>Info on copyright provided</p>
-                <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg"/>
-            </div>
-            <div class="share-links">
-                <h2>Share this Record</h2>
-                <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg"/>
-                <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg"/>
-                <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg"/>
-                <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg"/>
-            </div>
-        </div>
+    <div class="copyright">
+        <h2>Copyright Info</h2>
+        <p>Info on copyright provided</p>
+        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg"/>
+    </div>
+    <div class="share-links">
+        <h2>Share this Record</h2>
+        <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg"/>
     </div>
 </div>
 <!-- Featured Stories-->
@@ -226,5 +313,6 @@
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/timeline.js"></script>
 
 <?php include 'footer.php';?>

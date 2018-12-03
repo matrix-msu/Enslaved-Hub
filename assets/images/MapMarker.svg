@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="37px" height="37px" viewBox="0 0 37 37" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Map Marker</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="-66.921875%" y1="-62.75%" x2="143.890625%" y2="150.390625%" id="linearGradient-1">
+            <stop stop-color="#FAC661" offset="0%"></stop>
+            <stop stop-color="#F78F1C" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-2" cx="412.5" cy="502.5" r="12.5"></circle>
+        <filter x="-42.0%" y="-30.0%" width="184.0%" height="184.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="3" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.08 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Explore---Places" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Explore---Places---Fullscreen-Map" transform="translate(-394.000000, -487.000000)">
+            <g id="Map-Marker">
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                <circle stroke="#FFFFFF" stroke-width="1" stroke-linejoin="square" fill="url(#linearGradient-1)" fill-rule="evenodd" cx="412.5" cy="502.5" r="12"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
