@@ -197,6 +197,7 @@ function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
   $onestatement=[];
   $person_array=[];
   $event_array=[];
+  $place_array=[];
   $provenance_array=[];
   $person_array[$tag]='';
 
@@ -219,6 +220,7 @@ function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
         if (!in_array($event, $event_array)){
           $event_array[$eventLabel]=$event;
           $event_array[$placeLabel]=$event;
+          $place_array[$placeLabel]=places[$placeLabel];
           $event_array[$year]=$event;
         }
       }
@@ -244,6 +246,7 @@ function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
   $onestatement['PersonInfo']=$person_array;
   $onestatement['Events']=$event_array;
   $onestatement['Provenance']=$provenance_array;
+  $onestatement['Places']=$place_array;
   return $onestatement;
 
 }
@@ -270,9 +273,24 @@ function getpersonfullInfo($baseuri,$qitem){
   $placeofOrigin =  getQualifierItem($person,$qitem,properties['hasEthnodescriptor'],properties['referstoPlaceofOrigin']);
   $itemRecordeAt = getQualifierItem($person,$qitem,properties['hasPersonStatusRecord'],properties['recordedAt']);
 
+
+  $onestatement=getInfoperStatement($baseuri,$sex,"Sex","hasSexRecord",qsexTypes);
+  $allStatements['PersonInfo']=array_merge($allStatements['PersonInfo'],$onestatement['PersonInfo']);
+  $allStatements['Events']=array_merge((array)$allStatements['Events'],$onestatement['Events']);
+  $allStatements['Provenance']=array_merge((array)$allStatements['Provenance'],$onestatement['Provenance']);
+  $allStatements['Places']=array_merge((array)$allStatements['Places'],$onestatement['Places']);
+
   $onestatement=getInfoperStatement($baseuri,$roles,"Roles","hasParticipantRoleRecord",qroleTypes);
+  $allStatements['PersonInfo']=array_merge($allStatements['PersonInfo'],$onestatement['PersonInfo']);
+  $allStatements['Events']=array_merge((array)$allStatements['Events'],$onestatement['Events']);
+  $allStatements['Provenance']=array_merge((array)$allStatements['Provenance'],$onestatement['Provenance']);
+  $allStatements['Places']=array_merge((array)$allStatements['Places'],$onestatement['Places']);
 
-
+  $onestatement=getInfoperStatement($baseuri,$status,"Status","hasPersonStatusRecord",qpersonstatus);
+  $allStatements['PersonInfo']=array_merge($allStatements['PersonInfo'],$onestatement['PersonInfo']);
+  $allStatements['Events']=array_merge((array)$allStatements['Events'],$onestatement['Events']);
+  $allStatements['Provenance']=array_merge((array)$allStatements['Provenance'],$onestatement['Provenance']);
+  $allStatements['Places']=array_merge((array)$allStatements['Places'],$onestatement['Places']);
 
 
 
@@ -301,9 +319,6 @@ function getpersonfullInfo($baseuri,$qitem){
     }else{
       $person_array['Person Status'] = '';
     }*/
-    $allStatements['PersonInfo']=array_merge($allStatements['PersonInfo'],$onestatement['PersonInfo']);
-    $allStatements['Events']=array_merge((array)$allStatements['Events'],$onestatement['Events']);
-    $allStatements['Provenance']=array_merge((array)$allStatements['Provenance'],$onestatement['Provenance']);
 
   //  $allStatements=array_merge($allStatements,$onestatement);
 
@@ -374,13 +389,11 @@ function getReferences($json,$item,$property,$pr){
 function detailPerson($statement,$label){?>
   <a href="<?php echo BASE_URL.'explorePeople/?seach='.$statement?>">
       <div class="detail">
-          <div class="detail-top">
-              <h3><?php echo $statement;?></h3>
-              <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-          </div>
-          <p class="detail-bottom"><?php echo $label;?></p>
+            <h3><?php echo $label;?></h3>
+          <p class="detail-bottom"><?php echo $statement;?></p>
       </div>
   </a>
+
 <?php
 }
 

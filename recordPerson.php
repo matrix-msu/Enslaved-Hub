@@ -1,6 +1,11 @@
 <!-- Author: Drew Schineller-->
 <?php
 include 'header.php';
+$baseuri='https://sandro-16.matrix.msu.edu/entity/';
+$qitem='Q503';
+$allStatements=getpersonfullInfo($baseuri,$qitem);
+$person_array=$allStatements['PersonInfo'];
+//var_dump($person_array);
 
 // Replace with Kora 3 events
 $events = [
@@ -63,8 +68,8 @@ $events = [
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><span id="current-title">Firstname Lastname</span></h4>
-        <h1>Firstname Lastname</h1>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><span id="current-title">Firstname Lastname</span></h4>
+       <h1><?php echo $person_array['Name'];?></h1>
         <h2 class="date-range"><span>1840</span>-<span>1864</span></h2>
     </div>
 </div>
@@ -77,78 +82,22 @@ $events = [
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur.</p>
+        <?php echo $person_array['Description']?>
     </div>
 </div>
 <!-- detail section -->
 <div class="detail-section">
     <div class="detailwrap">
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>NAME</h3>
-                <p class="detail-bottom">Firstname</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>SURNAME</h3>
-                <p class="detail-bottom">Lastname</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>ALTERNATE NAME</h3>
-                <p class="detail-bottom">Firstname</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>INSTITUTIONAL / CORPORATE NAME</h3>
-                <p class="detail-bottom">Firstname</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>ORIGIN</h3>
-                <p class="detail-bottom">Country</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>SEX</h3>
-                <p class="detail-bottom">Sex</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>AGE</h3>
-                <p class="detail-bottom">Number</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>COLOR</h3>
-                <p class="detail-bottom">Lastname</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>OCCUPATION</h3>
-                <p class="detail-bottom">Firstname</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>RELATIONSHIPS</h3>
-                <p class="detail-bottom">Lastname</p>
-            </div>
-        </a>
-        <a href="<?php echo BASE_URL;?>explorePeople">
-            <div class="detail">
-                <h3>ROLE</h3>
-                <p class="detail-bottom">Firstname</p>
-            </div>
-        </a>
+      <?php
+             foreach($person_array as $tag=>$data){
+               if($data!='' && $tag!='Description' && !is_array($data)){
+                   detailPerson($person_array[$tag],$tag);
+               }else if(is_array($data)){
+                 foreach ($data as $key => $value) {
+                   detailPerson($person_array[$key],$key);
+                 }
+               }
+             }?>
         <a href="<?php echo BASE_URL;?>explorePeople">
             <div class="detail">
                 <h3>CONTRIBUTING PROJECT</h3>
