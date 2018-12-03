@@ -17,11 +17,6 @@ $(".sort-pages p").click(function (e) { // toggle show/hide per-page submenu
     $(this).next().toggleClass('show');
 });
 
-// $(".row li").click(function() {
-//     window.location = $(this).find("a").attr("href");
-//     return false;
-// });
-
 $(document).ready(function(){ //limits number of featured stories to 6
     var featStories = $('#featured .row li').size(); //number of featured stories
     if (featStories > 6){

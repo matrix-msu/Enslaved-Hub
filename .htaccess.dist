@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+
+RewriteEngine on
+
+#RewriteBase /~matt.schleusener/enslaved <- change and uncomment if needed
+
+#Shows the .php files without displaying the .php extension in the URL
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+</IfModule>

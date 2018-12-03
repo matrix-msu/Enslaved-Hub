@@ -1,0 +1,27 @@
+<?php
+const roleTypes=[
+'Registered Person' => 'Q259',
+'Emancipated Person' => 'Q263',
+'Relocated' => 'Q272',
+'Person Being Born' => 'Q273',
+'Enslaved' => 'Q285',
+'Baptized Person' => 'Q291',
+'Runaway' => 'Q307',
+'Sold Person' => 'Q504',
+'Participant in a Middle Passage or Voyage' => 'Q513',
+'Participant in a Registry or Inventory or Census' => 'Q517',
+'Manumitter' => 'Q521',
+'Participant in a Birth event' => 'Q525',
+'Participant in a Death and Burial event' => 'Q545',
+'Participant in a Baptism event' => 'Q546',
+'Participant in a Marriage event' => 'Q547',
+'Participant in an Enslavement/Capture/Re-capture event' => 'Q548',
+'Participant in a Sale/Purchase event' => 'Q549',
+'Participant in a Manumission/Self-Purchase event' => 'Q550',
+'Participant in a Flight/Disappearance event' => 'Q551',
+'Participant in an Education event' => 'Q553',
+'Participant in a Legal Proceedings/Civil/Criminal/Arrest event' => 'Q554',
+'Party' => 'Q555',
+'Captured Person' => 'Q568',
+'Participant in a Rebellion Event' => 'Q598'];
+?>

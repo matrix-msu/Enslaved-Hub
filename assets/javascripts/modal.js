@@ -1,8 +1,8 @@
 $(".modal").click(function(){
     $("div.modal-view").css('display','block');
     image_src = $('img[style="display: block;"]').attr('src');
-    $("div.modal-image").css('background-image', 'url('+image_src+')');
-    //$('<img class="modal-image" src="'+image_src+'">').appendTo('div.modal-view');
+    $("div.modal-image").css('background-image', 'url("'+image_src+'")');
+    // $('<img class="modal-image" src="'+image_src+'">').appendTo('div.modal-view');
 });
 
 $(".modal-view").click(closeModal);
