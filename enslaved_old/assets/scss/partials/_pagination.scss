@@ -1,0 +1,32 @@
+.pagination-container {
+  text-align: right;
+
+  .page-select {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      color: transparentize($base-dark, .8);
+      cursor: pointer;
+      display: inline-block;
+      margin: 0 4px;
+      transition: .3s color ease;
+      vertical-align: middle;
+
+      &.active,
+      &:hover {
+        color: $base-dark;
+      }
+    }
+  }
+
+  .pagination-next {
+    margin-left: 20px;
+  }
+
+  .pagination-prev {
+    margin-right: 20px;
+  }
+}

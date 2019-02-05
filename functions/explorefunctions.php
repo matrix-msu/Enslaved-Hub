@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__).'/../config.php');
+//require_once(dirname(__FILE__).'/../config.php');
 require_once(dirname(__FILE__).'/../wikiconstants/properties.php');
 
 function callAPI($url,$limit,$offset){

@@ -1,0 +1,47 @@
+.full-record-2 {
+    display: flex;
+    justify-content: space-between;
+    .left-col {
+        width: 16%;
+        img {
+            display: block;
+            height: auto;
+            max-width: 100%;
+        }
+        p {
+            color: #2F313D;
+            font-size: 10px;
+            line-height: 18px;
+            margin-top: 20px;
+        }
+    }
+    .main-col {
+        width: 78%;
+        .section {
+            .title {
+                margin-bottom: 30px;
+                p {
+                    font-size: 14px;
+                    margin-bottom: 10px;
+                }
+                h3 {
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: $mobile-width-header) {
+    .full-record-2 {
+        flex-wrap: wrap;
+        .left-col {
+            margin-bottom: 40px;
+            order: 2;
+            width: 100%;
+        }
+        .main-col {
+            order: 1;
+            width: 100%;
+        }
+    }
+}

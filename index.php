@@ -1,168 +1,42 @@
-<!-- Author: Drew Schineller-->
-<?php include 'header.php';
+<?php
+    require_once ( __DIR__ . '/config.php' ) ;
 ?>
-<!-- Main page-->
-<!-- Heading image and title container-->
-<div class="container header">
-    <div class="container middlewrap">
-        <div class="heading-text">
-            <div class="heading-title">
-                <h1>Enslaved: </h1>
-                <h2>People of the Historic Slave Trade</h2>
-            </div>
-            <p>Project Intro lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore, sed do eiusmod tempor incididunt ut labore. <a href="<?php echo BASE_URL?>about">Learn More</a></p>
-        </div>
-        <div class="heading-search">
-            <h3>Search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade ...</h3>
-            <form class="search-form">
-                <input class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
-                <a href="<?php echo BASE_URL;?>search"><div class="search-icon"></div></a>
-                <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
-            </form>
-        </div>
-    </div>
-</div>
-<main class="home">
-    <div class="section-wrap">
-        <div class="section-info">
-            <a href="<?php echo BASE_URL;?>explore"><h2>Explore<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
-            <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
-        </div>
-        <div class="section-content">
-            <a href="<?php echo BASE_URL;?>explorePeople/">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg"/>
-                    <h3>People</h3>
-                    <span><?php echo queryAllAgentsCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>exploreEvents/">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg"/>
-                    <h3>Events</h3>
-                    <span><?php echo queryEventCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>explorePlaces/">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg"/>
-                    <h3>Places</h3>
-                    <span><?php echo queryPlaceCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>projects/">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg"/>
-                    <h3>Projects</h3>
-                    <span><?php echo queryProjectsCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>exploreSources/">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg"/>
-                    <h3>Sources</h3>
-                    <span><?php echo querySourceCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="section-wrap">
-        <div class="section-info">
-            <a href="<?php echo BASE_URL;?>visualize"><h2>Visualize<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
-            <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur  …</p>
-        </div>
-        <div class="section-content">
-            <div class="content-link">
-                <img class="icon" src="<?php echo BASE_URL;?>/assets/images/space.svg"/>
-                <h3>Space</h3>
-                <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-            </div>
-            <div class="content-link">
-                <img class="icon" src="<?php echo BASE_URL;?>/assets/images/time.svg"/>
-                <h3>Time</h3>
-                <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-            </div>
-            <div class="content-link">
-                <img class="icon" src="<?php echo BASE_URL;?>/assets/images/data.svg"/>
-                <h3>Data</h3>
-                <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-            </div>
-        </div>
-    </div>
-    <div class="section-wrap">
-        <div class="section-info">
-            <a href="<?php echo BASE_URL;?>stories/"><h2>Stories<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
-            <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
-        </div>
-        <div class="section-content">
-            <ul class="row">
-                <li>
-                    <a href="<?php echo BASE_URL?>fullstory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo BASE_URL?>fullstory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="section-wrap">
-        <div class="section-info">
-            <a href="<?php echo BASE_URL;?>projects"><h2>Projects<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
-            <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
-        </div>
-        <div class="section-content">
-            <ul class="row">
-                <li>
-                    <a href="<?php echo BASE_URL?>fullstory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>
-                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo BASE_URL?>fullstory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>
-                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</main>
-<div class="about-preview">
-    <div class="preview-wrap">
-        <div class="heading">
-            <h2>Inspirational, Attention Grabbing Heading Goes Here Like This.</h2>
-        </div>
-        <div class="description">
-            <p>Brief info on Project. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div class="about-card">
-            <a href="<?php echo BASE_URL?>fullstory/">
-                <div class="container cards">
-                    <p class="card-title">Learn More About the Project.</p>
-                    <h4 class="card-view-story">Go to About Page <div class="view-arrow"></h4>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
-<?php include 'footer.php';?>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title><?php echo BASE_URL;?></title>
+    <?php
+        echo JS_GLOBALS;
+    ?>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="<?php echo BASE_CSS_URL;?>" type="text/css">
+    <script language="JavaScript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>header.js"></script>
+    <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>modal.js"></script>
+    <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>search.js"></script>
+    <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>searchResults.js"></script>
+
+    <?php
+        $path = BASE_PATH . "config.json";
+        if( file_exists($path) ) {
+            $contents = file_get_contents($path);
+            $contents = json_decode($contents, true);
+            if (isset($contents['theme']) && $contents['theme'] !== '') {
+                echo '<link rel="stylesheet" href="' . BASE_URL . 'assets/stylesheets/themes/' . $contents['theme'] . '.css" type="text/css">';
+            }
+        }
+    ?>
+
+</head>
+<body>
+<?php
+    include 'header.php';
+    include BASE_VIEW_PATH . CURRENT_VIEW;
+    include 'footer.php';
+?>
+
+</body>
+</html>

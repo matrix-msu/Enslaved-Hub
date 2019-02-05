@@ -6,5 +6,3 @@
 </footer>
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/footer.js"></script>
-</body>
-</html>

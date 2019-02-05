@@ -1,0 +1,104 @@
+.card-column {
+  background-color: #FFFFFF;
+  height: auto;
+  padding: 100px 0;
+  width: 100%;
+}
+.card-column .cardwrap {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+.card-column .cardwrap .row {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 50px 0 0 0;
+  padding: 0;
+}
+.card-column .cardwrap .row li {
+  margin-bottom: 20px;
+  width: 31%;
+}
+.card-column .cardwrap .row li .cards-module {
+  border: 2px solid rgba(13, 18, 48, 0.05);
+  box-shadow: 0 2px 3px 0 rgba(30, 30, 30, 0.05);
+  color: #0D1230;
+  cursor: pointer;
+  height: 275px;
+  padding: 20px;
+  position: relative;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+.card-column .cardwrap .row li .cards-module p {
+  display: -webkit-box;
+  font-size: 14px;
+  line-height: 1.2em;
+  margin-bottom: 22px;
+  max-height: 2.4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.card-column .cardwrap .row li .cards-module .card-title {
+  font-family: bigcaslonblack;
+  font-weight: 900;
+  font-size: 25px;
+  height: 55px;
+}
+.card-column .cardwrap .row li .cards-module .card-learn-more {
+  bottom: 15px;
+  cursor: pointer;
+  position: absolute;
+  transition: color 0.3s ease;
+}
+.card-column .cardwrap .row li .cards-module:hover {
+  border: 2px solid #27AD88;
+  box-shadow: 0 12px 13px 0 rgba(30, 30, 30, 0.05);
+}
+.card-column .cardwrap .row li .cards-module:hover .card-learn-more {
+  color: #27AD88;
+}
+
+@media screen and (min-width: 1050px) {
+  .card-column .cardwrap .row li:nth-child(3n+2) {
+    margin-left: 3.5%;
+    margin-right: 3.5%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .card-column {
+    padding: 50px 0;
+  }
+  .card-column .cardwrap {
+    padding: 0 4%;
+  }
+  .card-column .cardwrap .column-header {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 1050px) {
+  .card-column .cardwrap .row li {
+    width: 48%;
+  }
+  .card-column .cardwrap .row li:nth-child(2n) {
+    margin-left: 4%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .card-column .cardwrap .row li {
+    width: 100%;
+  }
+  .card-column .cardwrap .row li:nth-child(2n) {
+    margin-left: 0;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .cardwrap {
+    padding: 0 6%;
+  }
+}

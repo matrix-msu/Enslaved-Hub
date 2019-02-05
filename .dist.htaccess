@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+
+    RewriteEngine on
+    RewriteBase /~josh.christ/website-template/
+
+    #RewriteCond %{REQUEST_URI} !\.(png|jpg|jpeg|gif|css|js|svg)$ [NC]
+    RewriteRule ^assets/.*$ - [PT]
+	RewriteRule ^modules/.*$ - [PT]
+    RewriteRule ^.*$ index.php [L]
+
+</IfModule>

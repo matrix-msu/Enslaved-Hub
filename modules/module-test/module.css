@@ -1,0 +1,157 @@
+.image-carousel {
+  max-width: unset;
+  padding: 0;
+  width: 100%;
+}
+.image-carousel .image-carousel-fig {
+  background: #0D1230;
+  height: 640px;
+  margin: 0;
+  position: relative;
+}
+.image-carousel .image-carousel-fig .arrow-left,
+.image-carousel .image-carousel-fig .arrow-right {
+  background: url(../../assets/images/chevron-down.svg) no-repeat;
+  background-color: #0D1230;
+  background-position: 16px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 10px 40px 0 rgba(13, 18, 48, 0.4);
+  height: 45px;
+  margin-top: -22.5px;
+  position: absolute;
+  top: 50%;
+  transition: 400ms;
+  width: 45px;
+  z-index: 2;
+}
+.image-carousel .image-carousel-fig .arrow-left:hover,
+.image-carousel .image-carousel-fig .arrow-right:hover {
+  cursor: pointer;
+  background-color: #27AD88;
+}
+.image-carousel .image-carousel-fig .arrow-left:focus,
+.image-carousel .image-carousel-fig .arrow-right:focus {
+  outline: none;
+}
+.image-carousel .image-carousel-fig .arrow-right {
+  margin-right: 40px;
+  right: 0;
+  transform: rotate(-90deg);
+}
+.image-carousel .image-carousel-fig .arrow-left {
+  margin-left: 40px;
+  transform: rotate(90deg);
+}
+.image-carousel .image-carousel-fig .carousel-title {
+  color: #FFFFFF;
+  height: min-content;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  transform: translateY(-50%);
+  transition: 400ms;
+  width: 40%;
+  z-index: 2;
+}
+.image-carousel .image-carousel-fig .carousel-title .title h1 {
+  display: -webkit-box;
+  font-size: 45px;
+  line-height: 1.2em;
+  max-height: 2.4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.image-carousel .image-carousel-fig .carousel-title .description {
+  display: -webkit-box;
+  font-size: 14px;
+  line-height: 1.5em;
+  margin: 20px 0;
+  /* max-height = line-height (1.5) * lines max number (3) */
+  max-height: 4.5em;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.image-carousel .image-carousel-fig .carousel-title .carousel-link {
+  text-decoration: none;
+}
+.image-carousel .image-carousel-fig .carousel-display {
+  box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.5);
+  display: block;
+  height: 100%;
+  margin: 0 auto;
+  max-width: 100%;
+  object-fit: cover;
+  position: absolute;
+  left: 0%;
+  transition: 400ms;
+  width: 100%;
+  z-index: 0;
+}
+.image-carousel .image-carousel-fig .carousel-controls {
+  height: 80px;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  z-index: 2;
+}
+.image-carousel .image-carousel-fig .carousel-controls .dot {
+  background-color: rgba(240, 240, 240, 0.2);
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
+.image-carousel .image-carousel-fig .carousel-controls .dot:hover {
+  cursor: pointer;
+}
+.image-carousel .image-carousel-fig .carousel-controls .active {
+  background-color: #F0F0F0;
+}
+.image-carousel .image-carousel-fig .overlay {
+  background-color: rgba(13, 18, 48, 0.7);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .image-carousel .image-carousel-fig {
+    height: 440px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .image-carousel .image-carousel-fig {
+    height: 280px;
+  }
+  .image-carousel .image-carousel-fig .arrow-right {
+    right: -30px;
+  }
+  .image-carousel .image-carousel-fig .arrow-left {
+    left: -30px;
+  }
+  .image-carousel .image-carousel-fig .carousel-controls {
+    height: 35px;
+  }
+  .image-carousel .image-carousel-fig .carousel-title .title {
+    margin-bottom: 10px;
+  }
+  .image-carousel .image-carousel-fig .carousel-title .title h1 {
+    font-size: 25px;
+  }
+  .image-carousel .image-carousel-fig .carousel-title .description {
+    display: none;
+  }
+}

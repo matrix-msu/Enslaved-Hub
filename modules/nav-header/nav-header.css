@@ -1,0 +1,200 @@
+.nav-header {
+  background-color: #0D1230;
+  height: 85px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+}
+
+.nav-header .nav-link img{
+	width: 13px;
+}
+.nav-header .navbar {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+.nav-header .left-section {
+  float: left;
+  margin-top: 23px;
+}
+.nav-header .responsive-menu {
+  margin-right: 4vw;
+  width: 100%;
+}
+.nav-header .dropdown-menu {
+  display: none;
+  float: right;
+}
+
+.nav-header .dropdown-menu .nav-link {
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: montserratregular;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 85px;
+  padding-right: 10px;
+  text-decoration: none;
+}
+.nav-header .dropdown-menu .dropdown-button {
+  cursor: pointer;
+  font-size: 12px;
+}
+.nav-header .dropdown-menu .dropdown-button img {
+  width: 13px;
+}
+.nav-header .right-section {
+  float: right;
+}
+.nav-header .right-section .nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-header .right-section .nav #drop-link ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+.nav-header .right-section .nav #drop-link ul .browse-sub {
+  background-color: #0D1230;
+  display: none;
+  left: -40px;
+  margin: 0;
+  padding: 10px;
+  position: absolute;
+  text-align: right;
+  width: 200px;
+}
+.nav-header .right-section .nav #drop-link ul .browse-sub .nav-sublink {
+  display: block;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: montserratregular;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 35px;
+  margin-right: 15px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.nav-header .right-section .nav #drop-link ul .browse-sub .nav-sublink:hover {
+  color: #27AD88;
+}
+.nav-header .right-section .nav .nav-item {
+  display: inline-table;
+}
+.nav-header .right-section .nav .nav-item .drop-carat, .navigation-header .right-section .nav .nav-item drop-link {
+  display: inline-block;
+}
+.nav-header .right-section .nav .nav-item .drop-carat {
+  cursor: pointer;
+  margin-left: 7px;
+}
+.nav-header .right-section .nav .nav-item .drop-carat img {
+  width: 12px;
+}
+.nav-header .right-section .nav .nav-item .nav-link {
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: montserratregular;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 85px;
+  margin-left: 45px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.nav-header .right-section .nav .nav-item .selected {
+  border-bottom: 2px solid #27AD88;
+  color: #27AD88;
+  padding: 0 3px 31px;
+}
+.nav-header .right-section .nav .nav-item:hover {
+  cursor: pointer;
+}
+.nav-header .right-section .nav .nav-item:hover .nav-link {
+  color: #27AD88;
+}
+
+ .fixedheader {
+  background-color: #0D1230;
+  position: fixed;
+  top: -85px;
+  transition: top 0.3s;
+}
+
+@media screen and (max-width: 1100px) {
+  .navbar {
+    padding: 0 6%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0 2% 0 6%;
+  }
+
+  .nav-header .dropclass {
+    display: block !important;
+    position: absolute;
+    right: 0;
+    top: 85px;
+  }
+  .nav-header .right-section {
+    background-color: #0D1230;
+    display: none;
+    height: 550px;
+    margin-right: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: right;
+    width: 230px;
+  }
+  .nav-header .right-section .nav {
+    padding-top: 30px;
+  }
+  .nav-header .right-section .nav #drop-link ul {
+    position: static;
+    margin-right: -35px;
+  }
+  .nav-header .right-section .nav #drop-link ul .browse-sub {
+    margin: 0;
+    position: static;
+    width: unset;
+  }
+  .nav-header .right-section .nav #drop-link ul .browse-sub .nav-sublink {
+    display: block;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 35px;
+    margin-right: 22px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-header .right-section .nav .submenu-drop {
+    display: block !important;
+  }
+  .nav-header .right-section .nav #drop-link {
+    margin-right: 35px;
+  }
+  .nav-header .right-section .nav .nav-item {
+    display: block;
+  }
+  .nav-header .right-section .nav .nav-item .drop-carat {
+    margin-left: -55px;
+  }
+  .nav-header .right-section .nav .nav-item .nav-link {
+    line-height: 45px;
+    margin-right: 71px;
+  }
+  .nav-header .right-section .nav .nav-item .selected {
+    padding: 0 0 5px;
+  }
+  .nav-header .dropdown-menu {
+    display: block;
+  }

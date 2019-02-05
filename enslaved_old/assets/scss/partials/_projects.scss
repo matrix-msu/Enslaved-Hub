@@ -1,0 +1,161 @@
+.projectcard{
+    //padding: 100px 0 0 0;
+
+    .cardheader-wrap{
+        margin-bottom: 50px;
+
+        .header-search{
+
+            .sort-stories{
+                float: left;
+                margin-bottom: 50px;
+            
+                .sort-stories-text{
+                    font-size: 20px;
+                    color: $base-dark;
+                    line-height: 60px;
+                }
+                
+                ul {
+                    background: $base-light;
+                    box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+                    color: $base-dark;
+                    display: none;
+                    list-style: none;
+                    margin: -10px auto 0;
+                    padding: 20px;
+                    position: absolute;
+                    left: -820px;
+                    right: 0;
+                    width: fit-content;
+                    z-index: 1;
+                    li {
+                        cursor: pointer;
+                        font-size: 14px;
+                        line-height: 15px;
+                        padding: 5px 3px;
+                    }
+                    li:hover {
+                        color: $sub-base;
+                    }
+    
+                    ul#submenu {
+                        margin-bottom: 20px;
+                    }
+    
+                }
+    
+                #submenu.show{
+                    display: block;
+                }
+    
+                span {
+                    cursor: pointer;
+                    img {
+                        transition: 400ms;
+                        margin-bottom: 3px;
+                    }
+                    img.show {
+                        transform: rotate(-180deg);
+                    }
+                }
+            }
+
+            .project-search{
+                float: right;
+                position: relative;
+                width: 380px;
+            
+                form{
+                    position: relative;
+            
+                    .search-field{
+                        border: 1px solid #CED0D2;
+                        border-radius: 100px;
+                        box-shadow: 0 4px 36px 0 rgba(0,0,0,0.05);
+                        color: $base-dark;
+                        font-size: 16px;
+                        font-family: aleoregular;
+                        margin: 0;
+                        outline: none;
+                        padding-left: 20px;
+                        padding-right: 60px;
+                        transition: border 0.3s ease;
+                        height: 60px;
+                        width: 100%;
+            
+                        &:hover{
+                            border: 1px solid $base-dark;
+                        }
+                        &:focus-within{
+                                border: 1px solid $base-dark;   
+                        }
+                    }
+                    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                        color: #253449;
+                        opacity: 1; /* Firefox */
+                        font-style: italic;
+                    }
+                    
+                    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                        color: #253449;
+                        font-style: italic;
+                    }
+                    
+                    ::-ms-input-placeholder { /* Microsoft Edge */
+                        color: #253449;
+                        font-style: italic;
+                    }
+                    
+                    .search-icon{
+                        cursor: pointer;
+                        height: 60px;
+                        width: 60px;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        background-image: url(../images/Search-dark.svg);
+                        background-repeat: no-repeat;
+                        background-position: 50% 50%;
+                    }
+                }
+            }
+        }
+    }
+
+    .cardwrap{
+
+        .row{
+            width: 100%;
+            li{
+
+                .cards{
+
+                    p{
+                        -webkit-line-clamp: 3;
+                    }
+
+                    .card-resources{
+                        bottom: 20px;
+                        left: 20px;
+                        font-size: 18px;
+                        cursor: pointer;
+                        position: absolute;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 650px){
+    .projectcard{
+        .cardheader-wrap{
+            .header-search{
+                .project-search{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

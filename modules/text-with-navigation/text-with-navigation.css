@@ -1,0 +1,72 @@
+.text-with-navigation {
+  display: flex;
+  justify-content: space-between;
+  overflow: visible;
+}
+.text-with-navigation .text-nav {
+  align-self: flex-start;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 135px;
+  vertical-align: top;
+}
+.text-with-navigation .text-nav .text-nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+.text-with-navigation .text-nav .text-nav-list .text-link {
+  border-right: 2px solid rgba(13, 18, 48, 0.07);
+  padding: 8px 20px;
+}
+.text-with-navigation .text-nav .text-nav-list .text-link a {
+  color: #0D1230;
+  opacity: 0.6;
+  text-decoration: none;
+}
+.text-with-navigation .text-nav .text-nav-list .text-link:hover {
+  border-right: 2px solid #27AD88;
+  cursor: pointer;
+}
+.text-with-navigation .text-nav .text-nav-list .text-link:hover a {
+  color: #27AD88;
+  opacity: 1;
+}
+.text-with-navigation .text-nav .text-nav-list .link-selected {
+  border-right: 2px solid #27AD88;
+}
+.text-with-navigation .text-nav .text-nav-list .link-selected a {
+  color: #27AD88;
+  opacity: 1;
+}
+.text-with-navigation .main-col {
+  vertical-align: top;
+  width: 75%;
+}
+.text-with-navigation .main-col .section {
+  margin-bottom: 50px;
+}
+.text-with-navigation .main-col .section h2 {
+  margin: 30px 0;
+}
+.text-with-navigation .main-col .section h2 a {
+  color: #0D1230;
+  font-family: bigcaslonblack;
+  text-decoration: none;
+}
+.text-with-navigation .main-col .section h2 a:hover {
+  cursor: default;
+}
+.text-with-navigation .main-col .section h2 a:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 768px) {
+  .text-with-navigation .text-nav {
+    display: none;
+  }
+  .text-with-navigation .main-col {
+    width: 100%;
+  }
+}
