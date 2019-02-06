@@ -1,10 +1,9 @@
 <!-- Author: Drew Schineller-->
 <?php
-include 'header.php';
-$baseuri='https://sandro-16.matrix.msu.edu/entity/';
-$qitem='Q503';
-$allStatements=getpersonfullInfo($baseuri,$qitem);
-$person_array=$allStatements['PersonInfo'];
+//$baseuri='https://sandro-16.matrix.msu.edu/entity/';
+//$qitem='Q503';
+//$allStatements=getpersonfullInfo($baseuri,$qitem);
+//$person_array=$allStatements['PersonInfo'];
 //var_dump($person_array);
 
 // Replace with Kora 3 events
@@ -86,17 +85,17 @@ $events = [
     </div>
 </div>
 <!-- detail section -->
-<div class="detail-section">
+<!-- <div class="detail-section">
     <div class="detailwrap">
       <?php
-             foreach($person_array as $tag=>$data){
-               if($data!='' && $tag!='Description' && !is_array($data)){
-                   detailPerson($person_array[$tag],$tag);
-               }else if(is_array($data)){
-                 foreach ($data as $key => $value) {
-                   detailPerson($person_array[$key],$key);
-                 }
-               }
+            //  foreach($person_array as $tag=>$data){
+            //    if($data!='' && $tag!='Description' && !is_array($data)){
+            //        detailPerson($person_array[$tag],$tag);
+            //    }else if(is_array($data)){
+            //      foreach ($data as $key => $value) {
+            //        detailPerson($person_array[$key],$key);
+            //      }
+            //    }
              }?>
         <a href="<?php echo BASE_URL;?>explorePeople">
             <div class="detail">
@@ -105,7 +104,7 @@ $events = [
             </div>
         </a>
     </div>
-</div>
+</div> -->
 <!-- Timeline -->
 <main class="full-record">
     <div class="timelinewrap">
@@ -241,7 +240,7 @@ $events = [
         <div class="container cardwrap">
             <ul class="row">
                 <li>
-                    <a href="<?php echo BASE_URL?>fullstory">
+                    <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
                             <p class="card-title">Title of Featured Story Goes Here Like This</p>
                             <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
@@ -249,7 +248,7 @@ $events = [
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo BASE_URL?>fullstory">
+                    <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
                             <p class="card-title">Title of Featured Story Goes Here Like This</p>
                             <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
@@ -264,4 +263,3 @@ $events = [
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/timeline.js"></script>
 
-<?php include 'footer.php';?>

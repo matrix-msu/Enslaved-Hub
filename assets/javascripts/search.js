@@ -39,6 +39,12 @@ $(document).ready(function() {
     $('.date-to').select2({
         placeholder: "To"
     });
+    $('#startYear').select2({
+        placeholder: "Select or Input the Start Year"
+    });
+    $('#endYear').select2({
+        placeholder: "Select or Input the End Year"
+    });
     // $('.s2-multiple').select2();
     $('b[role="presentation"]').hide();
     $('.select2-selection--multiple').append('<span class="select2-selection__arrow" role="presentation"></span>');
@@ -458,17 +464,19 @@ result_array.length = 11;
 //These html elements are set as independent variables and arrays so instead of one long line it is more readable
 var card_name = 'Firstname Lastname';
 var card_icon = 'Person-light.svg';
-var card_content = '<div class="card-info"><p><span>Person Status: </span>Enslaved</p><p><span>Sex: </span>Unidentified</p><p><span>Age: </span>26</p><p><span>Birth Date: </span>11. 03. 1876</p><p><span>Death Date: </span>11. 03. 1901</p></div>';
+var card_content = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified</p><p><span>Origin: </span>Location Name</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
+var card_contentTEST = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified Unidentified Unidentified Unidentified</p><p><span>Origin: </span>Location Nameeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
+//^test var
 
 var connection_lists = [
-'<h1>10 Connected People</h1><ul><li>Person Name <div id="arrow"></div></li><li>Person Name is Longer<div id="arrow"></div></li><li>Person Name <div id="arrow"></div></li><li>Person Name is Longer<div id="arrow"></div></li><li>Person Name <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
+'<h1>10 Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
 '<h1>10 Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
 '<h1>10 Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
 '<h1>10 Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>',
 '<h1>10 Connected Projects</h1><ul><li>Project Name <div id="arrow"></div></li><li>Project Name is Longer<div id="arrow"></div></li><li>Project Name <div id="arrow"></div></li><li>View All Project Connections <div id="arrow"></div></li></ul>'
 ];
 
-var connections = '<div class="connections"><div class="card-icons"><img src="./assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="./assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="./assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="./assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="./assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div>';
+var connections = '<div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div>';
 
 $("span.grid-view").click(function gridView (e) { // grid view
     e.stopPropagation()
@@ -483,8 +491,14 @@ $("span.grid-view").click(function gridView (e) { // grid view
         if (result) {
             result_array.length = result
         }
+        var testCount = 0; //test
         $.each(result_array,function () {
-            $('<li><div class="container card-image"><p>'+card_name+'</p><img src="./assets/images/'+card_icon+'"></div><div class="container cards">'+card_content+connections+'</div></li>').appendTo("ul.row");
+            if(testCount%2 == 0){
+                $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_content+connections+'</div></li>').appendTo("ul.row");
+            }else{
+                $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_contentTEST+connections+'</div></li>').appendTo("ul.row");
+            }
+            testCount++;
         });
         cards = true;
         view = 'grid';
@@ -554,14 +568,14 @@ $(".show-filter").click(function(e){ // toggle show/hide filter menu
     filter = !filter
     if (filter) {
         $("div.filter-menu").addClass("show");
-        $(this).html('<img src="assets/images/arrow-right.svg" alt="show filter menu button" style="transform:rotate(180deg);"> Hide Filter Menu');
+        $(this).html('<img src="../assets/images/arrow-right.svg" alt="show filter menu button" style="transform:rotate(180deg);"> Hide Filter Menu');
         if ( window.innerWidth <= 820 ) {
             $("#searchResults").removeClass("show");
         } else {
             centerStuffWithFilter()
         }
     } else { // toggle off filter-menu
-        $(this).html('<img src="assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu');
+        $(this).html('<img src="../assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu');
         $('div#searchResults').css('max-width', '');
         setTimeout(function () {
             $(".filter-menu").removeClass("show");
@@ -591,7 +605,7 @@ function centerStuffWithFilter () {
 // $(window).resize(function () {
 //     if (filter) {
 //         if(window.innerWidth <= 820){
-//             $(".show-filter").html('<img src="assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu');
+//             $(".show-filter").html('<img src="../assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu');
 //             filter = !filter;
 //             $('div#searchResults').css('max-width', '');
 //             setTimeout(function () {

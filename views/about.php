@@ -17,21 +17,21 @@
     <div class="cardwrap">
         <ul class="row">
             <li id="getinvolved">
-                <a href="<?php echo BASE_URL?>getInvolved">
+                <a href="<?php echo BASE_URL?>getInvolved/">
                     <div class="cards">
                         <p>Learn How to Get Involved</p>
                     </div>
                 </a>
             </li>
             <li id="viewpartners">
-                <a href="<?php echo BASE_URL?>ourPartners">
+                <a href="<?php echo BASE_URL?>ourPartners/">
                     <div class="cards">
                         <p>View our Partners</p>
                     </div>
                 </a>
             </li>
             <li id="contactus">
-                <a href="<?php echo BASE_URL?>contactUs">
+                <a href="<?php echo BASE_URL?>contactUs/">
                     <div class="cards">
                         <p>Contact Us</p>
                     </div>

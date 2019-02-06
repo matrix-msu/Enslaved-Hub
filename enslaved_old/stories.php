@@ -49,7 +49,7 @@ if ($page < 1) {
         <ul class="row">
             <?php
             foreach ($featured as $kid => $story) {
-                echo '<li><a href="'.BASE_URL.'fullstory?kid='.$kid.'">';
+                echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
                 echo '<div class="container cards">';
                 echo '<p class="card-title">'.$story['Title']['value'].'</p>';
                 echo '<h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>';
@@ -57,7 +57,7 @@ if ($page < 1) {
             }
             ?>
             <!-- <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="container cards">
                         <p class="card-title">Title of Featured Story Goes Here Like This</p>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>

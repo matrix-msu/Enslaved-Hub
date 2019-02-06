@@ -15,4 +15,25 @@ $(document).ready(function(){
         return false;
     });
     
+    // $(document).on('mouseenter',"div.detail-bottom",function () { // show icon-card info on hover
+    //     timer2 = setTimeout(function(){
+    //         //$('.detail-menu').removeClass('hovered');
+    //         $(this).find('.detail-menu').addClass('hovered');
+    //     }, 0);
+    // }).on('mouseleave',"div.detail-bottom",function() {
+    //     $('.detail-menu').removeClass('hovered');
+    //     clearTimeout(timer2);
+    // });
+
+    $(".detail-bottom div").on('mouseenter', function () { // show icon-card info on hover
+        $('.detail-menu').removeClass('hovered');
+        $(this).find('.detail-menu').addClass('hovered');
+    }).on('mouseleave',function() {
+        $('.detail-menu').removeClass('hovered');
+    });
+
+    $(".project-tab li").click(function(){
+        $("li").removeClass("tabbed");
+        $(this).addClass("tabbed");
+    });
 });

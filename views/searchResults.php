@@ -1,683 +1,699 @@
-<!-- page author: Kevin Sutherland -->
-<div class="container main">
+<!-- Heading image and title container-->
+<div class="container header">
 	<div class="container middlewrap">
-		<h4 class="search-button-header"><a id="new-search-button" href="<?php echo BASE_URL;?>search"><img src="<?php echo BASE_IMAGE_URL;?>arrow-left-green.svg" alt="start new search"> Start a New Search</a></h4>
-  	<h1 class="search">Search Page</h1>
-		<br>
-    <div class="container search"> 
-        <form action="submit">
-            <div class="search-field">
-                <input id="search-field" class="search-field" type="text" name="searchbar" placeholder="Search for whatever it is you want in life"/>
-            </div>
-            <input id="search-btn" class="search-submit"/>
-        </form>
-        <p id="searchResults-showing">Showing <span>X</span> of <span>###</span> Results</p>
-  	</div>
+        <div class="search-title">
+            <h1>Search</h1>
+            <a href="<?php echo BASE_URL;?>advancedSearch/"><h3>Go To Advanced Search<div class="arrow"></div></h3></a>
+        </div>
+        <div class="heading-search">
+            <h3>Search across 54,375,213 records from the Atlantic Slave Trade ...</h3>
+            <form class="search-form">
+                <input class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
+                <div class="search-icon"></div>
+                <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
+            </form>
+        </div>
   </div>
 </div>
 
 <main class="search-results">
     <div class="filter-menu">
-        <h3>Filter Your Results</h3>
-        <hr>
         <ul>
-            <li class="filter-cat">Gender<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <h3>Show Results For</h3>
+            <ul class="catmenu" id="submenu">
+                <li>
+                    <label>
+                        <input id="checkBox" type="checkbox">
+                        <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg">
+                        <p>People</p>
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input id="checkBox" type="checkbox">
+                        <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg">
+                        <p>Places</p>
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input id="checkBox" type="checkbox">
+                        <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg">
+                        <p>Events</p>
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input id="checkBox" type="checkbox">
+                        <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg">
+                        <p>Sources</p>
+                        <span></span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input id="checkBox" type="checkbox">
+                        <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg">
+                        <p>Projects</p>
+                        <span></span>
+                    </label>
+                </li>
+            </ul>
+            <!-- General Filtering -->
+            <hr>
+            <li class="cat-cat">General Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
             </li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Unidentified <em>(234)</em></p>
-                        <span></span>
-                    </label>
+            <ul id="mainmenu">
+
+                <li class="filter-cat">Country<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Male <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Region<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Female <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Decade<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Date Select<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
             </ul>
-            <li class="filter-cat">Age Category<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <!-- People Filtering -->
+            <hr>
+            <li class="cat-cat">People Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
             </li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Age Range <em>(234)</em></p>
-                        <span></span>
-                    </label>
+            <ul id="mainmenu">
+                <li class="filter-cat">Gender<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Age Range <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Unidentified <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Male <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Female <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Origin<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Age Range <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Age<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Age Range <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Age Range <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Age Range <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Age Category<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Age Range <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Age Range <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Age Range <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Color<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Occupation<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Relationship<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Role<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span></li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
             </ul>
-            <li class="filter-cat">Realm of Renown<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <!-- Event Filtering -->
+            <hr>
+            <li class="cat-cat">Event Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
             </li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+            <ul id="mainmenu">
+
+                <li class="filter-cat">Event Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Event Date<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
             </ul>
-            <li class="filter-cat">Slave Status<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <!-- Place Filtering -->
+            <hr>
+            <li class="cat-cat">Place Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
             </li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+            <ul id="mainmenu">
+
+                <li class="filter-cat">Country<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Region<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Province<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">City<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
             </ul>
-            <li class="filter-cat">Occupation<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <!-- Project Filtering -->
+            <hr>
+            <li class="cat-cat">Project Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
             </li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+            <ul id="mainmenu">
+
+                <li class="filter-cat">Project<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
             </ul>
-            <li class="filter-cat">Race of Parents<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+            <!-- Media Filtering -->
+            <hr>
+            <li class="cat-cat">Media Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+            </li>
+            <ul id="mainmenu">
+
+                <li class="filter-cat">Media Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Repository<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Contributing Scholar<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
                 </li>
+                <ul id="submenu">
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
-            <ul id="submenu">
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
-                </li>
-            </ul>
+
+
         </ul>
     </div>
+
+
     <div id="searchResults">
+        <h2 class="showing-results">Showing 24 of 54,375,213 Results</h2>
         <div id="search-result-controls">
-            <span class="align-left show-filter" class="show-filter"><img src="<?php echo BASE_IMAGE_URL;?>arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span>
-            <span class="align-center results-per-page"><span>#</span> Per Page <img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="results per page button"></span>
-            <ul id="submenu" class="results-per-page">
-                <li><span>1</span> Per Page</li>
-                <li><span>5</span> Per Page</li>
-                <li><span>8</span> Per Page</li>
-                <li><span>11</span> Per Page</li>
-            </ul>
-            <span class="align-center sort-by">Sort By <img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="results per page button"></span>
-            <ul id="submenu" class="sort-by">
-                <li>A - Z</li>
-                <li>Z - A</li>
-            </ul>
-            <span class="align-right">
+            <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span>
+            <span class="view-modes">
                 <span class="grid-view view-toggle">
-                    <img class="show" src="grid-inActive.svg" alt="grid view button">
-                    <img class="hide" src="grid-Active.svg" alt="grid view button">
+                    <img class="grid-icon show" src="../assets/images/List.svg" alt="grid view button">
                     <p class="tooltip">View Grid</p>
                 </span>
-                &nbsp;&nbsp;
                 <span class="table-view view-toggle">
-                    <img class="hide" src="table-inActive.svg" alt="table view button">
-                    <img class="show" src="table-Active.svg" alt="table view button">
+                    <img class="table-icon" src="../assets/images/table-Active.svg" alt="table view button">
                     <p class="tooltip">View Table</p>
+                </span>
+                <span class="time-view view-toggle">
+                    <img class="time-icon" src="../assets/images/time2.svg" alt="time view button">
+                    <p class="tooltip">View Time</p>
+                </span>
+                <span class="map-view view-toggle">
+                    <img class="map-icon" src="../assets/images/map.svg" alt="map view button">
+                    <p class="tooltip">View Map</p>
+                </span>
+            </span>
+            <span class="sorting-dropdowns">
+                <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+                    <ul id="sortmenu" class="sort-by">
+                        <li>A - Z</li>
+                        <li>Z - A</li>
+                    </ul>
+                </span>
+                <span class="align-center results-per-page"><span>#</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+                    <ul id="sortmenu" class="results-per-page">
+                        <li><span>1</span> Per Page</li>
+                        <li><span>5</span> Per Page</li>
+                        <li><span>8</span> Per Page</li>
+                        <li><span>11</span> Per Page</li>
+                    </ul>
                 </span>
             </span>
         </div>
@@ -731,19 +747,18 @@
             </div>
         </div>
         <div id="pagination">
-            <span id="pagiLeft" class="align-left"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="previous"></span>
-            <div>
+            <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
+            <div class="page-numbers">
                 <span class="num pagi-first">1</span>
                 <span class="dotsLeft">...</span>
                 <span class="num one"></span>
                 <span class="num two"></span>
                 <span class="num three"></span>
                 <span class="num four"></span>
-                <span class="num five"></span>
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
-            <span id="pagiRight" class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <span id="pagiRight" class="align-right"><div id="pagiRightArrow"></div></span>
         </div>
     </div>
 </main>
@@ -751,7 +766,7 @@
 <div class="modal-view">
     <div class="config-table-modal">
         <div class="config-table-modal-content-wrap">
-            <div class="close"><img src="<?php echo BASE_IMAGE_URL;?>x.svg" alt="close modal button"></div>
+            <div class="close"><img src="<?php echo BASE_URL;?>assets/images/x.svg" alt="close modal button"></div>
             <h4>Configure Table Columns</h4>
             <p>Choose Group of Variables
                 <select>
@@ -782,8 +797,8 @@
                     </div>
                 </div>
                 <div class="arrow-wrap">
-                    <img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="add item">
-                    <img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="remove item">
+                    <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="add item">
+                    <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="remove item">
                 </div>
                 <div class="right-col">
                     <p>Selected Columns</p>
@@ -796,8 +811,8 @@
                             <li class="right">Column Name5</li>
                             <li class="right">Column Name6</li>
                         </ul>
-                        <img class="down" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="move down">
-                        <img class="up" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="move up">
+                        <img class="down" src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="move down">
+                        <img class="up" src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="move up">
                     </div>
                 </div>
             </div>
@@ -806,7 +821,5 @@
     </div>
 </div>
 
-<script src="<?php echo BASE_JS_URL;?>searchResults.js"></script>
-<script src="<?php echo BASE_JS_URL;?>modal.js"></script>
-<script src="<?php echo BASE_JS_URL;?>search.js"></script>
-
+<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>

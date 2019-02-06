@@ -98,7 +98,7 @@
         </div>
         <div class="left-col">
             <div class="card">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="container cards">
                         <p class="card-title">The record of this source appears in the *Name of Project* Project</p>
                         <h4 class="card-view-story">View Original Record <div class="view-arrow"></h4>
@@ -128,7 +128,7 @@
         <div class="container cardwrap">
             <ul class="row">
                 <li>
-                    <a href="<?php echo BASE_URL?>fullstory">
+                    <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
                             <p class="card-title">Title of Featured Story Goes Here Like This</p>
                             <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
@@ -136,7 +136,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo BASE_URL?>fullstory">
+                    <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
                             <p class="card-title">Title of Featured Story Goes Here Like This</p>
                             <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>

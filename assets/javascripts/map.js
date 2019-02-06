@@ -21,7 +21,7 @@ $(document).ready(function(){
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
     
-    var connection_icons = '<div class="connections"><div class="card-icons"><img src="./assets/images/Person-light.svg"><span>10</span></div><div class="card-icons"><img src="./assets/images/Event-light.svg"><span>10</span></div><div class="card-icons"><img src="./assets/images/Source-light.svg"><span>10</span></div><div class="card-icons"><img src="./assets/images/Project-light.svg"><span>10</span></div></div>';
+    var connection_icons = '<div class="connections"><div class="card-icons"><img src="../assets/images/Person-light.svg"><span>10</span></div><div class="card-icons"><img src="../assets/images/Event-light.svg"><span>10</span></div><div class="card-icons"><img src="../assets/images/Source-light.svg"><span>10</span></div><div class="card-icons"><img src="../assets/images/Project-light.svg"><span>10</span></div></div>';
     // create popup contents
     var customPopup = '<h2>Place Name</h2>'+connection_icons+'<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut …</p><div class="view-record"><p>View Place Record<div class="view-arrow"></div></p></div>';
 
@@ -34,7 +34,7 @@ $(document).ready(function(){
 
     // Change the marker icon
     var orangeIcon = L.icon({
-        iconUrl: 'assets/images/MapMarker.svg',
+        iconUrl: '../assets/images/MapMarker.svg',
         //shadowUrl: 'leaf-shadow.png',
     
         iconSize:     [37, 37], // size of the icon
@@ -72,7 +72,7 @@ $(document).ready(function(){
 
     $('.leaflet-bottom.leaflet-right').children().remove();
 
-    $('.leaflet-bottom.leaflet-right').append('<div class="leaflet-fullscreen"><img src="./assets/images/Fullscreen.svg"/></div>');
+    $('.leaflet-bottom.leaflet-right').append('<div class="leaflet-fullscreen"><img src="../assets/images/Fullscreen.svg"/></div>');
 
     $('.leaflet-fullscreen').on("click", function(){
         if($('.mapwrap').hasClass("mapfullscreen")){

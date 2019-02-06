@@ -100,7 +100,7 @@
         <div class="section-content">
             <ul class="row">
                 <li>
-                    <a href="<?php echo BASE_URL?>fullstory/">
+                    <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
                             <p class="card-title">Title of Featured Story Goes Here Like This.</p>
                             <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
@@ -108,7 +108,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo BASE_URL?>fullstory/">
+                    <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
                             <p class="card-title">Title of Featured Story Goes Here Like This.</p>
                             <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
@@ -126,7 +126,7 @@
         <div class="section-content">
             <ul class="row">
                 <li>
-                    <a href="<?php echo BASE_URL?>fullstory/">
+                    <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
                             <p class="card-title">Title of Featured Project Goes Here Like This.</p>
                             <h4 class="card-view-story">View Project <div class="view-arrow"></h4>
@@ -134,7 +134,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo BASE_URL?>fullstory/">
+                    <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
                             <p class="card-title">Title of Featured Project Goes Here Like This.</p>
                             <h4 class="card-view-story">View Project <div class="view-arrow"></h4>
@@ -154,7 +154,7 @@
             <p>Brief info on Project. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
         <div class="about-card">
-            <a href="<?php echo BASE_URL?>fullstory/">
+            <a href="<?php echo BASE_URL?>fullStory/">
                 <div class="container cards">
                     <p class="card-title">Learn More About the Project.</p>
                     <h4 class="card-view-story">Go to About Page <div class="view-arrow"></h4>

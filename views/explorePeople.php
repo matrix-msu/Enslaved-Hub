@@ -1,5 +1,4 @@
 <!-- Page author: Drew Schineller-->
-<?php include 'header.php';?>
 <!-- Heading image and title container-->
 <div class="container header stories">
     <div class="container middlewrap">
@@ -29,7 +28,7 @@
             <a href="<?php echo BASE_URL?>peopleSub2/">Role Types<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Time<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>timeSub/">Time<div id="arrow"></div></a>
         </li>
         <li>
             <a href="<?php echo BASE_URL?>peopleSub2/">Place<div id="arrow"></div></a>
@@ -122,7 +121,7 @@
     <div class="cardwrap">
         <ul class="row">
             <li id="byspace">
-                <a href="<?php echo BASE_URL?>fullstory/">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/BySpace.svg"/>
@@ -132,7 +131,7 @@
                 </a>
             </li>
             <li id="bytime">
-                <a href="<?php echo BASE_URL?>fullstory/">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByTime.svg"/>
@@ -142,7 +141,7 @@
                 </a>
             </li>
             <li id="bydata">
-                <a href="<?php echo BASE_URL?>fullstory/">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByData.svg"/>
@@ -156,5 +155,3 @@
 </div>
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
-
-<?php include 'footer.php';?>

@@ -8,23 +8,23 @@ $sortDirection = (isset($_GET['direction']) ? strtoupper($_GET['direction']) : '
 $storiesPerPage = (isset($_GET['count']) && is_numeric($_GET['count']) ? $_GET['count'] : '8');
 $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1');
 
-//$stories = getStories($page, $storiesPerPage, [$sortField, $sortDirection]);
+$stories = getStories($page, $storiesPerPage, [$sortField, $sortDirection]);
 
-//$count = $stories["counts"]["global"]; // Total count of stories
+$count = $stories["counts"]["global"]; // Total count of stories
 
-//$featured = [];
-//foreach ($stories['records'][0] as $kid => $story) {
-//    if (isset($story['Featured']) && $story['Featured']['value'] == 'TRUE') {
-//        $featured[$kid] = $story;
-//    }
-//}
+$featured = [];
+foreach ($stories['records'][0] as $kid => $story) {
+    if (isset($story['Featured']) && $story['Featured']['value'] == 'TRUE') {
+        $featured[$kid] = $story;
+    }
+}
 
-//$page_count = ceil($count / $storiesPerPage);
-//if ($page < 1) {
-//    $page == 1;
-//} elseif ($page > $page_count) {
-//    $page = $page_count;
-//}
+$page_count = ceil($count / $storiesPerPage);
+if ($page < 1) {
+    $page == 1;
+} elseif ($page > $page_count) {
+    $page = $page_count;
+}
 ?>
 <!-- Stories page-->
 <!-- Heading image and title container-->
@@ -46,17 +46,17 @@ $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1'
     </div>
     <div class="container cardwrap" id="featured">
         <ul class="row">
-<!--            --><?php
-//            foreach ($featured as $kid => $story) {
-//                echo '<li><a href="'.BASE_URL.'fullstory?kid='.$kid.'">';
-//                echo '<div class="container cards">';
-//                echo '<p class="card-title">'.$story['Title']['value'].'</p>';
-//                echo '<h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>';
-//                echo '</div></a></li>';
-//            }
-//            ?>
+            <?php
+            foreach ($featured as $kid => $story) {
+                echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
+                echo '<div class="container cards">';
+                echo '<p class="card-title">'.$story['Title']['value'].'</p>';
+                echo '<h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>';
+                echo '</div></a></li>';
+            }
+            ?>
             <!-- <li>
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="container cards">
                         <p class="card-title">Title of Featured Story Goes Here Like This</p>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
@@ -110,13 +110,13 @@ $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1'
         </div>
         <ul class="row" id='AllStoriesContainer'>
             <?php
-//            displayStories($stories);
+            displayStories($stories);
 
             ?>
         </ul>
     </div>
     <div class="container pagiwrap">
-        <div class="container per-page-container">
+        <div class="sort-pages">
             <p><span class="per-page-text">X</span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"/></p>
             <ul id="submenu" class="pagenum-menu">
                 <li class="count-option" data-count="8"><span>8</span> Per Page</li>
@@ -132,60 +132,60 @@ $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1'
             </div>
 
             <ul class="page-select">
-<!--                --><?php
-//                $pag_html = '';
-//                if ($page > 3) {
-//                    $pag_html .= '<li data-page="1">1</li>';
-//                }
-//
-//                if ($page > 4) {
-//                    $pag_html .= '<li>...</li>';
-//                }
-//
-//                if ($page == $page_count && $page - 4 > 0) {
-//                    $pag_html .= '<li data-page="'.($page - 4).'">'.($page - 4).'</li>';
-//                }
-//
-//                if ($page >= $page_count - 1 && $page - 3 > 0) {
-//                    $pag_html .= '<li data-page="'.($page - 3).'">'.($page - 3).'</li>';
-//                }
-//
-//                if ($page - 2 >= 1) {
-//                    $pag_html .= '<li data-page="'.($page - 2).'">'.($page - 2).'</li>';
-//                }
-//
-//                if ($page - 1 >= 1) {
-//                    $pag_html .= '<li data-page="'.($page - 1).'">'.($page - 1).'</li>';
-//                }
-//
-//                $pag_html .=  '<li class="active">'.$page.'</li>';
-//
-//                if ($page + 1 <= $page_count) {
-//                    $pag_html .= '<li data-page="'.($page + 1).'">'.($page + 1).'</li>';
-//                }
-//
-//                if ($page + 2 <= $page_count) {
-//                    $pag_html .= '<li data-page="'.($page + 2).'">'.($page + 2).'</li>';
-//                }
-//
-//                if ($page <= 2 && $page + 3 <= $page_count) {
-//                    $pag_html .= '<li data-page="'.($page + 3).'">'.($page + 3).'</li>';
-//                }
-//
-//                if ($page == 1 && $page + 4 <= $page_count) {
-//                    $pag_html .= '<li data-page="'.($page + 4).'">'.($page + 4).'</li>';
-//                }
-//
-//                if ($page_count - $page > 4) {
-//                    $pag_html .= '<li>...</li>';
-//                }
-//
-//                if ($page_count - $page > 3) {
-//                    $pag_html .= '<li data-page="'.$page_count.'">'.$page_count.'</li>';
-//                }
-//
-//                echo $pag_html;
-//                ?>
+                <?php
+                $pag_html = '';
+                if ($page > 3) {
+                    $pag_html .= '<li data-page="1">1</li>';
+                }
+
+                if ($page > 4) {
+                    $pag_html .= '<li>...</li>';
+                }
+
+                if ($page == $page_count && $page - 4 > 0) {
+                    $pag_html .= '<li data-page="'.($page - 4).'">'.($page - 4).'</li>';
+                }
+
+                if ($page >= $page_count - 1 && $page - 3 > 0) {
+                    $pag_html .= '<li data-page="'.($page - 3).'">'.($page - 3).'</li>';
+                }
+
+                if ($page - 2 >= 1) {
+                    $pag_html .= '<li data-page="'.($page - 2).'">'.($page - 2).'</li>';
+                }
+
+                if ($page - 1 >= 1) {
+                    $pag_html .= '<li data-page="'.($page - 1).'">'.($page - 1).'</li>';
+                }
+
+                $pag_html .=  '<li class="active">'.$page.'</li>';
+
+                if ($page + 1 <= $page_count) {
+                    $pag_html .= '<li data-page="'.($page + 1).'">'.($page + 1).'</li>';
+                }
+
+                if ($page + 2 <= $page_count) {
+                    $pag_html .= '<li data-page="'.($page + 2).'">'.($page + 2).'</li>';
+                }
+
+                if ($page <= 2 && $page + 3 <= $page_count) {
+                    $pag_html .= '<li data-page="'.($page + 3).'">'.($page + 3).'</li>';
+                }
+
+                if ($page == 1 && $page + 4 <= $page_count) {
+                    $pag_html .= '<li data-page="'.($page + 4).'">'.($page + 4).'</li>';
+                }
+
+                if ($page_count - $page > 4) {
+                    $pag_html .= '<li>...</li>';
+                }
+
+                if ($page_count - $page > 3) {
+                    $pag_html .= '<li data-page="'.$page_count.'">'.$page_count.'</li>';
+                }
+
+                echo $pag_html;
+                ?>
             </ul>
 
             <div class="pagination-next btn-next no-select" data-page="<?php echo ($page < $page_count ? $page + 1 : ''); ?>">
@@ -197,4 +197,3 @@ $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1'
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/stories.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
-

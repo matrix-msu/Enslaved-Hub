@@ -3,7 +3,7 @@
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about"><span id="previous-title">About // </span></a><span id="current-title">Our Partners</span></h4>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about/"><span id="previous-title">About // </span></a><span id="current-title">Our Partners</span></h4>
         <h1>Our Partners</h1>
     </div>
 </div>

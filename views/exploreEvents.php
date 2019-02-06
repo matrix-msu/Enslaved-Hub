@@ -16,13 +16,13 @@
     <h1>Explore By</h1>
     <ul class="cards">
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2">Event Type<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Event Type<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2">Time<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Time<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2">Place<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Place<div id="arrow"></div></a>
         </li>
     </ul>
 </div>
@@ -32,7 +32,7 @@
     <div class="connection-cards">
         <ul class="connect-row events">
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent">
+                <a href="<?php echo BASE_URL?>recordEvent/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg">
                         <h3>Event Name</h3>
@@ -40,7 +40,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent">
+                <a href="<?php echo BASE_URL?>recordEvent/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg">
                         <h3>Event Name</h3>
@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent">
+                <a href="<?php echo BASE_URL?>recordEvent/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg">
                         <h3>Event Name</h3>
@@ -56,7 +56,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent">
+                <a href="<?php echo BASE_URL?>recordEvent/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg">
                         <h3>Event Name</h3>
@@ -64,7 +64,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent">
+                <a href="<?php echo BASE_URL?>recordEvent/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg">
                         <h3>Event Name</h3>
@@ -72,7 +72,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent">
+                <a href="<?php echo BASE_URL?>recordEvent/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg">
                         <h3>Event Name</h3>
@@ -80,7 +80,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent">
+                <a href="<?php echo BASE_URL?>recordEvent/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg">
                         <h3>Event Name</h3>
@@ -88,7 +88,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent">
+                <a href="<?php echo BASE_URL?>recordEvent/">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg">
                         <h3>Event Name</h3>
@@ -103,7 +103,7 @@
     <h3>Find Events</h3>
     <form class="search-form">
         <input class="search-field main-search" type="text" name="searchbar" placeholder="Start Searching for Events By Crew, Event Type, Rig, Captain, Etc."/>
-        <a href="<?php echo BASE_URL;?>search"><div class="search-icon"></div></a>
+        <a href="<?php echo BASE_URL;?>search/"><div class="search-icon"></div></a>
     </form>
 </div>
 <!-- Visualize People -->
@@ -112,7 +112,7 @@
     <div class="cardwrap">
         <ul class="row">
             <li id="byspace">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/BySpace.svg"/>
@@ -122,7 +122,7 @@
                 </a>
             </li>
             <li id="bytime">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByTime.svg"/>
@@ -132,7 +132,7 @@
                 </a>
             </li>
             <li id="bydata">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByData.svg"/>

@@ -1,6 +1,6 @@
 .info{
     height: auto;
-    padding: 80px 0 20px; //add side padding at certain width
+    padding: 60px 0 20px; //add side padding at certain width
     width: 100%;
 
     .infowrap{
@@ -115,12 +115,17 @@
     max-width: 1000px;
     height: 138px;
     padding: 0 6%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     .sort-pages{
+        position: relative;
+        padding-right: 20px;
         p{
             margin: 0;
             margin-left: 20px;
             float: left;
-            line-height: 138px;
+            line-height: 50px;
             color: #253449;
             font-size: 14px;
             cursor: pointer;
@@ -137,18 +142,18 @@
             color: $base-dark;
             display: none;
             list-style: none;
-            margin: 80px auto 0;
+            margin: 35px 0 0;
             padding: 20px;
             position: absolute;
-            left: -861px;
-            right: 0;
-            width: fit-content;
+            left: 0;
+            width: max-content;
             z-index: 1;
             li {
                 cursor: pointer;
                 font-size: 14px;
                 line-height: 15px;
                 padding: 5px 3px;
+                transition: color 0.3s ease;
             }
             li:hover {
                 color: $sub-base;
@@ -343,9 +348,6 @@
 }
 
 @media screen and (max-width: 550px){
-    .pagiwrap{
-        margin-bottom: 90px;
-    }
     #pagination{
         padding: 20px 7% 80px!important;
         min-width: 220px!important;

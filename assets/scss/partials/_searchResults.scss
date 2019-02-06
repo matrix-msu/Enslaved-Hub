@@ -546,7 +546,6 @@ span.align-right.show {
                         height: 150px;
                         margin: -10px;
                         width: 100%;
-                        overflow: hidden;
                         p{
                             display: -webkit-box;
                             font-size: 14px;
@@ -554,12 +553,48 @@ span.align-right.show {
                             // padding-right: 32px;
                             flex: 1 1 40%;
                             margin: 10px;
-                            overflow: hidden;
                             text-overflow: ellipsis;
                             -webkit-line-clamp: 1;
                             // -webkit-box-orient: vertical;
                             span{
                                 font-family: aleobold;
+                            }
+                            .multiple{
+                                color: $sub-base;
+                                font-family: aleobold;
+                                position: relative;
+
+                                .tooltip{
+                                    visibility: hidden;
+                                    width: 280px;
+                                    background-color: $base-dark;
+                                    color: $base-light;
+                                    padding: 15px;
+                                      
+                                    /* Position the tooltip */
+                                    position: absolute;
+                                    z-index: 100;
+                                    bottom: 130%;
+                                    left: 50%;
+                                    margin-left: -155px;
+                                }
+                                .tooltip::after {
+                                    content: " ";
+                                    position: absolute;
+                                    top: 100%; /* At the bottom of the tooltip */
+                                    left: 50%;
+                                    margin-left: -5px;
+                                    border-width: 5px;
+                                    border-style: solid;
+                                    border-color: $base-dark transparent transparent transparent;
+                                }
+
+                                &:hover{
+
+                                    .tooltip{
+                                        visibility: visible;
+                                    }
+                                }
                             }
                         }
                     }
@@ -583,11 +618,11 @@ span.align-right.show {
                                 height: 22px;
                                 padding-top: 3px;
                             }
-                            span{
-
-                            }
                             .connection-menu{
-                                display: none;
+                                //display: none;
+                                visibility: hidden;
+                                opacity: 0;
+                                transition: visibility 0s, opacity 0.5s, linear;
                                 background: $base-dark;
                                 box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
                                 color: $base-light;
@@ -595,14 +630,16 @@ span.align-right.show {
                                 white-space: nowrap;
                                 position: absolute;
                                 padding: 20px;
-                                bottom: 40px;
-                                right: -80px;
-                                width: 200px;
+                                bottom: 35px;
+                                right: -90px;
+                                width: 220px;
                                 // height: 20px;
                                 z-index: 10;
     
                                 &.hovered{
-                                    display: block;
+                                    //display: block;
+                                    visibility: visible;
+                                    opacity: 1;
                                 }
 
                                 h1{
@@ -622,6 +659,10 @@ span.align-right.show {
                                         cursor: pointer;
                                         font-size: 13px;
                                         transition: .2s;
+                                        line-height: 16px;
+                                        padding: 5px 0;
+                                        word-wrap: break-word;
+                                        white-space: normal;
 
                                         #arrow{
                                             color: $base-light;
@@ -632,7 +673,7 @@ span.align-right.show {
                                             height: 6px;
                                             transform: rotate(-90deg);
                                             float: right;
-                                            margin: 10px 0 0 0;
+                                            margin: 5px 0 0 10px;
                                             transition: color .2s;
                                         }
 
@@ -642,22 +683,26 @@ span.align-right.show {
                                                 background-image: url(../images/Arrow_colored.svg);
                                             }
                                         }
+
+                                        span{
+                                            opacity: .6;
+                                        }
                                     }
                                 }
                             }
-                            .connection-menu:after {
-                                content: '';
-                                position: absolute;
-                                bottom: 0;
-                                left: 50%;
-                                width: 0;
-                                height: 0;
-                                border: 10px solid transparent;
-                                border-top-color: $base-dark;
-                                border-bottom: 0;
-                                margin-left: -10px;
-                                margin-bottom: -10px;
-                            }
+                            // .connection-menu:after {
+                            //     content: '';
+                            //     position: absolute;
+                            //     bottom: 0;
+                            //     left: 50%;
+                            //     width: 0;
+                            //     height: 0;
+                            //     border: 10px solid transparent;
+                            //     border-top-color: $base-dark;
+                            //     border-bottom: 0;
+                            //     margin-left: -10px;
+                            //     margin-bottom: -10px;
+                            // }
                         }
                     }
                 }

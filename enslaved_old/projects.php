@@ -36,7 +36,7 @@
     <div class="container cardwrap">
         <ul class="row">
             <li>
-                <a href="<?php echo BASE_URL?>fullProject">
+                <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
@@ -45,7 +45,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject">
+                <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
@@ -54,7 +54,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject">
+                <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
@@ -63,7 +63,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject">
+                <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
@@ -72,7 +72,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject">
+                <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
@@ -81,7 +81,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject">
+                <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
@@ -90,7 +90,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject">
+                <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>
@@ -99,7 +99,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject">
+                <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <p class="card-title">Title of Project Goes Here Like This</p>
                         <h4 class="card-resources">234 Resources</h4>

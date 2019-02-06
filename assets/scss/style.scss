@@ -7,11 +7,10 @@
 @import "partials/header";
 @import "partials/index";
 @import "partials/blog";
-@import "partials/fullrecord";
-@import "partials/fullRecord-2";
+@import "partials/search";
 @import "partials/searchResults";
 @import "partials/modal";
-@import "partials/searchBar";
+//@import "partials/searchBar";
 @import "partials/cards";
 @import "partials/footer";
 @import "partials/buttonGrid";
@@ -30,9 +29,11 @@
 @import "partials/blazegraph";
 @import "partials/fullProject";
 @import "partials/stories";
-@import "partials/fullstory";
+@import "partials/fullStory";
 @import "partials/map";
 @import "partials/pagination";
 @import "partials/projects";
 @import "partials/about";
 @import "partials/explore";
+@import "partials/fullRecord";
+@import "partials/timeSub";

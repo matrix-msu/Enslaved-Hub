@@ -113,7 +113,7 @@
     <div class="cardwrap">
         <ul class="row">
             <li id="byspace">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/BySpace.svg"/>
@@ -123,7 +123,7 @@
                 </a>
             </li>
             <li id="bytime">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByTime.svg"/>
@@ -133,7 +133,7 @@
                 </a>
             </li>
             <li id="bydata">
-                <a href="<?php echo BASE_URL?>fullstory">
+                <a href="<?php echo BASE_URL?>fullStory/">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByData.svg"/>
