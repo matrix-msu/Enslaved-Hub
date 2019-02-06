@@ -322,7 +322,7 @@ function getpersonfullInfo($baseuri,$qitem){
 
   //  $allStatements=array_merge($allStatements,$onestatement);
 
-  debugfunc($allStatements);
+//  debugfunc($allStatements);
   return $allStatements;
 }
 

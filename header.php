@@ -5,7 +5,7 @@ foreach(glob('wikiconstants' . "/*.php") as $file){
     require_once $file;
 }
 require_once('functions/explorefunctions.php');
-
+require_once('functions/utilities.php');
 globaljsvars;
 print globaljsvars;
 

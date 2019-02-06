@@ -1,4 +1,9 @@
-<?php include 'header.php';?>
+<?php include 'header.php';
+if (!getPeopleResultscheck($_GET)){
+	die ("Wrong parameter");
+}
+?>
+
 <!-- Heading image and title container-->
 <div class="container header">
 	<div class="container middlewrap">

@@ -1,4 +1,4 @@
-<!-- Author: Drew Schineller-->
+
 <?php include 'header.php';
 ?>
 <!-- Main page-->

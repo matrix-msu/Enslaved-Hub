@@ -1,6 +1,5 @@
-<!-- Author: Drew Schineller-->
 <?php
-include 'header.php';
+require_once('header.php');
 $baseuri='https://sandro-16.matrix.msu.edu/entity/';
 $qitem='Q503';
 $allStatements=getpersonfullInfo($baseuri,$qitem);
@@ -180,8 +179,8 @@ $events = [
                 </div>
             </div>
             <div class="timeline-controls">
-                <div class="timeline-prev no-select"><img src="assets/images/chevron-down-dark.svg" alt="Previous Arrow"></div>
-                <div class="timeline-next no-select"><img src="assets/images/chevron-down-dark.svg" alt="Next Arrow"></div>
+                <div class="timeline-prev no-select"><img src="<?php echo BASE_URL?>assets/images/chevron-down-dark.svg" alt="Previous Arrow"></div>
+                <div class="timeline-next no-select"><img src="<?php echo BASE_URL?>assets/images/chevron-down-dark.svg" alt="Next Arrow"></div>
             </div>
         </div>
     </section>
