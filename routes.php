@@ -52,6 +52,10 @@ $GLOBALS['routes'] = array(
     'recordSource' => 'recordSource.php',
     'fullStory' => 'fullStory.php',
     'fullProject' => 'fullProject.php',
+    'peopleResults' => 'peopleResults.php',
+    'eventResults' => 'eventResults.php',
+    'placeResults' => 'placeResults.php',
+    'sourceResults' => 'sourceResults.php',
 );
 
 $location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";

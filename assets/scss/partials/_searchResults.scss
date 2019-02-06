@@ -543,7 +543,7 @@ span.align-right.show {
                     .card-info{
                         display: flex;
                         flex-wrap: wrap;
-                        height: 150px;
+                        height: fit-content; //150px
                         margin: -10px;
                         width: 100%;
                         p{
@@ -622,7 +622,7 @@ span.align-right.show {
                                 //display: none;
                                 visibility: hidden;
                                 opacity: 0;
-                                transition: visibility 0s, opacity 0.5s, linear;
+                                transition: visibility 1s, opacity 1s, linear;
                                 background: $base-dark;
                                 box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
                                 color: $base-light;
