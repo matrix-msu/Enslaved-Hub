@@ -8,6 +8,7 @@ define("BASE_VIEW_URL", BASE_URL . "views/");
 define("BASE_IMAGE_URL", BASE_URL . "assets/images/");
 define("BASE_CSS_URL", BASE_URL . "assets/stylesheets/style.css");
 define("BASE_MODULE_URL", BASE_URL . "modules/");
+define("BASE_LEAFLET_URL", BASE_URL . "assets/leaflet/");
 
 //project specific file paths - you should never use relative paths
 define("BASE_PATH",  "/matrix/home/noah.girard/public_html/enslaved/");
@@ -66,6 +67,11 @@ define("JS_GLOBALS",
     "var BASE_IMAGE_URL ='".BASE_IMAGE_URL."';" .
     "</script>"
 );
+
+//includes all the php files from wikiconstants directory
+foreach(glob('wikiconstants' . "/*.php") as $file){
+    require_once $file;
+}
 
 //include the lib files
 require_once( BASE_LIB_PATH . "configFunctions.php" );

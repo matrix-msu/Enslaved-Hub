@@ -478,8 +478,25 @@ var connection_lists = [
 
 var connections = '<div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div>';
 
-$("span.grid-view").click(function gridView (e) { // grid view
-    e.stopPropagation()
+//$("span.grid-view").click(function gridView (e) { // grid view
+
+$(document).ready(function () {
+    $.ajax({
+        url: BASE_URL + "api/blazegraph",
+        type: "GET",
+        data: {
+            preset: 'people',
+            filters:  {'sex': 'female'}
+        },
+        'success': function (data) {
+            result_array = JSON.parse(data);
+            console.log(result_array)
+            displayCards();
+        }
+    });
+});
+
+function displayCards() {
     if (cards === false) {
         $('tbody > tr').remove();
         $("#search-result-configure-download-row").hide();
@@ -491,22 +508,28 @@ $("span.grid-view").click(function gridView (e) { // grid view
         if (result) {
             result_array.length = result
         }
-        var testCount = 0; //test
-        $.each(result_array,function () {
-            if(testCount%2 == 0){
-                $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_content+connections+'</div></li>').appendTo("ul.row");
-            }else{
-                $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_contentTEST+connections+'</div></li>').appendTo("ul.row");
-            }
-            testCount++;
+        //var testCount = 0; //test
+        result_array.forEach(function (card) {
+            $(card).appendTo("ul.row");
         });
+
+        //$.each(result_array,function () {
+        ////    //if(testCount%2 == 0){
+        //    console.log($(this))
+        //        $(this).appendTo("ul.row");
+        //    //}else{
+        //    //    $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_contentTEST+connections+'</div></li>').appendTo("ul.row");
+        //    //}
+        //    //testCount++;
+        //});
         cards = true;
         view = 'grid';
         window.localStorage.setItem('cards', cards);
         window.localStorage.setItem('view', view);
         // $('div.result-column').css('padding', '0', 'margin-top', '-30px', 'margin-bottom', '-15px');
     }
-});
+}
+
 
 $("span.table-view").click(function tableView (e) { // table view
     e.stopPropagation()

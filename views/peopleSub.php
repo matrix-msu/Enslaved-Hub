@@ -20,19 +20,27 @@
     <ul class="cards">
       <?php foreach (sexTypes as $sex => $qvalue) {
         echo '<li>
-            <a href="'.BASE_URL.'peopleResults/">'.$sex.'<div id="arrow"></div><span>'.counterOfGender(sexTypes[$sex]).'</span></a>
-             </li>';
+            <a href="'.BASE_URL.'peopleResults/?sex='.$sex.'">'.$sex.'<div id="arrow"></div><span id="gender-'.$qvalue.'"></span></a></li>';
       }?>
-  <!--      <li>
-            <a href="<?php echo BASE_URL?>peopleResults">Male<div id="arrow"></div><span><?php echo counterOfGender(sexTypes['male']);?></span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL?>peopleResults">Female<div id="arrow"></div><span><?php echo counterOfGender(sexTypes['female']);?></span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL?>peopleResults">Unidentified<div id="arrow"></div><span><?php echo counterOfGender(sexTypes['unknown sex']);?></span></a>
-        </li>-->
     </ul>
 </div>
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $.each(<?php echo json_encode(sexTypes);?>, function(){
+            var temp = this;
+            $.ajax({
+                url: BASE_URL + 'api/counterOfGender',
+                method: "GET",
+                data: {gender: temp},
+                'success': function (data) {
+                    $('#gender-'+temp).html(data);
+                }
+            });
+        });
+
+    });
+</script>
