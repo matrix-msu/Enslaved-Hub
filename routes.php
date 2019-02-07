@@ -5,6 +5,7 @@ $GLOBALS['api_routes'] = array(
     'api/printEpisodes' => array('functions.php', 'printEpisodes'),
     'api/admin' => array('functions.php', 'admin'),
     'api/blazegraph' => array('functions.php', 'blazegraph'),
+	'api/counterOfGender' => array('explorefunctions.php', 'counterOfGender'),
 );
 
 $GLOBALS['routes'] = array(

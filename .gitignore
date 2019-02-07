@@ -1,3 +1,10 @@
-/*.htaccess
-/config.php
-/*.sass-cache/
+# bootstrap
+config.php
+config.json
+
+# htaccess files
+.htaccess
+
+# Directories
+/.idea
+/.sass-cache

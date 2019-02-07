@@ -111,10 +111,10 @@ function counterofAllitems(){
   }
 }
 //counter of a specific gender
-function counterOfGender($gender){
+function counterOfGender(){
   $query="SELECT (COUNT(?item) AS ?count) WHERE {
     ?item wdt:P3/wdt:P2  wd:Q2 .
-  	?item wdt:P17 wd:".$gender."}";
+  	?item wdt:P17 wd:".$_GET['gender']."}";
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');

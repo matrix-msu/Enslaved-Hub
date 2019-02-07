@@ -29,15 +29,19 @@ function admin(){
 
 function blazegraph()
 {
-    if (isset($_GET['delete'])) {
-        $path = "functions/queries.json";
-        $contents = file_get_contents($path);
-        $contents = json_decode($contents, true);
-        unset($contents[$_GET['delete']]);
-        $contents = array_values($contents);
-        $contents = json_encode($contents);
-        echo file_put_contents($path, $contents);
-        die;
+//    if (isset($_GET['delete'])) {
+//        $path = "functions/queries.json";
+//        $contents = file_get_contents($path);
+//        $contents = json_decode($contents, true);
+//        unset($contents[$_GET['delete']]);
+//        $contents = array_values($contents);
+//        $contents = json_encode($contents);
+//        echo file_put_contents($path, $contents);
+//        die;
+//    }
+
+    if (isset($_GET['filters'])){
+        $filtersArray = $_GET['filters'];
     }
 
     if (isset($_GET['preset'])) {
@@ -45,6 +49,7 @@ function blazegraph()
         $query = array('query' => "");
         switch ($preset){
             case 'people':
+
                 $query['query'] =
                         'SELECT ?person ?personLabel ?name ?sex ?sexLabel ?race ?age ?ageLabel ?status ?statusLabel ?role ?roleLabel ?owner ?ownerLabel ?match ?matchLabel WHERE {
                       SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
@@ -138,26 +143,28 @@ function blazegraph()
     curl_close($ch);
 //    echo $result;
 
+//
+//    $path = "functions/queries.json";
+//    $contents = file_get_contents($path);
+//    $contents = json_decode($contents, true);
+//    $contents[] = $query['query'];
+//    $contents = json_encode($contents);
+//
+//    file_put_contents($path, $contents);
 
-    $path = "functions/queries.json";
-    $contents = file_get_contents($path);
-    $contents = json_decode($contents, true);
-    $contents[] = $query['query'];
-    $contents = json_encode($contents);
 
-    file_put_contents($path, $contents);
-
-
-
+//    return $result;
     return createCards($result, $preset);
 }
 
+// this one is only used for blazegraph page
 function createCards($results, $preset = 'default'){
     $results = json_decode($results, true)['results']['bindings'];
 //    print_r($results[0]);die;
 
-    $cards = "";
-    foreach ($results as $record) {
+    $cards = Array();
+
+    foreach ($results as $index => $record) {
         switch ($preset){
             case 'people':
                 $fullName = $record['personLabel']['value'];
@@ -176,46 +183,38 @@ function createCards($results, $preset = 'default'){
                 $dateRange = "todo";
                 $location = "todo";
 
+                $connection_lists = Array(
+                    '<h1>10 Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
+                    '<h1>10 Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
+                    '<h1>10 Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
+                    '<h1>10 Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>',
+                    '<h1>10 Connected Projects</h1><ul><li>Project Name <div id="arrow"></div></li><li>Project Name is Longer<div id="arrow"></div></li><li>Project Name <div id="arrow"></div></li><li>View All Project Connections <div id="arrow"></div></li></ul>'
+                );
 
-                $card= "
-                    <div class='record'>
-                        <div class='image-and-name'>
-                            <img src='".BASE_IMAGE_URL."blazegraph/PersonCard.jpg' alt='record image'>
-                            <p class='name'>$firstName<br>$lastName</p>
-                        </div>
-                        <div class='record-main'>
-                            <div class='metadata'>
-                                <div class='column'>
-                                     <div class='metadata-row'>
-                                        <span>Person Status:</span><p class='person-status'>$status</p>
-                                    </div>
-                                    <div class='metadata-row'>
-                                        <span>Origin:</span><p class='origin'>$origin</p>
-                                    </div>
-                                    <div class='metadata-row'>
-                                        <span>Date Range:</span><p class='date-range'>$dateRange</p>
-                                    </div>
-                                </div>
-                                <div class='column'>
-                                    <div class='metadata-row'>
-                                        <span>Sex:</span><p class='sex'>$sex</p>
-                                    </div>
-                                    <div class='metadata-row'>
-                                        <span>Location:</span><p class='location'>$location</p>
-                                    </div>
-                                </div>
+                $connections = '<div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'.$connection_lists[0].
+                               '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'.$connection_lists[1].
+                               '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'.$connection_lists[2].
+                               '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'.$connection_lists[3].
+                               '</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'.$connection_lists[4].
+                               '</div></div></div>';
 
-                            </div>
-                            <div class='bottom-row'>
-                                <div class='icon-container'><img src='".BASE_IMAGE_URL."blazegraph/People.svg' alt=''><span>10</span></div>
-                                <div class='icon-container'><img src='".BASE_IMAGE_URL."blazegraph/Places.svg' alt=''><span>3</span></div>
-                                <div class='icon-container'><img src='".BASE_IMAGE_URL."blazegraph/Events.svg' alt=''><span>4</span></div>
-                                <div class='icon-container'><img src='".BASE_IMAGE_URL."blazegraph/Sources.svg' alt=''><span>2</span></div>
-                                <div class='icon-container'><img src='".BASE_IMAGE_URL."blazegraph/Projects.svg' alt=''><span>1</span></div>
-                            </div>
-                        </div>
-                    </div>
-                ";
+                $card_icon = 'Person-light.svg';
+
+                $card = "<li><div class='container card-image'>
+                            <p>$fullName</p>
+                            <img src='../assets/images/$card_icon'>
+                            </div><div class='container cards'>
+                            <div class='card-info'>
+                            <p><span>Person Status: </span><span class='multiple'>$status<span class='tooltip'>Enslaved, Freed, Owner, Status</span></span></p>
+                            <p><span>Sex: </span>$sex</p>
+                            <p><span>Origin: </span>$origin</p>
+                            <p><span>Location: </span>$location</p>
+                            <p><span>Date Range: </span>$dateRange</p></div>
+                            $connections
+                            </div></li>";
+
+
+                array_push($cards, $card);
                 break;
             case 'places':
                 $placeName = $record['place3Label']['value'];
@@ -311,13 +310,221 @@ function createCards($results, $preset = 'default'){
                 break;
         }
 
-
-
-        $cards .= $card;
     }
 
-    return $cards;
+    return json_encode($cards);
 }
+
+
+function printFeaturedEvents(){
+    if( !isset($_GET['category'])||!isset($_GET['start'])||!isset($_GET['limit']) ){
+        //todo- redirect 404 or 500
+        echo 'hi';
+        return;
+    }
+    echo($_GET['category']);
+    $data = json_decode(SearchOneForm(
+        PID,
+        $GLOBALS[$_GET['category']][PID],
+        'ALL',
+        [],
+        "",
+        [],
+        $_GET['start'],
+        $_GET['limit'],
+        ['size'=>true]
+    ),true);
+
+    $count = $data['counts']['global'];
+    $data = $data['records'][0];
+    $counter = count($data);
+    $html = '';
+    $index = -1;
+    if( isset($_GET['index'])){
+        $index = $_GET['index']-1;
+    }
+
+
+    $dots = '';
+    for ($i = 0; $i < $counter; $i++) {
+        $dots .= "<div class='dot' index=$i></div>";
+    }
+
+//    $dots = '';
+//    for ($i = 0; $i < $count; $i++) {
+//        $dots .= "<div class='dot' index=$i></div>";
+//    }
+    echo($data);
+    var_dump($data);die;
+    if($_GET['category'] == 'PEOPLE_SID_ARRAY') {
+        $category = 'people';
+
+        foreach ($data as $record) {
+            $index++;
+            $background = './assets/images/SourceCard.jpg';
+            $icon = './assets/images/Event-dark.svg';
+            $view_text = 'VIEW EVENT';
+
+            if (array_key_exists("background-image", $record) && $record['background-image'] != '') {
+                $background = $record['background-image'];
+            }
+
+            $name = 'Name: ';
+            if (isset($record['Name']) && isset($record['Name']['value'])) {
+                $name .= $record['Name']['value'];
+            }
+            $id = 'ID: ';
+            if (isset($record['Name Identifier']) && isset($record['Name Identifier']['value'])) {
+                $id .= $record['Name Identifier']['value'];
+            }
+            $voyage = 'Voyage ID: ';
+            if (isset($record['VOYAGE ID']) && isset($record['VOYAGE ID']['value'])) {
+                $voyage .= $record['VOYAGE ID']['value'];
+            }
+            $status = 'Gender: ';
+            if (isset($record['Gender']) && isset($record['Gender']['value'])) {
+                $status .= $record['Gender']['value'];
+            }
+            $registered = 'Register ID: ';
+            if (isset($record['Register ID']) && isset($record['Register ID']['value'])) {
+                $registered .= $record['Register ID']['value'];
+            }
+        }
+    }
+
+    if($_GET['category'] == 'EVENTS_SID_ARRAY') {
+        $category = 'events';
+
+        foreach ($data as $record) {
+            $index++;
+            $background = './assets/images/SourceCard.jpg';
+            $icon = './assets/images/Event-dark.svg';
+            $view_text = 'VIEW EVENT';
+
+            if (array_key_exists("background-image", $record) && $record['background-image'] != '') {
+                $background = $record['background-image'];
+            }
+
+            $name = 'Name: ';
+            if (isset($record['Name']) && isset($record['Name']['value'])) {
+                $name .= $record['Name']['value'];
+            }
+            $id = 'ID: ';
+            if (isset($record['Name Identifier']) && isset($record['Name Identifier']['value'])) {
+                $id .= $record['Name Identifier']['value'];
+            }
+            $voyage = 'Voyage ID: ';
+            if (isset($record['VOYAGE ID']) && isset($record['VOYAGE ID']['value'])) {
+                $voyage .= $record['VOYAGE ID']['value'];
+            }
+            $status = 'Gender: ';
+            if (isset($record['Gender']) && isset($record['Gender']['value'])) {
+                $status .= $record['Gender']['value'];
+            }
+            $registered = 'Register ID: ';
+            if (isset($record['Register ID']) && isset($record['Register ID']['value'])) {
+                $registered .= $record['Register ID']['value'];
+            }
+        }
+    }
+
+    if($_GET['category'] == 'PLACES_SID_ARRAY') {
+        $category = 'events';
+
+        foreach ($data as $record) {
+            $index++;
+            $background = './assets/images/SourceCard.jpg';
+            $icon = './assets/images/Event-dark.svg';
+            $view_text = 'VIEW EVENT';
+
+            if (array_key_exists("background-image", $record) && $record['background-image'] != '') {
+                $background = $record['background-image'];
+            }
+
+            $name = 'Name: ';
+            if (isset($record['Name']) && isset($record['Name']['value'])) {
+                $name .= $record['Name']['value'];
+            }
+            $id = 'ID: ';
+            if (isset($record['Name Identifier']) && isset($record['Name Identifier']['value'])) {
+                $id .= $record['Name Identifier']['value'];
+            }
+            $voyage = 'Voyage ID: ';
+            if (isset($record['VOYAGE ID']) && isset($record['VOYAGE ID']['value'])) {
+                $voyage .= $record['VOYAGE ID']['value'];
+            }
+            $status = 'Gender: ';
+            if (isset($record['Gender']) && isset($record['Gender']['value'])) {
+                $status .= $record['Gender']['value'];
+            }
+            $registered = 'Register ID: ';
+            if (isset($record['Register ID']) && isset($record['Register ID']['value'])) {
+                $registered .= $record['Register ID']['value'];
+            }
+        }
+    }
+
+    if($_GET['category'] == 'SOURCES_SID_ARRAY') {
+        $category = 'events';
+
+        foreach ($data as $record) {
+            $index++;
+            $background = './assets/images/SourceCard.jpg';
+            $icon = './assets/images/Event-dark.svg';
+            $view_text = 'VIEW EVENT';
+
+            if (array_key_exists("background-image", $record) && $record['background-image'] != '') {
+                $background = $record['background-image'];
+            }
+
+            $name = 'Name: ';
+            if (isset($record['Name']) && isset($record['Name']['value'])) {
+                $name .= $record['Name']['value'];
+            }
+            $id = 'ID: ';
+            if (isset($record['Name Identifier']) && isset($record['Name Identifier']['value'])) {
+                $id .= $record['Name Identifier']['value'];
+            }
+            $voyage = 'Voyage ID: ';
+            if (isset($record['VOYAGE ID']) && isset($record['VOYAGE ID']['value'])) {
+                $voyage .= $record['VOYAGE ID']['value'];
+            }
+            $status = 'Gender: ';
+            if (isset($record['Gender']) && isset($record['Gender']['value'])) {
+                $status .= $record['Gender']['value'];
+            }
+            $registered = 'Register ID: ';
+            if (isset($record['Register ID']) && isset($record['Register ID']['value'])) {
+                $registered .= $record['Register ID']['value'];
+            }
+        }
+    }
+
+    $html .= "<a class='card' href='' index='$index' set='0'>
+                <div class='card-header $category-cards'>
+                    <img class='background' src=$background alt='Record Image'>
+                    <img class='icon' src='$icon' alt='Record Icon'>
+                    <h3 class='card-title'>$name</h3>
+                </div>
+
+                <div class='card-body'>
+                    <div class='card-data'>
+                        <p>$id</p>
+                        <p>$voyage</p>
+                        <p>$status</p>
+                        <p>$registered</p>
+                    </div>
+
+                    <p class='card-link'>
+                        $view_text
+                        <img class='arrow-right' src='./assets/images/arrow-right-white.svg' alt='Arrow Right'>
+                    </p>
+                </div>
+            </a>
+            ";
+    return json_encode(array('html'=>$html, 'count'=>$count, 'dots'=>$dots, 'counter'=>$counter));
+}
+
 
 function xss_clean($data) {
     // Fix &entity\n;
