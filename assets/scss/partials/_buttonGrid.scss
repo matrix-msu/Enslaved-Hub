@@ -1,0 +1,103 @@
+.category{
+    background-color: $base-light;
+    height: auto;
+    width: 100%;
+    
+    .categorywrap{
+        margin: 0 auto;
+        max-width: 1000px;
+        
+        .button-grid{
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            list-style-type: none;
+            margin: 50px 0 0 0;
+            padding: 0;
+            
+            a{
+                width: 30%;
+            
+                li{
+                    margin-bottom: 30px;
+
+                    .buttons{
+                        border: 2px solid rgba(13,18,48,0.1);
+                        box-shadow: 0 2px 3px 0 rgba(30,30,30,0.05);
+                        color: $base-dark;
+                        font-family: montserratregular;
+                        font-size: 14px;
+                        height: 40px;
+                        line-height: 38px;
+                        padding: 5px;
+                        position: relative;
+                        text-align: center;
+                        transition: border 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+
+                        &:hover{
+                            border: 2px solid $sub-base;
+                            box-shadow: 0 12px 13px 0 rgba(30,30,30,0.05);
+                            color: $sub-base;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-width-400){
+    .category{
+        padding: 50px 0;
+
+        .categorywrap{
+            padding: 0 4%;
+
+            .category-header{
+                font-size: 30px;
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width: $mobile-button-breakpoint){
+    .category{
+
+        .categorywrap{
+
+            .button-grid{
+
+                a{
+                    width: 48%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-button-breakpoint-2){
+    .category{
+
+        .categorywrap{
+
+            .button-grid{
+
+                a{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-max-width){
+    .categorywrap{
+        padding: 0 6%;
+    }
+}

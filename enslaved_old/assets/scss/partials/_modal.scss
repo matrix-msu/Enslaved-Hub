@@ -1,0 +1,178 @@
+
+#modal-dim-background {
+    background: #000;
+    display: none;
+    height: 100%;
+    opacity: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+a.modal {
+    cursor: pointer;
+    color: #000;
+}
+.modal-view {
+    background: rgba(51, 51, 51, -0.5);
+    color: $base-light;
+    display: none;
+    height: 0%;
+    transition: 400ms;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    z-index: 1001;
+    
+    .modal-wrap {
+        height: 80%;
+        margin: -100% auto 0;
+        position: relative;
+        transition: 400ms;
+        width: 95%;
+        .arrow-left,
+        .arrow-right {
+            background: url(../images/chevron-down.svg) no-repeat;
+            background-color: $base-dark;
+            background-position: 16px;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 10px 40px 0 rgba(13,18,48,0.4);
+            height: 45px;
+            margin: 19px 0;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            transition: 400ms;
+            width: 45px;
+            z-index: 1;
+            &:hover {
+                cursor: pointer;
+                background-color: $sub-base;
+            }
+            &:focus {
+                outline: none;
+            }
+        }
+        .arrow-left {
+            left: 0;
+            margin-left: 24px;
+            transform: rotate(90deg);
+        }
+        .arrow-right {
+            margin-right: 24px;
+            right: 0;
+            transform: rotate(-90deg);
+        }
+        
+        p,
+        div {
+            position: relative;
+            padding: 15px 0 40px;
+            text-align: center;
+            
+            #modal-close {
+                background-color: $sub-base;
+                border-radius: 50%;
+                float: right;
+                height: 50px;
+                margin: 5px;
+                position: relative;
+                width: 50px;
+                
+                img {
+                    box-shadow: 0 15px 45px 0 rgba(0,0,0,0.5);
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    margin: auto;
+                }
+            }
+        }
+        .close {
+            position: fixed;
+            right: 30px;
+            z-index: 1;
+        }
+        
+        #modal-img {
+            height: 100%;
+            margin: 10px 0 0;
+            width: 100%;
+            
+            img {
+                display: block;
+                max-height: 100%;
+                max-width: 100%;
+                margin: 0 auto;
+                width: auto;
+            }
+            .modal-img-view {
+                max-height: unset;
+                max-width: unset;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 0;
+            }
+            div {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                .plus {
+                    padding: 15px;
+                }
+                .minus {
+                    padding: 22px 15px;
+                }
+                span {
+                    background-color: $base-dark;
+                    border-radius: 50%;
+                    display: inline-block;
+                    margin: 40px 10px 0;
+                    transition: 400ms;
+                    z-index: 1;
+                }
+                .plus,
+                .minus {
+                    &:hover {
+                        background-color: $sub-base;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-width-header) {
+    .modal-view .modal-wrap #modal-img .modal-img-view {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: $mobile-width-400) {
+   .modal-view {
+    color: $base-light;
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto;
+    z-index: 1001;
+    }
+}

@@ -58,3 +58,7 @@ h1,h2,h3,h4,h5,p,a,span,li,label,input{
         margin-left: 2px;
     }
 }
+
+input:not([type="image"]), textarea {
+    box-sizing: border-box;
+}

@@ -1,0 +1,62 @@
+#footer{
+    background-color: #0D2132;
+    
+    .footerwrap{
+        max-width: 1000px;
+        padding: 80px 6%;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+
+        .mellon{
+            max-width: 330px;
+            width: 100%;
+            margin: 50px 0;
+        }
+        .top-button{
+            height: 60px;
+            width: 330px;
+            border: 1px solid rgba(255,253,251,0.35);
+            border-radius: 100px;
+            background-color: #122E46;
+            box-shadow: 0 4px 16px 0 rgba(0,0,0,0.05);
+            cursor: pointer;
+            color: #FFFFFF;
+            font-family: aleoregular;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+
+            &:focus{
+                outline: none;
+            }
+        }
+        //FIX to flip background arrow without flipping text
+        .top-button:before{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: url(../images/Arrow.svg);
+            background-repeat: no-repeat;
+            background-position: 90% 50%;
+            -webkit-transform: scaleY(-1);
+            transform: scaleY(-1);
+        }
+    }
+}
+
+@media screen and (max-width: 820px){
+    #footer{
+        .footerwrap{
+            justify-content: space-around;
+            .mellon{
+                margin-right: 15px;
+            }
+        }
+    }
+}

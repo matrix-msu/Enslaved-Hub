@@ -14,12 +14,13 @@ $().ready(function(){
       var currentKid = $($eventPoints[0]).data('kid');
       var eventsCount = $eventPoints.length;
     
-      // Set info arrow to point at current point
-      // var pointLeft = Math.round($($eventPoints[0]).offset().left - $tlInfoContainer.offset().left) + 5;
-      // $tlInfoContainerArrowBottom.css('left', pointLeft);
-      // $tlInfoContainerArrowtop.css('left', pointLeft);
+      //Set info arrow to point at current point
+      //var pointLeft = Math.round($($eventPoints[0]).offset().left - $tlInfoContainer.offset().left) + 5;
+      //$tlInfoContainerArrowBottom.css('left', pointLeft);
+      //$tlInfoContainerArrowtop.css('left', pointLeft);
     
       setTimelineTitle(currentKid);
+      
 
       //Move container to correct position
       $tlContainer.appendTo(".timeline-section");
@@ -72,7 +73,7 @@ $().ready(function(){
     
       // Info Select
       var $infoSelect = $('.info-select');
-      var $info = $('.info');
+      var $info = $('.infowrap');
     
       // Switch between Event and Place Info for an Event on the timeline
       $infoSelect.click(function() {
@@ -128,6 +129,14 @@ $().ready(function(){
         $sourceSelect.removeClass('active');
         $('source-info-' + kid).addClass('active');
       }
+
+      //Removes the timeline container if there is only 1 event
+      if (eventsCount <= 1){
+        $tlContainer.remove();
+      }
+      //Set the arrow to the first event, or no event if there is only 1
+      setEventByKid(currentKid, $($eventPoints[0]));
+
     }
     
     initializeTimeline();

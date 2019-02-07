@@ -1,0 +1,74 @@
+#pagination-module {
+  font-family: montserratregular;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-bottom: 50px;
+  margin-left: auto;
+  padding: 30px 5%;
+  position: relative;
+  text-align: center;
+  transition: 400ms;
+  width: 40%;
+}
+#pagination-module span {
+  /*font-family: montserratregular !important;*/
+}
+#pagination-module .align-left,
+#pagination-module .align-right {
+  background-color: #ffffff;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(47, 50, 95, 0.2);
+  display: block;
+  opacity: 1;
+  padding: 22px 20px;
+}
+#pagination-module .align-left:hover,
+#pagination-module .align-right:hover {
+  background-color: rgba(13, 18, 48, 0.05);
+  border: 1px solid #2F325F;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.03);
+}
+#pagination-module .align-left {
+  bottom: 13px;
+  transform: rotate(90deg);
+  position: absolute;
+  left:0;
+  transition: 400ms;
+}
+#pagination-module .align-right {
+  bottom: 13px;
+  transform: rotate(-90deg);
+  position: absolute;
+  right:0;
+  transition: 400ms;
+}
+#pagination-module span.active {
+  opacity: 1;
+}
+#pagination-module span {
+  cursor: pointer;
+  margin: 0 5px;
+  opacity: 0.5;
+}
+#pagination-module span:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 1100px) {
+    #pagination-module{
+		width: 60%;
+	}
+}
+
+@media screen and (max-width: 500px) {
+  #pagination-module {
+    padding: 30px 0 80px;
+    margin: 0 auto 40px;
+    width: 95%;
+    min-width: 300px;
+  }
+  #pagination-module #pagiLeft, #pagination-module #pagiRight {
+    box-shadow: 0 2px 3px 0 rgba(30, 30, 30, 0.05);
+    padding: 17px 15px;
+  }
+}

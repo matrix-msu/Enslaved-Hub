@@ -1,0 +1,881 @@
+.container.middlewrap h1.search {
+  margin-bottom: 20px;
+}
+
+div.searched-term {
+  background-color: rgba(13, 18, 48, 0.8);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 6px;
+  padding: 10px;
+}
+div.searched-term img {
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.search form div.search-field {
+  box-sizing: border-box;
+  display: flex;
+  height: 50px !important;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+}
+.search form div.search-field input#search-field {
+  background-color: unset !important;
+  box-shadow: none !important;
+  border: none !important;
+  order: 999;
+  padding: 0 !important;
+  width: -webkit-fill-available;
+}
+
+.column .cardwrap .row li a {
+  color: #0D1230;
+}
+
+.search-button-header {
+  margin-bottom: 40px;
+}
+.search-button-header #new-search-button {
+  color: #27AD88;
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.search-button-header #new-search-button img {
+  padding-bottom: 1px;
+}
+
+#searchResults-showing {
+  font-size: 17px;
+  margin-top: 60px;
+}
+
+main.search-results {
+  margin: 0;
+  max-width: 100%;
+  padding: 0;
+  position: relative;
+  transition: 400ms;
+}
+
+.filter-menu {
+  background-color: #fcfcfc;
+  border: 2px solid rgba(26, 26, 26, 0.05);
+  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+  position: absolute;
+  top: 0;
+  left: -270px;
+  bottom: 0;
+  padding: 20px;
+  transition: 400ms;
+  width: 258px;
+  z-index: 3;
+}
+.filter-menu h3 {
+  font-size: 20px;
+  padding: 10px 0;
+}
+.filter-menu hr {
+  box-sizing: border-box;
+  border: 1px solid rgba(26, 26, 26, 0.05);
+  margin: 20px 0;
+  margin-left: -20px;
+  width: 110%;
+}
+.filter-menu ul {
+  list-style: none;
+  padding: 0;
+}
+.filter-menu ul li.filter-cat {
+  cursor: pointer;
+  font-family: montserratregular;
+  font-size: 16px;
+  padding: 15px 0;
+  position: relative;
+  transition: 200ms;
+  z-index: 0;
+}
+.filter-menu ul li.filter-cat span img {
+  margin-bottom: 2px;
+}
+.filter-menu ul ul#submenu {
+  margin-bottom: 20px;
+}
+
+ul#submenu {
+  display: none;
+  font-size: 16px;
+}
+ul#submenu li {
+  padding: 3px 0;
+}
+ul#submenu li label {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+ul#submenu li label input {
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+}
+ul#submenu li label p {
+  font-size: 14px;
+  font-weight: 300;
+  padding-top: 5px;
+}
+ul#submenu li label p em {
+  font-style: normal;
+}
+ul#submenu li label span {
+  border: 1px solid #1A1A1A;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+}
+ul#submenu li label:hover input ~ span {
+  /* on mouse-over, change background color */
+  background-color: #ccc;
+}
+ul#submenu li label input:checked ~ span {
+  /* when checked, add background color */
+  background-color: #27AD88;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
+  border: none;
+}
+ul#submenu li span:after {
+  /* create the checkmark/indicator (hidden when not checked) */
+  content: "";
+  position: absolute;
+  display: none;
+}
+ul#submenu li label input:checked ~ span:after {
+  /* show checkmark when checked */
+  display: block;
+}
+ul#submenu li label input:checked ~ p {
+  /* change label text color when checked */
+  color: #27AD88;
+  font-weight: 500;
+}
+ul#submenu li label span:after {
+  /* style the checkmark/indicator */
+  left: 8px;
+  top: 4px;
+  width: 3px;
+  height: 7px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+ul#submenu.show {
+  display: block;
+}
+
+.filter-menu.show {
+  left: 0;
+}
+
+span.align-left {
+  position: absolute;
+  left: 0;
+}
+
+span.align-right {
+  position: absolute;
+  right: 0;
+  transition: 400ms;
+}
+
+span.align-right.show {
+  transform: rotate(180deg);
+}
+
+#searchResults {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  transition: 400ms;
+  vertical-align: top;
+  max-width: 1000px;
+}
+#searchResults #search-result-controls {
+  font-size: 14px;
+  padding: 50px 5% 25px;
+  position: relative;
+  text-align: center;
+  width: 90%;
+}
+#searchResults #search-result-controls span {
+  font-family: montserratregular !important;
+}
+#searchResults #search-result-controls span.show-filter img {
+  margin-right: 5px;
+}
+#searchResults #search-result-controls span.grid-view, #searchResults #search-result-controls span.table-view {
+  position: relative;
+}
+#searchResults #search-result-controls span.grid-view p.tooltip,
+#searchResults #search-result-controls span.table-view p.tooltip {
+  background: #0D1230;
+  box-shadow: 0 25px 35px 0 rgba(13, 18, 48, 0.15);
+  color: #FFFFFF;
+  display: none;
+  font-size: 12px;
+  white-space: nowrap;
+  position: absolute;
+  padding: 10px;
+  bottom: 32px;
+  right: -25px;
+}
+#searchResults #search-result-controls span.table-view p.tooltip {
+  right: -30px;
+}
+#searchResults #search-result-controls span.table-view img,
+#searchResults #search-result-controls span.grid-view img {
+  display: none;
+}
+#searchResults #search-result-controls span.grid-view p.tooltip.hovered,
+#searchResults #search-result-controls span.table-view p.tooltip.hovered {
+  display: block;
+}
+#searchResults #search-result-controls span.table-view img.show,
+#searchResults #search-result-controls span.grid-view img.show {
+  display: inline;
+}
+#searchResults #search-result-controls span {
+  cursor: pointer;
+}
+#searchResults #search-result-controls span img {
+  transition: 400ms;
+}
+#searchResults #search-result-controls span img.show {
+  transform: rotate(-180deg);
+}
+#searchResults #search-result-controls span.sort-by {
+  margin-left: 40px;
+}
+#searchResults #search-result-controls ul.sort-by {
+  left: 130px;
+}
+#searchResults #search-result-controls ul.results-per-page {
+  right: 110px;
+}
+#searchResults #search-result-controls ul {
+  background: #0D1230;
+  box-shadow: 0 25px 35px 0 rgba(13, 18, 48, 0.15);
+  color: #FFFFFF;
+  display: none;
+  list-style: none;
+  margin: 10px auto 0;
+  padding: 20px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: fit-content;
+  z-index: 1;
+}
+#searchResults #search-result-controls ul li {
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 5px 3px;
+}
+#searchResults #search-result-controls ul li:hover {
+  color: #27AD88;
+}
+#searchResults #search-result-controls ul.show {
+  display: block;
+}
+#searchResults #search-result-configure-download-row {
+  font-size: 12px;
+  padding: 25px 5% 50px;
+  position: relative;
+  width: 90%;
+}
+#searchResults #search-result-configure-download-row span {
+  font-family: montserratregular !important;
+}
+#searchResults #search-result-configure-download-row span {
+  cursor: pointer;
+}
+#searchResults #search-result-configure-download-row .align-left .modal {
+  color: #000;
+  font-family: montserratregular;
+  transition: 400ms;
+}
+#searchResults #search-result-configure-download-row .align-left .modal:hover {
+  color: #27AD88;
+}
+#searchResults #search-result-configure-download-row .align-right b, #searchResults #search-result-configure-download-row .align-left b {
+  cursor: default;
+}
+#searchResults #search-result-configure-download-row .align-right span:hover, #searchResults #search-result-configure-download-row .align-left span:hover {
+  color: #27AD88;
+}
+#searchResults div#search-result-wrap {
+  position: relative;
+}
+#searchResults div#search-result-wrap #search-result-table {
+  box-shadow: 0 7px 10px 0 rgba(0, 0, 0, 0.05);
+  margin-left: 200px;
+  overflow: auto;
+}
+#searchResults div#search-result-wrap #search-result-table span {
+  font-family: montserratregular !important;
+}
+#searchResults div#search-result-wrap #search-result-table table {
+  background-color: rgba(13, 18, 48, 0.05);
+  border-collapse: collapse;
+  border: 1px solid rgba(13, 18, 48, 0.03);
+  border-left: 0;
+  font-family: montserratregular;
+  font-size: 13px;
+  overflow: hidden;
+  width: 100%;
+}
+#searchResults div#search-result-wrap #search-result-table table th {
+  background-color: #fff;
+  font-weight: 500;
+}
+#searchResults div#search-result-wrap #search-result-table table th, #searchResults div#search-result-wrap #search-result-table table td {
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 20px;
+  margin: 0;
+}
+#searchResults div#search-result-wrap #search-result-table table thead {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+  text-align: left;
+}
+#searchResults div#search-result-wrap #search-result-table table thead tr {
+  font-size: 10px;
+}
+#searchResults div#search-result-wrap #search-result-table table thead tr th:first-child {
+  background-color: #fff;
+  border: 1px solid rgba(13, 18, 48, 0.03);
+  border-right: 0;
+  border-bottom: 0;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+  margin-bottom: 1px;
+  max-width: 200px;
+  position: absolute;
+  top: auto;
+  left: 0;
+  width: 200px;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody {
+  overflow: auto;
+  vertical-align: top;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr {
+  border: 2px solid rgba(26, 26, 26, 0.02);
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr td p {
+  display: inline-block;
+  font-size: 13px;
+  max-width: 120px;
+  width: max-content;
+  word-break: break-all;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr span.first {
+  display: none;
+  font-family: montserratbold;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr span.meta {
+  display: inline-block;
+  max-width: 120px;
+  width: max-content;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr th:first-child, #searchResults div#search-result-wrap #search-result-table table tbody tr td:first-child {
+  background-color: #fff;
+  border: 1px solid rgba(13, 18, 48, 0.03);
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+  margin-bottom: 1px;
+  max-width: 200px;
+  position: absolute;
+  top: auto;
+  left: 0;
+  width: 200px;
+  word-break: break-all;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr th:first-child {
+  border-top: 1px solid rgba(13, 18, 48, 0.03);
+  border-bottom: 1px solid rgba(13, 18, 48, 0.03);
+  top: 0;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr td:last-child {
+  display: none;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr a {
+  color: #0D1230;
+  font-size: 18px;
+  text-decoration: none;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr:hover {
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.03);
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr:hover td {
+  background-color: rgba(39, 173, 136, 0.15);
+}
+#searchResults div#search-result-wrap #search-result-table table tbody tr:last-child td:first-child {
+  border-bottom: 1px solid rgba(13, 18, 48, 0.1);
+}
+#searchResults #pagination {
+  font-family: montserratregular;
+  margin-top: 50px;
+  margin-right: 0;
+  margin-bottom: 50px;
+  margin-left: auto;
+  padding: 30px 5%;
+  position: relative;
+  text-align: center;
+  transition: 400ms;
+  width: 40%;
+}
+#searchResults #pagination span {
+  font-family: montserratregular !important;
+}
+#searchResults #pagination .align-left,
+#searchResults #pagination .align-right {
+  background-color: #ffffff;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(47, 50, 95, 0.2);
+  display: block;
+  opacity: 1;
+  padding: 22px 20px;
+}
+#searchResults #pagination .align-left:hover,
+#searchResults #pagination .align-right:hover {
+  background-color: rgba(13, 18, 48, 0.05);
+  border: 1px solid #2F325F;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.03);
+}
+#searchResults #pagination .align-left {
+  bottom: 13px;
+  transform: rotate(90deg);
+}
+#searchResults #pagination .align-right {
+  bottom: 13px;
+  transform: rotate(-90deg);
+}
+#searchResults #pagination span.active {
+  opacity: 1;
+}
+#searchResults #pagination span {
+  cursor: pointer;
+  margin: 0 5px;
+  opacity: 0.5;
+}
+#searchResults #pagination span:hover {
+  opacity: 1;
+}
+
+#searchResults.show {
+  margin-left: 290px !important;
+}
+
+.modal-view {
+  display: none;
+  height: 100%;
+  transition: 400ms;
+  width: 100%;
+}
+.modal-view .config-table-modal {
+  background: #FFFFFF;
+  box-shadow: 0 25px 33px 0 rgba(0, 0, 0, 0.05);
+  color: #0D1230;
+  margin: 100% auto;
+  margin-bottom: 0;
+  max-height: 625px;
+  overflow-y: auto;
+  transition: 400ms;
+  width: 70%;
+  height: 80%;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap {
+  font-size: 14px;
+  height: unset;
+  position: relative;
+  padding: 45px;
+  padding-bottom: 0;
+  margin: 0;
+  width: unset;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div.close {
+  background: #0D1230;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  padding: 15px;
+  position: absolute;
+  top: 45px;
+  right: 45px;
+  height: unset;
+  width: unset;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap h4 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap p {
+  font-size: 14px;
+  text-align: left;
+  padding-bottom: 10px;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap p select {
+  background: url(../images/chevron-down-dark.svg) no-repeat;
+  background-position: 95%;
+  border: 1px solid rgba(13, 18, 48, 0.15);
+  border-radius: 0;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  display: block;
+  font-family: montserratregular;
+  margin: 5px 15px 15px 0;
+  padding: 15px 10px;
+  transition: 400ms;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 43%;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap p select :focus {
+  outline: none;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div {
+  display: flex;
+  font-size: 14px;
+  height: 50%;
+  justify-content: space-between;
+  margin: 0;
+  transition: 200ms;
+  width: unset;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div {
+  display: inline-block;
+  margin-top: 5px;
+  vertical-align: top;
+  width: 43%;
+  height: 80%;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div div {
+  border: 1px solid rgba(13, 18, 48, 0.15);
+  box-sizing: border-box;
+  margin-top: 0;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div div ul {
+  list-style: none;
+  margin: 10px 5px;
+  padding-left: 0;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div div ul li {
+  cursor: pointer;
+  transition: 400ms;
+  padding: 5px;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div div ul li:hover {
+  background-color: rgba(39, 173, 136, 0.2);
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.left-col {
+  margin-right: 10px;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.left-col div {
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.04);
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.right-col {
+  margin-left: 10px;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.right-col div {
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.04);
+  position: relative;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.right-col div ul#selected-cols {
+  width: 80%;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.right-col div img {
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  border: 1px solid rgba(13, 18, 48, 0.15);
+  padding: 10px 8px;
+  position: absolute;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transition: 400ms;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.right-col div img:last-child {
+  top: 30%;
+  transform: rotate(180deg);
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.right-col div img:hover {
+  background-color: rgba(13, 18, 48, 0.05);
+  border: 1px solid #2F325F;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.03);
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.arrow-wrap {
+  width: 10%;
+  margin-top: 120px;
+  height: min-content;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.arrow-wrap img {
+  border: 1px solid rgba(13, 18, 48, 0.15);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  padding: 10px 8px;
+  transition: 400ms;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.arrow-wrap img:first-child {
+  margin-bottom: 20px;
+  transform: rotate(-90deg);
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.arrow-wrap img:last-child {
+  transform: rotate(90deg);
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div div.arrow-wrap img:hover {
+  background-color: rgba(13, 18, 48, 0.05);
+  border: 1px solid #2F325F;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.03);
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div.update-columns-button {
+  background: #0D1230;
+  box-shadow: 0 2px 3px 0 rgba(30, 30, 30, 0.05);
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: montserratregular;
+  font-size: 16px;
+  float: right;
+  height: unset;
+  margin-top: 15px;
+  padding: 15px 35px;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap div.close:hover,
+.modal-view .config-table-modal div.config-table-modal-content-wrap div.update-columns-button:hover {
+  opacity: 0.75;
+}
+
+@media screen and (min-width: 1330px) {
+  #search-result-wrap .column .cardwrap .row li {
+    margin: 10px !important;
+    width: 23% !important;
+  }
+}
+@media screen and (max-width: 1100px) {
+  #searchResults,
+#searchResults.show {
+    margin: 0 6%;
+  }
+
+  #searchResults #search-result-controls span.table-view p.tooltip {
+    right: -10px;
+  }
+  #searchResults #pagination {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 935px) {
+  #searchResults div#search-result-wrap #search-result-table {
+    margin-left: 145px;
+  }
+  #searchResults div#search-result-wrap #search-result-table table thead tr th:first-child,
+#searchResults div#search-result-wrap #search-result-table table tbody tr td:first-child {
+    width: 145px;
+  }
+}
+@media screen and (max-width: 860px) {
+  .modal-view .config-table-modal {
+    margin: 45px auto;
+    width: 90%;
+  }
+}
+@media screen and (max-width: 820px) {
+  main.search-results {
+    overflow: auto;
+  }
+
+  #searchResults #search-result-table.grid {
+    margin: 0 auto;
+    width: 750px;
+  }
+
+  #searchResults.show #search-result-table.grid {
+    width: 500px;
+  }
+
+  .filter-menu.show {
+    height: 500px;
+    top: 100px;
+    left: 0;
+  }
+}
+@media screen and (max-width: 770px) {
+  #searchResults #search-result-table.grid {
+    width: auto;
+  }
+  #searchResults #search-result-table.grid table.grid tbody.grid tr.grid {
+    display: block;
+    margin: 10px auto;
+    width: 95%;
+  }
+}
+@media screen and (max-width: 680px) {
+  .modal-view .config-table-modal div.config-table-modal-content-wrap p select {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 620px) {
+  #searchResults div#search-result-wrap #search-result-table {
+    margin-left: 135px;
+  }
+  #searchResults div#search-result-wrap #search-result-table table thead tr th:first-child,
+#searchResults div#search-result-wrap #search-result-table table tbody tr td:first-child {
+    width: 135px;
+  }
+
+  .modal-view .config-table-modal {
+    height: 90%;
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap {
+    padding: 35px 45px;
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div.close {
+    top: 25px;
+    right: 25px;
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div {
+    flex-wrap: wrap;
+    height: unset;
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div div {
+    display: block;
+    width: 100%;
+    height: 20%;
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div div.left-col {
+    margin: 0;
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div div.arrow-wrap {
+    margin: 30px 0 -30px;
+    transform: rotate(-90deg);
+    width: 100%;
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div div.arrow-wrap img:first-child {
+    transform: rotate(90deg);
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div div.arrow-wrap img:last-child {
+    transform: rotate(-90deg);
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div div.right-col {
+    margin: 0;
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div div.right-col div img:last-child {
+    margin-top: -10px;
+  }
+  .modal-view .config-table-modal div.config-table-modal-content-wrap div.update-columns-button {
+    margin-top: 70px;
+    margin-bottom: 30px;
+  }
+}
+@media screen and (max-width: 575px) {
+  #searchResults #search-result-controls {
+    padding: 30px 5% 60px;
+  }
+  #searchResults #search-result-controls .align-center {
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+  }
+  #searchResults #search-result-controls .align-center.sort-by {
+    margin-left: 110px;
+  }
+  #searchResults #search-result-controls .results-per-page.show {
+    left: -5px;
+  }
+  #searchResults #search-result-controls .sort-by.show {
+    left: 110px;
+  }
+  #searchResults #search-result-controls .align-right {
+    bottom: -5px;
+  }
+  #searchResults #search-result-controls ul {
+    margin: 0;
+    top: 102px;
+  }
+  #searchResults #search-result-configure-download-row {
+    padding: 40px 5% 65px;
+  }
+  #searchResults #search-result-configure-download-row .align-right {
+    right: unset;
+    left: 0;
+    bottom: 20px;
+  }
+  #searchResults #search-result-wrap {
+    padding-top: 15px;
+  }
+
+  .filter-menu.show {
+    top: 75px;
+  }
+}
+@media screen and (max-width: 500px) {
+  #searchResults #pagination {
+    padding: 30px 0 80px;
+    margin: 0 auto 40px;
+    width: 95%;
+    min-width: 300px;
+  }
+  #searchResults #pagination #pagiLeft, #searchResults #pagination #pagiRight {
+    box-shadow: 0 2px 3px 0 rgba(30, 30, 30, 0.05);
+    padding: 17px 15px;
+  }
+}
+@media screen and (max-width: 415px) {
+  .modal-view div.config-table-modal .config-table-modal-content-wrap div.update-columns-button {
+    padding: 15px 25px;
+  }
+}
+@media screen and (max-width: 400px) {
+  /* currently, this var = 400px */
+  .search-button-header {
+    margin-bottom: 0;
+    display: none;
+  }
+}
+@media screen and (max-width: 395px) {
+  .modal-view div.config-table-modal .config-table-modal-content-wrap div.update-columns-button {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,30 @@
+<IfModule mod_rewrite.c>
+
+
+RewriteEngine on
+
+RewriteBase /~seila.gonzalez/enslaved
+
+#Shows the .php files without displaying the .php extension in the URL
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME}\.php -f
+
+
+RewriteRule ^home/.*$ index.php [L]
+RewriteRule ^about/.*$ about.php [L]
+RewriteRule ^getInvolved/.*$ getInvolved.php [L]
+RewriteRule ^ourPartners/.*$ ourPartners.php [L]
+RewriteRule ^contactUs/.*$ contactUs.php [L]
+RewriteRule ^explorePeople/.*$ explorePeople.php [L]
+RewriteRule ^exploreEvents/.*$ exploreEvents.php [L]
+RewriteRule ^explorePlaces/.*$ explorePlaces.php [L]
+RewriteRule ^exploreSources/.*$ exploreSources.php [L]
+RewriteRule ^peopleSub/.*$ peopleSub.php [L]
+RewriteRule ^stories/.*$ stories.php [L]
+RewriteRule ^projects/.*$ projects.php [L]
+RewriteRule ^search/.*$ search.php [L]
+RewriteRule ^recordPerson/$ recordPerson.php?item=$1&%{QUERY_STRING} [L]
+RewriteRule ^advancedsearch/.*$ advancedSearch.php [L]
+RewriteRule ^fullstory$ fullstory.php?kid=$1&%{QUERY_STRING} [L]
+RewriteRule ^searchresults/.*$ searchResults.php [L,QSA]
+</IfModule>

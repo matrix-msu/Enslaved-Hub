@@ -1,0 +1,267 @@
+.about-cards{
+    margin: 0 auto;
+    padding: 40px 6% 0;
+    max-width: 1000px;
+
+    .cardwrap{
+        margin: 0 auto;
+        max-width: 1000px;
+
+        .row{
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            flex-wrap: wrap;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            li{
+                width: 30%; //card sizing
+                margin-bottom: 20px; //card placement for this and 2 child stylings
+                margin-right: 5%;
+                padding: 0;
+                cursor: pointer;
+                background-repeat: no-repeat;
+                background-size: cover;
+
+                a{
+                    color: inherit;
+                    text-decoration: none;
+                }
+
+                &:nth-child(3n){
+                    margin-right: 0;
+                }
+
+                .cards{
+                    color: $base-light;
+                    position: relative;
+                    height: 175px;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-position: center;
+                    box-shadow: 0 15px 25px 0 rgba(18,46,70,0.1);
+                    border-bottom: 5px solid transparent;
+                    transition: border 0.3s ease,  box-shadow 0.3s ease;
+
+                    // .test{
+                    //     margin: 0 auto;
+                    //     width: fit-content;
+                    //     padding-top: 20px;
+                    // }
+
+                    p{
+                        font-size: 26px;
+                        color: #FBF9F5;
+                        position: absolute;
+                        bottom: 20px;
+                        left: 20px;
+                        padding-right: 20px;
+                    }
+
+                    &:hover{
+                        border-bottom: 5px solid $sub-base;
+                        box-shadow: 0 35px 45px 0 rgba(18,46,70,0.2);
+                    }
+                }
+            }
+            #getinvolved{
+                background-image: url(../images/SourceCard.jpg);
+            }
+            #viewpartners{
+                background-image: url(../images/StoryImg.jpg);
+            }
+            #contactus{
+                background-image: url(../images/Rectangle7.jpg);
+            }
+        }
+    }
+}
+
+.about-text{
+    padding: 40px 0 0;
+    width: 100%;
+    .textwrap{
+        margin: 0 auto;
+        max-width: 1000px;
+        padding: 0 6% 60px;
+
+        h2{
+            font-size: 36px;
+            color: $base-dark;
+            line-height: 55px;
+            margin-bottom: 40px;
+        }
+
+        p{
+            font-size: 18px;
+            color: $base-dark;
+            line-height: 32px;
+        }
+    }
+}
+
+.partner-text{
+    padding: 80px 0 80px;
+    width: 100%;
+    .textwrap{
+        margin: 0 auto;
+        max-width: 1000px;
+        padding: 0 6% 40px;
+
+        h2{
+            font-size: 22px;
+            color: $base-dark;
+            line-height: 40px;
+        }
+
+        p{
+            font-size: 14px;
+            color: $base-dark;
+            line-height: 32px;
+        }
+
+        a{
+            cursor: pointer;
+            text-decoration: underline;
+            color: $sub-base;
+        }
+    }
+}
+
+.contact-form{
+    padding: 0 6%;
+    max-width: 1000px;
+    margin: 0 auto;
+    .formwrap{
+        margin: 75px 0;
+        form{
+
+            .input-section{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-bottom: 50px;
+
+                #message{
+                    width: 100%;
+                    max-width: 100%;
+                    min-width: 100%;
+
+                    .input-field{
+                        height: 200px;
+                        padding-top: 20px;
+                    }
+                }
+
+                .inputwrap{
+                    width: 47.5%;
+                    margin-bottom: 22px;
+                    
+                    input, label{
+                        display: block;
+                    }
+                    label{
+                        margin-bottom: 10px;
+                        color: $base-dark;
+                        font-size: 15px;
+                    }
+                    .input-field{
+                        height: 60px;
+                        width: 100%;
+                        border: 1px solid #CED0D2;
+                        outline: none;
+                        background-color: #FFFDFB;
+                        box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+                        padding-left: 30px;
+                        padding-right: 30px;
+                        font-size: 14px;
+                        font-family: aleoregular;
+                        color: $base-dark;
+                        transition: border 0.2s;
+        
+                        &:hover{
+                            border: 1px solid $sub-base;
+                        }
+                        &:focus-within{
+                            border: 1px solid $sub-base;
+                        }
+                    }
+                    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                        color: #72818C;
+                        opacity: 1; /* Firefox */
+                    }
+                    
+                    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                        color: #72818C;
+                    }
+                    
+                    ::-ms-input-placeholder { /* Microsoft Edge */
+                        color: #72818C;
+                    }
+                }
+            }
+            .buttonwrap{
+                width: 100%;
+                text-align: right;
+                button{
+                    cursor: pointer;
+                    height: 60px;
+                    width: 380px;
+                    border: none;
+                    color: $base-light;
+                    font-size: 20px;
+                    outline: none;
+                    font-family: aleoregular;
+                    border-radius: 100px;
+                    background: $base-dark;
+                    transition: border 0.2s;
+                    transition: .2s;
+                    
+                    &:hover{
+                        border: 2px solid $sub-base;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 750px){
+    .about-cards{
+        .cardwrap{
+            .row{
+                li{
+                    width: 100%;
+
+                    &:nth-child(n){
+                        margin-left: 0;
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px){
+    .contact-form{
+        .formwrap{
+            form{
+                .input-section{
+                    .inputwrap{
+                        width: 100%;
+                    }
+                }
+                .buttonwrap{
+                    button{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,159 @@
+.image-card-grid-alt .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+.image-card-grid-alt .row .image-grid-2-card {
+  overflow: hidden;
+  position: relative;
+  transition: 400ms;
+  width: 48%;
+}
+.image-card-grid-alt .row .image-grid-2-card .border {
+  box-sizing: border-box;
+  height: 100%;
+  position: absolute;
+  transition: 200ms;
+  width: 100%;
+}
+.image-card-grid-alt .row .image-grid-2-card .border a {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+.image-card-grid-alt .row .image-grid-2-card img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.image-card-grid-alt .row .image-grid-2-card .title {
+  color: #FFFFFF;
+  opacity: 1;
+  position: absolute;
+  bottom: 0;
+  transition: 400ms;
+}
+.image-card-grid-alt .row .image-grid-2-card .title .title-wrap {
+  margin: auto 30px 30px;
+}
+.image-card-grid-alt .row .image-grid-2-card .title .title-wrap h4 {
+  display: -webkit-box;
+  font-size: 25px;
+  line-height: 1.2em;
+  /* max-height = line-height (1.2) * lines max number (3) */
+  max-height: 3.6em;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.image-card-grid-alt .row .image-grid-2-card .description {
+  background: rgba(13, 18, 48, 0.8);
+  height: 100%;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  transition: 250ms;
+  width: 100%;
+}
+.image-card-grid-alt .row .image-grid-2-card .description p {
+  box-sizing: border-box;
+  color: white;
+  display: -webkit-box;
+  font-size: 0.9em;
+  line-height: 1.5em;
+  margin: 20px;
+  max-height: 16.5em;
+  overflow: hidden;
+  -webkit-line-clamp: 11;
+  -webkit-box-orient: vertical;
+}
+.image-card-grid-alt .row .image-grid-2-card:hover {
+  background-color: rgba(13, 18, 48, 0.8);
+  box-shadow: 0 20px 25px 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.image-card-grid-alt .row .image-grid-2-card:hover .border {
+  z-index: 1;
+}
+.image-card-grid-alt .row .image-grid-2-card:hover .title {
+  opacity: 0;
+}
+.image-card-grid-alt .row .image-grid-2-card:hover .description {
+  opacity: 1;
+}
+.image-card-grid-alt .row:last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 1130px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 10;
+  }
+}
+@media screen and (max-width: 1040px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 9;
+  }
+}
+@media screen and (max-width: 955px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 8;
+  }
+}
+@media screen and (max-width: 870px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 7;
+  }
+}
+@media screen and (max-width: 768px) {
+  .image-card-grid-alt {
+    padding: 100px 8%;
+  }
+  .image-card-grid-alt .row {
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+  .image-card-grid-alt .row .image-grid-2-card {
+    margin: 0 0 20px;
+    width: 100%;
+  }
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 11;
+  }
+}
+@media screen and (max-width: 550px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 10;
+  }
+}
+@media screen and (max-width: 500px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 9;
+  }
+}
+@media screen and (max-width: 455px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 8;
+  }
+}
+@media screen and (max-width: 415px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 7;
+  }
+}
+@media screen and (max-width: 370px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 6;
+  }
+}
+@media screen and (max-width: 320px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 5;
+  }
+}
+@media screen and (max-width: 280px) {
+  .image-card-grid-alt .row .image-grid-2-card .description p {
+    -webkit-line-clamp: 4;
+  }
+}

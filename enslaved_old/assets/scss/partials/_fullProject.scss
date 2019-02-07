@@ -1,0 +1,278 @@
+.full-project{
+    .middlewrap{
+        overflow: auto;
+
+        .project-headers{
+            max-width: 520px;
+
+            h1{
+                float: left;
+            }
+            h2{
+                float: right;
+                font-size: 26px;
+                padding-top: 20px;
+            }
+        }
+    }
+}
+
+.project-button{
+    padding: 0 6% 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+
+    .jumpwrap{
+        position: absolute;
+        top: -22px;
+
+        .jump-button{
+            background-image: none;
+            font-style: italic;
+
+            &:first-child{
+                margin: 0;
+            }
+        }
+        //FIX to flip background arrow without flipping text
+        .jump-button:before{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 255px;
+            top: -105px;
+            left: 100px;
+            background-image: url(../images/Arrow-dark.svg);
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
+    }
+}
+
+.affiliations{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 6% 50px;
+    overflow: auto;
+
+    h2{
+        float: left;
+        padding-right: 20px;
+        color: $base-dark;
+        font-size: 26px;
+    }
+    hr{
+        border: none;
+        border-bottom: 1px solid #ECEAE5;
+        padding-top: 8px;
+        margin-bottom: 15px;
+    }
+    .affiliates{
+        padding-top: 50px;
+        display: flex;
+        flex-wrap: wrap;
+
+        img{
+            margin: 0 45px 30px;
+
+            &:first-child{
+                margin-left: 0;
+            }
+            &:last-child{
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.project-leads{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 6% 0;
+    overflow: auto;
+
+    .leadwrap{
+        border-bottom: 1px solid #ECEAE5;
+        padding-bottom: 80px;
+
+        h2{
+            float: left;
+            padding-right: 20px;
+            color: $base-dark;
+            font-size: 26px;
+        }
+        hr{
+            border: none;
+            border-bottom: 1px solid #ECEAE5;
+            padding-top: 15px;
+            margin-bottom: 15px;
+        }
+        .leads{
+            padding-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            
+            .lead-card{
+                overflow: auto;
+                margin-bottom: 30px;
+                cursor: pointer;
+    
+                .lead-photo{
+                    height: 92px;
+                    width: 92px;
+                    border-radius: 50%;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-position: center;
+                    float: left;
+                    margin-right: 20px;
+                }
+                .lead-text{
+                    float: right;
+                    padding-top: 20px;
+    
+                    h3{
+                        font-size: 20px;
+                        color: $base-dark;
+                        margin-bottom: 7px;
+                        text-decoration: none;
+                    }
+                    .view{
+                        width: fit-content;
+                        a{
+                            text-decoration: none;
+                            color: $base-dark;
+                            font-size: 15px;
+                            font-style: italic;
+                            transition: color 0.3s ease;
+        
+                            .view-arrow{
+                                transform: rotate(270deg);
+                                float: right;
+                                margin-left: 10px;
+                                margin-top: 6px;
+                                height: 7px;
+                                width: 11px;
+                                background-image: url(../images/Arrow-dark.svg);
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                transition: background-image 0.3s ease;
+                                
+                            }
+                        }
+                    }
+                }
+                &:hover{
+                    .lead-text{
+                        .view{
+                            a{
+                                color: $sub-base;
+                                .view-arrow{
+                                    background-image: url(../images/Arrow_colored.svg);
+                                }
+                            }
+                        }
+                    }   
+                }
+            }
+        }
+    }
+}
+
+.search-projects{
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 6% 40px;
+
+    .searchwrap{
+        width: 100%;
+        height: 60px;
+        position: relative;
+
+        .search-field{
+            border: 1px solid #CED0D2;
+            border-radius: 100px;
+            box-shadow: 0 4px 36px 0 rgba(0,0,0,0.03);
+            color: #253449;
+            background-color: #FFFDFB;
+            font-size: 16px;
+            margin: 0;
+            outline: none;
+            padding: 0;
+            padding-left: 30px;
+            transition: border 0.2s;
+            height: 60px;
+            padding-right: 60px;
+            width: 100%;
+    
+            &:hover{
+                border: 1px solid $sub-base;
+            }
+            &:focus-within{
+                border: 1px solid $sub-base;
+            }
+        }
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #253449;
+            opacity: 1; /* Firefox */
+            font-style: italic;
+        }
+        
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #253449;
+            font-style: italic;
+        }
+        
+        ::-ms-input-placeholder { /* Microsoft Edge */
+            color: #253449;
+            font-style: italic;
+        }
+        .search-icon{
+            cursor: pointer;
+            height: 60px;
+            width: 60px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-image: url(../images/Search-dark.svg);
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+        }
+        // .search-close{
+        //     position: absolute;
+        //     right: 65px;
+        //     width: 16px;
+        //     top: 25px;
+        //     cursor: pointer;
+        // }
+    }
+}
+
+.project-site{
+    max-width: 320px;
+    margin: 120px auto;
+    text-align: center;
+    p{
+        color: $base-dark;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    a{
+        color: $base-dark;
+        text-decoration: none;
+        font-size: 20px;
+        border-bottom: 2px solid $sub-base;
+        padding: 0 10px 12px;
+        transition: .1s;
+
+        &:hover{
+            padding-bottom: 14px;
+            color: $sub-base;
+        }
+    }
+}
