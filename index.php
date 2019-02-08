@@ -5,6 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <meta name="google" content="notranslate" />
     <title><?php echo BASE_URL;?></title>
     <?php
         echo JS_GLOBALS;
@@ -17,7 +18,6 @@
     <script language="JavaScript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>header.js"></script>
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>modal.js"></script>
-    <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>search.js"></script>
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>searchResults.js"></script>
     <!-- select2 cdn links -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />

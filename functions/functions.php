@@ -42,7 +42,19 @@ function blazegraph()
 
     if (isset($_GET['filters'])){
         $filtersArray = $_GET['filters'];
+        if (isset($filtersArray['limit'])){
+            $limit = "LIMIT " . $filtersArray['limit'];
+        } else {
+            $limit = '';
+        }
+
+    } else {
+        $filtersArray = Array();
     }
+
+    $template = $_GET['template'];
+
+
 
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
@@ -51,19 +63,51 @@ function blazegraph()
             case 'people':
 
                 $query['query'] =
-                        'SELECT ?person ?personLabel ?name ?sex ?sexLabel ?race ?age ?ageLabel ?status ?statusLabel ?role ?roleLabel ?owner ?ownerLabel ?match ?matchLabel WHERE {
-                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                      ?person wdt:P3 wd:Q2.
-                      OPTIONAL { ?person wdt:P82 ?name. }
-                      OPTIONAL { ?person wdt:P17 ?sex. }
-                      OPTIONAL { ?person wdt:P37 ?race. }
-                      OPTIONAL { ?person wdt:P18 ?age. }
-                      OPTIONAL { ?person wdt:P24 ?status. }
-                      OPTIONAL { ?person wdt:P39 ?role. }
-                      OPTIONAL { ?person wdt:P58 ?owner. }
-                      OPTIONAL { ?person wdt:P88 ?match. }
-                    }
-                    LIMIT 100';
+                        'SELECT ?person ?personLabel ?name ?originLabel
+                        (group_concat(distinct ?status; separator = "||") as ?status)
+                        (group_concat(distinct ?place; separator = "||") as ?place)
+                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+                        WHERE {
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                          ?person wdt:P3 wd:Q602.
+                          ?person wdt:P17 wd:Q47.
+                          OPTIONAL {?person wdt:P3 wd:Q2.}
+                          OPTIONAL {?person wdt:P82 ?name.}
+                          OPTIONAL {?person wdt:P20 ?origin.}
+                          OPTIONAL {?name wdt:P30 ?event.
+                                    ?event wdt:P13 ?startdate.}
+                          BIND(str(YEAR(?startdate)) AS ?startyear).
+
+                          OPTIONAL {?event wdt:P14 ?enddate.}
+                          BIND(str(YEAR(?enddate)) AS ?endyear).
+                          OPTIONAL {?event wdt:P12 ?place.}
+                          OPTIONAL { ?person wdt:P17 ?sex. }
+                          OPTIONAL { ?person wdt:P24 ?status. }
+                          OPTIONAL { ?person wdt:P58 ?owner. }
+                          OPTIONAL { ?person wdt:P88 ?match. }
+
+                        } group by ?person ?personLabel ?name ?originLabel
+                        ' . $limit;
+
+
+
+
+//                SELECT ?person ?personLabel ?name ?sex ?sexLabel ?race ?age ?ageLabel ?status ?statusLabel ?role ?roleLabel ?owner ?ownerLabel ?match ?matchLabel WHERE {
+//                SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+//                      ?person wdt:P3 wd:Q2.
+//                OPTIONAL { ?person wdt:P82 ?name. }
+//                      OPTIONAL { ?person wdt:P17 ?sex. }
+//                      OPTIONAL { ?person wdt:P37 ?race. }
+//                      OPTIONAL { ?person wdt:P18 ?age. }
+//                      OPTIONAL { ?person wdt:P24 ?status. }
+//                      OPTIONAL { ?person wdt:P39 ?role. }
+//                      OPTIONAL { ?person wdt:P58 ?owner. }
+//                      OPTIONAL { ?person wdt:P88 ?match. }
+//                    }
+//                    LIMIT 100
+
+
                 break;
             case 'places':
                 $query['query'] =
@@ -101,13 +145,70 @@ function blazegraph()
                     LIMIT 100';
                 break;
             case 'projects':
-                $query['query'] =
-                    'SELECT ?project ?projectLabel  WHERE {
-                      ?project wdt:P3 wd:Q264
+//                $query['query'] =
+//                    'SELECT ?project ?projectLabel  WHERE {
+//                      ?project wdt:P3 wd:Q264
+//
+//                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+//                    }
+//                ';
 
-                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                    }
-                ';
+                $query['query'] =
+                    'SELECT ?person ?personLabel ?name ?originLabel
+                        (group_concat(distinct ?status; separator = "||") as ?status)
+                        (group_concat(distinct ?place; separator = "||") as ?place)
+                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+                        WHERE {
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                          ?person wdt:P3 wd:Q602.
+                          ?person wdt:P17 wd:Q47.
+                          OPTIONAL {?person wdt:P3 wd:Q2.}
+                          OPTIONAL {?person wdt:P82 ?name.}
+                          OPTIONAL {?person wdt:P20 ?origin.}
+                          OPTIONAL {?name wdt:P30 ?event.
+                                    ?event wdt:P13 ?startdate.}
+                          BIND(str(YEAR(?startdate)) AS ?startyear).
+
+                          OPTIONAL {?event wdt:P14 ?enddate.}
+                          BIND(str(YEAR(?enddate)) AS ?endyear).
+                          OPTIONAL {?event wdt:P12 ?place.}
+                          OPTIONAL { ?person wdt:P17 ?sex. }
+                          OPTIONAL { ?person wdt:P24 ?status. }
+                          OPTIONAL { ?person wdt:P58 ?owner. }
+                          OPTIONAL { ?person wdt:P88 ?match. }
+
+                        } group by ?person ?personLabel ?name ?originLabel
+                        ' . $limit;
+                break;
+            case 'stories':
+                $query['query'] =
+                    'SELECT ?person ?personLabel ?name ?originLabel
+                        (group_concat(distinct ?status; separator = "||") as ?status)
+                        (group_concat(distinct ?place; separator = "||") as ?place)
+                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+                        WHERE {
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                          ?person wdt:P3 wd:Q602.
+                          ?person wdt:P17 wd:Q47.
+                          OPTIONAL {?person wdt:P3 wd:Q2.}
+                          OPTIONAL {?person wdt:P82 ?name.}
+                          OPTIONAL {?person wdt:P20 ?origin.}
+                          OPTIONAL {?name wdt:P30 ?event.
+                                    ?event wdt:P13 ?startdate.}
+                          BIND(str(YEAR(?startdate)) AS ?startyear).
+
+                          OPTIONAL {?event wdt:P14 ?enddate.}
+                          BIND(str(YEAR(?enddate)) AS ?endyear).
+                          OPTIONAL {?event wdt:P12 ?place.}
+                          OPTIONAL { ?person wdt:P17 ?sex. }
+                          OPTIONAL { ?person wdt:P24 ?status. }
+                          OPTIONAL { ?person wdt:P58 ?owner. }
+                          OPTIONAL { ?person wdt:P88 ?match. }
+
+                        } group by ?person ?personLabel ?name ?originLabel
+                        ' . $limit;
                 break;
             default:
                 die;
@@ -142,7 +243,7 @@ function blazegraph()
     $result = curl_exec($ch);
     curl_close($ch);
 //    echo $result;
-
+//    die;
 //
 //    $path = "functions/queries.json";
 //    $contents = file_get_contents($path);
@@ -154,13 +255,13 @@ function blazegraph()
 
 
 //    return $result;
-    return createCards($result, $preset);
+    return createCards($result, $template, $preset);
 }
 
 // this one is only used for blazegraph page
-function createCards($results, $preset = 'default'){
+function createCards($results, $template, $preset = 'default'){
     $results = json_decode($results, true)['results']['bindings'];
-//    print_r($results[0]);die;
+//    print_r($results[2]);die;
 
     $cards = Array();
 
@@ -171,17 +272,71 @@ function createCards($results, $preset = 'default'){
                 $nameArray = explode(' ', $fullName);
                 $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $fullName);
                 $lastName = $nameArray[count($nameArray)-1];
-                $status = $record['statusLabel']['value'];
-                if (isset($record['sexLabel'])){
+
+                if (isset($record['statusLabel']) && isset($record['statusLabel']['value'])){
+                    $status = $record['statusLabel']['value'];
+                } else {
+                    $status = "";
+                }
+
+                if (isset($record['sexLabel']) && isset($record['sexLabel']['value'])){
                     $sex = $record['sexLabel']['value'];
                 } else {
                     $sex = 'Unidentified';
                 }
 
-                //todo: find a way to get the origin, location, and date range
-                $origin = "todo";
-                $dateRange = "todo";
-                $location = "todo";
+                // todo turn these into status labels
+                if (isset($record['status']) && isset($record['status']['value'])){
+                    $statusArray = explode('||', $record['status']['value']);
+                    $status = '';
+                    $count = 1;
+                    foreach ($statusArray as $statusUrl) {
+                        $status .= "<a href='$statusUrl' target='_blank'>$count</a> ";
+                        $count++;
+                    }
+                } else {
+                    $status = '';
+                }
+
+
+                if (isset($record['originLabel']) && isset($record['originLabel']['value'])){
+                    $origin = $record['originLabel']['value'];
+                } else {
+                    $origin = '';
+                }
+
+                // todo turn these into placeLabels
+                if (isset($record['place']) && isset($record['place']['value'])){
+                    $placeArray = explode('||', $record['place']['value']);
+                    $location = '';
+                    $count = 1;
+                    foreach ($placeArray as $placeUrl) {
+                        $location .= "<a href='$placeUrl' target='_blank'>$count</a> ";
+                        $count++;
+                    }
+                } else {
+                    $location = '';
+                }
+
+                if (isset($record['startyear']) && isset($record['startyear']['value'])){
+                    $startYears = explode('||', $record['startyear']['value']);
+                    $startYear = min($startYears);
+                } else {
+                    $startYear = '';
+                }
+
+                if (isset($record['endyear']) && isset($record['endyear']['value'])){
+                    $endYears = explode('||', $record['endyear']['value']);
+                    $endYear = max($endYears);
+                } else {
+                    $endYear = '';
+                }
+
+                $dateRange = "$startYear - $endYear";
+
+
+
+
 
                 $connection_lists = Array(
                     '<h1>10 Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
@@ -301,8 +456,166 @@ function createCards($results, $preset = 'default'){
                 die;
                 break;
             case 'projects':
-                print_r($results);
-                die;
+                $fullName = $record['personLabel']['value'];
+                $nameArray = explode(' ', $fullName);
+                $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $fullName);
+                $lastName = $nameArray[count($nameArray)-1];
+
+                if (isset($record['statusLabel']) && isset($record['statusLabel']['value'])){
+                    $status = $record['statusLabel']['value'];
+                } else {
+                    $status = "";
+                }
+
+                if (isset($record['sexLabel']) && isset($record['sexLabel']['value'])){
+                    $sex = $record['sexLabel']['value'];
+                } else {
+                    $sex = 'Unidentified';
+                }
+
+                // todo turn these into status labels
+                if (isset($record['status']) && isset($record['status']['value'])){
+                    $statusArray = explode('||', $record['status']['value']);
+                    $status = '';
+                    $count = 1;
+                    foreach ($statusArray as $statusUrl) {
+                        $status .= "<a href='$statusUrl' target='_blank'>$count</a> ";
+                        $count++;
+                    }
+                } else {
+                    $status = '';
+                }
+
+
+                if (isset($record['originLabel']) && isset($record['originLabel']['value'])){
+                    $origin = $record['originLabel']['value'];
+                } else {
+                    $origin = '';
+                }
+
+                // todo turn these into placeLabels
+                if (isset($record['place']) && isset($record['place']['value'])){
+                    $placeArray = explode('||', $record['place']['value']);
+                    $location = '';
+                    $count = 1;
+                    foreach ($placeArray as $placeUrl) {
+                        $location .= "<a href='$placeUrl' target='_blank'>$count</a> ";
+                        $count++;
+                    }
+                } else {
+                    $location = '';
+                }
+
+                if (isset($record['startyear']) && isset($record['startyear']['value'])){
+                    $startYears = explode('||', $record['startyear']['value']);
+                    $startYear = min($startYears);
+                } else {
+                    $startYear = '';
+                }
+
+                if (isset($record['endyear']) && isset($record['endyear']['value'])){
+                    $endYears = explode('||', $record['endyear']['value']);
+                    $endYear = max($endYears);
+                } else {
+                    $endYear = '';
+                }
+
+                $dateRange = "$startYear - $endYear";
+
+
+                if ($template == 'homeCard') {
+                    $card = "<li>
+                    <a href='".BASE_URL."fullStory/'>
+                        <div class='container cards'>
+                            <p class='card-title'>$fullName</p>
+                            <h4 class='card-view-story'>View Story <div class='view-arrow'></h4>
+                        </div>
+                    </a>
+                </li>";
+                }
+
+                array_push($cards, $card);
+                break;
+            case 'stories':
+                $fullName = $record['personLabel']['value'];
+                $nameArray = explode(' ', $fullName);
+                $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $fullName);
+                $lastName = $nameArray[count($nameArray)-1];
+
+                if (isset($record['statusLabel']) && isset($record['statusLabel']['value'])){
+                    $status = $record['statusLabel']['value'];
+                } else {
+                    $status = "";
+                }
+
+                if (isset($record['sexLabel']) && isset($record['sexLabel']['value'])){
+                    $sex = $record['sexLabel']['value'];
+                } else {
+                    $sex = 'Unidentified';
+                }
+
+                // todo turn these into status labels
+                if (isset($record['status']) && isset($record['status']['value'])){
+                    $statusArray = explode('||', $record['status']['value']);
+                    $status = '';
+                    $count = 1;
+                    foreach ($statusArray as $statusUrl) {
+                        $status .= "<a href='$statusUrl' target='_blank'>$count</a> ";
+                        $count++;
+                    }
+                } else {
+                    $status = '';
+                }
+
+
+                if (isset($record['originLabel']) && isset($record['originLabel']['value'])){
+                    $origin = $record['originLabel']['value'];
+                } else {
+                    $origin = '';
+                }
+
+                // todo turn these into placeLabels
+                if (isset($record['place']) && isset($record['place']['value'])){
+                    $placeArray = explode('||', $record['place']['value']);
+                    $location = '';
+                    $count = 1;
+                    foreach ($placeArray as $placeUrl) {
+                        $location .= "<a href='$placeUrl' target='_blank'>$count</a> ";
+                        $count++;
+                    }
+                } else {
+                    $location = '';
+                }
+
+                if (isset($record['startyear']) && isset($record['startyear']['value'])){
+                    $startYears = explode('||', $record['startyear']['value']);
+                    $startYear = min($startYears);
+                } else {
+                    $startYear = '';
+                }
+
+                if (isset($record['endyear']) && isset($record['endyear']['value'])){
+                    $endYears = explode('||', $record['endyear']['value']);
+                    $endYear = max($endYears);
+                } else {
+                    $endYear = '';
+                }
+
+                $dateRange = "$startYear - $endYear";
+
+
+                if ($template == 'homeCard') {
+                    $card = "<li>
+                    <a href='".BASE_URL."fullStory/'>
+                        <div class='container cards'>
+                            <p class='card-title'>$fullName</p>
+                            <h4 class='card-view-story'>View Story <div class='view-arrow'></h4>
+                        </div>
+                    </a>
+                </li>";
+                }
+
+                array_push($cards, $card);
                 break;
             default:
                 print_r($results);

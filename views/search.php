@@ -8,8 +8,8 @@
         </div>
         <div class="heading-search">
             <h3>Search across 54,375,213 records from the Atlantic Slave Trade ...</h3>
-            <form class="search-form">
-                <input class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
+            <form class="search-form"  action="<?php echo BASE_URL;?>searchResults/">
+                <input class="search-field main-search" type="text" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
                 <a href="<?php echo BASE_URL;?>searchResults/"><div class="search-icon"></div></a>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
@@ -18,7 +18,7 @@
 </div>
 <main class="direct-search">
     <div class="searchwrap">
-        <form>
+        <form  action="<?php echo BASE_URL;?>searchResults/">
             <h2>Direct Search</h2>
             <div class="search-section">
                 <div class="inputwrap">
