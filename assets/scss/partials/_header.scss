@@ -35,6 +35,7 @@
                 .nav-item{
                     display: inline;
                     cursor: pointer;
+                    position: relative;
             
                     .nav-link{
                         color: #FFFFFF;
@@ -93,6 +94,7 @@
                         padding: 0;
                         position: absolute;
                         display: none;
+                        left: -10px;
     
                         .subwrap{
                             background-color: $base-light;
@@ -120,15 +122,17 @@
                                 color: $sub-base;
                             }
                         }
+                        /*
                         #explore-sub{
-                            left: 93px;
+                            //left: 93px;
                         }
                         #visualize-sub{
-                            left: 193px;
+                            //left: 193px;
                         }
                         #about-sub{
-                            left: 423px;
+                            //left: 322px; //was left: 423px;
                         }
+                        */
                     }
                     .sub-showing{
                         display: block;

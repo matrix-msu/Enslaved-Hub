@@ -116,7 +116,7 @@
     </form>
 </div>
 <!-- Visualize Sources -->
-<div class="explore-visualize">
+<div class="explore-visualize visualize-hide">
     <h2 class="column-header">Visualize Sources</h2>
     <div class="cardwrap">
         <ul class="row">

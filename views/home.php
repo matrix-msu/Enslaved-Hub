@@ -69,7 +69,7 @@
             </a>
         </div>
     </div>
-    <div class="section-wrap">
+    <div class="section-wrap visualize-hide">
         <div class="section-info">
             <a href="<?php echo BASE_URL;?>visualize"><h2>Visualize<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur  …</p>
