@@ -1,6 +1,6 @@
 <?php
-//require_once(dirname(__FILE__).'/../config.php');
-require_once(dirname(__FILE__).'/../wikiconstants/properties.php');
+//require_once(dirname(__FILE__).'/../config.php');ffds
+//require_once(dirname(__FILE__).'/../wikiconstants/properties.php');
 
 function callAPI($url,$limit,$offset){
     $url.='&format=json';

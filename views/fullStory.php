@@ -1,7 +1,5 @@
-<!-- Page author: Drew Schineller-->
+
 <?php
-include 'functions/functions.php';
-include 'functions/kora.php';
 if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
     $story = storyContent($_GET['kid']);
     // print_r($story);

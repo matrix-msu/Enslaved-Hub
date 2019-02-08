@@ -1,6 +1,5 @@
 <!-- Page author: Drew Schineller-->
 <?php
-include 'functions/kora.php';
 
 // Pagination Vars
 $sortField = (isset($_GET['field']) ? ucwords($_GET['field']) : 'Title');

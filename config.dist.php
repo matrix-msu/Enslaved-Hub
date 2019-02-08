@@ -18,9 +18,9 @@ define("BASE_VIEW_PATH", BASE_PATH . "views/");
 define("BASE_MODULE_PATH", BASE_PATH . "modules/");
 
 //kora urls - you shouldn't need to change these
-define("KORA_FILES_URL"     ,  "http://dev2.matrix.msu.edu/k3beta/public/app/files/");
-define ("KORA_BASE_URL", "https://kora3.matrix.msu.edu/api/");
-define ("KORA_SEARCH_URL", KORA_BASE_URL . "search");
+define("KORA_BASE_URL", "https://enslaved.kora3.matrix.msu.edu/");
+define("KORA_SEARCH_URL", KORA_BASE_URL . "api/search");
+define("KORA_FILES_URL", KORA_BASE_URL . "public/app/files/");
 
 define('API_URL','https://sandro-33.matrix.msu.edu/sparql?query=');
 
@@ -31,30 +31,9 @@ define("DATABASE_DBNAME",  "uohE4n032x");
 define("DATABASE_PASSWORD",  "arcs_dev");
 
 //kora project information - change these for your project
-$GLOBALS['PID_ARRAY'] = array(
-    11
-);
-$GLOBALS['PROJECT_SID_ARRAY'] = array(
-    11 => 31,
-);
-$GLOBALS['SEASON_SID_ARRAY'] = array(
-    11 => 32,
-);
-$GLOBALS['SURVEY_SID_ARRAY'] = array(
-    11 => 36,
-);
-$GLOBALS['RESOURCE_SID_ARRAY'] = array(
-    11 => 33,
-);
-$GLOBALS['PAGES_SID_ARRAY'] = array(
-    11 => 34,
-);
-$GLOBALS['SUBJECT_SID_ARRAY'] = array(
-    11 => 35,
-);
-$GLOBALS['TOKEN_ARRAY'] = array(
-    11 => "GPjkwxHb2zMss16JEmca2cg0",
-);
+define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');
+define('STORY_SID', 23);
+define('PID', 16);
 
 //useful javascript globals constants and functions
 define("JS_GLOBALS",
@@ -78,6 +57,8 @@ require_once( BASE_LIB_PATH . "configFunctions.php" );
 require_once( BASE_LIB_PATH . "koraWrapper.php" );
 require_once( BASE_LIB_PATH . "mySqlWrapper.php" );
 require_once( BASE_FUNCTIONS_PATH . "explorefunctions.php");
+require_once( BASE_FUNCTIONS_PATH . "storyfunctions.php");
+require_once( BASE_FUNCTIONS_PATH . "functions.php");
 
 
 //require the routes file

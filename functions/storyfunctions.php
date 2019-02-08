@@ -1,12 +1,12 @@
 <?php
 function storyContent($kid) {
-    $search = ['token' => token, 'form' => storyForm];
+    $search = ['token' => TOKEN, 'form' => STORY_SID];
     $search['fields'] = ['Title_16_23', 'Images_16_23', 'Caption_16_23', 'Text_16_23', 'Resources_16_23', 'Source_16_23', 'Timeline_16_23', 'Story_Associator_16_23'];
     $search['realnames'] = true;
     $query = [['search' => 'kid', 'kids' => [$kid]]];
     $search['query'] = $query;
     $data = ['forms' => '['.json_encode($search).']'];
-    $ch = curl_init(BASE_URL_KORA.'api/search');
+    $ch = curl_init(KORA_SEARCH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -17,8 +17,8 @@ function storyContent($kid) {
 
 function getStories($page = 1, $count = 8, $sort = []){
     $search = [
-        'token' => token,
-        'form' => storyForm,
+        'token' => TOKEN,
+        'form' => STORY_SID,
         'fields' => ['Title_16_23', 'Featured_16_23'],
         'realnames' => true,
         'size' => TRUE,
@@ -50,7 +50,7 @@ function getStories($page = 1, $count = 8, $sort = []){
     }
 
     $data = ['forms' => '['.json_encode($search).']'];
-    $ch = curl_init(BASE_URL_KORA.'api/search');
+    $ch = curl_init(KORA_SEARCH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -75,7 +75,7 @@ function appendIds($name) {
     return str_replace(' ', '_',
         ucwords(
             $name
-        ) . '_' . projectID . '_' . storyForm
+        ) . '_' . PID . '_' . STORY_SID
     );
 }
 
