@@ -486,9 +486,13 @@ $(document).ready(function () {
         type: "GET",
         data: {
             preset: 'people',
-            filters:  {'sex': 'female'}
+            filters:  {
+                sex: 'female'
+            },
+            template: 'searchCard'
         },
         'success': function (data) {
+            console.log('herererer')
             result_array = JSON.parse(data);
             console.log(result_array)
             displayCards();
