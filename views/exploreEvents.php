@@ -107,7 +107,7 @@
     </form>
 </div>
 <!-- Visualize People -->
-<div class="explore-visualize">
+<div class="explore-visualize visualize-hide">
     <h2 class="column-header">Visualize Events</h2>
     <div class="cardwrap">
         <ul class="row">
