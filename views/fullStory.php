@@ -4,18 +4,13 @@ if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
     $story = storyContent($_GET['kid']);
     // print_r($story);
     $images = [];
+    $caption = [];
     if (isset($story['Images'])) {
         foreach ($story['Images']['value'] as $image) {
             $images[] = $image['url'];
+            $caption[] = $image['caption'];
         }
     }
-    $caption = [];
-    if (isset($story['Caption'])) {
-        foreach ($story['Caption']['value'] as $cap) {
-            $caption[] = $cap;
-        }
-    }
-    // var_dump($caption);
 }
 else {
 
