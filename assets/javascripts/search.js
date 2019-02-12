@@ -481,18 +481,39 @@ var connections = '<div class="connections"><div class="card-icons"><img src="..
 //$("span.grid-view").click(function gridView (e) { // grid view
 
 $(document).ready(function () {
+    // https://stackoverflow.com/questions/12049620/how-to-get-get-variables-value-in-javascript
+    var $_GET = {};
+    if(document.location.toString().indexOf('?') !== -1) {
+        var query = document.location
+            .toString()
+            // get the query string
+            .replace(/^.*?\?/, '')
+            // and remove any existing hash string (thanks, @vrijdenker)
+            .replace(/#.*$/, '')
+            .split('&');
+
+        for(var i=0, l=query.length; i<l; i++) {
+            var aux = decodeURIComponent(query[i]).split('=');
+            $_GET[aux[0]] = aux[1];
+        }
+    }
+
+    var sexFilter = $_GET['sex'];
+    if (typeof(sexFilter) == "undefined"){
+        sexFilter = '';
+    }
+
     $.ajax({
         url: BASE_URL + "api/blazegraph",
         type: "GET",
         data: {
             preset: 'people',
             filters:  {
-                sex: 'female'
+                sex: sexFilter
             },
             template: 'searchCard'
         },
         'success': function (data) {
-            console.log('herererer')
             result_array = JSON.parse(data);
             console.log(result_array)
             displayCards();

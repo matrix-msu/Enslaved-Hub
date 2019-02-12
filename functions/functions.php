@@ -62,33 +62,131 @@ function blazegraph()
         switch ($preset){
             case 'people':
 
-                $query['query'] =
-                        'SELECT ?person ?personLabel ?name ?originLabel
+                $sexQuery = "";
+
+                if (isset($filtersArray['sex'])){
+                    $sex = $filtersArray['sex'];
+                    if (array_key_exists($sex, sexTypes)){
+                        $qSex = sexTypes[$sex];
+                        $sexQuery = "?person wdt:P17 wd:$qSex.";
+
+                    }
+                }
+
+//                echo $sexQuery;die;
+
+                $query['query'] ='
+                SELECT ?person ?personLabel ?name ?originLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
                         (group_concat(distinct ?place; separator = "||") as ?place)
                         (group_concat(distinct ?startyear; separator = "||") as ?startyear)
                         (group_concat(distinct ?endyear; separator = "||") as ?endyear)
                         WHERE {
                           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                          ?person wdt:P3 wd:Q602.
-                          ?person wdt:P17 wd:Q47.
-                          OPTIONAL {?person wdt:P3 wd:Q2.}
-                          OPTIONAL {?person wdt:P82 ?name.}
+                          ?person wdt:P3 wd:Q602.'
+                          . $sexQuery . '
+                          ?person wdt:P82 ?name.
+                          ?person p:P82 ?namestatement . # with a P82(hasname)statement
+                          FILTER  EXISTS { ?namestatement pq:P30 ?event}
+                          # ... but the statement has  P30 (recordedAt) qualifier
+	                  OPTIONAL { ?event wdt:P12 ?place. }
+
                           OPTIONAL {?person wdt:P20 ?origin.}
-                          OPTIONAL {?name wdt:P30 ?event.
-                                    ?event wdt:P13 ?startdate.}
+
+                          OPTIONAL {?event wdt:P13 ?startdate.}
                           BIND(str(YEAR(?startdate)) AS ?startyear).
 
                           OPTIONAL {?event wdt:P14 ?enddate.}
                           BIND(str(YEAR(?enddate)) AS ?endyear).
-                          OPTIONAL {?event wdt:P12 ?place.}
+
                           OPTIONAL { ?person wdt:P17 ?sex. }
                           OPTIONAL { ?person wdt:P24 ?status. }
-                          OPTIONAL { ?person wdt:P58 ?owner. }
-                          OPTIONAL { ?person wdt:P88 ?match. }
+
+
+                        } group by ?person ?personLabel ?name ?originLabel';
+
+
+                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept: application/sparql-results+json'
+//        'Content-Type: application/sparql-results+json'
+                ));
+                $result1 = curl_exec($ch);
+                curl_close($ch);
+
+
+                $query['query'] ='
+                SELECT ?person ?personLabel ?name ?originLabel
+                        (group_concat(distinct ?status; separator = "||") as ?status)
+                        WHERE {
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                          ?person wdt:P3 wd:Q602.
+                          '. $sexQuery . '
+                          ?person wdt:P82 ?name.
+                          ?person p:P82 ?namestatement . # with a P82 (hasname) statement
+	                 FILTER NOT EXISTS { ?namestatement pq:P30 ?event}
+                          # ... but the statement doesnt have  P30 qualifier
+
+
+                          OPTIONAL {?person wdt:P20 ?origin.}
+
+
+                          OPTIONAL { ?person wdt:P17 ?sex. }
+                          OPTIONAL { ?person wdt:P24 ?status. }
+
 
                         } group by ?person ?personLabel ?name ?originLabel
-                        ' . $limit;
+                        ';
+
+
+                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept: application/sparql-results+json'
+//        'Content-Type: application/sparql-results+json'
+                ));
+                $result2 = curl_exec($ch);
+                curl_close($ch);
+
+//                echo $result1;
+//                echo $result2;
+//                die;
+
+                $results = array_merge(json_decode($result1, true)['results']['bindings'], json_decode($result2, true)['results']['bindings']);
+
+//                        'SELECT ?person ?personLabel ?name ?originLabel
+//                        (group_concat(distinct ?status; separator = "||") as ?status)
+//                        (group_concat(distinct ?place; separator = "||") as ?place)
+//                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+//                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+//                        WHERE {
+//                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+//                          ?person wdt:P3 wd:Q602.
+//                          ?person wdt:P17 wd:Q47.
+//                          OPTIONAL {?person wdt:P3 wd:Q2.}
+//                          OPTIONAL {?person wdt:P82 ?name.}
+//                          OPTIONAL {?person wdt:P20 ?origin.}
+//                          OPTIONAL {?name wdt:P30 ?event.
+//                                    ?event wdt:P13 ?startdate.}
+//                          BIND(str(YEAR(?startdate)) AS ?startyear).
+//
+//                          OPTIONAL {?event wdt:P14 ?enddate.}
+//                          BIND(str(YEAR(?enddate)) AS ?endyear).
+//                          OPTIONAL {?event wdt:P12 ?place.}
+//                          OPTIONAL { ?person wdt:P17 ?sex. }
+//                          OPTIONAL { ?person wdt:P24 ?status. }
+//                          OPTIONAL { ?person wdt:P58 ?owner. }
+//                          OPTIONAL { ?person wdt:P88 ?match. }
+//
+//                        } group by ?person ?personLabel ?name ?originLabel
+//                        ' . $limit;
 
 
 
@@ -106,8 +204,6 @@ function blazegraph()
 //                      OPTIONAL { ?person wdt:P88 ?match. }
 //                    }
 //                    LIMIT 100
-
-
                 break;
             case 'places':
                 $query['query'] =
@@ -119,6 +215,19 @@ function blazegraph()
 
                     SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
                     }order by ?place ?place2 ?place3';
+                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept: application/sparql-results+json'
+//        'Content-Type: application/sparql-results+json'
+                ));
+                $result = curl_exec($ch);
+                curl_close($ch);
+
+                $results = json_decode($result, true)['results']['bindings'];
                 break;
             case 'events':
                 $query['query'] =
@@ -127,6 +236,19 @@ function blazegraph()
                       SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
                     }
                     LIMIT 100';
+                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept: application/sparql-results+json'
+//        'Content-Type: application/sparql-results+json'
+                ));
+                $result = curl_exec($ch);
+                curl_close($ch);
+
+                $results = json_decode($result, true)['results']['bindings'];
                 break;
             case 'sources':
                 $query['query'] =
@@ -143,6 +265,19 @@ function blazegraph()
                       OPTIONAL { ?person wdt:P88 ?match. }
                     }
                     LIMIT 100';
+                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept: application/sparql-results+json'
+//        'Content-Type: application/sparql-results+json'
+                ));
+                $result = curl_exec($ch);
+                curl_close($ch);
+
+                $results = json_decode($result, true)['results']['bindings'];
                 break;
             case 'projects':
 //                $query['query'] =
@@ -180,6 +315,20 @@ function blazegraph()
 
                         } group by ?person ?personLabel ?name ?originLabel
                         ' . $limit;
+
+                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept: application/sparql-results+json'
+//        'Content-Type: application/sparql-results+json'
+                ));
+                $result = curl_exec($ch);
+                curl_close($ch);
+
+                $results = json_decode($result, true)['results']['bindings'];
                 break;
             case 'stories':
                 $query['query'] =
@@ -209,6 +358,20 @@ function blazegraph()
 
                         } group by ?person ?personLabel ?name ?originLabel
                         ' . $limit;
+
+                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept: application/sparql-results+json'
+//        'Content-Type: application/sparql-results+json'
+                ));
+                $result = curl_exec($ch);
+                curl_close($ch);
+
+                $results = json_decode($result, true)['results']['bindings'];
                 break;
             default:
                 die;
@@ -226,24 +389,6 @@ function blazegraph()
 
 
 
-//    print_r($query);
-//    die;
-    // var_export($query);
-    // die;
-
-    $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-        'Accept: application/sparql-results+json'
-//        'Content-Type: application/sparql-results+json'
-    ));
-    $result = curl_exec($ch);
-    curl_close($ch);
-//    echo $result;
-//    die;
 //
 //    $path = "functions/queries.json";
 //    $contents = file_get_contents($path);
@@ -255,20 +400,18 @@ function blazegraph()
 
 
 //    return $result;
-    return createCards($result, $template, $preset);
+    return createCards($results, $template, $preset);
 }
 
 // this one is only used for blazegraph page
 function createCards($results, $template, $preset = 'default'){
-    $results = json_decode($results, true)['results']['bindings'];
-//    print_r($results[2]);die;
-
+//    print_r($results[31]);die;
     $cards = Array();
 
     foreach ($results as $index => $record) {
         switch ($preset){
             case 'people':
-                $fullName = $record['personLabel']['value'];
+                $fullName = $record['name']['value'];
                 $nameArray = explode(' ', $fullName);
                 $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $fullName);
                 $lastName = $nameArray[count($nameArray)-1];
@@ -285,19 +428,34 @@ function createCards($results, $template, $preset = 'default'){
                     $sex = 'Unidentified';
                 }
 
-                // todo turn these into status labels
                 if (isset($record['status']) && isset($record['status']['value'])){
                     $statusArray = explode('||', $record['status']['value']);
                     $status = '';
-                    $count = 1;
+
+                    $statusCount = 0;
                     foreach ($statusArray as $statusUrl) {
-                        $status .= "<a href='$statusUrl' target='_blank'>$count</a> ";
-                        $count++;
+                        $qStatus = end(explode('/', $statusUrl));
+                        if (!empty($qStatus)){
+                            $statusLabel = qpersonstatus[$qStatus];
+                            if ($statusCount > 0){
+                                $status .= ", $statusLabel";
+                            } else {
+                                $status .= "$statusLabel";
+
+                            }
+                            $statusCount++;
+                        }
                     }
                 } else {
                     $status = '';
                 }
 
+
+                // if a person has multiple statuses, display them in a tooltip
+                $statusHtml = "<p><span>Person Status: </span>$status</p>";
+                if ($statusCount > 1){
+                    $statusHtml = "<p><span>Person Status: </span><span class='multiple'>Multiple<span class='tooltip'>$status</span></span></p>";
+                }
 
                 if (isset($record['originLabel']) && isset($record['originLabel']['value'])){
                     $origin = $record['originLabel']['value'];
@@ -305,14 +463,13 @@ function createCards($results, $template, $preset = 'default'){
                     $origin = '';
                 }
 
-                // todo turn these into placeLabels
                 if (isset($record['place']) && isset($record['place']['value'])){
                     $placeArray = explode('||', $record['place']['value']);
                     $location = '';
-                    $count = 1;
                     foreach ($placeArray as $placeUrl) {
-                        $location .= "<a href='$placeUrl' target='_blank'>$count</a> ";
-                        $count++;
+                        $qPlace = end(explode('/', $placeUrl));
+                        $place = qPlaces[$qPlace];
+                        $location .= "$place ";
                     }
                 } else {
                     $location = '';
@@ -360,7 +517,7 @@ function createCards($results, $template, $preset = 'default'){
                             <img src='../assets/images/$card_icon'>
                             </div><div class='container cards'>
                             <div class='card-info'>
-                            <p><span>Person Status: </span><span class='multiple'>$status<span class='tooltip'>Enslaved, Freed, Owner, Status</span></span></p>
+                            $statusHtml
                             <p><span>Sex: </span>$sex</p>
                             <p><span>Origin: </span>$origin</p>
                             <p><span>Location: </span>$location</p>
