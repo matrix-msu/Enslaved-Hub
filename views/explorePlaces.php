@@ -26,9 +26,10 @@
         </li>
     </ul>
 </div>
-
-<!-- map section will go here -->
-
+<!-- Large Map -->
+<div class="mapwrap">
+    <div id="map-large"></div>
+</div>
 <!-- Featured Places -->
 <div class="explore-featured">
     <h2>Featured Places</h2>
@@ -149,3 +150,4 @@
 </div>
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/map.js"></script>

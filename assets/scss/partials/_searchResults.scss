@@ -600,7 +600,7 @@ span.align-right.show {
                     }
                 
                     .connections{
-                        min-height: 30px;
+                        min-height: 40px;
                         max-width: 100%;
                         display: flex;
                         justify-content: space-between;
@@ -608,7 +608,7 @@ span.align-right.show {
                         // overflow: auto;
                         .card-icons{
                             position: relative;
-                            line-height: 30px;
+                            line-height: 38px;
                             display: flex;
                             font-size: 12px;
                             padding: 0 10px;
@@ -616,13 +616,10 @@ span.align-right.show {
                             img{
                                 padding-right: 6px;
                                 height: 22px;
-                                padding-top: 3px;
+                                padding-top: 8px;
                             }
                             .connection-menu{
-                                //display: none;
-                                visibility: hidden;
-                                opacity: 0;
-                                transition: visibility 1s, opacity 1s, linear;
+                                display: none;
                                 background: $base-dark;
                                 box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
                                 color: $base-light;
@@ -630,17 +627,17 @@ span.align-right.show {
                                 white-space: nowrap;
                                 position: absolute;
                                 padding: 20px;
-                                bottom: 35px;
+                                bottom: 38px;
                                 right: -90px;
                                 width: 220px;
                                 // height: 20px;
                                 z-index: 10;
     
-                                &.hovered{
-                                    //display: block;
-                                    visibility: visible;
-                                    opacity: 1;
-                                }
+                                // &.hovered{
+                                //     //display: block;
+                                //     visibility: visible;
+                                //     opacity: 1;
+                                // }
 
                                 h1{
                                     font-size: 18px;
