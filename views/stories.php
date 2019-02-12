@@ -116,7 +116,7 @@ if ($page < 1) {
     </div>
     <div class="container pagiwrap">
         <div class="sort-pages">
-            <p><span class="per-page-text">X</span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"/></p>
+            <p><span class="per-page-text"><?= (isset($_GET['count']) ? $_GET['count'] : '8') ?></span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"/></p>
             <ul id="submenu" class="pagenum-menu">
                 <li class="count-option" data-count="8"><span>8</span> Per Page</li>
                 <li class="count-option" data-count="12"><span>12</span> Per Page</li>
@@ -127,7 +127,7 @@ if ($page < 1) {
 
         <div class="pagination-container">
             <div class="pagination-prev btn-prev no-select" data-page="<?php echo ($page > 0 ? $page - 1 : ''); ?>">
-                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron-down-dark.svg" alt="Previous Featured Biography">
+                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/Arrow3.svg" alt="Previous Featured Biography">
             </div>
 
             <ul class="page-select">
@@ -188,7 +188,7 @@ if ($page < 1) {
             </ul>
 
             <div class="pagination-next btn-next no-select" data-page="<?php echo ($page < $page_count ? $page + 1 : ''); ?>">
-                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron-down-dark.svg" alt="Next Featured Biography">
+                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/Arrow3.svg" alt="Next Featured Biography">
             </div>
         </div>
     </div>

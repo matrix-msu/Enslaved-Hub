@@ -35,20 +35,6 @@
                 margin: 0;
             }
         }
-        //FIX to flip background arrow without flipping text
-        .jump-button:before{
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 255px;
-            top: -105px;
-            left: 100px;
-            background-image: url(../images/Arrow-dark.svg);
-            background-repeat: no-repeat;
-            background-position: 50% 50%;
-            -webkit-transform: rotate(-90deg);
-            transform: rotate(-90deg);
-        }
     }
 }
 

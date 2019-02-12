@@ -685,12 +685,12 @@
                         <li>Z - A</li>
                     </ul>
                 </span>
-                <span class="align-center results-per-page"><span>#</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+                <span class="align-center results-per-page"><span>10</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
                     <ul id="sortmenu" class="results-per-page">
-                        <li><span>1</span> Per Page</li>
-                        <li><span>5</span> Per Page</li>
-                        <li><span>8</span> Per Page</li>
-                        <li><span>11</span> Per Page</li>
+                        <li><span>10</span> Per Page</li>
+                        <li><span>20</span> Per Page</li>
+                        <li><span>35</span> Per Page</li>
+                        <li><span>50</span> Per Page</li>
                     </ul>
                 </span>
             </span>

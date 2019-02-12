@@ -230,7 +230,6 @@ span.align-right.show {
 
         .show-filter,.view-modes,.sorting-dropdowns{
             padding: 10px 15px;
-            margin-bottom: 20px;
         }
 
         span.show-filter{
@@ -486,7 +485,6 @@ span.align-right.show {
 
     .cardwrap{
         margin: 0 auto;
-        max-width: 1000px;
 
         .row{
             display: -webkit-box;
@@ -501,7 +499,7 @@ span.align-right.show {
             padding: 0;
 
             li{
-                width: 49%;
+                width: 32%;
                 margin-bottom: 20px; //card placement for this and 2 child stylings
                 padding: 0;
                 // display: flex;
@@ -727,6 +725,17 @@ span.align-right.show {
     }
 }
 
+@media screen and (max-width: 1550px){
+    .result-column{
+        .cardwrap{
+            .row{
+                li{
+                    width: 49%;
+                }
+            }
+        }
+    }
+}
 @media screen and (max-width: 1050px){
     .result-column{
         .cardwrap{
