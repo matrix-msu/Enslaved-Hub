@@ -476,7 +476,7 @@ var connection_lists = [
 '<h1>10 Connected Projects</h1><ul><li>Project Name <div id="arrow"></div></li><li>Project Name is Longer<div id="arrow"></div></li><li>Project Name <div id="arrow"></div></li><li>View All Project Connections <div id="arrow"></div></li></ul>'
 ];
 
-var connections = '<div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div>';
+var connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div></div>';
 
 $("span.grid-view").click(function gridView (e) { // grid view
     e.stopPropagation()
@@ -684,8 +684,11 @@ $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
 
 $(document).ready(function() {
     $('div.card-icons').hover(function() {
-        $(this).find('.connection-menu').fadeIn(200);
+        //$(this).find('.connection-menu').fadeIn(200);
+        $('.connection-menu').removeClass('hovered');
+        $(this).find('.connection-menu').addClass('hovered');
     }, function() {
-        $(this).find('.connection-menu').fadeOut(100);
+        //$(this).find('.connection-menu').fadeOut(100);
+        $('.connection-menu').removeClass('hovered');
     });
 });

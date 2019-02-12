@@ -504,21 +504,19 @@ span.align-right.show {
                 width: 49%;
                 margin-bottom: 20px; //card placement for this and 2 child stylings
                 padding: 0;
-                // display: flex;
                 border: 1px solid #E5E0D9;
                 box-shadow: 0 22px 55px 0 rgba(0,0,0,0.03);
                 cursor: pointer;
                 transition: .3s;
 
                 .card-image{
-                    // width: 190px;
                     background-image: url(../images/PersonCard.jpg);
                     background-repeat: no-repeat;
                     background-size: cover;
                     background-position: center;
-                    // flex-shrink: 0;
                     position: relative;
                     padding: 20px;
+                    height: 24px; //height of the p
                     p{
                         color: #EEEBE7;
                         font-size: 22px;
@@ -526,7 +524,6 @@ span.align-right.show {
                     img{
                         position: absolute;
                         bottom: 20px;
-                        // left: 20px;
                         right: 20px;
                     }
                 }
@@ -534,11 +531,11 @@ span.align-right.show {
                 .cards{
                     color: $base-dark;
                     cursor: pointer;
-                    //height: 180px;
                     padding: 20px;
                     position: relative;
-                    // width: calc(100% - 270px);
-                    // overflow: hidden;
+                    height: calc(100% - 104px); //100% of the card - (header + cards padding)
+                    height: -moz-calc(100% - 104px);
+                    height: -webkit-calc(100% - 104px);
 
                     .card-info{
                         display: flex;
@@ -546,16 +543,14 @@ span.align-right.show {
                         height: fit-content; //150px
                         margin: -10px;
                         width: 100%;
+                        margin-bottom: 55px; //connections height + margin between
                         p{
                             display: -webkit-box;
                             font-size: 14px;
-                            // margin-bottom: 20px;
-                            // padding-right: 32px;
                             flex: 1 1 40%;
                             margin: 10px;
                             text-overflow: ellipsis;
                             -webkit-line-clamp: 1;
-                            // -webkit-box-orient: vertical;
                             span{
                                 font-family: aleobold;
                             }
@@ -598,108 +593,111 @@ span.align-right.show {
                             }
                         }
                     }
-                
-                    .connections{
-                        min-height: 40px;
-                        max-width: 100%;
-                        display: flex;
-                        justify-content: space-between;
-                        margin-top: 15px;
-                        // overflow: auto;
-                        .card-icons{
-                            position: relative;
-                            line-height: 38px;
+                    .connectionswrap{
+                        position: absolute;
+                        width: calc(100% - 40px); //100% - side padding of the card
+                        width: -moz-calc(100% - 40px);
+                        width: -webkit-calc(100% - 40px);
+                        bottom: 20px;
+
+                        .connections{
+                            min-height: 40px;
+                            max-width: 100%;
                             display: flex;
-                            font-size: 12px;
-                            padding: 0 10px;
+                            justify-content: space-between;
 
-                            img{
-                                padding-right: 6px;
-                                height: 22px;
-                                padding-top: 8px;
-                            }
-                            .connection-menu{
-                                display: none;
-                                background: $base-dark;
-                                box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
-                                color: $base-light;
+                            .card-icons{
+                                position: relative;
+                                line-height: 38px;
+                                display: flex;
                                 font-size: 12px;
-                                white-space: nowrap;
-                                position: absolute;
-                                padding: 20px;
-                                bottom: 38px;
-                                right: -90px;
-                                width: 220px;
-                                // height: 20px;
-                                z-index: 10;
+                                padding: 0 10px;
     
-                                // &.hovered{
-                                //     //display: block;
-                                //     visibility: visible;
-                                //     opacity: 1;
-                                // }
-
-                                h1{
-                                    font-size: 18px;
-                                    margin-bottom: 10px;
+                                img{
+                                    padding-right: 6px;
+                                    height: 22px;
+                                    padding-top: 8px;
                                 }
-                                ul{
-                                    padding: 0;
-                                    li{
-                                        width: unset;
-                                        display: list-item;
-                                        margin: 0;
+                                .connection-menu{
+                                    display: none;
+                                    background: $base-dark;
+                                    box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+                                    color: $base-light;
+                                    font-size: 12px;
+                                    white-space: nowrap;
+                                    position: absolute;
+                                    padding: 20px;
+                                    bottom: 40px;
+                                    right: -90px;
+                                    width: 220px;
+                                    z-index: 10;
+        
+                                    &.hovered{
+                                        display: block;
+                                    }
+    
+                                    h1{
+                                        font-size: 18px;
+                                        margin-bottom: 10px;
+                                    }
+                                    ul{
                                         padding: 0;
-                                        border: none;
-                                        box-shadow: none;
-                                        list-style-type: none;
-                                        cursor: pointer;
-                                        font-size: 13px;
-                                        transition: .2s;
-                                        line-height: 16px;
-                                        padding: 5px 0;
-                                        word-wrap: break-word;
-                                        white-space: normal;
-
-                                        #arrow{
-                                            color: $base-light;
-                                            background-image: url(../images/Arrow.svg);
-                                            background-size: contain;
-                                            background-repeat: no-repeat;
-                                            width: 10px;
-                                            height: 6px;
-                                            transform: rotate(-90deg);
-                                            float: right;
-                                            margin: 5px 0 0 10px;
-                                            transition: color .2s;
-                                        }
-
-                                        &:hover{
-                                            color: $sub-base;
+                                        li{
+                                            width: unset;
+                                            display: list-item;
+                                            margin: 0;
+                                            padding: 0;
+                                            border: none;
+                                            box-shadow: none;
+                                            list-style-type: none;
+                                            cursor: pointer;
+                                            font-size: 13px;
+                                            transition: .2s;
+                                            line-height: 16px;
+                                            padding: 5px 0;
+                                            word-wrap: break-word;
+                                            white-space: normal;
+    
                                             #arrow{
-                                                background-image: url(../images/Arrow_colored.svg);
+                                                color: $base-light;
+                                                background-image: url(../images/Arrow.svg);
+                                                background-size: contain;
+                                                background-repeat: no-repeat;
+                                                width: 10px;
+                                                height: 6px;
+                                                transform: rotate(-90deg);
+                                                float: right;
+                                                margin: 5px 0 0 10px;
+                                                transition: color .2s;
                                             }
-                                        }
-
-                                        span{
-                                            opacity: .6;
+    
+                                            &:hover{
+                                                color: $sub-base;
+                                                #arrow{
+                                                    background-image: url(../images/Arrow_colored.svg);
+                                                }
+                                            }
+    
+                                            span{
+                                                opacity: .6;
+                                            }
                                         }
                                     }
                                 }
+                                // .connection-menu:after {
+                                //     content: '';
+                                //     position: absolute;
+                                //     bottom: 0;
+                                //     left: 50%;
+                                //     width: 0;
+                                //     height: 0;
+                                //     border: 10px solid transparent;
+                                //     border-top-color: $base-dark;
+                                //     border-bottom: 0;
+                                //     margin-left: -10px;
+                                //     margin-bottom: -10px;
+                                // }
                             }
-                            // .connection-menu:after {
-                            //     content: '';
-                            //     position: absolute;
-                            //     bottom: 0;
-                            //     left: 50%;
-                            //     width: 0;
-                            //     height: 0;
-                            //     border: 10px solid transparent;
-                            //     border-top-color: $base-dark;
-                            //     border-bottom: 0;
-                            //     margin-left: -10px;
-                            //     margin-bottom: -10px;
-                            // }
                         }
                     }
                 }
@@ -733,6 +731,7 @@ span.align-right.show {
                     display: flex;
                     .card-image{
                         width: 190px;
+                        height: unset;
                         img{
                             left: 20px;
                             right: 0px;
@@ -741,14 +740,9 @@ span.align-right.show {
     
                     .cards{
                         width: calc(100% - 270px);
-                        .card-info{
-                            p{
-                            }
-                        }
-                    
-                        .connections{
-
-                        }
+                        width: -moz-calc(100% - 270px);
+                        width: -webkit-calc(100% - 270px);
+                        height: unset;
                     }
                 }
             }
@@ -776,13 +770,14 @@ span.align-right.show {
                             p{
                             }
                         }
-                    
-                        .connections{
-                            .card-icons{
-                                padding: 0;
+                        .connectionswrap{
+                            .connections{
+                                .card-icons{
+                                    padding: 0;
 
-                                .connection-menu{
-                                    right: -90px;
+                                    .connection-menu{
+                                        right: -90px;
+                                    }
                                 }
                             }
                         }
@@ -798,12 +793,13 @@ span.align-right.show {
             .row{
                 li{
                     .cards{
-                        .connections{
-                            .card-icons{
-                                img{
-                                    padding-right: 4px;
-                                    height: 17px;
-                                    padding-top: 5px;
+                        .connectionswrap{
+                            .connections{
+                                .card-icons{
+                                    img{
+                                        padding-right: 4px;
+                                        height: 17px;
+                                    }
                                 }
                             }
                         }
