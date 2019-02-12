@@ -22,7 +22,7 @@
             <a href="<?php echo BASE_URL?>peopleSub2/">Age Category<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Color<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Ethnodescriptor<div id="arrow"></div></a>
         </li>
         <li>
             <a href="<?php echo BASE_URL?>peopleSub2/">Role Types<div id="arrow"></div></a>

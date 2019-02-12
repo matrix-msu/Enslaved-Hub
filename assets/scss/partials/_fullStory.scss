@@ -105,6 +105,7 @@
 		width:32%;
         
         .sliderwrap{
+            margin-bottom: 65px;
             width: 100%;
             height: auto;
             position: relative;
@@ -211,9 +212,7 @@
             }
         }
         
-        .key-events{
-            margin-top: 65px;
-
+        .key-events {
             .key-events-title{
                 font-size: 28px;
                 color: $base-dark;
