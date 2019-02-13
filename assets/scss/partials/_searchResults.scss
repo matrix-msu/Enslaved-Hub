@@ -543,7 +543,7 @@ span.align-right.show {
                         height: fit-content; //150px
                         margin: -10px;
                         width: 100%;
-                        margin-bottom: 55px; //connections height + margin between
+                        margin-bottom: 45px; //connections height + margin between - 10px
                         p{
                             display: -webkit-box;
                             font-size: 14px;
@@ -598,7 +598,7 @@ span.align-right.show {
                         width: calc(100% - 40px); //100% - side padding of the card
                         width: -moz-calc(100% - 40px);
                         width: -webkit-calc(100% - 40px);
-                        bottom: 20px;
+                        bottom: 10px;
 
                         .connections{
                             min-height: 40px;
