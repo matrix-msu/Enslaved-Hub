@@ -4,18 +4,13 @@ if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
     $story = storyContent($_GET['kid']);
     // print_r($story);
     $images = [];
+    $caption = [];
     if (isset($story['Images'])) {
         foreach ($story['Images']['value'] as $image) {
             $images[] = $image['url'];
+            $caption[] = $image['caption'];
         }
     }
-    $caption = [];
-    if (isset($story['Caption'])) {
-        foreach ($story['Caption']['value'] as $cap) {
-            $caption[] = $cap;
-        }
-    }
-    // var_dump($caption);
 }
 else {
 
@@ -90,23 +85,25 @@ else {
             </section>
         </article>
         <article class="right-column">
-            <div class="container sliderwrap">
-                <div class="slider">
-                </div>
-                <div class="image-pagination">
-                    <img id="prev-arrow" onclick="plusSlides(-1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg">
-                    <div class="dotwrap" style="text-align:center">
+            <?php if (isset($images) && count($images) > 0) { ?>
+                <div class="container sliderwrap">
+                    <div class="slider">
                     </div>
-                    <img id="next-arrow" onclick="plusSlides(1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg">
+                    <div class="image-pagination">
+                        <img id="prev-arrow" onclick="plusSlides(-1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg">
+                        <div class="dotwrap" style="text-align:center">
+                        </div>
+                        <img id="next-arrow" onclick="plusSlides(1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg">
+                    </div>
+                    <div class="expand modal">
+                        <img src="<?php echo BASE_URL?>assets/images/expand.svg">
+                    </div>
+                    <!-- <div class="cation" style="text-align: center; padding-top: 20px; opacity: 0.7;"> -->
+                    <div class="caption">
+                        <p class="caption-text"><?php if(isset($caption[0])) echo $caption[0]; ?></p>
+                    </div>
                 </div>
-                <div class="expand modal">
-                    <img src="<?php echo BASE_URL?>assets/images/expand.svg">
-                </div>
-                <!-- <div class="cation" style="text-align: center; padding-top: 20px; opacity: 0.7;"> -->
-                <div class="caption">
-                    <p class="caption-text"><?php if(isset($caption[0])) echo $caption[0]; ?></p>
-                </div>
-            </div>
+            <?php } ?>
 
             <div class="key-events">
                 <?php

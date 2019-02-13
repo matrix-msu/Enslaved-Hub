@@ -61,14 +61,14 @@ function displayConnections(cardType, cardAmount){
     
     if( cardType == "Person"){
         for(i = 0; i < displayAmount; i++){
-            $('.connect-row').append('<li><div class="cards"><img src="../assets/images/'+cardType+'-light.svg"><h3>Firstname Lastname</h3></div></li>');
+            $('.connect-row').append('<li><div class="cards"><img src="'+BASE_IMAGE_URL+cardType+'-light.svg"><h3>Firstname Lastname</h3></div></li>');
         }
     }else{
         for(i = 0; i < displayAmount; i++){
-            $('.connect-row').append('<li><div class="cards"><img src="../assets/images/'+cardType+'-light.svg"><h3>'+cardType+' Name</h3></div></li>');
+            $('.connect-row').append('<li><div class="cards"><img src="'+BASE_IMAGE_URL+cardType+'-light.svg"><h3>'+cardType+' Name</h3></div></li>');
         }
     }
-    $('.connect-row .cards').css("background-image", "url(../assets/images/"+cardType+"Card.jpg)");
+    $('.connect-row .cards').css("background-image", "url("+BASE_IMAGE_URL+cardType+"Card.jpg)");
     //There does need to be a certain naming convention for the image names due to this function
 }
 function removeConnections(){

@@ -21,18 +21,17 @@ h1,h2,h3,h4,h5,p,a,span,li,label,input{
     border: 1px solid rgba(158, 154, 149, 0.4);
     box-shadow: 0 5px 5px 0 rgba(0,0,0,0.03);
     cursor: pointer;
-    display: inline-block;
+    display: inline-flex;
+    height: 40px;
     opacity: 1;
-    padding: 20px 16px;
     position: relative;
     transition: all .5s;
+    width: 40px;
 
     .chevron {
-        height: 7px;
-        width: 13px;
-        background-image: url(../images/Arrow2.svg);
-        background-repeat: no-repeat;
-        background-size: cover;
+        height: 9px;
+        position: relative;
+        margin: auto;
     }
 
     &:hover {
@@ -44,18 +43,14 @@ h1,h2,h3,h4,h5,p,a,span,li,label,input{
 
 .btn-prev {
     left: 0;
-
-    .chevron {
-        transform: rotate(90deg);
-        margin-right: 2px;
-    }
 }
+
 .btn-next {
     right: 0;
 
     .chevron {
-        transform: rotate(-90deg);
-        margin-left: 2px;
+        left: 1px;
+        transform: rotate(180deg);
     }
 }
 

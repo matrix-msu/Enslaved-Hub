@@ -402,14 +402,14 @@ function detailPerson($statement,$label){
             //For each detail to add create it in seperate divs with a detail menu in each
             for ($x = 0; $x <= (count($statementArr) - 1); $x++){
               echo "<div>" . $statementArr[$x];
-              echo '<div class="detail-menu"> <h1>Lastname</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>';
+              echo '<div class="detail-menu"> <h1>Metadata</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>';
               echo "</div>";
               if ($x != (count($statementArr) - 1)){
                 echo "<h4> | </h4>";
               }
             }
             ?>
-            
+
           </div>
       </div>
   </a>
