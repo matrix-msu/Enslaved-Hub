@@ -73,6 +73,17 @@ function setPage(newPage) {
     window.location = newLocation();
 }
 
+function scrollToAll() {
+    updateUrlParams();
+
+    if (urlParams['page'] != '' ||
+            urlParams['count'] != '' ||
+            urlParams['field'] != '' ||
+            urlParams['direction'] != '') {
+        $('html, body').scrollTop($("#all-header").offset().top - 60);
+    }
+}
+
 function initializeSort() {
     var $sortOptions = $('.sort-option');
 
@@ -137,6 +148,7 @@ function initializePagination() {
     });
 }
 
+scrollToAll()
 initializeSort();
 initializeCount();
 initializePagination();

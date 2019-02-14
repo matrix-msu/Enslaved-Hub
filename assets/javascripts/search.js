@@ -552,7 +552,17 @@ function displayCards() {
         window.localStorage.setItem('cards', cards);
         window.localStorage.setItem('view', view);
         // $('div.result-column').css('padding', '0', 'margin-top', '-30px', 'margin-bottom', '-15px');
+
+        setCardLinks();
     }
+}
+
+// Temporary fix to have result cards link to full record page
+function setCardLinks() {
+    $('.result-column .cardwrap .row li').unbind();
+    $('.result-column .cardwrap .row li').click(function(e) {
+        window.location = BASE_URL + 'recordPerson/';
+    });
 }
 
 
