@@ -57,6 +57,7 @@ $GLOBALS['routes'] = array(
     'eventResults' => 'eventResults.php',
     'placeResults' => 'placeResults.php',
     'sourceResults' => 'sourceResults.php',
+    'timeSub' => 'timeSub.php'
 );
 
 $location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
