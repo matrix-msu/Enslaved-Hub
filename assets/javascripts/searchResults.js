@@ -1,4 +1,4 @@
-// jQuery's '.css' inserts css styles as inline-styles 
+// jQuery's '.css' inserts css styles as inline-styles
 // this can be problematic because it overwrites css styles applied in the stylesheet
 // $(element).css('style',''); unsets these inline styles
 var setView; // load grid or table view, with # results per page from last page visit on page load

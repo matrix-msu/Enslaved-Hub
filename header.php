@@ -24,7 +24,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item drop-link">
+                <li class="nav-item drop-link visualize-hide">
                     <a class="nav-link unselected" id="visualize" href="<?php echo BASE_URL;?>">Visualize</a>
                     <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg"/></span>
                     <ul class="sub-list">

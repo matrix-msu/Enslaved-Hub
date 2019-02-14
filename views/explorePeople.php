@@ -22,7 +22,7 @@
             <a href="<?php echo BASE_URL?>peopleSub2/">Age Category<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Color<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2/">Ethnodescriptor<div id="arrow"></div></a>
         </li>
         <li>
             <a href="<?php echo BASE_URL?>peopleSub2/">Role Types<div id="arrow"></div></a>
@@ -116,7 +116,7 @@
     </form>
 </div>
 <!-- Visualize People -->
-<div class="explore-visualize">
+<div class="explore-visualize visualize-hide">
     <h2 class="column-header">Visualize People</h2>
     <div class="cardwrap">
         <ul class="row">

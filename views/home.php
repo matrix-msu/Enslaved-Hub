@@ -12,7 +12,7 @@
         </div>
         <div class="heading-search">
             <h3>Search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade ...</h3>
-            <form class="search-form">
+            <form class="search-form" action="<?= BASE_URL ?>searchResults/">
                 <input class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
                 <a href="<?php echo BASE_URL;?>search"><div class="search-icon"></div></a>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
@@ -69,7 +69,7 @@
             </a>
         </div>
     </div>
-    <div class="section-wrap">
+    <div class="section-wrap visualize-hide">
         <div class="section-info">
             <a href="<?php echo BASE_URL;?>visualize"><h2>Visualize<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur  …</p>
@@ -98,23 +98,23 @@
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
         </div>
         <div class="section-content">
-            <ul class="row">
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>
-                        </div>
-                    </a>
-                </li>
+            <ul class="row" id="stories-list">
+<!--                <li>-->
+<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
+<!--                        <div class="container cards">-->
+<!--                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>-->
+<!--                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
+<!--                        <div class="container cards">-->
+<!--                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>-->
+<!--                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </li>-->
             </ul>
         </div>
     </div>
@@ -124,23 +124,23 @@
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
         </div>
         <div class="section-content">
-            <ul class="row">
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>
-                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>
-                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>
-                        </div>
-                    </a>
-                </li>
+            <ul class="row" id="projects-list">
+<!--                <li>-->
+<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
+<!--                        <div class="container cards">-->
+<!--                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>-->
+<!--                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
+<!--                        <div class="container cards">-->
+<!--                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>-->
+<!--                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </li>-->
             </ul>
         </div>
     </div>
@@ -163,3 +163,46 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    $(document).ready(function () {
+
+        // Create the 2 stories cards
+        $.ajax({
+            url: BASE_URL + "api/blazegraph",
+            type: "GET",
+            data: {
+                preset: 'stories',
+                filters:  {limit: 2},
+                template: 'homeCard'
+
+            },
+            'success': function (data) {
+                result_array = JSON.parse(data);
+                result_array.forEach(function (card) {
+                    $(card).appendTo("#stories-list");
+                });
+            }
+        });
+
+        // Create the 2 projects cards
+        $.ajax({
+            url: BASE_URL + "api/blazegraph",
+            type: "GET",
+            data: {
+                preset: 'projects',
+                filters:  {limit: 2},
+                template: 'homeCard'
+
+            },
+            'success': function (data) {
+                result_array = JSON.parse(data);
+                result_array.forEach(function (card) {
+                    $(card).appendTo("#projects-list");
+                });
+            }
+        });
+    });
+
+</script>

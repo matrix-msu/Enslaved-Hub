@@ -1,4 +1,10 @@
 <!-- Author: Drew Schineller-->
+<?php
+$baseuri='https://sandro-16.matrix.msu.edu/entity/';
+$qitem='Q503';
+$allStatements=getpersonfullInfo($baseuri,$qitem);
+$person_array=$allStatements['PersonInfo'];
+?>
 <!-- Source Full Record page-->
 <!-- Heading image and title container-->
 <div class="container header source-page">
@@ -48,77 +54,60 @@
 <!-- detail section -->
 <div class="detail-section">
     <div class="detailwrap">
-        <div class="right-col">
-            <a href="<?php echo BASE_URL;?>exploreSource/">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Format</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
+        <?php
+        foreach($person_array as $tag=>$data){
+        if($data!='' && $tag!='Description' && !is_array($data)){
+            detailPerson($person_array[$tag],$tag);
+        }else if(is_array($data)){
+            foreach ($data as $key => $value) {
+            detailPerson($person_array[$key],$key);
+            }
+        }
+        }?>
+        <a href="<?php echo BASE_URL;?>explorePeople/">
+            <div class="detail">
+                <h3>CONTRIBUTING PROJECT</h3>
+                <div class="detail-bottom">
+                    <div>Lastname
+                        <div class="detail-menu">
+                            <h1>Metadata</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
+                        </div>
                     </div>
-                    <p class="detail-bottom">PDF</p>
+                    <h4> | </h4>
+                    <div>Second
+                        <div class="detail-menu">
+                            <h1>Metadata</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>exploreSource/">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Object Type</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Vessel Seizure</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>exploreSource/">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Title</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">Negrito Vessel Seizure</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>exploreSource/">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>Document Pages</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">2</p>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>exploreSource/">
-                <div class="detail">
-                    <div class="detail-top">
-                        <h3>File Name</h3>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
-                    </div>
-                    <p class="detail-bottom">01_negrito_capture.pdf</p>
-                </div>
-            </a>
-        </div>
-        <div class="left-col">
-            <div class="card">
-                <a href="<?php echo BASE_URL?>fullStory/">
-                    <div class="container cards">
-                        <p class="card-title">The record of this source appears in the *Name of Project* Project</p>
-                        <h4 class="card-view-story">View Original Record <div class="view-arrow"></h4>
-                    </div>
-                </a>
             </div>
-            <div class="copyright">
-                <h2>Copyright Info</h2>
-                <p>Info on copyright provided</p>
-                <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg"/>
-            </div>
-            <div class="share-links">
-                <h2>Share this Record</h2>
-                <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg"/>
-                <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg"/>
-                <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg"/>
-                <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg"/>
-            </div>
-        </div>
+        </a>
     </div>
 </div>
+
+<!-- Extra Info -->
+<div class="extra-info">
+    <div class="copyright">
+        <h2>Copyright Info</h2>
+        <p>Info on copyright provided</p>
+        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg"/>
+    </div>
+    <div class="share-links">
+        <h2>Share this Record</h2>
+        <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg"/>
+    </div>
+</div>
+
 <!-- Featured Stories-->
 <div class="container column featured-card">
         <div class="container cardheader-wrap">

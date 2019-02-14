@@ -31,9 +31,6 @@
             font-size: 14px;
             position: relative;
             overflow: hidden;
-            background-image: url(../images/Arrow-dark.svg);
-            background-repeat: no-repeat;
-            background-position: 90% 50%;
         
             &:focus{
                 outline: none;
@@ -42,6 +39,20 @@
             &:first-child{
                 margin-right: 30px;
                 margin-bottom: 15px;
+            }
+
+            &:before{
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 255px;
+                top: -105px;
+                left: 100px;
+                background-image: url(../images/Arrow-dark.svg);
+                background-repeat: no-repeat;
+                background-position: 50% 50%;
+                -webkit-transform: rotate(-90deg);
+                transform: rotate(-90deg);
             }
         }
     }
