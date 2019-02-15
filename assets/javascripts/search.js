@@ -182,6 +182,13 @@ function showModal(i) {
     }
 }
 
+function appendCards(){
+    console.log('here', result_array)
+    result_array.forEach(function (card) {
+        $(card).appendTo("ul.row");
+    });
+}
+
 // scroll wheel
 $(document).ready(function () {
     $('#modal-image').bind('mousewheel', function (e) {
@@ -391,13 +398,13 @@ var num_of_results
 $(document).ready(function () {
     $('span.results-per-page > span').html(result_array.length)
     setView = window.localStorage.getItem('view')
-    if (!setView || setView === 'grid') {
-        cards = false
-        $('span.grid-view').trigger('click');
-    } else {
-        cards = true
-        $('span.table-view').trigger('click');
-    }
+    //if (!setView || setView === 'grid') {
+    //    cards = false
+    //    $('span.grid-view').trigger('click');
+    //} else {
+    //    cards = true
+    //    $('span.table-view').trigger('click');
+    //}
     num_of_results = window.localStorage.getItem('display_amount')
     if (!num_of_results) {
         $('span.results-per-page > span').html('11');
@@ -468,30 +475,29 @@ var card_content = '<div class="card-info"><p><span>Person Status: </span><span 
 var card_contentTEST = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified Unidentified Unidentified Unidentified</p><p><span>Origin: </span>Location Nameeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
 //^test var
 
-var connection_lists = [
-'<h1>10 Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
-'<h1>10 Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
-'<h1>10 Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
-'<h1>10 Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>',
-'<h1>10 Connected Projects</h1><ul><li>Project Name <div id="arrow"></div></li><li>Project Name is Longer<div id="arrow"></div></li><li>Project Name <div id="arrow"></div></li><li>View All Project Connections <div id="arrow"></div></li></ul>'
-];
-
-var connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div></div>';
+//var connection_lists = [
+//'<h1>10 Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
+//'<h1>10 Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
+//'<h1>10 Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
+//'<h1>10 Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>',
+//'<h1>10 Connected Projects</h1><ul><li>Project Name <div id="arrow"></div></li><li>Project Name is Longer<div id="arrow"></div></li><li>Project Name <div id="arrow"></div></li><li>View All Project Connections <div id="arrow"></div></li></ul>'
+//];
+//
+//var connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div></div>';
 
 $("span.grid-view").click(function gridView (e) { // grid view
     e.stopPropagation()
+    console.log('call display')
     displayCards();
 });
-/*
+
 $(document).ready(function () {
-    // https://stackoverflow.com/questions/12049620/how-to-get-get-variables-value-in-javascript
     var $_GET = {};
     if(document.location.toString().indexOf('?') !== -1) {
         var query = document.location
             .toString()
             // get the query string
             .replace(/^.*?\?/, '')
-            // and remove any existing hash string (thanks, @vrijdenker)
             .replace(/#.*$/, '')
             .split('&');
 
@@ -518,33 +524,33 @@ $(document).ready(function () {
         },
         'success': function (data) {
             result_array = JSON.parse(data);
-            displayCards();
+            appendCards();
+            //displayCards();
         }
     });
 });
-*/
+
 
 function displayCards() {
+    //$('tbody > tr').remove();
+    cards = false;
+    view = 'grid';
+    window.localStorage.setItem('cards', cards);
+    $(this).next().toggleClass("show");
+
     if (cards === false) {
-        $('tbody > tr').remove();
+        //$('tbody > tr').remove();
+        $('.result-column').show();
         $("#search-result-configure-download-row").hide();
         $("#search-result-table").hide();
         $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
         $('span.view-toggle .grid-icon').addClass('show'); //make the grid-icon active
-        $('<div class="result-column"><div class="cardwrap"><ul class="row"></ul></div></div>').appendTo("div#search-result-wrap");
+        //$('<div class="result-column"><div class="cardwrap"><ul class="row"></ul></div></div>').appendTo("div#search-result-wrap");
         result = parseInt(localStorage.getItem('display_amount'), 10)
         if (result) {
             result_array.length = result
         }
-        var testCount = 0; //test
-        $.each(result_array,function () {
-            if(testCount%2 == 0){
-                $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_content+connections+'</div></li>').appendTo("ul.row");
-            }else{
-                $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_contentTEST+connections+'</div></li>').appendTo("ul.row");
-            }
-            testCount++;
-        });
+
         cards = true;
         view = 'grid';
         window.localStorage.setItem('cards', cards);
@@ -569,7 +575,7 @@ $("span.table-view").click(function tableView (e) { // table view
     if (cards === true) {
         cards = false
         window.localStorage.setItem('cards', cards)
-        $('div.result-column').remove();
+        //$('div.result-column').remove();
         $('div#search-result-table').show();
         $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
         $('span.view-toggle .table-icon').addClass('show'); //make the table-icon active
