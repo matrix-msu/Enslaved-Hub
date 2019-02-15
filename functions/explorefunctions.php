@@ -128,6 +128,133 @@ function counterOfGender(){
   }
 }
 
+//get the roles and their counts
+function counterOfRole(){
+  $query="SELECT ?role ?roleLabel ?count
+      WHERE
+      {
+        {
+          SELECT ?role (COUNT(?human) AS ?count) WHERE {
+            ?human wdt:P3 wd:Q602.
+            ?human wdt:P39 ?role.
+          }
+          GROUP BY ?role
+        }
+        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+      }
+      ORDER BY DESC(?count)
+      LIMIT 100
+      ";
+  $encode=urlencode($query);
+  $call=API_URL.$encode;
+  $res=callAPI($call,'','');
+
+  $res= json_decode($res);
+
+  if (!empty($res)){
+    return json_encode($res->results->bindings);
+  }else{
+    return $res;
+  }
+}
+
+
+// Count the number of people in each age category
+function counterOfAge(){
+  $query='SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
+                        (group_concat(distinct ?status; separator = "||") as ?status)
+                        (group_concat(distinct ?place; separator = "||") as ?place)
+                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+                        WHERE {
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                          ?person wdt:P3 wd:Q602.
+                          ?person wdt:P32 wd:Q66.
+                          OPTIONAL {?person wdt:P3 wd:Q2.}
+                          OPTIONAL {?person wdt:P33 ?age.}
+                          OPTIONAL {?person wdt:P32 ?agecategory.}
+                          OPTIONAL {?person wdt:P82 ?name.}
+                          OPTIONAL {?person wdt:P20 ?origin.}
+                          OPTIONAL {?name wdt:P30 ?event.
+                                    ?event wdt:P13 ?startdate.}
+                          BIND(str(YEAR(?startdate)) AS ?startyear).
+                      OPTIONAL {?event wdt:P14 ?enddate.}
+                      BIND(str(YEAR(?enddate)) AS ?endyear).
+                      OPTIONAL {?event wdt:P12 ?place.}
+                      OPTIONAL { ?person wdt:P17 ?sex. }
+                      OPTIONAL { ?person wdt:P24 ?status. }
+                      OPTIONAL { ?person wdt:P58 ?owner. }
+                      OPTIONAL { ?person wdt:P88 ?match. }
+
+                    } group by ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
+                ';
+  $encode=urlencode($query);
+  $call=API_URL.$encode;
+  $res=callAPI($call,'','');
+
+  $res= json_decode($res);
+
+  if (!empty($res)){
+    return json_encode($res->results->bindings);
+  }else{
+    return $res;
+  }
+}
+
+function counterOfEthnodescriptor(){
+  $query="SELECT ?ethno ?ethnoLabel ?count
+          WHERE
+          {
+            {
+              SELECT ?ethno (COUNT(?human) AS ?count) WHERE {
+                ?human wdt:P3 wd:Q602.
+                ?human wdt:P86 ?ethno.
+              }
+              GROUP BY ?ethno
+            }
+            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+          }
+          ORDER BY DESC(?count)
+          LIMIT 100
+      ";
+  $encode=urlencode($query);
+  $call=API_URL.$encode;
+  $res=callAPI($call,'','');
+
+  $res= json_decode($res);
+
+  if (!empty($res)){
+    return json_encode($res->results->bindings);
+  }else{
+    return $res;
+  }
+}
+
+// count the number of people with a certain type filter
+function counterOfType() {
+  $type = '';
+  if (isset($_GET['type'])){
+    $type = $_GET['type'];
+  }
+
+  if ($type == ''){
+    die;
+  }
+
+  if ($type == "Role Types"){
+    return counterOfRole();
+  }
+  if ($type == "Age Category"){
+    return counterOfAge();
+  }
+  if ($type == "Ethnodescriptor"){
+    return counterOfEthnodescriptor();
+  }
+  if ($type == "Place"){
+    return counterOfPlace();
+  }
+}
+
 
 
 function getJsonInfo($url){

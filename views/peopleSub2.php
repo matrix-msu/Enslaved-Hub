@@ -1,9 +1,19 @@
 <!-- Page author: Drew Schineller-->
 <!-- Heading image and title container-->
+<?php
+if (isset($_GET['type'])){
+    $type = $_GET['type'];
+} else {
+    $type = '';
+}
+?>
+
+
+
 <div class="container header stories">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><span id="current-title">Role</span></h4>
-        <h1>Role</h1>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><span id="current-title"><?php echo $type;?></span></h4>
+        <h1><?php echo $type;?></h1>
     </div>
 </div>
 <!-- info container-->
@@ -24,85 +34,68 @@
         </ul>
     </div>
     <ul class="cards">
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Agent<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Appraiser<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Buyer<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Captain<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Clerk<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Concessionaire<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Court Official<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Crew<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Deceased Owner<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Diplomat<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Emancipator<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Emperor<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Enslaved Person<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Godparent<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Govenor<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Guardian<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Hirer<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Judge<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Liberated African<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Petitioner<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Police Officer<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">President<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Priest (Cleric)<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Rescued African<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Rig Owner<div id="arrow"></div><span>6,000</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL;?>peopleResults/">Seller<div id="arrow"></div><span>6,000</span></a>
-        </li>
+        <?php
+        $typeCategories = array();
+        $typeID = str_replace(' ', '-', $type) . '-';
+        $typeLabel = '';
+
+
+        switch ($type){
+            case "Role Types":
+                $typeCategories = roleTypes;
+                $typeLabel = 'roleLabel';
+                break;
+            case "Ethnodescriptor":
+                $typeCategories = ethnodescriptor;
+                $typeLabel = 'ethnoLabel';
+                break;
+            case "Age Category":
+                $typeCategories = ageCategory;
+                $typeLabel = 'agecategoryLabel';
+                break;
+            case "Place":
+                $typeCategories = places;
+                $typeLabel = 'placeLabel';
+                break;
+        }
+        ?>
+        <script>
+            var type = "<?php echo $type ?>";
+            var typeID = "<?php echo $typeID ?>";
+            var typeLabel = "<?php echo $typeLabel ?>";
+        </script>
+        <?php
+        foreach (array_keys($typeCategories) as $category) { ?>
+            <li>
+                <a href="<?php echo BASE_URL;?>peopleResults/"><p class='type-title'><?php echo $category;?></p><div id="arrow"></div><span id="<?php echo $typeID . $typeCategories[$category];?>"></span></a>
+            </li>
+        <?php } ?>
     </ul>
 </div>
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: BASE_URL + 'api/counterOfType',
+            method: "GET",
+            data: {type: type},
+            'success': function (data) {
+                data = JSON.parse(data);
+
+                console.log(data);
+
+                data.forEach(function(records) {
+                    var category = records[typeLabel]['value'];
+                    var count = records['count']['value'];
+                    var span = $("a:contains("+category+")").find('span');
+
+                    if ($(span).length > 0){
+                        $(span).html(count)
+                    }
+                });
+            }
+        });
+    });
+</script>

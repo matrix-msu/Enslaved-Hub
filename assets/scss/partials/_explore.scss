@@ -155,7 +155,7 @@
             text-decoration: none;
         }
         li{
-            min-width: 32%;
+            min-width: 48%;
             background-color: #FFFDFB;
             border: 1px solid rgba(37,52,73,0.22);
             box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
@@ -163,15 +163,24 @@
             // margin-bottom: 30px;
             padding: 20px;
             color: $base-dark;
-            font-size: 20px;
+            font-size: 14px;
             cursor: pointer;
             margin-bottom: 30px;
             margin-right: 2%;
             transition: border .3s, padding .3s;
 
-            &:nth-child(3n){
-                margin-right: 0;
+            .type-title{
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                display: inline-block;
+                vertical-align: middle;
+                max-width: 80%;
             }
+
+            //&:nth-child(3n){
+            //    margin-right: 0;
+            //}
 
             span{
                 float: right;

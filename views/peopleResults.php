@@ -1,9 +1,16 @@
 <!-- Heading image and title container-->
 <div class="container header">
 	<div class="container middlewrap">
-    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub"><span id="previous-title">Gender // </span></a><span id="current-title">Male</span></h4>
+        <?php
+        if (isset($_GET['sex'])){
+            $currentTitle = $_GET['sex'];
+        } else {
+            $currentTitle = 'josh';
+        }
+        ?>
+    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub"><span id="previous-title">Gender // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4>
         <div class="search-title">
-            <h1>Male</h1>
+            <h1><?php echo $currentTitle;?></h1>
         </div>
         <div class="heading-search">
             <form class="search-form">
