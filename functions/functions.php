@@ -73,10 +73,8 @@ function blazegraph()
                     }
                 }
 
-//                echo $sexQuery;die;
-
                 $query['query'] ='
-                SELECT ?person ?personLabel ?name ?originLabel
+                SELECT ?person ?personLabel ?name ?originLabel ?sexLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
                         (group_concat(distinct ?place; separator = "||") as ?place)
                         (group_concat(distinct ?startyear; separator = "||") as ?startyear)
@@ -103,7 +101,7 @@ function blazegraph()
                           OPTIONAL { ?person wdt:P24 ?status. }
 
 
-                        } group by ?person ?personLabel ?name ?originLabel';
+                        } group by ?person ?personLabel ?name ?originLabel ?sexLabel';
 
 
                 $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
@@ -113,14 +111,12 @@ function blazegraph()
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
                     'Accept: application/sparql-results+json'
-//        'Content-Type: application/sparql-results+json'
                 ));
                 $result1 = curl_exec($ch);
                 curl_close($ch);
 
-
                 $query['query'] ='
-                SELECT ?person ?personLabel ?name ?originLabel
+                SELECT ?person ?personLabel ?name ?originLabel ?sexLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
                         WHERE {
                           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
@@ -139,7 +135,7 @@ function blazegraph()
                           OPTIONAL { ?person wdt:P24 ?status. }
 
 
-                        } group by ?person ?personLabel ?name ?originLabel
+                        } group by ?person ?personLabel ?name ?originLabel ?sexLabel
                         ';
 
 
@@ -150,60 +146,17 @@ function blazegraph()
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
                     'Accept: application/sparql-results+json'
-//        'Content-Type: application/sparql-results+json'
                 ));
                 $result2 = curl_exec($ch);
                 curl_close($ch);
 
-//                echo $result1;
-//                echo $result2;
-//                die;
+                $result1 = json_decode($result1, true)['results']['bindings'];
+                $result2 = json_decode($result2, true)['results']['bindings'];
 
-                $results = array_merge(json_decode($result1, true)['results']['bindings'], json_decode($result2, true)['results']['bindings']);
+                $results = array_merge($result1, $result2);
 
-//                        'SELECT ?person ?personLabel ?name ?originLabel
-//                        (group_concat(distinct ?status; separator = "||") as ?status)
-//                        (group_concat(distinct ?place; separator = "||") as ?place)
-//                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
-//                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
-//                        WHERE {
-//                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-//                          ?person wdt:P3 wd:Q602.
-//                          ?person wdt:P17 wd:Q47.
-//                          OPTIONAL {?person wdt:P3 wd:Q2.}
-//                          OPTIONAL {?person wdt:P82 ?name.}
-//                          OPTIONAL {?person wdt:P20 ?origin.}
-//                          OPTIONAL {?name wdt:P30 ?event.
-//                                    ?event wdt:P13 ?startdate.}
-//                          BIND(str(YEAR(?startdate)) AS ?startyear).
-//
-//                          OPTIONAL {?event wdt:P14 ?enddate.}
-//                          BIND(str(YEAR(?enddate)) AS ?endyear).
-//                          OPTIONAL {?event wdt:P12 ?place.}
-//                          OPTIONAL { ?person wdt:P17 ?sex. }
-//                          OPTIONAL { ?person wdt:P24 ?status. }
-//                          OPTIONAL { ?person wdt:P58 ?owner. }
-//                          OPTIONAL { ?person wdt:P88 ?match. }
-//
-//                        } group by ?person ?personLabel ?name ?originLabel
-//                        ' . $limit;
+//                print_r($results);die;
 
-
-
-
-//                SELECT ?person ?personLabel ?name ?sex ?sexLabel ?race ?age ?ageLabel ?status ?statusLabel ?role ?roleLabel ?owner ?ownerLabel ?match ?matchLabel WHERE {
-//                SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-//                      ?person wdt:P3 wd:Q2.
-//                OPTIONAL { ?person wdt:P82 ?name. }
-//                      OPTIONAL { ?person wdt:P17 ?sex. }
-//                      OPTIONAL { ?person wdt:P37 ?race. }
-//                      OPTIONAL { ?person wdt:P18 ?age. }
-//                      OPTIONAL { ?person wdt:P24 ?status. }
-//                      OPTIONAL { ?person wdt:P39 ?role. }
-//                      OPTIONAL { ?person wdt:P58 ?owner. }
-//                      OPTIONAL { ?person wdt:P88 ?match. }
-//                    }
-//                    LIMIT 100
                 break;
             case 'places':
                 $query['query'] =
@@ -405,7 +358,7 @@ function blazegraph()
 
 // this one is only used for blazegraph page
 function createCards($results, $template, $preset = 'default'){
-//    print_r($results[31]);die;
+//    print_r($results);die;
     $cards = Array();
 
     foreach ($results as $index => $record) {

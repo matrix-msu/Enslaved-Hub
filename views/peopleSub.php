@@ -20,7 +20,7 @@
     <ul class="cards">
       <?php foreach (sexTypes as $sex => $qvalue) {
         echo '<li>
-            <a href="'.BASE_URL.'peopleResults/?sex='.$sex.'">'.$sex.'<div id="arrow"></div><span id="gender-'.$qvalue.'"></span></a></li>';
+            <a href="'.BASE_URL.'peopleResults/?sex='.$sex.'"><p class="type-title">'.$sex.'</p><div id="arrow"></div><span id="gender-'.$qvalue.'"></span></a></li>';
       }?>
     </ul>
 </div>

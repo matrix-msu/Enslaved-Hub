@@ -515,7 +515,6 @@ $(document).ready(function () {
         },
         'success': function (data) {
             result_array = JSON.parse(data);
-            console.log(result_array)
             displayCards();
         }
     });
