@@ -24,7 +24,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item drop-link visualize-hide">
+                <!-- <li class="nav-item drop-link visualize-hide">
                     <a class="nav-link unselected" id="visualize" href="<?php echo BASE_URL;?>">Visualize</a>
                     <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg"/></span>
                     <ul class="sub-list">
@@ -34,7 +34,7 @@
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>">Data</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="nav-item"><a class="nav-link unselected" id="stories" href="<?php echo BASE_URL;?>stories/">Stories</a></li>
                 <li class="nav-item"><a class="nav-link unselected" id="projects" href="<?php echo BASE_URL;?>projects/">Projects</a></li>
                 <li class="nav-item drop-link">

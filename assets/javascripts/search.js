@@ -476,10 +476,13 @@ var connection_lists = [
 '<h1>10 Connected Projects</h1><ul><li>Project Name <div id="arrow"></div></li><li>Project Name is Longer<div id="arrow"></div></li><li>Project Name <div id="arrow"></div></li><li>View All Project Connections <div id="arrow"></div></li></ul>'
 ];
 
-var connections = '<div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div>';
+var connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div></div>';
 
-//$("span.grid-view").click(function gridView (e) { // grid view
-
+$("span.grid-view").click(function gridView (e) { // grid view
+    e.stopPropagation()
+    displayCards();
+});
+/*
 $(document).ready(function () {
     // https://stackoverflow.com/questions/12049620/how-to-get-get-variables-value-in-javascript
     var $_GET = {};
@@ -519,6 +522,7 @@ $(document).ready(function () {
         }
     });
 });
+*/
 
 function displayCards() {
     if (cards === false) {
@@ -532,20 +536,15 @@ function displayCards() {
         if (result) {
             result_array.length = result
         }
-        //var testCount = 0; //test
-        result_array.forEach(function (card) {
-            $(card).appendTo("ul.row");
+        var testCount = 0; //test
+        $.each(result_array,function () {
+            if(testCount%2 == 0){
+                $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_content+connections+'</div></li>').appendTo("ul.row");
+            }else{
+                $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_contentTEST+connections+'</div></li>').appendTo("ul.row");
+            }
+            testCount++;
         });
-
-        //$.each(result_array,function () {
-        ////    //if(testCount%2 == 0){
-        //    console.log($(this))
-        //        $(this).appendTo("ul.row");
-        //    //}else{
-        //    //    $('<li><div class="container card-image"><p>'+card_name+'</p><img src="../assets/images/'+card_icon+'"></div><div class="container cards">'+card_contentTEST+connections+'</div></li>').appendTo("ul.row");
-        //    //}
-        //    //testCount++;
-        //});
         cards = true;
         view = 'grid';
         window.localStorage.setItem('cards', cards);
@@ -694,29 +693,36 @@ $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
     $(this).next().toggleClass("show");
 });
 
-//Hover for the different connection icons on the result cards
-// $(document).ready(function(){
-//     var timer2
-//     $("div.card-icons").mouseenter(function () { // show icon-card info on hover
-//         var that = this;
-//         timer2 = setTimeout(function(){
-//             $('.connection-menu').removeClass('hovered');
-//             $(that).find('.connection-menu').addClass('hovered');
-//         }, 250);
-//     }).mouseleave(function() {
-//         $('.connection-menu').removeClass('hovered');
-//         clearTimeout(timer2);
+//This fixes the issue of deleting and adding the elements back where the hover wasnt working
+// $(document).on('mouseenter',"div.card-icons",function () { // show icon-card info on hover
+//     $(this).find('.connection-menu').fadeIn("slow", function(){
+//         // $('.connection-menu').removeClass('hovered');
+//         // $(this).find('.connection-menu').addClass('hovered');
+//     });
+// }).on('mouseleave',".connection-menu",function(e) {
+//     $(this).fadeOut("slow", function(){
+//         // $('.connection-menu').removeClass('hovered');
 //     });
 // });
 
-//This fixes the issue of deleting and adding the elements back where the hover wasnt working
-$(document).on('mouseenter',"div.card-icons",function () { // show icon-card info on hover
-    var that = this;
-    timer2 = setTimeout(function(){
+// $(document).ready(function() {
+//     $('div.card-icons').mouseenter(function() {
+//         $(this).find('.connection-menu').fadeIn();
+//     }).mouseleave( function() {
+//         $(this).find('.connection-menu').fadeOut();
+//         // setTimeout(function(){
+            
+//         // }, 200);
+//     });
+// });
+
+$(document).ready(function() {
+    $('div.card-icons').hover(function() {
+        //$(this).find('.connection-menu').fadeIn(200);
         $('.connection-menu').removeClass('hovered');
-        $(that).find('.connection-menu').addClass('hovered');
-    }, 0);
-}).on('mouseleave',"div.card-icons",function() {
-    $('.connection-menu').removeClass('hovered');
-    clearTimeout(timer2);
+        $(this).find('.connection-menu').addClass('hovered');
+    }, function() {
+        //$(this).find('.connection-menu').fadeOut(100);
+        $('.connection-menu').removeClass('hovered');
+    });
 });

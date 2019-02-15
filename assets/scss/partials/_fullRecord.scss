@@ -60,7 +60,12 @@
 
 .person-record-info{
     padding-top: 10px;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
+}
+
+.record-info{
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 
 .project-tab{
@@ -117,12 +122,11 @@
 
 .record-connections{
     border-bottom: none;
-    padding: 40px 6% 40px;
+    padding: 40px 6% 80px;
     max-width: 1000px;
     margin: 0 auto;
 
     .connectionwrap{
-        padding-bottom: 20px;
 
         .categories{
 
@@ -149,18 +153,18 @@
         }
     }
 }
-.source-event-connections{
-    padding-bottom: 0;
-    .connectionwrap{
-        padding-bottom: 80px;
-        border-bottom: 1px solid rgba(37,52,73,0.1);
-    }
-}
+// .source-event-connections{
+//     padding-bottom: 0;
+//     .connectionwrap{
+//         padding-bottom: 80px;
+//         border-bottom: 1px solid rgba(37,52,73,0.1);
+//     }
+// }
 
 .mapwrap{
     width: 100%;
     //margin: 0 auto;
-    padding: 40px 0 80px;
+    padding: 0 0 80px;
 
     #map-large{
         width: 100%;

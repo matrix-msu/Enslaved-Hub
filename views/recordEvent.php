@@ -4,6 +4,8 @@ $baseuri='https://sandro-16.matrix.msu.edu/entity/';
 $qitem='Q503';
 $allStatements=getpersonfullInfo($baseuri,$qitem);
 $person_array=$allStatements['PersonInfo'];
+$place_array=$allStatements['Places'];
+//var_dump($person_array);
 ?>
 <!-- Event Full Record page-->
 <!-- Heading image and title container-->
@@ -20,9 +22,49 @@ $person_array=$allStatements['PersonInfo'];
     </div>
 </div>
 <!-- info container-->
-<div class="container info">
+<div class="container info record-info">
     <div class="container infowrap">
         <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur.</p>
+    </div>
+</div>
+<!-- detail section -->
+<div class="detail-section">
+    <div class="detailwrap">
+        <?php
+        foreach($person_array as $tag=>$data){
+        if($data!='' && $tag!='Description' && !is_array($data)){
+            detailPerson($person_array[$tag],$tag);
+        }else if(is_array($data)){
+            foreach ($data as $key => $value) {
+            detailPerson($person_array[$key],$key);
+            }
+        }
+        }?>
+        <a href="<?php echo BASE_URL;?>exploreEvent/">
+            <div class="detail">
+                <h3>EVENT TYPE</h3>
+                <div class="detail-bottom">
+                    <div>Birth
+                        <div class="detail-menu">
+                            <h1>Lastname</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                            </p>
+                        </div>
+                    </div>
+                    <h4> | </h4>
+                    <div>Death
+                        <div class="detail-menu">
+                            <h1>Lastname</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                            </p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </a>
     </div>
 </div>
 <!-- Story Connections -->
@@ -52,47 +94,6 @@ $person_array=$allStatements['PersonInfo'];
         </div>
     </div>
 </div>
-<!-- detail section -->
-<div class="detail-section">
-    <div class="detailwrap">
-        <?php
-        foreach($person_array as $tag=>$data){
-        if($data!='' && $tag!='Description' && !is_array($data)){
-            detailPerson($person_array[$tag],$tag);
-        }else if(is_array($data)){
-            foreach ($data as $key => $value) {
-            detailPerson($person_array[$key],$key);
-            }
-        }
-        }?>
-        <a href="<?php echo BASE_URL;?>explorePeople/">
-            <div class="detail">
-                <h3>CONTRIBUTING PROJECT</h3>
-                <div class="detail-bottom">
-                    <div>Lastname
-                        <div class="detail-menu">
-                            <h1>Metadata</h1>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </p>
-                        </div>
-                    </div>
-                    <h4> | </h4>
-                    <div>Second
-                        <div class="detail-menu">
-                            <h1>Metadata</h1>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </a>
-    </div>
-</div>
-
 <!-- Extra Info -->
 <div class="extra-info">
     <div class="copyright">
@@ -108,33 +109,32 @@ $person_array=$allStatements['PersonInfo'];
         <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg"/>
     </div>
 </div>
-
 <!-- Featured Stories-->
 <div class="container column featured-card">
-        <div class="container cardheader-wrap">
-            <h2 class="column-header">Featured in these Stories</h2>
-        </div>
-        <div class="container cardwrap">
-            <ul class="row">
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
-                        <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <div class="container cardheader-wrap">
+        <h2 class="column-header">Featured in these Stories</h2>
     </div>
+    <div class="container cardwrap">
+        <ul class="row">
+            <li>
+                <a href="<?php echo BASE_URL?>fullStory/">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullStory/">
+                    <div class="container cards">
+                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
+                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
