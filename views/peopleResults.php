@@ -751,6 +751,12 @@
                     </tbody>
                 </table>
             </div>
+            <div class="result-column">
+                <div class="cardwrap">
+                    <ul class="row">
+                    </ul>
+                </div>
+            </div>
         </div>
         <div id="pagination">
             <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>

@@ -77,6 +77,8 @@ $("span.grid-view").click(function gridView(e) { // grid view
         $("#search-result-table").hide();
         $('span.view-toggle img.hide').show();
         $('span.view-toggle img.show').hide();
+
+        console.log('hello make row inside searhResults.js?????????');
         $('<div class="column"><div class="cardwrap"><ul class="row"></ul></div></div>').appendTo("div#search-result-wrap");
         result = parseInt(localStorage.getItem('display_amount'), 10)
         if (result) {
