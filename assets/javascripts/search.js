@@ -182,13 +182,6 @@ function showModal(i) {
     }
 }
 
-function appendCards(){
-    console.log('here', result_array)
-    result_array.forEach(function (card) {
-        $(card).appendTo("ul.row");
-    });
-}
-
 // scroll wheel
 $(document).ready(function () {
     $('#modal-image').bind('mousewheel', function (e) {
@@ -392,9 +385,9 @@ if (window.document.getElementById('modal-image')) {
 // this can be problematic because it overwrites css styles applied in the stylesheet
 // $(element).css('style',''); unsets these inline styles
 
-var setView // load grid or table view, with # results per page from last page visit on page load
-var cards
-var num_of_results
+var setView;     // load grid or table view, with # results per page from last page visit on page load
+var cards;
+var num_of_results;
 $(document).ready(function () {
     $('span.results-per-page > span').html(result_array.length)
     setView = window.localStorage.getItem('view')
@@ -449,9 +442,9 @@ $("ul.results-per-page li").click(function (e) { // set the per-page value
     location.reload();
 });
 
-var timer
+var timer;
 $("span.view-toggle").mouseenter(function () { // show tooltips on hover
-    var that = this
+    var that = this;
     timer = setTimeout(function(){
         $('span p.tooltip').removeClass('hovered');
         $(that).find("p.tooltip").addClass('hovered');
@@ -465,14 +458,14 @@ $("span.view-toggle").mouseenter(function () { // show tooltips on hover
 //Generates result cards
 var view;
 var result;
-result_array = [];
-result_array.length = 11;
+//result_array = [];
+//result_array.length = 11;
 
 //These html elements are set as independent variables and arrays so instead of one long line it is more readable
-var card_name = 'Firstname Lastname';
-var card_icon = 'Person-light.svg';
-var card_content = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified</p><p><span>Origin: </span>Location Name</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
-var card_contentTEST = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified Unidentified Unidentified Unidentified</p><p><span>Origin: </span>Location Nameeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
+//var card_name = 'Firstname Lastname';
+//var card_icon = 'Person-light.svg';
+//var card_content = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified</p><p><span>Origin: </span>Location Name</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
+//var card_contentTEST = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified Unidentified Unidentified Unidentified</p><p><span>Origin: </span>Location Nameeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
 //^test var
 
 //var connection_lists = [
@@ -491,7 +484,10 @@ $("span.grid-view").click(function gridView (e) { // grid view
     displayCards();
 });
 
+
+// Get the query parameters from the url and use ajax to load results
 $(document).ready(function () {
+    // Get params from url
     var $_GET = {};
     if(document.location.toString().indexOf('?') !== -1) {
         var query = document.location
@@ -506,30 +502,43 @@ $(document).ready(function () {
             $_GET[aux[0]] = aux[1];
         }
     }
+    console.log($_GET)
 
-    var sexFilter = $_GET['sex'];
-    if (typeof(sexFilter) == "undefined"){
-        sexFilter = '';
+    // The first key of the get params should be the type
+    var type = Object.keys($_GET)[0];
+    var filter = $_GET[type];
+    console.log(type, filter)
+
+    if (typeof(filter) == "undefined"){
+        filter = '';
     }
+
+    var filters = {};
+    filters[type] = filter;
+
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
         type: "GET",
         data: {
             preset: 'people',
-            filters:  {
-                sex: sexFilter
-            },
+            filters: filters,
             template: 'searchCard'
         },
         'success': function (data) {
             result_array = JSON.parse(data);
             appendCards();
-            //displayCards();
         }
     });
 });
 
+function appendCards(){
+    console.log('here', result_array)
+    //todo show the number of results here
+    result_array.forEach(function (card) {
+        $(card).appendTo("ul.row");
+    });
+}
 
 function displayCards() {
     //$('tbody > tr').remove();
@@ -575,6 +584,7 @@ $("span.table-view").click(function tableView (e) { // table view
     if (cards === true) {
         cards = false
         window.localStorage.setItem('cards', cards)
+        $('div.result-column').hide();
         //$('div.result-column').remove();
         $('div#search-result-table').show();
         $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
@@ -623,11 +633,11 @@ function correctTableHeights () {
 }
 
 // filter handled below here
-var filter
-var tableWidth = 0
+var filter;
+var tableWidth = 0;
 $(".show-filter").click(function(e){ // toggle show/hide filter menu
     e.stopPropagation();
-    filter = !filter
+    filter = !filter;
     if (filter) {
         $("div.filter-menu").addClass("show");
         $(this).html('<img src="../assets/images/arrow-right.svg" alt="show filter menu button" style="transform:rotate(180deg);"> Hide Filter Menu');
@@ -657,7 +667,7 @@ function centerStuffWithFilter () {
         $('div#searchResults.show').css('width','');
         $("#searchResults").removeClass("show");
     } else {
-        tableWidth = window.innerWidth - 330
+        tableWidth = window.innerWidth - 330;
         $('div#searchResults').css('max-width', '3000px');// remove max-width property
         $('div#searchResults.show').css('width', tableWidth); // apply width
     }

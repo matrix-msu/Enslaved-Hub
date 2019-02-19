@@ -155,7 +155,7 @@
             text-decoration: none;
         }
         li{
-            min-width: 48%;
+            width: 48%;
             background-color: #FFFDFB;
             border: 1px solid rgba(37,52,73,0.22);
             box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
@@ -494,24 +494,6 @@
                 // .cards{
                     background-image: url(../images/ByData.png);
                 // }
-            }
-        }
-    }
-}
-
-@media screen and (max-width: 800px){
-    .explore-by{
-        .cards{
-            li{
-                width: 49%;
-                margin-right: 2%;
-
-                &:nth-child(3n){
-                    margin-right: auto;
-                }
-                &:nth-child(2n){
-                    margin-right: 0;
-                }
             }
         }
     }

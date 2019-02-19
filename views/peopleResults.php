@@ -2,13 +2,19 @@
 <div class="container header">
 	<div class="container middlewrap">
         <?php
-        if (isset($_GET['sex'])){
-            $currentTitle = $_GET['sex'];
+//        print_r($_GET);die;
+        if (count($_GET) > 0){
+            $typeTitle = array_keys($_GET)[0];
+            $currentTitle = $_GET[$typeTitle];
+            $typeTitle = str_replace('_', ' ', $typeTitle);
+            $currentTitle = str_replace('_', ' ', $currentTitle);
         } else {
-            $currentTitle = 'josh';
+            $typeTitle = '';
+            $currentTitle = '';
         }
+
         ?>
-    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub"><span id="previous-title">Gender // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4>
+    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub"><span id="previous-title"><?php echo $typeTitle;?> // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4>
         <div class="search-title">
             <h1><?php echo $currentTitle;?></h1>
         </div>

@@ -51,6 +51,7 @@ function blazegraph()
     } else {
         $filtersArray = Array();
     }
+//    print_r($filtersArray);die;
 
     $template = $_GET['template'];
 
@@ -63,7 +64,6 @@ function blazegraph()
             case 'people':
 
                 $sexQuery = "";
-
                 if (isset($filtersArray['sex'])){
                     $sex = $filtersArray['sex'];
                     if (array_key_exists($sex, sexTypes)){
@@ -73,35 +73,46 @@ function blazegraph()
                     }
                 }
 
+                $roleQuery = '';
+                if (isset($filtersArray['Role Types'])){
+                    $role = $filtersArray['Role Types'];
+                    if (array_key_exists($role, roleTypes)){
+                        $qRole = roleTypes[$role];
+                        $roleQuery = "?person wdt:P39 wd:$qRole.";
+
+                    }
+                }
+
                 $query['query'] ='
-                SELECT ?person ?personLabel ?name ?originLabel ?sexLabel
+                SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel ?role ?roleLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
                         (group_concat(distinct ?place; separator = "||") as ?place)
                         (group_concat(distinct ?startyear; separator = "||") as ?startyear)
                         (group_concat(distinct ?endyear; separator = "||") as ?endyear)
                         WHERE {
                           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                          ?person wdt:P3 wd:Q602.'
-                          . $sexQuery . '
-                          ?person wdt:P82 ?name.
-                          ?person p:P82 ?namestatement . # with a P82(hasname)statement
-                          FILTER  EXISTS { ?namestatement pq:P30 ?event}
-                          # ... but the statement has  P30 (recordedAt) qualifier
-	                  OPTIONAL { ?event wdt:P12 ?place. }
-
+                          ?person wdt:P3 wd:Q602.
+                          '. $sexQuery .'
+                          ?person wdt:P32 wd:Q66.
+                          '. $roleQuery .'
+                          OPTIONAL {?person wdt:P3 wd:Q2.}
+                          OPTIONAL {?person wdt:P33 ?age.}
+                          OPTIONAL {?person wdt:P39 ?role.}
+                          OPTIONAL {?person wdt:P32 ?agecategory.}
+                          OPTIONAL {?person wdt:P82 ?name.}
                           OPTIONAL {?person wdt:P20 ?origin.}
-
-                          OPTIONAL {?event wdt:P13 ?startdate.}
+                          OPTIONAL {?name wdt:P30 ?event.
+                                    ?event wdt:P13 ?startdate.}
                           BIND(str(YEAR(?startdate)) AS ?startyear).
-
-                          OPTIONAL {?event wdt:P14 ?enddate.}
-                          BIND(str(YEAR(?enddate)) AS ?endyear).
-
-                          OPTIONAL { ?person wdt:P17 ?sex. }
-                          OPTIONAL { ?person wdt:P24 ?status. }
-
-
-                        } group by ?person ?personLabel ?name ?originLabel ?sexLabel';
+                      OPTIONAL {?event wdt:P14 ?enddate.}
+                      BIND(str(YEAR(?enddate)) AS ?endyear).
+                      OPTIONAL {?event wdt:P12 ?place.}
+                      OPTIONAL { ?person wdt:P17 ?sex. }
+                      OPTIONAL { ?person wdt:P24 ?status. }
+                      OPTIONAL { ?person wdt:P58 ?owner. }
+                      OPTIONAL { ?person wdt:P88 ?match. }
+                    } group by ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel ?role ?roleLabel
+                ';
 
 
                 $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
@@ -115,6 +126,9 @@ function blazegraph()
                 $result1 = curl_exec($ch);
                 curl_close($ch);
 
+//                echo $query['query'];die;
+//                echo $result1;die;
+                
                 $query['query'] ='
                 SELECT ?person ?personLabel ?name ?originLabel ?sexLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
@@ -403,12 +417,15 @@ function createCards($results, $template, $preset = 'default'){
                     $status = '';
                 }
 
-
+                $statusHtml = '';
                 // if a person has multiple statuses, display them in a tooltip
-                $statusHtml = "<p><span>Person Status: </span>$status</p>";
+                if ($statusCount == 1){
+                    $statusHtml = "<p><span>Person Status: </span>$status</p>";
+                }
                 if ($statusCount > 1){
                     $statusHtml = "<p><span>Person Status: </span><span class='multiple'>Multiple<span class='tooltip'>$status</span></span></p>";
                 }
+
 
                 if (isset($record['originLabel']) && isset($record['originLabel']['value'])){
                     $origin = $record['originLabel']['value'];
@@ -419,11 +436,12 @@ function createCards($results, $template, $preset = 'default'){
                 if (isset($record['place']) && isset($record['place']['value'])){
                     $placeArray = explode('||', $record['place']['value']);
                     $location = '';
-                    foreach ($placeArray as $placeUrl) {
-                        $qPlace = end(explode('/', $placeUrl));
-                        $place = qPlaces[$qPlace];
-                        $location .= "$place ";
-                    }
+                    $placeUrl = end($placeArray);
+//                    foreach ($placeArray as $placeUrl) {
+                    $qPlace = end(explode('/', $placeUrl));
+                    $place = qPlaces[$qPlace];
+                    $location .= "$place ";
+//                    }
                 } else {
                     $location = '';
                 }
@@ -442,9 +460,20 @@ function createCards($results, $template, $preset = 'default'){
                     $endYear = '';
                 }
 
-                $dateRange = "$startYear - $endYear";
+                if ($startYear == ''){
+                    $dateRange = $endYear;
+                } elseif ($endYear == ''){
+                    $dateRange = $startYear;
+                } else {
+                    $dateRange = "$startYear - $endYear";
+                }
 
 
+                if ($origin != ''){
+                    $originHtml = "<p><span>Origin: </span>$origin</p>";
+                } else {
+                    $originHtml = '';
+                }
 
 
 
@@ -472,7 +501,7 @@ function createCards($results, $template, $preset = 'default'){
                             <div class='card-info'>
                             $statusHtml
                             <p><span>Sex: </span>$sex</p>
-                            <p><span>Origin: </span>$origin</p>
+                            $originHtml
                             <p><span>Location: </span>$location</p>
                             <p><span>Date Range: </span>$dateRange</p></div>
                             $connections
