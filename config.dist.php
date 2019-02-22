@@ -23,6 +23,7 @@ define("KORA_SEARCH_URL", KORA_BASE_URL . "api/search");
 define("KORA_FILES_URL", KORA_BASE_URL . "public/app/files/");
 
 define('API_URL','https://sandro-33.matrix.msu.edu/sparql?query=');
+define('BLAZEGRAPH_URL','https://sandro-33.matrix.msu.edu/namespace/wdq/sparql');
 
 //database info
 define("DATABASE_HOST",  "rush.matrix.msu.edu");

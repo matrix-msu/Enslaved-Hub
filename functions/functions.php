@@ -56,10 +56,10 @@ function blazegraph()
     $template = $_GET['template'];
 
 
-
+    $queryArray = array();
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
-        $query = array('query' => "");
+
         switch ($preset){
             case 'people':
 
@@ -83,6 +83,7 @@ function blazegraph()
                     }
                 }
 
+                $query = array('query' => "");
                 $query['query'] ='
                 SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel ?role ?roleLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
@@ -114,28 +115,18 @@ function blazegraph()
                     } group by ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel ?role ?roleLabel
                 ';
 
+                array_push($queryArray, $query);
 
-                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-                ));
-                $result1 = curl_exec($ch);
-                curl_close($ch);
 
-//                echo $query['query'];die;
-//                echo $result1;die;
-                
+                $query = array('query' => "");
                 $query['query'] ='
-                SELECT ?person ?personLabel ?name ?originLabel ?sexLabel
+                SELECT ?person ?personLabel ?name ?originLabel ?sexLabel ?role ?roleLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
                         WHERE {
                           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
                           ?person wdt:P3 wd:Q602.
                           '. $sexQuery . '
+                          '. $roleQuery . '
                           ?person wdt:P82 ?name.
                           ?person p:P82 ?namestatement . # with a P82 (hasname) statement
 	                 FILTER NOT EXISTS { ?namestatement pq:P30 ?event}
@@ -149,30 +140,13 @@ function blazegraph()
                           OPTIONAL { ?person wdt:P24 ?status. }
 
 
-                        } group by ?person ?personLabel ?name ?originLabel ?sexLabel
+                        } group by ?person ?personLabel ?name ?originLabel ?sexLabel ?role ?roleLabel
                         ';
 
-
-                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-                ));
-                $result2 = curl_exec($ch);
-                curl_close($ch);
-
-                $result1 = json_decode($result1, true)['results']['bindings'];
-                $result2 = json_decode($result2, true)['results']['bindings'];
-
-                $results = array_merge($result1, $result2);
-
-//                print_r($results);die;
-
+                array_push($queryArray, $query);
                 break;
             case 'places':
+                $query = array('query' => "");
                 $query['query'] =
                     'SELECT DISTINCT ?place ?placeLabel ?place2 ?place2Label ?place3 ?place3Label WHERE {
                      FILTER regex(?regex, "^United States") .
@@ -182,42 +156,22 @@ function blazegraph()
 
                     SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
                     }order by ?place ?place2 ?place3';
-                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-//        'Content-Type: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
 
-                $results = json_decode($result, true)['results']['bindings'];
+                array_push($queryArray, $query);
                 break;
             case 'events':
+                $query = array('query' => "");
                 $query['query'] =
                     'SELECT ?event ?eventLabel WHERE {
                       ?event wdt:P3 wd:Q34.
                       SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
                     }
                     LIMIT 100';
-                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-//        'Content-Type: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
 
-                $results = json_decode($result, true)['results']['bindings'];
+                array_push($queryArray, $query);
                 break;
             case 'sources':
+                $query = array('query' => "");
                 $query['query'] =
                     'SELECT ?person ?personLabel ?name ?sex ?sexLabel ?race ?age ?ageLabel ?status ?statusLabel ?role ?roleLabel ?owner ?ownerLabel ?match ?matchLabel WHERE {
                       SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
@@ -232,21 +186,11 @@ function blazegraph()
                       OPTIONAL { ?person wdt:P88 ?match. }
                     }
                     LIMIT 100';
-                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-//        'Content-Type: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
 
-                $results = json_decode($result, true)['results']['bindings'];
+                array_push($queryArray, $query);
                 break;
             case 'projects':
+                $query = array('query' => "");
 //                $query['query'] =
 //                    'SELECT ?project ?projectLabel  WHERE {
 //                      ?project wdt:P3 wd:Q264
@@ -254,7 +198,6 @@ function blazegraph()
 //                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 //                    }
 //                ';
-
                 $query['query'] =
                     'SELECT ?person ?personLabel ?name ?originLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
@@ -283,21 +226,10 @@ function blazegraph()
                         } group by ?person ?personLabel ?name ?originLabel
                         ' . $limit;
 
-                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-//        'Content-Type: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
-
-                $results = json_decode($result, true)['results']['bindings'];
+                array_push($queryArray, $query);
                 break;
             case 'stories':
+                $query = array('query' => "");
                 $query['query'] =
                     'SELECT ?person ?personLabel ?name ?originLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
@@ -325,20 +257,7 @@ function blazegraph()
 
                         } group by ?person ?personLabel ?name ?originLabel
                         ' . $limit;
-
-                $ch = curl_init("https://sandro-33.matrix.msu.edu/namespace/wdq/sparql");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-//        'Content-Type: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
-
-                $results = json_decode($result, true)['results']['bindings'];
+                array_push($queryArray, $query);
                 break;
             default:
                 die;
@@ -348,12 +267,39 @@ function blazegraph()
         $query = array(
             'query' => $_GET['query']
         );
+        array_push($queryArray, $query);
+
         $preset = 'default';
     }
     else{
         die;
     }
 
+
+    $resultsArray = array();
+    $first = true;
+
+    foreach ($queryArray as $query) {
+        $ch = curl_init(BLAZEGRAPH_URL);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+            'Accept: application/sparql-results+json'
+        ));
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($result, true)['results']['bindings'];
+
+        if ($first){
+            $resultsArray = $result;
+            $first = false;
+        } else {
+            $resultsArray = array_merge($resultsArray, $result);
+        }
+    }
 
 
 //
@@ -367,7 +313,7 @@ function blazegraph()
 
 
 //    return $result;
-    return createCards($results, $template, $preset);
+    return createCards($resultsArray, $template, $preset);
 }
 
 // this one is only used for blazegraph page
@@ -383,17 +329,23 @@ function createCards($results, $template, $preset = 'default'){
                 $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $fullName);
                 $lastName = $nameArray[count($nameArray)-1];
 
+                $personUrl = $record['person']['value'];
+                $personQ = end(explode('/', $personUrl));
+
                 if (isset($record['statusLabel']) && isset($record['statusLabel']['value'])){
                     $status = $record['statusLabel']['value'];
                 } else {
                     $status = "";
                 }
 
+                $sexHtml = '';
                 if (isset($record['sexLabel']) && isset($record['sexLabel']['value'])){
                     $sex = $record['sexLabel']['value'];
+                    $sexHtml = "<p><span>Sex: </span>$sex</p>";
                 } else {
-                    $sex = 'Unidentified';
+                    $sexHtml = "<p><span>Sex: </span>Unidentified</p>";
                 }
+
 
                 if (isset($record['status']) && isset($record['status']['value'])){
                     $statusArray = explode('||', $record['status']['value']);
@@ -433,17 +385,17 @@ function createCards($results, $template, $preset = 'default'){
                     $origin = '';
                 }
 
+
+                $locationHtml = '';
                 if (isset($record['place']) && isset($record['place']['value'])){
                     $placeArray = explode('||', $record['place']['value']);
                     $location = '';
                     $placeUrl = end($placeArray);
-//                    foreach ($placeArray as $placeUrl) {
                     $qPlace = end(explode('/', $placeUrl));
                     $place = qPlaces[$qPlace];
                     $location .= "$place ";
-//                    }
-                } else {
-                    $location = '';
+
+                    $locationHtml = "<p><span>Location: </span>$location</p>";
                 }
 
                 if (isset($record['startyear']) && isset($record['startyear']['value'])){
@@ -460,12 +412,17 @@ function createCards($results, $template, $preset = 'default'){
                     $endYear = '';
                 }
 
-                if ($startYear == ''){
-                    $dateRange = $endYear;
+                $dateRangeHtml = '';
+                $dateRange = '';
+                if ($startYear != '' && $endYear != ''){
+                    $dateRange = "$startYear - $endYear";
                 } elseif ($endYear == ''){
                     $dateRange = $startYear;
-                } else {
-                    $dateRange = "$startYear - $endYear";
+                } elseif ($startYear == '') {
+                    $dateRange = $endYear;
+                }
+                if ($dateRange != ''){
+                    $dateRangeHtml = "<p><span>Date Range: </span>$dateRange</p>";
                 }
 
 
@@ -494,18 +451,19 @@ function createCards($results, $template, $preset = 'default'){
 
                 $card_icon = 'Person-light.svg';
 
-                $card = "<li><div class='container card-image'>
+                $card = "<li><a href='".BASE_URL."recordPerson/$personQ'>
+                        <div class='container card-image'>
                             <p>$fullName</p>
                             <img src='../assets/images/$card_icon'>
                             </div><div class='container cards'>
                             <div class='card-info'>
                             $statusHtml
-                            <p><span>Sex: </span>$sex</p>
+                            $sexHtml
                             $originHtml
-                            <p><span>Location: </span>$location</p>
-                            <p><span>Date Range: </span>$dateRange</p></div>
+                            $locationHtml
+                            $dateRangeHtml
                             $connections
-                            </div></li>";
+                            </div></a></li>";
 
 
                 array_push($cards, $card);
