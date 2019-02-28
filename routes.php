@@ -69,6 +69,26 @@ if( substr($currentFile, -1) == '/' ){
     $currentFile = rtrim($currentFile,"/");
 }
 
+$filterToFileMap = array(
+    'sex' => sexTypes,
+    'Age Category' => ageCategory,
+    'Ethnodescriptor' => ethnodescriptor,
+    'Role_Types' => roleTypes,
+    'Place' => places
+);
+
+if( $currentFile == 'peopleResults' && isset($_GET)){
+    //check if the get value is real.
+
+    if (count($_GET) > 0){
+        $filterType = array_keys($_GET)[0];
+        $filterVal = $_GET[$filterType];
+
+        if (!(array_key_exists($filterType, $filterToFileMap) && array_key_exists($filterVal, $filterToFileMap[$filterType]))){
+            $currentFile = '';
+        }
+    }
+}
 
 if( isset($GLOBALS['api_routes'][$currentFile]) ){
     $currentApiFile = $GLOBALS['api_routes'][$currentFile];

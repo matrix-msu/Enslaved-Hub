@@ -452,18 +452,18 @@ function createCards($results, $template, $preset = 'default'){
                 $card_icon = 'Person-light.svg';
 
                 $card = "<li><a href='".BASE_URL."recordPerson/$personQ'>
-                        <div class='container card-image'>
+                        <span class='container card-image'>
                             <p>$fullName</p>
                             <img src='../assets/images/$card_icon'>
-                            </div><div class='container cards'>
-                            <div class='card-info'>
+                            </span><span class='container cards'>
+                            <span class='card-info'>
                             $statusHtml
                             $sexHtml
                             $originHtml
                             $locationHtml
                             $dateRangeHtml
                             $connections
-                            </div></a></li>";
+                            </span></a></li>";
 
 
                 array_push($cards, $card);

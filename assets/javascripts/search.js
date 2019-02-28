@@ -388,8 +388,9 @@ if (window.document.getElementById('modal-image')) {
 var setView;     // load grid or table view, with # results per page from last page visit on page load
 var cards;
 var num_of_results;
+var results_per_page = 10;
 $(document).ready(function () {
-    $('span.results-per-page > span').html(result_array.length)
+    $('span.results-per-page > span').html(results_per_page)
     setView = window.localStorage.getItem('view')
     //if (!setView || setView === 'grid') {
     //    cards = false
@@ -398,14 +399,14 @@ $(document).ready(function () {
     //    cards = true
     //    $('span.table-view').trigger('click');
     //}
-    num_of_results = window.localStorage.getItem('display_amount')
-    if (!num_of_results) {
-        $('span.results-per-page > span').html('11');
-        $('#searchResults-showing >span:first-child').html('11');
-    } else {
-        $('span.results-per-page > span').html(num_of_results);
-        $('#searchResults-showing >span:first-child').html(num_of_results);
-    }
+    // num_of_results = window.localStorage.getItem('display_amount')
+    // if (!num_of_results) {
+    //     $('span.results-per-page > span').html();
+    //     $('#searchResults-showing >span:first-child').html('11');
+    // } else {
+    //     $('span.results-per-page > span').html(num_of_results);
+    //     $('#searchResults-showing >span:first-child').html(num_of_results);
+    // }
     var pageURL = $(location).attr("href");
     var urlLength = pageURL.length;
     var testString = pageURL.substring(urlLength-13,urlLength);
@@ -507,7 +508,6 @@ $(document).ready(function () {
     // The first key of the get params should be the type
     var type = Object.keys($_GET)[0];
     var filter = $_GET[type];
-    console.log(type, filter)
 
     if (typeof(filter) == "undefined"){
         filter = '';
@@ -516,6 +516,8 @@ $(document).ready(function () {
     var filters = {};
     filters[type] = filter;
 
+    var searchBarPlaceholder = "Search Across " + filter + " Results";
+    $('.main-search').attr("placeholder", searchBarPlaceholder);
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -527,6 +529,26 @@ $(document).ready(function () {
         },
         'success': function (data) {
             result_array = JSON.parse(data);
+            var result_length = result_array.length;
+            searchBarPlaceholder = "Search Across " + result_length + " " + filter + " Results";
+            $('.main-search').attr("placeholder", searchBarPlaceholder);
+
+            var showingResultsText = '';
+
+            if (result_length < results_per_page) {
+                showingResultsText = "Showing " + result_length + " of " + result_length + " Results";
+            } else {
+                showingResultsText = "Showing " + results_per_page + " of " + result_length + " Results";
+
+            }
+
+            $('.showing-results').html(showingResultsText);
+
+
+
+
+
+
             appendCards();
         }
     });
