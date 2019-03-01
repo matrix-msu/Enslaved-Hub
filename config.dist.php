@@ -1,7 +1,7 @@
 <?php
 
 //project specific urls - you should never use relative paths
-define("BASE_URL",  "http://dev2.matrix.msu.edu/~noah.girard/enslaved/");
+define("BASE_URL",  "http://dev2.matrix.msu.edu/enslaved/");
 define("BASE_JS_URL", BASE_URL . "assets/javascripts/");
 define("BASE_AJAX_URL", BASE_URL . "ajax/");
 define("BASE_VIEW_URL", BASE_URL . "views/");
@@ -11,7 +11,7 @@ define("BASE_MODULE_URL", BASE_URL . "modules/");
 define("BASE_LEAFLET_URL", BASE_URL . "assets/leaflet/");
 
 //project specific file paths - you should never use relative paths
-define("BASE_PATH",  "/matrix/home/noah.girard/public_html/enslaved/");
+define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
 define("BASE_LIB_PATH", BASE_PATH . "lib/");
 define("BASE_FUNCTIONS_PATH", BASE_PATH . "functions/");
 define("BASE_VIEW_PATH", BASE_PATH . "views/");
@@ -25,11 +25,6 @@ define("KORA_FILES_URL", KORA_BASE_URL . "public/app/files/");
 define('API_URL','https://sandro-33.matrix.msu.edu/sparql?query=');
 define('BLAZEGRAPH_URL','https://sandro-33.matrix.msu.edu/namespace/wdq/sparql');
 
-//database info
-define("DATABASE_HOST",  "rush.matrix.msu.edu");
-define("DATABASE_USER",  "arcs_dev");
-define("DATABASE_DBNAME",  "uohE4n032x");
-define("DATABASE_PASSWORD",  "arcs_dev");
 
 //kora project information - change these for your project
 define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');

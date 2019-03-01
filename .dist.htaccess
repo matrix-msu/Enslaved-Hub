@@ -1,7 +1,8 @@
 <IfModule mod_rewrite.c>
 
     RewriteEngine on
-    RewriteBase /~josh.christ/website-template/
+    #for development RewriteBase /~user.lastname/enslaved/
+    RewriteBase /enslaved/
 
     #RewriteCond %{REQUEST_URI} !\.(png|jpg|jpeg|gif|css|js|svg)$ [NC]
     RewriteRule ^assets/.*$ - [PT]
