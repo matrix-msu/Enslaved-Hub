@@ -175,12 +175,12 @@
             data: {
                 preset: 'stories',
                 filters:  {limit: 2},
-                template: 'homeCard'
+                templates: ['homeCard']
 
             },
             'success': function (data) {
                 result_array = JSON.parse(data);
-                result_array.forEach(function (card) {
+                result_array['homeCard'].forEach(function (card) {
                     $(card).appendTo("#stories-list");
                 });
             }
@@ -193,12 +193,12 @@
             data: {
                 preset: 'projects',
                 filters:  {limit: 2},
-                template: 'homeCard'
+                templates: ['homeCard']
 
             },
             'success': function (data) {
                 result_array = JSON.parse(data);
-                result_array.forEach(function (card) {
+                result_array['homeCard'].forEach(function (card) {
                     $(card).appendTo("#projects-list");
                 });
             }

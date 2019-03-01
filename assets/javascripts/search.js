@@ -69,28 +69,28 @@ $(document).ready(function() {
 
 // check for searched terms in localstorage on page load
 $(document).ready(function(){
-    search_term = window.localStorage.getItem('searched_terms')
+    search_term = window.localStorage.getItem('searched_terms');
     if (search_term && location.href.match(/searchResults/)) {
-        search_term = search_term.split(',')
-        localStorage.removeItem('searched_terms')
+        search_term = search_term.split(',');
+        localStorage.removeItem('searched_terms');
         createCards (search_term)
     }
 });
 
 // collect searchInput values
-var search_term
-var term_card
-var padding_left = 0
+var search_term;
+var term_card;
+var padding_left = 0;
 var search_field = window.document.getElementById('search-field')
 $('.search-submit').click(function () {
-    search_term = search_field.value
-    search_term = search_term.split(',')
+    search_term = search_field.value;
+    search_term = search_term.split(',');
     localStorage.setItem('searched_terms', search_term);
     // redirect to search results page, if not already there
     if (!location.href.match(/searchResults/)) {
         location.href = "" + BASE_URL + "searchresults/"
     }
-    search_field.value = ''
+    search_field.value = '';
     createCards (search_term)
 });
 
@@ -117,23 +117,23 @@ var createCards = function (terms) {
 }
 
 var setPositioning = function () {
-    term_card = window.document.getElementsByClassName('searched-term')
+    term_card = window.document.getElementsByClassName('searched-term');
     if (term_card.length != 0) {
         search_field.placeholder = 'Add another search term here'
     } else {
         search_field.placeholder = 'Search for whatever it is you want in life'
     }
     setPadding ()
-}
+};
 
 var setPadding = function () {
-    padding_left = 0
+    padding_left = 0;
     if (term_card.length > 0) {
         $('div.search-field').css('padding-left', padding_left);
     } else {
         $('div.search-field').css('padding-left', '');
     }
-}
+};
 
 $('form').on('click', 'img.close', function () {
     $(this).parent(".searched-term").remove();
@@ -148,10 +148,10 @@ $('form').on('click', 'img.close', function () {
 //        Modals          //
 // ~~~~~~~~~~~~~~~~~~~~~~ //
 
-var modals = document.getElementsByClassName('modal')
-var hidden_modals = document.getElementsByClassName('modal-view')
+var modals = document.getElementsByClassName('modal');
+var hidden_modals = document.getElementsByClassName('modal-view');
 var modalImage = $('img.modal-img-view');
-var height
+var height;
 
 for (var i=0; i < modals.length; i++) {
     modals[i].addEventListener('click', showModal(i))
@@ -166,12 +166,12 @@ for (var i=0; i < modals.length; i++) {
 function showModal(i) {
     return function(){
         $(document.body).css('overflow', 'hidden');
-        hidden_modals[i].style.display = 'block'
-        hidden_modals[i].style.height = '100%'
+        hidden_modals[i].style.display = 'block';
+        hidden_modals[i].style.height = '100%';
         setTimeout(function(){
             $('.modal-view').css('background', 'rgba(13, 18, 48, 0.7)');
             setTimeout(function(){
-                hidden_modals[i].childNodes[1].style.marginTop = "150px"
+                hidden_modals[i].childNodes[1].style.marginTop = "150px";
                 height = modalImage.innerHeight()
                 // if (images) {
                 //     $('.modal-wrap .arrow-left').css('opacity', '1');
@@ -180,13 +180,6 @@ function showModal(i) {
             }, 100);
         }, 100);
     }
-}
-
-function appendCards(){
-    console.log('here', result_array)
-    result_array.forEach(function (card) {
-        $(card).appendTo("ul.row");
-    });
 }
 
 // scroll wheel
@@ -246,21 +239,21 @@ $('.minus').click(function () {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 // get all options from left and right columns
-var left_col = window.document.getElementsByClassName('left')
-var right_col = window.document.getElementsByClassName('right')
+var left_col = window.document.getElementsByClassName('left');
+var right_col = window.document.getElementsByClassName('right');
 
 // select thing from left column
-var selected_items = []
+var selected_items = [];
 $('#available-cols').on('click', 'li', function (e) {
-    e.stopPropagation()
+    e.stopPropagation();
     $(this).css('background-color', 'rgba(18, 46, 70, .16)');
     selected_items.push( $(this).html() );
 });
 
 // select things on the right column
-var other_items = []
+var other_items = [];
 $('#selected-cols').on('click', 'li', function (e) {
-    e.stopPropagation()
+    e.stopPropagation();
     $(this).css('background-color', 'rgba(18, 46, 70, .16)');
     $(this).addClass('selected');
     other_items.push( $(this).html() );
@@ -392,11 +385,12 @@ if (window.document.getElementById('modal-image')) {
 // this can be problematic because it overwrites css styles applied in the stylesheet
 // $(element).css('style',''); unsets these inline styles
 
-var setView // load grid or table view, with # results per page from last page visit on page load
-var cards
-var num_of_results
+var setView;     // load grid or table view, with # results per page from last page visit on page load
+var cards;
+var num_of_results;
+var results_per_page = 10;
 $(document).ready(function () {
-    $('span.results-per-page > span').html(result_array.length)
+    $('span.results-per-page > span').html(results_per_page)
     setView = window.localStorage.getItem('view')
     //if (!setView || setView === 'grid') {
     //    cards = false
@@ -405,14 +399,14 @@ $(document).ready(function () {
     //    cards = true
     //    $('span.table-view').trigger('click');
     //}
-    num_of_results = window.localStorage.getItem('display_amount')
-    if (!num_of_results) {
-        $('span.results-per-page > span').html('11');
-        $('#searchResults-showing >span:first-child').html('11');
-    } else {
-        $('span.results-per-page > span').html(num_of_results);
-        $('#searchResults-showing >span:first-child').html(num_of_results);
-    }
+    // num_of_results = window.localStorage.getItem('display_amount')
+    // if (!num_of_results) {
+    //     $('span.results-per-page > span').html();
+    //     $('#searchResults-showing >span:first-child').html('11');
+    // } else {
+    //     $('span.results-per-page > span').html(num_of_results);
+    //     $('#searchResults-showing >span:first-child').html(num_of_results);
+    // }
     var pageURL = $(location).attr("href");
     var urlLength = pageURL.length;
     var testString = pageURL.substring(urlLength-13,urlLength);
@@ -449,9 +443,9 @@ $("ul.results-per-page li").click(function (e) { // set the per-page value
     location.reload();
 });
 
-var timer
+var timer;
 $("span.view-toggle").mouseenter(function () { // show tooltips on hover
-    var that = this
+    var that = this;
     timer = setTimeout(function(){
         $('span p.tooltip').removeClass('hovered');
         $(that).find("p.tooltip").addClass('hovered');
@@ -465,14 +459,14 @@ $("span.view-toggle").mouseenter(function () { // show tooltips on hover
 //Generates result cards
 var view;
 var result;
-result_array = [];
-result_array.length = 11;
+//result_array = [];
+//result_array.length = 11;
 
 //These html elements are set as independent variables and arrays so instead of one long line it is more readable
-var card_name = 'Firstname Lastname';
-var card_icon = 'Person-light.svg';
-var card_content = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified</p><p><span>Origin: </span>Location Name</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
-var card_contentTEST = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified Unidentified Unidentified Unidentified</p><p><span>Origin: </span>Location Nameeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
+//var card_name = 'Firstname Lastname';
+//var card_icon = 'Person-light.svg';
+//var card_content = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified</p><p><span>Origin: </span>Location Name</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
+//var card_contentTEST = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified Unidentified Unidentified Unidentified</p><p><span>Origin: </span>Location Nameeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
 //^test var
 
 //var connection_lists = [
@@ -491,7 +485,10 @@ $("span.grid-view").click(function gridView (e) { // grid view
     displayCards();
 });
 
+
+// Get the query parameters from the url and use ajax to load results
 $(document).ready(function () {
+    // Get params from url
     var $_GET = {};
     if(document.location.toString().indexOf('?') !== -1) {
         var query = document.location
@@ -506,30 +503,70 @@ $(document).ready(function () {
             $_GET[aux[0]] = aux[1];
         }
     }
+    console.log($_GET)
 
-    var sexFilter = $_GET['sex'];
-    if (typeof(sexFilter) == "undefined"){
-        sexFilter = '';
+    // The first key of the get params should be the type
+    var type = Object.keys($_GET)[0];
+    var filter = $_GET[type];
+
+    if (typeof(filter) == "undefined"){
+        filter = '';
     }
+
+    var filters = {};
+    filters[type] = filter;
+
+    var searchBarPlaceholder = "Search Across " + filter + " Results";
+    $('.main-search').attr("placeholder", searchBarPlaceholder);
+
+
+    var templates = ['searchCard', 'gridCard'];
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
         type: "GET",
         data: {
             preset: 'people',
-            filters:  {
-                sex: sexFilter
-            },
-            template: 'searchCard'
+            filters: filters,
+            templates: templates
         },
         'success': function (data) {
             result_array = JSON.parse(data);
+
+            console.log('wat', result_array);
+
+
+            var result_length = result_array['searchCard'].length;
+            searchBarPlaceholder = "Search Across " + result_length + " " + filter + " Results";
+            $('.main-search').attr("placeholder", searchBarPlaceholder);
+
+            var showingResultsText = '';
+
+            if (result_length < results_per_page) {
+                showingResultsText = "Showing " + result_length + " of " + result_length + " Results";
+            } else {
+                showingResultsText = "Showing " + results_per_page + " of " + result_length + " Results";
+
+            }
+
+            $('.showing-results').html(showingResultsText);
+
             appendCards();
-            //displayCards();
         }
     });
 });
 
+function appendCards(){
+    console.log('here', result_array)
+    result_array['searchCard'].forEach(function (card) {
+        $(card).appendTo("ul.row");
+    });
+
+    result_array['gridCard'].forEach(function (card) {
+        $(card).appendTo("tbody");
+    });
+
+}
 
 function displayCards() {
     //$('tbody > tr').remove();
@@ -575,6 +612,7 @@ $("span.table-view").click(function tableView (e) { // table view
     if (cards === true) {
         cards = false
         window.localStorage.setItem('cards', cards)
+        $('div.result-column').hide();
         //$('div.result-column').remove();
         $('div#search-result-table').show();
         $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
@@ -589,9 +627,9 @@ $("span.table-view").click(function tableView (e) { // table view
         if (result) {
             result_array.length = result
         }
-        $.each(result_array,function () {
-            $('<tr class="tr"><td class="name td-name"><span>Name LastName</span></td><td class="gender"><p><span class="first">Gender: </span>Gndr</p></td><td class="age"><p><span class="first">Age: </span>##</p></td><td class="occupation"><p><span class="first">Occupation: </span>Fugitive Slave</p></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><a href="#">View Narrative</a></td></tr>').appendTo('tbody');
-        });
+        // $.each(result_array,function () {
+        //     $('<tr class="tr"><td class="name td-name"><span>Name LastName</span></td><td class="gender"><p><span class="first">Gender: </span>Gndr</p></td><td class="age"><p><span class="first">Age: </span>##</p></td><td class="occupation"><p><span class="first">Occupation: </span>Fugitive Slave</p></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><a href="#">View Narrative</a></td></tr>').appendTo('tbody');
+        // });
     }
 });
 
@@ -623,11 +661,11 @@ function correctTableHeights () {
 }
 
 // filter handled below here
-var filter
-var tableWidth = 0
+var filter;
+var tableWidth = 0;
 $(".show-filter").click(function(e){ // toggle show/hide filter menu
     e.stopPropagation();
-    filter = !filter
+    filter = !filter;
     if (filter) {
         $("div.filter-menu").addClass("show");
         $(this).html('<img src="../assets/images/arrow-right.svg" alt="show filter menu button" style="transform:rotate(180deg);"> Hide Filter Menu');
@@ -657,7 +695,7 @@ function centerStuffWithFilter () {
         $('div#searchResults.show').css('width','');
         $("#searchResults").removeClass("show");
     } else {
-        tableWidth = window.innerWidth - 330
+        tableWidth = window.innerWidth - 330;
         $('div#searchResults').css('max-width', '3000px');// remove max-width property
         $('div#searchResults.show').css('width', tableWidth); // apply width
     }

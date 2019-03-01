@@ -67,7 +67,10 @@ if (isset($_GET['type'])){
         <?php
         foreach (array_keys($typeCategories) as $category) { ?>
             <li>
-                <a href="<?php echo BASE_URL;?>peopleResults/"><p class='type-title'><?php echo $category;?></p><div id="arrow"></div><span id="<?php echo $typeID . $typeCategories[$category];?>"></span></a>
+                <a href="<?php echo BASE_URL;?>peopleResults/?<?php echo $type;?>=<?php echo $category;?>">
+                    <p class='type-title'><?php echo $category;?></p>
+                    <div id="arrow"></div><span id="<?php echo $typeID . $typeCategories[$category];?>">0</span>
+                </a>
             </li>
         <?php } ?>
     </ul>
@@ -87,6 +90,7 @@ if (isset($_GET['type'])){
                 console.log(data);
 
                 data.forEach(function(records) {
+                    console.log(records)
                     var category = records[typeLabel]['value'];
                     var count = records['count']['value'];
                     var span = $("a:contains("+category+")").find('span');

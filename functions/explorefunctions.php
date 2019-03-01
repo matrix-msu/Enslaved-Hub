@@ -161,7 +161,86 @@ function counterOfRole(){
 
 // Count the number of people in each age category
 function counterOfAge(){
-  $query='SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
+//  $adultQueries = '';
+//
+//  foreach (AgeCategoryAdult as $qAge) {
+//    $adultQueries .= "?person wdt:P32 wd:$qAge. ";
+//  }
+//  echo $adultQueries;
+//  die;
+
+  $InfantQuery = 'SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
+                        (group_concat(distinct ?status; separator = "||") as ?status)
+                        (group_concat(distinct ?place; separator = "||") as ?place)
+                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+                        WHERE {
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                          ?person wdt:P3 wd:Q602.
+                          ?person wdt:P32 wd:Q68.
+                          OPTIONAL {?person wdt:P3 wd:Q2.}
+                          OPTIONAL {?person wdt:P33 ?age.}
+                          OPTIONAL {?person wdt:P32 ?agecategory.}
+                          OPTIONAL {?person wdt:P82 ?name.}
+                          OPTIONAL {?person wdt:P20 ?origin.}
+                          OPTIONAL {?name wdt:P30 ?event.
+                                    ?event wdt:P13 ?startdate.}
+                          BIND(str(YEAR(?startdate)) AS ?startyear).
+                      OPTIONAL {?event wdt:P14 ?enddate.}
+                      BIND(str(YEAR(?enddate)) AS ?endyear).
+                      OPTIONAL {?event wdt:P12 ?place.}
+                      OPTIONAL { ?person wdt:P17 ?sex. }
+                      OPTIONAL { ?person wdt:P24 ?status. }
+                      OPTIONAL { ?person wdt:P58 ?owner. }
+                      OPTIONAL { ?person wdt:P88 ?match. }
+
+                    } group by ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
+                ';
+  $encode=urlencode($InfantQuery);
+  $call=API_URL.$encode;
+  $infantRes=callAPI($call,'','');
+
+  $infantRes = json_decode($infantRes);
+  $infantCount = count($infantRes->results->bindings);
+
+
+
+  $childQuery = 'SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
+                        (group_concat(distinct ?status; separator = "||") as ?status)
+                        (group_concat(distinct ?place; separator = "||") as ?place)
+                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+                        WHERE {
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                          ?person wdt:P3 wd:Q602.
+                          ?person wdt:P32 wd:Q69.
+                          OPTIONAL {?person wdt:P3 wd:Q2.}
+                          OPTIONAL {?person wdt:P33 ?age.}
+                          OPTIONAL {?person wdt:P32 ?agecategory.}
+                          OPTIONAL {?person wdt:P82 ?name.}
+                          OPTIONAL {?person wdt:P20 ?origin.}
+                          OPTIONAL {?name wdt:P30 ?event.
+                                    ?event wdt:P13 ?startdate.}
+                          BIND(str(YEAR(?startdate)) AS ?startyear).
+                      OPTIONAL {?event wdt:P14 ?enddate.}
+                      BIND(str(YEAR(?enddate)) AS ?endyear).
+                      OPTIONAL {?event wdt:P12 ?place.}
+                      OPTIONAL { ?person wdt:P17 ?sex. }
+                      OPTIONAL { ?person wdt:P24 ?status. }
+                      OPTIONAL { ?person wdt:P58 ?owner. }
+                      OPTIONAL { ?person wdt:P88 ?match. }
+
+                    } group by ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
+                ';
+  $encode=urlencode($childQuery);
+  $call=API_URL.$encode;
+  $childRes=callAPI($call,'','');
+
+  $childRes = json_decode($childRes);
+  $childCount = count($childRes->results->bindings);
+
+
+  $AdultQuery='SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
                         (group_concat(distinct ?place; separator = "||") as ?place)
                         (group_concat(distinct ?startyear; separator = "||") as ?startyear)
@@ -188,17 +267,73 @@ function counterOfAge(){
 
                     } group by ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
                 ';
-  $encode=urlencode($query);
+  $encode=urlencode($AdultQuery);
   $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+  $adultRes=callAPI($call,'','');
 
-  $res= json_decode($res);
+  $adultRes = json_decode($adultRes);
+  $adultCount = count($adultRes->results->bindings);
 
-  if (!empty($res)){
-    return json_encode($res->results->bindings);
-  }else{
-    return $res;
-  }
+
+  $oldQuery = 'SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
+                        (group_concat(distinct ?status; separator = "||") as ?status)
+                        (group_concat(distinct ?place; separator = "||") as ?place)
+                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+                        WHERE {
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                          ?person wdt:P3 wd:Q602.
+                          ?person wdt:P32 wd:Q71.
+                          OPTIONAL {?person wdt:P3 wd:Q2.}
+                          OPTIONAL {?person wdt:P33 ?age.}
+                          OPTIONAL {?person wdt:P32 ?agecategory.}
+                          OPTIONAL {?person wdt:P82 ?name.}
+                          OPTIONAL {?person wdt:P20 ?origin.}
+                          OPTIONAL {?name wdt:P30 ?event.
+                                    ?event wdt:P13 ?startdate.}
+                          BIND(str(YEAR(?startdate)) AS ?startyear).
+                      OPTIONAL {?event wdt:P14 ?enddate.}
+                      BIND(str(YEAR(?enddate)) AS ?endyear).
+                      OPTIONAL {?event wdt:P12 ?place.}
+                      OPTIONAL { ?person wdt:P17 ?sex. }
+                      OPTIONAL { ?person wdt:P24 ?status. }
+                      OPTIONAL { ?person wdt:P58 ?owner. }
+                      OPTIONAL { ?person wdt:P88 ?match. }
+
+                    } group by ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
+                ';
+  $encode=urlencode($oldQuery);
+  $call=API_URL.$encode;
+  $oldRes=callAPI($call,'','');
+
+  $oldRes = json_decode($oldRes);
+  $oldCount = count($oldRes->results->bindings);
+
+  $ageCounts = Array();
+
+  $ageCounts[0] = Array(
+    'count' => Array('value' => $infantCount),
+    'agecategoryLabel' => Array('value' => 'Infant')
+  );
+  $ageCounts[1] = Array(
+      'count' => Array('value' => $childCount),
+      'agecategoryLabel' => Array('value' => 'Child')
+  );
+  $ageCounts[2] = Array(
+      'count' => Array('value' => $adultCount),
+      'agecategoryLabel' => Array('value' => 'Adult')
+  );
+  $ageCounts[3] = Array(
+      'count' => Array('value' => $oldCount),
+      'agecategoryLabel' => Array('value' => 'Old')
+  );
+
+  return json_encode($ageCounts);
+//  if (!empty($res)){
+//    return json_encode($res->results->bindings);
+//  }else{
+//    return $res;
+//  }
 }
 
 function counterOfEthnodescriptor(){
