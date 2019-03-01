@@ -69,28 +69,28 @@ $(document).ready(function() {
 
 // check for searched terms in localstorage on page load
 $(document).ready(function(){
-    search_term = window.localStorage.getItem('searched_terms')
+    search_term = window.localStorage.getItem('searched_terms');
     if (search_term && location.href.match(/searchResults/)) {
-        search_term = search_term.split(',')
-        localStorage.removeItem('searched_terms')
+        search_term = search_term.split(',');
+        localStorage.removeItem('searched_terms');
         createCards (search_term)
     }
 });
 
 // collect searchInput values
-var search_term
-var term_card
-var padding_left = 0
+var search_term;
+var term_card;
+var padding_left = 0;
 var search_field = window.document.getElementById('search-field')
 $('.search-submit').click(function () {
-    search_term = search_field.value
-    search_term = search_term.split(',')
+    search_term = search_field.value;
+    search_term = search_term.split(',');
     localStorage.setItem('searched_terms', search_term);
     // redirect to search results page, if not already there
     if (!location.href.match(/searchResults/)) {
         location.href = "" + BASE_URL + "searchresults/"
     }
-    search_field.value = ''
+    search_field.value = '';
     createCards (search_term)
 });
 
@@ -117,23 +117,23 @@ var createCards = function (terms) {
 }
 
 var setPositioning = function () {
-    term_card = window.document.getElementsByClassName('searched-term')
+    term_card = window.document.getElementsByClassName('searched-term');
     if (term_card.length != 0) {
         search_field.placeholder = 'Add another search term here'
     } else {
         search_field.placeholder = 'Search for whatever it is you want in life'
     }
     setPadding ()
-}
+};
 
 var setPadding = function () {
-    padding_left = 0
+    padding_left = 0;
     if (term_card.length > 0) {
         $('div.search-field').css('padding-left', padding_left);
     } else {
         $('div.search-field').css('padding-left', '');
     }
-}
+};
 
 $('form').on('click', 'img.close', function () {
     $(this).parent(".searched-term").remove();
@@ -148,10 +148,10 @@ $('form').on('click', 'img.close', function () {
 //        Modals          //
 // ~~~~~~~~~~~~~~~~~~~~~~ //
 
-var modals = document.getElementsByClassName('modal')
-var hidden_modals = document.getElementsByClassName('modal-view')
+var modals = document.getElementsByClassName('modal');
+var hidden_modals = document.getElementsByClassName('modal-view');
 var modalImage = $('img.modal-img-view');
-var height
+var height;
 
 for (var i=0; i < modals.length; i++) {
     modals[i].addEventListener('click', showModal(i))
@@ -166,12 +166,12 @@ for (var i=0; i < modals.length; i++) {
 function showModal(i) {
     return function(){
         $(document.body).css('overflow', 'hidden');
-        hidden_modals[i].style.display = 'block'
-        hidden_modals[i].style.height = '100%'
+        hidden_modals[i].style.display = 'block';
+        hidden_modals[i].style.height = '100%';
         setTimeout(function(){
             $('.modal-view').css('background', 'rgba(13, 18, 48, 0.7)');
             setTimeout(function(){
-                hidden_modals[i].childNodes[1].style.marginTop = "150px"
+                hidden_modals[i].childNodes[1].style.marginTop = "150px";
                 height = modalImage.innerHeight()
                 // if (images) {
                 //     $('.modal-wrap .arrow-left').css('opacity', '1');
@@ -239,21 +239,21 @@ $('.minus').click(function () {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 // get all options from left and right columns
-var left_col = window.document.getElementsByClassName('left')
-var right_col = window.document.getElementsByClassName('right')
+var left_col = window.document.getElementsByClassName('left');
+var right_col = window.document.getElementsByClassName('right');
 
 // select thing from left column
-var selected_items = []
+var selected_items = [];
 $('#available-cols').on('click', 'li', function (e) {
-    e.stopPropagation()
+    e.stopPropagation();
     $(this).css('background-color', 'rgba(18, 46, 70, .16)');
     selected_items.push( $(this).html() );
 });
 
 // select things on the right column
-var other_items = []
+var other_items = [];
 $('#selected-cols').on('click', 'li', function (e) {
-    e.stopPropagation()
+    e.stopPropagation();
     $(this).css('background-color', 'rgba(18, 46, 70, .16)');
     $(this).addClass('selected');
     other_items.push( $(this).html() );
@@ -519,17 +519,24 @@ $(document).ready(function () {
     var searchBarPlaceholder = "Search Across " + filter + " Results";
     $('.main-search').attr("placeholder", searchBarPlaceholder);
 
+
+    var templates = ['searchCard', 'gridCard'];
+
     $.ajax({
         url: BASE_URL + "api/blazegraph",
         type: "GET",
         data: {
             preset: 'people',
             filters: filters,
-            template: 'searchCard'
+            templates: templates
         },
         'success': function (data) {
             result_array = JSON.parse(data);
-            var result_length = result_array.length;
+
+            console.log('wat', result_array);
+
+
+            var result_length = result_array['searchCard'].length;
             searchBarPlaceholder = "Search Across " + result_length + " " + filter + " Results";
             $('.main-search').attr("placeholder", searchBarPlaceholder);
 
@@ -544,11 +551,6 @@ $(document).ready(function () {
 
             $('.showing-results').html(showingResultsText);
 
-
-
-
-
-
             appendCards();
         }
     });
@@ -556,10 +558,14 @@ $(document).ready(function () {
 
 function appendCards(){
     console.log('here', result_array)
-    //todo show the number of results here
-    result_array.forEach(function (card) {
+    result_array['searchCard'].forEach(function (card) {
         $(card).appendTo("ul.row");
     });
+
+    result_array['gridCard'].forEach(function (card) {
+        $(card).appendTo("tbody");
+    });
+
 }
 
 function displayCards() {
@@ -621,9 +627,9 @@ $("span.table-view").click(function tableView (e) { // table view
         if (result) {
             result_array.length = result
         }
-        $.each(result_array,function () {
-            $('<tr class="tr"><td class="name td-name"><span>Name LastName</span></td><td class="gender"><p><span class="first">Gender: </span>Gndr</p></td><td class="age"><p><span class="first">Age: </span>##</p></td><td class="occupation"><p><span class="first">Occupation: </span>Fugitive Slave</p></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><a href="#">View Narrative</a></td></tr>').appendTo('tbody');
-        });
+        // $.each(result_array,function () {
+        //     $('<tr class="tr"><td class="name td-name"><span>Name LastName</span></td><td class="gender"><p><span class="first">Gender: </span>Gndr</p></td><td class="age"><p><span class="first">Age: </span>##</p></td><td class="occupation"><p><span class="first">Occupation: </span>Fugitive Slave</p></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><a href="#">View Narrative</a></td></tr>').appendTo('tbody');
+        // });
     }
 });
 

@@ -723,34 +723,10 @@
                             <th class="name">NAME</th>
                             <th class="gender">GENDER</th>
                             <th class="age">AGE</th>
-                            <th class="occupation">OCCUPATION</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
+                            <th class="status">STATUS</th>
+                            <th class="origin">ORIGIN</th>
+                            <th class="location">LOCATION</th>
+                            <th class="dateRange">DATE RANGE</th>
                         </tr>
                     </thead>
                     <tbody>
