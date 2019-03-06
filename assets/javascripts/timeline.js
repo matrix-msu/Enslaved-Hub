@@ -1,4 +1,23 @@
 $().ready(function(){
+    $.ajax({
+        url: BASE_URL + "api/getPersonRecordHtml",
+        type: "GET",
+        data: {
+            QID: QID,
+            type: 'timeline'
+        },
+        'success': function (html) {
+            console.log('timeline html', html)
+            $('main.full-record').html(html)
+
+            // $('.timelinewrap').html(wrapHtml);
+            // $('.timeline-container').html(containerHtml);
+        }
+    });
+
+
+
+
   function initializeTimeline() {
       // Timeline points and arrows
       var $tlContainer = $('.timeline-container');

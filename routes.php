@@ -7,6 +7,7 @@ $GLOBALS['api_routes'] = array(
     'api/blazegraph' => array('functions.php', 'blazegraph'),
 	'api/counterOfGender' => array('explorefunctions.php', 'counterOfGender'),
 	'api/counterOfType' => array('explorefunctions.php', 'counterOfType'),
+	'api/getPersonRecordHtml' => array('explorefunctions.php', 'getPersonRecordHtml'),
 );
 
 $GLOBALS['routes'] = array(
@@ -88,6 +89,15 @@ if( $currentFile == 'peopleResults' && isset($_GET)){
             $currentFile = '';
         }
     }
+}
+
+
+// Full person record page check
+$fileArray = explode('/', $currentFile);
+if ($fileArray[0] == 'recordPerson'){
+    $personQ = $fileArray[1];
+    define('QID', $personQ);
+    $currentFile = $fileArray[0];
 }
 
 if( isset($GLOBALS['api_routes'][$currentFile]) ){
