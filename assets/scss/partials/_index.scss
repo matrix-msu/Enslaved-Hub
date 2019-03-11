@@ -28,20 +28,18 @@
             margin: 0 0 60px;
 
             .heading-title{
-                clear: both;
-                overflow: hidden;
                 width: 100%;
-                h1{
-                    font-size: 120px;
-                    float: left;
-                    margin-bottom: 35px;
-                    margin-right: 20px;
+                margin-bottom: 20px;
+
+                .logo-main{
+                    width: 100%;
+                    max-width: 950px;
+                    height: auto;
                 }
-                h2{
-                    font-size: 45px;
-                    float: left;
-                    width:  42%;
-                    margin-top: 18px;
+                .logo-mobile{
+                    display: none;
+                    width: 95%;
+                    height: auto;
                 }
             }
 
@@ -140,7 +138,7 @@
 .home{
     max-width: 1000px;
     margin: 0 auto;
-    padding: 100px 0;
+    padding: 70px 6%;
 
     .section-wrap{
         clear: both;
@@ -357,7 +355,7 @@
     .preview-wrap{
         max-width: 1000px;
         margin: 0 auto;
-        padding: 80px 0 120px;
+        padding: 80px 6% 120px;
         overflow: hidden;
 
         .heading{
@@ -454,30 +452,8 @@
 }
 
 @media screen and (max-width: 780px) {
-    .header{
-        .middlewrap{
-            .heading-text{
-                
-                .heading-title{
-                    h1{
-                        font-size: 18vw!important;
-                        float: none;
-                        margin-bottom: 0;
-                    }
-                    h2{
-                        font-size: 5.5vw!important;
-                        float: none;
-                        width: unset;
-                        margin-top: 0!important;
-                        margin-bottom: 35px;
-                        
-                    }
-                }
-            }
-        }
-    }
     .home{
-        padding: 60px 6%!important;
+        padding: 60px 6%;
         .section-wrap{
             margin-bottom: 60px;
             padding-bottom: 60px;
@@ -503,7 +479,7 @@
     }
     .about-preview{
         .preview-wrap{
-            padding: 80px 6%!important;
+            padding: 80px 6%;
             .heading{
                 float: none;
                 width: 100%;
@@ -521,26 +497,17 @@
     }
 }
 
-@media screen and (max-width: $mobile-max-width){
-    .home{
-        padding: 70px 6%;
-    }
-    .about-preview{
-        .preview-wrap{
-            padding: 80px 6% 120px;
-        }
-    }
+@media screen and (max-width: 550px){
+
     .header{
         .middlewrap{
             .heading-text{
-                
                 .heading-title{
-                    h1{
-                        font-size: 11vw;
+                    .logo-main{
+                        display: none;
                     }
-                    h2{
-                        font-size: 4vw;
-                        margin-top: 2.2%;
+                    .logo-mobile{
+                        display: block;
                     }
                 }
             }
