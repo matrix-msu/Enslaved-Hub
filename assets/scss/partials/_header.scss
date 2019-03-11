@@ -16,12 +16,12 @@
         padding: 0 6%;
         .leftnav{
             float: left;
-            a{
-                text-decoration: none;
-                color: #FFFFFF;
-                line-height: 50px;
-                font-size: 32px;
-                margin: 0;
+            div.logo{
+                padding-top: 4px;
+                
+                img{
+                    height: auto;
+                }
             }
         }
         .rightnav{

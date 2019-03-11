@@ -12,6 +12,8 @@
     ?>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- favicon -->
+    <link rel="icon" href="<?php echo BASE_IMAGE_URL;?>favicon.png">
     <!-- stylesheet -->
     <link rel="stylesheet" href="<?php echo BASE_CSS_URL;?>" type="text/css">
     <!-- jquery / local scripts -->
