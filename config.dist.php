@@ -24,7 +24,8 @@ define("KORA_FILES_URL", KORA_BASE_URL . "public/app/files/");
 
 define('API_URL','https://sandro-33.matrix.msu.edu/sparql?query=');
 define('BLAZEGRAPH_URL','https://sandro-33.matrix.msu.edu/namespace/wdq/sparql');
-
+define('BASE_WIKI_URL','https://sandro-16.matrix.msu.edu/');
+define('WIKI_ENTITY_URL',  BASE_WIKI_URL . 'entity/');
 
 //kora project information - change these for your project
 define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');
