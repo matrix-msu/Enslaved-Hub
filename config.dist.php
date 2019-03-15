@@ -3,7 +3,7 @@
 define("BASE_URL",  "http://dev2.matrix.msu.edu/enslaved/");
 define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
 define('BASE_WIKI_URL','https://sandro-16.matrix.msu.edu/');
-define('BLAZEGRAPH_URL', 'https://sandro-33.matrix.msu.edu/namespace/wdq/sparql');
+define('BASE_BLAZEGRAPH_URL', 'https://sandro-33.matrix.msu.edu/');
 define("KORA_BASE_URL", "https://enslaved.kora3.matrix.msu.edu/");
 
 //project specific urls - you should never use relative paths
@@ -26,8 +26,9 @@ define("KORA_SEARCH_URL", KORA_BASE_URL . "api/search");
 define("KORA_FILES_URL", KORA_BASE_URL . "public/app/files/");
 
 //wikidata urls
-define('API_URL', BASE_WIKI_URL.'sparql?query=');
 define('WIKI_ENTITY_URL', BASE_WIKI_URL.'entity/');
+define('BLAZEGRAPH_URL', BASE_BLAZEGRAPH_URL.'namespace/wdq/sparql');
+define('API_URL', BASE_BLAZEGRAPH_URL.'sparql?query=');
 
 //kora project information - change these for your project
 define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');
