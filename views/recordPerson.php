@@ -153,84 +153,7 @@
 </div>
 <!-- Timeline -->
 <main class="full-record">
-<!--    <div class="timelinewrap">-->
-<!--        <section class="fr-section timeline-section">-->
-<!--        <h2 class="section-title">Person Timeline</h2>-->
-<!---->
-<!--        <div class="timeline-info-container" kid="--><?//= $events[0]['kid'] ?><!--">-->
-<!--            <div class="arrow-pointer-bottom"></div>-->
-<!--            <div class="arrow-pointer-top"></div>-->
-<!---->
-<!--            <div class="info-header">-->
-<!--                <div class="info-select info-select-event active" data-select="event">-->
-<!--                    <p>Event</p>-->
-<!--                    <p class="large-text">Birth</p>-->
-<!--                </div>-->
-<!--                <div class="info-select info-select-place" data-select="place">-->
-<!--                    <p>Place</p>-->
-<!--                    <p class="large-text">Batendu</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            --><?php //foreach($events as $index => $event) { ?>
-<!--                <div class="event-info---><?//= $event['kid'] ?><!-- infowrap --><?//= ($index == 0 ? 'active' : '') ?><!--">-->
-<!--                    <div class="info-column">-->
-<!--                        <p><span class="bold">Start Date:</span> 1804</p>-->
-<!--                        <p><span class="bold">End Date:</span> N/A</p>-->
-<!--                        <p><span class="bold">Age:</span> 0</p>-->
-<!--                        <p><span class="bold">Status:</span> Free</p>-->
-<!--                        <p><span class="bold">Age Category:</span> Infant</p>-->
-<!--                        <p><span class="bold">Description</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit,-->
-<!--                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
-<!--                    </div><div class="info-column">-->
-<!--                        <p><span class="bold">Ocupation:</span> N/A</p>-->
-<!--                        <p><span class="bold">Relationship:</span> Son - Kayawon</p>-->
-<!--                        <p><span class="bold">Religion:</span> N/A</p>-->
-<!--                        <p><span class="bold">Sources:</span> Koelle Polyglotta, 1</p>-->
-<!--                        <p><span class="bold">Place:</span> Batendu</p>-->
-<!--                        <p><span class="bold">Testing Kid:</span> --><?//= $event['kid'] ?><!--</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="place-info---><?//= $event['kid'] ?><!-- infowrap">-->
-<!--                <div class="info-column">-->
-<!--                    <p><span class="bold">Place Info:</span> Place Info</p>-->
-<!--                    <p><span class="bold">Testing Kid:</span> --><?//= $event['kid'] ?><!--</p>-->
-<!--                </div>-->
-<!--                </div>-->
-<!--            --><?php //} ?>
-<!--        </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="timeline-container">-->
-<!--            <div class="timeline">-->
-<!--                <div class="line"></div>-->
-<!--                <div class="hash-container" data-start="--><?//= $first_date_hash ?><!--" data-end="--><?//= $final_date_hash ?><!--">-->
-<!--                --><?php //foreach ($hashes as $index => $year) { ?>
-<!--                    <div class="hash" style="left:calc(--><?//= ($index / ($hash_count - 1)) * 100 ?>/*% - 14px)"><p>*/<?//= $year ?><!--</p></div>-->
-<!--                --><?php //} ?>
-<!--                </div>-->
-<!--                <div class="points-container">-->
-<!--                --><?php //foreach ($events as $index => $event) {
-//                    // Convert year, month, day into decimal form
-//                    $left = ($event['year'] - $first_date_hash) * 100 / $hash_range;
-//                    ?>
-<!---->
-<!--                    <div class="event-point no-select --><?//= ($index == 0 ? 'active' : '') ?><!--"-->
-<!--                    style="left:calc(--><?//= $left; ?>/*% - 5px)"*/
-/*                    data-kid="*/<?//= $event['kid'] ?><!--"-->
-<!--                    data-index="--><?//= $index ?><!--">-->
-<!--                    <span class="event-title">--><?//= $event['title'] ?><!-- - --><?//= $event['year'] ?><!--</span>-->
-<!--                    </div>-->
-<!--                --><?php //} ?>
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="timeline-controls">-->
-<!--                <div class="timeline-prev no-select"><img src="--><?php //echo BASE_URL;?><!--assets/images/chevron-down-dark.svg" alt="Previous Arrow"></div>-->
-<!--                <div class="timeline-next no-select"><img src="--><?php //echo BASE_URL;?><!--assets/images/chevron-down-dark.svg" alt="Next Arrow"></div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
-<!--    </div>-->
+
 </main>
 <!-- Story Connections -->
 <div class="story-connections record-connections">
@@ -319,7 +242,7 @@
                 type: 'name'
             },
             'success': function (html) {
-                console.log('name html', html);
+//                console.log('name html', html);
                 $('.middlewrap').html(html);
             }
         });
@@ -335,11 +258,11 @@
                 html = JSON.parse(html);
                 var description = html.description;
                 var details = html.details;
-
                 $('.description').html(description);
                 $('.detailwrap').html(details);
             }
         });
+
     });
 
 

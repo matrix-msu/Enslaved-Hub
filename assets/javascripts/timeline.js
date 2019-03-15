@@ -1,22 +1,4 @@
 $().ready(function(){
-    $.ajax({
-        url: BASE_URL + "api/getPersonRecordHtml",
-        type: "GET",
-        data: {
-            QID: QID,
-            type: 'timeline'
-        },
-        'success': function (html) {
-            console.log('timeline html', html)
-            $('main.full-record').html(html)
-
-            // $('.timelinewrap').html(wrapHtml);
-            // $('.timeline-container').html(containerHtml);
-        }
-    });
-
-
-
 
   function initializeTimeline() {
       // Timeline points and arrows
@@ -34,9 +16,9 @@ $().ready(function(){
       var eventsCount = $eventPoints.length;
     
       //Set info arrow to point at current point
-      //var pointLeft = Math.round($($eventPoints[0]).offset().left - $tlInfoContainer.offset().left) + 5;
-      //$tlInfoContainerArrowBottom.css('left', pointLeft);
-      //$tlInfoContainerArrowtop.css('left', pointLeft);
+      var pointLeft = Math.round($($eventPoints[0]).offset().left - $tlInfoContainer.offset().left) + 5;
+      $tlInfoContainerArrowBottom.css('left', pointLeft);
+      $tlInfoContainerArrowtop.css('left', pointLeft);
     
       setTimelineTitle(currentKid);
       
@@ -157,6 +139,23 @@ $().ready(function(){
       setEventByKid(currentKid, $($eventPoints[0]));
 
     }
-    
-    initializeTimeline();
+
+
+    // fill in html and start the js
+    $.ajax({
+        url: BASE_URL + "api/getPersonRecordHtml",
+        type: "GET",
+        data: {
+            QID: QID,
+            type: 'timeline'
+        },
+        'success': function (html) {
+            //console.log('timeline html', html)
+            $('main.full-record').html(html)
+
+            initializeTimeline();
+        }
+    });
+
+
 });

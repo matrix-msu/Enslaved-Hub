@@ -5,6 +5,7 @@ var setView; // load grid or table view, with # results per page from last page 
 var cards;
 var num_of_results;
 $(document).ready(function() {
+    console.log('search results.js')
     $('span.results-per-page > span').html(result_array.length);
     setView = window.localStorage.getItem('view');
     if (!setView || setView === 'grid') {

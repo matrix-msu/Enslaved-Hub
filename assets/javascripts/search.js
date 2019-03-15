@@ -2,6 +2,7 @@
 //  Search Select Boxes   //
 // ~~~~~~~~~~~~~~~~~~~~~~ //
 
+// this is used for advanced search
 $(document).ready(function() {
     $('#status').select2({
         placeholder: "Select Status"
@@ -60,321 +61,6 @@ $(document).ready(function() {
         $(e.target).append(option).change();
       });
 });
-
-
-
-// ~~~~~~~~~~~~~~~~~~ //
-// Search Query Cards //
-// ~~~~~~~~~~~~~~~~~~ //
-
-// check for searched terms in localstorage on page load
-$(document).ready(function(){
-    search_term = window.localStorage.getItem('searched_terms');
-    if (search_term && location.href.match(/searchResults/)) {
-        search_term = search_term.split(',');
-        localStorage.removeItem('searched_terms');
-        createCards (search_term)
-    }
-});
-
-// collect searchInput values
-var search_term;
-var term_card;
-var padding_left = 0;
-var search_field = window.document.getElementById('search-field')
-$('.search-submit').click(function () {
-    search_term = search_field.value;
-    search_term = search_term.split(',');
-    localStorage.setItem('searched_terms', search_term);
-    // redirect to search results page, if not already there
-    if (!location.href.match(/searchResults/)) {
-        location.href = "" + BASE_URL + "searchresults/"
-    }
-    search_field.value = '';
-    createCards (search_term)
-});
-
-// listen for user pressing 'enter'
-// change this to jquery
-$('#search-field').keyup(function (e) {
-    e.stopPropagation();
-    if (e.keyCode == 13) {
-        $(".search-submit").trigger('click');
-    }
-});
-
-var createCards = function (terms) {
-    if (terms.length === 1) {
-        // append the term to the div, append div to parent element
-        $("<div class='searched-term'>" + terms + "<img class='close' src='" + BASE_URL + "assets/images/x.svg' alt='close button'></div>").appendTo("div.search-field");
-    } else if (terms.length > 1) {
-        for (var i = 0; i < terms.length; i++) {
-            // append the term to the div, append div to parent element
-            $("<div class='searched-term'>" + terms[i] + "<img class='close' src='" + BASE_URL + "assets/images/x.svg' alt='close button'></div>").appendTo("div.search-field");
-        }
-    }
-    setPositioning ()
-}
-
-var setPositioning = function () {
-    term_card = window.document.getElementsByClassName('searched-term');
-    if (term_card.length != 0) {
-        search_field.placeholder = 'Add another search term here'
-    } else {
-        search_field.placeholder = 'Search for whatever it is you want in life'
-    }
-    setPadding ()
-};
-
-var setPadding = function () {
-    padding_left = 0;
-    if (term_card.length > 0) {
-        $('div.search-field').css('padding-left', padding_left);
-    } else {
-        $('div.search-field').css('padding-left', '');
-    }
-};
-
-$('form').on('click', 'img.close', function () {
-    $(this).parent(".searched-term").remove();
-    setPositioning ()
-});
-
-// ~~~~~~~~~~~~~~~~~~~~~~ //
-// End Search Query Cards //
-// ~~~~~~~~~~~~~~~~~~~~~~ //
-
-// ~~~~~~~~~~~~~~~~~~~~~~ //
-//        Modals          //
-// ~~~~~~~~~~~~~~~~~~~~~~ //
-
-var modals = document.getElementsByClassName('modal');
-var hidden_modals = document.getElementsByClassName('modal-view');
-var modalImage = $('img.modal-img-view');
-var height;
-
-for (var i=0; i < modals.length; i++) {
-    modals[i].addEventListener('click', showModal(i))
-    // change this to jquery
-    // i think my previous pagination functions can help here
-    // will come back to this
-    /*$('.modal').click(function(){
-        alert("I'm here");
-    })*/
-}
-
-function showModal(i) {
-    return function(){
-        $(document.body).css('overflow', 'hidden');
-        hidden_modals[i].style.display = 'block';
-        hidden_modals[i].style.height = '100%';
-        setTimeout(function(){
-            $('.modal-view').css('background', 'rgba(13, 18, 48, 0.7)');
-            setTimeout(function(){
-                hidden_modals[i].childNodes[1].style.marginTop = "150px";
-                height = modalImage.innerHeight()
-                // if (images) {
-                //     $('.modal-wrap .arrow-left').css('opacity', '1');
-                //     $('.modal-wrap .arrow-right').css('opacity', '1');
-                // }
-            }, 100);
-        }, 100);
-    }
-}
-
-// scroll wheel
-$(document).ready(function () {
-    $('#modal-image').bind('mousewheel', function (e) {
-        if (e.originalEvent.wheelDelta /120 > 0) {
-            $('.plus').trigger('click'); // scroll up
-        } else {
-            $('.minus').trigger('click'); // scroll down
-        }
-    })
-});
-
-$(".config-table-modal").click(function (e) {
-    e.stopPropagation();
-});
-$('#modal-img').click(function (e) {
-    e.stopPropagation();
-})
-
-$(".modal-view").click(closeModal);
-$("#modal-dim-background").click(closeModal);
-$('div.close').click(closeModal);
-
-function closeModal () {
-    $(document.body).css('overflow', '');
-    $(".config-table-modal").css('margin-top', '');
-    $(".modal-wrap").css('margin-top', '');
-    setTimeout(function(){
-        $('.modal-view').css('background', 'rgba(13, 18, 48, -0.3)');
-        setTimeout(function(){
-            $(".modal-view").css('display', '');
-            $(".modal-view").css('height', '');
-        }, 150);
-    }, 100);
-}
-
-$('.maximize').click(function () {
-    $('.modal').trigger('click');
-})
-
-// Zoom / Unzoom buttons //
-$('.plus').click(function () {
-    modalImage.css('max-width', 'unset');
-    height = height + 50
-    modalImage.css('height', height)
-});
-
-$('.minus').click(function () {
-    modalImage.css('max-width', 'unset');
-    height = height - 50
-    modalImage.css('height', height)
-});
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
-// TABLE MODAL HANDLED BELOW HERE //
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
-
-// get all options from left and right columns
-var left_col = window.document.getElementsByClassName('left');
-var right_col = window.document.getElementsByClassName('right');
-
-// select thing from left column
-var selected_items = [];
-$('#available-cols').on('click', 'li', function (e) {
-    e.stopPropagation();
-    $(this).css('background-color', 'rgba(18, 46, 70, .16)');
-    selected_items.push( $(this).html() );
-});
-
-// select things on the right column
-var other_items = [];
-$('#selected-cols').on('click', 'li', function (e) {
-    e.stopPropagation();
-    $(this).css('background-color', 'rgba(18, 46, 70, .16)');
-    $(this).addClass('selected');
-    other_items.push( $(this).html() );
-});
-
-// move selected things from left column to right column
-$('div.arrow-wrap > img:first-child').click(function (e) {
-    e.stopPropagation()
-    $('#available-cols > li').css('background', '');
-    for ( var i = 0; i < selected_items.length; i++) {
-        window.document.getElementById('selected-cols').insertAdjacentHTML('beforeend', '<li class="right">' + selected_items[i] + '</li>')
-        for (var x = 0; x < left_col.length; x++) {
-            if (selected_items[i] === left_col[x].textContent) {
-                left_col[x].remove()
-            }
-        }
-    }
-    selected_items.length = 0
-});
-
-// move selected things from right to left
-$('div.arrow-wrap > img:last-child').click(function (e) {
-    e.stopPropagation()
-    $('#selected-cols > li').css('background', '');
-    for ( var i = 0; i < other_items.length; i++) {
-        window.document.getElementById('available-cols').insertAdjacentHTML('beforeend', '<li class="left">' + other_items[i] + '</li>')
-        for (var x = 0; x < right_col.length; x++) {
-            if (other_items[i] === right_col[x].textContent) {
-                right_col[x].remove()
-            }
-        }
-    }
-    other_items.length = 0
-});
-
-// http://www.slavevoyages.org/voyage/search
-// http://www.slavevoyages.org/static/scripts/voyage/voyage-search.js
-// ctrl-f 'function move_var(direction)' to find where this is handled
-
-// move selected items down when down arrow is clicked
-// first img in html is 'move-down' arrow
-$('img.down').click(function (e) {
-    e.stopPropagation();
-    // move down
-    var $other_items = $('#selected-cols li.selected')
-    $other_items.last().next().after($other_items);
-});
-
-// move selected items up when up arrow is clicked
-// last img in html is the 'move-up' arrow
-$('img.up').click(function (e) {
-    e.stopPropagation();
-    // move up
-    var $other_items = $('#selected-cols li.selected')
-    $other_items.first().prev().before($other_items);
-});
-
-// deselect all elements when clicking off of items
-$('.config-table-modal').click(function () {
-    $('#selected-cols > li').css('background', '');
-    $('#available-cols > li').css('background', '');
-    $('#selected-cols > li').removeClass('selected');
-    $('#available-cols > li').removeClass('selected');
-    selected_items.length = 0
-    other_items.length = 0
-});
-
-// ~~~~~~~~~~~~~~~ //
-// DRAGGABLE MODAL //
-// ~~~~~~~~~~~~~~~ //
-
-// https://www.w3schools.com/howto/howto_js_draggable.asp
-// Make the DIV element draggagle:
-if (window.document.getElementById('modal-image')) {
-    dragElement(document.getElementById(("modal-image")));
-
-    function dragElement(elmnt) {
-      var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-      if (document.getElementById(elmnt.id + "modal-image")) {
-        /* if present, the header is where you move the DIV from:*/
-        document.getElementById(elmnt.id + "modal-image").onmousedown = dragMouseDown;
-      } else {
-        /* otherwise, move the DIV from anywhere inside the DIV:*/
-        elmnt.onmousedown = dragMouseDown;
-      }
-
-      function dragMouseDown(e) {
-        e = e || window.event;
-        // get the mouse cursor position at startup:
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves:
-        document.onmousemove = elementDrag;
-      }
-
-      function elementDrag(e) {
-        e = e || window.event;
-        // calculate the new cursor position:
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        // set the element's new position:
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-        elmnt.style.right = 'unset';
-        elmnt.style.bottom = 'unset';
-      }
-
-      function closeDragElement() {
-        /* stop moving when mouse button is released:*/
-        document.onmouseup = null;
-        document.onmousemove = null;
-      }
-    }
-}
-// ~~~~~~~~~~~~~~~~~~~~~~ //
-//      End Modals        //
-// ~~~~~~~~~~~~~~~~~~~~~~ //
-
 
 
 /////////////////////////////////////////////////////////////
@@ -436,6 +122,7 @@ $(".sorting-dropdowns .align-center").click(function (e) { // toggle show/hide p
     $(this).find("#sortmenu").toggleClass('show');
 });
 
+// todo: rather than reload, just adjust results?
 $("ul.results-per-page li").click(function (e) { // set the per-page value
     e.stopPropagation();
     num_of_results = $(this).find('span:first').html();
@@ -459,32 +146,6 @@ $("span.view-toggle").mouseenter(function () { // show tooltips on hover
 //Generates result cards
 var view;
 var result;
-//result_array = [];
-//result_array.length = 11;
-
-//These html elements are set as independent variables and arrays so instead of one long line it is more readable
-//var card_name = 'Firstname Lastname';
-//var card_icon = 'Person-light.svg';
-//var card_content = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified</p><p><span>Origin: </span>Location Name</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
-//var card_contentTEST = '<div class="card-info"><p><span>Person Status: </span><span class="multiple">Multiple<span class="tooltip">Enslaved, Freed, Owner, Status</span></span></p><p><span>Sex: </span>Unidentified Unidentified Unidentified Unidentified</p><p><span>Origin: </span>Location Nameeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p><p><span>Location: </span>Location Name</p><p><span>Date Range: </span>1840 - 1864</p></div>';
-//^test var
-
-//var connection_lists = [
-//'<h1>10 Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
-//'<h1>10 Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
-//'<h1>10 Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
-//'<h1>10 Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>',
-//'<h1>10 Connected Projects</h1><ul><li>Project Name <div id="arrow"></div></li><li>Project Name is Longer<div id="arrow"></div></li><li>Project Name <div id="arrow"></div></li><li>View All Project Connections <div id="arrow"></div></li></ul>'
-//];
-//
-//var connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[0]+'</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[1]+'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[2]+'</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[3]+'</div></div><div class="card-icons"><img src="../assets/images/Project-dark.svg"><span>10</span><div class="connection-menu">'+connection_lists[4]+'</div></div></div></div>';
-
-$("span.grid-view").click(function gridView (e) { // grid view
-    e.stopPropagation()
-    console.log('call display')
-    displayCards();
-});
-
 
 // Get the query parameters from the url and use ajax to load results
 $(document).ready(function () {
@@ -556,6 +217,7 @@ $(document).ready(function () {
     });
 });
 
+// put the cards and grids onto the page
 function appendCards(){
     console.log('here', result_array)
     result_array['searchCard'].forEach(function (card) {
@@ -568,7 +230,16 @@ function appendCards(){
 
 }
 
+
+$("span.grid-view").click(function gridView (e) { // grid view
+    e.stopPropagation()
+    console.log('call display')
+    displayCards();
+});
+
+// display the people cards
 function displayCards() {
+    console.log('display cards')
     //$('tbody > tr').remove();
     cards = false;
     view = 'grid';
@@ -593,20 +264,10 @@ function displayCards() {
         window.localStorage.setItem('cards', cards);
         window.localStorage.setItem('view', view);
         // $('div.result-column').css('padding', '0', 'margin-top', '-30px', 'margin-bottom', '-15px');
-
-        setCardLinks();
     }
 }
 
-// Temporary fix to have result cards link to full record page
-function setCardLinks() {
-    $('.result-column .cardwrap .row li').unbind();
-    $('.result-column .cardwrap .row li').click(function(e) {
-        window.location = BASE_URL + 'recordPerson/';
-    });
-}
-
-
+// display the grid view
 $("span.table-view").click(function tableView (e) { // table view
     e.stopPropagation()
     if (cards === true) {
@@ -685,10 +346,6 @@ $(".show-filter").click(function(e){ // toggle show/hide filter menu
     }
 });
 
-$('div.filter-menu').click(function(e){
-    e.stopPropagation();
-});
-
 function centerStuffWithFilter () {
     $("#searchResults").addClass("show");
     if (window.innerWidth <= 920) {
@@ -735,38 +392,4 @@ $("li.cat-cat").click(function () { // toggle show/hide filter-by submenus
 $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
     $(this).find("span:first").toggleClass("show");
     $(this).next().toggleClass("show");
-});
-
-//This fixes the issue of deleting and adding the elements back where the hover wasnt working
-// $(document).on('mouseenter',"div.card-icons",function () { // show icon-card info on hover
-//     $(this).find('.connection-menu').fadeIn("slow", function(){
-//         // $('.connection-menu').removeClass('hovered');
-//         // $(this).find('.connection-menu').addClass('hovered');
-//     });
-// }).on('mouseleave',".connection-menu",function(e) {
-//     $(this).fadeOut("slow", function(){
-//         // $('.connection-menu').removeClass('hovered');
-//     });
-// });
-
-// $(document).ready(function() {
-//     $('div.card-icons').mouseenter(function() {
-//         $(this).find('.connection-menu').fadeIn();
-//     }).mouseleave( function() {
-//         $(this).find('.connection-menu').fadeOut();
-//         // setTimeout(function(){
-            
-//         // }, 200);
-//     });
-// });
-
-$(document).ready(function() {
-    $('div.card-icons').hover(function() {
-        //$(this).find('.connection-menu').fadeIn(200);
-        $('.connection-menu').removeClass('hovered');
-        $(this).find('.connection-menu').addClass('hovered');
-    }, function() {
-        //$(this).find('.connection-menu').fadeOut(100);
-        $('.connection-menu').removeClass('hovered');
-    });
 });
