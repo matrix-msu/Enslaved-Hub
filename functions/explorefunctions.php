@@ -877,7 +877,11 @@ function getPersonRecordHtml(){
             $qStatus = end(explode('/', $statusUrl));
             $status = '';
             if (!empty($qStatus)) {
-                $status = qpersonstatus[$qStatus];
+                if (array_key_exists($qStatus, qpersonstatus)){
+                    $status = qpersonstatus[$qStatus];
+                } else {
+                    $status = '';
+                }
             }
 
 
@@ -889,7 +893,11 @@ function getPersonRecordHtml(){
                 foreach ($rolesArray as $roleUrl) {
                     $qRole = end(explode('/', $roleUrl));
                     if (!empty($qRole)){
-                        $roleLabel = qroleTypes[$qRole];
+                        if (array_key_exists($qRole, qroleTypes)){
+                            $roleLabel = qroleTypes[$qRole];
+                        } else {
+                            $roleLabel = '';
+                        }
                         if ($roleCount > 0){
                             $roles .= "|$roleLabel";
                         } else {
@@ -1026,7 +1034,7 @@ function getPersonRecordHtml(){
 
             foreach($events as $index => $event) {
                 $html .= '
-                <div class="event-info-'.$event['kid'].'infowrap'.($index == 0 ? 'active' : '').'">
+                <div class="event-info-'.$event['kid'].' infowrap '.($index == 0 ? 'active' : '').'">
                     <div class="info-column">
                         <p><span class="bold">Start Date:</span> 1804</p>
                         <p><span class="bold">End Date:</span> N/A</p>
@@ -1044,7 +1052,7 @@ function getPersonRecordHtml(){
                         <p><span class="bold">Testing Kid:</span>'.$event['kid'].'</p>
                     </div>
                 </div>
-                <div class="place-info-'.$event['kid'].'infowrap">
+                <div class="place-info-'.$event['kid'].' infowrap">
                     <div class="info-column">
                         <p><span class="bold">Place Info:</span> Place Info</p>
                         <p><span class="bold">Testing Kid:</span> '.$event['kid'].'</p>
@@ -1054,10 +1062,7 @@ function getPersonRecordHtml(){
 
             $html .= '</div></div>';
 
-
-
-
-            $html = '<div class="timeline-container">
+            $html .= '<div class="timeline-container">
             <div class="timeline">
                 <div class="line"></div>
                 <div class="hash-container" data-start="'.$first_date_hash.'" data-end="'.$final_date_hash.'">';
@@ -1078,7 +1083,7 @@ function getPersonRecordHtml(){
 
                     $html .= '
                     <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
-                    style="left:calc('.$left.' % - 5px)"
+                    style="left:calc('.$left.'% - 5px)"
                     data-kid="'.$event['kid'].'"
                     data-index="'.$index.'">
                     <span class="event-title">'.$event['title'].' - '.$event['year'].'</span>
