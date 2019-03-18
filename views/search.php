@@ -4,13 +4,14 @@
     <div class="container middlewrap">
         <div class="search-title">
             <h1>Search</h1>
-            <a href="<?php echo BASE_URL;?>advancedSearch/"><h3>Go To Advanced Search<div class="arrow"></div></h3></a>
+            <a href="<?php echo BASE_URL;?>advancedSearch/"><h2>Go To Advanced Search<div class="arrow"></div></h2></a>
         </div>
         <div class="heading-search">
             <h3>Search across 54,375,213 records from the Atlantic Slave Trade ...</h3>
             <form class="search-form"  action="<?php echo BASE_URL;?>searchResults/">
-                <input class="search-field main-search" type="text" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
-                <a href="<?php echo BASE_URL;?>searchResults/"><div class="search-icon"></div></a>
+                <label for="searchbar" class="sr-only">searchbar</label>
+                <input id="searchbar" class="search-field main-search" type="text" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
+                <a href="<?php echo BASE_URL;?>search"><div class="search-icon-2"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt=""></div></a>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
         </div>

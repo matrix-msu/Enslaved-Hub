@@ -43,7 +43,7 @@ div.searched-term {
             padding: 0;
             margin: 0;
 
-            h3 {
+            h2 {
                 font-size: 20px;
                 padding: 10px 0 30px;
             }
@@ -149,7 +149,7 @@ ul#submenu {
                 font-weight: 300;
                 padding-top: 2px;
                 color: #4A4A4A;
-                
+
                 em {
                     font-style: normal;
                 }
@@ -189,7 +189,7 @@ ul#submenu.show{
 }
 .filter-menu.show {
     left: 0;
-}	
+}
 span.align-left {
     position: absolute;
     left: 0;
@@ -315,21 +315,21 @@ span.align-right.show {
             span {
                 img {
                     height: 7px;
-                    margin-left: 5px;              
+                    margin-left: 5px;
                 }
             }
         }
         .sorting-dropdowns {
             cursor: pointer;
             img {
-                transition: 200ms;                
+                transition: 200ms;
             }
             img.show {
                 transform: rotate(-180deg);
             }
         }
     }
-    
+
     #search-result-configure-download-row {
         font-size: 12px;
         padding: 25px 5% 50px;
@@ -358,7 +358,7 @@ span.align-right.show {
     }
     div#search-result-wrap {
         position: relative;
-        
+
         #search-result-table {
             box-shadow: 0 7px 10px 0 rgba(0,0,0,0.05);
             margin-left: 200px;
@@ -575,7 +575,7 @@ span.align-right.show {
                                     background-color: $base-dark;
                                     color: $base-light;
                                     padding: 15px;
-                                      
+
                                     /* Position the tooltip */
                                     position: absolute;
                                     z-index: 100;
@@ -622,7 +622,7 @@ span.align-right.show {
                                 display: flex;
                                 font-size: 12px;
                                 padding: 0 10px;
-    
+
                                 img{
                                     padding-right: 6px;
                                     height: 22px;
@@ -641,11 +641,11 @@ span.align-right.show {
                                     right: -90px;
                                     width: 220px;
                                     z-index: 10;
-        
+
                                     &.hovered{
                                         display: block;
                                     }
-    
+
                                     h1{
                                         font-size: 18px;
                                         margin-bottom: 10px;
@@ -667,7 +667,7 @@ span.align-right.show {
                                             padding: 5px 0;
                                             word-wrap: break-word;
                                             white-space: normal;
-    
+
                                             #arrow{
                                                 color: $base-light;
                                                 background-image: url(../images/Arrow.svg);
@@ -680,14 +680,14 @@ span.align-right.show {
                                                 margin: 5px 0 0 10px;
                                                 transition: color .2s;
                                             }
-    
+
                                             &:hover{
                                                 color: $sub-base;
                                                 #arrow{
                                                     background-image: url(../images/Arrow_colored.svg);
                                                 }
                                             }
-    
+
                                             span{
                                                 opacity: .6;
                                             }
@@ -758,7 +758,7 @@ span.align-right.show {
                             right: 0px;
                         }
                     }
-    
+
                     .cards{
                         width: calc(100% - 270px);
                         width: -moz-calc(100% - 270px);
@@ -784,7 +784,7 @@ span.align-right.show {
                             right: 20px;
                         }
                     }
-    
+
                     .cards{
                         width: unset;
                         .card-info{
@@ -1065,7 +1065,7 @@ span.align-right.show {
         margin: 0 auto;
         width: 750px;
     }
-    
+
     #searchResults.show #search-result-table.grid {
         width: 500px;
     }
@@ -1082,12 +1082,12 @@ span.align-right.show {
 @media screen and (max-width: 770px){
     #searchResults #search-result-table.grid {
         width: auto;
-            
+
         table.grid tbody.grid tr.grid {
             display: block;
             margin: 10px auto;
             width: 95%;
-        }    
+        }
     }
 }
 // table modal
@@ -1104,7 +1104,7 @@ span.align-right.show {
             width: 135px;
         }
     }
-    
+
     // table modal
     .modal-view .config-table-modal {
         height: 90%;

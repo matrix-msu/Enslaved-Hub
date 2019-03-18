@@ -19,21 +19,21 @@
             <li id="getinvolved">
                 <a href="<?php echo BASE_URL?>getInvolved/">
                     <div class="cards">
-                        <p>Learn How to Get Involved</p>
+                        <h2>Learn How to Get Involved</h2>
                     </div>
                 </a>
             </li>
             <li id="viewpartners">
                 <a href="<?php echo BASE_URL?>ourPartners/">
                     <div class="cards">
-                        <p>View our Partners</p>
+                        <h2>View our Partners</h2>
                     </div>
                 </a>
             </li>
             <li id="contactus">
                 <a href="<?php echo BASE_URL?>contactUs/">
                     <div class="cards">
-                        <p>Contact Us</p>
+                        <h2>Contact Us</h2>
                     </div>
                 </a>
             </li>

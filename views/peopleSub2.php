@@ -13,7 +13,7 @@ if (isset($_GET['type'])){
 <div class="container header stories">
     <div class="container middlewrap">
         <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><span id="current-title"><?php echo $type;?></span></h4>
-        <h1><?php echo $type;?></h1>
+        <p class="people-heading"><?php echo $type;?></p>
     </div>
 </div>
 <!-- info container-->

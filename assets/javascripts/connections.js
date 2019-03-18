@@ -58,14 +58,14 @@ function displayConnections(cardType, cardAmount){
     }else if( cardAmount < 8 ){
         $(".load-more").addClass('loaded');
     }
-    
+
     if( cardType == "Person"){
         for(i = 0; i < displayAmount; i++){
-            $('.connect-row').append('<li><div class="cards"><img src="'+BASE_IMAGE_URL+cardType+'-light.svg"><h3>Firstname Lastname</h3></div></li>');
+            $('.connect-row').append('<li><div class="cards"><img src="'+BASE_IMAGE_URL+cardType+'-light.svg" alt="'+cardType+' icon"><h3>Firstname Lastname</h3></div></li>');
         }
     }else{
         for(i = 0; i < displayAmount; i++){
-            $('.connect-row').append('<li><div class="cards"><img src="'+BASE_IMAGE_URL+cardType+'-light.svg"><h3>'+cardType+' Name</h3></div></li>');
+            $('.connect-row').append('<li><div class="cards"><img src="'+BASE_IMAGE_URL+cardType+'-light.svg" alt="'+cardType+' icon"><h3>'+cardType+' Name</h3></div></li>');
         }
     }
     $('.connect-row .cards').css("background-image", "url("+BASE_IMAGE_URL+cardType+"Card.jpg)");

@@ -49,8 +49,8 @@ if ($page < 1) {
             foreach ($featured as $kid => $story) {
                 echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
                 echo '<div class="container cards">';
-                echo '<p class="card-title">'.$story['Title']['value'].'</p>';
-                echo '<h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>';
+                echo '<h2 class="card-title">'.$story['Title']['value'].'</h2>';
+                echo '<h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>';
                 echo '</div></a></li>';
             }
             ?>
@@ -72,7 +72,8 @@ if ($page < 1) {
             <h2 class="column-header">All Stories</h2>
             <div class="container search">
                 <form action="submit">
-                    <input class="search-field" type="text" name="searchbar" placeholder="Find a Story By Title or Keyword"/>
+                    <label for="searchbar" class="sr-only">searchbar</label>
+                    <input id="searchbar" class="search-field" type="text" name="searchbar" placeholder="Find a Story By Title or Keyword"/>
                     <div class="search-icon"></div>
                 </form>
             </div>

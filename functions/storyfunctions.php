@@ -63,8 +63,8 @@ function displayStories($stories){
     foreach ($stories['records'][0] as $kid => $story) {
         echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
         echo '<div class="container cards">';
-        echo '<p class="card-title">'.$story['Title']['value'].'</p>';
-        echo '<h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>';
+        echo '<h2 class="card-title">'.$story['Title']['value'].'</h2>';
+        echo '<h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>';
         echo '</div></a></li>';
     }
 }

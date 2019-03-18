@@ -17,7 +17,8 @@
         <div class="container header-search">
             <div class="container project-search">
                 <form action="submit">
-                    <input class="search-field" type="text" name="searchbar" placeholder="Find a Project By Title or Keyword"/>
+                    <label for="searchbar" class="sr-only">searchbar</label>
+                    <input id="searchbar" class="search-field" type="text" name="searchbar" placeholder="Find a Project By Title or Keyword"/>
                     <div class="search-icon"></div>
                 </form>
             </div>
@@ -37,72 +38,72 @@
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                        <p class="card-title">Title of Project Goes Here Like This</p>
-                        <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Project <div class="view-arrow"></div></h4>
+                        <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                        <h3 class="card-resources">234 Resources</h3>
+                        <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                        <p class="card-title">Title of Project Goes Here Like This</p>
-                        <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Project <div class="view-arrow"></div></h4>
+                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                      <h3 class="card-resources">234 Resources</h3>
+                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                        <p class="card-title">Title of Project Goes Here Like This</p>
-                        <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Project <div class="view-arrow"></div></h4>
+                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                      <h3 class="card-resources">234 Resources</h3>
+                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                        <p class="card-title">Title of Project Goes Here Like This</p>
-                        <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Project <div class="view-arrow"></div></h4>
+                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                      <h3 class="card-resources">234 Resources</h3>
+                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                        <p class="card-title">Title of Project Goes Here Like This</p>
-                        <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Project <div class="view-arrow"></div></h4>
+                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                      <h3 class="card-resources">234 Resources</h3>
+                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                        <p class="card-title">Title of Project Goes Here Like This</p>
-                        <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Project <div class="view-arrow"></div></h4>
+                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                      <h3 class="card-resources">234 Resources</h3>
+                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                        <p class="card-title">Title of Project Goes Here Like This</p>
-                        <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Project <div class="view-arrow"></div></h4>
+                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                      <h3 class="card-resources">234 Resources</h3>
+                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                        <p class="card-title">Title of Project Goes Here Like This</p>
-                        <h4 class="card-resources">234 Resources</h4>
-                        <h4 class="card-view-story">View Project <div class="view-arrow"></div></h4>
+                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                      <h3 class="card-resources">234 Resources</h3>
+                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>

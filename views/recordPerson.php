@@ -173,7 +173,7 @@
             <ul class="connect-row">
                 <li>
                     <div class="cards">
-                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
                     </div>
                 </li>
@@ -187,14 +187,14 @@
     <div class="copyright">
         <h2>Copyright Info</h2>
         <p>Info on copyright provided</p>
-        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg"/>
+        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg" alt="copyrights"/>
     </div>
     <div class="share-links">
         <h2>Share this Record</h2>
-        <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg" alt="facebook"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg" alt="twitter"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/>
     </div>
 </div>
 <!-- Featured Stories-->
@@ -207,16 +207,16 @@
                 <li>
                     <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
+                            <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
+                            <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
                         </div>
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
+                            <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
+                            <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
                         </div>
                     </a>
                 </li>

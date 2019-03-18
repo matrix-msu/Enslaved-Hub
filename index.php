@@ -2,8 +2,8 @@
     require_once ( __DIR__ . '/config.php' ) ;
 ?>
 
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 <head>
     <meta name="google" content="notranslate" />
     <title><?php echo BASE_URL;?></title>

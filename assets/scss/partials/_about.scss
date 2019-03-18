@@ -53,13 +53,13 @@
                     //     padding-top: 20px;
                     // }
 
-                    p{
-                        font-size: 26px;
-                        color: #FBF9F5;
-                        position: absolute;
-                        bottom: 20px;
-                        left: 20px;
-                        padding-right: 20px;
+                    h2{
+                      font-size: 26px;
+                      color: #FBF9F5;
+                      position: absolute;
+                      bottom: 20px;
+                      left: 20px;
+                      padding-right: 20px;
                     }
 
                     &:hover{
@@ -160,7 +160,7 @@
                 .inputwrap{
                     width: 47.5%;
                     margin-bottom: 22px;
-                    
+
                     input, label{
                         display: block;
                     }
@@ -182,7 +182,7 @@
                         font-family: aleoregular;
                         color: $base-dark;
                         transition: border 0.2s;
-        
+
                         &:hover{
                             border: 1px solid $sub-base;
                         }
@@ -194,11 +194,11 @@
                         color: #72818C;
                         opacity: 1; /* Firefox */
                     }
-                    
+
                     :-ms-input-placeholder { /* Internet Explorer 10-11 */
                         color: #72818C;
                     }
-                    
+
                     ::-ms-input-placeholder { /* Microsoft Edge */
                         color: #72818C;
                     }
@@ -220,7 +220,7 @@
                     background: $base-dark;
                     transition: border 0.2s;
                     transition: .2s;
-                    
+
                     &:hover{
                         border: 2px solid $sub-base;
                     }

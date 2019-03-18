@@ -4,7 +4,8 @@
     </div>
 </div>
 <main class="admin">
-    <select id="theme-select">
+    <label class="sr-only" for="theme-select">select menu</label>
+    <select id="theme-select" name="theme-select">
         <option disabled selected value style="display:none">select theme</option>
         <?php
         // print out all theme options by reading from the themes directory

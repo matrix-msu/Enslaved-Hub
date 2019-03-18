@@ -7,14 +7,14 @@
 <main class="media-record">
     <figure>
         <div class="fig-wrap">
-            <button class="arrow-left"></button>
-            <button class="arrow-right"></button>
-            <img id="carousel-img" class="carousel-display modal" src="<?php echo BASE_IMAGE_URL;?>placeholder_MODAL.png" alt="carousel image">
+            <button class="arrow-left"><img src="<?php echo BASE_URL;?>/assets/images/chevron-down.svg" alt="arrow left"></button>
+            <button class="arrow-right"><img src="<?php echo BASE_URL;?>/assets/images/chevron-down.svg" alt="arrow left"></button>
+            <img id="carousel-img" class="carousel-display modal" src="<?php echo BASE_IMAGE_URL;?>placeholder_MODAL.png" alt="main page image">
         </div>
         <div id="carousel-controls" class="carousel-controls">
-            <a href="<?php echo BASE_IMAGE_URL;?>placeholder_MODAL.png" target="_blank"><img class="external-link" src="<?php echo BASE_IMAGE_URL;?>external-link.svg"></a>
-            <a href="<?php echo BASE_IMAGE_URL;?>placeholder_MODAL.png" download><img class="download" src="<?php echo BASE_IMAGE_URL;?>download.svg"></a>
-            <img class="maximize" src="<?php echo BASE_IMAGE_URL;?>maximize.svg">
+            <a href="<?php echo BASE_IMAGE_URL;?>placeholder_MODAL.png" target="_blank"><img class="external-link" src="<?php echo BASE_IMAGE_URL;?>external-link.svg" alt="external link"></a>
+            <a href="<?php echo BASE_IMAGE_URL;?>placeholder_MODAL.png" download><img class="download" src="<?php echo BASE_IMAGE_URL;?>download.svg" alt="download icon"></a>
+            <img class="maximize" src="<?php echo BASE_IMAGE_URL;?>maximize.svg" alt="maximize icon">
         </div>
     </figure>
     <div class="thumbnails"></div>
