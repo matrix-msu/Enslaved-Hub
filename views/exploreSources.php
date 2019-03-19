@@ -43,7 +43,7 @@
             <li>
                 <a href="<?php echo BASE_URL?>recordSource/">
                     <div class="cards">
-                        < alt="source icon" src="<?php echo BASE_URL?>assets/images/Source-light.svg" alt="source icon">
+                        <img src="<?php echo BASE_URL?>assets/images/Source-light.svg" alt="source icon">
                         <h3>Source Name</h3>
                     </div>
                 </a>
