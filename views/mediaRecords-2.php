@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class='record-bottom'>
-            <img class="arrow hidden left" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg">
+            <img class="arrow hidden left" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="left arrow">
             <div class="list-wrap">
                 <ul class="tabs">
                     <li class="tab">Ben Rawlence</li>
@@ -53,7 +53,7 @@
                     <li class="tab">tag name</li>
                 </ul>
             </div>
-            <img class="arrow right" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg">
+            <img class="arrow right" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="right-arrow">
         </div>
     </div>
     <div class='record'>
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class='record-bottom'>
-            <img class="arrow hidden left" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg">
+            <img class="arrow hidden left" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="left arrow">
             <div class="list-wrap">
                 <ul class="tabs">
                     <li class="tab">Ben Rawlence</li>
@@ -104,7 +104,7 @@
                     <li class="tab">tag name</li>
                 </ul>
             </div>
-            <img class="arrow right" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg">
+            <img class="arrow right" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="right-arrow">
         </div>
     </div>
     <div class='record'>
@@ -133,7 +133,7 @@
             </div>
         </div>
         <div class='record-bottom'>
-            <img class="arrow hidden left" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg">
+            <img class="arrow hidden left" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="left arrow">
             <div class="list-wrap">
                 <ul class="tabs">
                     <li class="tab">Ben Rawlence</li>
@@ -155,7 +155,7 @@
                     <li class="tab">tag name</li>
                 </ul>
             </div>
-            <img class="arrow right" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg">
+            <img class="arrow right" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="right arrow">
         </div>
     </div>
     <div class='record'>
@@ -184,7 +184,7 @@
             </div>
         </div>
         <div class='record-bottom'>
-            <img class="arrow hidden left" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg">
+            <img class="arrow hidden left" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="left arrow">
             <div class="list-wrap">
                 <ul class="tabs">
                     <li class="tab">Ben Rawlence</li>
@@ -206,7 +206,7 @@
                     <li class="tab">tag name</li>
                 </ul>
             </div>
-            <img class="arrow right" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg">
+            <img class="arrow right" src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="right arrow">
         </div>
     </div>
 </main>

@@ -62,7 +62,7 @@
                 .icon{
                     margin-right: 17px;
                 }
-                h3{
+                h2{
                     font-size: 22px;
                     line-height: 26px;
                     color: $base-dark;
@@ -215,7 +215,7 @@
             font-size: 14px;
             cursor: pointer;
             img {
-                transition: 400ms;                
+                transition: 400ms;
             }
             img.show {
                 transform: rotate(-180deg);
@@ -244,13 +244,13 @@
             li:hover {
                 color: $sub-base;
             }
-    
+
             ul#submenu {
                 margin-bottom: 20px;
             }
-    
+
         }
-    
+
         #submenu.show{
             display: block;
         }
@@ -354,7 +354,7 @@
     form{
         position: relative;
         margin: 0;
-        
+
         .search-field{
             border: 1px solid #CED0D2;
             border-radius: 100px;
@@ -383,12 +383,12 @@
             opacity: 1; /* Firefox */
             font-style: italic;
         }
-        
+
         :-ms-input-placeholder { /* Internet Explorer 10-11 */
             color: $base-dark;
             font-style: italic;
         }
-        
+
         ::-ms-input-placeholder { /* Microsoft Edge */
             color: $base-dark;
             font-style: italic;

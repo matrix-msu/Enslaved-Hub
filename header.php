@@ -11,10 +11,10 @@
         </div>
         <div class="rightnav">
             <ul class="nav-menu">
-                <li class="nav-item"><img class="search-icon" src="<?php echo BASE_IMAGE_URL;?>Search.svg"/><a class="nav-link unselected" id="search" href="<?php echo BASE_URL;?>search/">Search</a></li>
+                <li class="nav-item"><img class="search-icon" src="<?php echo BASE_IMAGE_URL;?>Search.svg" alt="search icon"/><a class="nav-link unselected" id="search" href="<?php echo BASE_URL;?>search/">Search</a></li>
                 <li class="nav-item drop-link">
                     <a class="nav-link unselected" id="explore" href="<?php echo BASE_URL;?>explore/">Explore</a>
-                    <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg"/></span>
+                    <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg" alt="dropdown carrat"/></span>
                     <ul class="sub-list">
                         <li class="subwrap" id="explore-sub">
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>explorePeople/">People</a>
@@ -39,7 +39,7 @@
                 <li class="nav-item"><a class="nav-link unselected" id="projects" href="<?php echo BASE_URL;?>projects/">Projects</a></li>
                 <li class="nav-item drop-link">
                     <a class="nav-link unselected" id="about" href="<?php echo BASE_URL;?>about/">About</a>
-                    <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg"/></span>
+                    <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg" alt="dropdown arrow"/></span>
                     <ul class="sub-list">
                         <li class="subwrap" id="about-sub">
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>getInvolved/">Get Involved</a>

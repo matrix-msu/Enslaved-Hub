@@ -54,7 +54,7 @@
             <a><li><div class="buttons">Gender</div></li></a>
             <a><li><div class="buttons">Gender</div></li></a>
             <a><li><div class="buttons">Gender</div></li></a>
-            <a><li><div class="buttons">Gender</div></li></a>        
+            <a><li><div class="buttons">Gender</div></li></a>
         </ul>
     </div>
 </div>
@@ -66,7 +66,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Person Name or Narrative Title</p>
+                        <h2 class="card-title">Person Name or Narrative Title</h2>
                         <p><span>Gender</span>: Male</p>
                         <p><span>Born</span>: fl.1845 Virginia, United States</p>
                         <p><span>Occupation</span>: Fugitive Slave, Slave Narrative, Occupation..</p>
@@ -77,7 +77,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Person Name or Narrative Title</p>
+                        <h2 class="card-title">Person Name or Narrative Title</h2>
                         <p><span>Gender</span>: Male</p>
                         <p><span>Born</span>: fl.1845 Virginia, United States</p>
                         <p><span>Occupation</span>: Fugitive Slave, Slave Narrative, Occupation..</p>
@@ -88,7 +88,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Person Name or Narrative Title</p>
+                        <h2 class="card-title">Person Name or Narrative Title</h2>
                         <p><span>Gender</span>: Male</p>
                         <p><span>Born</span>: fl.1845 Virginia, United States</p>
                         <p><span>Occupation</span>: Fugitive Slave, Slave Narrative, Occupation..</p>

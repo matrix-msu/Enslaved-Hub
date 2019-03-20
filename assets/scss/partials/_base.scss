@@ -57,3 +57,11 @@ h1,h2,h3,h4,h5,p,a,span,li,label,input{
 input:not([type="image"]), textarea {
     box-sizing: border-box;
 }
+
+.sr-only {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+}

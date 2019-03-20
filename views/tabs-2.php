@@ -15,25 +15,29 @@
 <main class="image-card-grid-2">
     <div class="row">
         <div class="image-grid-2-card">
-            <div class="border"><a href="#"></a></div>
-            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card.jpg">
+          <a href="#">
+            <div class="border"></div>
+            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card.jpg" alt="card image">
             <div class="title">
                 <div class="title-wrap">
-                    <h4>Card Title</h4>
+                    <h2 class="tab-card-title">Card Title</h2>
                 </div>
             </div>
+          </a>
             <div class="description">
                 <p>Abillity to reveal a description on hover.</p>
             </div>
         </div>
         <div class="image-grid-2-card">
-            <div class="border"><a href="#"></a></div>
-            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card.jpg">
+          <a href="#">
+            <div class="border"></div>
+            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card.jpg" alt="card image">
             <div class="title">
                 <div class="title-wrap">
-                    <h4>Card Title is too long? Breaks to new line like so</h4>
+                    <h2 class="tab-card-title">Card Title is too long? Breaks to new line like so</h2>
                 </div>
             </div>
+          </a>
             <div class="description">
                 <p>Abillity to reveal a description on hover. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
             </div>
@@ -41,25 +45,29 @@
     </div>
     <div class="row">
         <div class="image-grid-2-card">
-            <div class="border"><a href="#"></a></div>
-            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card2.jpg">
+          <a href="#">
+            <div class="border"></div>
+            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card2.jpg" alt="card image">
             <div class="title">
                 <div class="title-wrap">
-                    <h4>Card Title is too long? Breaks to new line like so and if it goes past a third line it will add ellipses if there is text overflow.</h4>
+                    <h2 class="tab-card-title">Card Title is too long? Breaks to new line like so and if it goes past a third line it will add ellipses if there is text overflow.</h2>
                 </div>
             </div>
+          </a>
             <div class="description">
                 <p>Abillity to reveal a description on hover.</p>
             </div>
         </div>
         <div class="image-grid-2-card">
-            <div class="border"><a href="#"></a></div>
-            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card2.jpg">
+          <a href="#">
+            <div class="border"></div>
+            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card2.jpg" alt="card image">
             <div class="title">
                 <div class="title-wrap">
-                    <h4>Card Title is too long? Breaks to new line like so</h4>
+                    <h2 class="tab-card-title">Card Title is too long? Breaks to new line like so</h2>
                 </div>
             </div>
+          </a>
             <div class="description">
                 <p>Abillity to reveal a description on hover. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
             </div>
@@ -67,25 +75,29 @@
     </div>
     <div class="row">
         <div class="image-grid-2-card">
-            <div class="border"><a href="#"></a></div>
-            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card.jpg">
+          <a href="#">
+            <div class="border"></div>
+            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card.jpg" alt="card image">
             <div class="title">
                 <div class="title-wrap">
-                    <h4>Card Title</h4>
+                    <h2 class="tab-card-title">Card Title</h2>
                 </div>
             </div>
+          </a>
             <div class="description">
                 <p>Abillity to reveal a description on hover.</p>
             </div>
         </div>
         <div class="image-grid-2-card">
-            <div class="border"><a href="#"></a></div>
-            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card2.jpg">
+          <a href="#">
+            <div class="border"></div>
+            <img src="<?php echo BASE_IMAGE_URL;?>imageCardGrid2/card2.jpg" alt="card image">
             <div class="title">
                 <div class="title-wrap">
-                    <h4>Card Title is too long? Breaks to new line like so</h4>
+                    <h2 class="tab-card-title">Card Title is too long? Breaks to new line like so</h2>
                 </div>
             </div>
+          </a>
             <div class="description">
                 <p>Abillity to reveal a description on hover. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
             </div>
@@ -131,7 +143,7 @@
 <div class="modal-view">
     <div class="modal-wrap">
         <p class="close"><a id="modal-close"><img src="<?php echo BASE_IMAGE_URL;?>x.svg" alt="x.svg"></a></p>
-        <div id="modal-img">    
+        <div id="modal-img">
             <img src="<?php echo BASE_IMAGE_URL;?>person-placeholder-1.jpg" alt="person image placeholder">
         <p><small>Caption for image goes here if available</small></p>
         </div>

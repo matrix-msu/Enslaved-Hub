@@ -13,8 +13,9 @@
         <div class="heading-search">
             <h3>Search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade ...</h3>
             <form class="search-form" action="<?= BASE_URL ?>searchResults/">
-                <input class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
-                <a href="<?php echo BASE_URL;?>search"><div class="search-icon"></div></a>
+                <label for="searchbar" class="sr-only">searchbar</label>
+                <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
+                <a href="<?php echo BASE_URL;?>search"><div class="search-icon-2"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search icon"></div></a>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
         </div>
@@ -23,83 +24,83 @@
 <main class="home">
     <div class="section-wrap">
         <div class="section-info">
-            <a href="<?php echo BASE_URL;?>explore"><h2>Explore<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
+            <a href="<?php echo BASE_URL;?>explore"><h2>Explore<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
         </div>
         <div class="section-content">
             <a href="<?php echo BASE_URL;?>explorePeople/">
                 <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg"/>
+                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                     <h3>People</h3>
                     <span><?php echo queryAllAgentsCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
+                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
             <a href="<?php echo BASE_URL;?>exploreEvents/">
                 <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg"/>
+                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                     <h3>Events</h3>
                     <span><?php echo queryEventCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
+                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
             <a href="<?php echo BASE_URL;?>explorePlaces/">
                 <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg"/>
+                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                     <h3>Places</h3>
                     <span><?php echo queryPlaceCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
+                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
             <a href="<?php echo BASE_URL;?>projects/">
                 <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg"/>
+                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
                     <h3>Projects</h3>
                     <span><?php echo queryProjectsCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
+                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
             <a href="<?php echo BASE_URL;?>exploreSources/">
                 <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg"/>
+                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                     <h3>Sources</h3>
                     <span><?php echo querySourceCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
+                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
         </div>
     </div>
     <div class="section-wrap visualize-hide">
         <div class="section-info">
-            <a href="<?php echo BASE_URL;?>visualize"><h2>Visualize<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
+            <a href="<?php echo BASE_URL;?>visualize"><h2>Visualize<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="arrow"/></h2></a>
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur  …</p>
         </div>
         <div class="section-content">
             <div class="content-link">
-                <img class="icon" src="<?php echo BASE_URL;?>/assets/images/space.svg"/>
+                <img class="icon" src="<?php echo BASE_URL;?>/assets/images/space.svg" alt="space icon"/>
                 <h3>Space</h3>
-                <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
+                <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="arrow"/>
             </div>
             <div class="content-link">
-                <img class="icon" src="<?php echo BASE_URL;?>/assets/images/time.svg"/>
+                <img class="icon" src="<?php echo BASE_URL;?>/assets/images/time.svg" alt="time icon"/>
                 <h3>Time</h3>
-                <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
+                <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="arrow"/>
             </div>
             <div class="content-link">
-                <img class="icon" src="<?php echo BASE_URL;?>/assets/images/data.svg"/>
+                <img class="icon" src="<?php echo BASE_URL;?>/assets/images/data.svg" alt="data icon"/>
                 <h3>Data</h3>
-                <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/>
+                <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="arrow"/>
             </div>
         </div>
     </div>
     <div class="section-wrap">
         <div class="section-info">
-            <a href="<?php echo BASE_URL;?>stories/"><h2>Stories<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
+            <a href="<?php echo BASE_URL;?>stories/"><h2>Stories<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
         </div>
         <div class="section-content">
             <ul class="row" id="stories-list">
-<!--                <li>-->
+               <!-- <li>-->
 <!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
 <!--                        <div class="container cards">-->
 <!--                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>-->
@@ -114,18 +115,18 @@
 <!--                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>-->
 <!--                        </div>-->
 <!--                    </a>-->
-<!--                </li>-->
+<!--                </li>
             </ul>
         </div>
     </div>
     <div class="section-wrap">
         <div class="section-info">
-            <a href="<?php echo BASE_URL;?>projects"><h2>Projects<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg"/></h2></a>
+            <a href="<?php echo BASE_URL;?>projects"><h2>Projects<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
         </div>
         <div class="section-content">
             <ul class="row" id="projects-list">
-<!--                <li>-->
+<!            <li>-->
 <!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
 <!--                        <div class="container cards">-->
 <!--                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>-->
@@ -156,8 +157,8 @@
         <div class="about-card">
             <a href="<?php echo BASE_URL?>fullStory/">
                 <div class="container cards">
-                    <p class="card-title">Learn More About the Project.</p>
-                    <h4 class="card-view-story">Go to About Page <div class="view-arrow"></h4>
+                    <h2 class="card-title">Learn More About the Project.</h2>
+                    <h3 class="card-view-story">Go to About Page <div class="view-arrow"></h3>
                 </div>
             </a>
         </div>

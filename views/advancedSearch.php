@@ -69,6 +69,7 @@
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
+                    <label for="person-to">dropdown</label>
                     <select class="s2-single date-to" id="person-to">
                         <option value""></option>
                         <option value="1800">1800</option>
@@ -86,7 +87,7 @@
                 </div>
                 <div class="inputwrap">
                     <label for="type">Type</label>
-                    <select class="s2-multiple" id="type" multiple="multiple">
+                    <select class="s2-multiple" name="type" id="type" multiple="multiple">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="unidentified">Unidentified</option>
@@ -100,6 +101,7 @@
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
+                    <label for="event-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="event-to">
                         <option value""></option>
                         <option value="1800">1800</option>
@@ -155,6 +157,7 @@
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
+                    <label for="place-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="place-to">
                         <option value""></option>
                         <option value="1800">1800</option>

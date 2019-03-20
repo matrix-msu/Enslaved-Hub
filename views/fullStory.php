@@ -60,7 +60,7 @@ else {
             <section class="online-resources">
                 <?php
                 if (isset($story['Online Resources'])) {
-                    echo '<h3>Online Resources</h3>';
+                    echo '<h2>Online Resources</h2>';
                     echo $story['Online Resources']['value'];
                 }
                 ?>
@@ -90,13 +90,13 @@ else {
                     <div class="slider">
                     </div>
                     <div class="image-pagination">
-                        <img id="prev-arrow" onclick="plusSlides(-1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg">
+                        <img id="prev-arrow" onclick="plusSlides(-1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg" alt="arrow">
                         <div class="dotwrap" style="text-align:center">
                         </div>
-                        <img id="next-arrow" onclick="plusSlides(1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg">
+                        <img id="next-arrow" onclick="plusSlides(1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg" alt="arrow">
                     </div>
                     <div class="expand modal">
-                        <img src="<?php echo BASE_URL?>assets/images/expand.svg">
+                        <img src="<?php echo BASE_URL?>assets/images/expand.svg" alt="expander">
                     </div>
                     <!-- <div class="cation" style="text-align: center; padding-top: 20px; opacity: 0.7;"> -->
                     <div class="caption">
@@ -153,7 +153,7 @@ else {
             <ul class="connect-row">
                 <li>
                     <div class="cards">
-                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg">
+                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
                     </div>
                 </li>
@@ -171,16 +171,16 @@ else {
                 <li>
                     <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
+                            <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
+                            <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
                         </div>
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo BASE_URL?>fullStory/">
                         <div class="container cards">
-                            <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                            <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
+                            <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
+                            <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
                         </div>
                     </a>
                 </li>

@@ -6,8 +6,10 @@
     <div class="container search">
         <form action="submit">
             <div class="search-field">
+								<label class="sr-only" for="search-field">searchbar</label>
                 <input id="search-field" class="search-field" type="text" name="searchbar" placeholder="Search for whatever it is you want in life"/>
             </div>
+						<label for="search-btn" class="sr-only">submit search</label>
             <input id="search-btn" class="search-submit"/>
         </form>
         <p id="searchResults-showing">Showing <span>X</span> of <span>###</span> Results</p>
@@ -20,633 +22,554 @@
         <h3>Filter Your Results</h3>
         <hr>
         <ul>
-            <li class="filter-cat">Gender<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <li class="filter-cat">Gender<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span>
             </li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Unidentified <em>(234)</em></p>
-                        <span></span>
-                    </label>
+										<!-- <label for="checkBox" class="sr-only">checkbox</label> -->
+                    <input id="checkBox" type="checkbox">
+                    <p>Unidentified <em>(234)</em></p>
+                    <span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Male <em>(234)</em></p>
-                        <span></span>
-                    </label>
+										<!-- <label for="checkBox" class="sr-only">checkbox</label> -->
+                    <input id="checkBox" type="checkbox">
+                    <p>Male <em>(234)</em></p>
+                    <span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Female <em>(234)</em></p>
-                        <span></span>
-                    </label>
+										<!-- <label for="checkBox">checkbox</label> -->
+                    <input id="checkBox" type="checkbox">
+                    <p>Female <em>(234)</em></p>
+                    <span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Age Category<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <li class="filter-cat">Age Category<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="down arrow"></span>
             </li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Age Range <em>(234)</em></p>
-                        <span></span>
-                    </label>
+										<!-- <label for="checkBox">checkbox</label> -->
+                    <input id="checkBox" type="checkbox">
+                    <p>Age Range <em>(234)</em></p>
+                    <span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Age Range <em>(234)</em></p>
-                        <span></span>
-                    </label>
+										<!-- <label for="checkBox">checkbox</label> -->
+                    <input id="checkBox" type="checkbox">
+                    <p>Age Range <em>(234)</em></p>
+                    <span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Age Range <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Realm of Renown<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <li class="filter-cat">Realm of Renown<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span>
             </li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Slave Status<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <li class="filter-cat">Slave Status<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span>
             </li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Occupation<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <li class="filter-cat">Occupation<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span>
             </li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Race of Parents<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Race of Parents<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+                    <input id="checkBox" type="checkbox">
+                    <p>Undefined <em>(234)</em></p>
+                    <span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
-            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span></li>
+            <li class="filter-cat">Biographical Detail<span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="arrow down"></span></li>
             <ul id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<label for="checkBox">checkbox</label>
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
-                        <p>Undefined <em>(234)</em></p>
-                        <span></span>
-                    </label>
+									<!-- <label for="checkBox">checkbox</label> -->
+									<input id="checkBox" type="checkbox">
+									<p>Age Range <em>(234)</em></p>
+									<span></span>
                 </li>
             </ul>
         </ul>
@@ -742,7 +665,7 @@
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
-            <span id="pagiRight" class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg"></span>
+            <span id="pagiRight" class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="next"></span>
         </div>
     </div>
 </main>
@@ -753,7 +676,8 @@
             <div class="close"><img src="<?php echo BASE_IMAGE_URL;?>x.svg" alt="close modal button"></div>
             <h4>Configure Table Columns</h4>
             <p>Choose Group of Variables
-                <select>
+								<label for="var=group-drop" class="sr-only">dropdown</label>
+                <select name="var-group-drop" id="var-group-drop">
                     <option value="1">Name of Variable Group</option>
                     <option value="2">####</option>
                     <option value="3">####</option>

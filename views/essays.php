@@ -19,7 +19,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus hey hi there hi hellasdasdo hisadasdsdasd sadasdasd asd </p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus hey hi there hi hellasdasdo hisadasdsdasd sadasdasd asd </h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -28,7 +28,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -37,7 +37,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -54,7 +54,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -63,7 +63,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -72,7 +72,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -81,7 +81,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -90,7 +90,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -99,7 +99,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -108,7 +108,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>
@@ -117,7 +117,7 @@
             <li>
                 <a>
                     <div class="container cards">
-                        <p class="card-title">Essay Title Will Go Here Amet Cursus</p>
+                        <h2 class="card-title">Essay Title Will Go Here Amet Cursus</h2>
                         <p>Brief info on essay goes here  Amet venenatis urna cursus eget. Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.Feugiat scelerisque Arcu odio ut sem nulla pharetra. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus.</p>
                         <a class="card-learn-more">View Essay</a>
                     </div>

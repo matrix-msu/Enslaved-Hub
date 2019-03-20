@@ -44,9 +44,9 @@ images = [
 
 if (images.length > 1) {
     $('.fig-wrap').children('button').css('opacity', '1');
-    $('<div class="thumbnail-slider"><button class="arrow-left hidden sliderNavLeft"></button><button class="arrow-right sliderNavRight"></button><div class="slider-wrap"><ul id="slider" class="slider"></ul></div></div>').appendTo('.thumbnails');
+    $('<div class="thumbnail-slider"><button class="arrow-left hidden sliderNavLeft"><img src="' + BASE_IMAGE_URL + 'chevron-down.svg" alt="arrow left"></button><button class="arrow-right sliderNavRight"><img src="' + BASE_IMAGE_URL + 'chevron-down.svg" alt="arrow left"></button><div class="slider-wrap"><ul id="slider" class="slider"></ul></div></div>').appendTo('.thumbnails');
     for (var i = 0; i < images.length; i++){
-        $('<li class="thumbnail"><div class="overlay-border"></div><img class="thumbnail-img" src="' + BASE_IMAGE_URL + images[i] + '" alt="' + i + '"></li>').appendTo("ul.slider");
+        $('<li class="thumbnail"><div class="overlay-border"></div><img class="thumbnail-img" src="' + BASE_IMAGE_URL + images[i] + '" alt=image"' + i + '"></li>').appendTo("ul.slider");
     }
     $('<div class="custom-scrollbar"><div id="slider-bar" class="bar ui-slider"><span id="scroll" class="scroll"></span></div></div>').appendTo('.thumbnails');
     $('span.scroll').css('left', '0%');
