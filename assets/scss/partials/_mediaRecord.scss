@@ -13,7 +13,7 @@
             position: relative;
             .arrow-left,
             .arrow-right {
-                background: url(../images/chevron-down.svg) no-repeat;
+                // background: url(../images/chevron-down.svg) no-repeat;
                 background-color: $base-dark;
                 background-position: 16px;
                 border: none;
@@ -84,7 +84,7 @@
         white-space: nowrap;
         .arrow-left,
         .arrow-right {
-            background: url(../images/chevron-down.svg) no-repeat;
+            // background: url(../images/chevron-down.svg) no-repeat;
             background-color: $base-dark;
             background-position: 16px;
             border: none;
@@ -172,7 +172,7 @@
                         border: 3px solid $sub-base;
                     }
                 }
-            }  
+            }
         }
     }
     .custom-scrollbar {
@@ -211,7 +211,7 @@
         }
         .metadata {
             div {
-                border-bottom: 2px solid rgba(13,18,48,0.05); 
+                border-bottom: 2px solid rgba(13,18,48,0.05);
                 margin-bottom: 15px;
                 padding-bottom: 20px;
                 position: relative;

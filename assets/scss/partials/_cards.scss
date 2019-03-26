@@ -75,6 +75,16 @@
                         -webkit-box-orient: vertical;
                     }
 
+                    h2 {
+                      display: -webkit-box;
+                      font-size: 14px;
+                      margin-bottom: 22px;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      -webkit-line-clamp: 3;
+                      -webkit-box-orient: vertical;
+                    }
+
                     .card-title{
                         font-size: 26px;
                         max-width: 280px;
@@ -98,7 +108,7 @@
                             background-image: url(../images/Arrow.svg);
                             background-repeat: no-repeat;
                             transition: background-image 0.3s ease;
-                            
+
                         }
                     }
 
@@ -135,7 +145,7 @@
 
                 li{
                     width: 100%;
-                    
+
                     &:nth-child(n){
                         margin-left: 0;
                         margin-right: 0;

@@ -20,7 +20,7 @@
         <form action="<?php echo BASE_URL;?>searchResults/">
             <div class="search-section">
                 <div class="inputwrap">
-                    <label for="status">Start Year</label>
+                    <label for="startYear">Start Year</label>
                     <select class="s2-single" id="startYear">
                         <option value""></option>
                         <option value="1840">1840</option>
@@ -32,7 +32,7 @@
                     </select>
                 </div>
                 <div class="inputwrap">
-                    <label for="status">End Year</label>
+                    <label for="endYear">End Year</label>
                     <select class="s2-single" id="endYear">
                         <option value""></option>
                         <option value="1840">1840</option>
@@ -43,9 +43,9 @@
                         <option value="1842">1845</option>
                     </select>
                 </div>
-                
+
             </div>
-            
+
 
             <div class="buttonwrap">
                 <button id="direct-submit" name="submit" type="submit" data-submit="...Sending">Search</button>

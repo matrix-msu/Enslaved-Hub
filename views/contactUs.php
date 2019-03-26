@@ -28,6 +28,7 @@
                 </div>
                 <div class="inputwrap" id="message">
                     <label for="message">Your Message</label>
+                    <!-- <p>Your Message</p> -->
                     <textarea class="input-field" id="message" name="message" type="text" placeholder="Enter Your Message"></textarea>
                 </div>
             </div>

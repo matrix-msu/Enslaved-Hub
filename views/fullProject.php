@@ -25,8 +25,8 @@
     <h2>Affiliations</h2>
     <hr>
     <div class="affiliates">
-        <img src="<?php echo BASE_URL;?>assets/images/bl_logo_100.png"/>
-        <img src="<?php echo BASE_URL;?>assets/images/MSU.svg"/>
+        <img src="<?php echo BASE_URL;?>assets/images/bl_logo_100.png" alt="British Library logo"/>
+        <img src="<?php echo BASE_URL;?>assets/images/MSU.svg" alt="MSU logo"/>
     </div>
 </div>
 <!-- project leads -->
@@ -62,7 +62,8 @@
 <!-- searchbar -->
 <form class="search-projects">
     <div class="searchwrap">
-        <input class="search-field main-search" type="text" name="searchbar" placeholder="Search through the Project's Resources here"/>
+        <label for="searchbar" class="sr-only">searhbar</label>
+        <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Search through the Project's Resources here"/>
         <div class="search-icon"></div>
         <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
     </div>
@@ -77,7 +78,7 @@
                 <li>
                     <label>
                         <input id="checkBox" type="checkbox">
-                        <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg">
+                        <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg" alt="person icon">
                         <p>People</p>
                         <span></span>
                     </label>
@@ -85,7 +86,7 @@
                 <li>
                     <label>
                         <input id="checkBox" type="checkbox">
-                        <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg">
+                        <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg" alt="loction icon">
                         <p>Places</p>
                         <span></span>
                     </label>
@@ -93,7 +94,7 @@
                 <li>
                     <label>
                         <input id="checkBox" type="checkbox">
-                        <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg">
+                        <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg" alt="event icon">
                         <p>Events</p>
                         <span></span>
                     </label>
@@ -101,7 +102,7 @@
                 <li>
                     <label>
                         <input id="checkBox" type="checkbox">
-                        <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg">
+                        <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg" alt="source icon">
                         <p>Sources</p>
                         <span></span>
                     </label>
@@ -109,7 +110,7 @@
                 <li>
                     <label>
                         <input id="checkBox" type="checkbox">
-                        <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg">
+                        <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
                         <p>Projects</p>
                         <span></span>
                     </label>
@@ -117,11 +118,11 @@
             </ul>
             <!-- General Filtering -->
             <hr>
-            <li class="cat-cat">General Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+            <li class="cat-cat">General Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
             </li>
             <ul id="mainmenu">
 
-                <li class="filter-cat">Country<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Country<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -146,7 +147,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Region<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Region<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -171,7 +172,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Decade<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Decade<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -196,7 +197,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Date Select<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Date Select<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -224,10 +225,10 @@
             </ul>
             <!-- People Filtering -->
             <hr>
-            <li class="cat-cat">People Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+            <li class="cat-cat">People Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
             </li>
             <ul id="mainmenu">
-                <li class="filter-cat">Gender<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Gender<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -252,7 +253,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Origin<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Origin<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -277,7 +278,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Age<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Age<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -302,7 +303,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Age Category<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Age Category<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -327,7 +328,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Color<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Color<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -352,7 +353,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Occupation<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Occupation<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -377,7 +378,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Relationship<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Relationship<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -402,7 +403,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Role<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span></li>
+                <li class="filter-cat">Role<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span></li>
                 <ul id="submenu">
                     <li>
                         <label>
@@ -429,11 +430,11 @@
             </ul>
             <!-- Event Filtering -->
             <hr>
-            <li class="cat-cat">Event Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+            <li class="cat-cat">Event Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
             </li>
             <ul id="mainmenu">
 
-                <li class="filter-cat">Event Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Event Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -458,7 +459,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Event Date<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Event Date<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -486,11 +487,11 @@
             </ul>
             <!-- Place Filtering -->
             <hr>
-            <li class="cat-cat">Place Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+            <li class="cat-cat">Place Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
             </li>
             <ul id="mainmenu">
 
-                <li class="filter-cat">Country<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Country<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -515,7 +516,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Region<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Region<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -540,7 +541,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Province<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Province<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -565,7 +566,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">City<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">City<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -593,11 +594,11 @@
             </ul>
             <!-- Project Filtering -->
             <hr>
-            <li class="cat-cat">Project Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+            <li class="cat-cat">Project Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
             </li>
             <ul id="mainmenu">
 
-                <li class="filter-cat">Project<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Project<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -625,11 +626,11 @@
             </ul>
             <!-- Media Filtering -->
             <hr>
-            <li class="cat-cat">Media Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+            <li class="cat-cat">Media Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
             </li>
             <ul id="mainmenu">
 
-                <li class="filter-cat">Media Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Media Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -654,7 +655,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Repository<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Repository<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -679,7 +680,7 @@
                         </label>
                     </li>
                 </ul>
-                <li class="filter-cat">Contributing Scholar<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg"></span>
+                <li class="filter-cat">Contributing Scholar<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="down-arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -822,7 +823,8 @@
             <div class="close"><img src="<?php echo BASE_URL;?>assets/images/x.svg" alt="close modal button"></div>
             <h4>Configure Table Columns</h4>
             <p>Choose Group of Variables
-                <select>
+                <label for="dropdown-select" class="sr-only">dropdown select</label>
+                <select name="dropdown-select" id="dropdown-select">
                     <option value="1">Name of Variable Group</option>
                     <option value="2">####</option>
                     <option value="3">####</option>

@@ -12,7 +12,7 @@
                 text-decoration: none;
                 color: $base-light;
             }
-            h3{
+            h2{
                 float: right;
                 font-size: 18px;
                 line-height: 56px;
@@ -47,7 +47,7 @@
         }
         .last-page-header{
             margin-bottom: 45px;
-            
+
             #last-page {
                 color: $base-light;
                 font-size: 17px;
@@ -96,7 +96,7 @@
                 .inputwrap{
                     width: 47.5%;
                     margin-bottom: 22px;
-                    
+
                     input, label{
                         display: block;
                     }
@@ -117,7 +117,7 @@
                         font-family: aleoregular;
                         color: $base-dark;
                         transition: border 0.2s;
-        
+
                         &:hover{
                             border: 1px solid $sub-base;
                         }
@@ -129,11 +129,11 @@
                         color: #72818C;
                         opacity: 1; /* Firefox */
                     }
-                    
+
                     :-ms-input-placeholder { /* Internet Explorer 10-11 */
                         color: #72818C;
                     }
-                    
+
                     ::-ms-input-placeholder { /* Microsoft Edge */
                         color: #72818C;
                     }
@@ -268,7 +268,7 @@
                     background: $base-dark;
                     transition: border 0.2s;
                     transition: .2s;
-                    
+
                     &:hover{
                         border: 2px solid $sub-base;
                     }
@@ -280,7 +280,7 @@
 
 //safari hack to align the placeholder text of multiselect boxes
 @media not all and (min-resolution:.001dpcm) {
-    @supports (-webkit-appearance:none){ 
+    @supports (-webkit-appearance:none){
         .direct-search{
             .searchwrap{
                 form{
@@ -302,7 +302,7 @@
                 }
             }
         }
-    } 
+    }
 }
 
 
@@ -311,7 +311,7 @@
     .select2-dropdown{
         border-radius: 0;
         border: 1px solid #CED0D2;
-        
+
         .select2-search--dropdown{
             .select2-search__field{
                 outline: none;
@@ -395,4 +395,20 @@
             }
         }
     }
+}
+
+.search-icon-2 {
+  cursor: pointer;
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  img {
+    position: absolute;
+    top: 37%;
+    left: 35%;
+  }
 }

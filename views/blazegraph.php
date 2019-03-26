@@ -13,7 +13,7 @@
 </div>
 
 <div class="query-options">
-    <h3>Show Results For</h3>
+    <h2 id="blaze-top">Show Results For</h2>
     <div><button class="people-query-btn">People</button></div>
 <!--    <div><button class="places-query-btn">Places</button></div>-->
     <div><button class="events-query-btn">Events</button></div>
@@ -33,7 +33,8 @@
 
 <br><br>
 <form action="api.php" style="text-align:center;margin-top:50px">
-    <textarea  cols="80" rows="20"></textarea>
+    <label for="textarea" class="sr-only">text area</label>
+    <textarea  name="textarea" id="textarea" cols="80" rows="20"></textarea>
     <br>
     <button id="submit" type="submit">Submit</button>
 </form>

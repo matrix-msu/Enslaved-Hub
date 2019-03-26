@@ -31,13 +31,13 @@
         </a>
     </section>
     <section>
-        <h3>Subheader Title</h3>
+        <h1>Subheader Title</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat sed cras ornare arcu dui. Ac tortor vitae purus faucibus ornare. Ultricies mi eget mauris pharetra et ultrices. Sagittis eu volutpat odio facilisis mauris sit amet massa. Quam pellentesque nec nam aliquam sem et. In eu mi bibendum neque egestas. Eget egestas purus viverra accumsan in nisl. Vel facilisis volutpat est velit. Pellentesque elit eget gravida cum sociis natoque. <b>Adipiscing elit ut aliquam purus sit amet.</b> Urna cursus eget nunc scelerisque viverra mauris in aliquam sem. Scelerisque mauris pellentesque pulvinar pellentesque habitant. Id diam vel quam elementum pulvinar etiam non. Felis eget nunc lobortis mattis aliquam. Libero enim sed faucibus turpis in eu. Fermentum iaculis eu non diam phasellus vestibulum lorem sed. Nunc pulvinar sapien et ligula ullamcorper. Tellus in metus vulputate eu scelerisque felis imperdiet. </p>
         <blockquote>Quote Text Styling venenatis urna cursus eget. Feugiat scelerisque varius morbi enim nunc faucibus. Sem viverra aliquet eget sit amet tellus cras adipiscing. Malesuada bibendum arcu vitae elementum curabitur vitae.</blockquote>
     </section>
     <hr>
     <section>
-        <h3>Thats a line break</h3>
+        <h1>Thats a line break</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat sed cras ornare arcu dui. Ac tortor vitae purus faucibus ornare. Ultricies mi eget mauris pharetra et ultrices. Sagittis eu volutpat odio facilisis mauris sit amet massa. Quam pellentesque nec nam aliquam sem et. In eu mi bibendum neque egestas. Eget egestas purus viverra accumsan in nisl. Vel facilisis volutpat est velit. Pellentesque elit eget gravida cum sociis natoque. <b>Adipiscing elit ut aliquam purus sit amet.</b> Urna cursus eget nunc scelerisque viverra mauris in aliquam sem. Scelerisque mauris pellentesque pulvinar pellentesque habitant. Id diam vel quam elementum pulvinar etiam non. Felis eget nunc lobortis mattis aliquam. Libero enim sed faucibus turpis in eu. Fermentum iaculis eu non diam phasellus vestibulum lorem sed. Nunc pulvinar sapien et ligula ullamcorper. Tellus in metus vulputate eu scelerisque felis imperdiet. </p>
     </section>
 </article>
@@ -96,4 +96,3 @@
 </div>
 
 <script language="JavaScript" type="text/javascript" src="<?php echo BASE_URL;?>assets/javascripts/modal.js"></script>
-
