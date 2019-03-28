@@ -138,13 +138,39 @@
                     p{
                         -webkit-line-clamp: 3;
                     }
-
-                    .card-resources{
+                    .connections{
                         bottom: 20px;
                         left: 20px;
-                        font-size: 18px;
-                        cursor: pointer;
                         position: absolute;
+                        display: flex;
+                        flex-wrap: wrap;
+                        .card-icon{
+                            font-size: 18px;
+                            padding-right: 20px;
+                            img{
+                                height: 22px;
+                                margin-bottom: -4px;
+                                padding-right: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 435px){
+    .projectcard{
+        .cardwrap{
+            .row{
+                li{
+                    .cards{
+                        .connections{
+                            bottom: 55px;
+                            right: 20px;
+                            left: unset;
+                        }
                     }
                 }
             }
@@ -158,6 +184,20 @@
             .header-search{
                 .project-search{
                     width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 900px){
+    .projectcard{
+        .cardwrap{
+            .row{
+                li{
+                    width: 100%;
+                    margin-right: 0!important;
+                    margin-left: 0!important;
                 }
             }
         }
