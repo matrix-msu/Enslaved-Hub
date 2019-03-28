@@ -39,7 +39,20 @@
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
-                        <h3 class="card-resources">234 Resources</h3>
+                        <div class="connections">
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Person-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Place-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Event-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                        </div>
                         <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
@@ -47,63 +60,114 @@
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
-                      <h3 class="card-resources">234 Resources</h3>
-                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
+                        <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                        <div class="connections">
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Place-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Event-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                        </div>
+                        <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
-                      <h3 class="card-resources">234 Resources</h3>
-                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
+                        <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                        <div class="connections">
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Person-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                        </div>
+                        <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
-                      <h3 class="card-resources">234 Resources</h3>
-                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
+                        <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                        <div class="connections">
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Place-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                        </div>
+                        <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
-                      <h3 class="card-resources">234 Resources</h3>
-                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
+                        <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                        <div class="connections">
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Event-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                        </div>
+                        <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
-                      <h3 class="card-resources">234 Resources</h3>
-                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
+                        <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                        <div class="connections">
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Person-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Place-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                        </div>
+                        <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
-                      <h3 class="card-resources">234 Resources</h3>
-                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
+                        <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                        <div class="connections">
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Person-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Place-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                        </div>
+                        <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
-                      <h2 class="card-title">Title of Project Goes Here Like This</h2>
-                      <h3 class="card-resources">234 Resources</h3>
-                      <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
+                        <h2 class="card-title">Title of Project Goes Here Like This</h2>
+                        <div class="connections">
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Person-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                            <div class="card-icon">
+                                <img src="<?php echo BASE_IMAGE_URL?>Place-light.svg" alt="Card Icon"/>
+                                <span>10</span>
+                            </div>
+                        </div>
+                        <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
             </li>
