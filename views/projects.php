@@ -11,6 +11,9 @@
         <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur.</p>
     </div>
 </div>
+<?php
+include "functions/projectfunctions.php";
+?>
 <!-- all projects container-->
 <div class="container column projectcard">
     <div id="all-header" class="container cardheader-wrap">
@@ -35,7 +38,16 @@
     </div>
     <div class="container cardwrap">
         <ul class="row">
-            <li>
+            <?php
+                $projects = blazegraph();
+                $projects = json_decode($projects, true);
+                // print_r($projects);
+                foreach ($projects['homeCard'] as $project) {
+                    // print_r($project);
+                    echo $project;
+                }
+            ?>
+            <!-- <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
@@ -170,7 +182,7 @@
                         <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>
