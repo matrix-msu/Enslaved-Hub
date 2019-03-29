@@ -228,6 +228,61 @@ function blazegraph()
 
                 array_push($queryArray, $query);
                 break;
+            case 'projects2':
+                $query = array('query' => "");
+                $query['query'] =
+                    'SELECT ?project ?projectLabel
+                        WHERE {
+                        ?project wdt:P3 wd:Q264         #find projects
+                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+                        }';
+                array_push($queryArray, $query);
+                $query = array('query' => "");
+                $query['query'] =
+                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
+                        WHERE {
+                          ?project wdt:P3 wd:Q264.         #find projects
+                           ?item wdt:P3/wdt:P2 wd:Q2;        #find agents
+                                p:P3  ?object .
+                            ?object prov:wasDerivedFrom ?provenance .
+                            ?provenance pr:P35 ?reference .
+                            ?reference wdt:P7 ?project
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+                        }
+                        GROUP BY ?project ?projectLabel
+                        ORDER BY ?count';
+                array_push($queryArray, $query);
+                $query = array('query' => "");
+                $query['query'] =
+                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
+                        WHERE {
+                          ?project wdt:P3 wd:Q264.         #find projects
+                          ?item wdt:P3 wd:Q34;        #find events
+                                p:P3  ?object .
+                            ?object prov:wasDerivedFrom ?provenance .
+                            ?provenance pr:P35 ?reference .
+                            ?reference wdt:P7 ?project
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+                        }
+                        GROUP BY ?project ?projectLabel
+                        ORDER BY ?count';
+                array_push($queryArray, $query);
+                $query = array('query' => "");
+                $query['query'] =
+                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
+                        WHERE {
+                          ?project wdt:P3 wd:Q264.         #find projects
+                           ?item wdt:P3 wd:Q50;        #find places
+                                p:P3  ?object .
+                            ?object prov:wasDerivedFrom ?provenance .
+                            ?provenance pr:P35 ?reference .
+                            ?reference wdt:P7 ?project
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+                        }
+                        GROUP BY ?project ?projectLabel
+                        ORDER BY ?count';
+                array_push($queryArray, $query);
+                break;
             case 'stories':
                 $query = array('query' => "");
                 $query['query'] =
@@ -279,7 +334,7 @@ function blazegraph()
     $resultsArray = array();
     $first = true;
 
-    foreach ($queryArray as $query) {
+    foreach ($queryArray as $i => $query) {
         $ch = curl_init(BLAZEGRAPH_URL);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
@@ -297,7 +352,28 @@ function blazegraph()
             $resultsArray = $result;
             $first = false;
         } else {
-            $resultsArray = array_merge($resultsArray, $result);
+            if ($preset != "projects2") {
+                $resultsArray = array_merge($resultsArray, $result);
+            }
+            else {
+                foreach ($result as $count) {
+                    foreach ($resultsArray as $j => $project) {
+                        if ($project['projectLabel']['value'] == $count['projectLabel']['value']) {
+                            // how to tell which type it is? (person, place, event)
+                            if ($i == 1) {
+                                $resultsArray[$j]['personCount'] = $count['count']['value'];
+                            }
+                            else if ($i == 2) {
+                                $resultsArray[$j]['eventCount'] = $count['count']['value'];
+                            }
+                            else if ($i == 3) {
+                                $resultsArray[$j]['placeCount'] = $count['count']['value'];
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -498,9 +574,9 @@ function createCards($results, $templates, $preset = 'default'){
                                 </td>
                                 <td class='dateRange'>
                                     <p><span class='first'>Date Range: </span>$dateRange</p>
-                                </td>    
+                                </td>
                                 <td class='meta'>
-                                   
+
                                 </td>
                                 </tr>";
                     }
@@ -677,6 +753,44 @@ function createCards($results, $templates, $preset = 'default'){
                     array_push($cards[$template], $card);
                 }
 
+                break;
+            case 'projects2':
+                $fullName = $record['projectLabel']['value'];
+                $connections = "";
+                if (isset($record['personCount'])) {
+                    $connections .= '<div class="card-icon">
+                        <img src="'.BASE_IMAGE_URL.'Person-light.svg" alt="Card Icon"/>
+                        <span>'.$record['personCount'].'</span>
+                    </div>';
+                }
+                if (isset($record['placeCount'])) {
+                    $connections .= '<div class="card-icon">
+                        <img src="'.BASE_IMAGE_URL.'Place-light.svg" alt="Card Icon"/>
+                        <span>'.$record['placeCount'].'</span>
+                    </div>';
+                }
+                if (isset($record['eventCount'])) {
+                    $connections .= '<div class="card-icon">
+                        <img src="'.BASE_IMAGE_URL.'Event-light.svg" alt="Card Icon"/>
+                        <span>'.$record['eventCount'].'</span>
+                    </div>';
+                }
+                foreach ($templates as $template) {
+                    if ($template == 'homeCard') {
+                        $card = "<li>
+                        <a href='".BASE_URL."fullProject/'>
+                        <div class='container cards'>
+                            <h2 class='card-title'>$fullName</h2>
+                            <div class='connections'>
+                                $connections
+                            </div>
+                            <h4 class='card-view-story'>View Project <div class='view-arrow'></h4>
+                        </div>
+                    </a>
+                </li>";
+                    }
+                    array_push($cards[$template], $card);
+                }
                 break;
             case 'stories':
                 $fullName = $record['personLabel']['value'];
