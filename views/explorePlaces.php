@@ -16,13 +16,13 @@
     <h1>Explore By</h1>
     <ul class="cards">
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Place Type<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Place Type<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">City<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">City<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Province<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Province<div id="arrow"></div></a>
         </li>
     </ul>
 </div>
