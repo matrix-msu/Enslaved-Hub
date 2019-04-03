@@ -26,8 +26,8 @@
         </li>
     </ul>
 </div>
-<!-- Large Map -->
-<div class="mapwrap">
+<!-- Large Map, currently hidden -->
+<div class="mapwrap" style="display: none">
     <div id="map-large"></div>
 </div>
 <!-- Featured Places -->
