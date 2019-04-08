@@ -7,12 +7,14 @@ if (isset($_GET['type'])){
     $type = '';
 }
 ?>
-
-
-
+<script>
+$(document).ready(function(){
+    console.log("<?php echo $type; ?>");
+});
+</script>
 <div class="container header stories">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><span id="current-title"><?php echo $type;?></span></h4>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><span id="current-title"><?php echo $type;?></span></h4>
         <p class="people-heading"><?php echo $type;?></p>
     </div>
 </div>

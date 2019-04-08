@@ -25,7 +25,7 @@ if (isset($_GET['prev'])){
 <!-- Time Select -->
 <main class="direct-search timesub">
     <div class="searchwrap">
-        <form action="<?php echo BASE_URL;?>searchResults/">
+        <form action="<?php echo BASE_URL;?>searchResults">
             <div class="search-section">
                 <div class="inputwrap">
                     <label for="startYear">Start Year</label>

@@ -12,7 +12,7 @@
         </div>
         <div class="heading-search">
             <h3>Search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade ...</h3>
-            <form class="search-form" action="<?= BASE_URL ?>searchResults/">
+            <form class="search-form" action="<?= BASE_URL ?>searchResults">
                 <label for="searchbar" class="sr-only">searchbar</label>
                 <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
                 <a href="<?php echo BASE_URL;?>search"><div class="search-icon-2"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search icon"></div></a>
@@ -28,7 +28,7 @@
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
         </div>
         <div class="section-content">
-            <a href="<?php echo BASE_URL;?>explorePeople/">
+            <a href="<?php echo BASE_URL;?>explorePeople">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                     <h3>People</h3>
@@ -36,7 +36,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>exploreEvents/">
+            <a href="<?php echo BASE_URL;?>exploreEvents">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                     <h3>Events</h3>
@@ -44,7 +44,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePlaces/">
+            <a href="<?php echo BASE_URL;?>explorePlaces">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                     <h3>Places</h3>
@@ -52,7 +52,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>projects/">
+            <a href="<?php echo BASE_URL;?>projects">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
                     <h3>Projects</h3>
@@ -60,7 +60,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>exploreSources/">
+            <a href="<?php echo BASE_URL;?>exploreSources">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                     <h3>Sources</h3>
@@ -95,13 +95,13 @@
     </div>
     <div class="section-wrap">
         <div class="section-info">
-            <a href="<?php echo BASE_URL;?>stories/"><h2>Stories<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
+            <a href="<?php echo BASE_URL;?>stories"><h2>Stories<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
         </div>
         <div class="section-content">
             <ul class="row" id="stories-list">
                <!-- <li>-->
-<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
+<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory">-->
 <!--                        <div class="container cards">-->
 <!--                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>-->
 <!--                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>-->
@@ -109,7 +109,7 @@
 <!--                    </a>-->
 <!--                </li>-->
 <!--                <li>-->
-<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
+<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory">-->
 <!--                        <div class="container cards">-->
 <!--                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>-->
 <!--                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>-->
@@ -127,7 +127,7 @@
         <div class="section-content">
             <ul class="row" id="projects-list">
 <!            <li>-->
-<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
+<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory">-->
 <!--                        <div class="container cards">-->
 <!--                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>-->
 <!--                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>-->
@@ -135,7 +135,7 @@
 <!--                    </a>-->
 <!--                </li>-->
 <!--                <li>-->
-<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory/">-->
+<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory">-->
 <!--                        <div class="container cards">-->
 <!--                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>-->
 <!--                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>-->
@@ -155,7 +155,7 @@
             <p>Brief info on Project. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
         <div class="about-card">
-            <a href="<?php echo BASE_URL?>fullStory/">
+            <a href="<?php echo BASE_URL?>fullStory">
                 <div class="container cards">
                     <h2 class="card-title">Learn More About the Project.</h2>
                     <h3 class="card-view-story">Go to About Page <div class="view-arrow"></h3>

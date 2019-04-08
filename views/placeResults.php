@@ -1,7 +1,7 @@
 <!-- Heading image and title container-->
 <div class="container header place-page">
 	<div class="container middlewrap">
-    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePlaces/"><span id="previous-title">Places // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub2"><span id="previous-title">Place Type // </span></a><span id="current-title">Port</span></h4>
+    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePlaces"><span id="previous-title">Places // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub2"><span id="previous-title">Place Type // </span></a><span id="current-title">Port</span></h4>
         <div class="search-title">
             <h1>Port</h1>
         </div>

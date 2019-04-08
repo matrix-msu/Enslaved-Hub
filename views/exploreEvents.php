@@ -32,7 +32,7 @@
     <div class="connection-cards">
         <ul class="connect-row events">
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent/">
+                <a href="<?php echo BASE_URL?>recordEvent">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg" alt="event icon">
                         <h3>Event Name</h3>
@@ -40,7 +40,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent/">
+                <a href="<?php echo BASE_URL?>recordEvent">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg" alt="event icon">
                         <h3>Event Name</h3>
@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent/">
+                <a href="<?php echo BASE_URL?>recordEvent">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg" alt="event icon">
                         <h3>Event Name</h3>
@@ -56,7 +56,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent/">
+                <a href="<?php echo BASE_URL?>recordEvent">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg" alt="event icon">
                         <h3>Event Name</h3>
@@ -64,7 +64,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent/">
+                <a href="<?php echo BASE_URL?>recordEvent">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg" alt="event icon">
                         <h3>Event Name</h3>
@@ -72,7 +72,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent/">
+                <a href="<?php echo BASE_URL?>recordEvent">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg" alt="event icon">
                         <h3>Event Name</h3>
@@ -80,7 +80,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent/">
+                <a href="<?php echo BASE_URL?>recordEvent">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg" alt="event icon">
                         <h3>Event Name</h3>
@@ -88,7 +88,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordEvent/">
+                <a href="<?php echo BASE_URL?>recordEvent">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Event-light.svg" alt="event icon">
                         <h3>Event Name</h3>
@@ -113,7 +113,7 @@
     <div class="cardwrap">
         <ul class="row">
             <li id="byspace">
-                <a href="<?php echo BASE_URL?>fullStory/">
+                <a href="<?php echo BASE_URL?>fullStory">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/BySpace.svg" alt="space"/>
@@ -123,7 +123,7 @@
                 </a>
             </li>
             <li id="bytime">
-                <a href="<?php echo BASE_URL?>fullStory/">
+                <a href="<?php echo BASE_URL?>fullStory">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByTime.svg" alt="space"/>
@@ -133,7 +133,7 @@
                 </a>
             </li>
             <li id="bydata">
-                <a href="<?php echo BASE_URL?>fullStory/">
+                <a href="<?php echo BASE_URL?>fullStory">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByData.svg" alt="space"/>

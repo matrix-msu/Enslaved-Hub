@@ -1,7 +1,7 @@
 drop <!-- Heading image and title container-->
 <div class="container header source-page">
 	<div class="container middlewrap">
-    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>exploreSources/"><span id="previous-title">Sources // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub2"><span id="previous-title">Format // </span></a><span id="current-title">Image</span></h4>
+    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>exploreSources"><span id="previous-title">Sources // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub2"><span id="previous-title">Format // </span></a><span id="current-title">Image</span></h4>
         <div class="search-title">
             <h1>Image</h1>
         </div>

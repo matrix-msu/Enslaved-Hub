@@ -11,7 +11,7 @@ $place_array=$allStatements['Places'];
 <!-- Heading image and title container-->
 <div class="container header place-page">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePlaces/"><span id="previous-title">Places // </span></a><span id="current-title">Place Name</span></h4>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePlaces"><span id="previous-title">Places // </span></a><span id="current-title">Place Name</span></h4>
         <h1>Place Name</h1>
     </div>
 </div>
@@ -40,7 +40,7 @@ $place_array=$allStatements['Places'];
             }
         }
         }?>
-        <a href="<?php echo BASE_URL;?>explorePlace/">
+        <a href="<?php echo BASE_URL;?>explorePlace">
             <div class="detail">
                 <h3>PLACE TYPE</h3>
                 <div class="detail-bottom">
@@ -121,7 +121,7 @@ $place_array=$allStatements['Places'];
         <div class="container cardwrap">
             <ul class="row">
                 <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
+                    <a href="<?php echo BASE_URL?>fullStory">
                         <div class="container cards">
                             <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
                             <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
@@ -129,7 +129,7 @@ $place_array=$allStatements['Places'];
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
+                    <a href="<?php echo BASE_URL?>fullStory">
                         <div class="container cards">
                             <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
                             <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>

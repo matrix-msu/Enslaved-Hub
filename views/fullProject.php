@@ -2,7 +2,7 @@
 <!-- Heading image and title container-->
 <div class="container header full-project">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>projects/"><span id="previous-title">Projects // </span></a><span id="current-title">Project Name</span></h4>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>projects"><span id="previous-title">Projects // </span></a><span id="current-title">Project Name</span></h4>
         <div class="project-headers">
             <h1>Project Name</h1>
             <h2><span>234</span> Resources</h2>

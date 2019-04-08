@@ -14,7 +14,7 @@
         }
 
         ?>
-    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub"><span id="previous-title"><?php echo $typeTitle;?> // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4>
+    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub"><span id="previous-title"><?php echo $typeTitle;?> // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4>
         <div class="search-title">
             <h1><?php echo $currentTitle;?></h1>
         </div>
