@@ -69,7 +69,7 @@
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
-                    <label for="person-to">dropdown</label>
+                    <label for="person-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="person-to">
                         <option value""></option>
                         <option value="1800">1800</option>
