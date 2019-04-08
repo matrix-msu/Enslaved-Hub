@@ -16,22 +16,22 @@
     <h1>Explore By</h1>
     <ul class="cards">
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Media Type<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Media Type<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Repository<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Repository<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Contributing Scholar<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Contributing Scholar<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Natory<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Natory<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Time<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Time<div id="arrow"></div></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/">Place<div id="arrow"></div></a>
+            <a href="<?php echo BASE_URL?>peopleSub2">Place<div id="arrow"></div></a>
         </li>
     </ul>
 </div>

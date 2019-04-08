@@ -1,7 +1,7 @@
 <!-- Heading image and title container-->
 <div class="container header event-page">
 	<div class="container middlewrap">
-    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>exploreEvents/"><span id="previous-title">Events // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub2/"><span id="previous-title">Event Type // </span></a><span id="current-title">Voyages</span></h4>
+    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>exploreEvents/"><span id="previous-title">Events // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub2"><span id="previous-title">Event Type // </span></a><span id="current-title">Voyages</span></h4>
         <div class="search-title">
             <h1>Voyages</h1>
         </div>
