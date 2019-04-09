@@ -37,9 +37,11 @@ $GLOBALS['routes'] = array(
 	'searchbar-results' => '../modules/searchbar/searchbar-results.php',
 	'explore' => 'explore.php',
 	'explorePeople' => 'explorePeople.php',
+	'exploreForm' => 'explorePeople.php',
 	'exploreEvents' => 'exploreEvents.php',
 	'explorePlaces' => 'explorePlaces.php',
 	'exploreSources' => 'exploreSources.php',
+	'eventsSub' => 'eventsSub.php',
 	'projects' => 'projects.php',
 	'stories' => 'stories.php',
 	'about' => 'about.php',
@@ -48,6 +50,7 @@ $GLOBALS['routes'] = array(
     'contactUs' => 'contactUs.php',
     'advancedSearch' => 'advancedSearch.php',
     'peopleSub' => 'peopleSub.php',
+    'exploreFilters' => 'peopleSub.php',
     'peopleSub2' => 'peopleSub2.php',
     'recordPerson' => 'recordPerson.php',
     'recordEvent' => 'recordEvent.php',
@@ -70,13 +73,7 @@ if( substr($currentFile, -1) == '/' ){
     $currentFile = rtrim($currentFile,"/");
 }
 
-$filterToFileMap = array(
-    'sex' => sexTypes,
-    'Age Category' => ageCategory,
-    'Ethnodescriptor' => ethnodescriptor,
-    'Role_Types' => roleTypes,
-    'Place' => places
-);
+$filterToFileMap = $GLOBALS['FILTER_TO_FILE_MAP'];
 
 if( $currentFile == 'peopleResults' && isset($_GET)){
     //check if the get value is real.
@@ -84,6 +81,7 @@ if( $currentFile == 'peopleResults' && isset($_GET)){
     if (count($_GET) > 0){
         $filterType = array_keys($_GET)[0];
         $filterVal = $_GET[$filterType];
+        $filterType = ucwords(str_replace("_", " ", array_keys($_GET)[0]));
 
         if (!(array_key_exists($filterType, $filterToFileMap) && array_key_exists($filterVal, $filterToFileMap[$filterType]))){
             $currentFile = '';
@@ -99,6 +97,19 @@ if ($fileArray[0] == 'recordPerson'){
     define('QID', $personQ);
     $currentFile = $fileArray[0];
 }
+
+$EXPLORE_JS_VARS = '';
+if ($fileArray[0] == 'explore' && count($fileArray) > 2){
+    define('EXPLORE_FORM', $fileArray[1]);
+    define('EXPLORE_FILTER', $fileArray[2]);
+    $currentFile = 'exploreFilters';
+    $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';var JS_EXPLORE_FILTERS = '".ucwords(str_replace("_", " ", EXPLORE_FILTER))."';</script>\n";
+}elseif ($fileArray[0] == 'explore' && count($fileArray) > 1){
+    define('EXPLORE_FORM', $fileArray[1]);
+    $currentFile = 'exploreForm';
+    $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';</script>\n";
+}
+define('EXPLORE_JS_VARS', $EXPLORE_JS_VARS);
 
 if( isset($GLOBALS['api_routes'][$currentFile]) ){
     $currentApiFile = $GLOBALS['api_routes'][$currentFile];
