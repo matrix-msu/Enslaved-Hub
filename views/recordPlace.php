@@ -94,8 +94,8 @@ $place_array=$allStatements['Places'];
         </div>
     </div>
 </div>
-<!-- Large Map -->
-<div class="mapwrap">
+<!-- Large Map, currently hidden -->
+<div class="mapwrap" style="display: none">
     <div id="map-large"></div>
 </div>
 <!-- Extra Info -->

@@ -1,8 +1,16 @@
+<?php
+if (isset($_GET['prev'])){
+    $prev = $_GET['prev'];
+} else {
+    //Default to people page
+    $prev = 'People';
+}
+?>
 <!-- Page author: Drew Schineller-->
 <!-- Heading image and title container-->
 <div class="container header stories">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople/"><span id="previous-title">People // </span></a><span id="current-title">Time</span></h4>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore<?php echo $prev; ?>"><span id="previous-title"><?php echo $prev; ?> // </span></a><span id="current-title">Time</span></h4>
         <h1>Time</h1>
     </div>
 </div>
