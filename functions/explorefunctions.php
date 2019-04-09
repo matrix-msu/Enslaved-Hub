@@ -128,6 +128,35 @@ function counterOfGender(){
   }
 }
 
+//counter of all genders
+function counterOfAllGenders(){
+    $query="SELECT ?sex ?sexLabel ?count
+      WHERE
+      {
+        {
+          SELECT ?sex (COUNT(?human) AS ?count) WHERE {
+    		?human wdt:P3/wdt:P2  wd:Q2 .
+            ?human wdt:P17 ?sex.
+          }
+          GROUP BY ?sex
+        }
+        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+      }
+      ORDER BY DESC(?count)
+      LIMIT 100";
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
+}
+
 //get the roles and their counts
 function counterOfRole(){
   $query="SELECT ?role ?roleLabel ?count
@@ -158,6 +187,33 @@ function counterOfRole(){
   }
 }
 
+function counterOfEventType() {
+    $query="SELECT ?eventType ?eventTypeLabel ?count
+        WHERE
+        {
+          {
+            SELECT ?eventType (COUNT(?event) AS ?count) WHERE {
+              ?event wdt:P3 wd:Q34.
+              ?event wdt:P81 ?eventType.
+            }
+            GROUP BY ?eventType
+          }
+          SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+        }
+        ORDER BY DESC(?count)
+      ";
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
+}
 
 // Count the number of people in each age category
 function counterOfAge(){
@@ -365,29 +421,81 @@ function counterOfEthnodescriptor(){
   }
 }
 
+function counterOfEventPlace(){
+    $query="SELECT ?place ?placeLabel ?count
+        WHERE
+        {
+          {
+            SELECT ?place (COUNT(?event) AS ?count) WHERE {
+              ?event wdt:P3 wd:Q34.
+              ?event wdt:P12 ?place.
+            }
+            GROUP BY ?place
+          }
+          SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+        }
+        ORDER BY DESC(?count)
+      ";
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
+}
+
 // count the number of people with a certain type filter
 function counterOfType() {
-  $type = '';
-  if (isset($_GET['type'])){
-    $type = $_GET['type'];
-  }
+    $type = '';
+    if (isset($_GET['type'])){
+        $type = $_GET['type'];
+    }
 
-  if ($type == ''){
-    die;
-  }
+    $category = '';
+    if (isset($_GET['category'])){
+        $category = $_GET['category'];
+    }
 
-  if ($type == "Role Types"){
-    return counterOfRole();
-  }
-  if ($type == "Age Category"){
-    return counterOfAge();
-  }
-  if ($type == "Ethnodescriptor"){
-    return counterOfEthnodescriptor();
-  }
-  if ($type == "Place"){
-    return counterOfPlace();
-  }
+    if ($type == '' || $category == ''){
+        die;
+    }
+
+    if ($category == "Events") {
+        if ($type == "Event Type"){
+            return counterOfEventType();
+        }
+        if ($type == "Time"){
+            return counterOfTime(); // not real
+        }
+        if ($type == "Place"){
+            return counterOfEventPlace();
+        }
+    }
+
+    if ($category == "People") {
+        if ($type == "Gender"){
+            return counterOfAllGenders();
+        }
+        if ($type == "Role Types"){
+            return counterOfRole();
+        }
+        if ($type == "Age Category"){
+            return counterOfAge();
+        }
+        if ($type == "Ethnodescriptor"){
+            return counterOfEthnodescriptor();
+        }
+        if ($type == "Place"){
+            return counterOfPeoplePlace();  // not real
+        }
+    }
+
+
 }
 
 

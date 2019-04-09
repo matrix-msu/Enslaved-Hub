@@ -1,8 +1,14 @@
 <!-- Page author: Drew Schineller-->
 <!-- Heading image and title container-->
+<?php
+//var_dump(EXPLORE_FORM);
+//var_dump($GLOBALS["FILTER_ARRAY"]);
+$upper = ucfirst(EXPLORE_FORM);
+?>
+
 <div class="container header stories">
     <div class="container middlewrap">
-        <h1>People</h1>
+        <h1><?=$upper?></h1>
     </div>
 </div>
 <!-- info container-->
@@ -15,24 +21,13 @@
 <div class="container explore-by">
     <h1>Explore By</h1>
     <ul class="cards">
-        <li>
-            <a href="<?php echo BASE_URL?>peopleSub/">Gender<div id="arrow"></div></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/?type=Age Category">Age Category<div id="arrow"></div></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/?type=Ethnodescriptor">Ethnodescriptor<div id="arrow"></div></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/?type=Role Types">Role Types<div id="arrow"></div></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL?>timeSub/">Time<div id="arrow"></div></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL?>peopleSub2/?type=Place">Place<div id="arrow"></div></a>
-        </li>
+
+        <?php foreach ($GLOBALS["FILTER_ARRAY"][EXPLORE_FORM] as $type) { ?>
+                <li>
+                    <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>"><?php echo $type?><div id="arrow"></div></a>
+                </li>
+       <?php } ?>
+
     </ul>
 </div>
 <!-- Featured People -->

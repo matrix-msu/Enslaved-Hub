@@ -17,10 +17,10 @@
                     <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg" alt="dropdown carrat"/></span>
                     <ul class="sub-list">
                         <li class="subwrap" id="explore-sub">
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explorePeople/">People</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>exploreEvents/">Events</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explorePlaces/">Places</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>exploreSources/">Sources</a>
+                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/people">People</a>
+                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/events">Events</a>
+                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/places">Places</a>
+                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/sources">Sources</a>
                         </li>
                     </ul>
                 </li>
