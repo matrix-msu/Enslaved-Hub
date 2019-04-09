@@ -38,15 +38,6 @@ include "functions/projectfunctions.php";
     </div>
     <div class="container cardwrap">
         <ul class="row">
-            <?php
-                $projects = blazegraph();
-                $projects = json_decode($projects, true);
-                // print_r($projects);
-                foreach ($projects['homeCard'] as $project) {
-                    // print_r($project);
-                    echo $project;
-                }
-            ?>
             <!-- <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
@@ -189,3 +180,4 @@ include "functions/projectfunctions.php";
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/stories.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/projects.js"></script>

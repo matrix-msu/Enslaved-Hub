@@ -775,10 +775,11 @@ function createCards($results, $templates, $preset = 'default'){
                         <span>'.$record['eventCount'].'</span>
                     </div>';
                 }
+                $project = array_reverse(explode('/', $record['project']['value']))[0];
                 foreach ($templates as $template) {
                     if ($template == 'homeCard') {
                         $card = "<li>
-                        <a href='".BASE_URL."fullProject/'>
+                        <a href='".BASE_URL."fullProject/$project'>
                         <div class='container cards'>
                             <h2 class='card-title'>$fullName</h2>
                             <div class='connections'>
