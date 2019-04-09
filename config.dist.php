@@ -35,22 +35,61 @@ define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');
 define('STORY_SID', 23);
 define('PID', 16);
 
+$GLOBALS['FILTER_ARRAY'] = Array(
+    "events" => array(
+        "Event Type",
+        "Time",
+        "Place"
+    ),
+    "people" => array(
+        "Gender",
+        "Age Category",
+        "Ethnodescriptor",
+        "Role Types",
+        "Time",
+        "Place"
+    ),
+    "places" => array(
+        "Place Type",
+        "City",
+        "Province"
+    ),
+    "sources" => array(
+        "Media Type",
+        "Repository",
+        "Contributing Scholar",
+        "Natory",
+        "Time",
+        "Place"
+    )
+);
+
+
 //useful javascript globals constants and functions
 define("JS_GLOBALS",
     "<script type='text/javascript'>" .
-    "var BASE_URL ='".BASE_URL."';" .
-    "var BASE_JS_URL ='".BASE_JS_URL."';" .
-    "var BASE_CSS_URL ='".BASE_CSS_URL."';" .
-    "var BASE_AJAX_URL ='".BASE_AJAX_URL."';" .
-    "var BASE_VIEW_URL ='".BASE_VIEW_URL."';" .
-    "var BASE_IMAGE_URL ='".BASE_IMAGE_URL."';" .
-    "</script>"
+        "var BASE_URL ='".BASE_URL."';" .
+        "var BASE_JS_URL ='".BASE_JS_URL."';" .
+        "var BASE_CSS_URL ='".BASE_CSS_URL."';" .
+        "var BASE_AJAX_URL ='".BASE_AJAX_URL."';" .
+        "var BASE_VIEW_URL ='".BASE_VIEW_URL."';" .
+        "var BASE_IMAGE_URL ='".BASE_IMAGE_URL."';" .
+    "</script>\n"
 );
 
 //includes all the php files from wikiconstants directory
 foreach(glob('wikiconstants' . "/*.php") as $file){
-    require_once $file;
+        require_once $file;
 }
+
+$GLOBALS['FILTER_TO_FILE_MAP'] = Array(
+    "Gender" => sexTypes,
+    "Ethnodescriptor" => ethnodescriptor,
+    "Role Types" => roleTypes,
+    "Age Category" => ageCategory,
+    "Place" => places,
+    "Event Type" => eventTypes
+);
 
 //include the lib files
 require_once( BASE_LIB_PATH . "configFunctions.php" );
@@ -59,7 +98,6 @@ require_once( BASE_LIB_PATH . "mySqlWrapper.php" );
 require_once( BASE_FUNCTIONS_PATH . "explorefunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "storyfunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "functions.php");
-
 
 //require the routes file
 require_once( "routes.php" );
