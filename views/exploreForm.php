@@ -24,12 +24,17 @@ $upper = ucfirst(EXPLORE_FORM);
 
         <?php foreach ($GLOBALS["FILTER_ARRAY"][EXPLORE_FORM] as $type) { ?>
                 <li>
-                    <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>"><?php echo $type?><div id="arrow"></div></a>
+                    <!-- <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>"><?php echo $type?><div id="arrow"></div></a> -->
+                    <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>">
+                        <p class='type-title'><?php echo $type?></p>
+                        <div id="arrow"></div>
+                    </a>
                 </li>
        <?php } ?>
 
     </ul>
 </div>
+<script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
 <!-- Featured People -->
 <div class="explore-featured">
     <h2>Featured People</h2>
@@ -150,4 +155,4 @@ $upper = ucfirst(EXPLORE_FORM);
     </div>
 </div>
 
-<script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
+
