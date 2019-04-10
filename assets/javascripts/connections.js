@@ -68,7 +68,7 @@ function displayConnections(cardType, cardAmount){
             $('.connect-row').append('<li><div class="cards"><img src="'+BASE_IMAGE_URL+cardType+'-light.svg" alt="'+cardType+' icon"><h3>'+cardType+' Name</h3></div></li>');
         }
     }
-    $('.connect-row .cards').css("background-image", "url("+BASE_IMAGE_URL+cardType+"Card.jpg)");
+    $('.connect-row li').css("background-image", "url("+BASE_IMAGE_URL+cardType+"Card.jpg)");
     //There does need to be a certain naming convention for the image names due to this function
 }
 function removeConnections(){

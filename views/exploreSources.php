@@ -110,9 +110,9 @@
 <!-- Search Bar -->
 <div class="explore-search">
     <h3>Find Sources</h3>
-    <form class="search-form">
+    <form class="search-form" action="<?php echo BASE_URL;?>searchResults" method="get">
         <label for="searchbar" class="sr-only">searchbar</label>
-        <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Start Searching for Sources By Media Type, Format, Etc."/>
+        <input id="searchbar" class="search-field main-search" type="text" name="sources" placeholder="Start Searching for Sources By Media Type, Format, Etc."/>
         <a href="<?php echo BASE_URL;?>search"><div class="search-icon-2"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt=""></div></a>
     </form>
 </div>
