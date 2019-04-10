@@ -7,15 +7,13 @@ if (isset($_GET['type'])){
     $type = '';
 }
 ?>
-<script>
-$(document).ready(function(){
-    console.log("<?php echo $type; ?>");
-});
-</script>
+
+
+
 <div class="container header stories">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><span id="current-title"><?php echo $type;?></span></h4>
-        <p class="people-heading"><?php echo $type;?></p>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>exploreEvents/"><span id="previous-title">Events // </span></a><span id="current-title"><?php echo $type;?></span></h4>
+        <p class="events-heading"><?php echo $type;?></p>
     </div>
 </div>
 <!-- info container-->
@@ -43,21 +41,17 @@ $(document).ready(function(){
 
 
         switch ($type){
-            case "Role Types":
-                $typeCategories = roleTypes;
-                $typeLabel = 'roleLabel';
-                break;
-            case "Ethnodescriptor":
-                $typeCategories = ethnodescriptor;
-                $typeLabel = 'ethnoLabel';
-                break;
-            case "Age Category":
-                $typeCategories = ageCategory;
-                $typeLabel = 'agecategoryLabel';
+            case "Event Type":
+                $typeCategories = eventTypes;
+                $typeLabel = 'eventTypeLabel';
                 break;
             case "Place":
                 $typeCategories = places;
-                $typeLabel = 'placeLabel';
+                $typeLabel = 'placesLabel';
+                break;
+            case "Time":
+                $typeCategories = [];   // todo: time stuff
+                $typeLabel = 'timeLabel'; //?
                 break;
         }
         ?>
@@ -69,7 +63,7 @@ $(document).ready(function(){
         <?php
         foreach (array_keys($typeCategories) as $category) { ?>
             <li>
-                <a href="<?php echo BASE_URL;?>peopleResults/?<?php echo $type;?>=<?php echo $category;?>">
+                <a href="<?php echo BASE_URL;?>eventResults/?<?php echo $type;?>=<?php echo $category;?>">
                     <p class='type-title'><?php echo $category;?></p>
                     <div id="arrow"></div><span id="<?php echo $typeID . $typeCategories[$category];?>">0</span>
                 </a>
@@ -82,10 +76,11 @@ $(document).ready(function(){
 
 <script>
     $(document).ready(function () {
+        console.log('counting by', type)
         $.ajax({
             url: BASE_URL + 'api/counterOfType',
             method: "GET",
-            data: {type: type,  category:"People"},
+            data: {type: type, category:"Events"},
             'success': function (data) {
                 data = JSON.parse(data);
 

@@ -7,9 +7,8 @@
 <head>
     <meta name="google" content="notranslate" />
     <title><?php echo BASE_URL;?></title>
-    <?php
-        echo JS_GLOBALS;
-    ?>
+    <?=JS_GLOBALS?>
+    <?=EXPLORE_JS_VARS?>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <!-- favicon -->

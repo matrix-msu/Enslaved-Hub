@@ -183,6 +183,8 @@ $(document).ready(function () {
 
     var templates = ['searchCard', 'gridCard'];
 
+    console.log('uhh', filters)
+
     $.ajax({
         url: BASE_URL + "api/blazegraph",
         type: "GET",

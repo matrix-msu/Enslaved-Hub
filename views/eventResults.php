@@ -1,9 +1,22 @@
 <!-- Heading image and title container-->
 <div class="container header event-page">
 	<div class="container middlewrap">
-    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>exploreEvents"><span id="previous-title">Events // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub2"><span id="previous-title">Event Type // </span></a><span id="current-title">Voyages</span></h4>
+        <?php
+        //        print_r($_GET);die;
+        if (count($_GET) > 0){
+            $typeTitle = array_keys($_GET)[0];
+            $currentTitle = $_GET[$typeTitle];
+            $typeTitle = str_replace('_', ' ', $typeTitle);
+            $currentTitle = str_replace('_', ' ', $currentTitle);
+        } else {
+            $typeTitle = '';
+            $currentTitle = '';
+        }
+
+        ?>
+    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>exploreEvents/"><span id="previous-title">Events // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub2/"><span id="previous-title"><?php echo $typeTitle;?> // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4>
         <div class="search-title">
-            <h1>Voyages</h1>
+            <h1><?php echo $currentTitle;?></h1>
         </div>
         <div class="heading-search">
             <form class="search-form">
@@ -742,6 +755,12 @@
                     <tbody>
                     </tbody>
                 </table>
+            </div>
+            <div class="result-column">
+                <div class="cardwrap">
+                    <ul class="row">
+                    </ul>
+                </div>
             </div>
         </div>
         <div id="pagination">
