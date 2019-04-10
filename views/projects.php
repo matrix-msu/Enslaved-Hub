@@ -11,9 +11,7 @@
         <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur.</p>
     </div>
 </div>
-<?php
-include "functions/projectfunctions.php";
-?>
+
 <!-- all projects container-->
 <div class="container column projectcard">
     <div id="all-header" class="container cardheader-wrap">
