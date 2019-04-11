@@ -69,7 +69,7 @@
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="container middlewrap">
-<!--        <h4 class="last-page-header"><a id="last-page" href="--><?php //echo BASE_URL;?><!--explorePeople/"><span id="previous-title">People // </span></a><span id="current-title">Firstname Lastname</span></h4>-->
+<!--        <h4 class="last-page-header"><a id="last-page" href="--><?php //echo BASE_URL;?><!--explorePeople"><span id="previous-title">People // </span></a><span id="current-title">Firstname Lastname</span></h4>-->
 <!--        <h1>--><?php //echo $person_array['Name'];?><!--</h1>-->
 <!--        <h2 class="date-range"><span>1840</span>-<span>1864</span></h2>-->
     </div>
@@ -113,7 +113,7 @@
 //            }
 //        }
 //        }?>
-<!--        <a href="--><?php //echo BASE_URL;?><!--explorePeople/">-->
+<!--        <a href="--><?php //echo BASE_URL;?><!--explorePeople">-->
 <!--            <div class="detail">-->
 <!--                <h3>CONTRIBUTING PROJECT</h3>-->
 <!--                <div class="detail-bottom">-->
@@ -205,7 +205,7 @@
         <div class="container cardwrap">
             <ul class="row">
                 <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
+                    <a href="<?php echo BASE_URL?>fullStory">
                         <div class="container cards">
                             <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
                             <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
@@ -213,7 +213,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo BASE_URL?>fullStory/">
+                    <a href="<?php echo BASE_URL?>fullStory">
                         <div class="container cards">
                             <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
                             <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>

@@ -59,7 +59,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -77,7 +77,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -91,7 +91,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -105,7 +105,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -119,7 +119,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -137,7 +137,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -155,7 +155,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
