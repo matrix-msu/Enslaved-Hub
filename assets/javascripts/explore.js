@@ -32,17 +32,30 @@ $(document).ready(function(){
                 var label = "";
                 for(var key in record) {
                     if(key.match("Label$")) {
-                        label = record[key]['value']
+                        label = record[key]['value'];
                     }
                 }
                 if (label != ""){
                     var count = record['count']['value'];
                     var span = $("a:contains("+label+")").find('span');
                     if ($(span).length > 0){
-                        $(span).html(count)
+                        $(span).html(count);
                     }
+                }
+            });
+            $(".cards li").each(function(){
+                if($(this).find("span").html() == 0){
+                    $(this).addClass("hide-category");
                 }
             });
         }
     });
+
+    // //Go through category cards and hide the ones with counts of 0
+    // $(".cards li").each(function(){
+    //     console.log($(this).find("span").html());
+    //     if($(this).find("span").html() == 0){
+    //         $(this).addClass("hide-category");
+    //     }
+    // });
 });

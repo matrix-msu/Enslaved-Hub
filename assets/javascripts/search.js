@@ -67,6 +67,22 @@ $(document).ready(function() {
 ///// SEARCH RESULTS
 ///////////////////////////////////////////////////////////////
 
+//Set checkboxes for FormType
+$(document).ready(function() {
+    var upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
+    $(".filter-menu ul.catmenu li").each(function(){
+        if( $(this).find("p").html() === upperForm){
+            //Check a checkbox if EXPLORE_FORM is set to this type
+            $(this).find("input").prop('checked', true);
+        }
+        else if(upperForm === 'All'){
+            //set all checkboxes to checked
+            $(this).find("input").prop('checked', true);
+        }
+    });
+});
+
+
 // jQuery's '.css' inserts css styles as inline-styles
 // this can be problematic because it overwrites css styles applied in the stylesheet
 // $(element).css('style',''); unsets these inline styles

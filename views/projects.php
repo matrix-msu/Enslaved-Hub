@@ -20,7 +20,7 @@
                 <form action="submit">
                     <label for="searchbar" class="sr-only">searchbar</label>
                     <input id="searchbar" class="search-field" type="text" name="searchbar" placeholder="Find a Project By Title or Keyword"/>
-                    <div class="search-icon"></div>
+                    <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
                 </form>
             </div>
             <div class="container sort-stories">

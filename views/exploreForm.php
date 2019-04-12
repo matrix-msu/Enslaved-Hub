@@ -24,7 +24,6 @@ $upper = ucfirst(EXPLORE_FORM);
 
         <?php foreach ($GLOBALS["FILTER_ARRAY"][EXPLORE_FORM] as $type) { ?>
                 <li>
-                    <!-- <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>"><?php echo $type?><div id="arrow"></div></a> -->
                     <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>">
                         <p class='type-title'><?php echo $type?></p>
                         <div id="arrow"></div>
@@ -110,10 +109,10 @@ $upper = ucfirst(EXPLORE_FORM);
 <!-- Search Bar -->
 <div class="explore-search">
     <h3>Find People</h3>
-    <form class="search-form" action="<?php echo BASE_URL;?>searchResults" method="get">
+    <form class="search-form" action="<?php echo BASE_URL;?>search/<?php echo EXPLORE_FORM ?>" method="get">
         <label for="searchbar" class="sr-only">searchbar</label>
-        <input id="searchbar" class="search-field main-search" type="text" name="people" placeholder="Start Searching for People By Name, Origin, Role, Etc."/>
-        <a href="<?php echo BASE_URL;?>search"><div class="search-icon-2"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></div></a>
+        <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Start Searching for People By Name, Origin, Role, Etc."/>
+        <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
     </form>
 </div>
 <!-- Visualize People -->

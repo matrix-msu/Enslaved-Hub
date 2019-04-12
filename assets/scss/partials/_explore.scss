@@ -206,6 +206,9 @@
                 padding-bottom: 17px;
             }
         }
+        .hide-category{
+            display: none;
+        }
     }
     .sort-cards{
         p{
@@ -393,18 +396,18 @@
             color: $base-dark;
             font-style: italic;
         }
-        .search-icon{
-            cursor: pointer;
-            height: 60px;
-            width: 60px;
-            position: absolute;
-            right: 0;
-            top: 0;
-            background-image: url(../images/Search-dark.svg);
-            background-repeat: no-repeat;
-            background-position: 50% 50%;
-            background-size: 30%;
-        }
+        // .search-icon{
+        //     cursor: pointer;
+        //     height: 60px;
+        //     width: 60px;
+        //     position: absolute;
+        //     right: 0;
+        //     top: 0;
+        //     background-image: url(../images/Search-dark.svg);
+        //     background-repeat: no-repeat;
+        //     background-position: 50% 50%;
+        //     background-size: 30%;
+        // }
     }
 }
 

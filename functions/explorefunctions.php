@@ -423,19 +423,20 @@ function counterOfEthnodescriptor(){
 
 function counterOfEventPlace(){
     $query="SELECT ?place ?placeLabel ?count
-        WHERE
-        {
-          {
-            SELECT ?place (COUNT(?event) AS ?count) WHERE {
-              ?event wdt:P3 wd:Q34.
-              ?event wdt:P12 ?place.
+            WHERE
+            {
+              {
+                SELECT ?place (COUNT(?event) AS ?count) WHERE {
+                  ?event wdt:P3 wd:Q34.
+                  ?event wdt:P12 ?place.
+                }
+                GROUP BY ?place
+              }
+              SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
             }
-            GROUP BY ?place
-          }
-          SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-        }
-        ORDER BY DESC(?count)
+            ORDER BY ASC(?placeLabel)
       ";
+
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -447,6 +448,64 @@ function counterOfEventPlace(){
     }else{
         return $res;
     }
+}
+
+function counterOfPlaceType(){
+  $query="SELECT ?placeType ?placeTypeLabel ?count
+          WHERE
+          {
+            {
+              SELECT ?placeType (COUNT(?place) AS ?count) WHERE {
+                ?place wdt:P3 wd:Q50.
+                ?place wdt:P80 ?placeType.
+              }
+              GROUP BY ?placeType
+            }
+            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+          }
+          ORDER BY ASC(?placeTypeLabel)
+    ";
+
+  $encode=urlencode($query);
+  $call=API_URL.$encode;
+  $res=callAPI($call,'','');
+
+  $res= json_decode($res);
+
+  if (!empty($res)){
+      return json_encode($res->results->bindings);
+  }else{
+      return $res;
+  }
+}
+
+function counterOfSourceType(){
+  $query="SELECT ?sourcetype ?sourcetypeLabel ?count
+          WHERE
+          {
+            {
+              SELECT ?sourcetype (COUNT(?source) AS ?count) WHERE {
+                ?source wdt:P3 wd:Q16.
+                ?source wdt:P9 ?sourcetype.
+              }
+              GROUP BY ?sourcetype
+            }
+            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+          }
+          ORDER BY ASC(?sourcetypeLabel)
+    ";
+
+  $encode=urlencode($query);
+  $call=API_URL.$encode;
+  $res=callAPI($call,'','');
+
+  $res= json_decode($res);
+
+  if (!empty($res)){
+      return json_encode($res->results->bindings);
+  }else{
+      return $res;
+  }
 }
 
 // count the number of people with a certain type filter
@@ -495,6 +554,17 @@ function counterOfType() {
         }
     }
 
+    if($category == "Places") {
+        if ($type == "Place Type"){
+          return counterOfPlaceType();
+        }
+    }
+
+    if($category == "Sources") {
+      if ($type == "Source Type"){
+        return counterOfSourceType();
+      }
+  }
 
 }
 
