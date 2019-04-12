@@ -404,8 +404,9 @@
   position: absolute;
   right: 0;
   top: 0;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
+  background: none;
+  border: none;
+  outline: none;
   img {
     position: absolute;
     top: 37%;
