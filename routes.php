@@ -8,6 +8,7 @@ $GLOBALS['api_routes'] = array(
 	'api/counterOfGender' => array('explorefunctions.php', 'counterOfGender'),
 	'api/counterOfType' => array('explorefunctions.php', 'counterOfType'),
 	'api/getPersonRecordHtml' => array('explorefunctions.php', 'getPersonRecordHtml'),
+    'api/getDateRange' => array('explorefunctions.php', 'getEventDateRange'),
 );
 
 $GLOBALS['routes'] = array(
@@ -51,7 +52,7 @@ $GLOBALS['routes'] = array(
     'recordPlace' => 'recordPlace.php',
     'recordSource' => 'recordSource.php',
     'fullStory' => 'fullStory.php',
-    'fullProject' => 'fullProject.php',
+    'project' => 'fullProject.php',
     'peopleResults' => 'peopleResults.php',
     'timeSub' => 'timeSub.php'
 );
@@ -86,6 +87,11 @@ $fileArray = explode('/', $currentFile);
 if ($fileArray[0] == 'recordPerson'){
     $personQ = $fileArray[1];
     define('QID', $personQ);
+    $currentFile = $fileArray[0];
+}
+if ($fileArray[0] == 'fullProject'){
+    $projectQ = $fileArray[1];
+    define('QID', $projectQ);
     $currentFile = $fileArray[0];
 }
 

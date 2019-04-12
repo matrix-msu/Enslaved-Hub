@@ -498,6 +498,60 @@ function counterOfType() {
 
 }
 
+function getEventDateRange() {
+    $fullResults = [];
+    $query='SELECT ?startyear ?endyear
+            WHERE {
+              SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+              ?event wdt:P3 wd:Q34.
+              ?event wdt:P13 ?startdate.
+              BIND(str(YEAR(?startdate)) AS ?startyear).
+
+              OPTIONAL {?event wdt:P14 ?enddate.}
+              BIND(str(YEAR(?enddate)) AS ?endyear).
+
+
+            } ORDER BY desc(?startyear) desc(?endyear)
+            LIMIT 1';
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        $fullResults['max'] = $res->results->bindings;
+    }else{
+        $fullResults['max'] = $res;
+    }
+
+    $query='SELECT ?startyear ?endyear
+            WHERE {
+              SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+              ?event wdt:P3 wd:Q34.
+              ?event wdt:P13 ?startdate.
+              BIND(str(YEAR(?startdate)) AS ?startyear).
+
+              OPTIONAL {?event wdt:P14 ?enddate.}
+              BIND(str(YEAR(?enddate)) AS ?endyear).
+
+
+            } ORDER BY asc(?startyear) asc(?endyear)
+            LIMIT 1';
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        $fullResults['min'] = $res->results->bindings;
+    }else{
+        $fullResults['min'] = $res;
+    }
+    return json_encode($fullResults);
+}
+
 
 
 function getJsonInfo($url){
@@ -1123,11 +1177,11 @@ function getPersonRecordHtml(){
             $html = '<div class="timelinewrap">
                 <section class="fr-section timeline-section">
                 <h2 class="section-title">Person Timeline</h2>
-        
+
                 <div class="timeline-info-container" kid="'.$events[0]['kid'].'">
                     <div class="arrow-pointer-bottom"></div>
                     <div class="arrow-pointer-top"></div>
-        
+
                     <div class="info-header">
                         <div class="info-select info-select-event active" data-select="event">
                             <p>Event</p>
@@ -1206,7 +1260,7 @@ function getPersonRecordHtml(){
                 <div class="timeline-next no-select"><img src="'.BASE_URL.'assets/images/chevron-down-dark.svg" alt="Next Arrow"></div>
             </div>
         </div>
-        
+
         </section>
         </div>';
 
