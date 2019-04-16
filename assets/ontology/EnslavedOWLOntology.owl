@@ -1,0 +1,1655 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:opla="http://ontologydesignpatterns.org/opla#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <Ontology rdf:about="http://www.enslaved.org/1.0/"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#date"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.enslaved.org/1.0/hasCoordinates -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/hasCoordinates"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/hasStatusGeneratedEvent -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/hasStatusGeneratedEvent">
+        <rdfs:subPropertyOf rdf:resource="http://www.enslaved.org/1.0/refersToEvent"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/refersToEvent -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/refersToEvent"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/roleProvidedBy -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/roleProvidedBy">
+        <inverseOf rdf:resource="http://www.enslaved.org/1.0/#hasParticipantRoleRecord"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#agentRecordSelfProperty -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#agentRecordSelfProperty"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#asPlaceCV -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#asPlaceCV"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#atPlace -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#atPlace"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#attributedTo -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#attributedTo"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#eventSelfProperty -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#eventSelfProperty"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#fallsWithin -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#fallsWithin"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#generatedBy -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#generatedBy"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasAgeCategory -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasAgeCategory"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasAgeRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasAgeRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasAgentRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasAgentRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasDescription -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasDescription"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasDescriptionText -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasDescriptionText"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasECVO -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasECVO"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasEventType -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasEventType"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasExternalReference -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasExternalReference"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasInterAgentRelationshipRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasInterAgentRelationshipRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasInterAgentRelationshipType -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasInterAgentRelationshipType"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasLicenseInformation -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasLicenseInformation"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasNameRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasNameRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasNameVariant -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasNameVariant"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasOccupationRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasOccupationRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasOriginRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasOriginRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasOriginalSourceType -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasOriginalSourceType"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasParticipantRoleRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasParticipantRoleRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasParticipantRoleType -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasParticipantRoleType"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasPersonRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasPersonRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasPersonStatusRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasPersonStatusRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasPlaceType -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasPlaceType"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasPreferedNameVariant -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasPreferedNameVariant"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasRaceRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasRaceRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasSexRecord -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasSexRecord"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasTemporalExtent -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasTemporalExtent"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasValue -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#hasValue"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#isDirectlyBasedOn -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#isDirectlyBasedOn"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#isRelationshipFrom -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#isRelationshipFrom"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#isRelationshipTo -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#isRelationshipTo"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#performedBy -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#performedBy"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#providesParticipantRole -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#providesParticipantRole"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#recordedAt -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#recordedAt"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#refersTo -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#refersTo"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#refersToPlaceOfOrigin -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#refersToPlaceOfOrigin"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#reportsOn -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#reportsOn"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#spatiallyLocatedIn -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#spatiallyLocatedIn"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#subEventOf -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#subEventOf"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#used -->
+
+    <ObjectProperty rdf:about="http://www.enslaved.org/1.0/#used"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.enslaved.org/1.0/hasReferenceURI -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/hasReferenceURI"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#asText -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#asText"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#availableFrom -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#availableFrom"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#contains -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#contains"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#endsAt -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#endsAt"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#fullNameAsString -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#fullNameAsString"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasAgeValue -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#hasAgeValue"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasAlternateName -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#hasAlternateName"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasFirstnameAsString -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#hasFirstnameAsString"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasLattitude -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#hasLattitude"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasLongitude -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#hasLongitude"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasName -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#hasName"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasRace -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#hasRace"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#hasSurnameAsString -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#hasSurnameAsString"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#occursAfter -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#occursAfter"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#occursBefore -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#occursBefore"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#startsAt -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#startsAt"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#withID -->
+
+    <DatatypeProperty rdf:about="http://www.enslaved.org/1.0/#withID"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.enslaved.org/1.0/Coordinates -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/Coordinates">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasLattitude"/>
+                <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasLongitude"/>
+                <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/Researcher -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/Researcher"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#AgeCategory -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#AgeCategory"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#AgeRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#AgeRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Class>
+                <unionOf rdf:parseType="Collection">
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasValue"/>
+                        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#AgeCategory"/>
+                    </Restriction>
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasAgeValue"/>
+                        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                    </Restriction>
+                </unionOf>
+            </Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasValue"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#AgeCategory"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasAgeValue"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#Agent -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#Agent">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasAgentRecord"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasDescriptionText"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Description"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasExternalReference"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#ExternalReference"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#AgentRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#AgentRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasTemporalExtent"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#TemporalExtent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty>
+                    <rdf:Description>
+                        <inverseOf rdf:resource="http://www.enslaved.org/1.0/#hasAgentRecord"/>
+                    </rdf:Description>
+                </onProperty>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#isDirectlyBasedOn"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#recordedAt"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#agentRecordSelfProperty"/>
+                <hasSelf rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSelf>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#Description -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#Description">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#asText"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#DocumentTypes -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#DocumentTypes"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#ECVO -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#ECVO"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#EntityWithProvenance -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#EntityWithProvenance">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasLicenseInformation"/>
+                <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#LicenseInformation"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#attributedTo"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#generatedBy"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#generatedBy"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ProvenancActivity"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasLicenseInformation"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#LicenseInformation"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasOriginalSourceType"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#DocumentTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#isDirectlyBasedOn"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasOriginalSourceType"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#DocumentTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#availableFrom"/>
+                <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#availableFrom"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/hasReferenceURI"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#Event -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#Event">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#atPlace"/>
+                <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Place"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasEventType"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#EventTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasDescription"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Description"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasEventType"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#EventTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasTemporalExtent"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#TemporalExtent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasExternalReference"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#ExternalReference"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#providesParticipantRole"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#ParticipantRoleRecord"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#eventSelfProperty"/>
+                <hasSelf rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasSelf>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasName"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#EventTypes -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#EventTypes"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#ExternalReference -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#ExternalReference">
+        <rdfs:subClassOf>
+            <Class>
+                <intersectionOf rdf:parseType="Collection">
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#refersTo"/>
+                        <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                        <onClass rdf:resource="http://www.enslaved.org/1.0/#ExternalReference"/>
+                    </Restriction>
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#withID"/>
+                        <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                        <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </Restriction>
+                </intersectionOf>
+            </Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Class>
+                <unionOf rdf:parseType="Collection">
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#refersTo"/>
+                        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ExternalReferent"/>
+                    </Restriction>
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#withID"/>
+                        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </Restriction>
+                </unionOf>
+            </Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#refersTo"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ExternalReferent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#withID"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#ExternalReferent -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#ExternalReferent"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#InterAgentRelationshipRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#InterAgentRelationshipRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasInterAgentRelationshipType"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#InterAgentRelationshipTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#isRelationshipFrom"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#isRelationshipTo"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#isRelationshipFrom"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#isRelationshipTo"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasInterAgentRelationshipType"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#InterAgentRelationshipTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#InterAgentRelationshipTypes -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#InterAgentRelationshipTypes"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#LicenseInformation -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#LicenseInformation"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#NameRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#NameRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasNameVariant"/>
+                <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#NameVariant"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasPreferedNameVariant"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#NameVariant"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#NameVariant -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#NameVariant">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#fullNameAsString"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasFirstnameAsString"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasSurnameAsString"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#OccupationRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#OccupationRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasValue"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Occupations"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#Occupations -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#Occupations"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#Organization -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#Organization">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#OriginRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#OriginRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Class>
+                <unionOf rdf:parseType="Collection">
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasECVO"/>
+                        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ECVO"/>
+                    </Restriction>
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#refersToPlaceOfOrigin"/>
+                        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Place"/>
+                    </Restriction>
+                </unionOf>
+            </Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasECVO"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ECVO"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#refersToPlaceOfOrigin"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Place"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasECVO"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#ECVO"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#ParticipantRoleRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#ParticipantRoleRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasParticipantRoleType"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ParticipantRoleTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty>
+                    <rdf:Description>
+                        <inverseOf rdf:resource="http://www.enslaved.org/1.0/#providesParticipantRole"/>
+                    </rdf:Description>
+                </onProperty>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasParticipantRoleType"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#ParticipantRoleTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#ParticipantRoleTypes -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#ParticipantRoleTypes"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#Person -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#Person">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasPersonRecord"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#PersonRecord"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#PersonRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#PersonRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty>
+                    <rdf:Description>
+                        <inverseOf rdf:resource="http://www.enslaved.org/1.0/#hasPersonRecord"/>
+                    </rdf:Description>
+                </onProperty>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Person"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#PersonStatus -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#PersonStatus"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#PersonStatusRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#PersonStatusRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/hasStatusGeneratedEvent"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasValue"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#PersonStatus"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#Place -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#Place">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+        <rdfs:subClassOf>
+            <Class>
+                <unionOf rdf:parseType="Collection">
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/hasCoordinates"/>
+                        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/Coordinates"/>
+                    </Restriction>
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#asPlaceCV"/>
+                        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#PlacesCV"/>
+                    </Restriction>
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasDescriptionText"/>
+                        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Description"/>
+                    </Restriction>
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasName"/>
+                        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </Restriction>
+                </unionOf>
+            </Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#asPlaceCV"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#PlacesCV"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasPlaceType"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#PlaceTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasDescription"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Description"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasPlaceType"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#PlaceTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#spatiallyLocatedIn"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#Place"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasAlternateName"/>
+                <minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</minQualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasName"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#PlaceTypes -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#PlaceTypes"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#PlacesCV -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#PlacesCV"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#PointInTime -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#PointInTime"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#ProvenancActivity -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#ProvenancActivity">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#performedBy"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#used"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#RaceRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#RaceRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#asText"/>
+                <maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxQualifiedCardinality>
+                <onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#ResearchProject -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#ResearchProject">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#ResearchProjectContributorRole -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#ResearchProjectContributorRole">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/Researcher"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty>
+                    <rdf:Description>
+                        <inverseOf rdf:resource="http://www.enslaved.org/1.0/#providesParticipantRole"/>
+                    </rdf:Description>
+                </onProperty>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ResearchProject"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#ResearchProjectPIRole -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#ResearchProjectPIRole">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/Researcher"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty>
+                    <rdf:Description>
+                        <inverseOf rdf:resource="http://www.enslaved.org/1.0/#providesParticipantRole"/>
+                    </rdf:Description>
+                </onProperty>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ResearchProject"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#SexRecord -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#SexRecord">
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#AgentRecord"/>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasValue"/>
+                <qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</qualifiedCardinality>
+                <onClass rdf:resource="http://www.enslaved.org/1.0/#SexTypes"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#SexTypes -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#SexTypes"/>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#TemporalExtent -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#TemporalExtent">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#fallsWithin"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Timespan"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#contains"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#endsAt"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#occursAfter"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#occursBefore"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#startsAt"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.enslaved.org/1.0/#Timespan -->
+
+    <Class rdf:about="http://www.enslaved.org/1.0/#Timespan">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#endsAt"/>
+                <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#startsAt"/>
+                <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing">
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/hasCoordinates"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/Coordinates"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/refersToEvent"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#atPlace"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Place"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasDescriptionText"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Description"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasExternalReference"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ExternalReference"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasNameVariant"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#NameVariant"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasTemporalExtent"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#TemporalExtent"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#providesParticipantRole"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ParticipantRoleRecord"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#subEventOf"/>
+                <allValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty>
+                    <rdf:Description>
+                        <inverseOf rdf:resource="http://www.enslaved.org/1.0/#hasDescriptionText"/>
+                    </rdf:Description>
+                </onProperty>
+                <maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxCardinality>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty>
+                    <rdf:Description>
+                        <inverseOf rdf:resource="http://www.enslaved.org/1.0/#hasExternalReference"/>
+                    </rdf:Description>
+                </onProperty>
+                <maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</maxCardinality>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#fullNameAsString"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasAlternateName"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasFirstnameAsString"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasLattitude"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasLongitude"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasName"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <Restriction>
+                <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasSurnameAsString"/>
+                <allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <Class>
+        <complementOf rdf:resource="http://www.enslaved.org/1.0/#Person"/>
+        <rdfs:subClassOf>
+            <Class>
+                <complementOf>
+                    <Restriction>
+                        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasAgentRecord"/>
+                        <allValuesFrom>
+                            <Class>
+                                <unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.enslaved.org/1.0/#AgeRecord"/>
+                                    <rdf:Description rdf:about="http://www.enslaved.org/1.0/#OccupationRecord"/>
+                                    <rdf:Description rdf:about="http://www.enslaved.org/1.0/#OriginRecord"/>
+                                    <rdf:Description rdf:about="http://www.enslaved.org/1.0/#PersonStatusRecord"/>
+                                    <rdf:Description rdf:about="http://www.enslaved.org/1.0/#RaceRecord"/>
+                                    <rdf:Description rdf:about="http://www.enslaved.org/1.0/#SexRecord"/>
+                                </unionOf>
+                            </Class>
+                        </allValuesFrom>
+                    </Restriction>
+                </complementOf>
+            </Class>
+        </rdfs:subClassOf>
+    </Class>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/hasCoordinates"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/Coordinates"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#Place"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/hasStatusGeneratedEvent"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#PersonStatusRecord"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#asPlaceCV"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#PlacesCV"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#Place"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#attributedTo"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#fallsWithin"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Timespan"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#TemporalExtent"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#generatedBy"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ProvenancActivity"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasEventType"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#EventTypes"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasInterAgentRelationshipType"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#InterAgentRelationshipTypes"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#InterAgentRelationshipRecord"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasOriginalSourceType"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#DocumentTypes"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasParticipantRoleType"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#ParticipantRoleTypes"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#ParticipantRoleRecord"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasPlaceType"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#PlaceTypes"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#Place"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#isRelationshipFrom"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#InterAgentRelationshipRecord"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#isRelationshipTo"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#InterAgentRelationshipRecord"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#performedBy"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#ProvenancActivity"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#subEventOf"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#Event"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#used"/>
+        <someValuesFrom rdf:resource="http://www.enslaved.org/1.0/#EntityWithProvenance"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#ProvenancActivity"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasAgentRecord"/>
+        <allValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#Agent"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#contains"/>
+        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#TemporalExtent"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#endsAt"/>
+        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#TemporalExtent"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasLattitude"/>
+        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/Coordinates"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#hasLongitude"/>
+        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/Coordinates"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#occursAfter"/>
+        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#TemporalExtent"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#occursBefore"/>
+        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#TemporalExtent"/>
+    </Restriction>
+    <Restriction>
+        <onProperty rdf:resource="http://www.enslaved.org/1.0/#startsAt"/>
+        <someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:subClassOf rdf:resource="http://www.enslaved.org/1.0/#TemporalExtent"/>
+    </Restriction>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.7.2018-12-02T02:23:35Z) https://github.com/owlcs/owlapi -->
+

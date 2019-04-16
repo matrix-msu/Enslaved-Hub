@@ -62,7 +62,8 @@ $GLOBALS['routes'] = array(
     'eventResults' => 'eventResults.php',
     'placeResults' => 'placeResults.php',
     'sourceResults' => 'sourceResults.php',
-    'timeSub' => 'timeSub.php'
+    'timeSub' => 'timeSub.php',
+    'enslavedOntology' => 'ontology.php'
 );
 
 $location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
@@ -117,6 +118,8 @@ if( isset($GLOBALS['api_routes'][$currentFile]) ){
     echo $currentApiFile[1]();
     die;
 }elseif( !isset($GLOBALS['routes'][$currentFile]) ){
+    echo ($actualLink);
+    die;
     header('HTTP/1.0 404 Not Found');
     define('CURRENT_VIEW', '404.php');
 }else{

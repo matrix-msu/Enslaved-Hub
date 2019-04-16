@@ -1,0 +1,1177 @@
+@prefix : <http://www.enslaved.org/1.0/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.enslaved.org/1.0/> .
+
+<http://www.enslaved.org/1.0/> rdf:type owl:Ontology .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.enslaved.org/1.0/hasCoordinates
+:hasCoordinates rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/hasStatusGeneratedEvent
+:hasStatusGeneratedEvent rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf :refersToEvent .
+
+
+###  http://www.enslaved.org/1.0/refersToEvent
+:refersToEvent rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/roleProvidedBy
+:roleProvidedBy rdf:type owl:ObjectProperty ;
+                owl:inverseOf <http://www.enslaved.org/1.0/#hasParticipantRoleRecord> .
+
+
+###  http://www.enslaved.org/1.0/#agentRecordSelfProperty
+<http://www.enslaved.org/1.0/#agentRecordSelfProperty> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#asPlaceCV
+<http://www.enslaved.org/1.0/#asPlaceCV> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#atPlace
+<http://www.enslaved.org/1.0/#atPlace> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#attributedTo
+<http://www.enslaved.org/1.0/#attributedTo> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#eventSelfProperty
+<http://www.enslaved.org/1.0/#eventSelfProperty> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#fallsWithin
+<http://www.enslaved.org/1.0/#fallsWithin> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#generatedBy
+<http://www.enslaved.org/1.0/#generatedBy> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasAgeCategory
+<http://www.enslaved.org/1.0/#hasAgeCategory> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasAgeRecord
+<http://www.enslaved.org/1.0/#hasAgeRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasAgentRecord
+<http://www.enslaved.org/1.0/#hasAgentRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasDescription
+<http://www.enslaved.org/1.0/#hasDescription> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasDescriptionText
+<http://www.enslaved.org/1.0/#hasDescriptionText> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasECVO
+<http://www.enslaved.org/1.0/#hasECVO> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasEventType
+<http://www.enslaved.org/1.0/#hasEventType> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasExternalReference
+<http://www.enslaved.org/1.0/#hasExternalReference> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasInterAgentRelationshipRecord
+<http://www.enslaved.org/1.0/#hasInterAgentRelationshipRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasInterAgentRelationshipType
+<http://www.enslaved.org/1.0/#hasInterAgentRelationshipType> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasLicenseInformation
+<http://www.enslaved.org/1.0/#hasLicenseInformation> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasNameRecord
+<http://www.enslaved.org/1.0/#hasNameRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasNameVariant
+<http://www.enslaved.org/1.0/#hasNameVariant> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasOccupationRecord
+<http://www.enslaved.org/1.0/#hasOccupationRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasOriginRecord
+<http://www.enslaved.org/1.0/#hasOriginRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasOriginalSourceType
+<http://www.enslaved.org/1.0/#hasOriginalSourceType> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasParticipantRoleRecord
+<http://www.enslaved.org/1.0/#hasParticipantRoleRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasParticipantRoleType
+<http://www.enslaved.org/1.0/#hasParticipantRoleType> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasPersonRecord
+<http://www.enslaved.org/1.0/#hasPersonRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasPersonStatusRecord
+<http://www.enslaved.org/1.0/#hasPersonStatusRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasPlaceType
+<http://www.enslaved.org/1.0/#hasPlaceType> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasPreferedNameVariant
+<http://www.enslaved.org/1.0/#hasPreferedNameVariant> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasRaceRecord
+<http://www.enslaved.org/1.0/#hasRaceRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasSexRecord
+<http://www.enslaved.org/1.0/#hasSexRecord> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasTemporalExtent
+<http://www.enslaved.org/1.0/#hasTemporalExtent> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasValue
+<http://www.enslaved.org/1.0/#hasValue> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#isDirectlyBasedOn
+<http://www.enslaved.org/1.0/#isDirectlyBasedOn> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#isRelationshipFrom
+<http://www.enslaved.org/1.0/#isRelationshipFrom> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#isRelationshipTo
+<http://www.enslaved.org/1.0/#isRelationshipTo> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#performedBy
+<http://www.enslaved.org/1.0/#performedBy> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#providesParticipantRole
+<http://www.enslaved.org/1.0/#providesParticipantRole> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#recordedAt
+<http://www.enslaved.org/1.0/#recordedAt> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#refersTo
+<http://www.enslaved.org/1.0/#refersTo> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#refersToPlaceOfOrigin
+<http://www.enslaved.org/1.0/#refersToPlaceOfOrigin> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#reportsOn
+<http://www.enslaved.org/1.0/#reportsOn> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#spatiallyLocatedIn
+<http://www.enslaved.org/1.0/#spatiallyLocatedIn> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#subEventOf
+<http://www.enslaved.org/1.0/#subEventOf> rdf:type owl:ObjectProperty .
+
+
+###  http://www.enslaved.org/1.0/#used
+<http://www.enslaved.org/1.0/#used> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.enslaved.org/1.0/hasReferenceURI
+:hasReferenceURI rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#asText
+<http://www.enslaved.org/1.0/#asText> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#availableFrom
+<http://www.enslaved.org/1.0/#availableFrom> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#contains
+<http://www.enslaved.org/1.0/#contains> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#endsAt
+<http://www.enslaved.org/1.0/#endsAt> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#fullNameAsString
+<http://www.enslaved.org/1.0/#fullNameAsString> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasAgeValue
+<http://www.enslaved.org/1.0/#hasAgeValue> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasAlternateName
+<http://www.enslaved.org/1.0/#hasAlternateName> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasFirstnameAsString
+<http://www.enslaved.org/1.0/#hasFirstnameAsString> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasLattitude
+<http://www.enslaved.org/1.0/#hasLattitude> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasLongitude
+<http://www.enslaved.org/1.0/#hasLongitude> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasName
+<http://www.enslaved.org/1.0/#hasName> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasRace
+<http://www.enslaved.org/1.0/#hasRace> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#hasSurnameAsString
+<http://www.enslaved.org/1.0/#hasSurnameAsString> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#occursAfter
+<http://www.enslaved.org/1.0/#occursAfter> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#occursBefore
+<http://www.enslaved.org/1.0/#occursBefore> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#startsAt
+<http://www.enslaved.org/1.0/#startsAt> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.enslaved.org/1.0/#withID
+<http://www.enslaved.org/1.0/#withID> rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.enslaved.org/1.0/Coordinates
+:Coordinates rdf:type owl:Class ;
+             rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty <http://www.enslaved.org/1.0/#hasLattitude> ;
+                               owl:someValuesFrom xsd:double
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty <http://www.enslaved.org/1.0/#hasLongitude> ;
+                               owl:someValuesFrom xsd:double
+                             ] .
+
+
+###  http://www.enslaved.org/1.0/Researcher
+:Researcher rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#AgeCategory
+<http://www.enslaved.org/1.0/#AgeCategory> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#AgeRecord
+<http://www.enslaved.org/1.0/#AgeRecord> rdf:type owl:Class ;
+                                         rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                         [ rdf:type owl:Class ;
+                                                           owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                           owl:onProperty <http://www.enslaved.org/1.0/#hasValue> ;
+                                                                           owl:someValuesFrom <http://www.enslaved.org/1.0/#AgeCategory>
+                                                                         ]
+                                                                         [ rdf:type owl:Restriction ;
+                                                                           owl:onProperty <http://www.enslaved.org/1.0/#hasAgeValue> ;
+                                                                           owl:someValuesFrom xsd:double
+                                                                         ]
+                                                                       )
+                                                         ] ,
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty <http://www.enslaved.org/1.0/#hasValue> ;
+                                                           owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                           owl:onClass <http://www.enslaved.org/1.0/#AgeCategory>
+                                                         ] ,
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty <http://www.enslaved.org/1.0/#hasAgeValue> ;
+                                                           owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                           owl:onDataRange xsd:double
+                                                         ] .
+
+
+###  http://www.enslaved.org/1.0/#Agent
+<http://www.enslaved.org/1.0/#Agent> rdf:type owl:Class ;
+                                     rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasAgentRecord> ;
+                                                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#AgentRecord>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasDescriptionText> ;
+                                                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#Description>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasExternalReference> ;
+                                                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#ExternalReference>
+                                                     ] .
+
+
+###  http://www.enslaved.org/1.0/#AgentRecord
+<http://www.enslaved.org/1.0/#AgentRecord> rdf:type owl:Class ;
+                                           rdfs:subClassOf <http://www.enslaved.org/1.0/#EntityWithProvenance> ,
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <http://www.enslaved.org/1.0/#hasTemporalExtent> ;
+                                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onClass <http://www.enslaved.org/1.0/#TemporalExtent>
+                                                           ] ,
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty [ owl:inverseOf <http://www.enslaved.org/1.0/#hasAgentRecord>
+                                                                            ] ;
+                                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onClass <http://www.enslaved.org/1.0/#Agent>
+                                                           ] ,
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <http://www.enslaved.org/1.0/#isDirectlyBasedOn> ;
+                                                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onClass <http://www.enslaved.org/1.0/#EntityWithProvenance>
+                                                           ] ,
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <http://www.enslaved.org/1.0/#recordedAt> ;
+                                                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onClass <http://www.enslaved.org/1.0/#Event>
+                                                           ] ,
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <http://www.enslaved.org/1.0/#agentRecordSelfProperty> ;
+                                                             owl:hasSelf "true"^^xsd:boolean
+                                                           ] .
+
+
+###  http://www.enslaved.org/1.0/#Description
+<http://www.enslaved.org/1.0/#Description> rdf:type owl:Class ;
+                                           rdfs:subClassOf <http://www.enslaved.org/1.0/#EntityWithProvenance> ,
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <http://www.enslaved.org/1.0/#asText> ;
+                                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onDataRange xsd:string
+                                                           ] .
+
+
+###  http://www.enslaved.org/1.0/#DocumentTypes
+<http://www.enslaved.org/1.0/#DocumentTypes> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#ECVO
+<http://www.enslaved.org/1.0/#ECVO> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#EntityWithProvenance
+<http://www.enslaved.org/1.0/#EntityWithProvenance> rdf:type owl:Class ;
+                                                    rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#hasLicenseInformation> ;
+                                                                      owl:someValuesFrom <http://www.enslaved.org/1.0/#LicenseInformation>
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#attributedTo> ;
+                                                                      owl:allValuesFrom <http://www.enslaved.org/1.0/#Agent>
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#generatedBy> ;
+                                                                      owl:allValuesFrom <http://www.enslaved.org/1.0/#EntityWithProvenance>
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#generatedBy> ;
+                                                                      owl:allValuesFrom <http://www.enslaved.org/1.0/#ProvenancActivity>
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#hasLicenseInformation> ;
+                                                                      owl:allValuesFrom <http://www.enslaved.org/1.0/#LicenseInformation>
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#hasOriginalSourceType> ;
+                                                                      owl:allValuesFrom <http://www.enslaved.org/1.0/#DocumentTypes>
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#isDirectlyBasedOn> ;
+                                                                      owl:allValuesFrom <http://www.enslaved.org/1.0/#EntityWithProvenance>
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#hasOriginalSourceType> ;
+                                                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                      owl:onClass <http://www.enslaved.org/1.0/#DocumentTypes>
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#availableFrom> ;
+                                                                      owl:someValuesFrom xsd:string
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty <http://www.enslaved.org/1.0/#availableFrom> ;
+                                                                      owl:allValuesFrom xsd:string
+                                                                    ] ,
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty :hasReferenceURI ;
+                                                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                                      owl:onDataRange xsd:anyURI
+                                                                    ] .
+
+
+###  http://www.enslaved.org/1.0/#Event
+<http://www.enslaved.org/1.0/#Event> rdf:type owl:Class ;
+                                     rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#atPlace> ;
+                                                       owl:someValuesFrom <http://www.enslaved.org/1.0/#Place>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasEventType> ;
+                                                       owl:allValuesFrom <http://www.enslaved.org/1.0/#EventTypes>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasDescription> ;
+                                                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#Description>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasEventType> ;
+                                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#EventTypes>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasTemporalExtent> ;
+                                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#TemporalExtent>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasExternalReference> ;
+                                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#ExternalReference>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#providesParticipantRole> ;
+                                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#ParticipantRoleRecord>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#eventSelfProperty> ;
+                                                       owl:hasSelf "true"^^xsd:boolean
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasName> ;
+                                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                       owl:onDataRange xsd:string
+                                                     ] .
+
+
+###  http://www.enslaved.org/1.0/#EventTypes
+<http://www.enslaved.org/1.0/#EventTypes> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#ExternalReference
+<http://www.enslaved.org/1.0/#ExternalReference> rdf:type owl:Class ;
+                                                 rdfs:subClassOf [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                          owl:onProperty <http://www.enslaved.org/1.0/#refersTo> ;
+                                                                                          owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                          owl:onClass <http://www.enslaved.org/1.0/#ExternalReference>
+                                                                                        ]
+                                                                                        [ rdf:type owl:Restriction ;
+                                                                                          owl:onProperty <http://www.enslaved.org/1.0/#withID> ;
+                                                                                          owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                          owl:onDataRange xsd:string
+                                                                                        ]
+                                                                                      ) ;
+                                                                   rdf:type owl:Class
+                                                                 ] ,
+                                                                 [ rdf:type owl:Class ;
+                                                                   owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                                   owl:onProperty <http://www.enslaved.org/1.0/#refersTo> ;
+                                                                                   owl:someValuesFrom <http://www.enslaved.org/1.0/#ExternalReferent>
+                                                                                 ]
+                                                                                 [ rdf:type owl:Restriction ;
+                                                                                   owl:onProperty <http://www.enslaved.org/1.0/#withID> ;
+                                                                                   owl:someValuesFrom xsd:string
+                                                                                 ]
+                                                                               )
+                                                                 ] ,
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty <http://www.enslaved.org/1.0/#refersTo> ;
+                                                                   owl:allValuesFrom <http://www.enslaved.org/1.0/#ExternalReferent>
+                                                                 ] ,
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty <http://www.enslaved.org/1.0/#withID> ;
+                                                                   owl:allValuesFrom xsd:string
+                                                                 ] .
+
+
+###  http://www.enslaved.org/1.0/#ExternalReferent
+<http://www.enslaved.org/1.0/#ExternalReferent> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#InterAgentRelationshipRecord
+<http://www.enslaved.org/1.0/#InterAgentRelationshipRecord> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://www.enslaved.org/1.0/#hasInterAgentRelationshipType> ;
+                                                                              owl:allValuesFrom <http://www.enslaved.org/1.0/#InterAgentRelationshipTypes>
+                                                                            ] ,
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://www.enslaved.org/1.0/#isRelationshipFrom> ;
+                                                                              owl:allValuesFrom <http://www.enslaved.org/1.0/#Agent>
+                                                                            ] ,
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://www.enslaved.org/1.0/#isRelationshipTo> ;
+                                                                              owl:allValuesFrom <http://www.enslaved.org/1.0/#Agent>
+                                                                            ] ,
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://www.enslaved.org/1.0/#isRelationshipFrom> ;
+                                                                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                              owl:onClass <http://www.enslaved.org/1.0/#Agent>
+                                                                            ] ,
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://www.enslaved.org/1.0/#isRelationshipTo> ;
+                                                                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                              owl:onClass <http://www.enslaved.org/1.0/#Agent>
+                                                                            ] ,
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://www.enslaved.org/1.0/#hasInterAgentRelationshipType> ;
+                                                                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                              owl:onClass <http://www.enslaved.org/1.0/#InterAgentRelationshipTypes>
+                                                                            ] .
+
+
+###  http://www.enslaved.org/1.0/#InterAgentRelationshipTypes
+<http://www.enslaved.org/1.0/#InterAgentRelationshipTypes> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#LicenseInformation
+<http://www.enslaved.org/1.0/#LicenseInformation> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#NameRecord
+<http://www.enslaved.org/1.0/#NameRecord> rdf:type owl:Class ;
+                                          rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty <http://www.enslaved.org/1.0/#hasNameVariant> ;
+                                                            owl:someValuesFrom <http://www.enslaved.org/1.0/#NameVariant>
+                                                          ] ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty <http://www.enslaved.org/1.0/#hasPreferedNameVariant> ;
+                                                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                            owl:onClass <http://www.enslaved.org/1.0/#NameVariant>
+                                                          ] .
+
+
+###  http://www.enslaved.org/1.0/#NameVariant
+<http://www.enslaved.org/1.0/#NameVariant> rdf:type owl:Class ;
+                                           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <http://www.enslaved.org/1.0/#fullNameAsString> ;
+                                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onDataRange xsd:string
+                                                           ] ,
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <http://www.enslaved.org/1.0/#hasFirstnameAsString> ;
+                                                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onDataRange xsd:string
+                                                           ] ,
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <http://www.enslaved.org/1.0/#hasSurnameAsString> ;
+                                                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onDataRange xsd:string
+                                                           ] .
+
+
+###  http://www.enslaved.org/1.0/#OccupationRecord
+<http://www.enslaved.org/1.0/#OccupationRecord> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty <http://www.enslaved.org/1.0/#hasValue> ;
+                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                  owl:onClass <http://www.enslaved.org/1.0/#Occupations>
+                                                                ] .
+
+
+###  http://www.enslaved.org/1.0/#Occupations
+<http://www.enslaved.org/1.0/#Occupations> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#Organization
+<http://www.enslaved.org/1.0/#Organization> rdf:type owl:Class ;
+                                            rdfs:subClassOf <http://www.enslaved.org/1.0/#Agent> .
+
+
+###  http://www.enslaved.org/1.0/#OriginRecord
+<http://www.enslaved.org/1.0/#OriginRecord> rdf:type owl:Class ;
+                                            rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                            [ rdf:type owl:Class ;
+                                                              owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://www.enslaved.org/1.0/#hasECVO> ;
+                                                                              owl:someValuesFrom <http://www.enslaved.org/1.0/#ECVO>
+                                                                            ]
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty <http://www.enslaved.org/1.0/#refersToPlaceOfOrigin> ;
+                                                                              owl:someValuesFrom <http://www.enslaved.org/1.0/#Place>
+                                                                            ]
+                                                                          )
+                                                            ] ,
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty <http://www.enslaved.org/1.0/#hasECVO> ;
+                                                              owl:allValuesFrom <http://www.enslaved.org/1.0/#ECVO>
+                                                            ] ,
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty <http://www.enslaved.org/1.0/#refersToPlaceOfOrigin> ;
+                                                              owl:allValuesFrom <http://www.enslaved.org/1.0/#Place>
+                                                            ] ,
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty <http://www.enslaved.org/1.0/#hasECVO> ;
+                                                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                              owl:onClass <http://www.enslaved.org/1.0/#ECVO>
+                                                            ] .
+
+
+###  http://www.enslaved.org/1.0/#ParticipantRoleRecord
+<http://www.enslaved.org/1.0/#ParticipantRoleRecord> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasParticipantRoleType> ;
+                                                                       owl:allValuesFrom <http://www.enslaved.org/1.0/#ParticipantRoleTypes>
+                                                                     ] ,
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty [ owl:inverseOf <http://www.enslaved.org/1.0/#providesParticipantRole>
+                                                                                      ] ;
+                                                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                       owl:onClass <http://www.enslaved.org/1.0/#Event>
+                                                                     ] ,
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasParticipantRoleType> ;
+                                                                       owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                       owl:onClass <http://www.enslaved.org/1.0/#ParticipantRoleTypes>
+                                                                     ] .
+
+
+###  http://www.enslaved.org/1.0/#ParticipantRoleTypes
+<http://www.enslaved.org/1.0/#ParticipantRoleTypes> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#Person
+<http://www.enslaved.org/1.0/#Person> rdf:type owl:Class ;
+                                      rdfs:subClassOf <http://www.enslaved.org/1.0/#Agent> ,
+                                                      [ rdf:type owl:Restriction ;
+                                                        owl:onProperty <http://www.enslaved.org/1.0/#hasPersonRecord> ;
+                                                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                        owl:onClass <http://www.enslaved.org/1.0/#PersonRecord>
+                                                      ] .
+
+
+###  http://www.enslaved.org/1.0/#PersonRecord
+<http://www.enslaved.org/1.0/#PersonRecord> rdf:type owl:Class ;
+                                            rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty [ owl:inverseOf <http://www.enslaved.org/1.0/#hasPersonRecord>
+                                                                             ] ;
+                                                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                              owl:onClass <http://www.enslaved.org/1.0/#Person>
+                                                            ] .
+
+
+###  http://www.enslaved.org/1.0/#PersonStatus
+<http://www.enslaved.org/1.0/#PersonStatus> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#PersonStatusRecord
+<http://www.enslaved.org/1.0/#PersonStatusRecord> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty :hasStatusGeneratedEvent ;
+                                                                    owl:allValuesFrom <http://www.enslaved.org/1.0/#Event>
+                                                                  ] ,
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty <http://www.enslaved.org/1.0/#hasValue> ;
+                                                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                    owl:onClass <http://www.enslaved.org/1.0/#PersonStatus>
+                                                                  ] .
+
+
+###  http://www.enslaved.org/1.0/#Place
+<http://www.enslaved.org/1.0/#Place> rdf:type owl:Class ;
+                                     rdfs:subClassOf <http://www.enslaved.org/1.0/#EntityWithProvenance> ,
+                                                     [ rdf:type owl:Class ;
+                                                       owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty :hasCoordinates ;
+                                                                       owl:someValuesFrom :Coordinates
+                                                                     ]
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty <http://www.enslaved.org/1.0/#asPlaceCV> ;
+                                                                       owl:someValuesFrom <http://www.enslaved.org/1.0/#PlacesCV>
+                                                                     ]
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasDescriptionText> ;
+                                                                       owl:someValuesFrom <http://www.enslaved.org/1.0/#Description>
+                                                                     ]
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasName> ;
+                                                                       owl:someValuesFrom xsd:string
+                                                                     ]
+                                                                   )
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#asPlaceCV> ;
+                                                       owl:allValuesFrom <http://www.enslaved.org/1.0/#PlacesCV>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasPlaceType> ;
+                                                       owl:allValuesFrom <http://www.enslaved.org/1.0/#PlaceTypes>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasDescription> ;
+                                                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#Description>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasPlaceType> ;
+                                                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#PlaceTypes>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#spatiallyLocatedIn> ;
+                                                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                       owl:onClass <http://www.enslaved.org/1.0/#Place>
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasAlternateName> ;
+                                                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                       owl:onDataRange xsd:string
+                                                     ] ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://www.enslaved.org/1.0/#hasName> ;
+                                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                       owl:onDataRange xsd:string
+                                                     ] .
+
+
+###  http://www.enslaved.org/1.0/#PlaceTypes
+<http://www.enslaved.org/1.0/#PlaceTypes> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#PlacesCV
+<http://www.enslaved.org/1.0/#PlacesCV> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#PointInTime
+<http://www.enslaved.org/1.0/#PointInTime> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#ProvenancActivity
+<http://www.enslaved.org/1.0/#ProvenancActivity> rdf:type owl:Class ;
+                                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty <http://www.enslaved.org/1.0/#performedBy> ;
+                                                                   owl:allValuesFrom <http://www.enslaved.org/1.0/#Agent>
+                                                                 ] ,
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty <http://www.enslaved.org/1.0/#used> ;
+                                                                   owl:allValuesFrom <http://www.enslaved.org/1.0/#EntityWithProvenance>
+                                                                 ] .
+
+
+###  http://www.enslaved.org/1.0/#RaceRecord
+<http://www.enslaved.org/1.0/#RaceRecord> rdf:type owl:Class ;
+                                          rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty <http://www.enslaved.org/1.0/#asText> ;
+                                                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                            owl:onDataRange xsd:string
+                                                          ] .
+
+
+###  http://www.enslaved.org/1.0/#ResearchProject
+<http://www.enslaved.org/1.0/#ResearchProject> rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://www.enslaved.org/1.0/#EntityWithProvenance> ,
+                                                               <http://www.enslaved.org/1.0/#Event> .
+
+
+###  http://www.enslaved.org/1.0/#ResearchProjectContributorRole
+<http://www.enslaved.org/1.0/#ResearchProjectContributorRole> rdf:type owl:Class ;
+                                                              rdfs:subClassOf :Researcher ,
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty [ owl:inverseOf <http://www.enslaved.org/1.0/#providesParticipantRole>
+                                                                                               ] ;
+                                                                                owl:allValuesFrom <http://www.enslaved.org/1.0/#ResearchProject>
+                                                                              ] .
+
+
+###  http://www.enslaved.org/1.0/#ResearchProjectPIRole
+<http://www.enslaved.org/1.0/#ResearchProjectPIRole> rdf:type owl:Class ;
+                                                     rdfs:subClassOf :Researcher ,
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty [ owl:inverseOf <http://www.enslaved.org/1.0/#providesParticipantRole>
+                                                                                      ] ;
+                                                                       owl:allValuesFrom <http://www.enslaved.org/1.0/#ResearchProject>
+                                                                     ] .
+
+
+###  http://www.enslaved.org/1.0/#SexRecord
+<http://www.enslaved.org/1.0/#SexRecord> rdf:type owl:Class ;
+                                         rdfs:subClassOf <http://www.enslaved.org/1.0/#AgentRecord> ,
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty <http://www.enslaved.org/1.0/#hasValue> ;
+                                                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                           owl:onClass <http://www.enslaved.org/1.0/#SexTypes>
+                                                         ] .
+
+
+###  http://www.enslaved.org/1.0/#SexTypes
+<http://www.enslaved.org/1.0/#SexTypes> rdf:type owl:Class .
+
+
+###  http://www.enslaved.org/1.0/#TemporalExtent
+<http://www.enslaved.org/1.0/#TemporalExtent> rdf:type owl:Class ;
+                                              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <http://www.enslaved.org/1.0/#fallsWithin> ;
+                                                                owl:allValuesFrom <http://www.enslaved.org/1.0/#Timespan>
+                                                              ] ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <http://www.enslaved.org/1.0/#contains> ;
+                                                                owl:allValuesFrom xsd:date
+                                                              ] ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <http://www.enslaved.org/1.0/#endsAt> ;
+                                                                owl:allValuesFrom xsd:date
+                                                              ] ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <http://www.enslaved.org/1.0/#occursAfter> ;
+                                                                owl:allValuesFrom xsd:date
+                                                              ] ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <http://www.enslaved.org/1.0/#occursBefore> ;
+                                                                owl:allValuesFrom xsd:date
+                                                              ] ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <http://www.enslaved.org/1.0/#startsAt> ;
+                                                                owl:allValuesFrom xsd:date
+                                                              ] .
+
+
+###  http://www.enslaved.org/1.0/#Timespan
+<http://www.enslaved.org/1.0/#Timespan> rdf:type owl:Class ;
+                                        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.enslaved.org/1.0/#endsAt> ;
+                                                          owl:someValuesFrom xsd:date
+                                                        ] ,
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <http://www.enslaved.org/1.0/#startsAt> ;
+                                                          owl:someValuesFrom xsd:date
+                                                        ] .
+
+
+###  http://www.w3.org/2002/07/owl#Thing
+owl:Thing rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasCoordinates ;
+                            owl:allValuesFrom :Coordinates
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :refersToEvent ;
+                            owl:allValuesFrom <http://www.enslaved.org/1.0/#Event>
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#atPlace> ;
+                            owl:allValuesFrom <http://www.enslaved.org/1.0/#Place>
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasDescriptionText> ;
+                            owl:allValuesFrom <http://www.enslaved.org/1.0/#Description>
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasExternalReference> ;
+                            owl:allValuesFrom <http://www.enslaved.org/1.0/#ExternalReference>
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasNameVariant> ;
+                            owl:allValuesFrom <http://www.enslaved.org/1.0/#NameVariant>
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasTemporalExtent> ;
+                            owl:allValuesFrom <http://www.enslaved.org/1.0/#TemporalExtent>
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#providesParticipantRole> ;
+                            owl:allValuesFrom <http://www.enslaved.org/1.0/#ParticipantRoleRecord>
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#subEventOf> ;
+                            owl:allValuesFrom <http://www.enslaved.org/1.0/#Event>
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty [ owl:inverseOf <http://www.enslaved.org/1.0/#hasDescriptionText>
+                                           ] ;
+                            owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty [ owl:inverseOf <http://www.enslaved.org/1.0/#hasExternalReference>
+                                           ] ;
+                            owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#fullNameAsString> ;
+                            owl:allValuesFrom xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasAlternateName> ;
+                            owl:allValuesFrom xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasFirstnameAsString> ;
+                            owl:allValuesFrom xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasLattitude> ;
+                            owl:allValuesFrom xsd:double
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasLongitude> ;
+                            owl:allValuesFrom xsd:double
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasName> ;
+                            owl:allValuesFrom xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://www.enslaved.org/1.0/#hasSurnameAsString> ;
+                            owl:allValuesFrom xsd:string
+                          ] .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:Class ;
+  owl:complementOf <http://www.enslaved.org/1.0/#Person> ;
+  rdfs:subClassOf [ rdf:type owl:Class ;
+                    owl:complementOf [ rdf:type owl:Restriction ;
+                                       owl:onProperty <http://www.enslaved.org/1.0/#hasAgentRecord> ;
+                                       owl:allValuesFrom [ rdf:type owl:Class ;
+                                                           owl:unionOf ( <http://www.enslaved.org/1.0/#AgeRecord>
+                                                                         <http://www.enslaved.org/1.0/#OccupationRecord>
+                                                                         <http://www.enslaved.org/1.0/#OriginRecord>
+                                                                         <http://www.enslaved.org/1.0/#PersonStatusRecord>
+                                                                         <http://www.enslaved.org/1.0/#RaceRecord>
+                                                                         <http://www.enslaved.org/1.0/#SexRecord>
+                                                                       )
+                                                         ]
+                                     ]
+                  ]
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty :hasCoordinates ;
+  owl:someValuesFrom :Coordinates ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#Place>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty :hasStatusGeneratedEvent ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#Event> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#PersonStatusRecord>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#asPlaceCV> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#PlacesCV> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#Place>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#attributedTo> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#Agent> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#EntityWithProvenance>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#fallsWithin> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#Timespan> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#TemporalExtent>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#generatedBy> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#ProvenancActivity> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#EntityWithProvenance>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#hasEventType> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#EventTypes> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#Event>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#hasInterAgentRelationshipType> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#InterAgentRelationshipTypes> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#InterAgentRelationshipRecord>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#hasOriginalSourceType> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#DocumentTypes> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#EntityWithProvenance>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#hasParticipantRoleType> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#ParticipantRoleTypes> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#ParticipantRoleRecord>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#hasPlaceType> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#PlaceTypes> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#Place>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#isRelationshipFrom> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#Agent> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#InterAgentRelationshipRecord>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#isRelationshipTo> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#Agent> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#InterAgentRelationshipRecord>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#performedBy> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#Agent> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#ProvenancActivity>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#subEventOf> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#Event> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#Event>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#used> ;
+  owl:someValuesFrom <http://www.enslaved.org/1.0/#EntityWithProvenance> ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#ProvenancActivity>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#hasAgentRecord> ;
+  owl:allValuesFrom owl:Thing ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#Agent>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#contains> ;
+  owl:someValuesFrom xsd:date ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#TemporalExtent>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#endsAt> ;
+  owl:someValuesFrom xsd:date ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#TemporalExtent>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#hasLattitude> ;
+  owl:someValuesFrom xsd:double ;
+  rdfs:subClassOf :Coordinates
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#hasLongitude> ;
+  owl:someValuesFrom xsd:double ;
+  rdfs:subClassOf :Coordinates
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#occursAfter> ;
+  owl:someValuesFrom xsd:date ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#TemporalExtent>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#occursBefore> ;
+  owl:someValuesFrom xsd:date ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#TemporalExtent>
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty <http://www.enslaved.org/1.0/#startsAt> ;
+  owl:someValuesFrom xsd:date ;
+  rdfs:subClassOf <http://www.enslaved.org/1.0/#TemporalExtent>
+] .
+
+
+###  Generated by the OWL API (version 5.1.9) https://github.com/owlcs/owlapi/

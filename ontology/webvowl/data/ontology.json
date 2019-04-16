@@ -1,0 +1,2063 @@
+{
+  "_comment" : "Created with OWL2VOWL (version 0.3.4), http://vowl.visualdataweb.org",
+  "header" : {
+    "baseIris" : [ "http://www.enslaved.org/1.0", "http://www.w3.org/2000/01/rdf-schema", "http://www.enslaved.org/1.0/", "http://www.w3.org/2001/XMLSchema" ],
+    "iri" : "http://www.enslaved.org/1.0/"
+  },
+  "namespace" : [ ],
+  "metrics" : {
+    "classCount" : 43,
+    "objectPropertyCount" : 49,
+    "datatypePropertyCount" : 18,
+    "individualCount" : 0
+  },
+  "class" : [ {
+    "id" : "10",
+    "type" : "owl:Class"
+  }, {
+    "id" : "20",
+    "type" : "owl:Class"
+  }, {
+    "id" : "23",
+    "type" : "owl:Class"
+  }, {
+    "id" : "31",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "12",
+    "type" : "owl:Thing"
+  }, {
+    "id" : "32",
+    "type" : "rdfs:Literal"
+  }, {
+    "id" : "33",
+    "type" : "rdfs:Literal"
+  }, {
+    "id" : "34",
+    "type" : "rdfs:Literal"
+  }, {
+    "id" : "35",
+    "type" : "rdfs:Literal"
+  }, {
+    "id" : "2",
+    "type" : "owl:Class"
+  }, {
+    "id" : "40",
+    "type" : "owl:Class"
+  }, {
+    "id" : "42",
+    "type" : "owl:Class"
+  }, {
+    "id" : "26",
+    "type" : "owl:Class"
+  }, {
+    "id" : "43",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "47",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "48",
+    "type" : "owl:Class"
+  }, {
+    "id" : "28",
+    "type" : "owl:Class"
+  }, {
+    "id" : "50",
+    "type" : "owl:Class"
+  }, {
+    "id" : "54",
+    "type" : "owl:Class"
+  }, {
+    "id" : "55",
+    "type" : "owl:Class"
+  }, {
+    "id" : "56",
+    "type" : "owl:Class"
+  }, {
+    "id" : "14",
+    "type" : "owl:Class"
+  }, {
+    "id" : "57",
+    "type" : "owl:Class"
+  }, {
+    "id" : "58",
+    "type" : "owl:Class"
+  }, {
+    "id" : "4",
+    "type" : "owl:Class"
+  }, {
+    "id" : "60",
+    "type" : "owl:Class"
+  }, {
+    "id" : "37",
+    "type" : "owl:Class"
+  }, {
+    "id" : "68",
+    "type" : "owl:Class"
+  }, {
+    "id" : "16",
+    "type" : "owl:Class"
+  }, {
+    "id" : "17",
+    "type" : "owl:Class"
+  }, {
+    "id" : "64",
+    "type" : "owl:Class"
+  }, {
+    "id" : "86",
+    "type" : "owl:Class"
+  }, {
+    "id" : "39",
+    "type" : "owl:Class"
+  }, {
+    "id" : "94",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "80",
+    "type" : "owl:Class"
+  }, {
+    "id" : "103",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "101",
+    "type" : "owl:Class"
+  }, {
+    "id" : "106",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "107",
+    "type" : "owl:Class"
+  }, {
+    "id" : "96",
+    "type" : "owl:Class"
+  }, {
+    "id" : "51",
+    "type" : "owl:Class"
+  }, {
+    "id" : "77",
+    "type" : "owl:Class"
+  }, {
+    "id" : "71",
+    "type" : "owl:Class"
+  }, {
+    "id" : "112",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "111",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "116",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "19",
+    "type" : "owl:Class"
+  }, {
+    "id" : "115",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "119",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "125",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "124",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "135",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "90",
+    "type" : "owl:Class"
+  }, {
+    "id" : "1",
+    "type" : "owl:Class"
+  }, {
+    "id" : "138",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "145",
+    "type" : "owl:Class"
+  }, {
+    "id" : "148",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "22",
+    "type" : "owl:Class"
+  }, {
+    "id" : "8",
+    "type" : "owl:Class"
+  }, {
+    "id" : "30",
+    "type" : "owl:Class"
+  }, {
+    "id" : "21",
+    "type" : "owl:Class"
+  }, {
+    "id" : "151",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "152",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "155",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "158",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "160",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "162",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "163",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "166",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "170",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "174",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "6",
+    "type" : "owl:Class"
+  }, {
+    "id" : "187",
+    "type" : "owl:Class"
+  } ],
+  "classAttribute" : [ {
+    "iri" : "http://www.enslaved.org/1.0/#OccupationRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "OccupationRecord"
+    },
+    "id" : "10",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#ResearchProject",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ResearchProject"
+    },
+    "id" : "20",
+    "superClasses" : [ "21", "22" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/Coordinates",
+    "baseIri" : "http://www.enslaved.org/1.0",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Coordinates"
+    },
+    "id" : "23"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "31",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2002/07/owl#Thing",
+    "baseIri" : "http://owl2vowl.de",
+    "id" : "12",
+    "label" : {
+      "undefined" : "Thing"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2000/01/rdf-schema#Literal",
+    "id" : "32",
+    "label" : {
+      "IRI-based" : "Literal",
+      "undefined" : "Literal"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2000/01/rdf-schema#Literal",
+    "id" : "33",
+    "label" : {
+      "IRI-based" : "Literal",
+      "undefined" : "Literal"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2000/01/rdf-schema#Literal",
+    "id" : "34",
+    "label" : {
+      "IRI-based" : "Literal",
+      "undefined" : "Literal"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2000/01/rdf-schema#Literal",
+    "id" : "35",
+    "label" : {
+      "IRI-based" : "Literal",
+      "undefined" : "Literal"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#AgentRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "AgentRecord"
+    },
+    "subClasses" : [ "37", "39", "26", "28", "1", "4", "6", "8", "10", "14" ],
+    "id" : "2",
+    "superClasses" : [ "22" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#Occupations",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Occupations"
+    },
+    "id" : "40"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#Place",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Place"
+    },
+    "id" : "42",
+    "superClasses" : [ "22" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#OriginRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "OriginRecord"
+    },
+    "id" : "26",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "43",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "47",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#PointInTime",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "PointInTime"
+    },
+    "id" : "48"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#ParticipantRoleRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ParticipantRoleRecord"
+    },
+    "id" : "28",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#ResearchProjectPIRole",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ResearchProjectPIRole"
+    },
+    "id" : "50",
+    "superClasses" : [ "51" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#LicenseInformation",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "LicenseInformation"
+    },
+    "id" : "54"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#Timespan",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Timespan"
+    },
+    "id" : "55"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#InterAgentRelationshipTypes",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "InterAgentRelationshipTypes"
+    },
+    "id" : "56"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#SexRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "SexRecord"
+    },
+    "id" : "14",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#ProvenancActivity",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ProvenancActivity"
+    },
+    "id" : "57"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#ECVO",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ECVO"
+    },
+    "id" : "58"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#AgeRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "AgeRecord"
+    },
+    "id" : "4",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#DocumentTypes",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "DocumentTypes"
+    },
+    "id" : "60"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#PersonStatusRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "PersonStatusRecord"
+    },
+    "id" : "37",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#ExternalReferent",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ExternalReferent"
+    },
+    "id" : "68"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#Person",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Person"
+    },
+    "id" : "16",
+    "superClasses" : [ "17" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#Agent",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Agent"
+    },
+    "subClasses" : [ "16", "19" ],
+    "id" : "17"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#Description",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Description"
+    },
+    "id" : "64",
+    "superClasses" : [ "22" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#ParticipantRoleTypes",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ParticipantRoleTypes"
+    },
+    "id" : "86"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#NameRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "NameRecord"
+    },
+    "id" : "39",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "94",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#PlacesCV",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "PlacesCV"
+    },
+    "id" : "80"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "103",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#EventTypes",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "EventTypes"
+    },
+    "id" : "101"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "106",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#SexTypes",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "SexTypes"
+    },
+    "id" : "107"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#ExternalReference",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ExternalReference"
+    },
+    "id" : "96"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/Researcher",
+    "baseIri" : "http://www.enslaved.org/1.0",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Researcher"
+    },
+    "subClasses" : [ "50", "71" ],
+    "id" : "51"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#PlaceTypes",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "PlaceTypes"
+    },
+    "id" : "77"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#ResearchProjectContributorRole",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "ResearchProjectContributorRole"
+    },
+    "id" : "71",
+    "superClasses" : [ "51" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "112",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "111",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "116",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#Organization",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Organization"
+    },
+    "id" : "19",
+    "superClasses" : [ "17" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "115",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "119",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "125",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "124",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "135",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#NameVariant",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "NameVariant"
+    },
+    "id" : "90"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#RaceRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "RaceRecord"
+    },
+    "id" : "1",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#double",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "138",
+    "label" : {
+      "IRI-based" : "double"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#AgeCategory",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "AgeCategory"
+    },
+    "id" : "145"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "148",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#EntityWithProvenance",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "EntityWithProvenance"
+    },
+    "subClasses" : [ "42", "64", "20", "2" ],
+    "id" : "22"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#PersonRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "PersonRecord"
+    },
+    "id" : "8",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#TemporalExtent",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "TemporalExtent"
+    },
+    "id" : "30"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#Event",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Event"
+    },
+    "subClasses" : [ "20" ],
+    "id" : "21"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "151",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#double",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "152",
+    "label" : {
+      "IRI-based" : "double"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "155",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#double",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "158",
+    "label" : {
+      "IRI-based" : "double"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#double",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "160",
+    "label" : {
+      "IRI-based" : "double"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "162",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "163",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#double",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "166",
+    "label" : {
+      "IRI-based" : "double"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "170",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#double",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "174",
+    "label" : {
+      "IRI-based" : "double"
+    }
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#InterAgentRelationshipRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "InterAgentRelationshipRecord"
+    },
+    "id" : "6",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#PersonStatus",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "PersonStatus"
+    },
+    "id" : "187"
+  } ],
+  "property" : [ {
+    "id" : "0",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "3",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "5",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "7",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "9",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "11",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "13",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "15",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "18",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "24",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "25",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "27",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "29",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "36",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "38",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "41",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "44",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "45",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "46",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "49",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "52",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "53",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "59",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "61",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "62",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "63",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "65",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "66",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "67",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "69",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "70",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "72",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "73",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "74",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "75",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "76",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "78",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "79",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "81",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "82",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "83",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "85",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "87",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "88",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "89",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "91",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "92",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "93",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "95",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "97",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "98",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "99",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "100",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "102",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "104",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "105",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "110",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "114",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "117",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "118",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "120",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "121",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "122",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "123",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "126",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "127",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "128",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "129",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "130",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "131",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "133",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "134",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "144",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "146",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "149",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "153",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "159",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "161",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "164",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "165",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "167",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "168",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "169",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "171",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "172",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "173",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "175",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "176",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "177",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "179",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "180",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "181",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "182",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "183",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "184",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "185",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "186",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "188",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "189",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "190",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "191",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "192",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "193",
+    "type" : "owl:someValuesFrom"
+  } ],
+  "propertyAttribute" : [ {
+    "range" : "2",
+    "domain" : "1",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "0"
+  }, {
+    "range" : "2",
+    "domain" : "4",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "3"
+  }, {
+    "range" : "2",
+    "domain" : "6",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "5"
+  }, {
+    "range" : "2",
+    "domain" : "8",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "7"
+  }, {
+    "range" : "2",
+    "domain" : "10",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "9"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasAgeCategory",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasAgeCategory"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "11"
+  }, {
+    "range" : "2",
+    "domain" : "14",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "13"
+  }, {
+    "range" : "17",
+    "domain" : "16",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "15"
+  }, {
+    "range" : "17",
+    "domain" : "19",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "18"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#spatiallyLocatedIn",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "spatiallyLocatedIn"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "24"
+  }, {
+    "range" : "2",
+    "domain" : "26",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "25"
+  }, {
+    "range" : "2",
+    "domain" : "28",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "27"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#startsAt",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "31",
+    "label" : {
+      "IRI-based" : "startsAt"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "29"
+  }, {
+    "range" : "2",
+    "domain" : "37",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "36"
+  }, {
+    "range" : "2",
+    "domain" : "39",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "38"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasOccupationRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasOccupationRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "41"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#occursAfter",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "43",
+    "label" : {
+      "IRI-based" : "occursAfter"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "44"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/hasReferenceURI",
+    "baseIri" : "http://www.enslaved.org/1.0",
+    "range" : "33",
+    "label" : {
+      "IRI-based" : "hasReferenceURI"
+    },
+    "domain" : "12",
+    "attributes" : [ "datatype" ],
+    "id" : "45"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#occursBefore",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "47",
+    "label" : {
+      "IRI-based" : "occursBefore"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "46"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasDescription",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasDescription"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "49"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasPersonRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasPersonRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "52"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasInterAgentRelationshipRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasInterAgentRelationshipRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "53"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasAgeRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasAgeRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "59"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasAgeValue",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "35",
+    "label" : {
+      "IRI-based" : "hasAgeValue"
+    },
+    "maxCardinality" : "1",
+    "domain" : "12",
+    "attributes" : [ "datatype" ],
+    "id" : "61"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasPersonStatusRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasPersonStatusRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "62"
+  }, {
+    "range" : "22",
+    "domain" : "64",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "63"
+  }, {
+    "range" : "22",
+    "domain" : "20",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "65"
+  }, {
+    "range" : "22",
+    "domain" : "2",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "66"
+  }, {
+    "range" : "21",
+    "domain" : "20",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "67"
+  }, {
+    "range" : "51",
+    "domain" : "50",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "69"
+  }, {
+    "range" : "51",
+    "domain" : "71",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "70"
+  }, {
+    "range" : "22",
+    "domain" : "42",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "72"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#performedBy",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "performedBy"
+    },
+    "domain" : "57",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "73"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasValue",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasValue"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "74"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#recordedAt",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "recordedAt"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "75"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasPlaceType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "77",
+    "label" : {
+      "IRI-based" : "hasPlaceType"
+    },
+    "domain" : "42",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "76"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#reportsOn",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "reportsOn"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "78"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#asPlaceCV",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "80",
+    "label" : {
+      "IRI-based" : "asPlaceCV"
+    },
+    "domain" : "42",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "79"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#refersToPlaceOfOrigin",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "42",
+    "label" : {
+      "IRI-based" : "refersToPlaceOfOrigin"
+    },
+    "domain" : "26",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "81"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasECVO",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "58",
+    "label" : {
+      "IRI-based" : "hasECVO"
+    },
+    "domain" : "26",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "82"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/hasStatusGeneratedEvent",
+    "baseIri" : "http://www.enslaved.org/1.0",
+    "range" : "21",
+    "label" : {
+      "IRI-based" : "hasStatusGeneratedEvent"
+    },
+    "superproperty" : [ "84" ],
+    "domain" : "37",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "83"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasParticipantRoleType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "86",
+    "label" : {
+      "IRI-based" : "hasParticipantRoleType"
+    },
+    "domain" : "28",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "85"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#isRelationshipTo",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "isRelationshipTo"
+    },
+    "domain" : "6",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "87"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasInterAgentRelationshipType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "56",
+    "label" : {
+      "IRI-based" : "hasInterAgentRelationshipType"
+    },
+    "domain" : "6",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "88"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasNameVariant",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "90",
+    "label" : {
+      "IRI-based" : "hasNameVariant"
+    },
+    "domain" : "39",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "89"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#isRelationshipFrom",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "isRelationshipFrom"
+    },
+    "domain" : "6",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "91"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasNameRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasNameRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "92"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasRace",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "32",
+    "label" : {
+      "IRI-based" : "hasRace"
+    },
+    "domain" : "12",
+    "attributes" : [ "datatype" ],
+    "id" : "93"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#withID",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "94",
+    "label" : {
+      "IRI-based" : "withID"
+    },
+    "domain" : "96",
+    "attributes" : [ "datatype", "allValues" ],
+    "id" : "95"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#refersTo",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "68",
+    "label" : {
+      "IRI-based" : "refersTo"
+    },
+    "domain" : "96",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "97"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#generatedBy",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "57",
+    "label" : {
+      "IRI-based" : "generatedBy"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "98"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasLicenseInformation",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "54",
+    "label" : {
+      "IRI-based" : "hasLicenseInformation"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "99"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasEventType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "101",
+    "label" : {
+      "IRI-based" : "hasEventType"
+    },
+    "domain" : "21",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "100"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#atPlace",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "42",
+    "label" : {
+      "IRI-based" : "atPlace"
+    },
+    "domain" : "21",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "102"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#isDirectlyBasedOn",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "22",
+    "label" : {
+      "IRI-based" : "isDirectlyBasedOn"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "104"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#generatedBy",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "22",
+    "label" : {
+      "IRI-based" : "generatedBy"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "105"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#endsAt",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "111",
+    "label" : {
+      "IRI-based" : "endsAt"
+    },
+    "domain" : "55",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "110"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#endsAt",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "115",
+    "label" : {
+      "IRI-based" : "endsAt"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "allValues" ],
+    "id" : "114"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#startsAt",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "112",
+    "label" : {
+      "IRI-based" : "startsAt"
+    },
+    "domain" : "55",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "117"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#occursBefore",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "116",
+    "label" : {
+      "IRI-based" : "occursBefore"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "allValues" ],
+    "id" : "118"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#eventSelfProperty",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "eventSelfProperty"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "120"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#contains",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "119",
+    "label" : {
+      "IRI-based" : "contains"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "allValues" ],
+    "id" : "121"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasSexRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasSexRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "122"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#startsAt",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "124",
+    "label" : {
+      "IRI-based" : "startsAt"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "allValues" ],
+    "id" : "123"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#fallsWithin",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "55",
+    "label" : {
+      "IRI-based" : "fallsWithin"
+    },
+    "domain" : "30",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "126"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#providesParticipantRole",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "20",
+    "label" : {
+      "IRI-based" : "providesParticipantRole"
+    },
+    "domain" : "71",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "127"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#used",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "22",
+    "label" : {
+      "IRI-based" : "used"
+    },
+    "domain" : "57",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "128"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#occursAfter",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "125",
+    "label" : {
+      "IRI-based" : "occursAfter"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "allValues" ],
+    "id" : "129"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#providesParticipantRole",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "20",
+    "label" : {
+      "IRI-based" : "providesParticipantRole"
+    },
+    "domain" : "50",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "130"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/hasCoordinates",
+    "baseIri" : "http://www.enslaved.org/1.0",
+    "range" : "23",
+    "label" : {
+      "IRI-based" : "hasCoordinates"
+    },
+    "domain" : "42",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "131"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#asPlaceCV",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "80",
+    "label" : {
+      "IRI-based" : "asPlaceCV"
+    },
+    "domain" : "42",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "133"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/hasStatusGeneratedEvent",
+    "baseIri" : "http://www.enslaved.org/1.0",
+    "range" : "21",
+    "label" : {
+      "IRI-based" : "hasStatusGeneratedEvent"
+    },
+    "superproperty" : [ "84" ],
+    "domain" : "37",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "134"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasParticipantRoleRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasParticipantRoleRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "144"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasOriginRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasOriginRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "146"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasRaceRecord",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasRaceRecord"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "149"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#asText",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "34",
+    "label" : {
+      "IRI-based" : "asText"
+    },
+    "maxCardinality" : "1",
+    "cardinality" : "1",
+    "domain" : "12",
+    "attributes" : [ "datatype" ],
+    "id" : "153"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasLattitude",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "158",
+    "label" : {
+      "IRI-based" : "hasLattitude"
+    },
+    "domain" : "23",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "159"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasLongitude",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "160",
+    "label" : {
+      "IRI-based" : "hasLongitude"
+    },
+    "domain" : "23",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "161"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#endsAt",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "163",
+    "label" : {
+      "IRI-based" : "endsAt"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "164"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasLongitude",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "166",
+    "label" : {
+      "IRI-based" : "hasLongitude"
+    },
+    "domain" : "23",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "165"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasLicenseInformation",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "54",
+    "label" : {
+      "IRI-based" : "hasLicenseInformation"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "167"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasOriginalSourceType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "60",
+    "label" : {
+      "IRI-based" : "hasOriginalSourceType"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "168"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#availableFrom",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "170",
+    "label" : {
+      "IRI-based" : "availableFrom"
+    },
+    "domain" : "22",
+    "attributes" : [ "datatype", "allValues" ],
+    "id" : "169"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#attributedTo",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "attributedTo"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "allValues" ],
+    "id" : "171"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#availableFrom",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "103",
+    "label" : {
+      "IRI-based" : "availableFrom"
+    },
+    "domain" : "22",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "172"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasLattitude",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "174",
+    "label" : {
+      "IRI-based" : "hasLattitude"
+    },
+    "domain" : "23",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "173"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#used",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "22",
+    "label" : {
+      "IRI-based" : "used"
+    },
+    "domain" : "57",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "175"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#subEventOf",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "21",
+    "label" : {
+      "IRI-based" : "subEventOf"
+    },
+    "domain" : "21",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "176"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#contains",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "162",
+    "label" : {
+      "IRI-based" : "contains"
+    },
+    "domain" : "30",
+    "attributes" : [ "datatype", "someValues" ],
+    "id" : "177"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasPreferedNameVariant",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasPreferedNameVariant"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "179"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#isRelationshipFrom",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "isRelationshipFrom"
+    },
+    "domain" : "6",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "180"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasPlaceType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "77",
+    "label" : {
+      "IRI-based" : "hasPlaceType"
+    },
+    "domain" : "42",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "181"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#performedBy",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "performedBy"
+    },
+    "domain" : "57",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "182"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#isRelationshipTo",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "isRelationshipTo"
+    },
+    "domain" : "6",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "183"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasParticipantRoleType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "86",
+    "label" : {
+      "IRI-based" : "hasParticipantRoleType"
+    },
+    "domain" : "28",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "184"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasOriginalSourceType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "60",
+    "label" : {
+      "IRI-based" : "hasOriginalSourceType"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "185"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#agentRecordSelfProperty",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "agentRecordSelfProperty"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "186"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasInterAgentRelationshipType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "56",
+    "label" : {
+      "IRI-based" : "hasInterAgentRelationshipType"
+    },
+    "domain" : "6",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "188"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/roleProvidedBy",
+    "inverse" : "144",
+    "baseIri" : "http://www.enslaved.org/1.0",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "roleProvidedBy"
+    },
+    "domain" : "12",
+    "attributes" : [ "object" ],
+    "id" : "189"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#fallsWithin",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "55",
+    "label" : {
+      "IRI-based" : "fallsWithin"
+    },
+    "domain" : "30",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "190"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#attributedTo",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "17",
+    "label" : {
+      "IRI-based" : "attributedTo"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "191"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#hasEventType",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "101",
+    "label" : {
+      "IRI-based" : "hasEventType"
+    },
+    "domain" : "21",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "192"
+  }, {
+    "iri" : "http://www.enslaved.org/1.0/#generatedBy",
+    "baseIri" : "http://www.enslaved.org/1.0/",
+    "range" : "57",
+    "label" : {
+      "IRI-based" : "generatedBy"
+    },
+    "domain" : "22",
+    "attributes" : [ "object", "someValues" ],
+    "id" : "193"
+  } ]
+}

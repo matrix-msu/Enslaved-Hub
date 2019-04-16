@@ -14,6 +14,7 @@ define("BASE_IMAGE_URL", BASE_URL . "assets/images/");
 define("BASE_CSS_URL", BASE_URL . "assets/stylesheets/style.css");
 define("BASE_MODULE_URL", BASE_URL . "modules/");
 define("BASE_LEAFLET_URL", BASE_URL . "assets/leaflet/");
+define("BASE_ONTOLOGY_URL", BASE_URL . "assets/ontology/");
 
 //project specific file paths - you should never use relative paths
 define("BASE_LIB_PATH", BASE_PATH . "lib/");
@@ -74,6 +75,7 @@ define("JS_GLOBALS",
         "var BASE_AJAX_URL ='".BASE_AJAX_URL."';" .
         "var BASE_VIEW_URL ='".BASE_VIEW_URL."';" .
         "var BASE_IMAGE_URL ='".BASE_IMAGE_URL."';" .
+        "var BASE_ONTOLOGY_URL ='".BASE_ONTOLOGY_URL."';" .
     "</script>\n"
 );
 

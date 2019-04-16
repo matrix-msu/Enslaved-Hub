@@ -65,3 +65,30 @@ input:not([type="image"]), textarea {
   width: 1px;
   height: 1px;
 }
+
+.text-section {
+    padding: 50px 0;
+    
+    h2 {
+        border-bottom: 1px solid $sub-base;
+        color: $sub-base;
+        font-weight: bold;
+        margin: 1.5em 0 1em;
+        padding: 0 0 8px;
+    }
+
+    p {
+        line-height: 1.2em;
+        margin: 1em 0;
+    }
+
+    .date {
+        font-style: italic;
+    }
+
+    .text-wrapper {
+        margin: auto;
+        max-width: 1000px;
+        width: 90%;
+    }
+}
