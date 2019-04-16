@@ -24,12 +24,17 @@ $upper = ucfirst(EXPLORE_FORM);
 
         <?php foreach ($GLOBALS["FILTER_ARRAY"][EXPLORE_FORM] as $type) { ?>
                 <li>
-                    <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>"><?php echo $type?><div id="arrow"></div></a>
+                    <!-- <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>"><?php echo $type?><div id="arrow"></div></a> -->
+                    <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>">
+                        <p class='type-title'><?php echo $type?></p>
+                        <div id="arrow"></div>
+                    </a>
                 </li>
        <?php } ?>
 
     </ul>
 </div>
+<script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
 <!-- Featured People -->
 <div class="explore-featured">
     <h2>Featured People</h2>
@@ -44,7 +49,7 @@ $upper = ucfirst(EXPLORE_FORM);
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson/">
+                <a href="<?php echo BASE_URL?>recordPerson">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
@@ -52,7 +57,7 @@ $upper = ucfirst(EXPLORE_FORM);
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson/">
+                <a href="<?php echo BASE_URL?>recordPerson">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
@@ -60,7 +65,7 @@ $upper = ucfirst(EXPLORE_FORM);
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson/">
+                <a href="<?php echo BASE_URL?>recordPerson">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
@@ -68,7 +73,7 @@ $upper = ucfirst(EXPLORE_FORM);
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson/">
+                <a href="<?php echo BASE_URL?>recordPerson">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
@@ -76,7 +81,7 @@ $upper = ucfirst(EXPLORE_FORM);
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson/">
+                <a href="<?php echo BASE_URL?>recordPerson">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
@@ -84,7 +89,7 @@ $upper = ucfirst(EXPLORE_FORM);
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson/">
+                <a href="<?php echo BASE_URL?>recordPerson">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
@@ -92,7 +97,7 @@ $upper = ucfirst(EXPLORE_FORM);
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>recordPerson/">
+                <a href="<?php echo BASE_URL?>recordPerson">
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
@@ -105,10 +110,10 @@ $upper = ucfirst(EXPLORE_FORM);
 <!-- Search Bar -->
 <div class="explore-search">
     <h3>Find People</h3>
-    <form class="search-form">
+    <form class="search-form" action="<?php echo BASE_URL;?>searchResults" method="get">
         <label for="searchbar" class="sr-only">searchbar</label>
-        <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Start Searching for People By Name, Origin, Role, Etc."/>
-        <a href="<?php echo BASE_URL;?>search"><div class="search-icon-2"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt=""></div></a>
+        <input id="searchbar" class="search-field main-search" type="text" name="people" placeholder="Start Searching for People By Name, Origin, Role, Etc."/>
+        <a href="<?php echo BASE_URL;?>search"><div class="search-icon-2"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></div></a>
     </form>
 </div>
 <!-- Visualize People -->
@@ -117,7 +122,7 @@ $upper = ucfirst(EXPLORE_FORM);
     <div class="cardwrap">
         <ul class="row">
             <li id="byspace">
-                <a href="<?php echo BASE_URL?>fullStory/">
+                <a href="<?php echo BASE_URL?>fullStory">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/BySpace.svg" alt="space"/>
@@ -127,7 +132,7 @@ $upper = ucfirst(EXPLORE_FORM);
                 </a>
             </li>
             <li id="bytime">
-                <a href="<?php echo BASE_URL?>fullStory/">
+                <a href="<?php echo BASE_URL?>fullStory">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByTime.svg" alt="time"/>
@@ -137,7 +142,7 @@ $upper = ucfirst(EXPLORE_FORM);
                 </a>
             </li>
             <li id="bydata">
-                <a href="<?php echo BASE_URL?>fullStory/">
+                <a href="<?php echo BASE_URL?>fullStory">
                     <div class="cards">
                         <div class="test">
                             <img src="<?php echo BASE_URL?>assets/images/ByData.svg" alt="data"/>
@@ -150,4 +155,4 @@ $upper = ucfirst(EXPLORE_FORM);
     </div>
 </div>
 
-<script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
+

@@ -35,13 +35,9 @@ $GLOBALS['routes'] = array(
     'admin' => 'admin.php',
     'module-test' => 'module-test.php',
 	'searchbar-results' => '../modules/searchbar/searchbar-results.php',
-	'explore' => 'explore.php',
-	'explorePeople' => 'explorePeople.php',
-	'exploreForm' => 'explorePeople.php',
-	'exploreEvents' => 'exploreEvents.php',
-	'explorePlaces' => 'explorePlaces.php',
-	'exploreSources' => 'exploreSources.php',
-	'eventsSub' => 'eventsSub.php',
+    'explore' => 'explore.php',
+    'exploreForm' => 'exploreForm.php',
+    'exploreFilters' => 'exploreFilters.php',
 	'projects' => 'projects.php',
 	'stories' => 'stories.php',
 	'about' => 'about.php',
@@ -49,9 +45,6 @@ $GLOBALS['routes'] = array(
 	'ourPartners' => 'ourPartners.php',
     'contactUs' => 'contactUs.php',
     'advancedSearch' => 'advancedSearch.php',
-    'peopleSub' => 'peopleSub.php',
-    'exploreFilters' => 'peopleSub.php',
-    'peopleSub2' => 'peopleSub2.php',
     'recordPerson' => 'recordPerson.php',
     'recordEvent' => 'recordEvent.php',
     'recordPlace' => 'recordPlace.php',
@@ -100,12 +93,16 @@ if ($fileArray[0] == 'recordPerson'){
 }
 
 $EXPLORE_JS_VARS = '';
-if ($fileArray[0] == 'explore' && count($fileArray) > 2){
+if ($fileArray[0] == 'explore' && count($fileArray) > 2){ //filter
     define('EXPLORE_FORM', $fileArray[1]);
     define('EXPLORE_FILTER', $fileArray[2]);
     $currentFile = 'exploreFilters';
+    //GET RID OF THIS AS SOON AS FUNCTIONS TO HANDLE TIME PROPERLY EXIST
+    if ($fileArray[2] == "time") {
+        $currentFile = 'timeSub';
+    }
     $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';var JS_EXPLORE_FILTERS = '".ucwords(str_replace("_", " ", EXPLORE_FILTER))."';</script>\n";
-}elseif ($fileArray[0] == 'explore' && count($fileArray) > 1){
+}elseif ($fileArray[0] == 'explore' && count($fileArray) > 1){ //form
     define('EXPLORE_FORM', $fileArray[1]);
     $currentFile = 'exploreForm';
     $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';</script>\n";

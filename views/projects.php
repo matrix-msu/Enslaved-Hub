@@ -11,6 +11,7 @@
         <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur.</p>
     </div>
 </div>
+
 <!-- all projects container-->
 <div class="container column projectcard">
     <div id="all-header" class="container cardheader-wrap">
@@ -35,7 +36,7 @@
     </div>
     <div class="container cardwrap">
         <ul class="row">
-            <li>
+            <!-- <li>
                 <a href="<?php echo BASE_URL?>fullProject/">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
@@ -58,7 +59,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -76,7 +77,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -90,7 +91,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -104,7 +105,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -118,7 +119,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -136,7 +137,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -154,7 +155,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo BASE_URL?>fullProject/">
+                <a href="<?php echo BASE_URL?>fullProject">
                     <div class="container cards">
                         <h2 class="card-title">Title of Project Goes Here Like This</h2>
                         <div class="connections">
@@ -170,10 +171,11 @@
                         <h3 class="card-view-story">View Project <div class="view-arrow"></div></h3>
                     </div>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/stories.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/projects.js"></script>

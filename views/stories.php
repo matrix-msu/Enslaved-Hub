@@ -55,7 +55,7 @@ if ($page < 1) {
             }
             ?>
             <!-- <li>
-                <a href="<?php echo BASE_URL?>fullStory/">
+                <a href="<?php echo BASE_URL?>fullStory">
                     <div class="container cards">
                         <p class="card-title">Title of Featured Story Goes Here Like This</p>
                         <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
