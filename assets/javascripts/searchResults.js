@@ -14,6 +14,23 @@ $(document).ready(function() {
             $(this).find("input").prop('checked', true);
         }
     });
+    $(".filter-menu ul#mainmenu").each(function(){
+        $(this).find(".filter-cat").each(function(){
+            if($(this).attr("name") === "gender"){
+                $(this).find("input").prop('checked', true);
+            }
+        });
+        // if( $(this).find("p").html() === upperForm){
+        //     //Check a checkbox if EXPLORE_FORM is set to this type
+        //     $(this).find("input").prop('checked', true);
+        // }
+        // else if(upperForm === 'All'){
+        //     //set all checkboxes to checked
+        //     $(this).find("input").prop('checked', true);
+        // }
+    });
+
+
 
     $(document).click(function () { // close things with clicked-off
         $('span.results-per-page').find("img:first").removeClass('show');

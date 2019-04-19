@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="buttonwrap">
-                <button id="direct-submit" name="submit" type="submit" data-submit="...Sending">Search</button>
+                <button id="direct-submit" type="submit" data-submit="...Sending">Search</button>
             </div>
         </form>
     </div>

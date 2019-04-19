@@ -45,6 +45,7 @@ $(document).ready(function(){
                     }
                 });
                 $(".cards li").each(function(){
+                    console.log($(this).find("span").html());
                     if($(this).find("span").html() == 0){
                         $(this).addClass("hide-category");
                     }

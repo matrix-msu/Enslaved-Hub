@@ -175,7 +175,7 @@
             <li class="cat-cat">People Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
             </li>
             <ul id="mainmenu">
-                <li class="filter-cat">Gender<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
+                <li class="filter-cat" id="gender">Gender<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
