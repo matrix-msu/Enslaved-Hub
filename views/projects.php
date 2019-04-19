@@ -176,6 +176,5 @@
     </div>
 </div>
 
-<script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/stories.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/projects.js"></script>

@@ -12,8 +12,9 @@
         }
         $upperForm = ucfirst(EXPLORE_FORM);
 
-        echo '<h4 class="last-page-header">';
+        //Conditions to put the previous page header in
         if(EXPLORE_FORM != null && EXPLORE_FORM != 'all'){
+            echo '<h4 class="last-page-header">';
             echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '"><span id="previous-title">' . $upperForm . ' // </span></a>';
         
             if($typeTitle != '' && $typeTitle != 'searchbar'){
@@ -22,8 +23,9 @@
             if($currentTitle != ''){
                 echo '<span id="current-title">' . $currentTitle . '</span>';
             }
+
+            echo '</h4>';
         }
-        echo '</h4>';
        ?>
         <!-- <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM?>"><span id="previous-title"><?php echo $upperForm ?> // </span></a><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM.'/'.$typeTitle?>"><span id="previous-title"><?php echo ucwords(str_replace('_', ' ', $typeTitle));?> // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4> -->
         <div class="search-title">
@@ -828,5 +830,5 @@
     </div>
 </div>
 
-<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/searchResults.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
