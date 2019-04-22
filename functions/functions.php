@@ -228,6 +228,56 @@ function blazegraph()
 
                 array_push($queryArray, $query);
                 break;
+            case 'projectAssoc':
+                $query = array('query' => "");
+                $query['query'] =
+                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?agentcount)
+                        WHERE {
+                          ?project wdt:P3 wd:Q264.         #find projects
+                           ?item wdt:P3/wdt:P2 wd:Q2;        #find agents
+                                p:P3  ?object .
+                            ?object prov:wasDerivedFrom ?provenance .
+                            ?provenance pr:P35 ?reference .
+                            ?reference wdt:P7 ?project;
+                                       wdt:P7 wd:'.$_GET['qid'].'.
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+                        }
+                        GROUP BY ?project ?projectLabel
+                        ORDER BY ?count';
+                array_push($queryArray, $query);
+                $query = array('query' => "");
+                $query['query'] =
+                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?eventcount)
+                        WHERE {
+                          ?project wdt:P3 wd:Q264.         #find projects
+                          ?item wdt:P3 wd:Q34;        #find events
+                                p:P3  ?object .
+                            ?object prov:wasDerivedFrom ?provenance .
+                            ?provenance pr:P35 ?reference .
+                            ?reference wdt:P7 ?project;
+                                       wdt:P7 wd:'.$_GET['qid'].'.
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+                        }
+                        GROUP BY ?project ?projectLabel
+                        ORDER BY ?count';
+                array_push($queryArray, $query);
+                $query = array('query' => "");
+                $query['query'] =
+                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?placecount)
+                        WHERE {
+                          ?project wdt:P3 wd:Q264.         #find projects
+                           ?item wdt:P3 wd:Q50;        #find places
+                                p:P3  ?object .
+                            ?object prov:wasDerivedFrom ?provenance .
+                            ?provenance pr:P35 ?reference .
+                            ?reference wdt:P7 ?project;
+                                       wdt:P7 wd:'.$_GET['qid'].'.
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+                        }
+                        GROUP BY ?project ?projectLabel
+                        ORDER BY ?count';
+                array_push($queryArray, $query);
+                break;
             case 'projects2':
                 $query = array('query' => "");
                 $query['query'] =
@@ -376,7 +426,6 @@ function blazegraph()
             }
         }
     }
-
 
 //
 //    $path = "functions/queries.json";
@@ -754,6 +803,27 @@ function createCards($results, $templates, $preset = 'default'){
                 }
 
                 break;
+            case 'projectAssoc':
+                if (isset($record['agentcount'])) {
+                    $card = '<div class="card-icon">
+                        <img src="'.BASE_IMAGE_URL.'Person-light.svg" alt="Card Icon"/>
+                        <span>'.$record['agentcount']['value'].'</span>
+                    </div>';
+                }
+                else if (isset($record['placecount'])) {
+                    $card = '<div class="card-icon">
+                        <img src="'.BASE_IMAGE_URL.'Place-light.svg" alt="Card Icon"/>
+                        <span>'.$record['placecount']['value'].'</span>
+                    </div>';
+                }
+                else if (isset($record['eventcount'])) {
+                    $card = '<div class="card-icon">
+                        <img src="'.BASE_IMAGE_URL.'Event-light.svg" alt="Card Icon"/>
+                        <span>'.$record['eventcount']['value'].'</span>
+                    </div>';
+                }
+                array_push($cards['projectAssoc'], $card);
+                break;
             case 'projects2':
                 $fullName = $record['projectLabel']['value'];
                 $connections = "";
@@ -779,7 +849,7 @@ function createCards($results, $templates, $preset = 'default'){
                 foreach ($templates as $template) {
                     if ($template == 'homeCard') {
                         $card = "<li>
-                        <a href='".BASE_URL."fullProject/$project'>
+                        <a href='".BASE_URL."project/$project'>
                         <div class='container cards'>
                             <h2 class='card-title'>$fullName</h2>
                             <div class='connections'>
