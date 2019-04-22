@@ -26,15 +26,17 @@ $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
     </div>
     <ul class="cards">
       <?php
+      $lowerWithDashes = strtolower(str_replace(" ", "_", EXPLORE_FILTER));
       $typeCategories = array();
       if (array_key_exists($upperWithSpaces, $GLOBALS['FILTER_TO_FILE_MAP'])){
 
           $typeCategories = $GLOBALS['FILTER_TO_FILE_MAP'][$upperWithSpaces];
+          ksort($typeCategories);
       }
 
       foreach (array_keys($typeCategories) as $category) { ?>
-          <li>
-              <a href="<?php echo BASE_URL;?>peopleResults/?<?php echo EXPLORE_FILTER;?>=<?php echo $category;?>">
+          <li class="hide-category">
+              <a href="<?php echo BASE_URL;?>search/<?php echo EXPLORE_FORM?>?<?php echo EXPLORE_FILTER;?>=<?php echo $category;?>">
                   <p class='type-title'><?php echo $category;?></p>
                   <div id="arrow"></div><span id="<?php echo $category;?>">0</span>
               </a>

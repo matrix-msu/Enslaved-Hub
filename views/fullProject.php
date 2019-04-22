@@ -64,7 +64,7 @@
     <div class="searchwrap">
         <label for="searchbar" class="sr-only">searhbar</label>
         <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Search through the Project's Resources here"/>
-        <div class="search-icon"></div>
+        <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
         <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
     </div>
 </form>

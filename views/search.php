@@ -8,10 +8,10 @@
         </div>
         <div class="heading-search">
             <h3>Search across 54,375,213 records from the Atlantic Slave Trade ...</h3>
-            <form class="search-form"  action="<?php echo BASE_URL;?>searchResults">
+            <form class="search-form"  action="<?php echo BASE_URL;?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
-                <input id="searchbar" class="search-field main-search" type="text" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
-                <a href="<?php echo BASE_URL;?>search"><div class="search-icon-2"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt=""></div></a>
+                <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
+                <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
         </div>
@@ -19,7 +19,7 @@
 </div>
 <main class="direct-search">
     <div class="searchwrap">
-        <form  action="<?php echo BASE_URL;?>searchResults">
+        <form  action="<?php echo BASE_URL;?>search/all">
             <h2>Direct Search</h2>
             <div class="search-section">
                 <div class="inputwrap">
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="buttonwrap">
-                <button id="direct-submit" name="submit" type="submit" data-submit="...Sending">Search</button>
+                <button id="direct-submit" type="submit" data-submit="...Sending">Search</button>
             </div>
         </form>
     </div>
