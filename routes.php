@@ -94,7 +94,7 @@ if ($fileArray[0] == 'recordPerson'){
     define('QID', $personQ);
     $currentFile = $fileArray[0];
 }
-if ($fileArray[0] == 'fullProject'){
+if ($fileArray[0] == 'project'){
     $projectQ = $fileArray[1];
     define('QID', $projectQ);
     $currentFile = $fileArray[0];
