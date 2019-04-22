@@ -314,6 +314,23 @@ function blazegraph()
                         ' . $limit;
                 array_push($queryArray, $query);
                 break;
+            case 'featured':
+                if($templates[0] == 'Place'){
+                    $query = array('query' => "");
+                    $query['query'] = <<<QUERY
+SELECT DISTINCT ?place ?placeLabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random) WHERE {
+    ?place wdt:P3 wd:Q50 .
+    ?place wikibase:statements ?statementcount .
+            FILTER (?statementcount >3  )
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    } ORDER BY ?random
+    LIMIT 8                
+QUERY;
+                }
+                
+                array_push($queryArray, $query);
+                break;
+
             default:
                 die;
         }
@@ -401,7 +418,8 @@ function createCards($results, $templates, $preset = 'default'){
         $cards[$template] = array();
     }
 
-    foreach ($results as $index => $record) {
+    foreach ($results as $index => $record) {  ///foreach result
+
         switch ($preset){
             case 'people':
                 $fullName = $record['name']['value'];
@@ -873,6 +891,30 @@ function createCards($results, $templates, $preset = 'default'){
                     </a>
                 </li>";
                     }
+
+                    array_push($cards[$template], $card);
+                }
+                break;
+            case 'featured':
+                foreach ($templates as $template) {
+                    $cardTitle = '';
+                    if($template == 'Place'){
+                        $cardTitle = $record['placeLabel']['value'];
+                    }
+                    $cardType = $template;
+                    $iconURL = BASE_IMAGE_URL . $template . "-light.svg";
+                    $link = BASE_URL . "recordPerson/?item=Q503";
+                    $background = "background-image: url(" . BASE_IMAGE_URL . $cardType . "Card.jpg)";
+                    $card = <<<HTML
+<li style="$background">
+    <a href="$link">
+        <div class="cards">
+            <img src="$iconURL" alt="Person icon">
+            <h3>$cardTitle</h3>
+        </div>
+    </a>
+</li>
+HTML;
 
                     array_push($cards[$template], $card);
                 }
