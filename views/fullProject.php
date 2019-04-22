@@ -21,18 +21,18 @@
     </div>
 </div>
 <!-- affiliations -->
-<div class="affiliations">
+<!-- <div class="affiliations">
     <h2>Affiliations</h2>
     <hr>
     <div class="affiliates">
         <img src="<?php echo BASE_URL;?>assets/images/bl_logo_100.png" alt="British Library logo"/>
         <img src="<?php echo BASE_URL;?>assets/images/MSU.svg" alt="MSU logo"/>
     </div>
-</div>
+</div> -->
 <!-- project leads -->
 <div class="project-leads">
     <div class="leadwrap">
-        <h2>Project Leads</h2>
+        <h2>Principal Investigators</h2>
         <hr>
         <div class="leads">
             <div class="lead-card">
@@ -59,6 +59,36 @@
         </div>
     </div>
 </div>
+<!-- Contributors -->
+<!-- <div class="project-contributors">
+    <div class="contributorwrap">
+        <h2>Contributors</h2>
+        <hr>
+        <div class="contributors">
+            <div class="contributor-card">
+                <div class="contributor-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval2.jpg);"></div>
+                <div class="contributor-text">
+                    <h3>Person Name</h3>
+                    <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
+                </div>
+            </div>
+            <div class="contributor-card">
+                <div class="contributor-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval3.jpg);"></div>
+                <div class="contributor-text">
+                    <h3>Person Name</h3>
+                    <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
+                </div>
+            </div>
+            <div class="contributor-card">
+                <div class="contributor-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval4.jpg);"></div>
+                <div class="contributor-text">
+                    <h3>Person Name</h3>
+                    <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 <!-- searchbar -->
 <form class="search-projects">
     <div class="searchwrap">
@@ -882,7 +912,10 @@
     <a href="#">project.past.matrix.msu.edu</a>
 </div>
 
-
+<script>
+    var QID = <?php echo json_encode(QID); ?>;
+    var infourl = <?php echo json_encode(BASE_WIKI_URL . 'wiki/Special:EntityData/' . QID); ?>;
+</script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullProject.js"></script>
