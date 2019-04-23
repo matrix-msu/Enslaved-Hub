@@ -479,6 +479,30 @@ function counterOfPlaceType(){
   }
 }
 
+function counterOfCity(){
+  $query= <<<QUERY
+SELECT DISTINCT ?place ?placeLabel ?place2 ?place2Label  WHERE {
+  ?place wdt:P3 wd:Q50; #it's a place
+      wdt:P80 wd:Q29.#place is a city
+OPTIONAL {?place2 wdt:P10 ?place.} #place is locatedIn a city
+
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .} 
+}order by ?placeLabel
+QUERY;
+
+  $encode=urlencode($query);
+  $call=API_URL.$encode;
+  $res=callAPI($call,'','');
+
+  $res= json_decode($res);
+
+  if (!empty($res)){
+      return json_encode($res->results->bindings);
+  }else{
+      return $res;
+  }
+}
+
 function counterOfSourceType(){
   $query="SELECT ?sourcetype ?sourcetypeLabel ?count
           WHERE
@@ -557,6 +581,9 @@ function counterOfType() {
     if($category == "Places") {
         if ($type == "Place Type"){
           return counterOfPlaceType();
+        }
+        if ($type == "City"){
+          return counterOfEventPlace();
         }
     }
 

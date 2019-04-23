@@ -968,12 +968,16 @@ function createCards($results, $templates, $preset = 'default'){
             case 'featured':
                 foreach ($templates as $template) {
                     $cardTitle = '';
+                    $qid = '';
                     if($template == 'Place'){
                         $cardTitle = $record['placeLabel']['value'];
+                        $uri = $record['place']['value'];
+                        $uriarr = explode('/', $uri);
+                        $qid = end($uriarr);
                     }
                     $cardType = $template;
                     $iconURL = BASE_IMAGE_URL . $template . "-light.svg";
-                    $link = BASE_URL . "recordPerson/?item=Q503";
+                    $link = BASE_URL . "record" . $cardType . "/?item=" . $qid;
                     $background = "background-image: url(" . BASE_IMAGE_URL . $cardType . "Card.jpg)";
                     $card = <<<HTML
 <li style="$background">
