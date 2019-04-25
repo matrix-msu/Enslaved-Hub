@@ -5,21 +5,32 @@ $(document).ready(function(){
     });
 
     $.ajax({
-        url: infourl,
+        url: BASE_URL+"api/getProjectFullInfo",
         type: "GET",
+        data: {qid: QID},
         success: function (data) {
-            data = data['entities'][QID];
+            data = JSON.parse(data);
             console.log(data);
-            $(".project-headers > h1").html(data.labels.en.value);
-            $("#current-title").html(data.labels.en.value);
-            $(".container.infowrap").html(data.descriptions.en.value);
-            if ('P29' in data.claims) {
+            $(".project-headers > h1").html(data.title.value);
+            $("#current-title").html(data.title.value);
+            $(".container.infowrap").html(data.desc.value);
+            if ('link' in data) {
                 $('#details').click(function () {
-                    document.location.href = data.claims.P29[0].mainsnak.datavalue.value;
+                    document.location.href = data.link.value;
                 });
             }
             else {
                 $('.project-button').hide();
+            }
+            var pis = data.piNames.value.split("||");
+            pis.forEach(function(name) {
+                $('.leads').append('<div class="lead-card"><div class="lead-text"><h3>'+name+'</h3></div></div>');
+            });
+            if ('contributor' in data) {
+                var contributors = data.contributor.value.split("||");
+                contributors.forEach(function(name) {
+                    $('.contributors').append('<div class="contributor-card"><div class="contributor-text"><h3>'+name+'</h3></div></div>');
+                });
             }
         }
     });
