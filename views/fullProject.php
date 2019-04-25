@@ -35,7 +35,7 @@
         <h2>Principal Investigators</h2>
         <hr>
         <div class="leads">
-            <div class="lead-card">
+            <!-- <div class="lead-card">
                 <div class="lead-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval2.jpg);"></div>
                 <div class="lead-text">
                     <h3>Person Name</h3>
@@ -55,17 +55,17 @@
                     <h3>Person Name</h3>
                     <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
 <!-- Contributors -->
-<!-- <div class="project-contributors">
+<div class="project-contributors">
     <div class="contributorwrap">
         <h2>Contributors</h2>
         <hr>
         <div class="contributors">
-            <div class="contributor-card">
+            <!-- <div class="contributor-card">
                 <div class="contributor-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval2.jpg);"></div>
                 <div class="contributor-text">
                     <h3>Person Name</h3>
@@ -85,10 +85,10 @@
                     <h3>Person Name</h3>
                     <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
-</div> -->
+</div>
 <!-- searchbar -->
 <form class="search-projects">
     <div class="searchwrap">
