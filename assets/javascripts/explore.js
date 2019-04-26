@@ -46,17 +46,30 @@ $(document).ready(function(){
             data: {type: JS_EXPLORE_FILTERS,  category:JS_EXPLORE_FORM},
             'success': function (data) {
                 data = JSON.parse(data);
-                console.log('data', data);
                 data.forEach(function(record) {
-                    console.log(record)
                     var label = "";
+                    var count = "";
+                    console.log(record);
                     for(var key in record) {
                         if(key.match("Label$")) {
                             label = record[key]['value'];
                         }
+                        if(key.match("count$")) {
+                            count = record[key]['value'];
+                        }
+                        else if(key.match("Count$")) {
+                            if(count !== ""){
+                                var count2 = record[key]['value'];
+                                count = +count + +count2;
+                            }
+                            else{
+                                count = record[key]['value'];
+                            }
+                            
+                        }
                     }
                     if (label != ""){
-                        var count = record['count']['value'];
+                        
                         var span = $("a:contains("+label+")").find('span');
                         if ($(span).length > 0){
                             $(span).html(count);
@@ -64,7 +77,6 @@ $(document).ready(function(){
                     }
                 });
                 $(".cards li").each(function(){
-                    console.log($(this).find("span").html());
                     if($(this).find("span").html() != 0){
                         $(this).removeClass("hide-category");
                     }

@@ -1,4 +1,4 @@
-$().ready(function(){
+//$(document).ready(function(){
 
   function initializeTimeline() {
       // Timeline points and arrows
@@ -24,7 +24,7 @@ $().ready(function(){
       
 
       //Move container to correct position
-      $tlContainer.appendTo(".timeline-section");
+      //$tlContainer.appendTo(".timeline-section");
     
       // Set event title positioning on point hover
       $eventPoints.find('.event-title').each(function() {
@@ -140,22 +140,4 @@ $().ready(function(){
 
     }
 
-
-    // fill in html and start the js
-    $.ajax({
-        url: BASE_URL + "api/getPersonRecordHtml",
-        type: "GET",
-        data: {
-            QID: QID,
-            type: 'timeline'
-        },
-        'success': function (html) {
-            //console.log('timeline html', html)
-            $('main.full-record').html(html)
-
-            initializeTimeline();
-        }
-    });
-
-
-});
+//});
