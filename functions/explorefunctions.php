@@ -663,19 +663,36 @@ function counterOfType() {
 
 function getEventDateRange() {
     $fullResults = [];
-    $query='SELECT ?startyear ?endyear
-            WHERE {
-              SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-              ?event wdt:P3 wd:Q34.
-              ?event wdt:P13 ?startdate.
-              BIND(str(YEAR(?startdate)) AS ?startyear).
-
-              OPTIONAL {?event wdt:P14 ?enddate.}
-              BIND(str(YEAR(?enddate)) AS ?endyear).
-
-
-            } ORDER BY desc(?startyear) desc(?endyear)
-            LIMIT 1';
+    $query='SELECT ?year ?yearend WHERE {
+            {SELECT ?year WHERE {
+              ?event wdt:P3 wd:Q34; #event
+                     wdt:P13 ?date.
+                BIND(str(YEAR(?date)) AS ?year).
+              }ORDER BY desc(?year)
+            LIMIT 1}
+            UNION
+            {
+            select ?yearend where {
+              ?event wdt:P3 wd:Q34; #event
+                     wdt:P14 ?enddate.
+                BIND(str(YEAR(?enddate)) AS ?yearend).
+              }ORDER BY desc(?yearend)
+            LIMIT 1
+            }
+            }';
+    // $query='SELECT ?startyear ?endyear
+    //         WHERE {
+    //           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    //           ?event wdt:P3 wd:Q34.
+    //           ?event wdt:P13 ?startdate.
+    //           BIND(str(YEAR(?startdate)) AS ?startyear).
+    //
+    //           OPTIONAL {?event wdt:P14 ?enddate.}
+    //           BIND(str(YEAR(?enddate)) AS ?endyear).
+    //
+    //
+    //         } ORDER BY desc(?startyear) desc(?endyear)
+    //         LIMIT 1';
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -688,19 +705,25 @@ function getEventDateRange() {
         $fullResults['max'] = $res;
     }
 
-    $query='SELECT ?startyear ?endyear
-            WHERE {
-              SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-              ?event wdt:P3 wd:Q34.
-              ?event wdt:P13 ?startdate.
-              BIND(str(YEAR(?startdate)) AS ?startyear).
-
-              OPTIONAL {?event wdt:P14 ?enddate.}
-              BIND(str(YEAR(?enddate)) AS ?endyear).
-
-
-            } ORDER BY asc(?startyear) asc(?endyear)
-            LIMIT 1';
+    $query='SELECT ?year WHERE {
+            ?event wdt:P3 wd:Q34; #event
+                   wdt:P13 ?date.
+              BIND(str(YEAR(?date)) AS ?year).
+            }ORDER BY ASC(?year)
+          LIMIT 1';
+    // $query='SELECT ?startyear ?endyear
+    //         WHERE {
+    //           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    //           ?event wdt:P3 wd:Q34.
+    //           ?event wdt:P13 ?startdate.
+    //           BIND(str(YEAR(?startdate)) AS ?startyear).
+    //
+    //           OPTIONAL {?event wdt:P14 ?enddate.}
+    //           BIND(str(YEAR(?enddate)) AS ?endyear).
+    //
+    //
+    //         } ORDER BY asc(?startyear) asc(?endyear)
+    //         LIMIT 1';
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -836,6 +859,35 @@ function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
   $onestatement['Places']=$place_array;
   return $onestatement;
 
+}
+function getProjectFullInfo() {
+    $query = 'SELECT  ?title ?desc ?link
+             (group_concat(distinct ?pinames; separator = "||") as ?piNames)
+             (group_concat(distinct ?contributor; separator = ", ") as ?contributor)
+            WHERE
+            {
+             VALUES ?project {wd:'.$_GET['qid'].'} #Q number needs to be changed for every project.
+              ?project wdt:P3 wd:Q264. #all projects
+              OPTIONAL{?project wdt:P29 ?link. }
+              ?project schema:description ?desc.
+              ?project rdfs:label ?title.
+              OPTIONAL{ ?project wdt:P28 ?contributor.}
+              ?project wdt:P95 ?pi.
+              ?pi rdfs:label ?pinames.
+              SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+            }GROUP BY ?title ?desc ?link';
+
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return json_encode($res->results->bindings[0]);
+    }else{
+        return $res;
+    }
 }
 function getpersonfullInfo($qitem){
    $baseuri = WIKI_ENTITY_URL;

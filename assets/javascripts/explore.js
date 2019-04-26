@@ -29,8 +29,13 @@ $(document).ready(function(){
                 'success': function (data) {
                     data = JSON.parse(data);
                     console.log('data', data);
-                    var min = data['min'][0]['startyear']['value'];
-                    var max = data['max'][0]['startyear']['value'];
+                    // var min = data['min'][0]['startyear']['value'];
+                    // var max = data['max'][0]['startyear']['value'];
+                    var min = data['min'][0]['year']['value'];
+                    var max = data['max'][0]['year']['value'];
+                    if (parseInt(max) < parseInt(data['max'][1]['yearend']['value'])) {
+                        max = data['max'][1]['yearend']['value'];
+                    }
                     for (var i = min; i <= max; i++) {
                         console.log(i);
                         $("#startYear").append("<option value='"+i+"'>"+i+"</option>");
