@@ -325,6 +325,10 @@
     
                         &:hover{
                             color: $sub-base;
+
+                            .detail-menu{
+                                display: block;
+                            }
                         }
                     }
                     h4{
@@ -350,9 +354,9 @@
                         margin-left: -9vw; //-100px
                         z-index: 404;
     
-                        &.hovered{
-                            display: block;
-                        }
+                        // &.hovered{
+                        //     display: block;
+                        // }
     
                         h1{
                             font-size: 18px;

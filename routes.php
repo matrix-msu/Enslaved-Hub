@@ -41,6 +41,7 @@ $GLOBALS['routes'] = array(
     'exploreForm' => 'exploreForm.php',
     'exploreFilters' => 'exploreFilters.php',
     'exploreResults' => 'exploreResults.php',
+    'recordForm' => 'recordPerson.php',
 
 	'projects' => 'projects.php',
 	'stories' => 'stories.php',
@@ -88,12 +89,12 @@ if( $currentFile == 'exploreResults' && isset($_GET)){
 }
 
 
-// Full person record page check
 $fileArray = explode('/', $currentFile);
-if ($fileArray[0] == 'recordPerson'){
-    $personQ = $fileArray[1];
-    define('QID', $personQ);
-    $currentFile = $fileArray[0];
+
+if ($fileArray[0] == 'record' && count($fileArray) > 2){
+    define('RECORD_FORM', $fileArray[1]);
+    define('QID', $fileArray[2]);
+    $currentFile = 'recordPerson';
 }
 if ($fileArray[0] == 'project'){
     $projectQ = $fileArray[1];

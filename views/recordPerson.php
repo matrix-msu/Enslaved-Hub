@@ -62,7 +62,8 @@
 //  $hashes = range($first_date_hash, $final_date_hash, $increment);
 //  $hash_count = count($hashes);
 //  $hash_range = end($hashes) - $hashes[0];
-//?>
+//
+?>
 
 
 <!-- Person Full Record page-->
@@ -76,7 +77,11 @@
 </div>
 <div class="jump-buttons person-buttons">
     <div class="jumpwrap">
-        <button class="jump-button" id="timeline">Jump to Person Timeline</button>
+        <?php
+            if(RECORD_FORM == 'person'){
+                echo '<button class="jump-button" id="timeline">Jump to Person Timeline</button>';
+            }
+        ?>
         <button class="jump-button" id="details">Jump to Person Details</button>
     </div>
 </div>
@@ -93,10 +98,9 @@
 <!-- info container-->
 <div class="container info person-record-info">
     <div class="container infowrap">
-        <p class="description">
+        <!-- <p class="description">
             Description Here
-<!--        --><?php //echo $person_array['Description']?>
-        </p>
+        </p> -->
     </div>
 </div>
 <!-- detail section -->
@@ -152,9 +156,9 @@
     </div>
 </div>
 <!-- Timeline -->
-<main class="full-record">
+<div class="timeline-container">
 
-</main>
+</div>
 <!-- Story Connections -->
 <div class="story-connections record-connections">
     <div class="connectionwrap">
@@ -230,6 +234,8 @@
 
 <script>
     var QID = "<?php echo QID;?>";
+    var recordform = "<?php echo RECORD_FORM ?>";
+    console.log(QID);
     // load the page data with ajax here
     $(document).ready(function () {
         // name, details, timeline, connections, featured stories
@@ -239,27 +245,25 @@
             type: "GET",
             data: {
                 QID: QID,
-                type: 'name'
+                type: recordform
             },
-            'success': function (html) {
-//                console.log('name html', html);
-                $('.middlewrap').html(html);
-            }
-        });
-
-        $.ajax({
-            url: BASE_URL + "api/getPersonRecordHtml",
-            type: "GET",
-            data: {
-                QID: QID,
-                type: 'details'
+            'success': function (json) {
+                var html = JSON.parse(json);
+                console.log(html);
+                $('.middlewrap').html(html.header);
+                $('.infowrap').html(html.description);
+                $('.detail-section').html(html.details);
+                // $('.timeline-container').html(html.timeline);
+                // initializeTimeline();
+                <?php
+                    if(RECORD_FORM == 'person'){
+                        echo "$('.timeline-container').html(html.timeline);\n";
+                        echo "initializeTimeline(); //function in timeline.js\n";
+                    }
+                ?>
             },
-            'success': function (html) {
-                html = JSON.parse(html);
-                var description = html.description;
-                var details = html.details;
-                $('.description').html(description);
-                $('.detailwrap').html(details);
+            'error': function (xhr, status, error){
+                console.log('fail');
             }
         });
 

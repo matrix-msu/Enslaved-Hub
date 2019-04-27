@@ -977,7 +977,7 @@ function createCards($results, $templates, $preset = 'default'){
                     }
                     $cardType = $template;
                     $iconURL = BASE_IMAGE_URL . $template . "-light.svg";
-                    $link = BASE_URL . "record" . $cardType . "/?item=" . $qid;
+                    $link = BASE_URL . "record/" . strtolower($cardType) . "/" . $qid;
                     $background = "background-image: url(" . BASE_IMAGE_URL . $cardType . "Card.jpg)";
                     $card = <<<HTML
 <li style="$background">

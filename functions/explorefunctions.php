@@ -187,34 +187,6 @@ function counterOfRole(){
   }
 }
 
-function counterOfEventType() {
-    $query="SELECT ?eventType ?eventTypeLabel ?count
-        WHERE
-        {
-          {
-            SELECT ?eventType (COUNT(?event) AS ?count) WHERE {
-              ?event wdt:P3 wd:Q34.
-              ?event wdt:P81 ?eventType.
-            }
-            GROUP BY ?eventType
-          }
-          SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-        }
-        ORDER BY DESC(?count)
-      ";
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        return json_encode($res->results->bindings);
-    }else{
-        return $res;
-    }
-}
-
 // Count the number of people in each age category
 function counterOfAge(){
 //  $adultQueries = '';
@@ -421,6 +393,68 @@ function counterOfEthnodescriptor(){
   }
 }
 
+function counterOfPeoplePlace() {
+  $query= <<<QUERY
+SELECT DISTINCT ?placeLabel (COUNT(?agent) as ?count)  WHERE {
+  ?place wdt:P3 wd:Q50 . #it's a place
+  ?event wdt:P12 ?place.
+  ?agent wdt:P3/wdt:P2 wd:Q2;
+      p:P82 [ #with property "hasName" mandatory
+          
+            pq:P30 ?event #recordeAt Event
+          
+        ];
+  
+  SERVICE wikibase:label {
+      bd:serviceParam wikibase:language "en" .
+      
+  }
+}GROUP BY ?placeLabel
+ORDER BY ?placeLabel
+
+QUERY;
+
+  $encode=urlencode($query);
+  $call=API_URL.$encode;
+  $res=callAPI($call,'','');
+
+  $res= json_decode($res);
+
+  if (!empty($res)){
+      return json_encode($res->results->bindings);
+  }else{
+      return $res;
+  }
+}
+
+function counterOfEventType() {
+  $query="SELECT ?eventType ?eventTypeLabel ?count
+      WHERE
+      {
+        {
+          SELECT ?eventType (COUNT(?event) AS ?count) WHERE {
+            ?event wdt:P3 wd:Q34.
+            ?event wdt:P81 ?eventType.
+          }
+          GROUP BY ?eventType
+        }
+        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+      }
+      ORDER BY DESC(?count)
+    ";
+  $encode=urlencode($query);
+  $call=API_URL.$encode;
+  $res=callAPI($call,'','');
+
+  $res= json_decode($res);
+
+  if (!empty($res)){
+      return json_encode($res->results->bindings);
+  }else{
+      return $res;
+  }
+}
+
 function counterOfEventPlace(){
     $query="SELECT ?place ?placeLabel ?count
             WHERE
@@ -451,20 +485,18 @@ function counterOfEventPlace(){
 }
 
 function counterOfPlaceType(){
-  $query="SELECT ?placeType ?placeTypeLabel ?count
-          WHERE
-          {
-            {
-              SELECT ?placeType (COUNT(?place) AS ?count) WHERE {
-                ?place wdt:P3 wd:Q50.
-                ?place wdt:P80 ?placeType.
-              }
-              GROUP BY ?placeType
-            }
-            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-          }
-          ORDER BY ASC(?placeTypeLabel)
-    ";
+  $query= <<<QUERY
+SELECT ?placeType ?placeTypeLabel (COUNT(?place) AS ?count)
+WHERE
+{     ?place wdt:P3 wd:Q50.
+      ?place wdt:P80 ?placeType.
+    
+    
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?placeType ?placeTypeLabel
+ORDER BY ASC(?placeTypeLabel)
+QUERY;
 
   $encode=urlencode($query);
   $call=API_URL.$encode;
@@ -481,13 +513,44 @@ function counterOfPlaceType(){
 
 function counterOfCity(){
   $query= <<<QUERY
-SELECT DISTINCT ?place ?placeLabel ?place2 ?place2Label  WHERE {
-  ?place wdt:P3 wd:Q50; #it's a place
-      wdt:P80 wd:Q29.#place is a city
-OPTIONAL {?place2 wdt:P10 ?place.} #place is locatedIn a city
+SELECT DISTINCT ?city ?cityLabel (COUNT(?place) AS ?count) WHERE {
+  ?city wdt:P3 wd:Q50; #it's a place
+      wdt:P80 wd:Q29.#?city is a city
+OPTIONAL {?place wdt:P10 ?city.} #place is locatedIn a city
 
 SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .} 
-}order by ?placeLabel
+}GROUP BY ?city ?cityLabel
+order by ?cityLabel 
+
+QUERY;
+
+  $encode=urlencode($query);
+  $call=API_URL.$encode;
+  $res=callAPI($call,'','');
+
+  $res= json_decode($res);
+
+  if (!empty($res)){
+      return json_encode($res->results->bindings);
+  }else{
+      return $res;
+  }
+}
+
+function counterOfProvince(){
+  $query= <<<QUERY
+SELECT DISTINCT ?provinceLabel (COUNT(?city) as ?cityCount) (COUNT(?place) as ?placeCount) WHERE {
+  ?province wdt:P80 wd:Q31 . #it's a province
+  ?city wdt:P10 ?province. #city located in province
+  OPTIONAL{?place wdt:P10 ?city} #optional places located in city
+  SERVICE wikibase:label {
+      bd:serviceParam wikibase:language "en" .
+      
+  }
+}GROUP BY ?provinceLabel 
+ORDER BY ?provinceLabel
+
+
 QUERY;
 
   $encode=urlencode($query);
@@ -583,7 +646,10 @@ function counterOfType() {
           return counterOfPlaceType();
         }
         if ($type == "City"){
-          return counterOfEventPlace();
+          return counterOfCity();
+        }
+        if ($type == "Province"){
+          return counterOfProvince();
         }
     }
 
@@ -999,32 +1065,32 @@ function detailPersonHtml($statement,$label){
         array_pop($statementArr);
     }
 
-
-
+    $baseurl = BASE_URL;
+    $upperlabel = strtoupper($label);
     $html = '';
 
-    $html .= '
-    <a href="'.BASE_URL.'explorePeople/?search='.$statement.'">
-        <div class="detail">
-            <h3>'.strtoupper($label).'</h3>
-            <div class="detail-bottom">
-            ';
+    $html .= <<<HTML
+<a href="{$baseurl}explorePeople/?search={$statement}">
+    <div class="detail">
+        <h3>$upperlabel</h3>
+        <div class="detail-bottom">
+HTML;
 
 
-                //For each detail to add create it in seperate divs with a detail menu in each
-                for ($x = 0; $x <= (count($statementArr) - 1); $x++){
-                    $html .= "<div>" . $statementArr[$x];
-                    $html .= '<div class="detail-menu"> <h1>Metadata</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>';
-                    $html .= "</div>";
+    //For each detail to add create it in seperate divs with a detail menu in each
+    for ($x = 0; $x <= (count($statementArr) - 1); $x++){
+        $html .= "<div>" . $statementArr[$x];
+        $html .= '<div class="detail-menu"> <h1>Metadata</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>';
+        $html .= "</div>";
 
-                    if ($x != (count($statementArr) - 1)){
-                        $html.= "<h4> | </h4>";
-                    }
-                }
+        if ($x != (count($statementArr) - 1)){
+            $html.= "<h4> | </h4>";
+        }
+    }
 
     $html .= '</div></div></a>';
 
-   return $html;
+    return $html;
 
 }
 
@@ -1033,7 +1099,7 @@ function detailPersonHtml($statement,$label){
 
 
 function getPersonRecordHtml(){
-    $personQ = $_REQUEST['QID'];
+    $qid = $_REQUEST['QID'];
     $type = $_REQUEST['type'];
 
 //    $call=WIKI_ENTITY_URL.$personQ.'.json';
@@ -1045,6 +1111,7 @@ function getPersonRecordHtml(){
 
 
     // get results from queries
+    /*
     switch ($type){
         case 'name':
             $query['query'] ='
@@ -1289,11 +1356,313 @@ function getPersonRecordHtml(){
         case 'featuredStories':
 
             break;
+    } */
+
+    //Timeline
+    // Code for creating events on Timeline
+    // Replace with Kora 3 events
+    $events = [
+      ['kid' => '1', 'title' => 'birth', 'description' => 'Person was born', 'year' => 1730],
+      ['kid' => '2', 'title' => 'event 1', 'description' => 'Example description 1', 'year' => 1739],
+      ['kid' => '3', 'title' => 'event 2', 'description' => 'Example description 2', 'year' => 1741],
+      ['kid' => '4', 'title' => 'event 3', 'description' => 'Example description 3', 'year' => 1745],
+      ['kid' => '5', 'title' => 'event 4', 'description' => 'Example description 4', 'year' => 1756],
+      ['kid' => '6', 'title' => 'event 5', 'description' => 'Example description 5', 'year' => 1756.5],
+      ['kid' => '7', 'title' => 'event 6', 'description' => 'Example description 6', 'year' => 1760],
+      ['kid' => '8', 'title' => 'event 7', 'description' => 'Example description 7', 'year' => 1763],
+      ['kid' => '9', 'title' => 'event 8', 'description' => 'Example description 8', 'year' => 1774],
+      ['kid' => '10', 'title' => 'event 9', 'description' => 'Example description 9', 'year' => 1789],
+      ['kid' => '11', 'title' => 'event 10', 'description' => 'Example description 10', 'year' => 1789.5],
+      ['kid' => '12', 'title' => 'event 11', 'description' => 'Example description 11', 'year' => 1794],
+      ['kid' => '13', 'title' => 'event 12', 'description' => 'Example description 12', 'year' => 1796],
+      ['kid' => '14', 'title' => 'event 13', 'description' => 'Example description 13', 'year' => 1799],
+      ['kid' => '15', 'title' => 'event 14', 'description' => 'Example description 14', 'year' => 1800],
+      ['kid' => '16', 'title' => 'event 15', 'description' => 'Example description 15', 'year' => 1801],
+      ['kid' => '17', 'title' => 'event 16', 'description' => 'Example description 16', 'year' => 1803],
+      ['kid' => '18', 'title' => 'event 17', 'description' => 'Example description 17', 'year' => 1804],
+      ['kid' => '19', 'title' => 'event 18', 'description' => 'Example description 18', 'year' => 1806],
+      ['kid' => '20', 'title' => 'event 19', 'description' => 'Example description 19', 'year' => 1807],
+  ];
+
+  $timeline_event_dates = [];
+  foreach ($events as $event) {
+      // If there are months and days, put the year into decimal format
+      // Ex: March 6, 1805 = 1805.18
+      array_push($timeline_event_dates, $event['year']);
+  }
+
+  $first_date = min($timeline_event_dates);
+  $final_date = max($timeline_event_dates);
+  $diff = $final_date - $first_date;
+
+  if ($diff < 10) {
+      $increment = 1;
+  } elseif ($diff < 20) {
+      $increment = 2;
+  } elseif ($diff < 40) {
+      $increment = 5;
+  } elseif ($diff < 90) {
+      $increment = 10;
+  } else {
+      $increment = 20;
+  }
+
+  // Hash starts at year that is divisible by incrememnt and before the first event
+  $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
+  $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
+
+  $hashes = range($first_date_hash, $final_date_hash, $increment);
+  $hash_count = count($hashes);
+  $hash_range = end($hashes) - $hashes[0];
+
+    //QUERY FOR RECORD INFO
+    $query['query'] = <<<QUERY
+SELECT ?name ?desc ?located  ?type ?geonames ?code 
+(group_concat(distinct ?refName; separator = "||") as ?sources)
+(group_concat(distinct ?pname; separator = "||") as ?researchprojects)
+  WHERE
+{
+  VALUES ?place {wd:$qid} #Q number needs to be changed for every place. 
+  ?place wdt:P3 wd:Q50;
+        ?property  ?object .
+  ?object prov:wasDerivedFrom ?provenance .
+  ?provenance pr:P35 ?source .
+  ?source rdfs:label ?refName;
+          wdt:P7 ?project.
+  ?project rdfs:label ?pname.
+  ?place schema:description ?desc.
+  ?place rdfs:label ?name.
+  ?place wdt:P80 ?placetype.
+  ?placetype rdfs:label ?type.
+  OPTIONAL{?place wdt:P10 ?locatedIn. 
+          ?locatedIn rdfs:label ?located}.
+  OPTIONAL{ ?place wdt:P71 ?geonames.}
+    OPTIONAL{ ?place wdt:P96 ?code.}
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}GROUP BY ?name ?desc ?located  ?type ?geonames ?code
+    
+
+QUERY;
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $record = $result[0];
+
+    //Get variables from query
+
+    //Name
+    $fullName = $record['name']['value'];
+
+    //Checks for start and end years and creates date range
+    if (isset($record['startyear']) && isset($record['startyear']['value'])){
+        $startYears = explode('||', $record['startyear']['value']);
+        $startYear = min($startYears);
+    } else {
+        $startYear = '';
+    }
+
+    if (isset($record['endyear']) && isset($record['endyear']['value'])){
+        $endYears = explode('||', $record['endyear']['value']);
+        $endYear = max($endYears);
+    } else {
+        $endYear = '';
+    }
+
+    $dateRange = '';
+    if ($startYear != '' && $endYear != ''){
+        $dateRange = "$startYear - $endYear";
+    } elseif ($endYear == ''){
+        $dateRange = $startYear;
+    } elseif ($startYear == '') {
+        $dateRange = $endYear;
+    }
+
+    //Description
+    if (isset($record['desc']) && isset($record['desc']['value']) ){
+      $description = $record['desc']['value'];
+    } else {
+      $description = '';
+    }
+
+    //Location
+    if (isset($record['located']) && isset($record['located']['value']) ){
+      $located = $record['located']['value'];
+    } else {
+      $located = '';
+    }
+
+    //Geonames
+    if (isset($record['geonames']) && isset($record['geonames']['value']) ){
+      $geoname = $record['geonames']['value'];
+    } else {
+      $geoname = '';
+    }
+
+    //Code
+    if (isset($record['code']) && isset($record['code']['value']) ){
+      $code = $record['code']['value'];
+    } else {
+      $code = '';
     }
 
     // create the html based on the type of results
+    $htmlArray = [];
+
+    //Header w/ date range
+    $html = '';
+    if($type == "person"){
+      $type = "people";
+    }
+    else{
+      $type = $type . 's';
+    }
+    $url = BASE_URL . "explore/" . $type;
+    $recordform = ucfirst($type);
+
+    $html .= <<<HTML
+<h4 class='last-page-header'>
+    <a id='last-page' href="$url"><span id=previous-title>$recordform // </span></a>
+    <span id='current-title'>$fullName</span>
+</h4>
+<h1>$fullName</h1>
+<h2 class='date-range'><span>$dateRange</span></h2>
+HTML;
+
+    $htmlArray['header'] = $html;
+
+    //Description
     $html = '';
 
+    $html .= '<p class="description">' . $description . '</p>';
+
+    $htmlArray['description'] = $html;
+
+    //Detail section
+    $html = '';
+
+    $html .= '<div class="detailwrap">';
+    $html .= detailPersonHtml($fullName, "Name");
+    $html .= detailPersonHtml($located, "Location");
+    $html .= detailPersonHtml($geoname, "Geoname");
+    $html .= detailPersonHtml($code, "Code");
+    $html .= detailPersonHtml('Projects here', "Contributing Project");
+    $html .= '</div>';
+
+    $htmlArray['details'] = $html;
+
+    //Timeline section
+    $html = '';
+
+    $html = <<<HTML
+<div class="timelinewrap">
+  <section class="fr-section timeline-section">
+  <h2 class="section-title">Person Timeline</h2>
+
+  <div class="timeline-info-container" kid="{$events[0]['kid']}">
+      <div class="arrow-pointer-bottom"></div>
+      <div class="arrow-pointer-top"></div>
+
+      <div class="info-header">
+          <div class="info-select info-select-event active" data-select="event">
+              <p>Event</p>
+              <p class="large-text">Birth</p>
+          </div>
+          <div class="info-select info-select-place" data-select="place">
+              <p>Place</p>
+              <p class="large-text">Batendu</p>
+          </div>
+      </div>
+HTML;
+
+    foreach($events as $index => $event) {
+      $html .= '
+      <div class="event-info-'.$event['kid'].' infowrap '.($index == 0 ? 'active' : '').'">
+          <div class="info-column">
+              <p><span class="bold">Start Date:</span> 1804</p>
+              <p><span class="bold">End Date:</span> N/A</p>
+              <p><span class="bold">Age:</span> 0</p>
+              <p><span class="bold">Status:</span> Free</p>
+              <p><span class="bold">Age Category:</span> Infant</p>
+              <p><span class="bold">Description</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div><div class="info-column">
+              <p><span class="bold">Ocupation:</span> N/A</p>
+              <p><span class="bold">Relationship:</span> Son - Kayawon</p>
+              <p><span class="bold">Religion:</span> N/A</p>
+              <p><span class="bold">Sources:</span> Koelle Polyglotta, 1</p>
+              <p><span class="bold">Place:</span> Batendu</p>
+              <p><span class="bold">Testing Kid:</span>'.$event['kid'].'</p>
+          </div>
+      </div>
+      <div class="place-info-'.$event['kid'].' infowrap">
+          <div class="info-column">
+              <p><span class="bold">Place Info:</span> Place Info</p>
+              <p><span class="bold">Testing Kid:</span> '.$event['kid'].'</p>
+          </div>
+      </div>';
+    }
+
+    $html .= '</div>';
+
+    $html .= '<div class="timeline-container">
+    <div class="timeline">
+      <div class="line"></div>
+      <div class="hash-container" data-start="'.$first_date_hash.'" data-end="'.$final_date_hash.'">';
+
+
+    foreach ($hashes as $index => $year) {
+      $html .= '<div class="hash" style="left:calc('.($index / ($hash_count - 1)) * 100 .'% - 14px)"><p>'.$year.'</p></div>';
+    }
+
+    $html .= '
+      </div>
+      <div class="points-container">
+      ';
+
+      foreach ($events as $index => $event) {
+          // Convert year, month, day into decimal form
+          $left = ($event['year'] - $first_date_hash) * 100 / $hash_range;
+
+          $html .= '
+          <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
+          style="left:calc('.$left.'% - 5px)"
+          data-kid="'.$event['kid'].'"
+          data-index="'.$index.'">
+          <span class="event-title">'.$event['title'].' - '.$event['year'].'</span>
+          </div>';
+      }
+
+    $html .= '
+      </div>
+    </div>
+    <div class="timeline-controls">
+      <div class="timeline-prev no-select"><img src="'.BASE_URL.'assets/images/chevron-down-dark.svg" alt="Previous Arrow"></div>
+      <div class="timeline-next no-select"><img src="'.BASE_URL.'assets/images/chevron-down-dark.svg" alt="Next Arrow"></div>
+    </div>
+    </div>
+
+    </section>
+    </div>';
+
+    $htmlArray['timeline'] = $html;
+
+
+    // return $htmlArray;
+    return json_encode($htmlArray);
+
+    /*
     switch ($type){
         case 'name':
             $html .= "
@@ -1423,7 +1792,7 @@ function getPersonRecordHtml(){
     }
 
     return $html;
-
+    */
 }
 
 
