@@ -28,7 +28,7 @@
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
         </div>
         <div class="section-content">
-            <a href="<?php echo BASE_URL;?>explore/people">
+            <a href="<?php echo BASE_URL;?>search/people">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                     <h3>People</h3>
@@ -36,7 +36,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explore/events">
+            <a href="<?php echo BASE_URL;?>search/events">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                     <h3>Events</h3>
@@ -44,7 +44,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explore/places">
+            <a href="<?php echo BASE_URL;?>search/places">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                     <h3>Places</h3>
@@ -60,7 +60,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explore/sources">
+            <a href="<?php echo BASE_URL;?>search/sources">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                     <h3>Sources</h3>
