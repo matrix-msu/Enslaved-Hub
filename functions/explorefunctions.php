@@ -10,13 +10,16 @@ function callAPI($url,$limit,$offset){
 
 //get all agents numbers
 function queryAllAgentsCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:P3/wdt:P2 wd:Q2 .}';
+  $query='SELECT  (count(distinct ?agent) as ?count)
+  WHERE {?agent wdt:P3/wdt:P2 wd:Q2;
+ 		 wdt:P39 ?role;
+  FILTER(?role != wd:Q536). #agent cannot be a researcher
+  }';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
 
   $res= json_decode($res);
-
   if (!empty($res)){
     return $res->results->bindings[0]->count->value;
   }else{
@@ -400,14 +403,14 @@ SELECT DISTINCT ?placeLabel (COUNT(?agent) as ?count)  WHERE {
   ?event wdt:P12 ?place.
   ?agent wdt:P3/wdt:P2 wd:Q2;
       p:P82 [ #with property "hasName" mandatory
-          
+
             pq:P30 ?event #recordeAt Event
-          
+
         ];
-  
+
   SERVICE wikibase:label {
       bd:serviceParam wikibase:language "en" .
-      
+
   }
 }GROUP BY ?placeLabel
 ORDER BY ?placeLabel
@@ -490,9 +493,9 @@ SELECT ?placeType ?placeTypeLabel (COUNT(?place) AS ?count)
 WHERE
 {     ?place wdt:P3 wd:Q50.
       ?place wdt:P80 ?placeType.
-    
-    
-  
+
+
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?placeType ?placeTypeLabel
 ORDER BY ASC(?placeTypeLabel)
@@ -518,9 +521,9 @@ SELECT DISTINCT ?city ?cityLabel (COUNT(?place) AS ?count) WHERE {
       wdt:P80 wd:Q29.#?city is a city
 OPTIONAL {?place wdt:P10 ?city.} #place is locatedIn a city
 
-SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .} 
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
 }GROUP BY ?city ?cityLabel
-order by ?cityLabel 
+order by ?cityLabel
 
 QUERY;
 
@@ -545,9 +548,9 @@ SELECT DISTINCT ?provinceLabel (COUNT(?city) as ?cityCount) (COUNT(?place) as ?p
   OPTIONAL{?place wdt:P10 ?city} #optional places located in city
   SERVICE wikibase:label {
       bd:serviceParam wikibase:language "en" .
-      
+
   }
-}GROUP BY ?provinceLabel 
+}GROUP BY ?provinceLabel
 ORDER BY ?provinceLabel
 
 
@@ -1417,12 +1420,12 @@ function getPersonRecordHtml(){
 
     //QUERY FOR RECORD INFO
     $query['query'] = <<<QUERY
-SELECT ?name ?desc ?located  ?type ?geonames ?code 
+SELECT ?name ?desc ?located  ?type ?geonames ?code
 (group_concat(distinct ?refName; separator = "||") as ?sources)
 (group_concat(distinct ?pname; separator = "||") as ?researchprojects)
   WHERE
 {
-  VALUES ?place {wd:$qid} #Q number needs to be changed for every place. 
+  VALUES ?place {wd:$qid} #Q number needs to be changed for every place.
   ?place wdt:P3 wd:Q50;
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
@@ -1434,14 +1437,14 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
   ?place rdfs:label ?name.
   ?place wdt:P80 ?placetype.
   ?placetype rdfs:label ?type.
-  OPTIONAL{?place wdt:P10 ?locatedIn. 
+  OPTIONAL{?place wdt:P10 ?locatedIn.
           ?locatedIn rdfs:label ?located}.
   OPTIONAL{ ?place wdt:P71 ?geonames.}
     OPTIONAL{ ?place wdt:P96 ?code.}
-  
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }GROUP BY ?name ?desc ?located  ?type ?geonames ?code
-    
+
 
 QUERY;
 
