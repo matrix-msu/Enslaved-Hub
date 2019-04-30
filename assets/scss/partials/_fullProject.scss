@@ -3,15 +3,21 @@
         overflow: auto;
 
         .project-headers{
-            max-width: 520px;
+            // max-width: 520px;
 
             h1{
-                float: left;
+                // float: left;
+                display: inline;
             }
             h2{
-                float: right;
+                // float: right;
                 font-size: 26px;
                 padding-top: 20px;
+                display: inline-flex;
+
+                .card-icon{
+                    margin-left: 10px;
+                }
             }
         }
     }
