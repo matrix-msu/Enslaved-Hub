@@ -59,5 +59,25 @@ $(document).ready(function() {
         var option = $(e.target).children('[value='+id+']');
         option.detach();
         $(e.target).append(option).change();
-      });
+    });
+
+
 });
+
+function removeEmpty() {
+    var form = $('form');
+    var allInputs = form.find('input');
+    var allSelects = form.find('select');
+    var input,select, i, j;
+
+    for(i = 0; input = allInputs[i]; i++) {
+        if(input.getAttribute('name') && !input.value) {
+            input.setAttribute('name', '');
+        }
+    }
+    for(j = 0; select = allSelects[j]; j++) {
+        if(select.getAttribute('name') && !select.value) {
+            select.setAttribute('name', '');
+        }
+    }
+}

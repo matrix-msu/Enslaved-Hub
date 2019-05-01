@@ -365,6 +365,19 @@ function blazegraph()
                 array_push($queryArray, $query);
                 break;
             case 'featured':
+                if($templates[0] == 'Person'){
+                    $query = array('query' => "");
+                    $query['query'] = <<<QUERY
+SELECT DISTINCT ?agent ?agentLabel (SHA512(CONCAT(STR(?agent), STR(RAND()))) as ?random) WHERE {
+    ?agent wdt:P3/wdt:P2 wd:Q2 . #all agents and people
+    ?agent wikibase:statements ?statementcount . #with at least 4 core fields
+    FILTER (?statementcount >3  ).
+    ?agent wdt:P88 ?match. #and they have a match
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    } ORDER BY ?random
+LIMIT 8                     
+QUERY;
+                }
                 if($templates[0] == 'Place'){
                     $query = array('query' => "");
                     $query['query'] = <<<QUERY
@@ -969,7 +982,13 @@ function createCards($results, $templates, $preset = 'default'){
                 foreach ($templates as $template) {
                     $cardTitle = '';
                     $qid = '';
-                    if($template == 'Place'){
+                    if($template == 'Person'){
+                        $cardTitle = $record['agentLabel']['value'];
+                        $uri = $record['agent']['value'];
+                        $uriarr = explode('/', $uri);
+                        $qid = end($uriarr);
+                    }
+                    else if($template == 'Place'){
                         $cardTitle = $record['placeLabel']['value'];
                         $uri = $record['place']['value'];
                         $uriarr = explode('/', $uri);

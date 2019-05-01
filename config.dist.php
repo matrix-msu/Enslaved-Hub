@@ -5,6 +5,7 @@ define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
 define('BASE_WIKI_URL','https://sandro-16.matrix.msu.edu/');
 define('BASE_BLAZEGRAPH_URL', 'https://sandro-33.matrix.msu.edu/');
 define("KORA_BASE_URL", "https://enslaved.kora3.matrix.msu.edu/");
+define("SANDRO_BASE_URL", "https://sandro-16.matrix.msu.edu/");
 
 //project specific urls - you should never use relative paths
 define("BASE_JS_URL", BASE_URL . "assets/javascripts/");

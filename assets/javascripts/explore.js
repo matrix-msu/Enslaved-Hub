@@ -109,7 +109,57 @@ $(document).ready(function(){
                     $('.connect-row').append(e);
                 })
             }
-        })
+        });
+
+        if(JS_EXPLORE_FORM === "Sources"){
+            $.ajax({
+                url: BASE_URL + 'api/counterOfType',
+                method: "GET",
+                data: {type: "Source Type",  category:JS_EXPLORE_FORM},
+                'success': function (data) {
+                    data = JSON.parse(data);
+                    data.forEach(function(record) {
+                        var label = "";
+                        var count = "";
+                        console.log(record);
+                        for(var key in record) {
+                            if(key.match("Label$")) {
+                                label = record[key]['value'];
+                            }
+                            if(key.match("count$")) {
+                                count = record[key]['value'];
+                            }
+                            else if(key.match("Count$")) {
+                                if(count !== ""){
+                                    var count2 = record[key]['value'];
+                                    count = +count + +count2;
+                                }
+                                else{
+                                    count = record[key]['value'];
+                                }
+                                
+                            }
+                        }
+                        if (label != ""){
+                            
+                            var contents = $("a:contains("+label+")").html();
+                            contents += "<span></span>";
+                            $("a:contains("+label+")").html(contents);
+                            var span = $("a:contains("+label+")").find('span');
+
+                            if ($(span).length > 0){
+                                $(span).html(count);
+                            }
+                        }
+                    });
+                    $(".cards li").each(function(){
+                        if($(this).find("span").html() != 0){
+                            $(this).removeClass("hide-category");
+                        }
+                    });
+                }
+            });
+        }
     }
 
     // //Go through category cards and hide the ones with counts of 0

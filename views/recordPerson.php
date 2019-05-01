@@ -1,72 +1,5 @@
 <!-- Author: Drew Schineller-->
-<?php
-//$allStatements=getpersonfullInfo(QID);
-//$person_array=$allStatements['PersonInfo'];
-
-//echo QID;die;
-
-//var_dump($person_array);
-
-// Code for creating events on Timeline
-// Replace with Kora 3 events
-//$events = [
-//    ['kid' => '1', 'title' => 'birth', 'description' => 'Person was born', 'year' => 1730],
-//    ['kid' => '2', 'title' => 'event 1', 'description' => 'Example description 1', 'year' => 1739],
-//    ['kid' => '3', 'title' => 'event 2', 'description' => 'Example description 2', 'year' => 1741],
-//    ['kid' => '4', 'title' => 'event 3', 'description' => 'Example description 3', 'year' => 1745],
-//    ['kid' => '5', 'title' => 'event 4', 'description' => 'Example description 4', 'year' => 1756],
-//    ['kid' => '6', 'title' => 'event 5', 'description' => 'Example description 5', 'year' => 1756.5],
-//    ['kid' => '7', 'title' => 'event 6', 'description' => 'Example description 6', 'year' => 1760],
-//    ['kid' => '8', 'title' => 'event 7', 'description' => 'Example description 7', 'year' => 1763],
-//    ['kid' => '9', 'title' => 'event 8', 'description' => 'Example description 8', 'year' => 1774],
-//    ['kid' => '10', 'title' => 'event 9', 'description' => 'Example description 9', 'year' => 1789],
-//    ['kid' => '11', 'title' => 'event 10', 'description' => 'Example description 10', 'year' => 1789.5],
-//    ['kid' => '12', 'title' => 'event 11', 'description' => 'Example description 11', 'year' => 1794],
-//    ['kid' => '13', 'title' => 'event 12', 'description' => 'Example description 12', 'year' => 1796],
-//    ['kid' => '14', 'title' => 'event 13', 'description' => 'Example description 13', 'year' => 1799],
-//    ['kid' => '15', 'title' => 'event 14', 'description' => 'Example description 14', 'year' => 1800],
-//    ['kid' => '16', 'title' => 'event 15', 'description' => 'Example description 15', 'year' => 1801],
-//    ['kid' => '17', 'title' => 'event 16', 'description' => 'Example description 16', 'year' => 1803],
-//    ['kid' => '18', 'title' => 'event 17', 'description' => 'Example description 17', 'year' => 1804],
-//    ['kid' => '19', 'title' => 'event 18', 'description' => 'Example description 18', 'year' => 1806],
-//    ['kid' => '20', 'title' => 'event 19', 'description' => 'Example description 19', 'year' => 1807],
-//  ];
-//
-//  $timeline_event_dates = [];
-//  foreach ($events as $event) {
-//    // If there are months and days, put the year into decimal format
-//    // Ex: March 6, 1805 = 1805.18
-//    array_push($timeline_event_dates, $event['year']);
-//  }
-//
-//  $first_date = min($timeline_event_dates);
-//  $final_date = max($timeline_event_dates);
-//  $diff = $final_date - $first_date;
-//
-//  if ($diff < 10) {
-//      $increment = 1;
-//  } elseif ($diff < 20) {
-//      $increment = 2;
-//  } elseif ($diff < 40) {
-//      $increment = 5;
-//  } elseif ($diff < 90) {
-//      $increment = 10;
-//  } else {
-//      $increment = 20;
-//  }
-//
-//  // Hash starts at year that is divisible by incrememnt and before the first event
-//  $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
-//  $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
-//
-//  $hashes = range($first_date_hash, $final_date_hash, $increment);
-//  $hash_count = count($hashes);
-//  $hash_range = end($hashes) - $hashes[0];
-//
-?>
-
-
-<!-- Person Full Record page-->
+<!-- Explore Full Record page-->
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="container middlewrap">
@@ -82,18 +15,18 @@
                 echo '<button class="jump-button" id="timeline">Jump to Person Timeline</button>';
             }
         ?>
-        <button class="jump-button" id="details">Jump to Person Details</button>
+        <button class="jump-button" id="details">Jump to <?php echo ucfirst(RECORD_FORM); ?> Details</button>
     </div>
 </div>
 <!-- tabs -->
 <div class="project-tab">
-    <h2>VIEW RECORD DETAILS FROM</h2>
+    <!-- <h2>VIEW RECORD DETAILS FROM</h2>
     <ul>
         <li class="tabbed">All</li>
         <li>Project Name</li>
         <li>Other Project Name</li>
         <hr>
-    </ul>
+    </ul> -->
 </div>
 <!-- info container-->
 <div class="container info person-record-info">
@@ -146,12 +79,12 @@
 </div>
 <div class="advanced-section">
     <div class="advanced-details">
-        <h2>Advanced Details</h2>
-        <p>To see a more granular provenance of this record, you can download the following files:</p>
+        <h2>Representations</h2>
+        <!-- <p>To see a more granular provenance of this record, you can download the following files:</p> -->
         <div class="advancedwrap">
-            <a href="">Download RDF</a>
-            <a href="">Download Turtle</a>
-            <a href="">Download JSON</a>
+            <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".rdf";?>">Download RDF</a>
+            <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".ttl";?>">Download Turtle</a>
+            <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".json";?>">Download JSON</a>
         </div>
     </div>
 </div>
