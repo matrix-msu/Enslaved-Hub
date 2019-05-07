@@ -1070,11 +1070,18 @@ function detailPersonHtml($statement,$label){
 
     $baseurl = BASE_URL;
     $upperlabel = strtoupper($label);
+    $lowerlabel = strtolower($label);
     $html = '';
 
+    if($label === "Geoname Identifier"){
+      $html .= '<a href="http://www.geonames.org/' . $statementArr[0] . '/">';
+    }
+    else{
+      $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statement . '">';
+    }
+
     $html .= <<<HTML
-<a href="{$baseurl}explorePeople/?search={$statement}">
-    <div class="detail">
+    <div class="detail $lowerlabel">
         <h3>$upperlabel</h3>
         <div class="detail-bottom">
 HTML;
@@ -1558,12 +1565,12 @@ QUERY;
 
     //Geonames
     if (isset($record['geonames']) && isset($record['geonames']['value']) ){
-      $recordVars['Geoname'] = $record['geonames']['value'];
+      $recordVars['Geoname Identifier'] = $record['geonames']['value'];
     }
 
     //Code
     if (isset($record['code']) && isset($record['code']['value']) ){
-      $recordVars['Code'] = $record['code']['value'];
+      $recordVars['Modern Country Code'] = $record['code']['value'];
     }
 
     //Source

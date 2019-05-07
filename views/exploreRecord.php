@@ -15,7 +15,7 @@
                 echo '<button class="jump-button" id="timeline">Jump to Person Timeline</button>';
             }
         ?>
-        <button class="jump-button" id="details">Jump to <?php echo ucfirst(RECORD_FORM); ?> Details</button>
+        <!-- <button class="jump-button" id="details">Jump to <?php echo ucfirst(RECORD_FORM); ?> Details</button> -->
     </div>
 </div>
 <!-- tabs -->
