@@ -11,7 +11,7 @@
 </div>
 <main class="direct-search">
     <div class="searchwrap">
-        <form action="<?php echo BASE_URL;?>search/all">
+        <form action="<?php echo BASE_URL;?>search/all" method="get" onsubmit="removeEmpty()">
             <!-- PERSON -->
             <h2>Person</h2>
             <div class="search-section">

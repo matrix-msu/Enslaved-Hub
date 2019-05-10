@@ -41,7 +41,7 @@ $GLOBALS['routes'] = array(
     'exploreForm' => 'exploreForm.php',
     'exploreFilters' => 'exploreFilters.php',
     'exploreResults' => 'exploreResults.php',
-    'recordForm' => 'recordPerson.php',
+    'recordForm' => 'exploreRecord.php',
 
 	'projects' => 'projects.php',
 	'stories' => 'stories.php',
@@ -94,12 +94,15 @@ $fileArray = explode('/', $currentFile);
 if ($fileArray[0] == 'record' && count($fileArray) > 2){
     define('RECORD_FORM', $fileArray[1]);
     define('QID', $fileArray[2]);
-    $currentFile = 'recordPerson';
+    $currentFile = 'recordForm';
 }
 if ($fileArray[0] == 'project'){
     $projectQ = $fileArray[1];
     define('QID', $projectQ);
     $currentFile = $fileArray[0];
+}
+if($fileArray[0] == 'explore' && $fileArray[1] == 'sources'){
+    $fileArray[2] = 'source_type';
 }
 
 $EXPLORE_JS_VARS = '';

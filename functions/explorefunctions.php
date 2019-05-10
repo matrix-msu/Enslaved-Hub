@@ -1063,18 +1063,25 @@ function detailPerson($statement,$label){
 
 function detailPersonHtml($statement,$label){
     //Splits the statement(detail) up into multiple parts for multiple details, also trims whitespace off end
-    $statementArr = explode('|', $statement);
+    $statementArr = explode('||', $statement);
     if (end($statementArr) == ' '){
         array_pop($statementArr);
     }
 
     $baseurl = BASE_URL;
     $upperlabel = strtoupper($label);
+    $lowerlabel = strtolower($label);
     $html = '';
 
+    if($label === "Geoname Identifier"){
+      $html .= '<a href="http://www.geonames.org/' . $statementArr[0] . '/">';
+    }
+    else{
+      $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statement . '">';
+    }
+
     $html .= <<<HTML
-<a href="{$baseurl}explorePeople/?search={$statement}">
-    <div class="detail">
+    <div class="detail $lowerlabel">
         <h3>$upperlabel</h3>
         <div class="detail-bottom">
 HTML;
@@ -1364,90 +1371,127 @@ function getPersonRecordHtml(){
     //Timeline
     // Code for creating events on Timeline
     // Replace with Kora 3 events
-    $events = [
-      ['kid' => '1', 'title' => 'birth', 'description' => 'Person was born', 'year' => 1730],
-      ['kid' => '2', 'title' => 'event 1', 'description' => 'Example description 1', 'year' => 1739],
-      ['kid' => '3', 'title' => 'event 2', 'description' => 'Example description 2', 'year' => 1741],
-      ['kid' => '4', 'title' => 'event 3', 'description' => 'Example description 3', 'year' => 1745],
-      ['kid' => '5', 'title' => 'event 4', 'description' => 'Example description 4', 'year' => 1756],
-      ['kid' => '6', 'title' => 'event 5', 'description' => 'Example description 5', 'year' => 1756.5],
-      ['kid' => '7', 'title' => 'event 6', 'description' => 'Example description 6', 'year' => 1760],
-      ['kid' => '8', 'title' => 'event 7', 'description' => 'Example description 7', 'year' => 1763],
-      ['kid' => '9', 'title' => 'event 8', 'description' => 'Example description 8', 'year' => 1774],
-      ['kid' => '10', 'title' => 'event 9', 'description' => 'Example description 9', 'year' => 1789],
-      ['kid' => '11', 'title' => 'event 10', 'description' => 'Example description 10', 'year' => 1789.5],
-      ['kid' => '12', 'title' => 'event 11', 'description' => 'Example description 11', 'year' => 1794],
-      ['kid' => '13', 'title' => 'event 12', 'description' => 'Example description 12', 'year' => 1796],
-      ['kid' => '14', 'title' => 'event 13', 'description' => 'Example description 13', 'year' => 1799],
-      ['kid' => '15', 'title' => 'event 14', 'description' => 'Example description 14', 'year' => 1800],
-      ['kid' => '16', 'title' => 'event 15', 'description' => 'Example description 15', 'year' => 1801],
-      ['kid' => '17', 'title' => 'event 16', 'description' => 'Example description 16', 'year' => 1803],
-      ['kid' => '18', 'title' => 'event 17', 'description' => 'Example description 17', 'year' => 1804],
-      ['kid' => '19', 'title' => 'event 18', 'description' => 'Example description 18', 'year' => 1806],
-      ['kid' => '20', 'title' => 'event 19', 'description' => 'Example description 19', 'year' => 1807],
-  ];
+        $events = [
+        ['kid' => '1', 'title' => 'birth', 'description' => 'Person was born', 'year' => 1730],
+        ['kid' => '2', 'title' => 'event 1', 'description' => 'Example description 1', 'year' => 1739],
+        ['kid' => '3', 'title' => 'event 2', 'description' => 'Example description 2', 'year' => 1741],
+        ['kid' => '4', 'title' => 'event 3', 'description' => 'Example description 3', 'year' => 1745],
+        ['kid' => '5', 'title' => 'event 4', 'description' => 'Example description 4', 'year' => 1756],
+        ['kid' => '6', 'title' => 'event 5', 'description' => 'Example description 5', 'year' => 1756.5],
+        ['kid' => '7', 'title' => 'event 6', 'description' => 'Example description 6', 'year' => 1760],
+        ['kid' => '8', 'title' => 'event 7', 'description' => 'Example description 7', 'year' => 1763],
+        ['kid' => '9', 'title' => 'event 8', 'description' => 'Example description 8', 'year' => 1774],
+        ['kid' => '10', 'title' => 'event 9', 'description' => 'Example description 9', 'year' => 1789],
+        ['kid' => '11', 'title' => 'event 10', 'description' => 'Example description 10', 'year' => 1789.5],
+        ['kid' => '12', 'title' => 'event 11', 'description' => 'Example description 11', 'year' => 1794],
+        ['kid' => '13', 'title' => 'event 12', 'description' => 'Example description 12', 'year' => 1796],
+        ['kid' => '14', 'title' => 'event 13', 'description' => 'Example description 13', 'year' => 1799],
+        ['kid' => '15', 'title' => 'event 14', 'description' => 'Example description 14', 'year' => 1800],
+        ['kid' => '16', 'title' => 'event 15', 'description' => 'Example description 15', 'year' => 1801],
+        ['kid' => '17', 'title' => 'event 16', 'description' => 'Example description 16', 'year' => 1803],
+        ['kid' => '18', 'title' => 'event 17', 'description' => 'Example description 17', 'year' => 1804],
+        ['kid' => '19', 'title' => 'event 18', 'description' => 'Example description 18', 'year' => 1806],
+        ['kid' => '20', 'title' => 'event 19', 'description' => 'Example description 19', 'year' => 1807],
+    ];
 
-  $timeline_event_dates = [];
-  foreach ($events as $event) {
-      // If there are months and days, put the year into decimal format
-      // Ex: March 6, 1805 = 1805.18
-      array_push($timeline_event_dates, $event['year']);
-  }
+    $timeline_event_dates = [];
+    foreach ($events as $event) {
+        // If there are months and days, put the year into decimal format
+        // Ex: March 6, 1805 = 1805.18
+        array_push($timeline_event_dates, $event['year']);
+    }
 
-  $first_date = min($timeline_event_dates);
-  $final_date = max($timeline_event_dates);
-  $diff = $final_date - $first_date;
+    $first_date = min($timeline_event_dates);
+    $final_date = max($timeline_event_dates);
+    $diff = $final_date - $first_date;
 
-  if ($diff < 10) {
-      $increment = 1;
-  } elseif ($diff < 20) {
-      $increment = 2;
-  } elseif ($diff < 40) {
-      $increment = 5;
-  } elseif ($diff < 90) {
-      $increment = 10;
-  } else {
-      $increment = 20;
-  }
+    if ($diff < 10) {
+        $increment = 1;
+    } elseif ($diff < 20) {
+        $increment = 2;
+    } elseif ($diff < 40) {
+        $increment = 5;
+    } elseif ($diff < 90) {
+        $increment = 10;
+    } else {
+        $increment = 20;
+    }
 
-  // Hash starts at year that is divisible by incrememnt and before the first event
-  $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
-  $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
+    // Hash starts at year that is divisible by incrememnt and before the first event
+    $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
+    $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
 
-  $hashes = range($first_date_hash, $final_date_hash, $increment);
-  $hash_count = count($hashes);
-  $hash_range = end($hashes) - $hashes[0];
+    $hashes = range($first_date_hash, $final_date_hash, $increment);
+    $hash_count = count($hashes);
+    $hash_range = end($hashes) - $hashes[0];
 
     //QUERY FOR RECORD INFO
-    $query['query'] = <<<QUERY
-SELECT ?name ?desc ?located  ?type ?geonames ?code
+    $query = [];
+    if($type === "person"){
+
+    }
+    else if($type === "place"){
+        $query['query'] = <<<QUERY
+SELECT ?name ?desc ?located  ?type ?geonames ?code 
 (group_concat(distinct ?refName; separator = "||") as ?sources)
 (group_concat(distinct ?pname; separator = "||") as ?researchprojects)
+    WHERE
+{
+    VALUES ?place {wd:$qid} #Q number needs to be changed for every place. 
+    ?place wdt:P3 wd:Q50;
+            ?property  ?object .
+    ?object prov:wasDerivedFrom ?provenance .
+    ?provenance pr:P35 ?source .
+    ?source rdfs:label ?refName;
+            wdt:P7 ?project.
+    ?project rdfs:label ?pname.
+    ?place schema:description ?desc.
+    ?place rdfs:label ?name.
+    ?place wdt:P80 ?placetype.
+    ?placetype rdfs:label ?type.
+    OPTIONAL{?place wdt:P10 ?locatedIn. 
+            ?locatedIn rdfs:label ?located}.
+    OPTIONAL{ ?place wdt:P71 ?geonames.}
+    OPTIONAL{ ?place wdt:P96 ?code.}
+    
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}GROUP BY ?name ?desc ?located  ?type ?geonames ?code      
+QUERY;
+    }
+    else if($type === "event"){
+      $query['query'] = <<<QUERY
+SELECT ?name ?desc ?located  ?type ?date ?endDate 
+(group_concat(distinct ?refName; separator = "||") as ?sources)
+(group_concat(distinct ?pname; separator = "||") as ?researchprojects)
+(group_concat(distinct ?rolename; separator = "||") as ?roles)
   WHERE
 {
-  VALUES ?place {wd:$qid} #Q number needs to be changed for every place.
-  ?place wdt:P3 wd:Q50;
+  VALUES ?event {wd:$qid} #Q number needs to be changed for every event. 
+  ?event wdt:P3 wd:Q34;
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:P35 ?source .
   ?source rdfs:label ?refName;
           wdt:P7 ?project.
   ?project rdfs:label ?pname.
-  ?place schema:description ?desc.
-  ?place rdfs:label ?name.
-  ?place wdt:P80 ?placetype.
-  ?placetype rdfs:label ?type.
-  OPTIONAL{?place wdt:P10 ?locatedIn.
-          ?locatedIn rdfs:label ?located}.
-  OPTIONAL{ ?place wdt:P71 ?geonames.}
-    OPTIONAL{ ?place wdt:P96 ?code.}
-
+  ?event schema:description ?desc.
+  ?event rdfs:label ?name.
+  ?event wdt:P81 ?eventtype.
+  ?eventtype rdfs:label ?type.
+  OPTIONAL{?event wdt:P12 ?place. 
+          ?place rdfs:label ?located}.
+  OPTIONAL{ ?event wdt:P13 ?datetime.
+          BIND(xsd:date(?datetime) AS ?date)}
+    OPTIONAL{ ?event wdt:P14 ?endDatetime.
+            BIND(xsd:date(?endDatetime) AS ?endDate)}
+    OPTIONAL{ ?event wdt:P38 ?roles.
+            ?roles rdfs:label ?rolename.}
+  
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?located  ?type ?geonames ?code
-
-
+}GROUP BY ?name ?desc ?located  ?type ?date ?endDate    
 QUERY;
-
+    }
+    
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
@@ -1463,12 +1507,23 @@ QUERY;
     $result = json_decode($result, true)['results']['bindings'];
     $record = $result[0];
 
+
+
     //Get variables from query
+    $recordVars = [];
 
     //Name
-    $fullName = $record['name']['value'];
+    $recordVars['Name'] = $record['name']['value'];
+
+    //Description
+    if (isset($record['desc']) && isset($record['desc']['value']) ){
+      $description = $record['desc']['value'];
+    } else {
+      $description = '';
+    }
 
     //Checks for start and end years and creates date range
+    /*
     if (isset($record['startyear']) && isset($record['startyear']['value'])){
         $startYears = explode('||', $record['startyear']['value']);
         $startYear = min($startYears);
@@ -1491,33 +1546,46 @@ QUERY;
     } elseif ($startYear == '') {
         $dateRange = $endYear;
     }
+    */
 
-    //Description
-    if (isset($record['desc']) && isset($record['desc']['value']) ){
-      $description = $record['desc']['value'];
-    } else {
-      $description = '';
+    //Date
+    if (isset($record['date']) && isset($record['date']['value']) ){
+      $recordVars['Date'] = $record['date']['value'];
     }
 
     //Location
     if (isset($record['located']) && isset($record['located']['value']) ){
-      $located = $record['located']['value'];
-    } else {
-      $located = '';
+      $recordVars['Location'] = $record['located']['value'];
+    }
+
+    //Type
+    if (isset($record['type']) && isset($record['type']['value']) ){
+      $recordVars['Type'] = $record['type']['value'];
     }
 
     //Geonames
     if (isset($record['geonames']) && isset($record['geonames']['value']) ){
-      $geoname = $record['geonames']['value'];
-    } else {
-      $geoname = '';
+      $recordVars['Geoname Identifier'] = $record['geonames']['value'];
     }
 
     //Code
     if (isset($record['code']) && isset($record['code']['value']) ){
-      $code = $record['code']['value'];
-    } else {
-      $code = '';
+      $recordVars['Modern Country Code'] = $record['code']['value'];
+    }
+
+    //Source
+    if (isset($record['sources']) && isset($record['sources']['value']) ){
+      $recordVars['Sources'] = $record['sources']['value'];
+    }
+
+    //Project
+    if (isset($record['researchprojects']) && isset($record['researchprojects']['value']) ){
+      $recordVars['Contributing Projects'] = $record['researchprojects']['value'];
+    }
+
+    //Roles
+    if (isset($record['roles']) && isset($record['roles']['value']) ){
+      $recordVars['Roles'] = $record['roles']['value'];
     }
 
     // create the html based on the type of results
@@ -1533,13 +1601,15 @@ QUERY;
     }
     $url = BASE_URL . "explore/" . $type;
     $recordform = ucfirst($type);
+    $name = $recordVars['Name'];
+    $dateRange = '';
 
     $html .= <<<HTML
 <h4 class='last-page-header'>
     <a id='last-page' href="$url"><span id=previous-title>$recordform // </span></a>
-    <span id='current-title'>$fullName</span>
+    <span id='current-title'>$name</span>
 </h4>
-<h1>$fullName</h1>
+<h1>$name</h1>
 <h2 class='date-range'><span>$dateRange</span></h2>
 HTML;
 
@@ -1556,11 +1626,15 @@ HTML;
     $html = '';
 
     $html .= '<div class="detailwrap">';
-    $html .= detailPersonHtml($fullName, "Name");
-    $html .= detailPersonHtml($located, "Location");
-    $html .= detailPersonHtml($geoname, "Geoname");
-    $html .= detailPersonHtml($code, "Code");
-    $html .= detailPersonHtml('Projects here', "Contributing Project");
+    // $html .= detailPersonHtml($name, "Name");
+    // $html .= detailPersonHtml($located, "Location");
+    // $html .= detailPersonHtml($geoname, "Geoname");
+    // $html .= detailPersonHtml($code, "Code");
+    // $html .= detailPersonHtml($sources, "Sources");
+    // $html .= detailPersonHtml($projects, "Contributing Project");
+    foreach($recordVars as $key => $value){
+      $html .= detailPersonHtml($value, $key);
+    }
     $html .= '</div>';
 
     $htmlArray['details'] = $html;
