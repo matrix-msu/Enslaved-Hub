@@ -48,4 +48,31 @@ $(document).ready(function(){
             $(".project-headers > h2").html(str);
         }
     });
+
+    // Get Cards
+    var templates = ['searchCard', 'gridCard'];
+    var filters = {};
+    var offset = 0;
+    var limit = 10;
+
+    $.ajax({
+        url: BASE_URL + "api/blazegraph",
+        type: "GET",
+        data: {
+            preset: 'singleProject',
+            filters: filters,
+            templates: templates,
+            qid: QID,
+            limit: limit,
+            offset: offset
+        },
+        success: function (data) {
+          
+          console.log("results: ", data);
+
+           $("span.grid-view").trigger("click");
+        }
+    });
+
+
 });

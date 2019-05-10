@@ -826,8 +826,223 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td class="name">NAME</td>
+                            <td class="gender">GENDER</td>
+                            <td class="age">AGE</td>
+                            <td class="occupation">OCCUPATION</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                        </tr>
+                        <tr>
+                            <td class="name">NAME</td>
+                            <td class="gender">GENDER</td>
+                            <td class="age">AGE</td>
+                            <td class="occupation">OCCUPATION</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">METADATA TITLE</td>
+                        </tr>
                     </tbody>
                 </table>
+            </div>
+             <div class="result-column">
+                <div class="blazegraph-records">
+                    <!-- Placeholder card format for a person -->
+                    <div class='record'>
+                        <div class='image-and-name'>
+                            <img src='../assets/images/PersonCard.jpg' alt='record image'>
+                            <p class='name'>Firstname <br> lastname</p>
+                            <div class="type-icon"><img src="../assets/images/Person-light.svg" alt=''></div>
+                        </div>
+                        <div class='record-main'>
+                            <div class='metadata'>
+                                <div class='column'>
+                                    <div class='metadata-row'>
+                                        <span>Person status:</span><p class='city'>Enslaved</p>
+                                    </div>
+                                    <div class='metadata-row'>
+                                        <span>Origin:</span><p class='country'>Location</p>
+                                    </div>
+                                    <div class='metadata-row'>
+                                        <span>Date Range:</span><p class='enslaved-region'>1800 - 1900</p>
+                                    </div>
+                                </div>
+                                <div class='column'>
+                                     <div class='metadata-row'>
+                                        <span>Sex:</span><p class='province'>Unidentified</p>
+                                    </div>
+                                    <div class='metadata-row'>
+                                        <span>Location:</span><p class='location'>Location</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class='bottom-row'>
+                                <div class='icon-container'><img src="../assets/images/Person-dark.svg" alt=''><span>10</span></div>
+                                <div class='icon-container'><img src="../assets/images/Place-dark.svg" alt=''><span>3</span></div>
+                                <div class='icon-container'><img src="../assets/images/Event-dark.svg" alt=''><span>4</span></div>
+                                <div class='icon-container'><img src="../assets/images/Source-dark.svg" alt=''><span>2</span></div>
+                                <div class='icon-container'><img src="../assets/images/Project-dark.svg" alt=''><span>1</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Placeholder card format for a place -->
+                    <div class='record'>
+                        <div class='image-and-name'>
+                            <img src='../assets/images/PlaceCard.jpg' alt='record image'>
+                            <p class='name'>Place Name</p>
+                            <div class="type-icon"><img src="../assets/images/Place-light.svg" alt=''></div>
+                        </div>
+                        <div class='record-main'>
+                            <div class='metadata'>
+                                <div class='column'>
+                                    <div class='metadata-row'>
+                                        <span>City:</span><p class='city'>city Name</p>
+                                    </div>
+                                    <div class='metadata-row'>
+                                        <span>Country:</span><p class='country'>Country Name</p>
+                                    </div>
+                                    <div class='metadata-row'>
+                                        <span>Enslaved Region:</span><p class='enslaved-region'>Region Name</p>
+                                    </div>
+                                </div>
+                                <div class='column'>
+                                     <div class='metadata-row'>
+                                        <span>Province:</span><p class='province'>Province</p>
+                                    </div>
+                                    <div class='metadata-row'>
+                                        <span>Location:</span><p class='location'>Location</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class='bottom-row'>
+                                <div class='icon-container'><img src="../assets/images/Person-dark.svg" alt=''><span>10</span></div>
+                                <div class='icon-container'><img src="../assets/images/Place-dark.svg" alt=''><span>3</span></div>
+                                <div class='icon-container'><img src="../assets/images/Event-dark.svg" alt=''><span>4</span></div>
+                                <div class='icon-container'><img src="../assets/images/Source-dark.svg" alt=''><span>2</span></div>
+                                <div class='icon-container'><img src="../assets/images/Project-dark.svg" alt=''><span>1</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Placeholder card format for an event -->
+                    <div class='record'>
+                        <div class='image-and-name'>
+                            <img src='../assets/images/EventCard.jpg' alt='record image'>
+                            <p class='name'>Event Name</p>
+                            <div class="type-icon"><img src="../assets/images/Event-light.svg" alt=''></div>
+                        </div>
+                        <div class='record-main'>
+                            <div class='metadata'>
+                                <div class='column'>
+                                    <div class='metadata-row'>
+                                        <span>Event Type:</span><p class='event-type'>Capture</p>
+                                    </div>
+                                    <div class='metadata-row'>
+                                        <span>Event Date:</span><p class='event-date'>11.03.1876</p>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="metadata-row">
+                                        <!-- no data here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='bottom-row'>
+                                <div class='icon-container'><img src="../assets/images/Person-dark.svg" alt=''><span>10</span></div>
+                                <div class='icon-container'><img src="../assets/images/Place-dark.svg" alt=''><span>3</span></div>
+                                <div class='icon-container'><img src="../assets/images/Event-dark.svg" alt=''><span>4</span></div>
+                                <div class='icon-container'><img src="../assets/images/Source-dark.svg" alt=''><span>2</span></div>
+                                <div class='icon-container'><img src="../assets/images/Project-dark.svg" alt=''><span>1</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Placeholder card format for a source -->
+                    <div class='record'>
+                        <div class='image-and-name'>
+                            <img src='../assets/images/SourceCard.jpg' alt='record image'>
+                            <p class='name'>Source Name</p>
+                            <div class="type-icon"><img src="../assets/images/Source-light.svg" alt=''></div>
+                        </div>
+                        <div class='record-main'>
+                            <div class='metadata'>
+                                <div class='column'>
+                                    <div class='metadata-row'>
+                                        <span>Type:</span><p class='event-type'>Image</p>
+                                    </div>
+                                    <div class='metadata-row'>
+                                        <span>Metadata Title:</span><p class='event-date'>Metadata Content</p>
+                                    </div>
+                                    <div class='metadata-row'>
+                                        <span>Metadata Title:</span><p class='event-date'>More Metadata Content</p>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="metadata-row">
+                                        <!-- no data here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='bottom-row'>
+                                <div class='icon-container'><img src="../assets/images/Person-dark.svg" alt=''><span>10</span></div>
+                                <div class='icon-container'><img src="../assets/images/Place-dark.svg" alt=''><span>3</span></div>
+                                <div class='icon-container'><img src="../assets/images/Event-dark.svg" alt=''><span>4</span></div>
+                                <div class='icon-container'><img src="../assets/images/Source-dark.svg" alt=''><span>2</span></div>
+                                <div class='icon-container'><img src="../assets/images/Project-dark.svg" alt=''><span>1</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="pagination">
