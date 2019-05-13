@@ -52,8 +52,10 @@ $(document).ready(function() {
         option.detach();
         $(e.target).append(option).change();
       });
-    
-    /**************************************************************************************************************/
+});
+
+/**************************************************************************************************************/
+$(document).ready(function() {
     // close things with clicked-off
     $(document).click(function () {
         $('span.results-per-page').find("img:first").removeClass('show');
@@ -144,6 +146,7 @@ $(document).ready(function() {
         $(this).find("span:first").toggleClass("show");
         $(this).next().toggleClass("show");
     });
+    
     //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
     if (pageURL.includes("search")){

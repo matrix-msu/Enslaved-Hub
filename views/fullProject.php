@@ -826,6 +826,9 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        <?php for ($i=0; $i < 10; $i++): ?>
+                            
                         <tr>
                             <td class="name">NAME</td>
                             <td class="gender">GENDER</td>
@@ -859,44 +862,17 @@
                             <td class="meta">METADATA TITLE</td>
                             <td class="meta">METADATA TITLE</td>
                         </tr>
-                        <tr>
-                            <td class="name">NAME</td>
-                            <td class="gender">GENDER</td>
-                            <td class="age">AGE</td>
-                            <td class="occupation">OCCUPATION</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                        </tr>
+
+                        <?php endfor; ?>
+
                     </tbody>
                 </table>
             </div>
              <div class="result-column">
                 <div class="blazegraph-records">
+
+                    <?php for ($i=0; $i < 2; $i++): ?>
+
                     <!-- Placeholder card format for a person -->
                     <div class='record'>
                         <div class='image-and-name'>
@@ -1042,6 +1018,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <?php endfor; ?>
+
                 </div>
             </div>
         </div>
