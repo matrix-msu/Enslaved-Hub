@@ -61,6 +61,77 @@ function blazegraph()
         $preset = $_GET['preset'];
 
         switch ($preset){
+            case 'singleProject':
+                return "none"; // Discontinue due to errors
+
+                // QID is mandatory
+                if(!isset($_GET["qid"]) || empty($_GET["qid"])) return false;
+                $Q_ID = $_GET["qid"];
+                
+                $Q_limit = 10;
+                $Q_offset = 0;
+
+                // Get Limit and offset from GET
+                if(isset($_GET["limit"]) && !empty($_GET["limit"])) $Q_limit = $_GET["limit"];
+                if(isset($_GET["offset"]) && !empty($_GET["offset"])) $Q_offset = $_GET["offset"];
+
+                $query = array('query' => "");
+                $query['query'] ='
+                SELECT DISTINCT ?agent ?startyear ?endyear
+                (group_concat(distinct ?name; separator = "||") as ?name) #name
+
+                (group_concat(distinct ?placelab; separator = "||") as ?place) #place
+
+                (group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+
+                (group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+
+                (group_concat(distinct ?match; separator = "||") as ?closeMatch)
+
+                WHERE {
+
+                  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+
+                  ?agent wdt:P3/wdt:P2 wd:Q2;
+
+                     wdt:P82 ?name; #name is mandatory
+                          p:P3  ?object .
+                  ?object prov:wasDerivedFrom ?provenance .
+                  ?provenance pr:P35 ?reference .
+                  ?reference wdt:P7 wd: '.$Q_ID.'
+
+                  OPTIONAL{?agent  wdt:P39 ?role}. #optional role
+                  MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+                 
+                  OPTIONAL { ?agent wdt:P24 ?status. 
+                            ?status rdfs:label ?statuslab}
+                  
+                  OPTIONAL { ?agent wdt:P17 ?sex. 
+                            ?sex rdfs:label ?sexlab}
+
+                  OPTIONAL { ?agent wdt:P88 ?match}.
+                  
+                  ?agent p:P82 ?statement.
+                  ?statement ps:P82 ?name. 
+                  OPTIONAL{ ?statement pq:P30 ?event.
+                            ?event  wdt:P13 ?startdate.
+                           BIND(str(YEAR(?startdate)) AS ?startyear).
+                           OPTIONAL {?event wdt:P14 ?enddate.
+                       BIND(str(YEAR(?enddate)) AS ?endyear)}.
+                           OPTIONAL {?event wdt:P12 ?place.
+                                    ?place rdfs:label ?placelab}
+                           
+                          }.
+
+
+                } group by ?agent ?event ?startyear ?endyear
+                order by ?agent
+                limit '.$Q_limit.'
+                offset '.$Q_offset.'
+                ';
+
+                array_push($queryArray, $query);
+                break;
             case 'people':
 
                 $sexQuery = "";

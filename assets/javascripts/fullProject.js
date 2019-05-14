@@ -1,16 +1,14 @@
 $(document).ready(function(){
-    $('.lead-card').click(function(){
-        window.location = $(this).find("a").attr("href");
-        return false;
-    });
-
+    /*
+        Get project information and display in views (replace placeholders in views)
+        Info includes, project name, description, contribution, and link to project site
+    */
     $.ajax({
         url: BASE_URL+"api/getProjectFullInfo",
         type: "GET",
         data: {qid: QID},
         success: function (data) {
             data = JSON.parse(data);
-            console.log(data);
             $(".project-headers > h1").html(data.title.value);
             $("#current-title").html(data.title.value);
             $(".container.infowrap").html(data.desc.value);
@@ -35,6 +33,10 @@ $(document).ready(function(){
         }
     });
 
+    /*
+        Get resources number to be displayed next to the title (aka project name)
+        Data shows how much people, events, places, and sources are associated with the project
+    */
     $.ajax({
         url: BASE_URL+"api/blazegraph",
         type: "GET",
@@ -48,4 +50,36 @@ $(document).ready(function(){
             $(".project-headers > h2").html(str);
         }
     });
+
+    /* 
+        Get data (return data embedded in html format both in grid (cards) and table view (table))
+        Replace blazegraph-records class innerHTML content with cards returned
+        Replace search-result-table class innerHTML content with table returned
+    */
+    var templates = ['searchCard', 'gridCard'];
+    var filters = {};
+    var offset = 0;
+    var limit = 10;
+
+    $.ajax({
+        url: BASE_URL + "api/blazegraph",
+        type: "GET",
+        data: {
+            preset: 'singleProject',
+            filters: filters,
+            templates: templates,
+            qid: QID,
+            limit: limit,
+            offset: offset
+        },
+        success: function (data) {
+            console.log(data);
+
+
+
+           $("span.grid-view").trigger("click");
+        }
+    });
+
+
 });
