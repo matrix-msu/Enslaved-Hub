@@ -31,50 +31,11 @@
 <!-- info container-->
 <div class="container info person-record-info">
     <div class="container infowrap">
-        <!-- <p class="description">
-            Description Here
-        </p> -->
     </div>
 </div>
 <!-- detail section -->
 <div class="detail-section">
     <div class="detailwrap">
-<!--        --><?php
-////        print_r($person_array);die;
-//        foreach($person_array as $tag=>$data){
-//        if($data!='' && $tag!='Description' && !is_array($data)){
-//            detailPerson($person_array[$tag],$tag);
-//        }else if(is_array($data)){
-//            foreach ($data as $key => $value) {
-//            detailPerson($person_array[$key],$key);
-//            }
-//        }
-//        }?>
-<!--        <a href="--><?php //echo BASE_URL;?><!--explorePeople">-->
-<!--            <div class="detail">-->
-<!--                <h3>CONTRIBUTING PROJECT</h3>-->
-<!--                <div class="detail-bottom">-->
-<!--                    <div>Lastname-->
-<!--                        <div class="detail-menu">-->
-<!--                            <h1>Metadata</h1>-->
-<!--                            <p>-->
-<!--                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.-->
-<!--                            </p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <h4> | </h4>-->
-<!--                    <div>Second-->
-<!--                        <div class="detail-menu">-->
-<!--                            <h1>Metadata</h1>-->
-<!--                            <p>-->
-<!--                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.-->
-<!--                            </p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!---->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </a>-->
     </div>
 </div>
 <div class="advanced-section">
@@ -82,6 +43,7 @@
         <h2>Representations</h2>
         <!-- <p>To see a more granular provenance of this record, you can download the following files:</p> -->
         <div class="advancedwrap">
+            <a href="https://creativecommons.org/licenses/by/4.0/"><img src="<?php echo BASE_IMAGE_URL;?>ccby4.svg"></a>
             <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".rdf";?>">Download RDF</a>
             <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".ttl";?>">Download Turtle</a>
             <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".json";?>">Download JSON</a>
@@ -126,13 +88,13 @@
         <p>Info on copyright provided</p>
         <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg" alt="copyrights"/>
     </div>
-    <div class="share-links">
+    <!-- <div class="share-links">
         <h2>Share this Record</h2>
         <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg" alt="facebook"/>
         <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg" alt="twitter"/>
         <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
         <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/>
-    </div>
+    </div> -->
 </div>
 <!-- Featured Stories-->
 <div class="container column featured-card">

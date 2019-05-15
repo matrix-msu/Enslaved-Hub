@@ -16,9 +16,6 @@ $(document).ready(function(){
         $('.sort-cards p').next().removeClass('show');
     });
 
-    //displayFeatured(JS_EXPLORE_FORM);
-
-    //Keep at bottom it messes up Explore Form pages
     //Get counts only if on explorefilter page
     if( typeof JS_EXPLORE_FILTERS !== 'undefined' ){
         if (JS_EXPLORE_FILTERS == "Time") {

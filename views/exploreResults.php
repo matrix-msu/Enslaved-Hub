@@ -713,12 +713,12 @@
                         <li>Z - A</li>
                     </ul>
                 </span>
-                <span class="align-center results-per-page"><span>10</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+                <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
                     <ul id="sortmenu" class="results-per-page">
-                        <li><span>10</span> Per Page</li>
-                        <li><span>20</span> Per Page</li>
-                        <li><span>35</span> Per Page</li>
-                        <li><span>50</span> Per Page</li>
+                        <li><span>12</span> Per Page</li>
+                        <li><span>24</span> Per Page</li>
+                        <li><span>36</span> Per Page</li>
+                        <li><span>48</span> Per Page</li>
                     </ul>
                 </span>
             </span>
@@ -763,6 +763,7 @@
                 <span class="num two"></span>
                 <span class="num three"></span>
                 <span class="num four"></span>
+                <span class="num five"></span>
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>

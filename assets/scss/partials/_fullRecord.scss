@@ -464,6 +464,7 @@
         .advancedwrap{
             display: flex;
             flex-wrap: wrap;
+            align-items: center;
             a{
                 color: $sub-base;
                 text-decoration: none;

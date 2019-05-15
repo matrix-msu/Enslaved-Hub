@@ -50,16 +50,8 @@ $GLOBALS['routes'] = array(
 	'ourPartners' => 'ourPartners.php',
     'contactUs' => 'contactUs.php',
     'advancedSearch' => 'advancedSearch.php',
-    'recordPerson' => 'recordPerson.php',
-    'recordEvent' => 'recordEvent.php',
-    'recordPlace' => 'recordPlace.php',
-    'recordSource' => 'recordSource.php',
     'fullStory' => 'fullStory.php',
     'project' => 'fullProject.php',
-    'peopleResults' => 'peopleResults.php',
-    'eventResults' => 'eventResults.php',
-    'placeResults' => 'placeResults.php',
-    'sourceResults' => 'sourceResults.php',
     'timeSub' => 'timeSub.php',
     'enslavedOntology' => 'ontology.php'
 );
@@ -101,8 +93,10 @@ if ($fileArray[0] == 'project'){
     define('QID', $projectQ);
     $currentFile = $fileArray[0];
 }
-if($fileArray[0] == 'explore' && $fileArray[1] == 'sources'){
-    $fileArray[2] = 'source_type';
+if($fileArray[0] == 'explore' && count($fileArray) > 1){
+    if($fileArray[1] == 'sources'){
+        $fileArray[2] = 'source_type';
+    }
 }
 
 $EXPLORE_JS_VARS = '';
