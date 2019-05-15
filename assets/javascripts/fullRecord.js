@@ -14,16 +14,6 @@ $(document).ready(function(){
         $('html, body').animate({ scrollTop: target.offset().top - 50 }, 1000);
         return false;
     });
-    
-    // $(document).on('mouseenter',"div.detail-bottom",function () { // show icon-card info on hover
-    //     timer2 = setTimeout(function(){
-    //         //$('.detail-menu').removeClass('hovered');
-    //         $(this).find('.detail-menu').addClass('hovered');
-    //     }, 0);
-    // }).on('mouseleave',"div.detail-bottom",function() {
-    //     $('.detail-menu').removeClass('hovered');
-    //     clearTimeout(timer2);
-    // });
 
     $(".detail-bottom div").on('mouseenter', function () { // show icon-card info on hover
         $('.detail-menu').removeClass('hovered');
