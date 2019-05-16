@@ -29,16 +29,16 @@ function admin(){
 
 function blazegraph()
 {
-//    if (isset($_GET['delete'])) {
-//        $path = "functions/queries.json";
-//        $contents = file_get_contents($path);
-//        $contents = json_decode($contents, true);
-//        unset($contents[$_GET['delete']]);
-//        $contents = array_values($contents);
-//        $contents = json_encode($contents);
-//        echo file_put_contents($path, $contents);
-//        die;
-//    }
+   // if (isset($_GET['delete'])) {
+   //     $path = "functions/queries.json";
+   //     $contents = file_get_contents($path);
+   //     $contents = json_decode($contents, true);
+   //     unset($contents[$_GET['delete']]);
+   //     $contents = array_values($contents);
+   //     $contents = json_encode($contents);
+   //     echo file_put_contents($path, $contents);
+   //     die;
+   // }
 
     if (isset($_GET['filters'])){
         $filtersArray = $_GET['filters'];
@@ -67,12 +67,10 @@ function blazegraph()
 
         switch ($preset){
             case 'singleProject':
-                return "none"; // Discontinue due to errors
-
                 // QID is mandatory
                 if(!isset($_GET["qid"]) || empty($_GET["qid"])) return false;
-                $Q_ID = $_GET["qid"];
                 
+                $Q_ID = $_GET["qid"];
                 $Q_limit = 10;
                 $Q_offset = 0;
 
@@ -103,7 +101,7 @@ function blazegraph()
                           p:P3  ?object .
                   ?object prov:wasDerivedFrom ?provenance .
                   ?provenance pr:P35 ?reference .
-                  ?reference wdt:P7 wd: '.$Q_ID.'
+                  ?reference wdt:P7 wd:'.$Q_ID.'
 
                   OPTIONAL{?agent  wdt:P39 ?role}. #optional role
                   MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
@@ -137,6 +135,7 @@ function blazegraph()
 
                 array_push($queryArray, $query);
                 break;
+
             case 'people':
 
                 $sexQuery = "";
@@ -195,7 +194,7 @@ WHERE {
     ?agent p:P82 ?statement.
     ?statement ps:P82 ?name. 
     OPTIONAL{ ?statement pq:P30 ?event.
-                ?event	wdt:P13 ?startdate.
+                ?event  wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
             OPTIONAL {?event wdt:P14 ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
@@ -217,6 +216,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent ?event ?startyear ?endyear
 (group_concat(distinct ?name; separator = "||") as ?name) #name
+>>>>>>> 85758871b81fc6e3e2190e54deb91ff04b1d50bc
 
 (group_concat(distinct ?placelab; separator = "||") as ?place) #place
 
@@ -248,7 +248,7 @@ WHERE {
     ?agent p:P82 ?statement.
     ?statement ps:P82 ?name. 
     OPTIONAL{ ?statement pq:P30 ?event.
-                ?event	wdt:P13 ?startdate.
+                ?event  wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
             OPTIONAL {?event wdt:P14 ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
@@ -311,13 +311,13 @@ QUERY;
                 break;
             case 'projects':
                 $query = array('query' => "");
-//                $query['query'] =
-//                    'SELECT ?project ?projectLabel  WHERE {
-//                      ?project wdt:P3 wd:Q264
-//
-//                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-//                    }
-//                ';
+               // $query['query'] =
+               //     'SELECT ?project ?projectLabel  WHERE {
+               //       ?project wdt:P3 wd:Q264
+
+               //       SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+               //     }
+               // ';
                 $query['query'] =
                     'SELECT ?person ?personLabel ?name ?originLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
@@ -487,28 +487,26 @@ QUERY;
             case 'featured':
                 if($templates[0] == 'Person'){
                     $query = array('query' => "");
-                    $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent ?agentLabel (SHA512(CONCAT(STR(?agent), STR(RAND()))) as ?random) WHERE {
-    ?agent wdt:P3/wdt:P2 wd:Q2 . #all agents and people
-    ?agent wikibase:statements ?statementcount . #with at least 4 core fields
-    FILTER (?statementcount >3  ).
-    ?agent wdt:P88 ?match. #and they have a match
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    } ORDER BY ?random
-LIMIT 8                     
-QUERY;
+                    $query['query'] = '
+                    SELECT DISTINCT ?agent ?agentLabel (SHA512(CONCAT(STR(?agent), STR(RAND()))) as ?random) WHERE {
+                        ?agent wdt:P3/wdt:P2 wd:Q2 . #all agents and people
+                        ?agent wikibase:statements ?statementcount . #with at least 4 core fields
+                        FILTER (?statementcount >3  ).
+                        ?agent wdt:P88 ?match. #and they have a match
+                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+                        } ORDER BY ?random
+                    LIMIT 8';
                 }
                 if($templates[0] == 'Place'){
                     $query = array('query' => "");
-                    $query['query'] = <<<QUERY
-SELECT DISTINCT ?place ?placeLabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random) WHERE {
-    ?place wdt:P3 wd:Q50 .
-    ?place wikibase:statements ?statementcount .
-            FILTER (?statementcount >3  )
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    } ORDER BY ?random
-    LIMIT 8                
-QUERY;
+                    $query['query'] = '
+                    SELECT DISTINCT ?place ?placeLabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random) WHERE {
+                        ?place wdt:P3 wd:Q50 .
+                        ?place wikibase:statements ?statementcount .
+                                FILTER (?statementcount >3  )
+                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+                        } ORDER BY ?random
+                        LIMIT 8';
                 }
                 
                 array_push($queryArray, $query);
@@ -547,6 +545,7 @@ QUERY;
         curl_close($ch);
 
         $result = json_decode($result, true)['results']['bindings'];
+        if(!$result) continue;
 
         if ($first){
             $resultsArray = $result;
@@ -586,18 +585,14 @@ QUERY;
             }
         }
     }
+    // $path = "functions/queries.json";
+    // $contents = file_get_contents($path);
+    // $contents = json_decode($contents, true);
+    // $contents[] = $query['query'];
+    // $contents = json_encode($contents);
+    // file_put_contents($path, $contents);
 
-//
-//    $path = "functions/queries.json";
-//    $contents = file_get_contents($path);
-//    $contents = json_decode($contents, true);
-//    $contents[] = $query['query'];
-//    $contents = json_encode($contents);
-//
-//    file_put_contents($path, $contents);
-
-
-//    return $result;
+    
     return createCards($resultsArray, $templates, $preset);
 }
 
@@ -619,6 +614,96 @@ function createCards($results, $templates, $preset = 'default'){
     foreach ($results as $index => $record) {  ///foreach result
 
         switch ($preset){
+            case 'singleProject':
+                // Getting first and last names
+                $firstname = "";
+                $lastname = "";
+                if(array_key_exists("name", $record))
+                {
+                  $name = explode(' ', $record["name"]["value"]);
+                  if(array_key_exists(0, $name)) $firstname = $name[0];
+                  if(array_key_exists(1, $name)) $lastname = $name[1];
+                }
+
+                // Get all info
+                $status = (array_key_exists("status", $record) && !empty($record["status"]["value"])) ? $record["status"]["value"] : "Unknown";
+                $origin = (array_key_exists("origin", $record) && !empty($record["origin"]["value"])) ? $record["origin"]["value"] : "Unknown";
+                $startyear = (array_key_exists("startyear", $record) && !empty($record["startyear"]["value"])) ? $record["startyear"]["value"] : "Unknown";
+                $endyear = (array_key_exists("endyear", $record) && !empty($record["endyear"]["value"])) ? $record["endyear"]["value"] : "Unknown";
+                $dateRange = $startyear .' - '. $endyear;
+                $sex = (array_key_exists("sex", $record) && !empty($record["sex"]["value"])) ? $record["sex"]["value"] : "Unidentified";
+                $location = (array_key_exists("place", $record) && !empty($record["place"]["value"])) ? $record["place"]["value"] : "Unknown";
+
+                // Create link (without closing tag)
+                $link = "";
+                if(array_key_exists("agent", $record) && !empty($record["agent"]["value"]))
+                {
+                  $agent = explode("/", $record["agent"]["value"]);
+                  $link = '<a href="'.BASE_URL.'recordPerson/'.end($agent).'">';
+                }
+
+                foreach ($templates as $template) 
+                {
+                  if($template == "gridCard")
+                  {
+                    $card = '
+                    <div class="record"> '.$link.'
+                        <div class="image-and-name">
+                            <img src="../assets/images/PersonCard.jpg" alt="record image">
+                            <p class="name">'.$firstname.' <br> '.$lastname.'</p>
+                            <div class="type-icon"><img src="../assets/images/Person-light.svg" alt=""></div>
+                        </div>
+                        <div class="record-main">
+                            <div class="metadata">
+                                <div class="column">
+                                    <div class="metadata-row">
+                                        <span>Person status:</span><p class="city">'.$status.'</p>
+                                    </div>
+                                    <div class="metadata-row">
+                                        <span>Origin:</span><p class="country">'.$origin.'</p>
+                                    </div>
+                                    <div class="metadata-row">
+                                        <span>Date Range:</span><p class="enslaved-region">'.$dateRange.'</p>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                     <div class="metadata-row">
+                                        <span>Sex:</span><p class="province">'.$sex.'</p>
+                                    </div>
+                                    <div class="metadata-row">
+                                        <span>Location:</span><p class="location">'.$location.'</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="bottom-row">
+                                <div class="icon-container"><img src="../assets/images/Person-dark.svg"  alt=""><span>10</span></div>
+                                <div class="icon-container"><img src="../assets/images/Place-dark.svg"   alt=""><span>3</span></div>
+                                <div class="icon-container"><img src="../assets/images/Event-dark.svg"   alt=""><span>4</span></div>
+                                <div class="icon-container"><img src="../assets/images/Source-dark.svg"  alt=""><span>2</span></div>
+                                <div class="icon-container"><img src="../assets/images/Project-dark.svg" alt=""><span>1</span></div>
+                            </div>
+                        </div></a>
+                    </div>';
+                  }
+                  elseif($template == "searchCard") 
+                  {
+                    $card = '
+                    <tr>
+                        <td class="">'.$firstname.'</td>
+                        <td class="">'.$lastname.'</td>
+                        <td class="">'.$origin.'</td>
+                        <td class="">'.$status.'</td>
+                        <td class="">'.$startyear.'</td>
+                        <td class="">'.$endyear.'</td>
+                        <td class="">'.$sex.'</td>
+                        <td class="">'.$location.'</td>
+                        <td class="">'.$link.'</a></td>
+                    </tr>';
+                  }
+                  array_push($cards[$template], $card);
+                }
+                break;
             case 'people':
                 $fullName = $record['name']['value'];
                 $nameArray = explode(' ', $fullName);
@@ -626,7 +711,8 @@ function createCards($results, $templates, $preset = 'default'){
                 $lastName = $nameArray[count($nameArray)-1];
 
                 $personUrl = $record['agent']['value'];
-                $personQ = end(explode('/', $personUrl));
+                $xplode = explode('/', $personUrl);
+                $personQ = end($xplode);
 
                 // if (isset($record['status']) && isset($record['status']['value'])){
                 //     $status = $record['status']['value'];
@@ -647,6 +733,7 @@ function createCards($results, $templates, $preset = 'default'){
                     $status = '';
 
                     $statusCount = 0;
+
                     foreach ($statusArray as $stat) {
                         if (!empty($stat)){
                             if ($statusCount > 0){
@@ -671,6 +758,7 @@ function createCards($results, $templates, $preset = 'default'){
                 $location = '';
                 if (isset($record['place']) && isset($record['place']['value'])){
                     $placeArray = explode('||', $record['place']['value']);
+
                     $placeCount = 0;
                     foreach ($placeArray as $place) {
                         if (!empty($place)){

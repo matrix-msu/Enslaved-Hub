@@ -73,13 +73,46 @@ $(document).ready(function(){
             offset: offset
         },
         success: function (data) {
-            console.log(data);
-
-
-
-           $("span.grid-view").trigger("click");
+           if(data)
+           {
+                data = JSON.parse(data);
+                gridDisplay(data['gridCard']);
+                tableDisplay(data['searchCard']);
+           }
         }
     });
 
 
+    function gridDisplay(data)
+    {
+        // Display cards
+        $(".blazegraph-records").html("");
+        data.forEach(function (card) {
+            $(card).appendTo(".blazegraph-records");
+        });
+
+        $("span.grid-view").trigger("click");
+    }
+
+    function tableDisplay(data)
+    {
+        let thead = '\
+        <tr>\
+            <th class="meta">FIRSTNAME</th>\
+            <th class="meta">LASTNAME</th>\
+            <th class="meta">ORIGIN</th>\
+            <th class="meta">STATUS</th>\
+            <th class="meta">STRAT YEAR</th>\
+            <th class="meta">END YEAR</th>\
+            <th class="meta">SEX</th>\
+            <th class="meta">LOCATION</th>\
+        <tr>';
+        $("thead").html(thead);
+
+        // Display table rows
+        $("tbody").html("");
+        data.forEach(function (card) {
+            $(card).appendTo("tbody");
+        });
+    }
 });

@@ -10,6 +10,10 @@
     position: relative;
     transition: 250ms;
     width: 80%;
+    a {
+      text-decoration: None;
+      color: inherit;
+    }
     .image-and-name {
       display: inline-block;
       height: 100%;
@@ -33,6 +37,7 @@
         position: absolute;
         bottom: 20px;
         left: 20px;
+        width: 30px;
       }
     }
     .record-main {
@@ -65,11 +70,12 @@
         column-count: 2;
         .column{
           padding:0;
-
         }
         .metadata-row{
           margin-bottom:20px;
           color: #253449;
+          overflow: hidden;
+          //line-height: 14px;
           span{
             display: inline-block;
             padding-right: 6px;
