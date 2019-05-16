@@ -1,8 +1,359 @@
+///******************************************************************* */
+/// Global and _GET variables and ajax function to get and set initial HTML for cards
+///******************************************************************* */
+
+//Global vars used on whole page
+var view;
+var result_array;
+var total_length = 0;
+var card_offset = 0;
+var card_limit = 12;
+var page = 1;
+var pages = 1;
+var filters = {};
+
+// Get params from url
+var $_GET = {};
+var $_GET_length = 0;
+if(document.location.toString().indexOf('?') !== -1) {
+    var query = document.location
+        .toString()
+        // get the query string
+        .replace(/^.*?\?/, '')
+        .replace(/#.*$/, '')
+        .split('&');
+
+    for(var i=0; i < query.length; i++) {
+        var aux = decodeURIComponent(query[i]).split('=');
+        $_GET[aux[0]] = aux[1];
+        $_GET_length++;
+    }
+}
+
+// Set all the filters from the URL
+for(var i=0; i < $_GET_length; i++){
+    var type = Object.keys($_GET)[i];
+    var filter = $_GET[type];
+
+    if (typeof(filter) == "undefined"){
+        filter = '';
+    }
+    filters[type] = filter;
+    console.log("Filter: " + type + " = " + filter);
+}
+
+/** 
+ * Takes parameters for an ajax call that sets result_array to an array with
+ * the array of Grid View cards html, array of Table View cards html, and the total amount of results found
+ * instead of taking in parameters it references global variables
+ * 
+ * \param preset : preset that determines type of query call (ex: 'person', 'event')
+ * \param limit : limit to the number of cards per page : default value = 12
+ * \param offset : number of cards offset from the first card (with 0 being the first card) : default value = 0
+*/
+function searchResults(preset, limit = 12, offset = 0){
+    filters['limit'] = limit;
+    card_limit = limit;
+    filters['offset'] = offset;
+    card_offset = offset;
+
+    var templates = ['searchCard', 'gridCard'];
+
+    $.ajax({
+        url: BASE_URL + "api/blazegraph",
+        type: "GET",
+        data: {
+            preset: preset,
+            filters: filters,
+            templates: templates
+        },
+        'success': function (data) {
+            result_array = JSON.parse(data);
+            
+            console.log(result_array);
+
+            var result_length = result_array['searchCard'].length;
+            total_length = result_array['total'];
+
+            searchBarPlaceholder = "Search Across " + total_length + " " + filter + " Results";
+            $('.main-search').attr("placeholder", searchBarPlaceholder);
+
+            var showingResultsText = '';
+
+            if (result_length < card_limit) {
+                showingResultsText = "Showing " + result_length + " of " + total_length + " Results";
+            } else {
+                showingResultsText = "Showing " + card_limit + " of " + total_length + " Results";
+            }
+
+            $('.showing-results').html(showingResultsText);
+
+            //Wait till doc is ready
+            $(document).ready(function(){
+                appendCards();
+                setPagination();
+            });
+            
+        }
+    });
+}
+
+///******************************************************************* */
+/// Append Cards
+///******************************************************************* */
+
+function appendCards(){
+    $("ul.row").empty(); //empty row before appending more
+    result_array['searchCard'].forEach(function (card) {
+        $(card).appendTo("ul.row");
+    });
+
+    $("tbody").empty(); //empty grid before appending more
+    result_array['gridCard'].forEach(function (card) {
+        $(card).appendTo("tbody");
+    });
+
+}
+
+///******************************************************************* */
+/// Pagination functions
+///******************************************************************* */
+
+function setPagination() {
+    pages = Math.ceil(total_length / card_limit);
+    page = Math.ceil(card_offset / card_limit) + 1;
+
+    $('span.pagi-last').html(pages); //last pagination number to number of pages
+    console.log("Test:" + total_length + ' ' + card_offset + ' ' + card_limit);
+
+    if (pages < 2) { // sets pagination on page load
+        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
+        $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+        $('span.dotsLeft').hide();
+        $('span.dotsRight').hide();
+        $('span.pagi-first').hide();
+        $('span.one').hide();
+        $('span.two').hide();
+        $('span.three').hide();
+        $('span.four').hide();
+        $('span.five').hide();
+        $('span.pagi-last').hide();
+    } else {
+        $('span.dotsLeft').hide();
+        $('span.dotsRight').hide();
+        $('span.pagi-first').show();
+        $('span.pagi-first').html(1);
+        $('span.pagi-last').hide();
+        $('span.one').hide();
+        $('span.two').hide();
+        $('span.three').hide();
+        $('span.four').hide();
+        $('span.five').hide();
+        $('span.one').show();
+        $('span.one').html(2);
+
+        if (pages > 2) {
+            $('span.two').show();
+            $('span.two').html(3);
+        }
+        if (pages > 3) {
+            $('span.three').show();
+            $('span.three').html(4);
+        }
+        if (pages > 4) {
+            $('span.four').show();
+            $('span.four').html(5);
+        }
+        if (pages > 5) {
+            $('span.five').show();
+            $('span.five').html(6);
+        }
+        if (pages > 6) {
+            $('span.dotsRight').show();
+            $('span.pagi-last').show();
+        }
+
+
+        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
+        $('span#pagiRight').css('opacity', '', 'cursor', '');
+        $('span.num').removeClass('active');
+        $('span.pagi-first').addClass('active');
+    }
+    paginate();
+}
+
+function paginate() {
+    if (page === 1) {
+
+        $('span.dotsLeft').hide();
+        // $('span.dotsRight').hide();
+        $('span.pagi-first').show();
+        $('span.pagi-first').html(1);
+        $('span.one').hide();
+        $('span.two').hide();
+        $('span.three').hide();
+        $('span.four').hide();
+        $('span.five').hide();
+        $('span.one').show();
+        $('span.one').html(2);
+
+        if (pages > 2) {
+            $('span.two').show();
+            $('span.two').html(3);
+        }
+        if (pages > 3) {
+            $('span.three').show();
+            $('span.three').html(4);
+        }
+        if (pages > 4) {
+            $('span.four').show();
+            $('span.four').html(5);
+        }
+        if (pages > 5) {
+            $('span.five').show();
+            $('span.five').html(6);
+        }
+        if (pages > 6) {
+            $('span.dotsRight').show();
+            $('span.pagi-last').show();
+        }
+
+        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
+        $('span#pagiRight').css('opacity', '', 'cursor', '');
+        $('span.num').removeClass('active');
+        $('span.pagi-first').addClass('active');
+
+    } else if (page >= 2 && page <= 5) {
+        $('span.dotsLeft').hide();
+        // $('span.dotsRight').hide();
+        $('span.pagi-first').show();
+        $('span.pagi-first').html(1);
+        $('span.one').hide();
+        $('span.two').hide();
+        $('span.three').hide();
+        $('span.four').hide();
+        $('span.five').hide();
+        $('span.one').show();
+        $('span.one').html(2);
+
+        if (pages > 2) {
+            $('span.two').show();
+            $('span.two').html(3);
+        }
+        if (pages > 3) {
+            $('span.three').show();
+            $('span.three').html(4);
+        }
+        if (pages > 4) {
+            $('span.four').show();
+            $('span.four').html(5);
+        }
+        if (pages > 5) {
+            $('span.five').show();
+            $('span.five').html(6);
+        }
+        if (pages > 6) {
+            $('span.dotsRight').show();
+            $('span.pagi-last').show();
+        }
+
+        if(page == pages){
+            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+        }else{
+            $('span#pagiRight').css('opacity', '', 'cursor', '');
+        }
+        $('span#pagiLeft').css('opacity', '', 'cursor', '');
+        $('span.num').removeClass('active');
+        $('#pagination').find('.num').eq(page - 1).addClass('active');
+    } else if (pages - page >= 5) {
+        $('span#pagiLeft').css('opacity', '', 'cursor', '');
+        $('span#pagiRight').css('opacity', '', 'cursor', '');
+        $('span.pagi-first').show();
+        $('span.dotsLeft').show();
+        $('span.dotsRight').show();
+        $('span.one').html(page - 2);
+        $('span.two').html(page - 1);
+        $('span.three').html(page);
+        $('span.four').html(page + 1);
+        $('span.five').html(page + 2);
+        $('span.num').removeClass('active');
+        $('span.three').addClass('active');
+    } else if (pages - page < 6 && page != pages) {
+        $('span#pagiLeft').css('opacity', '', 'cursor', '');
+        $('span#pagiRight').css('opacity', '', 'cursor', '');
+        $('span.one').html(pages - 5);
+        $('span.two').html(pages - 4);
+        $('span.three').html(pages - 3);
+        $('span.four').html(pages - 2);
+        $('span.five').html(pages - 1);
+        $('span.num').removeClass('active');
+        $('#pagination').find('.num').eq(6 - (pages - page)).addClass('active');
+        $('span.dotsLeft').show();
+        $('span.dotsRight').hide();
+    } else if (page === pages) {
+        if(page == 6){
+            //Special case where there are 6 pages and the active is the last page
+
+            $('span.dotsLeft').hide();
+            // $('span.dotsRight').hide();
+            $('span.pagi-first').show();
+            $('span.pagi-first').html(1);
+            $('span.one').hide();
+            $('span.two').hide();
+            $('span.three').hide();
+            $('span.four').hide();
+            $('span.five').hide();
+            $('span.one').show();
+            $('span.one').html(2);
+    
+            if (pages > 2) {
+                $('span.two').show();
+                $('span.two').html(3);
+            }
+            if (pages > 3) {
+                $('span.three').show();
+                $('span.three').html(4);
+            }
+            if (pages > 4) {
+                $('span.four').show();
+                $('span.four').html(5);
+            }
+            if (pages > 5) {
+                $('span.five').show();
+                $('span.five').html(6);
+            }
+            $('span#pagiLeft').css('opacity', '', 'cursor', '');
+            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+            $('span.num').removeClass('active');
+            $('#pagination').find('.num.five').addClass('active');
+        }
+        else{
+            //Last page and greater than 6
+            $('span#pagiLeft').css('opacity', '', 'cursor', '');
+            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+            $('span.dotsRight').hide();
+            $('span.dotsLeft').show();
+            $('span.one').html(page - 5);
+            $('span.two').html(page - 4);
+            $('span.three').html(page - 3);
+            $('span.four').html(page - 2);
+            $('span.five').html(page - 1);
+            $('span.num').removeClass('active');
+            $('span.pagi-last').addClass('active');
+        }
+    }
+}
+
+//Generate cards
+searchResults('people');
+
+//Document load
 $(document).ready(function() {
     ///******************************************************************* */
-    /// Set Checkboxes for Form type
+    /// Set Filter Checkboxes
     ///******************************************************************* */
     
+    //For form type
     var upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
     $(".filter-menu ul.catmenu li").each(function(){
         if( $(this).find("p").html() === upperForm){
@@ -10,7 +361,7 @@ $(document).ready(function() {
             $(this).find("input").prop('checked', true);
         }
         else if(upperForm === 'All'){
-            //set all checkboxes to checked
+            //Set all checkboxes to checked
             $(this).find("input").prop('checked', true);
         }
     });
@@ -30,7 +381,17 @@ $(document).ready(function() {
         // }
     });
 
+    //Put setting of other filters here
 
+
+
+    ///******************************************************************* */
+    /// Event Handlers for the page
+    ///******************************************************************* */
+
+    //SearchBar placeholder text
+    var searchBarPlaceholder = "Search Across " + filters[0] + " Results";
+    $('.main-search').attr("placeholder", searchBarPlaceholder); 
 
     $(document).click(function () { // close things with clicked-off
         $('span.results-per-page').find("img:first").removeClass('show');
@@ -52,12 +413,15 @@ $(document).ready(function() {
         $(this).find("#sortmenu").toggleClass('show');
     });
     
-    // todo: rather than reload, just adjust results?
+    $('span.results-per-page > span').html(card_limit);
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
-        num_of_results = $(this).find('span:first').html();
-        localStorage.setItem('display_amount', num_of_results);
-        location.reload();
+        card_limit = $(this).find('span:first').html();
+        localStorage.setItem('display_amount', card_limit);
+        card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
+        searchResults('people', card_limit, card_offset, filters);
+        $('span.results-per-page > span').html(card_limit);
+        $(document).trigger('click');
     });
     
     var timer;
@@ -72,110 +436,10 @@ $(document).ready(function() {
         clearTimeout(timer)
     });
 
-
-    ///******************************************************************* */
-    /// Generate Result Cards
-    ///******************************************************************* */
-
-    var view;
-    var result;
-    // Get the query parameters from the url and use ajax to load results
-
-    // Get params from url
-    var $_GET = {};
-    if(document.location.toString().indexOf('?') !== -1) {
-        var query = document.location
-            .toString()
-            // get the query string
-            .replace(/^.*?\?/, '')
-            .replace(/#.*$/, '')
-            .split('&');
-
-        for(var i=0, l=query.length; i<l; i++) {
-            var aux = decodeURIComponent(query[i]).split('=');
-            $_GET[aux[0]] = aux[1];
-        }
-    }
-    console.log($_GET)
-
-    // The first key of the get params should be the type
-    var type = Object.keys($_GET)[0];
-    var filter = $_GET[type];
-
-    if (typeof(filter) == "undefined"){
-        filter = '';
-    }
-
-    var filters = {};
-    filters[type] = filter;
-
-    var searchBarPlaceholder = "Search Across " + filter + " Results";
-    $('.main-search').attr("placeholder", searchBarPlaceholder);
-
-
-    var templates = ['searchCard', 'gridCard'];
-
-    console.log('uhh', filters)
-
-    $.ajax({
-        url: BASE_URL + "api/blazegraph",
-        type: "GET",
-        data: {
-            preset: 'people',
-            filters: filters,
-            templates: templates
-        },
-        'success': function (data) {
-            result_array = JSON.parse(data);
-
-            console.log('wat', result_array);
-
-
-            var result_length = result_array['searchCard'].length;
-            searchBarPlaceholder = "Search Across " + result_length + " " + filter + " Results";
-            $('.main-search').attr("placeholder", searchBarPlaceholder);
-
-            var showingResultsText = '';
-
-            if (result_length < results_per_page) {
-                showingResultsText = "Showing " + result_length + " of " + result_length + " Results";
-            } else {
-                showingResultsText = "Showing " + results_per_page + " of " + result_length + " Results";
-
-            }
-
-            $('.showing-results').html(showingResultsText);
-
-            appendCards();
-        }
-    });
-
-
-    ///******************************************************************* */
-    /// Cards and Grid creation and initialization
-    ///******************************************************************* */
-
-    function appendCards(){
-        console.log('here', result_array)
-        result_array['searchCard'].forEach(function (card) {
-            $(card).appendTo("ul.row");
-        });
-
-        result_array['gridCard'].forEach(function (card) {
-            $(card).appendTo("tbody");
-        });
-
-    }
-
+    var cards;
+    // Display the Grid View
     $("span.grid-view").click(function gridView (e) { // grid view
-        e.stopPropagation()
-        console.log('call display')
-        displayCards();
-    });
-
-    // display the people cards
-    function displayCards() {
-        console.log('display cards')
+        e.stopPropagation();
         //$('tbody > tr').remove();
         cards = false;
         view = 'grid';
@@ -191,9 +455,9 @@ $(document).ready(function() {
             $('span.view-toggle .grid-icon').addClass('show'); //make the grid-icon active
             //$('<div class="result-column"><div class="cardwrap"><ul class="row"></ul></div></div>').appendTo("div#search-result-wrap");
             result = parseInt(localStorage.getItem('display_amount'), 10)
-            if (result) {
-                result_array.length = result
-            }
+            // if (result) {
+            //     result_array.length = result
+            // }
 
             cards = true;
             view = 'grid';
@@ -201,9 +465,9 @@ $(document).ready(function() {
             window.localStorage.setItem('view', view);
             // $('div.result-column').css('padding', '0', 'margin-top', '-30px', 'margin-bottom', '-15px');
         }
-    }
+    });
 
-    // display the grid view
+    // Display the Table View
     $("span.table-view").click(function tableView (e) { // table view
         e.stopPropagation()
         if (cards === true) {
@@ -230,6 +494,7 @@ $(document).ready(function() {
         }
     });
 
+    //not sure what this does exactly
     // need to be sure the first <td> in each <tr> has a height matching the <tr>
     // first <td> is positioned absolutely, so that we may scroll the table without scrolling the first <td>
     // absolute positioning makes height behave differently, so this function is needed to ensure height consistency between the first table cell and its respective row
@@ -257,20 +522,13 @@ $(document).ready(function() {
         }
     }
 
-
     // load grid or table view, with # results per page from last page visit on page load
-    var setView;
-    var cards;
-    var num_of_results;
-    var results_per_page = 10;
-
-    $('span.results-per-page > span').html(results_per_page)
-    setView = window.localStorage.getItem('view');
+    var setView = window.localStorage.getItem('view');
     if (!setView || setView === 'grid') {
-       cards = false
+       cards = false;
        $('span.grid-view').trigger('click');
     } else {
-       cards = true
+       cards = true;
        $('span.table-view').trigger('click');
     }
     // num_of_results = window.localStorage.getItem('display_amount')
@@ -281,7 +539,7 @@ $(document).ready(function() {
     //     $('span.results-per-page > span').html(num_of_results);
     //     $('#searchResults-showing >span:first-child').html(num_of_results);
     // }
-
+    
 
     ///******************************************************************* */
     /// Filter
@@ -342,7 +600,7 @@ $(document).ready(function() {
     $(window).resize(function () { // make main content responsive when filter is visible
         if (filter) {
             setTimeout(function () {
-                centerStuffWithFilter()
+                centerStuffWithFilter();
             }, 150);
         }
     });
@@ -363,159 +621,55 @@ $(document).ready(function() {
     if (pageURL.includes("search")){
         $(".show-filter").trigger("click");
     }
-});
 
 
-// ~~~~~~~~~~ //
-// PAGINATION //
-// ~~~~~~~~~~ //
+    ///******************************************************************* */
+    /// PAGINATION HANDLERS
+    ///******************************************************************* */
 
-$(document).ready(function(){
-    var page = 1
-    var _pages = $('span.pagi-last').html();
-    var pages = parseInt(_pages)
-    var num = document.getElementsByClassName('num')
-    if (+page === 1) { // sets pagination on page load
-        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
-        $('span.dotsLeft').hide();
-        $('span.pagi-first').addClass('active');
-        $('span.one').html(2);
-        $('span.two').html(3);
-        $('span.three').html(4);
-        $('span.four').html(5);
-        $('span.five').html(6);
-    }
-    $('span#pagiRight').click(function (e) {
-        e.stopPropagation();
-        if (+page === +pages) {
+    $('span#pagiRight').click(function(e) {
+        // e.stopPropagation();
+        if (page === pages) {
             $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
         } else {
-        page = +page + 1;
-        paginate();
+            $('.num.active').nextAll('.num').first().click();
         }
     });
-    $('span.dotsRight').click(function (e) {
-        e.stopPropagation();
-        if (+pages - +page < 10) {
-            page = +pages;
-            paginate();
+    $('span.dotsRight').click(function(e) {
+        // e.stopPropagation();
+        if (pages - page < 10) {
+            return;
         } else {
-        page = +page + 10;
-        paginate();
+            page = page + 10;
+            paginate();
+            $('.num.active').click();
         }
     });
-    $('span#pagiLeft').click(function (e) {
-        e.stopPropagation();
-        if (+page === 1) {
+    $('span#pagiLeft').click(function(e) {
+        // e.stopPropagation();
+        if (page === 1) {
             $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
         } else {
-        page = +page - 1;
-        paginate();
+            $('.num.active').prevAll('.num').first().click();
         }
     });
-    $('span.dotsLeft').click(function (e) {
-        e.stopPropagation();
-        if (+page - 10 < 0) {
-            page = 1;
+    $('span.dotsLeft').click(function(e) {
+        // e.stopPropagation();
+        if (page - 10 < 0) { // this check, and the other +10 check may not be needed
+            return; // since the dots are hidden at instances when they
+        } else { // would normally break the pagination
+            page = page - 10;
             paginate();
-        } else {
-        page = +page - 10;
-        paginate();
+            $('.num.active').click();
         }
     });
-    $('span.num').click(function (e) {
-        e.stopPropagation();
+    $('span.num').click(function(e) {
+        // e.stopPropagation();
         page = $(this).html(); // set page
+        page = parseInt(page);
+        searchResults('people', card_limit, (page - 1) * card_limit, filters);
         paginate();
     });
 
-    function paginate () {
-        if (+page === 1) {
-            $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
-            $('span#pagiRight').css('opacity', '', 'cursor', '');
-            $('span.dotsLeft').hide();
-            $('span.dotsRight').show();
-            $('span.pagi-first').show();
-            $('span.pagi-first').html(1);
-            $('span.one').html(2);
-            $('span.two').html(3);
-            $('span.three').html(4);
-            $('span.four').html(5);
-            $('span.num').removeClass('active');
-            $('span.pagi-first').addClass('active');
-        } else if (+page > 1 && +page <= 10) {
-            $('span#pagiLeft').css('opacity','','cursor','');
-            $('span.dotsLeft').show();
-            $('span.pagi-first').show();
-            $('span.one').html(page);
-            $('span.two').html(+page + 1);
-            $('span.three').html(+page + 2);
-            $('span.four').html(+page + 3);
-            $('span.num').removeClass('active');
-            $('span.one').addClass('active');
-        } else if (+pages - +page > 10) {
-            $('span#pagiLeft').css('opacity', '', 'cursor', '');
-            $('span#pagiRight').css('opacity', '', 'cursor', '');
-            $('span.pagi-first').show();
-            $('span.dotsLeft').show();
-            $('span.dotsRight').show();
-            $('span.one').html(+page - 1);
-            $('span.two').html(page);
-            $('span.three').html(+page + 1);
-            $('span.four').html(+page + 2);
-            $('span.num').removeClass('active');
-            $('span.two').addClass('active');
-        } else if (+pages - +page === 10) {
-            $('span#pagiRight').css('opacity', '', 'cursor', '');
-            $('span.dotsRight').show();
-            $('span.dotsLeft').show();
-            $('span.one').html(+page - 2);
-            $('span.two').html(+page - 1);
-            $('span.three').html(page);
-            $('span.four').html(+page + 1);
-            $('span.num').removeClass('active');
-            $('span.three').addClass('active');
-        } else if (+pages - +page === 9) {
-            $('span#pagiRight').css('opacity', '', 'cursor', '');
-            $('span.dotsRight').show();
-            $('span.dotsLeft').show();
-            $('span.one').html(+page - 3);
-            $('span.two').html(+page - 2);
-            $('span.three').html(page);
-            $('span.four').html(+page + 1);
-            $('span.num').removeClass('active');
-            $('span.three').addClass('active');
-        } else if (+pages - +page === 8) {
-            $('span#pagiRight').css('opacity', '', 'cursor', '');
-            $('span.dotsRight').show();
-            $('span.dotsLeft').show();
-            $('span.one').html(+page - 3);
-            $('span.two').html(+page - 2);
-            $('span.three').html(+page - 1);
-            $('span.four').html(page);
-            $('span.num').removeClass('active');
-            $('span.four').addClass('active');
-        } else if (+pages - +page < 8 && +page != +pages) {
-            $('span#pagiRight').css('opacity', '', 'cursor', '');
-            $('span.dotsRight').show();
-            $('span.dotsLeft').show();
-            $('span.one').html(+page - 3);
-            $('span.two').html(+page - 2);
-            $('span.three').html(+page - 1);
-            $('span.four').html(page);
-            $('span.num').removeClass('active');
-            $('span.four').addClass('active');
-        } else if (+page === +pages) {
-            $('span#pagiLeft').css('opacity', '', 'cursor', '');
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
-            $('span.dotsRight').hide();
-            $('span.dotsLeft').show();
-            $('span.one').html(+page - 4);
-            $('span.two').html(page - 3);
-            $('span.three').html(+page - 2);
-            $('span.four').html(+page - 1);
-            $('span.num').removeClass('active');
-            $('span.pagi-last').addClass('active');
-        }
-    }
 });
+

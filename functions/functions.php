@@ -42,19 +42,24 @@ function blazegraph()
 
     if (isset($_GET['filters'])){
         $filtersArray = $_GET['filters'];
+
         if (isset($filtersArray['limit'])){
-            $limit = "LIMIT " . $filtersArray['limit'];
+            $limit = $filtersArray['limit'];
         } else {
+            //default to 10
             $limit = '';
         }
-
+        if (isset($filtersArray['offset'])){
+            $offset = $filtersArray['offset'];
+        } else {
+            //default to 0
+            $offset = '';
+        }
     } else {
         $filtersArray = Array();
     }
-   // print_r($filtersArray);die;
 
     $templates = $_GET['templates'];
-
 
     $queryArray = array();
     if (isset($_GET['preset'])) {
@@ -154,66 +159,111 @@ function blazegraph()
                 }
 
                 $query = array('query' => "");
-                $query['query'] ='
-                SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel ?role ?roleLabel
-                        (group_concat(distinct ?status; separator = "||") as ?status)
-                        (group_concat(distinct ?place; separator = "||") as ?place)
-                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
-                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
-                        WHERE {
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                          ?person wdt:P3 wd:Q602.
-                          '. $sexQuery .'
-                          ?person wdt:P32 wd:Q66.
-                          '. $roleQuery .'
-                          OPTIONAL {?person wdt:P3 wd:Q2.}
-                          OPTIONAL {?person wdt:P33 ?age.}
-                          OPTIONAL {?person wdt:P39 ?role.}
-                          OPTIONAL {?person wdt:P32 ?agecategory.}
-                          OPTIONAL {?person wdt:P82 ?name.}
-                          OPTIONAL {?person wdt:P20 ?origin.}
-                          OPTIONAL {?name wdt:P30 ?event.
-                                    ?event wdt:P13 ?startdate.}
-                          BIND(str(YEAR(?startdate)) AS ?startyear).
-                      OPTIONAL {?event wdt:P14 ?enddate.}
-                      BIND(str(YEAR(?enddate)) AS ?endyear).
-                      OPTIONAL {?event wdt:P12 ?place.}
-                      OPTIONAL { ?person wdt:P17 ?sex. }
-                      OPTIONAL { ?person wdt:P24 ?status. }
-                      OPTIONAL { ?person wdt:P58 ?owner. }
-                      OPTIONAL { ?person wdt:P88 ?match. }
-                    } group by ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel ?role ?roleLabel
-                ';
+                
+                $query['query'] = <<<QUERY
+SELECT DISTINCT ?agent ?event ?startyear ?endyear
+(group_concat(distinct ?name; separator = "||") as ?name) #name
+
+(group_concat(distinct ?placelab; separator = "||") as ?place) #place
+
+(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+
+(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+
+(group_concat(distinct ?match; separator = "||") as ?closeMatch)
+
+WHERE {
+
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+
+    ?agent wdt:P3/wdt:P2 wd:Q2;
+
+            wdt:P82 ?name. #name is mandatory
+
+    OPTIONAL{?agent  wdt:P39 ?role}. #optional role
+    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    
+    OPTIONAL { ?agent wdt:P24 ?status. 
+            ?status rdfs:label ?statuslab}
+    
+    OPTIONAL { ?agent wdt:P17 ?sex. 
+            ?sex rdfs:label ?sexlab}
+
+    OPTIONAL { ?agent wdt:P88 ?match}.
+    
+    ?agent p:P82 ?statement.
+    ?statement ps:P82 ?name. 
+    OPTIONAL{ ?statement pq:P30 ?event.
+                ?event  wdt:P13 ?startdate.
+            BIND(str(YEAR(?startdate)) AS ?startyear).
+            OPTIONAL {?event wdt:P14 ?enddate.
+            BIND(str(YEAR(?enddate)) AS ?endyear)}.
+            OPTIONAL {?event wdt:P12 ?place.
+                    ?place rdfs:label ?placelab}
+            
+            }.
+
+
+} group by ?agent ?event ?startyear ?endyear
+order by ?agent
+limit $limit
+offset $offset
+QUERY;
 
                 array_push($queryArray, $query);
-
 
                 $query = array('query' => "");
-                $query['query'] ='
-                SELECT ?person ?personLabel ?name ?originLabel ?sexLabel ?role ?roleLabel
-                        (group_concat(distinct ?status; separator = "||") as ?status)
-                        WHERE {
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                          ?person wdt:P3 wd:Q602.
-                          '. $sexQuery . '
-                          '. $roleQuery . '
-                          ?person wdt:P82 ?name.
-                          ?person p:P82 ?namestatement . # with a P82 (hasname) statement
-                   FILTER NOT EXISTS { ?namestatement pq:P30 ?event}
-                          # ... but the statement doesnt have  P30 qualifier
+                $query['query'] = <<<QUERY
+SELECT DISTINCT ?agent ?event ?startyear ?endyear
+(group_concat(distinct ?name; separator = "||") as ?name) #name
+>>>>>>> 85758871b81fc6e3e2190e54deb91ff04b1d50bc
+
+(group_concat(distinct ?placelab; separator = "||") as ?place) #place
+
+(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+
+(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+
+(group_concat(distinct ?match; separator = "||") as ?closeMatch)
+
+WHERE {
+
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+
+    ?agent wdt:P3/wdt:P2 wd:Q2;
+
+            wdt:P82 ?name. #name is mandatory
+
+    OPTIONAL{?agent  wdt:P39 ?role}. #optional role
+    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    
+    OPTIONAL { ?agent wdt:P24 ?status. 
+            ?status rdfs:label ?statuslab}
+    
+    OPTIONAL { ?agent wdt:P17 ?sex. 
+            ?sex rdfs:label ?sexlab}
+
+    OPTIONAL { ?agent wdt:P88 ?match}.
+    
+    ?agent p:P82 ?statement.
+    ?statement ps:P82 ?name. 
+    OPTIONAL{ ?statement pq:P30 ?event.
+                ?event  wdt:P13 ?startdate.
+            BIND(str(YEAR(?startdate)) AS ?startyear).
+            OPTIONAL {?event wdt:P14 ?enddate.
+            BIND(str(YEAR(?enddate)) AS ?endyear)}.
+            OPTIONAL {?event wdt:P12 ?place.
+                    ?place rdfs:label ?placelab}
+            
+            }.
 
 
-                          OPTIONAL {?person wdt:P20 ?origin.}
-
-
-                          OPTIONAL { ?person wdt:P17 ?sex. }
-                          OPTIONAL { ?person wdt:P24 ?status. }
-
-
-                        } group by ?person ?personLabel ?name ?originLabel ?sexLabel ?role ?roleLabel
-                        ';
+} group by ?agent ?event ?startyear ?endyear
+order by ?agent
+QUERY;
 
                 array_push($queryArray, $query);
+
                 break;
             case 'places':
                 $query = array('query' => "");
@@ -502,7 +552,17 @@ function blazegraph()
             $first = false;
         } else {
             if ($preset != "projects2") {
-                $resultsArray = array_merge($resultsArray, $result);
+                if($preset == 'people'){
+                    //For people search results get the count of all the results
+                    $counter = 0;
+                    foreach($result as $count){
+                        $counter++;
+                    }
+                    $resultsArray[0]['count'] = $counter;
+                }
+                else{
+                    $resultsArray = array_merge($resultsArray, $result);
+                }
             }
             else {
                 foreach ($result as $count) {
@@ -544,6 +604,13 @@ function createCards($results, $templates, $preset = 'default'){
     foreach ($templates as $template) {
         $cards[$template] = array();
     }
+
+    if(isset($results[0]['count'])){
+        $count = 0;
+        $count = $results[0]['count'];
+        $cards['total'] =  $count;
+    }
+
     foreach ($results as $index => $record) {  ///foreach result
 
         switch ($preset){
@@ -643,37 +710,36 @@ function createCards($results, $templates, $preset = 'default'){
                 $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $fullName);
                 $lastName = $nameArray[count($nameArray)-1];
 
-                $personUrl = $record['person']['value'];
+                $personUrl = $record['agent']['value'];
                 $xplode = explode('/', $personUrl);
                 $personQ = end($xplode);
 
-                if (isset($record['statusLabel']) && isset($record['statusLabel']['value'])){
-                    $status = $record['statusLabel']['value'];
-                } else {
-                    $status = "";
-                }
+                // if (isset($record['status']) && isset($record['status']['value'])){
+                //     $status = $record['status']['value'];
+                // } else {
+                //     $status = "";
+                // }
 
-                if (isset($record['sexLabel']) && isset($record['sexLabel']['value'])){
-                    $sex = $record['sexLabel']['value'];
+                if (isset($record['sex']) && isset($record['sex']['value'])){
+                    $sex = $record['sex']['value'];
+                    if($sex == ''){
+                        $sex = "Unidentified";
+                    }
                 } else {
                     $sex = "Unidentified";
                 }
-
                 if (isset($record['status']) && isset($record['status']['value'])){
                     $statusArray = explode('||', $record['status']['value']);
                     $status = '';
 
                     $statusCount = 0;
-                    foreach ($statusArray as $statusUrl) {
-                        $xplode = explode('/', $statusUrl);
-                        $qStatus = end($xplode);
-                        if (!empty($qStatus)){
-                            $statusLabel = qpersonstatus[$qStatus];
-                            if ($statusCount > 0){
-                                $status .= ", $statusLabel";
-                            } else {
-                                $status .= "$statusLabel";
 
+                    foreach ($statusArray as $stat) {
+                        if (!empty($stat)){
+                            if ($statusCount > 0){
+                                $status .= ", $stat";
+                            } else {
+                                $status .= "$stat";
                             }
                             $statusCount++;
                         }
@@ -692,11 +758,18 @@ function createCards($results, $templates, $preset = 'default'){
                 $location = '';
                 if (isset($record['place']) && isset($record['place']['value'])){
                     $placeArray = explode('||', $record['place']['value']);
-                    $placeUrl = end($placeArray);
-                    $xplode = explode('/', $placeUrl);
-                    $qPlace = end($xplode);
-                    $place = qPlaces[$qPlace];
-                    $location = $place;
+
+                    $placeCount = 0;
+                    foreach ($placeArray as $place) {
+                        if (!empty($place)){
+                            if ($statusCount > 0){
+                                $location .= ", $place";
+                            } else {
+                                $location .= "$place";
+                            }
+                            $placeCount++;
+                        }
+                    }
                 }
 
                 if (isset($record['startyear']) && isset($record['startyear']['value'])){
@@ -821,6 +894,7 @@ function createCards($results, $templates, $preset = 'default'){
 
                     array_push($cards[$template], $card);
                 }
+
                 break;
             case 'places':
                 $placeName = $record['place3Label']['value'];
