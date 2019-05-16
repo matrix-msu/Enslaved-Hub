@@ -46,13 +46,11 @@ function blazegraph()
         if (isset($filtersArray['limit'])){
             $limit = $filtersArray['limit'];
         } else {
-            //default to 10
             $limit = '';
         }
         if (isset($filtersArray['offset'])){
             $offset = $filtersArray['offset'];
         } else {
-            //default to 0
             $offset = '';
         }
     } else {
@@ -61,6 +59,7 @@ function blazegraph()
 
     $templates = $_GET['templates'];
 
+    $record_total = 0;
     $queryArray = array();
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
@@ -79,59 +78,59 @@ function blazegraph()
                 if(isset($_GET["offset"]) && !empty($_GET["offset"])) $Q_offset = $_GET["offset"];
 
                 $query = array('query' => "");
-                $query['query'] ='
-                SELECT DISTINCT ?agent ?startyear ?endyear
-                (group_concat(distinct ?name; separator = "||") as ?name) #name
+                $query['query'] = <<<QUERY
+SELECT DISTINCT ?agent ?startyear ?endyear
+(group_concat(distinct ?name; separator = "||") as ?name) #name
 
-                (group_concat(distinct ?placelab; separator = "||") as ?place) #place
+(group_concat(distinct ?placelab; separator = "||") as ?place) #place
 
-                (group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
 
-                (group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
 
-                (group_concat(distinct ?match; separator = "||") as ?closeMatch)
+(group_concat(distinct ?match; separator = "||") as ?closeMatch)
 
-                WHERE {
+WHERE {
 
-                  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-                  ?agent wdt:P3/wdt:P2 wd:Q2;
+    ?agent wdt:P3/wdt:P2 wd:Q2;
 
-                     wdt:P82 ?name; #name is mandatory
-                          p:P3  ?object .
-                  ?object prov:wasDerivedFrom ?provenance .
-                  ?provenance pr:P35 ?reference .
-                  ?reference wdt:P7 wd:'.$Q_ID.'
+        wdt:P82 ?name; #name is mandatory
+            p:P3  ?object .
+    ?object prov:wasDerivedFrom ?provenance .
+    ?provenance pr:P35 ?reference .
+    ?reference wdt:P7 wd:$Q_ID
 
-                  OPTIONAL{?agent  wdt:P39 ?role}. #optional role
-                  MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-                 
-                  OPTIONAL { ?agent wdt:P24 ?status. 
-                            ?status rdfs:label ?statuslab}
-                  
-                  OPTIONAL { ?agent wdt:P17 ?sex. 
-                            ?sex rdfs:label ?sexlab}
+    OPTIONAL{?agent  wdt:P39 ?role}. #optional role
+    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    
+    OPTIONAL { ?agent wdt:P24 ?status. 
+            ?status rdfs:label ?statuslab}
+    
+    OPTIONAL { ?agent wdt:P17 ?sex. 
+            ?sex rdfs:label ?sexlab}
 
-                  OPTIONAL { ?agent wdt:P88 ?match}.
-                  
-                  ?agent p:P82 ?statement.
-                  ?statement ps:P82 ?name. 
-                  OPTIONAL{ ?statement pq:P30 ?event.
-                            ?event  wdt:P13 ?startdate.
-                           BIND(str(YEAR(?startdate)) AS ?startyear).
-                           OPTIONAL {?event wdt:P14 ?enddate.
-                       BIND(str(YEAR(?enddate)) AS ?endyear)}.
-                           OPTIONAL {?event wdt:P12 ?place.
-                                    ?place rdfs:label ?placelab}
-                           
-                          }.
+    OPTIONAL { ?agent wdt:P88 ?match}.
+    
+    ?agent p:P82 ?statement.
+    ?statement ps:P82 ?name. 
+    OPTIONAL{ ?statement pq:P30 ?event.
+            ?event  wdt:P13 ?startdate.
+            BIND(str(YEAR(?startdate)) AS ?startyear).
+            OPTIONAL {?event wdt:P14 ?enddate.
+        BIND(str(YEAR(?enddate)) AS ?endyear)}.
+            OPTIONAL {?event wdt:P12 ?place.
+                    ?place rdfs:label ?placelab}
+            
+            }.
 
 
-                } group by ?agent ?event ?startyear ?endyear
-                order by ?agent
-                limit '.$Q_limit.'
-                offset '.$Q_offset.'
-                ';
+} group by ?agent ?event ?startyear ?endyear
+order by ?agent
+limit $Q_limit
+offset $Q_offset
+QUERY;
 
                 array_push($queryArray, $query);
                 break;
@@ -158,6 +157,18 @@ function blazegraph()
                     }
                 }
 
+                $genderQuery = "";
+                if (isset($filtersArray['gender'])){
+                    $gender = $filtersArray['gender'];
+                    $qGender = $gender == 'Male';
+                    if($gender == 'Male'){
+                        $genderQuery = "?agent wdt:P17 wd:Q48";
+                    }
+                    else if($gender == 'Female'){
+                        $genderQuery = "?agent wdt:P17 wd:Q47";
+                    }
+                }
+
                 $query = array('query' => "");
                 
                 $query['query'] = <<<QUERY
@@ -174,34 +185,36 @@ SELECT DISTINCT ?agent ?event ?startyear ?endyear
 
 WHERE {
 
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-    ?agent wdt:P3/wdt:P2 wd:Q2;
+?agent wdt:P3/wdt:P2 wd:Q2;
 
-            wdt:P82 ?name. #name is mandatory
+        wdt:P82 ?name. #name is mandatory
 
-    OPTIONAL{?agent  wdt:P39 ?role}. #optional role
-    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-    
-    OPTIONAL { ?agent wdt:P24 ?status. 
-            ?status rdfs:label ?statuslab}
-    
-    OPTIONAL { ?agent wdt:P17 ?sex. 
-            ?sex rdfs:label ?sexlab}
+OPTIONAL{?agent  wdt:P39 ?role}. #optional role
+MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
 
-    OPTIONAL { ?agent wdt:P88 ?match}.
-    
-    ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name. 
-    OPTIONAL{ ?statement pq:P30 ?event.
-                ?event  wdt:P13 ?startdate.
-            BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?event wdt:P14 ?enddate.
-            BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?event wdt:P12 ?place.
-                    ?place rdfs:label ?placelab}
-            
-            }.
+$genderQuery
+
+OPTIONAL { ?agent wdt:P24 ?status. 
+        ?status rdfs:label ?statuslab}
+
+OPTIONAL { ?agent wdt:P17 ?sex. 
+        ?sex rdfs:label ?sexlab}
+
+OPTIONAL { ?agent wdt:P88 ?match}.
+
+?agent p:P82 ?statement.
+?statement ps:P82 ?name. 
+OPTIONAL{ ?statement pq:P30 ?event.
+            ?event	wdt:P13 ?startdate.
+        BIND(str(YEAR(?startdate)) AS ?startyear).
+        OPTIONAL {?event wdt:P14 ?enddate.
+        BIND(str(YEAR(?enddate)) AS ?endyear)}.
+        OPTIONAL {?event wdt:P12 ?place.
+                ?place rdfs:label ?placelab}
+        
+        }.
 
 
 } group by ?agent ?event ?startyear ?endyear
@@ -216,7 +229,6 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent ?event ?startyear ?endyear
 (group_concat(distinct ?name; separator = "||") as ?name) #name
->>>>>>> 85758871b81fc6e3e2190e54deb91ff04b1d50bc
 
 (group_concat(distinct ?placelab; separator = "||") as ?place) #place
 
@@ -228,34 +240,36 @@ SELECT DISTINCT ?agent ?event ?startyear ?endyear
 
 WHERE {
 
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-    ?agent wdt:P3/wdt:P2 wd:Q2;
+?agent wdt:P3/wdt:P2 wd:Q2;
 
-            wdt:P82 ?name. #name is mandatory
+        wdt:P82 ?name. #name is mandatory
 
-    OPTIONAL{?agent  wdt:P39 ?role}. #optional role
-    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-    
-    OPTIONAL { ?agent wdt:P24 ?status. 
-            ?status rdfs:label ?statuslab}
-    
-    OPTIONAL { ?agent wdt:P17 ?sex. 
-            ?sex rdfs:label ?sexlab}
+OPTIONAL{?agent  wdt:P39 ?role}. #optional role
+MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
 
-    OPTIONAL { ?agent wdt:P88 ?match}.
-    
-    ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name. 
-    OPTIONAL{ ?statement pq:P30 ?event.
-                ?event  wdt:P13 ?startdate.
-            BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?event wdt:P14 ?enddate.
-            BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?event wdt:P12 ?place.
-                    ?place rdfs:label ?placelab}
-            
-            }.
+$genderQuery
+
+OPTIONAL { ?agent wdt:P24 ?status. 
+        ?status rdfs:label ?statuslab}
+
+OPTIONAL { ?agent wdt:P17 ?sex. 
+        ?sex rdfs:label ?sexlab}
+
+OPTIONAL { ?agent wdt:P88 ?match}.
+
+?agent p:P82 ?statement.
+?statement ps:P82 ?name. 
+OPTIONAL{ ?statement pq:P30 ?event.
+            ?event	wdt:P13 ?startdate.
+        BIND(str(YEAR(?startdate)) AS ?startyear).
+        OPTIONAL {?event wdt:P14 ?enddate.
+        BIND(str(YEAR(?enddate)) AS ?endyear)}.
+        OPTIONAL {?event wdt:P12 ?place.
+                ?place rdfs:label ?placelab}
+        
+        }.
 
 
 } group by ?agent ?event ?startyear ?endyear
@@ -267,256 +281,274 @@ QUERY;
                 break;
             case 'places':
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT DISTINCT ?place ?placeLabel ?place2 ?place2Label ?place3 ?place3Label WHERE {
-                     FILTER regex(?regex, "^United States") .
-                     ?place rdfs:label ?regex .
-                     OPTIONAL{?place2 wdt:P10 ?place . }
-                     OPTIONAL {?place3 wdt:P10 ?place2 .}
+                $query['query'] = <<<QUERY
+SELECT DISTINCT ?place ?placeLabel ?place2 ?place2Label ?place3 ?place3Label WHERE {
+    FILTER regex(?regex, "^United States") .
+    ?place rdfs:label ?regex .
+    OPTIONAL{?place2 wdt:P10 ?place . }
+    OPTIONAL {?place3 wdt:P10 ?place2 .}
 
-                    SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
-                    }order by ?place ?place2 ?place3';
+SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
+}order by ?place ?place2 ?place3
+QUERY;
 
                 array_push($queryArray, $query);
                 break;
             case 'events':
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?event ?eventLabel WHERE {
-                      ?event wdt:P3 wd:Q34.
-                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                    }
-                    LIMIT 100';
+                $query['query'] = <<<QUERY
+SELECT ?event ?eventLabel WHERE {
+    ?event wdt:P3 wd:Q34.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+LIMIT 100
+QUERY;
 
                 array_push($queryArray, $query);
                 break;
             case 'sources':
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?person ?personLabel ?name ?sex ?sexLabel ?race ?age ?ageLabel ?status ?statusLabel ?role ?roleLabel ?owner ?ownerLabel ?match ?matchLabel WHERE {
-                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                      ?person wdt:P3 wd:Q2.
-                      OPTIONAL { ?person wdt:P82 ?name. }
-                      OPTIONAL { ?person wdt:P17 ?sex. }
-                      OPTIONAL { ?person wdt:P37 ?race. }
-                      OPTIONAL { ?person wdt:P18 ?age. }
-                      OPTIONAL { ?person wdt:P24 ?status. }
-                      OPTIONAL { ?person wdt:P39 ?role. }
-                      OPTIONAL { ?person wdt:P58 ?owner. }
-                      OPTIONAL { ?person wdt:P88 ?match. }
-                    }
-                    LIMIT 100';
+                $query['query'] = <<<QUERY
+SELECT ?person ?personLabel ?name ?sex ?sexLabel ?race ?age ?ageLabel ?status ?statusLabel ?role ?roleLabel ?owner ?ownerLabel ?match ?matchLabel WHERE {
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    ?person wdt:P3 wd:Q2.
+    OPTIONAL { ?person wdt:P82 ?name. }
+    OPTIONAL { ?person wdt:P17 ?sex. }
+    OPTIONAL { ?person wdt:P37 ?race. }
+    OPTIONAL { ?person wdt:P18 ?age. }
+    OPTIONAL { ?person wdt:P24 ?status. }
+    OPTIONAL { ?person wdt:P39 ?role. }
+    OPTIONAL { ?person wdt:P58 ?owner. }
+    OPTIONAL { ?person wdt:P88 ?match. }
+}
+LIMIT 100
+QUERY;
 
                 array_push($queryArray, $query);
                 break;
             case 'projects':
                 $query = array('query' => "");
-               // $query['query'] =
-               //     'SELECT ?project ?projectLabel  WHERE {
-               //       ?project wdt:P3 wd:Q264
+//                $query['query'] =
+//                    'SELECT ?project ?projectLabel  WHERE {
+//                      ?project wdt:P3 wd:Q264
+//
+//                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+//                    }
+//                ';
+                $query['query'] = <<<QUERY
+SELECT ?person ?personLabel ?name ?originLabel
+    (group_concat(distinct ?status; separator = "||") as ?status)
+    (group_concat(distinct ?place; separator = "||") as ?place)
+    (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+    (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+    WHERE {
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+        ?person wdt:P3 wd:Q602.
+        ?person wdt:P17 wd:Q47.
+        OPTIONAL {?person wdt:P3 wd:Q2.}
+        OPTIONAL {?person wdt:P82 ?name.}
+        OPTIONAL {?person wdt:P20 ?origin.}
+        OPTIONAL {?name wdt:P30 ?event.
+                ?event wdt:P13 ?startdate.}
+        BIND(str(YEAR(?startdate)) AS ?startyear).
 
-               //       SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-               //     }
-               // ';
-                $query['query'] =
-                    'SELECT ?person ?personLabel ?name ?originLabel
-                        (group_concat(distinct ?status; separator = "||") as ?status)
-                        (group_concat(distinct ?place; separator = "||") as ?place)
-                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
-                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
-                        WHERE {
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                          ?person wdt:P3 wd:Q602.
-                          ?person wdt:P17 wd:Q47.
-                          OPTIONAL {?person wdt:P3 wd:Q2.}
-                          OPTIONAL {?person wdt:P82 ?name.}
-                          OPTIONAL {?person wdt:P20 ?origin.}
-                          OPTIONAL {?name wdt:P30 ?event.
-                                    ?event wdt:P13 ?startdate.}
-                          BIND(str(YEAR(?startdate)) AS ?startyear).
+        OPTIONAL {?event wdt:P14 ?enddate.}
+        BIND(str(YEAR(?enddate)) AS ?endyear).
+        OPTIONAL {?event wdt:P12 ?place.}
+        OPTIONAL { ?person wdt:P17 ?sex. }
+        OPTIONAL { ?person wdt:P24 ?status. }
+        OPTIONAL { ?person wdt:P58 ?owner. }
+        OPTIONAL { ?person wdt:P88 ?match. }
 
-                          OPTIONAL {?event wdt:P14 ?enddate.}
-                          BIND(str(YEAR(?enddate)) AS ?endyear).
-                          OPTIONAL {?event wdt:P12 ?place.}
-                          OPTIONAL { ?person wdt:P17 ?sex. }
-                          OPTIONAL { ?person wdt:P24 ?status. }
-                          OPTIONAL { ?person wdt:P58 ?owner. }
-                          OPTIONAL { ?person wdt:P88 ?match. }
-
-                        } group by ?person ?personLabel ?name ?originLabel
-                        ' . $limit;
+    } group by ?person ?personLabel ?name ?originLabel
+    limit $limit
+QUERY;
 
                 array_push($queryArray, $query);
                 break;
             case 'projectAssoc':
+                $qid = $_GET['qid'];
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?agentcount)
-                        WHERE {
-                          ?project wdt:P3 wd:Q264.         #find projects
-                           ?item wdt:P3/wdt:P2 wd:Q2;        #find agents
-                                p:P3  ?object .
-                            ?object prov:wasDerivedFrom ?provenance .
-                            ?provenance pr:P35 ?reference .
-                            ?reference wdt:P7 ?project;
-                                       wdt:P7 wd:'.$_GET['qid'].'.
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-                        }
-                        GROUP BY ?project ?projectLabel
-                        ORDER BY ?count';
+                $query['query'] = <<<QUERY
+SELECT ?project ?projectLabel  (COUNT(*) AS ?agentcount)
+    WHERE {
+        ?project wdt:P3 wd:Q264.         #find projects
+        ?item wdt:P3/wdt:P2 wd:Q2;        #find agents
+            p:P3  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?reference .
+        ?reference wdt:P7 ?project;
+                    wdt:P7 wd:$qid
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    }
+    GROUP BY ?project ?projectLabel
+    ORDER BY ?count
+QUERY;
                 array_push($queryArray, $query);
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?eventcount)
-                        WHERE {
-                          ?project wdt:P3 wd:Q264.         #find projects
-                          ?item wdt:P3 wd:Q34;        #find events
-                                p:P3  ?object .
-                            ?object prov:wasDerivedFrom ?provenance .
-                            ?provenance pr:P35 ?reference .
-                            ?reference wdt:P7 ?project;
-                                       wdt:P7 wd:'.$_GET['qid'].'.
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-                        }
-                        GROUP BY ?project ?projectLabel
-                        ORDER BY ?count';
+                $query['query'] = <<<QUERY
+SELECT ?project ?projectLabel  (COUNT(*) AS ?eventcount)
+    WHERE {
+        ?project wdt:P3 wd:Q264.         #find projects
+        ?item wdt:P3 wd:Q34;        #find events
+            p:P3  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?reference .
+        ?reference wdt:P7 ?project;
+                    wdt:P7 wd:$qid
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    }
+    GROUP BY ?project ?projectLabel
+    ORDER BY ?count
+QUERY;
                 array_push($queryArray, $query);
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?placecount)
-                        WHERE {
-                          ?project wdt:P3 wd:Q264.         #find projects
-                           ?item wdt:P3 wd:Q50;        #find places
-                                p:P3  ?object .
-                            ?object prov:wasDerivedFrom ?provenance .
-                            ?provenance pr:P35 ?reference .
-                            ?reference wdt:P7 ?project;
-                                       wdt:P7 wd:'.$_GET['qid'].'.
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-                        }
-                        GROUP BY ?project ?projectLabel
-                        ORDER BY ?count';
+                $query['query'] = <<<QUERY
+SELECT ?project ?projectLabel  (COUNT(*) AS ?placecount)
+    WHERE {
+        ?project wdt:P3 wd:Q264.         #find projects
+        ?item wdt:P3 wd:Q50;        #find places
+            p:P3  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?reference .
+        ?reference wdt:P7 ?project;
+                    wdt:P7 wd:$qid
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    }
+    GROUP BY ?project ?projectLabel
+    ORDER BY ?count
+QUERY;
                 array_push($queryArray, $query);
                 break;
             case 'projects2':
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?project ?projectLabel
-                        WHERE {
-                        ?project wdt:P3 wd:Q264         #find projects
-                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-                        }';
+                $query['query'] = <<<QUERY
+SELECT ?project ?projectLabel
+    WHERE {
+    ?project wdt:P3 wd:Q264         #find projects
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    }
+QUERY;
                 array_push($queryArray, $query);
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
-                        WHERE {
-                          ?project wdt:P3 wd:Q264.         #find projects
-                           ?item wdt:P3/wdt:P2 wd:Q2;        #find agents
-                                p:P3  ?object .
-                            ?object prov:wasDerivedFrom ?provenance .
-                            ?provenance pr:P35 ?reference .
-                            ?reference wdt:P7 ?project
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-                        }
-                        GROUP BY ?project ?projectLabel
-                        ORDER BY ?count';
+                $query['query'] = <<<QUERY
+SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
+    WHERE {
+        ?project wdt:P3 wd:Q264.         #find projects
+        ?item wdt:P3/wdt:P2 wd:Q2;        #find agents
+            p:P3  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?reference .
+        ?reference wdt:P7 ?project
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    }
+    GROUP BY ?project ?projectLabel
+    ORDER BY ?count
+QUERY;
                 array_push($queryArray, $query);
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
-                        WHERE {
-                          ?project wdt:P3 wd:Q264.         #find projects
-                          ?item wdt:P3 wd:Q34;        #find events
-                                p:P3  ?object .
-                            ?object prov:wasDerivedFrom ?provenance .
-                            ?provenance pr:P35 ?reference .
-                            ?reference wdt:P7 ?project
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-                        }
-                        GROUP BY ?project ?projectLabel
-                        ORDER BY ?count';
+                $query['query'] = <<<QUERY
+SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
+    WHERE {
+        ?project wdt:P3 wd:Q264.         #find projects
+        ?item wdt:P3 wd:Q34;        #find events
+            p:P3  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?reference .
+        ?reference wdt:P7 ?project
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    }
+    GROUP BY ?project ?projectLabel
+    ORDER BY ?count
+QUERY;
                 array_push($queryArray, $query);
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
-                        WHERE {
-                          ?project wdt:P3 wd:Q264.         #find projects
-                           ?item wdt:P3 wd:Q50;        #find places
-                                p:P3  ?object .
-                            ?object prov:wasDerivedFrom ?provenance .
-                            ?provenance pr:P35 ?reference .
-                            ?reference wdt:P7 ?project
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-                        }
-                        GROUP BY ?project ?projectLabel
-                        ORDER BY ?count';
+                $query['query'] = <<<QUERY
+SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
+    WHERE {
+        ?project wdt:P3 wd:Q264.         #find projects
+        ?item wdt:P3 wd:Q50;        #find places
+            p:P3  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?reference .
+        ?reference wdt:P7 ?project
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    }
+    GROUP BY ?project ?projectLabel
+    ORDER BY ?count
+QUERY;
                 array_push($queryArray, $query);
                 break;
             case 'stories':
                 $query = array('query' => "");
-                $query['query'] =
-                    'SELECT ?person ?personLabel ?name ?originLabel
-                        (group_concat(distinct ?status; separator = "||") as ?status)
-                        (group_concat(distinct ?place; separator = "||") as ?place)
-                        (group_concat(distinct ?startyear; separator = "||") as ?startyear)
-                        (group_concat(distinct ?endyear; separator = "||") as ?endyear)
-                        WHERE {
-                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                          ?person wdt:P3 wd:Q602.
-                          ?person wdt:P17 wd:Q47.
-                          OPTIONAL {?person wdt:P3 wd:Q2.}
-                          OPTIONAL {?person wdt:P82 ?name.}
-                          OPTIONAL {?person wdt:P20 ?origin.}
-                          OPTIONAL {?name wdt:P30 ?event.
-                                    ?event wdt:P13 ?startdate.}
-                          BIND(str(YEAR(?startdate)) AS ?startyear).
+                $query['query'] = <<<QUERY
+SELECT ?person ?personLabel ?name ?originLabel
+    (group_concat(distinct ?status; separator = "||") as ?status)
+    (group_concat(distinct ?place; separator = "||") as ?place)
+    (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+    (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+    WHERE {
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+        ?person wdt:P3 wd:Q602.
+        ?person wdt:P17 wd:Q47.
+        OPTIONAL {?person wdt:P3 wd:Q2.}
+        OPTIONAL {?person wdt:P82 ?name.}
+        OPTIONAL {?person wdt:P20 ?origin.}
+        OPTIONAL {?name wdt:P30 ?event.
+                ?event wdt:P13 ?startdate.}
+        BIND(str(YEAR(?startdate)) AS ?startyear).
 
-                          OPTIONAL {?event wdt:P14 ?enddate.}
-                          BIND(str(YEAR(?enddate)) AS ?endyear).
-                          OPTIONAL {?event wdt:P12 ?place.}
-                          OPTIONAL { ?person wdt:P17 ?sex. }
-                          OPTIONAL { ?person wdt:P24 ?status. }
-                          OPTIONAL { ?person wdt:P58 ?owner. }
-                          OPTIONAL { ?person wdt:P88 ?match. }
+        OPTIONAL {?event wdt:P14 ?enddate.}
+        BIND(str(YEAR(?enddate)) AS ?endyear).
+        OPTIONAL {?event wdt:P12 ?place.}
+        OPTIONAL { ?person wdt:P17 ?sex. }
+        OPTIONAL { ?person wdt:P24 ?status. }
+        OPTIONAL { ?person wdt:P58 ?owner. }
+        OPTIONAL { ?person wdt:P88 ?match. }
 
-                        } group by ?person ?personLabel ?name ?originLabel
-                        ' . $limit;
+    } group by ?person ?personLabel ?name ?originLabel
+    limit $limit
+QUERY;
                 array_push($queryArray, $query);
                 break;
             case 'featured':
+                //Feature Cards on the Explore Form page
                 if($templates[0] == 'Person'){
                     $query = array('query' => "");
-                    $query['query'] = '
-                    SELECT DISTINCT ?agent ?agentLabel (SHA512(CONCAT(STR(?agent), STR(RAND()))) as ?random) WHERE {
-                        ?agent wdt:P3/wdt:P2 wd:Q2 . #all agents and people
-                        ?agent wikibase:statements ?statementcount . #with at least 4 core fields
-                        FILTER (?statementcount >3  ).
-                        ?agent wdt:P88 ?match. #and they have a match
-                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-                        } ORDER BY ?random
-                    LIMIT 8';
+                    $query['query'] = <<<QUERY
+SELECT DISTINCT ?agent ?agentLabel (SHA512(CONCAT(STR(?agent), STR(RAND()))) as ?random) WHERE {
+?agent wdt:P3/wdt:P2 wd:Q2 . #all agents and people
+?agent wikibase:statements ?statementcount . #with at least 4 core fields
+FILTER (?statementcount >3  ).
+?agent wdt:P88 ?match. #and they have a match
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+} ORDER BY ?random
+LIMIT 8                     
+QUERY;
                 }
                 if($templates[0] == 'Place'){
                     $query = array('query' => "");
-                    $query['query'] = '
-                    SELECT DISTINCT ?place ?placeLabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random) WHERE {
-                        ?place wdt:P3 wd:Q50 .
-                        ?place wikibase:statements ?statementcount .
-                                FILTER (?statementcount >3  )
-                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-                        } ORDER BY ?random
-                        LIMIT 8';
+                    $query['query'] = <<<QUERY
+SELECT DISTINCT ?place ?placeLabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random) WHERE {
+?place wdt:P3 wd:Q50 .
+?place wikibase:statements ?statementcount .
+        FILTER (?statementcount >3  )
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+} ORDER BY ?random
+LIMIT 8                
+QUERY;
                 }
-                
+            
                 array_push($queryArray, $query);
                 break;
 
             default:
                 die;
         }
+        
     }
     elseif (isset($_GET['query'])) {
+        //Preset not supplied so query needs to be supplied instead
         $query = array(
             'query' => $_GET['query']
         );
@@ -545,24 +577,24 @@ QUERY;
         curl_close($ch);
 
         $result = json_decode($result, true)['results']['bindings'];
+        
         if(!$result) continue;
 
         if ($first){
             $resultsArray = $result;
             $first = false;
         } else {
-            if ($preset != "projects2") {
-                if($preset == 'people'){
-                    //For people search results get the count of all the results
-                    $counter = 0;
-                    foreach($result as $count){
-                        $counter++;
-                    }
-                    $resultsArray[0]['count'] = $counter;
+            if($preset == 'people'){
+                //For people search results get the count of all the results
+                // $counter = 0;
+                foreach($result as $count){
+                    // $counter++;
+                    $record_total++;
                 }
-                else{
-                    $resultsArray = array_merge($resultsArray, $result);
-                }
+                // $resultsArray[0]['count'] = $counter;
+            }
+            else if ($preset != "projects2") {
+                $resultsArray = array_merge($resultsArray, $result);
             }
             else {
                 foreach ($result as $count) {
@@ -592,12 +624,18 @@ QUERY;
     // $contents = json_encode($contents);
     // file_put_contents($path, $contents);
 
-    
-    return createCards($resultsArray, $templates, $preset);
+    //Get HTML for the cards
+    return createCards($resultsArray, $templates, $preset, $record_total);
 }
 
-// this one is only used for blazegraph page
-function createCards($results, $templates, $preset = 'default'){
+/**
+ * Creates the HTML for type of cards specified in $templates
+ * 
+ * \param $results : Array of results that the query returned
+ * \param $templates : Array of the type of cards to make
+ * \param $preset : 
+ */
+function createCards($results, $templates, $preset = 'default', $count = 0){
 //    print_r($results);die;
     $cards = Array();
 
@@ -605,11 +643,7 @@ function createCards($results, $templates, $preset = 'default'){
         $cards[$template] = array();
     }
 
-    if(isset($results[0]['count'])){
-        $count = 0;
-        $count = $results[0]['count'];
-        $cards['total'] =  $count;
-    }
+    $cards['total'] =  $count;
 
     foreach ($results as $index => $record) {  ///foreach result
 
