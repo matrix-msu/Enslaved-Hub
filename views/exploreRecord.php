@@ -143,6 +143,7 @@
                 type: recordform
             },
             'success': function (json) {
+                console.log(json);
                 var html = JSON.parse(json);
                 console.log(html);
                 $('.middlewrap').html(html.header);
