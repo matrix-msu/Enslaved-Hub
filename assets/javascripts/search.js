@@ -89,6 +89,12 @@ $(document).ready(function() {
         clearTimeout(timer)
     });
 
+    // Handles click on a table row (redirects page to url attach to last hidden column of the row)
+    $("#search-result-table").on("click", "tbody > tr", function() {
+        let link = $(this).find("a").attr("href");
+        if(link) window.location.href = link;
+    });
+
 });
 /**************************************************************************************************************/
 // FILTER
