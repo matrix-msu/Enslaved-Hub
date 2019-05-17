@@ -8,8 +8,7 @@ var result_array;
 var total_length = 0;
 var card_offset = 0;
 var card_limit = 12;
-var page = 1;
-var pages = 1;
+var presets = {};
 var filters = {};
 
 // Get params from url
@@ -47,7 +46,7 @@ for(var i=0; i < $_GET_length; i++){
  * the array of Grid View cards html, array of Table View cards html, and the total amount of results found
  * instead of taking in parameters it references global variables
  * 
- * \param preset : preset that determines type of query call (ex: 'person', 'event')
+ * \param presets : Array of presets that determines type of query call (ex: 'person', 'event') (singular right now)
  * \param limit : limit to the number of cards per page : default value = 12
  * \param offset : number of cards offset from the first card (with 0 being the first card) : default value = 0
 */
@@ -57,7 +56,7 @@ function searchResults(preset, limit = 12, offset = 0){
     filters['offset'] = offset;
     card_offset = offset;
 
-    var templates = ['searchCard', 'gridCard'];
+    var templates = ['gridCard', 'tableCard'];
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -68,11 +67,12 @@ function searchResults(preset, limit = 12, offset = 0){
             templates: templates
         },
         'success': function (data) {
+            // console.log(data);
             result_array = JSON.parse(data);
             
             console.log(result_array);
 
-            var result_length = result_array['searchCard'].length;
+            var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
 
             searchBarPlaceholder = "Search Across " + total_length + " " + filter + " Results";
@@ -91,7 +91,7 @@ function searchResults(preset, limit = 12, offset = 0){
             //Wait till doc is ready
             $(document).ready(function(){
                 appendCards();
-                setPagination();
+                setPagination(total_length, card_limit, card_offset);
             });
             
         }
@@ -104,244 +104,15 @@ function searchResults(preset, limit = 12, offset = 0){
 
 function appendCards(){
     $("ul.row").empty(); //empty row before appending more
-    result_array['searchCard'].forEach(function (card) {
+    result_array['gridCard'].forEach(function (card) {
         $(card).appendTo("ul.row");
     });
 
     $("tbody").empty(); //empty grid before appending more
-    result_array['gridCard'].forEach(function (card) {
+    result_array['tableCard'].forEach(function (card) {
         $(card).appendTo("tbody");
     });
 
-}
-
-///******************************************************************* */
-/// Pagination functions
-///******************************************************************* */
-
-function setPagination() {
-    pages = Math.ceil(total_length / card_limit);
-    page = Math.ceil(card_offset / card_limit) + 1;
-
-    $('span.pagi-last').html(pages); //last pagination number to number of pages
-    console.log("Test:" + total_length + ' ' + card_offset + ' ' + card_limit);
-
-    if (pages < 2) { // sets pagination on page load
-        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
-        $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
-        $('span.dotsLeft').hide();
-        $('span.dotsRight').hide();
-        $('span.pagi-first').hide();
-        $('span.one').hide();
-        $('span.two').hide();
-        $('span.three').hide();
-        $('span.four').hide();
-        $('span.five').hide();
-        $('span.pagi-last').hide();
-    } else {
-        $('span.dotsLeft').hide();
-        $('span.dotsRight').hide();
-        $('span.pagi-first').show();
-        $('span.pagi-first').html(1);
-        $('span.pagi-last').hide();
-        $('span.one').hide();
-        $('span.two').hide();
-        $('span.three').hide();
-        $('span.four').hide();
-        $('span.five').hide();
-        $('span.one').show();
-        $('span.one').html(2);
-
-        if (pages > 2) {
-            $('span.two').show();
-            $('span.two').html(3);
-        }
-        if (pages > 3) {
-            $('span.three').show();
-            $('span.three').html(4);
-        }
-        if (pages > 4) {
-            $('span.four').show();
-            $('span.four').html(5);
-        }
-        if (pages > 5) {
-            $('span.five').show();
-            $('span.five').html(6);
-        }
-        if (pages > 6) {
-            $('span.dotsRight').show();
-            $('span.pagi-last').show();
-        }
-
-
-        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
-        $('span#pagiRight').css('opacity', '', 'cursor', '');
-        $('span.num').removeClass('active');
-        $('span.pagi-first').addClass('active');
-    }
-    paginate();
-}
-
-function paginate() {
-    if (page === 1) {
-
-        $('span.dotsLeft').hide();
-        // $('span.dotsRight').hide();
-        $('span.pagi-first').show();
-        $('span.pagi-first').html(1);
-        $('span.one').hide();
-        $('span.two').hide();
-        $('span.three').hide();
-        $('span.four').hide();
-        $('span.five').hide();
-        $('span.one').show();
-        $('span.one').html(2);
-
-        if (pages > 2) {
-            $('span.two').show();
-            $('span.two').html(3);
-        }
-        if (pages > 3) {
-            $('span.three').show();
-            $('span.three').html(4);
-        }
-        if (pages > 4) {
-            $('span.four').show();
-            $('span.four').html(5);
-        }
-        if (pages > 5) {
-            $('span.five').show();
-            $('span.five').html(6);
-        }
-        if (pages > 6) {
-            $('span.dotsRight').show();
-            $('span.pagi-last').show();
-        }
-
-        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
-        $('span#pagiRight').css('opacity', '', 'cursor', '');
-        $('span.num').removeClass('active');
-        $('span.pagi-first').addClass('active');
-
-    } else if (page >= 2 && page <= 5) {
-        $('span.dotsLeft').hide();
-        // $('span.dotsRight').hide();
-        $('span.pagi-first').show();
-        $('span.pagi-first').html(1);
-        $('span.one').hide();
-        $('span.two').hide();
-        $('span.three').hide();
-        $('span.four').hide();
-        $('span.five').hide();
-        $('span.one').show();
-        $('span.one').html(2);
-
-        if (pages > 2) {
-            $('span.two').show();
-            $('span.two').html(3);
-        }
-        if (pages > 3) {
-            $('span.three').show();
-            $('span.three').html(4);
-        }
-        if (pages > 4) {
-            $('span.four').show();
-            $('span.four').html(5);
-        }
-        if (pages > 5) {
-            $('span.five').show();
-            $('span.five').html(6);
-        }
-        if (pages > 6) {
-            $('span.dotsRight').show();
-            $('span.pagi-last').show();
-        }
-
-        if(page == pages){
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
-        }else{
-            $('span#pagiRight').css('opacity', '', 'cursor', '');
-        }
-        $('span#pagiLeft').css('opacity', '', 'cursor', '');
-        $('span.num').removeClass('active');
-        $('#pagination').find('.num').eq(page - 1).addClass('active');
-    } else if (pages - page >= 5) {
-        $('span#pagiLeft').css('opacity', '', 'cursor', '');
-        $('span#pagiRight').css('opacity', '', 'cursor', '');
-        $('span.pagi-first').show();
-        $('span.dotsLeft').show();
-        $('span.dotsRight').show();
-        $('span.one').html(page - 2);
-        $('span.two').html(page - 1);
-        $('span.three').html(page);
-        $('span.four').html(page + 1);
-        $('span.five').html(page + 2);
-        $('span.num').removeClass('active');
-        $('span.three').addClass('active');
-    } else if (pages - page < 6 && page != pages) {
-        $('span#pagiLeft').css('opacity', '', 'cursor', '');
-        $('span#pagiRight').css('opacity', '', 'cursor', '');
-        $('span.one').html(pages - 5);
-        $('span.two').html(pages - 4);
-        $('span.three').html(pages - 3);
-        $('span.four').html(pages - 2);
-        $('span.five').html(pages - 1);
-        $('span.num').removeClass('active');
-        $('#pagination').find('.num').eq(6 - (pages - page)).addClass('active');
-        $('span.dotsLeft').show();
-        $('span.dotsRight').hide();
-    } else if (page === pages) {
-        if(page == 6){
-            //Special case where there are 6 pages and the active is the last page
-
-            $('span.dotsLeft').hide();
-            // $('span.dotsRight').hide();
-            $('span.pagi-first').show();
-            $('span.pagi-first').html(1);
-            $('span.one').hide();
-            $('span.two').hide();
-            $('span.three').hide();
-            $('span.four').hide();
-            $('span.five').hide();
-            $('span.one').show();
-            $('span.one').html(2);
-    
-            if (pages > 2) {
-                $('span.two').show();
-                $('span.two').html(3);
-            }
-            if (pages > 3) {
-                $('span.three').show();
-                $('span.three').html(4);
-            }
-            if (pages > 4) {
-                $('span.four').show();
-                $('span.four').html(5);
-            }
-            if (pages > 5) {
-                $('span.five').show();
-                $('span.five').html(6);
-            }
-            $('span#pagiLeft').css('opacity', '', 'cursor', '');
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
-            $('span.num').removeClass('active');
-            $('#pagination').find('.num.five').addClass('active');
-        }
-        else{
-            //Last page and greater than 6
-            $('span#pagiLeft').css('opacity', '', 'cursor', '');
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
-            $('span.dotsRight').hide();
-            $('span.dotsLeft').show();
-            $('span.one').html(page - 5);
-            $('span.two').html(page - 4);
-            $('span.three').html(page - 3);
-            $('span.four').html(page - 2);
-            $('span.five').html(page - 1);
-            $('span.num').removeClass('active');
-            $('span.pagi-last').addClass('active');
-        }
-    }
 }
 
 //Generate cards
@@ -389,6 +160,14 @@ $(document).ready(function() {
     /// Event Handlers for the page
     ///******************************************************************* */
 
+    //Change in current-page input so call searchResults function
+    $('#pagination .current-page').change(function(){
+        var val = $('#pagination .current-page').val();
+        console.log("Value: " + val);
+        //Call searchResults normally except calculate new offset
+        searchResults('people', card_limit, (val - 1) * card_limit);
+    });
+
     //SearchBar placeholder text
     var searchBarPlaceholder = "Search Across " + filters[0] + " Results";
     $('.main-search').attr("placeholder", searchBarPlaceholder); 
@@ -419,7 +198,7 @@ $(document).ready(function() {
         card_limit = $(this).find('span:first').html();
         localStorage.setItem('display_amount', card_limit);
         card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
-        searchResults('people', card_limit, card_offset, filters);
+        searchResults('people', card_limit, card_offset);
         $('span.results-per-page > span').html(card_limit);
         $(document).trigger('click');
     });
@@ -485,9 +264,9 @@ $(document).ready(function() {
             var view = 'table'
             window.localStorage.setItem('view', view)
             result = parseInt(localStorage.getItem('display_amount'), 10)
-            if (result) {
-                result_array.length = result
-            }
+            // if (result) {
+            //     result_array.length = result
+            // }
             // $.each(result_array,function () {
             //     $('<tr class="tr"><td class="name td-name"><span>Name LastName</span></td><td class="gender"><p><span class="first">Gender: </span>Gndr</p></td><td class="age"><p><span class="first">Age: </span>##</p></td><td class="occupation"><p><span class="first">Occupation: </span>Fugitive Slave</p></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><span class="meta">Metadata Content</span></td><td class="meta"><a href="#">View Narrative</a></td></tr>').appendTo('tbody');
             // });
@@ -503,7 +282,7 @@ $(document).ready(function() {
     // if <element>.height > 13 {var = <element>.height; element.parent(tr).height = var}
     var tr = window.document.getElementsByClassName('tr')
     var td = window.document.getElementsByClassName('td-name')
-    function correctTableHeights () {
+    function correctTableHeights() {
         if (tr){
             for (var i = 0; i < tr.length; i++) {
                 // if row-height != first-cell-height OR if name-height != rowHeight
@@ -518,9 +297,10 @@ $(document).ready(function() {
                     tr[i].style.height = '' + height + ''
                 }
             }
-            window.setTimeout('correctTableHeights()', 1000*1) // function reloads itself every 1 seconds
+            //window.setTimeout('correctTableHeights()', 1000*1) // function reloads itself every 1 seconds
         }
     }
+    //correctTableHeights();
 
     // load grid or table view, with # results per page from last page visit on page load
     var setView = window.localStorage.getItem('view');
@@ -622,54 +402,4 @@ $(document).ready(function() {
         $(".show-filter").trigger("click");
     }
 
-
-    ///******************************************************************* */
-    /// PAGINATION HANDLERS
-    ///******************************************************************* */
-
-    $('span#pagiRight').click(function(e) {
-        // e.stopPropagation();
-        if (page === pages) {
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
-        } else {
-            $('.num.active').nextAll('.num').first().click();
-        }
-    });
-    $('span.dotsRight').click(function(e) {
-        // e.stopPropagation();
-        if (pages - page < 10) {
-            return;
-        } else {
-            page = page + 10;
-            paginate();
-            $('.num.active').click();
-        }
-    });
-    $('span#pagiLeft').click(function(e) {
-        // e.stopPropagation();
-        if (page === 1) {
-            $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
-        } else {
-            $('.num.active').prevAll('.num').first().click();
-        }
-    });
-    $('span.dotsLeft').click(function(e) {
-        // e.stopPropagation();
-        if (page - 10 < 0) { // this check, and the other +10 check may not be needed
-            return; // since the dots are hidden at instances when they
-        } else { // would normally break the pagination
-            page = page - 10;
-            paginate();
-            $('.num.active').click();
-        }
-    });
-    $('span.num').click(function(e) {
-        // e.stopPropagation();
-        page = $(this).html(); // set page
-        page = parseInt(page);
-        searchResults('people', card_limit, (page - 1) * card_limit, filters);
-        paginate();
-    });
-
 });
-

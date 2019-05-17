@@ -755,6 +755,7 @@
             </div>
         </div>
         <div id="pagination">
+            <input class="current-page" type="hidden" value="1">
             <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
             <div class="page-numbers">
                 <span class="num pagi-first">1</span>
@@ -831,5 +832,5 @@
     </div>
 </div>
 
-<script src="<?php echo BASE_URL;?>assets/javascripts/searchResults.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/searchResults.js"></script>

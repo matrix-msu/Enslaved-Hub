@@ -1022,6 +1022,7 @@
             </div>
         </div>
         <div id="pagination">
+            <input class="current-page" type="hidden" value="1">
             <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
             <div class="page-numbers">
                 <span class="num pagi-first">1</span>
@@ -1030,6 +1031,7 @@
                 <span class="num two"></span>
                 <span class="num three"></span>
                 <span class="num four"></span>
+                <span class="num five"></span>
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
@@ -1107,6 +1109,5 @@
     var QID = <?php echo json_encode(QID); ?>;
     var infourl = <?php echo json_encode(BASE_WIKI_URL . 'wiki/Special:EntityData/' . QID); ?>;
 </script>
-<!-- <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script> -->
-<!-- <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script> -->
+<script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullProject.js"></script>

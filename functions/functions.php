@@ -133,6 +133,61 @@ offset $Q_offset
 QUERY;
 
                 array_push($queryArray, $query);
+
+                $query = array('query' => "");
+                $query['query'] = <<<QUERY
+SELECT DISTINCT ?agent ?startyear ?endyear
+(group_concat(distinct ?name; separator = "||") as ?name) #name
+
+(group_concat(distinct ?placelab; separator = "||") as ?place) #place
+
+(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+
+(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+
+(group_concat(distinct ?match; separator = "||") as ?closeMatch)
+
+WHERE {
+
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+
+    ?agent wdt:P3/wdt:P2 wd:Q2;
+
+        wdt:P82 ?name; #name is mandatory
+            p:P3  ?object .
+    ?object prov:wasDerivedFrom ?provenance .
+    ?provenance pr:P35 ?reference .
+    ?reference wdt:P7 wd:$Q_ID
+
+    OPTIONAL{?agent  wdt:P39 ?role}. #optional role
+    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    
+    OPTIONAL { ?agent wdt:P24 ?status. 
+            ?status rdfs:label ?statuslab}
+    
+    OPTIONAL { ?agent wdt:P17 ?sex. 
+            ?sex rdfs:label ?sexlab}
+
+    OPTIONAL { ?agent wdt:P88 ?match}.
+    
+    ?agent p:P82 ?statement.
+    ?statement ps:P82 ?name. 
+    OPTIONAL{ ?statement pq:P30 ?event.
+            ?event  wdt:P13 ?startdate.
+            BIND(str(YEAR(?startdate)) AS ?startyear).
+            OPTIONAL {?event wdt:P14 ?enddate.
+        BIND(str(YEAR(?enddate)) AS ?endyear)}.
+            OPTIONAL {?event wdt:P12 ?place.
+                    ?place rdfs:label ?placelab}
+            
+            }.
+
+
+} group by ?agent ?event ?startyear ?endyear
+order by ?agent
+QUERY;
+
+                array_push($queryArray, $query);
                 break;
 
             case 'people':
@@ -173,6 +228,11 @@ QUERY;
                 
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent ?event ?startyear ?endyear
+(count(distinct ?people) as ?countpeople)
+(count(distinct ?event) as ?countervent)
+(count(distinct ?place) as ?countplace)
+(count(distinct ?source) as ?countsource)
+
 (group_concat(distinct ?name; separator = "||") as ?name) #name
 
 (group_concat(distinct ?placelab; separator = "||") as ?place) #place
@@ -185,39 +245,51 @@ SELECT DISTINCT ?agent ?event ?startyear ?endyear
 
 WHERE {
 
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-?agent wdt:P3/wdt:P2 wd:Q2;
-
-        wdt:P82 ?name. #name is mandatory
-
-OPTIONAL{?agent  wdt:P39 ?role}. #optional role
-MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-
-$genderQuery
-
-OPTIONAL { ?agent wdt:P24 ?status. 
-        ?status rdfs:label ?statuslab}
-
-OPTIONAL { ?agent wdt:P17 ?sex. 
-        ?sex rdfs:label ?sexlab}
-
-OPTIONAL { ?agent wdt:P88 ?match}.
-
-?agent p:P82 ?statement.
-?statement ps:P82 ?name. 
-OPTIONAL{ ?statement pq:P30 ?event.
-            ?event	wdt:P13 ?startdate.
-        BIND(str(YEAR(?startdate)) AS ?startyear).
-        OPTIONAL {?event wdt:P14 ?enddate.
-        BIND(str(YEAR(?enddate)) AS ?endyear)}.
-        OPTIONAL {?event wdt:P12 ?place.
-                ?place rdfs:label ?placelab}
-        
-        }.
+    ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+            ?property  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?source .
 
 
-} group by ?agent ?event ?startyear ?endyear
+    ?agent wdt:P82 ?name. #name is mandatory
+
+    OPTIONAL{?agent  wdt:P39 ?role}. #optional role
+    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+
+    $genderQuery
+
+    OPTIONAL { ?agent wdt:P24 ?status. 
+            ?status rdfs:label ?statuslab}
+    
+    OPTIONAL { ?agent wdt:P17 ?sex. 
+            ?sex rdfs:label ?sexlab}
+
+    OPTIONAL { ?agent wdt:P88 ?match}.
+    
+    ?agent p:P82 ?statement.
+    ?statement ps:P82 ?name. 
+    OPTIONAL{ ?statement pq:P30 ?event.
+                ?event	wdt:P13 ?startdate.
+            BIND(str(YEAR(?startdate)) AS ?startyear).
+            OPTIONAL {?event wdt:P14 ?enddate.
+            BIND(str(YEAR(?enddate)) AS ?endyear)}.
+            OPTIONAL {?event wdt:P12 ?place.
+                    ?place rdfs:label ?placelab}
+            
+            }.
+    OPTIONAL {?agent wdt:P25 ?people}
+    OPTIONAL {?agent p:P39 ?roles.
+                ?roles ps:P39 ?event. 
+            ?roles pq:P98 ?event}.
+    OPTIONAL {?agent p:P24 ?status.
+                ?status ps:P24 ?event. 
+            ?status pq:P99 ?event}.
+    
+
+
+} group by ?agent ?event ?startyear ?endyear 
 order by ?agent
 limit $limit
 offset $offset
@@ -584,14 +656,11 @@ QUERY;
             $resultsArray = $result;
             $first = false;
         } else {
-            if($preset == 'people'){
+            if($preset == 'people' || $preset == 'singleProject'){
                 //For people search results get the count of all the results
-                // $counter = 0;
                 foreach($result as $count){
-                    // $counter++;
                     $record_total++;
                 }
-                // $resultsArray[0]['count'] = $counter;
             }
             else if ($preset != "projects2") {
                 $resultsArray = array_merge($resultsArray, $result);
@@ -675,6 +744,8 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                   $agent = explode("/", $record["agent"]["value"]);
                   $link = '<a href="'.BASE_URL.'recordPerson/'.end($agent).'">';
                 }
+
+                $status = str_replace("||", ", ",  $status);
 
                 foreach ($templates as $template) 
                 {
@@ -830,9 +901,11 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     $dateRange = $endYear;
                 }
 
-
-
-
+                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
+                    $countpeople = $record['countpeople']['value'];
+                } else {
+                    $countpeople = '';
+                }
 
                 $connection_lists = Array(
                     '<h1>10 Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
@@ -850,11 +923,9 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     '</div></div></div></div>';
 
 
-
-
                 // create the html for each template
                 foreach ($templates as $template) {
-                    if ($template == 'searchCard'){
+                    if ($template == 'gridCard'){
 
                         $statusHtml = '';
                         // if a person has multiple statuses, display them in a tooltip
@@ -896,7 +967,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                             $connections
                             </span></a></li>";
 
-                    } elseif ($template == 'gridCard'){
+                    } elseif ($template == 'tableCard'){
                         $card = "<tr class='tr'>
                                 <td class='name td-name'>
                                     <span>$fullName</span>

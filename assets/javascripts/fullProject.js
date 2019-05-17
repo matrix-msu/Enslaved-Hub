@@ -1,16 +1,38 @@
-var templates = ['searchCard', 'gridCard'];
+//Global vars used on whole page
+var total_length = 12;
+var card_offset = 0;
+var card_limit = 5;
+var presets = {};
 var filters = {};
-var offset = 0;
-var limit = 10;
+var filter = "";
+var templates = ['gridCard', 'searchCard'];
+var view = "gridCard";
+var sort = "ASC";
+
+
+// Get params from url and set to filters object
+if(document.location.toString().indexOf('?') !== -1) {
+    var query = document.location
+        .toString()
+        // get the query string
+        .replace(/^.*?\?/, '')
+        .replace(/#.*$/, '')
+        .split('&');
+
+    for(var i=0; i < query.length; i++) {
+        var aux = decodeURIComponent(query[i]).split('=');
+        filters[aux[0]] = aux[1];
+    }
+}
 
 $(document).ready(function() {
-    // close things with clicked-off
+    // close things with clicked-off (where click anywher in the body/page)
     $(document).click(function () {
         $('span.results-per-page').find("img:first").removeClass('show');
         $('span.results-per-page #sortmenu').removeClass('show');
         $('span.sort-by #sortmenu').removeClass('show');
         $('span.sort-by').find("img:first").removeClass('show');
-        if (window.innerWidth < 820 && filter) {
+        if (window.innerWidth < 820) {
             $(".show-filter").trigger('click');
         }
     });
@@ -19,12 +41,14 @@ $(document).ready(function() {
     $('div.container.main').click(function (e) {
         e.stopPropagation();
     })
+
     // Toggle sorting and per-page menu
     $(".sorting-dropdowns .align-center").click(function (e) {
         e.stopPropagation();
         $(this).find("img:first").toggleClass('show');
         $(this).find("#sortmenu").toggleClass('show');
     });
+
     // show tooltips on hover (on top of icons)
     var timer;
     $("span.view-toggle").mouseenter(function () {
@@ -38,15 +62,65 @@ $(document).ready(function() {
         clearTimeout(timer)
     });
 
-    // Handles click on a table row (redirects page to url attach to last hidden column of the row)
+    // Handles click on a table row (redirects page to url attach to last hidden column of a row)
     $("#search-result-table").on("click", "tbody > tr", function() {
         let link = $(this).find("a").attr("href");
         if(link) window.location.href = link;
     });
 
+     // Grid view
+    $("span.grid-view").click(function tableView (e) {
+        e.stopPropagation();
+
+        $('.result-column').show();
+        $("#search-result-configure-download-row").hide();
+        $("#search-result-table").hide();
+        $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
+        $('span.view-toggle .grid-icon').addClass('show'); //make the grid-icon active
+
+        view = "gridCard";
+    });
+
+    // Table view
+    $("span.table-view").click(function tableView (e) {
+        e.stopPropagation();
+
+        $('div.result-column').hide();
+        $('div#search-result-table').show();
+        $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
+        $('span.view-toggle .table-icon').addClass('show'); //make the table-icon active
+        $(this).addClass("show");
+        $("span.grid-view").removeClass("show");
+        $("#search-result-configure-download-row").show();
+        $('table').css('width', '', 'margin', '');
+
+        view = "searchCard";
+    });
+
+    // use gridview onload
+    $("span.grid-view").trigger("click");
+
+    // handles per-page (Filter to determine how many data to show per page)
+    $('span.results-per-page > span').html(card_limit);
+    $("ul.results-per-page li").click(function (e) {
+        // setting new per-page value
+        e.stopPropagation();
+        card_limit = $(this).find('span:first').html(); // get mew value
+        card_offset = 0; //reset offset to 0
+        getProjectData(filters, card_offset, card_limit);
+        $('span.results-per-page > span').html(card_limit);
+        $(document).trigger('click');
+    });
+
+    //Change in current-page input so call getProjectData function
+    $('#pagination .current-page').change(function(){
+        var val = $('#pagination .current-page').val();
+        //Call getProjectData normally except calculate new offset
+        getProjectData(filters, (val - 1) * card_limit, card_limit);
+    });
 });
 /**************************************************************************************************************/
-// FILTER
+// FILTER (Not sure how this works yet)
 $(document).ready(function() {
     // toggle show/hide filter menu
     var filter = false;
@@ -108,37 +182,7 @@ $(document).ready(function() {
         $(".show-filter").trigger("click");
     }
 });
-/**************************************************************************************************************/
-// Toggle view formats (Grid and Table)
-$(document).ready(function(){
-    // Grid view
-    $("span.grid-view").click(function tableView (e) {
-        e.stopPropagation();
 
-        $('.result-column').show();
-        $("#search-result-configure-download-row").hide();
-        $("#search-result-table").hide();
-        $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
-        $('span.view-toggle .grid-icon').addClass('show'); //make the grid-icon active
-    });
-
-    // Table view
-    $("span.table-view").click(function tableView (e) {
-        e.stopPropagation();
-
-        $('div.result-column').hide();
-        $('div#search-result-table').show();
-        $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
-        $('span.view-toggle .table-icon').addClass('show'); //make the table-icon active
-        $(this).addClass("show");
-        $("span.grid-view").removeClass("show");
-        $("#search-result-configure-download-row").show();
-        $('table').css('width', '', 'margin', '');
-    });
-
-    // Show cards onload
-    $("span.grid-view").trigger("click");
-});
 /**************************************************************************************************************/
 $(document).ready(function(){
     /*
@@ -194,9 +238,7 @@ $(document).ready(function(){
     });
 
     // Get data
-    getProjectData(templates, filters, offset, limit);
-
-    
+    getProjectData(filters, card_offset, card_limit);
 });
 
 /* 
@@ -204,7 +246,7 @@ $(document).ready(function(){
     Replace blazegraph-records class innerHTML content with cards returned
     Replace search-result-table class innerHTML content with table returned
 */
-function getProjectData(templates, filters, offset, limit)
+function getProjectData(filters, offset, limit)
 {
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -221,27 +263,53 @@ function getProjectData(templates, filters, offset, limit)
            if(data)
            {
                 data = JSON.parse(data);
-                gridDisplay(data['gridCard']);
-                tableDisplay(data['searchCard']);
+
+                // Getting the total number of data in the query
+                if("total" in data) total_length = data["total"];
+                
+                // Change search form placeholder
+                var result_length = data['gridCard'].length;
+                let searchBarPlaceholder = "Search Across " + total_length + " " + filter + " Results";
+                $('.main-search').attr("placeholder", searchBarPlaceholder);
+                
+                // Display text showing number of results
+                var showingResultsText = showingResultsText = "Showing " + result_length + " of " + total_length + " Results";
+                $('.showing-results').html(showingResultsText);
+
+                // Maintain previous view format
+                if(view == "searchCard")
+                {
+                    tableDisplay(data['searchCard']);
+                    $("span.table-view").trigger("click");
+                    gridDisplay(data['gridCard']);
+                }
+                else
+                {
+                    gridDisplay(data['gridCard']);
+                    $("span.grid-view").trigger("click");
+                    tableDisplay(data['searchCard']);
+                }
+                // set pagination
+                setPagination(total_length, limit, offset);
            }
         }
     });
 }
-
+/*
+    Display cards
+*/
 function gridDisplay(data)
 {
-    // Display cards
     $(".blazegraph-records").html("");
     data.forEach(function (card) {
         $(card).appendTo(".blazegraph-records");
     });
-
-    $("span.grid-view").trigger("click");
 }
-
+/*
+    Display table rows
+*/
 function tableDisplay(data)
 {
-    // Display table rows
     $("tbody").html("");
     data.forEach(function (card) {
         $(card).appendTo("tbody");
