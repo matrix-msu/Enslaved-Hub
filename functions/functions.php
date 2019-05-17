@@ -745,6 +745,8 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                   $link = '<a href="'.BASE_URL.'recordPerson/'.end($agent).'">';
                 }
 
+                $status = str_replace("||", ", ",  $status);
+
                 foreach ($templates as $template) 
                 {
                   if($template == "gridCard")
