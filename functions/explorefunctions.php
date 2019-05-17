@@ -1125,25 +1125,24 @@ HTML;
     <div class="detail-bottom">
 HTML;
   
-    if($label === "Geoname Identifier"){
-      $html = '<a href="http://www.geonames.org/' . $statementArr[0] . '/">';
-    }
-    else{
-      $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statement . '">';
-    }
-  
     //For each detail to add create it in seperate divs with a detail menu in each
     for ($x = 0; $x <= (count($statementArr) - 1); $x++){
+        if($label === "Geoname Identifier"){
+          $html .= '<a href="http://www.geonames.org/' . $statementArr[0] . '/">';
+        }
+        else{
+          $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
+        }
         $html .= "<div>" . $statementArr[$x];
         $html .= '<div class="detail-menu"> <h1>Metadata</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>';
-        $html .= "</div>";
+        $html .= "</div></a>";
   
         if ($x != (count($statementArr) - 1)){
             $html.= "<h4> | </h4>";
         }
     }
   
-    $html .= '</a></div></div>';
+    $html .= '</div></div>';
   }
 
 
@@ -1215,7 +1214,52 @@ function getPersonRecordHtml(){
     //QUERY FOR RECORD INFO
     $query = [];
     if($type === "person"){
+      $query['query'] = <<<QUERY
+SELECT ?name ?desc ?sextype  ?race ?match
+(group_concat(distinct ?refName; separator = "||") as ?sources)
+(group_concat(distinct ?pname; separator = "||") as ?researchprojects)
+(group_concat(distinct ?roleslabel; separator = "||") as ?roles)
+(group_concat(distinct ?statuslabel; separator = "||") as ?status)
+(group_concat(distinct ?ecvo; separator = "||") as ?ecvo)
 
+ WHERE
+{
+ VALUES ?agent {wd:$qid} #Q number needs to be changed for every event. 
+  ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+  		 ?property  ?object .
+  ?object prov:wasDerivedFrom ?provenance .
+  ?provenance pr:P35 ?source .
+  ?source rdfs:label ?refName;
+          wdt:P7 ?project.
+  ?project rdfs:label ?pname.
+  ?agent schema:description ?desc.
+  ?agent wdt:P82 ?name.
+  OPTIONAL{?agent wdt:P17 ?sex. 
+          ?sex rdfs:label ?sextype}.
+  OPTIONAL{?agent wdt:P37 ?race}.
+  
+  OPTIONAL {?agent wdt:P24 ?status.
+           ?status rdfs:label ?statuslabel}.
+  OPTIONAL {?agent wdt:P39 ?roles.
+           ?roles rdfs:label ?roleslabel}.
+  OPTIONAL {?agent wdt:P86 ?ethnodescriptor.
+           ?ethnodescriptor rdfs:label ?ecvo}.
+  OPTIONAL {?agent wdt:P39 ?roles.
+           ?roles rdfs:label ?roleslabel}.
+  OPTIONAL {?agent wdt:P88 ?match}.
+  
+  # OPTIONAL{
+   # ?event p:P38 ?statement .            
+	#?statement ps:P38 ?roles .
+  	#?roles rdfs:label ?rolename.
+	#?statement pq:P39 ?participant.
+  	#?participant rdfs:label ?participantname}.
+        
+	
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}GROUP BY ?name ?desc ?sextype  ?race ?match    
+QUERY;
     }
     else if($type === "place"){
         $query['query'] = <<<QUERY
@@ -1256,7 +1300,7 @@ SELECT ?name ?desc ?located  ?type ?date ?endDate
 
   WHERE
 {
-  VALUES ?event {wd:Q508} #Q number needs to be changed for every event. 
+  VALUES ?event {wd:$qid} #Q number needs to be changed for every event. 
   ?event wdt:P3 wd:Q34;
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
@@ -1344,6 +1388,26 @@ QUERY;
         $dateRange = $endYear;
     }
     */
+    
+    //Sex
+    if (isset($record['sextype']) && isset($record['sextype']['value']) ){
+      $recordVars['Sex'] = $record['sextype']['value'];
+    }
+
+    //Race
+    if (isset($record['race']) && isset($record['race']['value']) ){
+      $recordVars['Race'] = $record['race']['value'];
+    }
+
+    //Status
+    if (isset($record['status']) && isset($record['status']['value']) ){
+      $recordVars['Status'] = $record['status']['value'];
+    }
+
+    //ECVO
+    if (isset($record['ecvo']) && isset($record['ecvo']['value']) ){
+      $recordVars['ECVO'] = $record['ecvo']['value'];
+    }
 
     //Date
     if (isset($record['date']) && isset($record['date']['value']) ){

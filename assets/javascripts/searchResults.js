@@ -75,17 +75,16 @@ function searchResults(preset, limit = 12, offset = 0){
             var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
 
-            searchBarPlaceholder = "Search Across " + total_length + " " + filter + " Results";
+            searchBarFilter = filter != undefined ? filter : '';
+            searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
             $('.main-search').attr("placeholder", searchBarPlaceholder);
 
             var showingResultsText = '';
-
             if (result_length < card_limit) {
                 showingResultsText = "Showing " + result_length + " of " + total_length + " Results";
             } else {
                 showingResultsText = "Showing " + card_limit + " of " + total_length + " Results";
             }
-
             $('.showing-results').html(showingResultsText);
 
             //Wait till doc is ready

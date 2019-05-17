@@ -104,7 +104,7 @@ $(document).ready(function(){
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
                     $('.connect-row').append(e);
-                })
+                });
             }
         });
 
