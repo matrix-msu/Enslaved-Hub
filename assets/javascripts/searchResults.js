@@ -115,7 +115,7 @@ function appendCards(){
 }
 
 //Generate cards
-searchResults('people');
+searchResults('events');
 
 //Document load
 $(document).ready(function() {

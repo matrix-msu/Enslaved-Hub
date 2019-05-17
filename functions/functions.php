@@ -462,7 +462,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countervent)
+(count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 (group_concat(distinct ?roleLabel; separator = "||") as ?roles)
@@ -501,7 +501,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countervent)
+(count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 (group_concat(distinct ?roleLabel; separator = "||") as ?roles)
@@ -979,34 +979,30 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 }
                 break;
             case 'people':
-                $fullName = $record['name']['value'];
-                $nameArray = explode(' ', $fullName);
-                $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $fullName);
-                $lastName = $nameArray[count($nameArray)-1];
+                //Person Name
+                $name = $record['name']['value'];
+                // $nameArray = explode(' ', $name);
+                // $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $name);
+                // $lastName = $nameArray[count($nameArray)-1];
 
+                //Person QID
                 $personUrl = $record['agent']['value'];
                 $xplode = explode('/', $personUrl);
                 $personQ = end($xplode);
 
-                // if (isset($record['status']) && isset($record['status']['value'])){
-                //     $status = $record['status']['value'];
-                // } else {
-                //     $status = "";
-                // }
-
+                //Person Sex
+                $sex = "Unidentified";
                 if (isset($record['sex']) && isset($record['sex']['value'])){
-                    $sex = $record['sex']['value'];
-                    if($sex == ''){
-                        $sex = "Unidentified";
+                    if($record['sex']['value'] != ''){
+                        $sex = $record['sex']['value'];
                     }
-                } else {
-                    $sex = "Unidentified";
                 }
+
+                //Person Status
+                $status = '';
+                $statusCount = 0;
                 if (isset($record['status']) && isset($record['status']['value'])){
                     $statusArray = explode('||', $record['status']['value']);
-                    $status = '';
-
-                    $statusCount = 0;
 
                     foreach ($statusArray as $stat) {
                         if (!empty($stat)){
@@ -1018,49 +1014,39 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                             $statusCount++;
                         }
                     }
-                } else {
-                    $status = '';
                 }
 
-                if (isset($record['originLabel']) && isset($record['originLabel']['value'])){
-                    $origin = $record['originLabel']['value'];
-                } else {
-                    $origin = '';
-                }
-
-                $locationHtml = '';
-                $location = '';
+                //Person location
+                $places = '';
+                $placesCount = 0;
                 if (isset($record['place']) && isset($record['place']['value'])){
-                    $placeArray = explode('||', $record['place']['value']);
+                    $placesArray = explode('||', $record['place']['value']);
 
-                    $placeCount = 0;
-                    foreach ($placeArray as $place) {
+                    foreach ($placesArray as $place) {
                         if (!empty($place)){
-                            if ($statusCount > 0){
-                                $location .= ", $place";
+                            if ($placesCount > 0){
+                                $places .= ", $place";
                             } else {
-                                $location .= "$place";
+                                $places .= "$place";
                             }
-                            $placeCount++;
+                            $placesCount++;
                         }
                     }
                 }
 
+                //Date Range
+                $startYear = '';
                 if (isset($record['startyear']) && isset($record['startyear']['value'])){
                     $startYears = explode('||', $record['startyear']['value']);
                     $startYear = min($startYears);
-                } else {
-                    $startYear = '';
                 }
 
+                $endYear = '';
                 if (isset($record['endyear']) && isset($record['endyear']['value'])){
                     $endYears = explode('||', $record['endyear']['value']);
                     $endYear = max($endYears);
-                } else {
-                    $endYear = '';
                 }
 
-                $dateRangeHtml = '';
                 $dateRange = '';
                 if ($startYear != '' && $endYear != ''){
                     $dateRange = "$startYear - $endYear";
@@ -1070,6 +1056,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     $dateRange = $endYear;
                 }
 
+                //Connection counts
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
                     $countpeople = $record['countpeople']['value'];
                 } else {
@@ -1091,6 +1078,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     $countsource = '';
                 }
 
+                //Connection HTML
                 $connection_lists = Array(
                     '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
                     '<h1>'.$countplace.' Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
@@ -1109,6 +1097,8 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 foreach ($templates as $template) {
                     if ($template == 'gridCard'){
 
+                        $sexHtml = "<p><span>Sex: </span>$sex</p>";
+
                         $statusHtml = '';
                         // if a person has multiple statuses, display them in a tooltip
                         if ($statusCount == 1){
@@ -1118,64 +1108,65 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                             $statusHtml = "<p><span>Person Status: </span><span class='multiple'>Multiple<span class='tooltip'>$status</span></span></p>";
                         }
 
-                        if ($location != ''){
-                            $locationHtml = "<p><span>Location: </span>$location</p>";
+                        $placesHtml = '';
+                        if ($placesCount == 1){
+                            $placesHtml = "<p><span>Place: </span>$places</p>";
+                        }
+                        if ($placesCount > 1){
+                            $placesHtml = "<p><span>Place: </span><span class='multiple'>Multiple<span class='tooltip'>$places</span></span></p>";
                         }
 
-                        $sexHtml = "<p><span>Sex: </span>$sex</p>";
-
+                        $dateRangeHtml = '';
                         if ($dateRange != ''){
                             $dateRangeHtml = "<p><span>Date Range: </span>$dateRange</p>";
                         }
-                        if ($origin != ''){
-                            $originHtml = "<p><span>Origin: </span>$origin</p>";
-                        } else {
-                            $originHtml = '';
-                        }
 
-                        $card_icon = 'Person-light.svg';
+                        $card_icon_url = BASE_IMAGE_URL . 'Person-light.svg';
+                        $person_url = BASE_URL . "record/person/" . $personQ;
 
-                        $card = "<li><a href='".BASE_URL."record/person/$personQ'>
-                        <span class='container card-image'>
-                            <p>$fullName</p>
-                            <img src='../assets/images/$card_icon'>
-                            </span><span class='container cards'>
-                            <span class='card-info'>
-                            $statusHtml
-                            $sexHtml
-                            $originHtml
-                            $locationHtml
-                            $dateRangeHtml
-                            $connections
-                            </span></a></li>";
+                        $card = <<<HTML
+<li>
+    <a href='$personQ'>
+        <span class='container card-image'>
+            <p>$name</p>
+            <img src='$card_icon_url'>
+        </span>
+        <span class='container cards'>
+            <span class='card-info'>
+                $sexHtml
+                $statusHtml
+                $placesHtml
+                $dateRangeHtml
+                $connections
+            </span>
+        </span>
+    </a>
+</li>
+HTML;
 
                     } elseif ($template == 'tableCard'){
-                        $card = "<tr class='tr'>
-                                <td class='name td-name'>
-                                    <span>$fullName</span>
-                                </td>
-                                <td class='gender'>
-                                    <p><span class='first'>Gender: </span>$sex</p>
-                                </td>
-                                <td class='age'>
-                                    <p><span class='first'>Age: </span>##</p>
-                                </td>
-                                <td class='status'>
-                                    <p><span class='first'>Status: </span>$status</p>
-                                </td>
-                                <td class='origin'>
-                                    <p><span class='first'>Origin: </span>$origin</p>
-                                </td>
-                                <td class='location'>
-                                    <p><span class='first'>Location: </span>$location</p>
-                                </td>
-                                <td class='dateRange'>
-                                    <p><span class='first'>Date Range: </span>$dateRange</p>
-                                </td>
-                                <td class='meta'>
+                        $card = <<<HTML
+<tr class='tr'>
+    <td class='name td-name'>
+        <span>$name</span>
+    </td>
+    <td class='gender'>
+        <p><span class='first'>Gender: </span>$sex</p>
+    </td>
+    <td class='status'>
+        <p><span class='first'>Status: </span>$status</p>
+    </td>
+    <td class='location'>
+        <p><span class='first'>Location: </span>$places</p>
+    </td>
+    <td class='dateRange'>
+        <p><span class='first'>Date Range: </span>$dateRange</p>
+    </td>
+    <td class='meta'>
 
-                                </td>
-                                </tr>";
+    </td>
+</tr>
+HTML;
                     }
 
 
@@ -1184,88 +1175,74 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                 break;
             case 'places':
-                $fullName = $record['name']['value'];
-                $nameArray = explode(' ', $fullName);
-                $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $fullName);
-                $lastName = $nameArray[count($nameArray)-1];
+                //NEEDS TO BE UPDATE FROM EVENT TO PLACE
+                //Event name
+                $name = $record['eventLabel']['value'];
 
-                $personUrl = $record['agent']['value'];
-                $xplode = explode('/', $personUrl);
-                $personQ = end($xplode);
+                //Event URL
+                $eventUrl = $record['event']['value'];
+                $xplode = explode('/', $eventUrl);
+                $eventQ = end($xplode); //qid
 
-                // if (isset($record['status']) && isset($record['status']['value'])){
-                //     $status = $record['status']['value'];
-                // } else {
-                //     $status = "";
-                // }
-
-                if (isset($record['sex']) && isset($record['sex']['value'])){
-                    $sex = $record['sex']['value'];
-                    if($sex == ''){
-                        $sex = "Unidentified";
+                //Event Type
+                $type = "Unidentified";
+                if (isset($record['typeLabel']) && isset($record['typeLabel']['value'])){
+                    if($record['typeLabel']['value'] != ''){
+                        $type = $record['typeLabel']['value'];
                     }
-                } else {
-                    $sex = "Unidentified";
                 }
-                if (isset($record['status']) && isset($record['status']['value'])){
-                    $statusArray = explode('||', $record['status']['value']);
-                    $status = '';
 
-                    $statusCount = 0;
+                //Event Roles
+                $roles = '';
+                $rolesCount = 0;
+                if (isset($record['roles']) && isset($record['roles']['value'])){
+                    $rolesArray = explode('||', $record['roles']['value']);
 
-                    foreach ($statusArray as $stat) {
-                        if (!empty($stat)){
-                            if ($statusCount > 0){
-                                $status .= ", $stat";
+                    foreach ($rolesArray as $role) {
+                        if (!empty($role)){
+                            if ($rolesCount > 0){
+                                $roles .= ", $role";
                             } else {
-                                $status .= "$stat";
+                                $roles .= "$role";
                             }
-                            $statusCount++;
+                            $rolesCount++;
                         }
                     }
-                } else {
-                    $status = '';
                 }
 
-                if (isset($record['originLabel']) && isset($record['originLabel']['value'])){
-                    $origin = $record['originLabel']['value'];
-                } else {
-                    $origin = '';
-                }
+                // Event Places
+                $places = '';
+                $placesCount = 0;
+                if (isset($record['places']) && isset($record['places']['value'])){
+                    $placesArray = explode('||', $record['places']['value']);
 
-                $locationHtml = '';
-                $location = '';
-                if (isset($record['place']) && isset($record['place']['value'])){
-                    $placeArray = explode('||', $record['place']['value']);
-
-                    $placeCount = 0;
-                    foreach ($placeArray as $place) {
+                    foreach ($placesArray as $place) {
                         if (!empty($place)){
-                            if ($statusCount > 0){
-                                $location .= ", $place";
+                            if ($placesCount > 0){
+                                $places .= ", $place";
                             } else {
-                                $location .= "$place";
+                                $places .= "$place";
                             }
-                            $placeCount++;
+                            $placesCount++;
                         }
                     }
                 }
 
+                //Event Start Year
+                $startYear = '';
                 if (isset($record['startyear']) && isset($record['startyear']['value'])){
                     $startYears = explode('||', $record['startyear']['value']);
                     $startYear = min($startYears);
-                } else {
-                    $startYear = '';
                 }
 
+                //Event End Year
+                $endYear = '';
                 if (isset($record['endyear']) && isset($record['endyear']['value'])){
                     $endYears = explode('||', $record['endyear']['value']);
                     $endYear = max($endYears);
-                } else {
-                    $endYear = '';
                 }
 
-                $dateRangeHtml = '';
+                //Date range
                 $dateRange = '';
                 if ($startYear != '' && $endYear != ''){
                     $dateRange = "$startYear - $endYear";
@@ -1275,6 +1252,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     $dateRange = $endYear;
                 }
 
+                //Counts for connections
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
                     $countpeople = $record['countpeople']['value'];
                 } else {
@@ -1296,6 +1274,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     $countsource = '';
                 }
 
+                //Connection html
                 $connection_lists = Array(
                     '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
                     '<h1>'.$countplace.' Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
@@ -1314,73 +1293,76 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 foreach ($templates as $template) {
                     if ($template == 'gridCard'){
 
-                        $statusHtml = '';
-                        // if a person has multiple statuses, display them in a tooltip
-                        if ($statusCount == 1){
-                            $statusHtml = "<p><span>Person Status: </span>$status</p>";
+                        $typeHtml = "<p><span>Type: </span>$type</p>";
+
+                        $rolesHtml = '';
+                        // Check for multiple roles
+                        if ($rolesCount == 1){
+                            $rolesHtml = "<p><span>Role: </span>$roles</p>";
                         }
-                        if ($statusCount > 1){
-                            $statusHtml = "<p><span>Person Status: </span><span class='multiple'>Multiple<span class='tooltip'>$status</span></span></p>";
+                        if ($rolesCount > 1){
+                            $rolesHtml = "<p><span>Role: </span><span class='multiple'>Multiple<span class='tooltip'>$roles</span></span></p>";
+                        }
+                        // Check for multiple places
+                        $placesHtml = '';
+                        if ($placesCount == 1){
+                            $placesHtml = "<p><span>Place: </span>$places</p>";
+                        }
+                        if ($placesCount > 1){
+                            $placesHtml = "<p><span>Place: </span><span class='multiple'>Multiple<span class='tooltip'>$places</span></span></p>";
                         }
 
-                        if ($location != ''){
-                            $locationHtml = "<p><span>Location: </span>$location</p>";
-                        }
-
-                        $sexHtml = "<p><span>Sex: </span>$sex</p>";
-
+                        $dateRangeHtml = '';
                         if ($dateRange != ''){
                             $dateRangeHtml = "<p><span>Date Range: </span>$dateRange</p>";
                         }
-                        if ($origin != ''){
-                            $originHtml = "<p><span>Origin: </span>$origin</p>";
-                        } else {
-                            $originHtml = '';
-                        }
 
-                        $card_icon = 'Person-light.svg';
+                        $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
+                        $event_url = BASE_URL . "record/event/" . $eventQ;
 
-                        $card = "<li><a href='".BASE_URL."record/person/$personQ'>
-                        <span class='container card-image'>
-                            <p>$fullName</p>
-                            <img src='../assets/images/$card_icon'>
-                            </span><span class='container cards'>
-                            <span class='card-info'>
-                            $statusHtml
-                            $sexHtml
-                            $originHtml
-                            $locationHtml
-                            $dateRangeHtml
-                            $connections
-                            </span></a></li>";
+                        $card = <<<HTML
+<li>
+    <a href='$eventUrl'>
+        <span class='container card-image'>
+            <p>$name</p>
+            <img src='$card_icon_url'>
+        </span>
+        <span class='container cards'>
+            <span class='card-info'>
+                $typeHtml
+                $rolesHtml
+                $placesHtml
+                $dateRangeHtml
+                $connections
+            </span>
+        </span>
+    </a>
+</li>
+HTML;
 
                     } elseif ($template == 'tableCard'){
-                        $card = "<tr class='tr'>
-                                <td class='name td-name'>
-                                    <span>$fullName</span>
-                                </td>
-                                <td class='gender'>
-                                    <p><span class='first'>Gender: </span>$sex</p>
-                                </td>
-                                <td class='age'>
-                                    <p><span class='first'>Age: </span>##</p>
-                                </td>
-                                <td class='status'>
-                                    <p><span class='first'>Status: </span>$status</p>
-                                </td>
-                                <td class='origin'>
-                                    <p><span class='first'>Origin: </span>$origin</p>
-                                </td>
-                                <td class='location'>
-                                    <p><span class='first'>Location: </span>$location</p>
-                                </td>
-                                <td class='dateRange'>
-                                    <p><span class='first'>Date Range: </span>$dateRange</p>
-                                </td>
-                                <td class='meta'>
+                        $card = <<<HTML
+<tr class='tr'>
+    <td class='name td-name'>
+        <span>$name</span>
+    </td>
+    <td class='type'>
+        <p><span class='first'>Type: </span>$type</p>
+    </td>
+    <td class='role'>
+        <p><span class='first'>Role: </span>$roles</p>
+    </td>
+    <td class='place'>
+        <p><span class='first'>Place: </span>$places</p>
+    </td>
+    <td class='dateRange'>
+        <p><span class='first'>Date Range: </span>$dateRange</p>
+    </td>
+    <td class='meta'>
 
-                                </td>
-                                </tr>";
+    </td>
+</tr>
+HTML;
                     }
 
 
@@ -1455,7 +1437,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 }
 
                 //Date range
-                $dateRangeHtml = '';
                 $dateRange = '';
                 if ($startYear != '' && $endYear != ''){
                     $dateRange = "$startYear - $endYear";
@@ -1506,73 +1487,76 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 foreach ($templates as $template) {
                     if ($template == 'gridCard'){
 
-                        $statusHtml = '';
-                        // if a person has multiple statuses, display them in a tooltip
-                        if ($statusCount == 1){
-                            $statusHtml = "<p><span>Person Status: </span>$status</p>";
+                        $typeHtml = "<p><span>Type: </span>$type</p>";
+
+                        $rolesHtml = '';
+                        // Check for multiple roles
+                        if ($rolesCount == 1){
+                            $rolesHtml = "<p><span>Role: </span>$roles</p>";
                         }
-                        if ($statusCount > 1){
-                            $statusHtml = "<p><span>Person Status: </span><span class='multiple'>Multiple<span class='tooltip'>$status</span></span></p>";
+                        if ($rolesCount > 1){
+                            $rolesHtml = "<p><span>Role: </span><span class='multiple'>Multiple<span class='tooltip'>$roles</span></span></p>";
+                        }
+                        // Check for multiple places
+                        $placesHtml = '';
+                        if ($placesCount == 1){
+                            $placesHtml = "<p><span>Place: </span>$places</p>";
+                        }
+                        if ($placesCount > 1){
+                            $placesHtml = "<p><span>Place: </span><span class='multiple'>Multiple<span class='tooltip'>$places</span></span></p>";
                         }
 
-                        if ($location != ''){
-                            $locationHtml = "<p><span>Location: </span>$location</p>";
-                        }
-
-                        $sexHtml = "<p><span>Sex: </span>$sex</p>";
-
+                        $dateRangeHtml = '';
                         if ($dateRange != ''){
                             $dateRangeHtml = "<p><span>Date Range: </span>$dateRange</p>";
                         }
-                        if ($origin != ''){
-                            $originHtml = "<p><span>Origin: </span>$origin</p>";
-                        } else {
-                            $originHtml = '';
-                        }
 
-                        $card_icon = 'Person-light.svg';
+                        $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
+                        $event_url = BASE_URL . "record/event/" . $eventQ;
 
-                        $card = "<li><a href='".BASE_URL."record/person/$personQ'>
-                        <span class='container card-image'>
-                            <p>$name</p>
-                            <img src='../assets/images/$card_icon'>
-                            </span><span class='container cards'>
-                            <span class='card-info'>
-                            $statusHtml
-                            $sexHtml
-                            $originHtml
-                            $locationHtml
-                            $dateRangeHtml
-                            $connections
-                            </span></a></li>";
+                        $card = <<<HTML
+<li>
+    <a href='$eventUrl'>
+        <span class='container card-image'>
+            <p>$name</p>
+            <img src='$card_icon_url'>
+        </span>
+        <span class='container cards'>
+            <span class='card-info'>
+                $typeHtml
+                $rolesHtml
+                $placesHtml
+                $dateRangeHtml
+                $connections
+            </span>
+        </span>
+    </a>
+</li>
+HTML;
 
                     } elseif ($template == 'tableCard'){
-                        $card = "<tr class='tr'>
-                                <td class='name td-name'>
-                                    <span>$name</span>
-                                </td>
-                                <td class='gender'>
-                                    <p><span class='first'>Gender: </span>$sex</p>
-                                </td>
-                                <td class='age'>
-                                    <p><span class='first'>Age: </span>##</p>
-                                </td>
-                                <td class='status'>
-                                    <p><span class='first'>Status: </span>$status</p>
-                                </td>
-                                <td class='origin'>
-                                    <p><span class='first'>Origin: </span>$origin</p>
-                                </td>
-                                <td class='location'>
-                                    <p><span class='first'>Location: </span>$location</p>
-                                </td>
-                                <td class='dateRange'>
-                                    <p><span class='first'>Date Range: </span>$dateRange</p>
-                                </td>
-                                <td class='meta'>
+                        $card = <<<HTML
+<tr class='tr'>
+    <td class='name td-name'>
+        <span>$name</span>
+    </td>
+    <td class='type'>
+        <p><span class='first'>Type: </span>$type</p>
+    </td>
+    <td class='role'>
+        <p><span class='first'>Role: </span>$roles</p>
+    </td>
+    <td class='place'>
+        <p><span class='first'>Place: </span>$places</p>
+    </td>
+    <td class='dateRange'>
+        <p><span class='first'>Date Range: </span>$dateRange</p>
+    </td>
+    <td class='meta'>
 
-                                </td>
-                                </tr>";
+    </td>
+</tr>
+HTML;
                     }
 
 
