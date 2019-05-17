@@ -794,85 +794,31 @@
                         <tr>
                             <th class="meta">FIRSTNAME</th>
                             <th class="meta">LASTNAME</th>
-                            <th class="meta">ORIGIN</th>
                             <th class="meta">STATUS</th>
                             <th class="meta">START YEAR</th>
                             <th class="meta">END YEAR</th>
                             <th class="meta">SEX</th>
                             <th class="meta">LOCATION</th>
-                            <!-- 
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th> 
-                            -->
                         </tr>
                     </thead>
                     <tbody>
-                    <!-- 
+                        <!-- placeholder for people table row -->
                         <tr>
-                            <td class="name">NAME</td>
-                            <td class="gender">GENDER</td>
-                            <td class="age">AGE</td>
-                            <td class="occupation">OCCUPATION</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
-                            <td class="meta">METADATA TITLE</td>
+                            <td class="meta">Eddard</td>
+                            <td class="meta">Stark</td>
+                            <td class="meta">Lord of the north</td>
+                            <td class="meta">100</td>
+                            <td class="meta">200</td>
+                            <td class="meta">Male</td>
+                            <td class="meta">Winterfell</td>
+                            <td class="meta"></td>
                         </tr>
-                    -->
                     </tbody>
                 </table>
             </div>
              <div class="result-column">
-                <div class="blazegraph-records">
-                    <!--  
-                    <!- Placeholder card format for a person --
+                <div class="blazegraph-records"> 
+                    <!-- Placeholder card format for a person -->
                     <div class='record'>
                         <div class='image-and-name'>
                             <img src='../assets/images/PersonCard.jpg' alt='record image'>
@@ -884,9 +830,6 @@
                                 <div class='column'>
                                     <div class='metadata-row'>
                                         <span>Person status:</span><p class='city'>Enslaved</p>
-                                    </div>
-                                    <div class='metadata-row'>
-                                        <span>Origin:</span><p class='country'>Location</p>
                                     </div>
                                     <div class='metadata-row'>
                                         <span>Date Range:</span><p class='enslaved-region'>1800 - 1900</p>
@@ -911,7 +854,7 @@
                             </div>
                         </div>
                     </div>
-                    <!- Placeholder card format for a place --
+                    <!-- Placeholder card format for a place -->
                     <div class='record'>
                         <div class='image-and-name'>
                             <img src='../assets/images/PlaceCard.jpg' alt='record image'>
@@ -950,7 +893,7 @@
                             </div>
                         </div>
                     </div>
-                    <!- Placeholder card format for an event --
+                    <!-- Placeholder card format for an event -->
                     <div class='record'>
                         <div class='image-and-name'>
                             <img src='../assets/images/EventCard.jpg' alt='record image'>
@@ -969,7 +912,7 @@
                                 </div>
                                 <div class="column">
                                     <div class="metadata-row">
-                                        <!- no data here --
+                                        <!-- no data here -->
                                     </div>
                                 </div>
                             </div>
@@ -982,7 +925,7 @@
                             </div>
                         </div>
                     </div>
-                    <!- Placeholder card format for a source --
+                    <!-- Placeholder card format for a source -->
                     <div class='record'>
                         <div class='image-and-name'>
                             <img src='../assets/images/SourceCard.jpg' alt='record image'>
@@ -1004,7 +947,7 @@
                                 </div>
                                 <div class="column">
                                     <div class="metadata-row">
-                                        <!- no data here --
+                                        <!-- no data here -->
                                     </div>
                                 </div>
                             </div>
@@ -1017,7 +960,6 @@
                             </div>
                         </div>
                     </div>
-                    -->
                 </div>
             </div>
         </div>
