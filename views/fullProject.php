@@ -792,10 +792,15 @@
                 <table id="search-results">
                     <thead>
                         <tr>
-                            <th class="name">NAME</th>
-                            <th class="gender">GENDER</th>
-                            <th class="age">AGE</th>
-                            <th class="occupation">OCCUPATION</th>
+                            <th class="meta">FIRSTNAME</th>
+                            <th class="meta">LASTNAME</th>
+                            <th class="meta">ORIGIN</th>
+                            <th class="meta">STATUS</th>
+                            <th class="meta">START YEAR</th>
+                            <th class="meta">END YEAR</th>
+                            <th class="meta">SEX</th>
+                            <th class="meta">LOCATION</th>
+                            <!-- 
                             <th class="meta">METADATA TITLE</th>
                             <th class="meta">METADATA TITLE</th>
                             <th class="meta">METADATA TITLE</th>
@@ -821,14 +826,12 @@
                             <th class="meta">METADATA TITLE</th>
                             <th class="meta">METADATA TITLE</th>
                             <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
+                            <th class="meta">METADATA TITLE</th> 
+                            -->
                         </tr>
                     </thead>
                     <tbody>
-
-                        <?php for ($i=0; $i < 10; $i++): ?>
-                            
+                    <!-- 
                         <tr>
                             <td class="name">NAME</td>
                             <td class="gender">GENDER</td>
@@ -862,18 +865,14 @@
                             <td class="meta">METADATA TITLE</td>
                             <td class="meta">METADATA TITLE</td>
                         </tr>
-
-                        <?php endfor; ?>
-
+                    -->
                     </tbody>
                 </table>
             </div>
              <div class="result-column">
                 <div class="blazegraph-records">
-
-                    <?php for ($i=0; $i < 2; $i++): ?>
-
-                    <!-- Placeholder card format for a person -->
+                    <!--  
+                    <!- Placeholder card format for a person --
                     <div class='record'>
                         <div class='image-and-name'>
                             <img src='../assets/images/PersonCard.jpg' alt='record image'>
@@ -912,7 +911,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Placeholder card format for a place -->
+                    <!- Placeholder card format for a place --
                     <div class='record'>
                         <div class='image-and-name'>
                             <img src='../assets/images/PlaceCard.jpg' alt='record image'>
@@ -951,7 +950,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Placeholder card format for an event -->
+                    <!- Placeholder card format for an event --
                     <div class='record'>
                         <div class='image-and-name'>
                             <img src='../assets/images/EventCard.jpg' alt='record image'>
@@ -970,7 +969,7 @@
                                 </div>
                                 <div class="column">
                                     <div class="metadata-row">
-                                        <!-- no data here -->
+                                        <!- no data here --
                                     </div>
                                 </div>
                             </div>
@@ -983,7 +982,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Placeholder card format for a source -->
+                    <!- Placeholder card format for a source --
                     <div class='record'>
                         <div class='image-and-name'>
                             <img src='../assets/images/SourceCard.jpg' alt='record image'>
@@ -1005,7 +1004,7 @@
                                 </div>
                                 <div class="column">
                                     <div class="metadata-row">
-                                        <!-- no data here -->
+                                        <!- no data here --
                                     </div>
                                 </div>
                             </div>
@@ -1018,9 +1017,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <?php endfor; ?>
-
+                    -->
                 </div>
             </div>
         </div>
@@ -1110,6 +1107,6 @@
     var QID = <?php echo json_encode(QID); ?>;
     var infourl = <?php echo json_encode(BASE_WIKI_URL . 'wiki/Special:EntityData/' . QID); ?>;
 </script>
-<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
-<script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
+<!-- <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script> -->
+<!-- <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script> -->
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullProject.js"></script>

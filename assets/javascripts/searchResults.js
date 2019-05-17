@@ -10,7 +10,6 @@ var card_offset = 0;
 var card_limit = 12;
 var page = 1;
 var pages = 1;
-var presets = {};
 var filters = {};
 
 // Get params from url
@@ -48,7 +47,7 @@ for(var i=0; i < $_GET_length; i++){
  * the array of Grid View cards html, array of Table View cards html, and the total amount of results found
  * instead of taking in parameters it references global variables
  * 
- * \param presets : Array of presets that determines type of query call (ex: 'person', 'event')
+ * \param preset : preset that determines type of query call (ex: 'person', 'event')
  * \param limit : limit to the number of cards per page : default value = 12
  * \param offset : number of cards offset from the first card (with 0 being the first card) : default value = 0
 */
@@ -69,7 +68,6 @@ function searchResults(preset, limit = 12, offset = 0){
             templates: templates
         },
         'success': function (data) {
-            console.log(data);
             result_array = JSON.parse(data);
             
             console.log(result_array);
@@ -421,7 +419,7 @@ $(document).ready(function() {
         card_limit = $(this).find('span:first').html();
         localStorage.setItem('display_amount', card_limit);
         card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
-        searchResults(['people'], card_limit, card_offset);
+        searchResults('people', card_limit, card_offset, filters);
         $('span.results-per-page > span').html(card_limit);
         $(document).trigger('click');
     });
@@ -669,7 +667,7 @@ $(document).ready(function() {
         // e.stopPropagation();
         page = $(this).html(); // set page
         page = parseInt(page);
-        searchResults('people', card_limit, (page - 1) * card_limit);
+        searchResults('people', card_limit, (page - 1) * card_limit, filters);
         paginate();
     });
 
