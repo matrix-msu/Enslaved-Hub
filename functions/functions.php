@@ -730,7 +730,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                 // Get all info
                 $status = (array_key_exists("status", $record) && !empty($record["status"]["value"])) ? $record["status"]["value"] : "Unknown";
-                $origin = (array_key_exists("origin", $record) && !empty($record["origin"]["value"])) ? $record["origin"]["value"] : "Unknown";
                 $startyear = (array_key_exists("startyear", $record) && !empty($record["startyear"]["value"])) ? $record["startyear"]["value"] : "Unknown";
                 $endyear = (array_key_exists("endyear", $record) && !empty($record["endyear"]["value"])) ? $record["endyear"]["value"] : "Unknown";
                 $dateRange = $startyear .' - '. $endyear;
@@ -746,6 +745,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 }
 
                 $status = str_replace("||", ", ",  $status);
+                $location = str_replace("||", ", ",  $location);
 
                 foreach ($templates as $template) 
                 {
@@ -763,9 +763,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                                 <div class="column">
                                     <div class="metadata-row">
                                         <span>Person status:</span><p class="city">'.$status.'</p>
-                                    </div>
-                                    <div class="metadata-row">
-                                        <span>Origin:</span><p class="country">'.$origin.'</p>
                                     </div>
                                     <div class="metadata-row">
                                         <span>Date Range:</span><p class="enslaved-region">'.$dateRange.'</p>
@@ -791,13 +788,12 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         </div></a>
                     </div>';
                   }
-                  elseif($template == "searchCard") 
+                  elseif($template == "tableCard") 
                   {
                     $card = '
                     <tr>
                         <td class="">'.$firstname.'</td>
                         <td class="">'.$lastname.'</td>
-                        <td class="">'.$origin.'</td>
                         <td class="">'.$status.'</td>
                         <td class="">'.$startyear.'</td>
                         <td class="">'.$endyear.'</td>

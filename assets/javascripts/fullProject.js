@@ -5,7 +5,7 @@ var card_limit = 5;
 var presets = {};
 var filters = {};
 var filter = "";
-var templates = ['gridCard', 'searchCard'];
+var templates = ['gridCard', 'tableCard'];
 var view = "gridCard";
 var sort = "ASC";
 
@@ -94,7 +94,7 @@ $(document).ready(function() {
         $("#search-result-configure-download-row").show();
         $('table').css('width', '', 'margin', '');
 
-        view = "searchCard";
+        view = "tableCard";
     });
 
     // use gridview onload
@@ -277,9 +277,9 @@ function getProjectData(filters, offset, limit)
                 $('.showing-results').html(showingResultsText);
 
                 // Maintain previous view format
-                if(view == "searchCard")
+                if(view == "tableCard")
                 {
-                    tableDisplay(data['searchCard']);
+                    tableDisplay(data['tableCard']);
                     $("span.table-view").trigger("click");
                     gridDisplay(data['gridCard']);
                 }
@@ -287,7 +287,7 @@ function getProjectData(filters, offset, limit)
                 {
                     gridDisplay(data['gridCard']);
                     $("span.grid-view").trigger("click");
-                    tableDisplay(data['searchCard']);
+                    tableDisplay(data['tableCard']);
                 }
                 // set pagination
                 setPagination(total_length, limit, offset);
