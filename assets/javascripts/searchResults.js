@@ -3,6 +3,7 @@
 ///******************************************************************* */
 
 //Global vars used on whole page
+var search_type = JS_EXPLORE_FORM.toLowerCase();
 var view;
 var result_array;
 var total_length = 0;
@@ -75,17 +76,16 @@ function searchResults(preset, limit = 12, offset = 0){
             var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
 
-            searchBarPlaceholder = "Search Across " + total_length + " " + filter + " Results";
+            searchBarFilter = filter != undefined ? filter : '';
+            searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
             $('.main-search').attr("placeholder", searchBarPlaceholder);
 
             var showingResultsText = '';
-
             if (result_length < card_limit) {
                 showingResultsText = "Showing " + result_length + " of " + total_length + " Results";
             } else {
                 showingResultsText = "Showing " + card_limit + " of " + total_length + " Results";
             }
-
             $('.showing-results').html(showingResultsText);
 
             //Wait till doc is ready
@@ -116,7 +116,7 @@ function appendCards(){
 }
 
 //Generate cards
-searchResults('people');
+searchResults(search_type);
 
 //Document load
 $(document).ready(function() {
@@ -165,7 +165,7 @@ $(document).ready(function() {
         var val = $('#pagination .current-page').val();
         console.log("Value: " + val);
         //Call searchResults normally except calculate new offset
-        searchResults('people', card_limit, (val - 1) * card_limit);
+        searchResults(search_type, card_limit, (val - 1) * card_limit);
     });
 
     //SearchBar placeholder text
@@ -198,7 +198,7 @@ $(document).ready(function() {
         card_limit = $(this).find('span:first').html();
         localStorage.setItem('display_amount', card_limit);
         card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
-        searchResults('people', card_limit, card_offset);
+        searchResults(search_type, card_limit, card_offset);
         $('span.results-per-page > span').html(card_limit);
         $(document).trigger('click');
     });

@@ -97,31 +97,34 @@
     </div> -->
 </div>
 <!-- Featured Stories-->
+
+<?php if(RECORD_FORM !== 'place'){ ?>
 <div class="container column featured-card">
-        <div class="container cardheader-wrap">
-            <h2 class="column-header">Featured in these Stories</h2>
-        </div>
-        <div class="container cardwrap">
-            <ul class="row">
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory">
-                        <div class="container cards">
-                            <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
-                            <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory">
-                        <div class="container cards">
-                            <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
-                            <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <div class="container cardheader-wrap">
+        <h2 class="column-header">Featured in these Stories</h2>
     </div>
+    <div class="container cardwrap">
+        <ul class="row">
+            <li>
+                <a href="<?php echo BASE_URL?>fullStory">
+                    <div class="container cards">
+                        <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
+                        <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullStory">
+                    <div class="container cards">
+                        <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
+                        <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<?php } ?>
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
