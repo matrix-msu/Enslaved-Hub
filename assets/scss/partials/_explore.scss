@@ -295,7 +295,7 @@
                     box-shadow: 0 2px 3px 0 rgba(51, 51, 51, .05);
                     border: 3px solid rgba(239, 150, 8, 0);
                     transition: border 0.3s, box-shadow 0.3s ease;
-                    height: 178px;
+                    height: 210px;
                     position: relative;
                     //background-color: #122E46;
 
@@ -308,10 +308,16 @@
                         position: absolute;
                         color: #EEEBE7;
                         font-size: 20px;
-                        width: 122px;
+                        width: calc(100% - 34px); //122
                         bottom: 15px;
                         left: 17px;
                         margin-right: 10px;
+                        //Ellipses past 5th line
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 6;
+                        -webkit-box-orient: vertical;
                     }
                 }
                 &:nth-child(4n){
@@ -497,7 +503,7 @@
     }
 }
 
-@media screen and (max-width: 760px){
+@media screen and (max-width: 800px){
     .explore-featured{
         .connection-cards{
             .connect-row{
@@ -516,7 +522,7 @@
         }
     }
 }
-@media screen and (max-width: 580px){
+@media screen and (max-width: 650px){
     .explore-featured{
         .connection-cards{
             .connect-row{
@@ -530,6 +536,18 @@
                     &:nth-child(2n){
                         margin-right: 0;
                     }
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 400px){
+    .explore-featured{
+        .connection-cards{
+            .connect-row{
+                li{
+                    width: 100%;
+                    margin-right: 0;
                 }
             }
         }

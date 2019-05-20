@@ -38,6 +38,23 @@
     <div class="detailwrap">
     </div>
 </div>
+
+<!-- Extra Info -->
+<div class="extra-info">
+    <div class="copyright">
+        <h2>Copyright Info</h2>
+        <p>Info on copyright provided</p>
+        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg" alt="copyrights"/>
+    </div>
+    <!-- <div class="share-links">
+        <h2>Share this Record</h2>
+        <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg" alt="facebook"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg" alt="twitter"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/>
+    </div> -->
+</div>
+
 <div class="advanced-section">
     <div class="advanced-details">
         <h2>Representations</h2>
@@ -81,21 +98,7 @@
         </div>
     </div>
 </div>
-<!-- Extra Info -->
-<div class="extra-info">
-    <div class="copyright">
-        <h2>Copyright Info</h2>
-        <p>Info on copyright provided</p>
-        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg" alt="copyrights"/>
-    </div>
-    <!-- <div class="share-links">
-        <h2>Share this Record</h2>
-        <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg" alt="facebook"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg" alt="twitter"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/>
-    </div> -->
-</div>
+
 <!-- Featured Stories-->
 
 <?php if(RECORD_FORM !== 'place'){ ?>
