@@ -885,100 +885,13 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
     foreach ($templates as $template) {
         $cards[$template] = array();
     }
-
     $cards['total'] =  $count;
 
+    // use same people display for people in single project
+    if($preset == "singleProject") $preset = "people";
+
     foreach ($results as $index => $record) {  ///foreach result
-
         switch ($preset){
-            case 'singleProject':
-                // Getting first and last names
-                $firstname = "";
-                $lastname = "";
-                if(array_key_exists("name", $record))
-                {
-                  $name = explode(' ', $record["name"]["value"]);
-                  if(array_key_exists(0, $name)) $firstname = $name[0];
-                  if(array_key_exists(1, $name)) $lastname = $name[1];
-                }
-
-                // Get all info
-                $status = (array_key_exists("status", $record) && !empty($record["status"]["value"])) ? $record["status"]["value"] : "Unknown";
-                $startyear = (array_key_exists("startyear", $record) && !empty($record["startyear"]["value"])) ? $record["startyear"]["value"] : "Unknown";
-                $endyear = (array_key_exists("endyear", $record) && !empty($record["endyear"]["value"])) ? $record["endyear"]["value"] : "Unknown";
-                $dateRange = $startyear .' - '. $endyear;
-                $sex = (array_key_exists("sex", $record) && !empty($record["sex"]["value"])) ? $record["sex"]["value"] : "Unidentified";
-                $location = (array_key_exists("place", $record) && !empty($record["place"]["value"])) ? $record["place"]["value"] : "Unknown";
-
-                // Create link (without closing tag)
-                $link = "";
-                if(array_key_exists("agent", $record) && !empty($record["agent"]["value"]))
-                {
-                  $agent = explode("/", $record["agent"]["value"]);
-                  $link = '<a href="'.BASE_URL.'recordPerson/'.end($agent).'">';
-                }
-
-                $status = str_replace("||", ", ",  $status);
-                $location = str_replace("||", ", ",  $location);
-
-                foreach ($templates as $template) 
-                {
-                  if($template == "gridCard")
-                  {
-                    $card = '
-                    <div class="record"> '.$link.'
-                        <div class="image-and-name">
-                            <img src="../assets/images/PersonCard.jpg" alt="record image">
-                            <p class="name">'.$firstname.' <br> '.$lastname.'</p>
-                            <div class="type-icon"><img src="../assets/images/Person-light.svg" alt=""></div>
-                        </div>
-                        <div class="record-main">
-                            <div class="metadata">
-                                <div class="column">
-                                    <div class="metadata-row">
-                                        <span>Person status:</span><p class="city">'.$status.'</p>
-                                    </div>
-                                    <div class="metadata-row">
-                                        <span>Date Range:</span><p class="enslaved-region">'.$dateRange.'</p>
-                                    </div>
-                                </div>
-                                <div class="column">
-                                     <div class="metadata-row">
-                                        <span>Sex:</span><p class="province">'.$sex.'</p>
-                                    </div>
-                                    <div class="metadata-row">
-                                        <span>Location:</span><p class="location">'.$location.'</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="bottom-row">
-                                <div class="icon-container"><img src="../assets/images/Person-dark.svg"  alt=""><span>10</span></div>
-                                <div class="icon-container"><img src="../assets/images/Place-dark.svg"   alt=""><span>3</span></div>
-                                <div class="icon-container"><img src="../assets/images/Event-dark.svg"   alt=""><span>4</span></div>
-                                <div class="icon-container"><img src="../assets/images/Source-dark.svg"  alt=""><span>2</span></div>
-                                <div class="icon-container"><img src="../assets/images/Project-dark.svg" alt=""><span>1</span></div>
-                            </div>
-                        </div></a>
-                    </div>';
-                  }
-                  elseif($template == "tableCard") 
-                  {
-                    $card = '
-                    <tr>
-                        <td class="">'.$firstname.'</td>
-                        <td class="">'.$lastname.'</td>
-                        <td class="">'.$status.'</td>
-                        <td class="">'.$startyear.'</td>
-                        <td class="">'.$endyear.'</td>
-                        <td class="">'.$sex.'</td>
-                        <td class="">'.$location.'</td>
-                        <td class="">'.$link.'</a></td>
-                    </tr>';
-                  }
-                  array_push($cards[$template], $card);
-                }
-                break;
             case 'people':
                 //Person Name
                 $name = $record['name']['value'];
@@ -1167,7 +1080,7 @@ HTML;
         <p><span class='first'>Date Range: </span>$dateRange</p>
     </td>
     <td class='meta'>
-
+        <a href='$person_url'>
     </td>
 </tr>
 HTML;

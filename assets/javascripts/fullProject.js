@@ -264,6 +264,8 @@ function getProjectData(filters, offset, limit)
            {
                 data = JSON.parse(data);
 
+                console.log(data);
+
                 // Getting the total number of data in the query
                 if("total" in data) total_length = data["total"];
                 
@@ -300,9 +302,9 @@ function getProjectData(filters, offset, limit)
 */
 function gridDisplay(data)
 {
-    $(".blazegraph-records").html("");
+    $("ul.row").empty(); //empty row before appending more
     data.forEach(function (card) {
-        $(card).appendTo(".blazegraph-records");
+        $(card).appendTo("ul.row");
     });
 }
 /*
@@ -310,7 +312,7 @@ function gridDisplay(data)
 */
 function tableDisplay(data)
 {
-    $("tbody").html("");
+    $("tbody").empty(); //empty grid before appending more
     data.forEach(function (card) {
         $(card).appendTo("tbody");
     });
