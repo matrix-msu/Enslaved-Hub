@@ -769,17 +769,18 @@ QUERY;
                 if($templates[0] == 'Event'){
                     $query = array('query' => "");
                     $query['query'] = <<<QUERY
-SELECT ?type ?typeLabel (SAMPLE(?event) AS ?event)(SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random) WHERE {
-
+SELECT ?event ?eventLabel 
+(SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random) WHERE {
+    
     ?event wdt:P3 wd:Q34;
                 wdt:P81 ?type;
             wikibase:statements ?statementcount .
         FILTER (?statementcount >3  ).
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
-GROUP BY ?type ?typeLabel
+GROUP BY ?event ?eventLabel
 ORDER BY ?random
-LIMIT 8              
+LIMIT 8                             
 QUERY;
                 }
             
@@ -1039,20 +1040,23 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                         $card = <<<HTML
 <li>
-    <a href='$personQ'>
-        <span class='container card-image'>
+    <a href='$person_url'>
+        <div class='container card-image'>
             <p>$name</p>
             <img src='$card_icon_url'>
-        </span>
-        <span class='container cards'>
-            <span class='card-info'>
-                $sexHtml
-                $statusHtml
-                $placesHtml
-                $dateRangeHtml
-                $connections
-            </span>
-        </span>
+        </div>
+        
+        <div class="content-wrap">
+            <div class='container cards'>
+                <div class='card-info'>
+                    $sexHtml
+                    $statusHtml
+                    $placesHtml
+                    $dateRangeHtml
+                </div>
+            </div>
+            $connections
+        </div>
     </a>
 </li>
 HTML;
@@ -1076,7 +1080,7 @@ HTML;
         <p><span class='first'>Date Range: </span>$dateRange</p>
     </td>
     <td class='meta'>
-
+        <a href='$person_url'>
     </td>
 </tr>
 HTML;
@@ -1235,20 +1239,22 @@ HTML;
 
                         $card = <<<HTML
 <li>
-    <a href='$eventUrl'>
-        <span class='container card-image'>
+    <a href='$event_url'>
+        <div class='container card-image'>
             <p>$name</p>
             <img src='$card_icon_url'>
-        </span>
-        <span class='container cards'>
-            <span class='card-info'>
-                $typeHtml
-                $rolesHtml
-                $placesHtml
-                $dateRangeHtml
-                $connections
-            </span>
-        </span>
+        </div>
+        <div class="content-wrap">
+            <div class='container cards'>
+                <div class='card-info'>
+                    $typeHtml
+                    $rolesHtml
+                    $placesHtml
+                    $dateRangeHtml
+                </div>
+            </div>
+            $connections
+        </div>
     </a>
 </li>
 HTML;
@@ -1429,20 +1435,23 @@ HTML;
 
                         $card = <<<HTML
 <li>
-    <a href='$eventUrl'>
-        <span class='container card-image'>
+    <a href='$event_url'>
+        <div class='container card-image'>
             <p>$name</p>
             <img src='$card_icon_url'>
-        </span>
-        <span class='container cards'>
-            <span class='card-info'>
-                $typeHtml
-                $rolesHtml
-                $placesHtml
-                $dateRangeHtml
-                $connections
-            </span>
-        </span>
+        </div>
+        <div class="content-wrap">
+            <div class='container cards'>
+                <div class='card-info'>
+                    $typeHtml
+                    $rolesHtml
+                    $placesHtml
+                    $dateRangeHtml
+                </div>
+                
+            </div>
+            $connections
+        </div>
     </a>
 </li>
 HTML;
@@ -1726,7 +1735,7 @@ HTML;
                         $qid = end($uriarr);
                     }
                     else if($template == 'Event'){
-                        $cardTitle = $record['typeLabel']['value'];
+                        $cardTitle = $record['eventLabel']['value'];
                         $uri = $record['event']['value'];
                         $uriarr = explode('/', $uri);
                         $qid = end($uriarr);

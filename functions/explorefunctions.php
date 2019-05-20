@@ -1102,11 +1102,11 @@ HTML;
 <div class="detail-bottom">
   <a href="$pqurl">
     <div>$matched
-      <div class="detail-menu"> <h1>Metadata</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>
-    </div>
-  </a>
-</div>
 HTML;
+
+      $html .= '<div class="detail-menu"> <h1>Metadata</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>';
+
+      $html .= "</div></a></div>";
     }
 
     $html .= '</div>';
@@ -1264,29 +1264,32 @@ QUERY;
     else if($type === "place"){
         $query['query'] = <<<QUERY
 SELECT ?name ?desc ?located  ?type ?geonames ?code 
-(group_concat(distinct ?refName; separator = "||") as ?sources)
-(group_concat(distinct ?pname; separator = "||") as ?researchprojects)
-    WHERE
+(group_concat(distinct ?refName; separator = "||") as ?sourceLabel)
+(group_concat(distinct ?pname; separator = "||") as ?projectlabel)
+(group_concat(distinct ?source; separator = "||") as ?source)
+(group_concat(distinct ?project; separator = "||") as ?project)
+
+  WHERE
 {
-    VALUES ?place {wd:$qid} #Q number needs to be changed for every place. 
-    ?place wdt:P3 wd:Q50;
-            ?property  ?object .
-    ?object prov:wasDerivedFrom ?provenance .
-    ?provenance pr:P35 ?source .
-    ?source rdfs:label ?refName;
-            wdt:P7 ?project.
-    ?project rdfs:label ?pname.
-    ?place schema:description ?desc.
-    ?place rdfs:label ?name.
-    ?place wdt:P80 ?placetype.
-    ?placetype rdfs:label ?type.
-    OPTIONAL{?place wdt:P10 ?locatedIn. 
-            ?locatedIn rdfs:label ?located}.
-    OPTIONAL{ ?place wdt:P71 ?geonames.}
+  VALUES ?place {wd:Q28} #Q number needs to be changed for every place. 
+  ?place wdt:P3 wd:Q50;
+        ?property  ?object .
+  ?object prov:wasDerivedFrom ?provenance .
+  ?provenance pr:P35 ?source .
+  ?source rdfs:label ?refName;
+          wdt:P7 ?project.
+  ?project rdfs:label ?pname.
+  ?place schema:description ?desc.
+  ?place rdfs:label ?name.
+  ?place wdt:P80 ?placetype.
+  ?placetype rdfs:label ?type.
+  OPTIONAL{?place wdt:P10 ?locatedIn. 
+          ?locatedIn rdfs:label ?located}.
+  OPTIONAL{ ?place wdt:P71 ?geonames.}
     OPTIONAL{ ?place wdt:P96 ?code.}
-    
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?located  ?type ?geonames ?code      
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}GROUP BY ?name ?desc ?located  ?type ?geonames ?code 
 QUERY;
     }
     else if($type === "event"){
