@@ -769,7 +769,7 @@ QUERY;
                 if($templates[0] == 'Event'){
                     $query = array('query' => "");
                     $query['query'] = <<<QUERY
-SELECT ?type ?typeLabel (SAMPLE(?event) AS ?event)(SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random) WHERE {
+SELECT ?event ?eventLabel (SAMPLE(?event) AS ?event)(SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random) WHERE {
 
     ?event wdt:P3 wd:Q34;
                 wdt:P81 ?type;
@@ -779,7 +779,8 @@ SELECT ?type ?typeLabel (SAMPLE(?event) AS ?event)(SHA512(CONCAT(STR(?event), ST
     }
 GROUP BY ?type ?typeLabel
 ORDER BY ?random
-LIMIT 8              
+LIMIT 8
+                               
 QUERY;
                 }
             
@@ -1126,7 +1127,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                         $card = <<<HTML
 <li>
-    <a href='$personQ'>
+    <a href='$person_url'>
         <span class='container card-image'>
             <p>$name</p>
             <img src='$card_icon_url'>
@@ -1322,7 +1323,7 @@ HTML;
 
                         $card = <<<HTML
 <li>
-    <a href='$eventUrl'>
+    <a href='$event_url'>
         <span class='container card-image'>
             <p>$name</p>
             <img src='$card_icon_url'>
@@ -1516,7 +1517,7 @@ HTML;
 
                         $card = <<<HTML
 <li>
-    <a href='$eventUrl'>
+    <a href='$event_url'>
         <span class='container card-image'>
             <p>$name</p>
             <img src='$card_icon_url'>
