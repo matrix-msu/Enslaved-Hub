@@ -773,10 +773,10 @@
                 </span>
                 <span class="align-center results-per-page"><span>#</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
                     <ul id="sortmenu" class="results-per-page">
-                        <li><span>1</span> Per Page</li>
-                        <li><span>5</span> Per Page</li>
-                        <li><span>8</span> Per Page</li>
-                        <li><span>11</span> Per Page</li>
+                        <li><span>12</span> Per Page</li>
+                        <li><span>24</span> Per Page</li>
+                        <li><span>36</span> Per Page</li>
+                        <li><span>48</span> Per Page</li>
                     </ul>
                 </span>
             </span>
