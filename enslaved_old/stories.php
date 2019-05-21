@@ -75,7 +75,7 @@ if ($page < 1) {
             <div class="container search">
                 <form action="submit">
                     <input class="search-field" type="text" name="searchbar" placeholder="Find a Story By Title or Keyword"/>
-                    <div class="search-icon"></div>
+                    <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
                 </form>
             </div>
         </div>

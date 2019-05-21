@@ -19,7 +19,8 @@ const places =
     'Matanzas' => 'Q590',
     'Havannah' => 'Q591',
     'Sherbro' => 'Q596',
-    'St. Helena Island FN Region' => 'Q163'];
+    'St. Helena Island FN Region' => 'Q163'
+];
 
 const qPlaces =
 ['Q28' => 'New Orleans',

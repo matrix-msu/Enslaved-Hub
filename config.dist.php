@@ -5,6 +5,7 @@ define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
 define('BASE_WIKI_URL','https://sandro-16.matrix.msu.edu/');
 define('BASE_BLAZEGRAPH_URL', 'https://sandro-33.matrix.msu.edu/');
 define("KORA_BASE_URL", "https://enslaved.kora3.matrix.msu.edu/");
+define("SANDRO_BASE_URL", "https://sandro-16.matrix.msu.edu/");
 
 //project specific urls - you should never use relative paths
 define("BASE_JS_URL", BASE_URL . "assets/javascripts/");
@@ -86,11 +87,15 @@ foreach(glob('wikiconstants' . "/*.php") as $file){
 
 $GLOBALS['FILTER_TO_FILE_MAP'] = Array(
     "Gender" => sexTypes,
+    "Age Category" => ageCategory,
     "Ethnodescriptor" => ethnodescriptor,
     "Role Types" => roleTypes,
-    "Age Category" => ageCategory,
     "Place" => places,
-    "Event Type" => eventTypes
+    "Event Type" => eventTypes,
+    "Place Type" => placeTypes,
+    "City" => cities,
+    "Province" => provinces,
+    "Source Type" => sourceTypes
 );
 
 //include the lib files

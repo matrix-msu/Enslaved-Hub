@@ -4,12 +4,16 @@
     border: 2px solid rgba(13,18,48,0.05);
     box-shadow: 0 2px 3px 0 rgba(30,30,30,0.05);
     box-sizing: border-box;
-    height: 250px;
+    height: 191px;
     margin: 0 auto 40px;
     overflow: hidden;
     position: relative;
     transition: 250ms;
     width: 80%;
+    a {
+      text-decoration: None;
+      color: #253449;
+    }
     .image-and-name {
       display: inline-block;
       height: 100%;
@@ -26,8 +30,14 @@
         top: 0;
         left: 0;
         padding:20px;
-        color: white;
+        color: #EEEBE7;
         font-size: 22px;
+      }
+      .type-icon {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        width: 30px;
       }
     }
     .record-main {
@@ -60,13 +70,15 @@
         column-count: 2;
         .column{
           padding:0;
-
         }
         .metadata-row{
           margin-bottom:20px;
+          overflow: hidden;
+          //line-height: 14px;
           span{
             display: inline-block;
             padding-right: 6px;
+            font-weight: bold;
           }
           p{
             display: inline-block;

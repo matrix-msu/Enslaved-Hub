@@ -12,10 +12,10 @@
         </div>
         <div class="heading-search">
             <h3>Search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade ...</h3>
-            <form class="search-form" action="<?= BASE_URL ?>searchResults">
+            <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
                 <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
-                <a href="<?php echo BASE_URL;?>search"><div class="search-icon-2"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search icon"></div></a>
+                <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
         </div>
@@ -28,7 +28,7 @@
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
         </div>
         <div class="section-content">
-            <a href="<?php echo BASE_URL;?>explorePeople">
+            <a href="<?php echo BASE_URL;?>search/people">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                     <h3>People</h3>
@@ -36,7 +36,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>exploreEvents">
+            <a href="<?php echo BASE_URL;?>search/events">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                     <h3>Events</h3>
@@ -44,7 +44,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explorePlaces">
+            <a href="<?php echo BASE_URL;?>search/places">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                     <h3>Places</h3>
@@ -60,7 +60,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>exploreSources">
+            <a href="<?php echo BASE_URL;?>search/sources">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                     <h3>Sources</h3>

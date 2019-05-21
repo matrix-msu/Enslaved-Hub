@@ -29,26 +29,26 @@ if (isset($_GET['prev'])){
             <div class="search-section">
                 <div class="inputwrap">
                     <label for="startYear">Start Year</label>
-                    <select class="s2-single" id="startYear">
+                    <select class="s2-single" id="startYear" name="startYear">
                         <option value""></option>
-                        <option value="1840">1840</option>
+                        <!-- <option value="1840">1840</option>
                         <option value="1841">1841</option>
                         <option value="1842">1842</option>
                         <option value="1840">1843</option>
                         <option value="1841">1844</option>
-                        <option value="1842">1845</option>
+                        <option value="1842">1845</option> -->
                     </select>
                 </div>
                 <div class="inputwrap">
                     <label for="endYear">End Year</label>
-                    <select class="s2-single" id="endYear">
+                    <select class="s2-single" id="endYear" name="endYear">
                         <option value""></option>
-                        <option value="1840">1840</option>
+                        <!-- <option value="1840">1840</option>
                         <option value="1841">1841</option>
                         <option value="1842">1842</option>
                         <option value="1840">1843</option>
                         <option value="1841">1844</option>
-                        <option value="1842">1845</option>
+                        <option value="1842">1845</option> -->
                     </select>
                 </div>
 
@@ -62,3 +62,4 @@ if (isset($_GET['prev'])){
     </div>
 </main>
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>

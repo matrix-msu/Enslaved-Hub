@@ -21,21 +21,21 @@
     </div>
 </div>
 <!-- affiliations -->
-<div class="affiliations">
+<!-- <div class="affiliations">
     <h2>Affiliations</h2>
     <hr>
     <div class="affiliates">
         <img src="<?php echo BASE_URL;?>assets/images/bl_logo_100.png" alt="British Library logo"/>
         <img src="<?php echo BASE_URL;?>assets/images/MSU.svg" alt="MSU logo"/>
     </div>
-</div>
+</div> -->
 <!-- project leads -->
 <div class="project-leads">
     <div class="leadwrap">
-        <h2>Project Leads</h2>
+        <h2>Principal Investigators</h2>
         <hr>
         <div class="leads">
-            <div class="lead-card">
+            <!-- <div class="lead-card">
                 <div class="lead-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval2.jpg);"></div>
                 <div class="lead-text">
                     <h3>Person Name</h3>
@@ -55,7 +55,37 @@
                     <h3>Person Name</h3>
                     <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
                 </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+<!-- Contributors -->
+<div class="project-contributors">
+    <div class="contributorwrap">
+        <h2>Contributors</h2>
+        <hr>
+        <div class="contributors">
+            <!-- <div class="contributor-card">
+                <div class="contributor-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval2.jpg);"></div>
+                <div class="contributor-text">
+                    <h3>Person Name</h3>
+                    <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
+                </div>
             </div>
+            <div class="contributor-card">
+                <div class="contributor-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval3.jpg);"></div>
+                <div class="contributor-text">
+                    <h3>Person Name</h3>
+                    <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
+                </div>
+            </div>
+            <div class="contributor-card">
+                <div class="contributor-photo" style="background-image: url(<?php echo BASE_URL;?>assets/images/Oval4.jpg);"></div>
+                <div class="contributor-text">
+                    <h3>Person Name</h3>
+                    <div class="view"><a href="#">View Profile <div class="view-arrow"></div></a></div>
+                </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -64,7 +94,7 @@
     <div class="searchwrap">
         <label for="searchbar" class="sr-only">searhbar</label>
         <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Search through the Project's Resources here"/>
-        <div class="search-icon"></div>
+        <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
         <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
     </div>
 </form>
@@ -764,43 +794,24 @@
                         <tr>
                             <th class="name">NAME</th>
                             <th class="gender">GENDER</th>
-                            <th class="age">AGE</th>
-                            <th class="occupation">OCCUPATION</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
-                            <th class="meta">METADATA TITLE</th>
+                            <th class="status">STATUS</th>
+                            <th class="location">LOCATION</th>
+                            <th class="dateRange">DATE RANGE</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
             </div>
+            <div class="result-column">
+                <div class="cardwrap">
+                    <ul class="row">
+                    </ul>
+                </div>
+            </div>
         </div>
         <div id="pagination">
+            <input class="current-page" type="hidden" value="1">
             <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
             <div class="page-numbers">
                 <span class="num pagi-first">1</span>
@@ -809,6 +820,7 @@
                 <span class="num two"></span>
                 <span class="num three"></span>
                 <span class="num four"></span>
+                <span class="num five"></span>
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
@@ -882,7 +894,9 @@
     <a href="#">project.past.matrix.msu.edu</a>
 </div>
 
-
-<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
+<script>
+    var QID = <?php echo json_encode(QID); ?>;
+    var infourl = <?php echo json_encode(BASE_WIKI_URL . 'wiki/Special:EntityData/' . QID); ?>;
+</script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullProject.js"></script>

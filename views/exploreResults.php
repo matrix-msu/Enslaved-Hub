@@ -2,27 +2,40 @@
 <div class="container header">
 	<div class="container middlewrap">
         <?php
-//        print_r($_GET);die;
         if (count($_GET) > 0){
             $typeTitle = array_keys($_GET)[0];
             $currentTitle = $_GET[$typeTitle];
-            $typeTitle = str_replace('_', ' ', $typeTitle);
             $currentTitle = str_replace('_', ' ', $currentTitle);
         } else {
             $typeTitle = '';
-            $currentTitle = '';
+            $currentTitle = 'Search';
         }
+        $upperForm = ucfirst(EXPLORE_FORM);
 
-        ?>
-    <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explorePeople"><span id="previous-title">People // </span></a><a id="last-page" href="<?php echo BASE_URL;?>peopleSub"><span id="previous-title"><?php echo $typeTitle;?> // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4>
+        //Conditions to put the previous page header in
+        if(EXPLORE_FORM != null && EXPLORE_FORM != 'all'){
+            echo '<h4 class="last-page-header">';
+            echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '"><span id="previous-title">' . $upperForm . ' // </span></a>';
+        
+            if($typeTitle != '' && $typeTitle != 'searchbar'){
+                echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '/' . $typeTitle . '"><span id="previous-title">' . ucwords(str_replace('_', ' ', $typeTitle)) . ' // </span></a>';
+            }
+            if($currentTitle != ''){
+                echo '<span id="current-title">' . $currentTitle . '</span>';
+            }
+
+            echo '</h4>';
+        }
+       ?>
+        <!-- <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM?>"><span id="previous-title"><?php echo $upperForm ?> // </span></a><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM.'/'.$typeTitle?>"><span id="previous-title"><?php echo ucwords(str_replace('_', ' ', $typeTitle));?> // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4> -->
         <div class="search-title">
             <h1><?php echo $currentTitle;?></h1>
         </div>
         <div class="heading-search">
             <form class="search-form">
-								<label for="searchbar" class="sr-only">searchbar</label>
+				<label for="searchbar" class="sr-only">searchbar</label>
                 <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Search Across 6,000 Male Results"/>
-                <div class="search-icon"></div>
+                <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
         </div>
@@ -72,7 +85,7 @@
                         <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
                         <p>Projects</p>
                         <span></span>
-                    </label> alt="arrow"
+                    </label>
                 </li>
             </ul>
             <!-- General Filtering -->
@@ -187,7 +200,7 @@
             <li class="cat-cat">People Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
             </li>
             <ul id="mainmenu">
-                <li class="filter-cat">Gender<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
+                <li class="filter-cat" name="gender">Gender<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
@@ -700,12 +713,12 @@
                         <li>Z - A</li>
                     </ul>
                 </span>
-                <span class="align-center results-per-page"><span>10</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+                <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
                     <ul id="sortmenu" class="results-per-page">
-                        <li><span>10</span> Per Page</li>
-                        <li><span>20</span> Per Page</li>
-                        <li><span>35</span> Per Page</li>
-                        <li><span>50</span> Per Page</li>
+                        <li><span>12</span> Per Page</li>
+                        <li><span>24</span> Per Page</li>
+                        <li><span>36</span> Per Page</li>
+                        <li><span>48</span> Per Page</li>
                     </ul>
                 </span>
             </span>
@@ -742,6 +755,7 @@
             </div>
         </div>
         <div id="pagination">
+            <input class="current-page" type="hidden" value="1">
             <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
             <div class="page-numbers">
                 <span class="num pagi-first">1</span>
@@ -750,6 +764,7 @@
                 <span class="num two"></span>
                 <span class="num three"></span>
                 <span class="num four"></span>
+                <span class="num five"></span>
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
@@ -817,5 +832,5 @@
     </div>
 </div>
 
-<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/searchResults.js"></script>

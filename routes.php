@@ -8,6 +8,8 @@ $GLOBALS['api_routes'] = array(
 	'api/counterOfGender' => array('explorefunctions.php', 'counterOfGender'),
 	'api/counterOfType' => array('explorefunctions.php', 'counterOfType'),
 	'api/getPersonRecordHtml' => array('explorefunctions.php', 'getPersonRecordHtml'),
+    'api/getDateRange' => array('explorefunctions.php', 'getEventDateRange'),
+    'api/getProjectFullInfo' => array('explorefunctions.php', 'getProjectFullInfo'),
 );
 
 $GLOBALS['routes'] = array(
@@ -38,6 +40,9 @@ $GLOBALS['routes'] = array(
     'explore' => 'explore.php',
     'exploreForm' => 'exploreForm.php',
     'exploreFilters' => 'exploreFilters.php',
+    'exploreResults' => 'exploreResults.php',
+    'recordForm' => 'exploreRecord.php',
+
 	'projects' => 'projects.php',
 	'stories' => 'stories.php',
 	'about' => 'about.php',
@@ -45,16 +50,8 @@ $GLOBALS['routes'] = array(
 	'ourPartners' => 'ourPartners.php',
     'contactUs' => 'contactUs.php',
     'advancedSearch' => 'advancedSearch.php',
-    'recordPerson' => 'recordPerson.php',
-    'recordEvent' => 'recordEvent.php',
-    'recordPlace' => 'recordPlace.php',
-    'recordSource' => 'recordSource.php',
     'fullStory' => 'fullStory.php',
-    'fullProject' => 'fullProject.php',
-    'peopleResults' => 'peopleResults.php',
-    'eventResults' => 'eventResults.php',
-    'placeResults' => 'placeResults.php',
-    'sourceResults' => 'sourceResults.php',
+    'project' => 'fullProject.php',
     'timeSub' => 'timeSub.php',
     'enslavedOntology' => 'ontology.php'
 );
@@ -69,7 +66,7 @@ if( substr($currentFile, -1) == '/' ){
 
 $filterToFileMap = $GLOBALS['FILTER_TO_FILE_MAP'];
 
-if( $currentFile == 'peopleResults' && isset($_GET)){
+if( $currentFile == 'exploreResults' && isset($_GET)){
     //check if the get value is real.
 
     if (count($_GET) > 0){
@@ -84,12 +81,22 @@ if( $currentFile == 'peopleResults' && isset($_GET)){
 }
 
 
-// Full person record page check
 $fileArray = explode('/', $currentFile);
-if ($fileArray[0] == 'recordPerson'){
-    $personQ = $fileArray[1];
-    define('QID', $personQ);
+
+if ($fileArray[0] == 'record' && count($fileArray) > 2){
+    define('RECORD_FORM', $fileArray[1]);
+    define('QID', $fileArray[2]);
+    $currentFile = 'recordForm';
+}
+if ($fileArray[0] == 'project'){
+    $projectQ = $fileArray[1];
+    define('QID', $projectQ);
     $currentFile = $fileArray[0];
+}
+if($fileArray[0] == 'explore' && count($fileArray) > 1){
+    if($fileArray[1] == 'sources'){
+        $fileArray[2] = 'source_type';
+    }
 }
 
 $EXPLORE_JS_VARS = '';
@@ -105,6 +112,11 @@ if ($fileArray[0] == 'explore' && count($fileArray) > 2){ //filter
 }elseif ($fileArray[0] == 'explore' && count($fileArray) > 1){ //form
     define('EXPLORE_FORM', $fileArray[1]);
     $currentFile = 'exploreForm';
+    $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';</script>\n";
+}
+elseif ($fileArray[0] == 'search' && count($fileArray) > 1){ //search
+    define('EXPLORE_FORM', $fileArray[1]);
+    $currentFile = 'exploreResults';
     $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';</script>\n";
 }
 define('EXPLORE_JS_VARS', $EXPLORE_JS_VARS);
