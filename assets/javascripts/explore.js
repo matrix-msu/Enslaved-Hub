@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     $('.cards li').click(function(){
         console.log("clicked");
         window.location = $(this).find("a").attr("href");

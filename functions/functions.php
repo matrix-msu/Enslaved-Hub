@@ -370,7 +370,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
  (count(distinct ?people) as ?countpeople)
- (count(distinct ?event) as ?countervent)
+ (count(distinct ?event) as ?countevent)
  (count(distinct ?place) as ?countplace)
  (count(distinct ?source) as ?countsource)
  (group_concat(distinct ?roleLabel; separator = "||") as ?roles)
@@ -409,7 +409,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countervent)
+(count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 (group_concat(distinct ?roleLabel; separator = "||") as ?roles)
@@ -537,19 +537,30 @@ QUERY;
             case 'sources':
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
-SELECT ?person ?personLabel ?name ?sex ?sexLabel ?race ?age ?ageLabel ?status ?statusLabel ?role ?roleLabel ?owner ?ownerLabel ?match ?matchLabel WHERE {
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-    ?person wdt:P3 wd:Q2.
-    OPTIONAL { ?person wdt:P82 ?name. }
-    OPTIONAL { ?person wdt:P17 ?sex. }
-    OPTIONAL { ?person wdt:P37 ?race. }
-    OPTIONAL { ?person wdt:P18 ?age. }
-    OPTIONAL { ?person wdt:P24 ?status. }
-    OPTIONAL { ?person wdt:P39 ?role. }
-    OPTIONAL { ?person wdt:P58 ?owner. }
-    OPTIONAL { ?person wdt:P88 ?match. }
-}
-LIMIT 100
+SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
+
+(count(distinct ?agent) as ?countpeople)
+(count(distinct ?event) as ?countevent)
+(count(distinct ?place) as ?countplace)
+(count(distinct ?source) as ?countsource)
+{
+    ?source wdt:P3 wd:Q16. #entity with provenance
+    ?source wdt:P9 ?sourcetype.
+    ?source wdt:P7 ?project.
+    ?source wdt:P8 ?event.
+    OPTIONAL{?event wdt:P12 ?place}.
+    ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+            ?property  ?object .
+    ?object prov:wasDerivedFrom ?provenance .
+    ?provenance pr:P35 ?source .
+    
+
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+            
+}group by ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
+order by ?sourceLabel
+limit 12
+offset 0               
 QUERY;
 
                 array_push($queryArray, $query);
@@ -769,18 +780,19 @@ QUERY;
                 if($templates[0] == 'Event'){
                     $query = array('query' => "");
                     $query['query'] = <<<QUERY
-SELECT ?event ?eventLabel 
+SELECT DISTINCT ?type (SAMPLE(?event) AS ?event) (SAMPLE(?elabel) AS ?label) 
 (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random) WHERE {
     
     ?event wdt:P3 wd:Q34;
+            rdfs:label ?elabel;
                 wdt:P81 ?type;
             wikibase:statements ?statementcount .
         FILTER (?statementcount >3  ).
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
-GROUP BY ?event ?eventLabel
+GROUP BY ?type 
 ORDER BY ?random
-LIMIT 8                             
+LIMIT 8
 QUERY;
                 }
             
@@ -1486,8 +1498,126 @@ HTML;
                 }
                 break;
             case 'sources':
-                print_r($results);
-                die;
+                //Source name
+                $name = $record['sourceLabel']['value'];
+
+                //Source URL
+                $sourceUrl = $record['source']['value'];
+                $xplode = explode('/', $sourceUrl);
+                $sourceQ = end($xplode); //qid
+
+                //Source Type
+                $type = "Unidentified";
+                if (isset($record['sourcetypeLabel']) && isset($record['sourcetypeLabel']['value'])){
+                    if($record['sourcetypeLabel']['value'] != ''){
+                        $type = $record['sourcetypeLabel']['value'];
+                    }
+                }
+
+                //Source Project 
+                $project = "";
+                if (isset($record['projectLabel']) && isset($record['projectLabel']['value'])){
+                    if($record['projectLabel']['value'] != ''){
+                        $project = $record['projectLabel']['value'];
+                    }
+                }
+                
+
+                //Counts for connections
+                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
+                    $countpeople = $record['countpeople']['value'];
+                } else {
+                    $countpeople = '';
+                }
+                if(isset($record['countevent']) && isset($record['countevent']['value'])){
+                    $countevent = $record['countevent']['value'];
+                } else {
+                    $countevent = '';
+                }
+                if(isset($record['countplace']) && isset($record['countplace']['value'])){
+                    $countplace = $record['countplace']['value'];
+                } else {
+                    $countplace = '';
+                }
+                if(isset($record['countsource']) && isset($record['countsource']['value'])){
+                    $countsource = $record['countsource']['value'];
+                } else {
+                    $countsource = '';
+                }
+
+                //Connection html
+                $connection_lists = Array(
+                    '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
+                    '<h1>'.$countplace.' Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
+                    '<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
+                    '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
+                );
+
+                $connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
+                    '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
+                    '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
+                    '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
+                    '</div></div></div></div>';
+
+
+                // create the html for each template
+                foreach ($templates as $template) {
+                    if ($template == 'gridCard'){
+
+                        $typeHtml = "<p><span>Type: </span>$type</p>";
+
+                        $projectHtml = '';
+                        if ($project != ""){
+                            $projectHtml = "<p><span>Project: </span>$project</p>";
+                        }
+  
+
+                        $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
+                        $source_url = BASE_URL . "record/sources/" . $sourceQ;
+
+                        $card = <<<HTML
+<li>
+    <a href='$source_url'>
+        <div class='container card-image'>
+            <p>$name</p>
+            <img src='$card_icon_url'>
+        </div>
+        <div class="content-wrap">
+            <div class='container cards'>
+                <div class='card-info'>
+                    $typeHtml
+                    $projectHtml
+                </div>
+                
+            </div>
+            $connections
+        </div>
+    </a>
+</li>
+HTML;
+
+                    } elseif ($template == 'tableCard'){
+                        $card = <<<HTML
+<tr class='tr'>
+    <td class='name td-name'>
+        <span>$name</span>
+    </td>
+    <td class='type'>
+        <p><span class='first'>Type: </span>$type</p>
+    </td>
+    <td class='project'>
+        <p><span class='first'>Project: </span>$project</p>
+    </td>
+    <td class='meta'>
+
+    </td>
+</tr>
+HTML;
+                    }
+
+
+                    array_push($cards[$template], $card);
+                }
                 break;
             case 'projects':
                 $fullName = $record['personLabel']['value'];
@@ -1735,7 +1865,7 @@ HTML;
                         $qid = end($uriarr);
                     }
                     else if($template == 'Event'){
-                        $cardTitle = $record['eventLabel']['value'];
+                        $cardTitle = $record['label']['value'];
                         $uri = $record['event']['value'];
                         $uriarr = explode('/', $uri);
                         $qid = end($uriarr);

@@ -59,6 +59,9 @@ function searchResults(preset, limit = 12, offset = 0){
 
     var templates = ['gridCard', 'tableCard'];
 
+    console.log(preset, filters, templates);
+
+
     $.ajax({
         url: BASE_URL + "api/blazegraph",
         type: "GET",
@@ -71,10 +74,11 @@ function searchResults(preset, limit = 12, offset = 0){
             // console.log(data);
             result_array = JSON.parse(data);
             
-            console.log(result_array);
+            console.log('result array', result_array);
 
             var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
+        
 
             searchBarFilter = filter != undefined ? filter : '';
             searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
