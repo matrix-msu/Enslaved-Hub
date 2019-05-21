@@ -1068,6 +1068,7 @@ function detailPersonHtml($statement,$label){
   $html = '';
 
   if($label === "RolesA"){
+    //Multiple roles in the roles array so match them up with the participant
     $lowerlabel = "roles";
     $upperlabel = "ROLES";
     //Array for Roles means there are participants and pQIDs to match
@@ -1108,15 +1109,38 @@ HTML;
 
       $html .= "</div></a></div>";
     }
-
     $html .= '</div>';
+
   }
   else{
     //Default for details without special behavior
-    //Splits the statement(detail) up into multiple parts for multiple details, also trims whitespace off end
-    $statementArr = explode('||', $statement);
-    if (end($statementArr) == '' || end($statementArr) == ' '){
-      array_pop($statementArr);
+
+    //QID given for sources and projects to link to them
+    if($label === "Sources" || $label === "Contributing Projects"){
+
+      $statementArr = explode('||', $statement['label']);
+      if (end($statementArr) == '' || end($statementArr) == ' '){
+        array_pop($statementArr);
+      }
+
+      $qidArr = [];
+      $qidurlArr = explode('||', $statement['qid']);
+      if (end($qidurlArr) == '' || end($qidurlArr) == ' '){
+        array_pop($qidurlArr);
+      }
+      //Loop through urls and get the qids from the end
+      foreach($qidurlArr as $qidurl){
+        $urlArr = explode('/', $qidurl);
+        $qid = end($urlArr);
+        array_push($qidArr, $qid);
+      }
+    }
+    else{
+      //Splits the statement(detail) up into multiple parts for multiple details, also trims whitespace off end
+      $statementArr = explode('||', $statement);
+      if (end($statementArr) == '' || end($statementArr) == ' '){
+        array_pop($statementArr);
+      }
     }
   
     $html .= <<<HTML
@@ -1130,11 +1154,21 @@ HTML;
         if($label === "Geoname Identifier"){
           $html .= '<a href="http://www.geonames.org/' . $statementArr[0] . '/">';
         }
+        else if($label === "Sources"){
+          $html .= '<a href="' . $baseurl . 'record/source/' . $qidArr[$x] . '">';
+        }
+        else if($label === "Contributing Projects"){
+          $html .= '<a href="' . $baseurl . 'project/' . $qidArr[$x] . '">';
+        }
         else{
           $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
         }
-        $html .= "<div>" . $statementArr[$x];
-        $html .= '<div class="detail-menu"> <h1>Metadata</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>';
+        $detailname = $statementArr[$x];
+        $html .= "<div>" . $detailname;
+        if(array_key_exists($detailname,controlledVocabulary)){
+          $detailinfo = ucfirst(controlledVocabulary[$detailname]);
+          $html .= "<div class='detail-menu'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
+        }
         $html .= "</div></a>";
   
         if ($x != (count($statementArr) - 1)){
@@ -1221,12 +1255,13 @@ SELECT ?name ?desc ?sextype  ?race ?match
 (group_concat(distinct ?roleslabel; separator = "||") as ?roles)
 (group_concat(distinct ?statuslabel; separator = "||") as ?status)
 (group_concat(distinct ?ecvo; separator = "||") as ?ecvo)
-
- WHERE
+(group_concat(distinct ?occupationlabel; separator = "||") as ?occupation)
+(group_concat(distinct ?relationslabel; separator = "||") as ?relationships)
+  WHERE
 {
- VALUES ?agent {wd:$qid} #Q number needs to be changed for every event. 
+  VALUES ?agent {wd:$qid} #Q number needs to be changed for every event. 
   ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
-  		 ?property  ?object .
+        ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:P35 ?source .
   ?source rdfs:label ?refName;
@@ -1239,23 +1274,19 @@ SELECT ?name ?desc ?sextype  ?race ?match
   OPTIONAL{?agent wdt:P37 ?race}.
   
   OPTIONAL {?agent wdt:P24 ?status.
-           ?status rdfs:label ?statuslabel}.
+            ?status rdfs:label ?statuslabel}.
   OPTIONAL {?agent wdt:P39 ?roles.
-           ?roles rdfs:label ?roleslabel}.
+            ?roles rdfs:label ?roleslabel}.
   OPTIONAL {?agent wdt:P86 ?ethnodescriptor.
-           ?ethnodescriptor rdfs:label ?ecvo}.
+            ?ethnodescriptor rdfs:label ?ecvo}.
   OPTIONAL {?agent wdt:P39 ?roles.
-           ?roles rdfs:label ?roleslabel}.
+            ?roles rdfs:label ?roleslabel}.
+  OPTIONAL {?agent wdt:P21 ?occupation.
+            ?occupation rdfs:label ?occupationlabel}.
+  OPTIONAL {?agent wdt:P25 ?relations.
+            ?relations rdfs:label ?relationslabel}.
   OPTIONAL {?agent wdt:P88 ?match}.
-  
-  # OPTIONAL{
-   # ?event p:P38 ?statement .            
-	#?statement ps:P38 ?roles .
-  	#?roles rdfs:label ?rolename.
-	#?statement pq:P39 ?participant.
-  	#?participant rdfs:label ?participantname}.
-        
-	
+    
   
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }GROUP BY ?name ?desc ?sextype  ?race ?match    
@@ -1271,7 +1302,7 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
 
   WHERE
 {
-  VALUES ?place {wd:Q28} #Q number needs to be changed for every place. 
+  VALUES ?place {wd:$qid} #Q number needs to be changed for every place. 
   ?place wdt:P3 wd:Q50;
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
@@ -1438,13 +1469,25 @@ QUERY;
     }
 
     //Source
-    if (isset($record['sources']) && isset($record['sources']['value']) ){
-      $recordVars['Sources'] = $record['sources']['value'];
+    if (isset($record['sourceLabel']) && isset($record['sourceLabel']['value']) ){
+      if(isset($record['source']['value'])){
+        $sourceArr = ['label' => $record['sourceLabel']['value'], 'qid' => $record['source']['value']];
+        $recordVars['Sources'] = $sourceArr;
+      }
+      else{
+        $recordVars['Sources'] = $record['sourceLabel']['value'];
+      }
     }
 
     //Project
-    if (isset($record['researchprojects']) && isset($record['researchprojects']['value']) ){
-      $recordVars['Contributing Projects'] = $record['researchprojects']['value'];
+    if (isset($record['projectlabel']) && isset($record['projectlabel']['value']) ){
+      if(isset($record['project']['value'])){
+        $projectArr = ['label' => $record['projectlabel']['value'], 'qid' => $record['project']['value']];
+        $recordVars['Contributing Projects'] = $projectArr;
+      }
+      else{
+        $recordVars['Contributing Projects'] = $record['projectlabel']['value'];
+      }
     }
 
     //Roles
