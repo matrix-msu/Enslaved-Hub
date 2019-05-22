@@ -840,6 +840,9 @@ QUERY;
         if ($first){
             $resultsArray = $result;
             $first = false;
+            foreach($result as $count){
+                $record_total++;
+            }
         } else {
             if($preset == 'people' || $preset == 'places' || $preset == 'events' || $preset == 'sources' || $preset == 'singleProject'){
                 //Get the count of all the results
