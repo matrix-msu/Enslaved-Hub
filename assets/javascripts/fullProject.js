@@ -1,14 +1,13 @@
 //Global vars used on whole page
-var total_length = 12;
+var total_length = 0;
 var card_offset = 0;
-var card_limit = 5;
+var card_limit = 12;
 var presets = {};
 var filters = {};
 var filter = "";
 var templates = ['gridCard', 'tableCard'];
 var view = "gridCard";
 var sort = "ASC";
-
 
 // Get params from url and set to filters object
 if(document.location.toString().indexOf('?') !== -1) {
@@ -181,6 +180,14 @@ $(document).ready(function() {
     if (pageURL.includes("search")){
         $(".show-filter").trigger("click");
     }
+
+    // Showing results for (select People, Event, Place, or Source)
+    $(".filter-menu ul.catmenu li").each(function(){
+        if( $(this).find("p").html() === "People"){
+            $(this).find("input").prop('checked', true);
+            $(".show-filter").trigger('click');
+        }
+    });
 });
 
 /**************************************************************************************************************/
@@ -229,6 +236,7 @@ $(document).ready(function(){
         data: {preset: 'projectAssoc', templates: ['projectAssoc'], qid: QID},
         success: function (data) {
             data = JSON.parse(data);
+            // console.log(data);
             var str = "";
             data['projectAssoc'].forEach(function (e) {
                 str += e;
@@ -291,6 +299,7 @@ function getProjectData(filters, offset, limit)
                     $("span.grid-view").trigger("click");
                     tableDisplay(data['tableCard']);
                 }
+
                 // set pagination
                 setPagination(total_length, limit, offset);
            }
