@@ -112,11 +112,17 @@ function appendCards(){
         $(card).appendTo("ul.row");
     });
 
-    $("tbody").empty(); //empty grid before appending more
-    result_array['tableCard'].forEach(function (card) {
-        $(card).appendTo("tbody");
-    });
+    $("thead").empty(); //empty headers before adding them 
+    var headers = result_array['tableCard']['headers'];
+    $(headers).appendTo("thead");
 
+    $("tbody").empty(); //empty grid before appending more
+    for (var key in result_array['tableCard']){
+        if (key != 'headers'){
+            var card = result_array['tableCard'][key];
+            $(card).appendTo("tbody");
+        }
+    }
 }
 
 //Generate cards
