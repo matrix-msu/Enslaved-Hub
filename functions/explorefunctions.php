@@ -1095,7 +1095,8 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($roles); $i++){
-      $pqid = end(explode('/', $pq[$i]));
+      $explode = explode('/', $pq[$i]);
+      $pqid = end($explode);
       $pqurl = $baseurl . 'record/person/' . $pqid;
       $matched = $roles[$i] . ' - ' . $participants[$i];
 
