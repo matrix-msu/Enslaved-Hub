@@ -321,8 +321,17 @@ function gridDisplay(data)
 */
 function tableDisplay(data)
 {
+    // $("tbody").empty(); //empty grid before appending more
+    // data.forEach(function (card) {
+    //     $(card).appendTo("tbody");
+    // });
+
+
     $("tbody").empty(); //empty grid before appending more
-    data.forEach(function (card) {
-        $(card).appendTo("tbody");
-    });
+    for (var key in data){
+        if (key != 'headers'){
+            var card = data[key];
+            $(card).appendTo("tbody");
+        }
+    }
 }
