@@ -907,6 +907,9 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
     // use same people display for people in single project
     if($preset == "singleProject") $preset = "people";
 
+
+    $first = true;  // need to know if first to add table headers
+
     foreach ($results as $index => $record) {  ///foreach result
         switch ($preset){
             case 'people':
@@ -1079,6 +1082,24 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 HTML;
 
                     } elseif ($template == 'tableCard'){
+                        if ($first) {
+                            $first = false;
+
+                            $headers = <<<HTML
+<tr>
+    <th class="name">NAME</th>
+    <th class="gender">GENDER</th>
+    <th class="age">AGE</th>
+    <th class="status">STATUS</th>
+    <th class="origin">ORIGIN</th>
+    <th class="location">LOCATION</th>
+    <th class="dateRange">DATE RANGE</th>
+</tr>
+HTML;
+                            $cards['tableCard']['headers'] = $headers;
+                        }
+
+
                         $card = <<<HTML
 <tr class='tr'>
     <td class='name td-name'>
@@ -1277,6 +1298,25 @@ HTML;
 HTML;
 
                     } elseif ($template == 'tableCard'){
+                        if ($first) {
+                            //todo create the correct place headers
+                            $first = false;
+
+                            $headers = <<<HTML
+<tr>
+    <th class="name">NAME</th>
+    <th class="gender">GENDER</th>
+    <th class="age">AGE</th>
+    <th class="status">STATUS</th>
+    <th class="origin">ORIGIN</th>
+    <th class="location">LOCATION</th>
+    <th class="dateRange">DATE RANGE</th>
+</tr>
+HTML;
+                            $cards['tableCard']['headers'] = $headers;
+                        }
+
+
                         $card = <<<HTML
 <tr class='tr'>
     <td class='name td-name'>
@@ -1474,6 +1514,24 @@ HTML;
 HTML;
 
                     } elseif ($template == 'tableCard'){
+                        if ($first) {
+                            //todo: create the correct event headers
+                            $first = false;
+
+                            $headers = <<<HTML
+<tr>
+    <th class="name">NAME</th>
+    <th class="gender">GENDER</th>
+    <th class="age">AGE</th>
+    <th class="status">STATUS</th>
+    <th class="origin">ORIGIN</th>
+    <th class="location">LOCATION</th>
+    <th class="dateRange">DATE RANGE</th>
+</tr>
+HTML;
+                            $cards['tableCard']['headers'] = $headers;
+                        }
+
                         $card = <<<HTML
 <tr class='tr'>
     <td class='name td-name'>
@@ -1602,6 +1660,19 @@ HTML;
 HTML;
 
                     } elseif ($template == 'tableCard'){
+                        if ($first) {
+                            $first = false;
+
+                            $headers = <<<HTML
+<tr>
+    <th class="name">NAME</th>
+    <th class="type">TYPE</th>
+    <th class="project">PROJECT</th>
+</tr>
+HTML;
+                            $cards['tableCard']['headers'] = $headers;
+                        }
+
                         $card = <<<HTML
 <tr class='tr'>
     <td class='name td-name'>
