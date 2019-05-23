@@ -611,19 +611,18 @@ QUERY;
                 $qid = $_GET['qid'];
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
-SELECT ?project ?projectLabel  (COUNT(*) AS ?agentcount)
+SELECT DISTINCT ?project ?projectLabel (count(distinct ?agent) as ?agentcount)
     WHERE {
-        ?project wdt:P3 wd:Q264.         #find projects
-        ?item wdt:P3/wdt:P2 wd:Q2;        #find agents
-            p:P3  ?object .
+        VALUES ?project {wd:Q25}
+        ?agent wdt:P3/wdt:P2 wd:Q2;        #find agents
+                p:P3  ?object .
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?reference .
-        ?reference wdt:P7 ?project;
-                    wdt:P7 wd:$qid
+        ?reference wdt:P7 ?project
+                    
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
     GROUP BY ?project ?projectLabel
-    ORDER BY ?count
 QUERY;
                 array_push($queryArray, $query);
                 $query = array('query' => "");
@@ -842,9 +841,9 @@ QUERY;
         if ($first){
             $resultsArray = $result;
             $first = false;
-            foreach($result as $count){
-                $record_total++;
-            }
+            // foreach($result as $count){
+            //     $record_total++;
+            // }
         } else {
             if($preset == 'people' || $preset == 'places' || $preset == 'events' || $preset == 'sources' || $preset == 'singleProject'){
                 //Get the count of all the results
