@@ -406,10 +406,16 @@ $(document).ready(function() {
         $(this).next().toggleClass("show");
     });
 
+
+    // click filters
+    $(document).on("change", "input[type=checkbox]", function() {
+        $(this).parent().parent().parent();
+        $(this).parent().find('p').text();
+    })
+
     //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
     if (pageURL.includes("search")){
         $(".show-filter").trigger("click");
     }
-
 });
