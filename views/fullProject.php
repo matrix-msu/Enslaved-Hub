@@ -105,7 +105,7 @@
         <ul>
             <h3>Show Results For</h3>
             <ul class="catmenu" id="submenu">
-                <li>
+                <li id="People">
                     <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg" alt="person icon">
@@ -113,7 +113,7 @@
                         <span></span>
                     </label>
                 </li>
-                <li>
+                <li id="Places">
                     <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg" alt="loction icon">
@@ -121,7 +121,7 @@
                         <span></span>
                     </label>
                 </li>
-                <li>
+                <li id="Events">
                     <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg" alt="event icon">
@@ -129,7 +129,7 @@
                         <span></span>
                     </label>
                 </li>
-                <li>
+                <li id="Sources">
                     <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg" alt="source icon">
@@ -137,7 +137,7 @@
                         <span></span>
                     </label>
                 </li>
-                <li>
+                <li id="Projects">
                     <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
