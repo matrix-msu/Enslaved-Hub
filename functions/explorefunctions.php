@@ -10,11 +10,15 @@ function callAPI($url,$limit,$offset){
 
 //get all agents numbers
 function queryAllAgentsCounter(){
-  $query='SELECT  (count(distinct ?agent) as ?count)
-  WHERE {?agent wdt:P3/wdt:P2 wd:Q2;
- 		 wdt:P39 ?role;
-  FILTER(?role != wd:Q536). #agent cannot be a researcher
-  }';
+  $query='SELECT  (COUNT(distinct ?agent) AS ?count)
+    WHERE {
+        ?agent wdt:P3/wdt:P2 wd:Q2;        #find agents{
+        MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    }
+
+    ORDER BY ?count
+    ';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -1102,13 +1106,12 @@ HTML;
 
       $html .= <<<HTML
 <div class="detail-bottom">
-  <a href="$pqurl">
-    <div>$matched
+    <div>$roles[$i]
 HTML;
 
       $html .= '<div class="detail-menu"> <h1>Metadata</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>';
 
-      $html .= "</div></a></div>";
+      $html .= "</div> - <a href='$pqurl'>$participants[$i]</a></div>";
     }
     $html .= '</div>';
 
@@ -1143,16 +1146,26 @@ HTML;
         array_pop($statementArr);
       }
     }
-  
+
     $html .= <<<HTML
   <div class="detail $lowerlabel">
     <h3>$upperlabel</h3>
     <div class="detail-bottom">
 HTML;
-  
+
     //For each detail to add create it in seperate divs with a detail menu in each
     for ($x = 0; $x <= (count($statementArr) - 1); $x++){
-        if($label === "Geoname Identifier"){
+        if($label === "Name"){
+          $detailname = $statementArr[$x];
+          $html .= "<div>" . $detailname;
+          if(array_key_exists($detailname,controlledVocabulary)){
+            $detailinfo = ucfirst(controlledVocabulary[$detailname]);
+            $html .= "<div class='detail-menu'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
+          }
+          $html .= "</div>";
+          continue;
+        }
+        else if($label === "Geoname Identifier"){
           $html .= '<a href="http://www.geonames.org/' . $statementArr[0] . '/">';
         }
         else if($label === "Sources"){
@@ -1160,6 +1173,20 @@ HTML;
         }
         else if($label === "Contributing Projects"){
           $html .= '<a href="' . $baseurl . 'project/' . $qidArr[$x] . '">';
+        }
+        else if($label === "Location"){
+          $locationQ = '';
+          $locationName = $statementArr[$x];
+
+          if (null !== places[$locationName]){
+            $locationQ = places[$locationName];
+          }
+
+          if ($locationQ != ''){
+            $html .= '<a href="' . $baseurl . 'record/place/' . $locationQ . '">';
+          }
+        }
+        else if ($label === 'Roles'){
         }
         else{
           $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
@@ -1171,12 +1198,12 @@ HTML;
           $html .= "<div class='detail-menu'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
         }
         $html .= "</div></a>";
-  
+
         if ($x != (count($statementArr) - 1)){
             $html.= "<h4> | </h4>";
         }
     }
-  
+
     $html .= '</div></div>';
   }
 
@@ -1250,17 +1277,28 @@ function getPersonRecordHtml(){
     $query = [];
     if($type === "person"){
       $query['query'] = <<<QUERY
-SELECT ?name ?desc ?sextype  ?race ?match
+SELECT ?name ?desc ?sextype  ?race
 (group_concat(distinct ?refName; separator = "||") as ?sources)
 (group_concat(distinct ?pname; separator = "||") as ?researchprojects)
 (group_concat(distinct ?roleslabel; separator = "||") as ?roles)
+(group_concat(distinct ?eventrole; separator = "||") as ?eventRole)
+(group_concat(distinct ?eventLabel; separator = "||") as ?eventRoleLabel)
 (group_concat(distinct ?statuslabel; separator = "||") as ?status)
+(group_concat(distinct ?statusevent; separator = "||") as ?statusevent)
+(group_concat(distinct ?eventstatusLabel; separator = "||") as ?eventstatusLabel)
+
 (group_concat(distinct ?ecvo; separator = "||") as ?ecvo)
 (group_concat(distinct ?occupationlabel; separator = "||") as ?occupation)
 (group_concat(distinct ?relationslabel; separator = "||") as ?relationships)
+(group_concat(distinct ?relationname; separator = "||") as ?qrelationname)
+(group_concat(distinct ?relationagentlabel; separator = "||") as ?relationagentlabel)
+(group_concat(distinct ?match; separator = "||") as ?match)
+(group_concat(distinct ?matchlabel; separator = "||") as ?matchlabel)
+
+
   WHERE
 {
-  VALUES ?agent {wd:$qid} #Q number needs to be changed for every event. 
+  VALUES ?agent {wd:$qid} #Q number needs to be changed for every event.
   ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
@@ -1270,32 +1308,49 @@ SELECT ?name ?desc ?sextype  ?race ?match
   ?project rdfs:label ?pname.
   ?agent schema:description ?desc.
   ?agent wdt:P82 ?name.
-  OPTIONAL{?agent wdt:P17 ?sex. 
+  OPTIONAL{?agent wdt:P17 ?sex.
           ?sex rdfs:label ?sextype}.
   OPTIONAL{?agent wdt:P37 ?race}.
-  
+
   OPTIONAL {?agent wdt:P24 ?status.
             ?status rdfs:label ?statuslabel}.
-  OPTIONAL {?agent wdt:P39 ?roles.
-            ?roles rdfs:label ?roleslabel}.
+
   OPTIONAL {?agent wdt:P86 ?ethnodescriptor.
             ?ethnodescriptor rdfs:label ?ecvo}.
-  OPTIONAL {?agent wdt:P39 ?roles.
-            ?roles rdfs:label ?roleslabel}.
   OPTIONAL {?agent wdt:P21 ?occupation.
             ?occupation rdfs:label ?occupationlabel}.
-  OPTIONAL {?agent wdt:P25 ?relations.
-            ?relations rdfs:label ?relationslabel}.
   OPTIONAL {?agent wdt:P88 ?match}.
-    
-  
+  OPTIONAL {?agent p:P39 ?statement.
+            ?statement ps:P39 ?roles.
+            ?roles rdfs:label ?roleslabel.
+            ?statement pq:P98 ?eventrole.
+            ?eventrole rdfs:label ?eventLabel}.
+  OPTIONAL {?agent p:P24 ?statstatus.
+            ?statstatus ps:P24 ?status.
+            ?status rdfs:label ?statusLabel.
+            ?statstatus pq:P99 ?statusevent.
+            ?statusevent rdfs:label ?eventstatusLabel}.
+
+  OPTIONAL{
+    ?agent p:P25 ?staterel .
+  ?staterel ps:P25 ?relations .
+    ?relations rdfs:label ?relationslabel.
+  ?staterel pq:P104 ?relationname.
+    ?relationname rdfs:label ?relationagentlabel}.
+  OPTIONAL {?agent wdt:P88 ?match.
+            ?match rdfs:label ?matchlabel}.
+
+
+
+
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?sextype  ?race ?match    
+}GROUP BY ?name ?desc ?sextype  ?race
 QUERY;
     }
     else if($type === "place"){
         $query['query'] = <<<QUERY
-SELECT ?name ?desc ?located  ?type ?geonames ?code 
+SELECT ?name ?desc ?located  ?type ?geonames ?code
 (group_concat(distinct ?refName; separator = "||") as ?sourceLabel)
 (group_concat(distinct ?pname; separator = "||") as ?projectlabel)
 (group_concat(distinct ?source; separator = "||") as ?source)
@@ -1303,7 +1358,7 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
 
   WHERE
 {
-  VALUES ?place {wd:$qid} #Q number needs to be changed for every place. 
+  VALUES ?place {wd:$qid} #Q number needs to be changed for every place.
   ?place wdt:P3 wd:Q50;
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
@@ -1315,18 +1370,18 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
   ?place rdfs:label ?name.
   ?place wdt:P80 ?placetype.
   ?placetype rdfs:label ?type.
-  OPTIONAL{?place wdt:P10 ?locatedIn. 
+  OPTIONAL{?place wdt:P10 ?locatedIn.
           ?locatedIn rdfs:label ?located}.
   OPTIONAL{ ?place wdt:P71 ?geonames.}
     OPTIONAL{ ?place wdt:P96 ?code.}
-  
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?located  ?type ?geonames ?code 
+}GROUP BY ?name ?desc ?located  ?type ?geonames ?code
 QUERY;
     }
     else if($type === "event"){
       $query['query'] = <<<QUERY
-SELECT ?name ?desc ?located  ?type ?date ?endDate 
+SELECT ?name ?desc ?located  ?type ?date ?endDate
 (group_concat(distinct ?refName; separator = "||") as ?sources)
 (group_concat(distinct ?pname; separator = "||") as ?researchprojects)
 (group_concat(distinct ?rolename; separator = "||") as ?roles)
@@ -1335,7 +1390,7 @@ SELECT ?name ?desc ?located  ?type ?date ?endDate
 
   WHERE
 {
-  VALUES ?event {wd:$qid} #Q number needs to be changed for every event. 
+  VALUES ?event {wd:$qid} #Q number needs to be changed for every event.
   ?event wdt:P3 wd:Q34;
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
@@ -1347,27 +1402,48 @@ SELECT ?name ?desc ?located  ?type ?date ?endDate
   ?event rdfs:label ?name.
   ?event wdt:P81 ?eventtype.
   ?eventtype rdfs:label ?type.
-  OPTIONAL{?event wdt:P12 ?place. 
+  OPTIONAL{?event wdt:P12 ?place.
           ?place rdfs:label ?located}.
   OPTIONAL{ ?event wdt:P13 ?datetime.
           BIND(xsd:date(?datetime) AS ?date)}
     OPTIONAL{ ?event wdt:P14 ?endDatetime.
             BIND(xsd:date(?endDatetime) AS ?endDate)}
-    
+
     OPTIONAL{
-    ?event p:P38 ?statement .            
+    ?event p:P38 ?statement .
   ?statement ps:P38 ?roles .
     ?roles rdfs:label ?rolename.
   ?statement pq:P39 ?participant.
     ?participant rdfs:label ?participantname}.
-        
-  
-  
+
+
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }GROUP BY ?name ?desc ?located  ?type ?date ?endDate
 QUERY;
     }
-    
+    else if ($type == 'source'){
+        $query['query'] = <<<QUERY
+SELECT ?name ?desc ?project ?pname ?type ?secondarysource
+
+ WHERE
+{
+ VALUES ?source {wd:Q267} #Q number needs to be changed for every source.
+  ?source wdt:P3 wd:Q16;
+         wdt:P7 ?project.
+  ?project rdfs:label ?pname.
+  ?source schema:description ?desc.
+  ?source rdfs:label ?name.
+  ?source wdt:P9 ?sourcetype.
+  ?sourcetype rdfs:label ?type.
+  OPTIONAL{?source wdt:P84 ?secondarysource}.
+
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}GROUP BY ?name ?desc ?project ?pname ?type ?secondarysource
+QUERY;
+    }
+
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
@@ -1382,8 +1458,6 @@ QUERY;
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
     $record = $result[0];
-
-
 
     //Get variables from query
     $recordVars = [];
@@ -1423,7 +1497,7 @@ QUERY;
         $dateRange = $endYear;
     }
     */
-    
+
     //Sex
     if (isset($record['sextype']) && isset($record['sextype']['value']) ){
       $recordVars['Sex'] = $record['sextype']['value'];
@@ -1482,14 +1556,23 @@ QUERY;
 
     //Project
     if (isset($record['projectlabel']) && isset($record['projectlabel']['value']) ){
-      if(isset($record['project']['value'])){
-        $projectArr = ['label' => $record['projectlabel']['value'], 'qid' => $record['project']['value']];
-        $recordVars['Contributing Projects'] = $projectArr;
-      }
-      else{
-        $recordVars['Contributing Projects'] = $record['projectlabel']['value'];
-      }
+        if(isset($record['project']['value'])){
+            $projectArr = ['label' => $record['projectlabel']['value'], 'qid' => $record['project']['value']];
+            $recordVars['Contributing Projects'] = $projectArr;
+        }
+        else{
+            $recordVars['Contributing Projects'] = $record['projectlabel']['value'];
+        }
+    } else if (isset($record['project']) && isset($record['project']['value']) ){     // project for source page
+        $recordVars['Projects'] = $record['pname']['value'];
+        // $recordVars['projectUrl'] = $record['project']['value']; //todo make this work
     }
+
+    //secondarysource
+    // if (isset($record['secondarysource']) && isset($record['secondarysource']['value']) ){
+    //   $recordVars['Secondary Source'] = $record['secondarysource']['value'];
+    // }
+
 
     //Roles
     //Gets the roles, participants, and pqID if they exist and matches them together
@@ -1548,6 +1631,7 @@ HTML;
     // $html .= detailPersonHtml($code, "Code");
     // $html .= detailPersonHtml($sources, "Sources");
     // $html .= detailPersonHtml($projects, "Contributing Project");
+    // print_r($recordVars);die;
     foreach($recordVars as $key => $value){
       $html .= detailPersonHtml($value, $key);
     }

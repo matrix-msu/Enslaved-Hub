@@ -493,7 +493,7 @@ span.align-right.show {
             display: -webkit-flex;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
             list-style-type: none;
             margin: 32px 0 0 0;
             padding: 0;
@@ -508,6 +508,8 @@ span.align-right.show {
                 box-shadow: 0 22px 55px 0 rgba(0,0,0,0.03);
                 cursor: pointer;
                 transition: .3s;
+                margin-left: 3px;
+                margin-right: 3px;
 
                 a{
                     color: inherit;
