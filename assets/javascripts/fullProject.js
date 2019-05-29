@@ -4,7 +4,7 @@ var card_offset = 0;
 var card_limit = 12;
 var presets = {};
 var filters = {};
-var filter = "";
+var filter = false;
 var templates = ['gridCard', 'tableCard'];
 var view = "gridCard";
 var sort = "ASC";
@@ -31,7 +31,8 @@ $(document).ready(function() {
         $('span.results-per-page #sortmenu').removeClass('show');
         $('span.sort-by #sortmenu').removeClass('show');
         $('span.sort-by').find("img:first").removeClass('show');
-        if (window.innerWidth < 820) {
+        // close filter on small screen
+        if (window.innerWidth < 820 && filter) {
             $(".show-filter").trigger('click');
         }
     });
@@ -106,7 +107,7 @@ $(document).ready(function() {
         e.stopPropagation();
         card_limit = $(this).find('span:first').html(); // get mew value
         card_offset = 0; //reset offset to 0
-        getProjectData(filters, card_offset, card_limit);
+        getProjectData("People", filters, card_offset, card_limit);
         $('span.results-per-page > span').html(card_limit);
         $(document).trigger('click');
     });
@@ -115,14 +116,10 @@ $(document).ready(function() {
     $('#pagination .current-page').change(function(){
         var val = $('#pagination .current-page').val();
         //Call getProjectData normally except calculate new offset
-        getProjectData(filters, (val - 1) * card_limit, card_limit);
+        getProjectData("People", filters, (val - 1) * card_limit, card_limit);
     });
-});
-/**************************************************************************************************************/
-// FILTER (Not sure how this works yet)
-$(document).ready(function() {
+
     // toggle show/hide filter menu
-    var filter = false;
     var tableWidth = 0;
     $(".show-filter").click(function(e){
         e.stopPropagation();
@@ -175,19 +172,11 @@ $(document).ready(function() {
         $(this).next().toggleClass("show");
     });
     
-    //Trigger filter to show on page load
-    var pageURL = $(location).attr("href");
-    if (pageURL.includes("search")){
+    //Trigger filter to show on page load (unless on small device)
+    if (window.innerWidth > 820){
         $(".show-filter").trigger("click");
     }
 
-    // Showing results for (select People, Event, Place, or Source)
-    $(".filter-menu ul.catmenu li").each(function(){
-        if( $(this).find("p").html() === "People"){
-            $(this).find("input").prop('checked', true);
-            $(".show-filter").trigger('click');
-        }
-    });
 });
 
 /**************************************************************************************************************/
@@ -246,7 +235,7 @@ $(document).ready(function(){
     });
 
     // Get data
-    getProjectData(filters, card_offset, card_limit);
+    getProjectData("People", filters, card_offset, card_limit);
 });
 
 /* 
@@ -254,8 +243,12 @@ $(document).ready(function(){
     Replace blazegraph-records class innerHTML content with cards returned
     Replace search-result-table class innerHTML content with table returned
 */
-function getProjectData(filters, offset, limit)
-{
+function getProjectData(scheme, filters, offset, limit)
+{ 
+    // Hightlight Select category in filter
+    $(".filter-menu ul.catmenu li#"+scheme).find("input").prop("checked", true);
+
+
     $.ajax({
         url: BASE_URL + "api/blazegraph",
         type: "GET",
@@ -322,7 +315,10 @@ function gridDisplay(data)
 function tableDisplay(data)
 {
     $("tbody").empty(); //empty grid before appending more
-    data.forEach(function (card) {
-        $(card).appendTo("tbody");
-    });
+    for (var key in data){
+        if (key != 'headers'){
+            var card = data[key];
+            $(card).appendTo("tbody");
+        }
+    }
 }
