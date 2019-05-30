@@ -1,6 +1,5 @@
 <?php
 const countrycode=[
-
 "AF" => "Afghanistan",
 "AX" => "Åland Islands",
 "AL" => "Albania",
