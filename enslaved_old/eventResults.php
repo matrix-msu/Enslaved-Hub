@@ -8,7 +8,7 @@
         </div>
         <div class="heading-search">
             <form class="search-form">
-                <input class="search-field main-search" type="text" name="searchbar" placeholder="Search Across 6,000 Voyage Results"/>
+                <input class="search-field main-search" type="text" name="searchbar"/>
                 <div class="search-icon"></div>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>

@@ -31,7 +31,7 @@
             font-size: 14px;
             position: relative;
             overflow: hidden;
-        
+
             &:focus{
                 outline: none;
             }
@@ -254,7 +254,7 @@
                 font-size: 12px;
                 padding: 0 10px;
                 cursor: pointer;
-                
+
                 &:first-child{
                     padding-left: 0;
                 }
@@ -314,10 +314,10 @@
                 margin-bottom: 10px;
                 //transition: all .3s ease;
             }
-            
+
             .detail-bottom{
-                
-                div{
+
+                div, a{
                     font-size: 18px;
                     color: $base-dark;
                     line-height: 26px;
@@ -431,7 +431,7 @@
 
 @media screen and (max-width: 400px) {
     .detail-section{
-    
+
         .detailwrap{
             a{
                 width: 100%;
@@ -824,7 +824,7 @@
             overflow-x: auto;
             overflow-y: hidden;
             position: relative;
-            
+
             .info-select {
                 bottom: 0;
                 left: 80px;
@@ -842,7 +842,7 @@
 
 @media screen and (max-width: 660px){
     .jump-buttons{
-        
+
         .jumpwrap{
             .jump-button:first-child{
                 margin-right: 40px;
@@ -855,7 +855,7 @@
 }
 @media screen and (max-width: 460px){
     .jump-buttons{
-        
+
         .jumpwrap{
             .jump-button{
                 width: 100%;

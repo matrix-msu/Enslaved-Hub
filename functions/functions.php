@@ -68,7 +68,7 @@ function blazegraph()
             case 'singleProject':
                 // QID is mandatory
                 if(!isset($_GET["qid"]) || empty($_GET["qid"])) return false;
-                
+
                 $Q_ID = $_GET["qid"];
                 $Q_limit = 10;
                 $Q_offset = 0;
@@ -79,9 +79,9 @@ function blazegraph()
 
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent 
+SELECT DISTINCT ?agent
 (group_concat(distinct ?startyear; separator = "||") as ?startyear) #daterange
-(group_concat(distinct ?endyear; separator = "||") as ?endyear) 
+(group_concat(distinct ?endyear; separator = "||") as ?endyear)
 
 (group_concat(distinct ?name; separator = "||") as ?name) #name
 (group_concat(distinct ?placelab; separator = "||") as ?place) #place
@@ -90,7 +90,7 @@ SELECT DISTINCT ?agent
 
 
 (count(distinct ?relations) as ?countpeople)
-(count(distinct ?event) as ?countervent)
+(count(distinct ?event) as ?counterevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?reference) as ?countsource)
 WHERE {
@@ -104,19 +104,19 @@ WHERE {
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:P35 ?reference .
   ?reference wdt:P7 wd:$Q_ID #include here the Q number of the project
-             
-  
+
+
   MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-  
-  OPTIONAL { ?agent wdt:P24 ?status. 
+
+  OPTIONAL { ?agent wdt:P24 ?status.
             ?status rdfs:label ?statuslab}
-  
-  OPTIONAL { ?agent wdt:P17 ?sex. 
+
+  OPTIONAL { ?agent wdt:P17 ?sex.
             ?sex rdfs:label ?sexlab}
 
   OPTIONAL { ?agent wdt:P25 ?relations}.
   OPTIONAL { ?agent wdt:P88 ?relations}.
-  
+
   OPTIONAL{ ?reference wdt:P8 ?event.
             ?event  wdt:P13 ?startdate.
            BIND(str(YEAR(?startdate)) AS ?startyear).
@@ -124,11 +124,11 @@ WHERE {
            BIND(str(YEAR(?enddate)) AS ?endyear)}.
            OPTIONAL {?event wdt:P12 ?place.
                     ?place rdfs:label ?placelab}
-           
+
           }.
 
 
-} group by ?agent 
+} group by ?agent
 order by ?agent
 limit $Q_limit
 offset $Q_offset
@@ -163,17 +163,17 @@ WHERE {
 
     OPTIONAL{?agent  wdt:P39 ?role}. #optional role
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-    
-    OPTIONAL { ?agent wdt:P24 ?status. 
+
+    OPTIONAL { ?agent wdt:P24 ?status.
             ?status rdfs:label ?statuslab}
-    
-    OPTIONAL { ?agent wdt:P17 ?sex. 
+
+    OPTIONAL { ?agent wdt:P17 ?sex.
             ?sex rdfs:label ?sexlab}
 
     OPTIONAL { ?agent wdt:P88 ?match}.
-    
+
     ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name. 
+    ?statement ps:P82 ?name.
     OPTIONAL{ ?statement pq:P30 ?event.
             ?event  wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
@@ -181,7 +181,7 @@ WHERE {
         BIND(str(YEAR(?enddate)) AS ?endyear)}.
             OPTIONAL {?event wdt:P12 ?place.
                     ?place rdfs:label ?placelab}
-            
+
             }.
 
 
@@ -227,7 +227,7 @@ QUERY;
                 }
 
                 $query = array('query' => "");
-                
+
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent ?event ?startyear ?endyear
 (count(distinct ?people) as ?countpeople)
@@ -262,16 +262,16 @@ WHERE {
 
     $genderQuery
 
-    OPTIONAL { ?agent wdt:P24 ?status. 
+    OPTIONAL { ?agent wdt:P24 ?status.
             ?status rdfs:label ?statuslab}
-    
-    OPTIONAL { ?agent wdt:P17 ?sex. 
+
+    OPTIONAL { ?agent wdt:P17 ?sex.
             ?sex rdfs:label ?sexlab}
 
     OPTIONAL { ?agent wdt:P88 ?match}.
-    
+
     ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name. 
+    ?statement ps:P82 ?name.
     OPTIONAL{ ?statement pq:P30 ?event.
                 ?event	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
@@ -279,19 +279,19 @@ WHERE {
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
             OPTIONAL {?event wdt:P12 ?place.
                     ?place rdfs:label ?placelab}
-            
+
             }.
     OPTIONAL {?agent wdt:P25 ?people}
     OPTIONAL {?agent p:P39 ?roles.
-                ?roles ps:P39 ?event. 
+                ?roles ps:P39 ?event.
             ?roles pq:P98 ?event}.
     OPTIONAL {?agent p:P24 ?status.
-                ?status ps:P24 ?event. 
+                ?status ps:P24 ?event.
             ?status pq:P99 ?event}.
-    
 
 
-} group by ?agent ?event ?startyear ?endyear 
+
+} group by ?agent ?event ?startyear ?endyear
 order by ?agent
 limit $limit
 offset $offset
@@ -325,16 +325,16 @@ MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
 
 $genderQuery
 
-OPTIONAL { ?agent wdt:P24 ?status. 
+OPTIONAL { ?agent wdt:P24 ?status.
         ?status rdfs:label ?statuslab}
 
-OPTIONAL { ?agent wdt:P17 ?sex. 
+OPTIONAL { ?agent wdt:P17 ?sex.
         ?sex rdfs:label ?sexlab}
 
 OPTIONAL { ?agent wdt:P88 ?match}.
 
 ?agent p:P82 ?statement.
-?statement ps:P82 ?name. 
+?statement ps:P82 ?name.
 OPTIONAL{ ?statement pq:P30 ?event.
             ?event	wdt:P13 ?startdate.
         BIND(str(YEAR(?startdate)) AS ?startyear).
@@ -342,7 +342,7 @@ OPTIONAL{ ?statement pq:P30 ?event.
         BIND(str(YEAR(?enddate)) AS ?endyear)}.
         OPTIONAL {?event wdt:P12 ?place.
                 ?place rdfs:label ?placelab}
-        
+
         }.
 
 
@@ -368,7 +368,7 @@ QUERY;
                 }
 
                 $query = array('query' => "");
-                
+
                 $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
  (count(distinct ?people) as ?countpeople)
@@ -377,13 +377,13 @@ SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
  (count(distinct ?source) as ?countsource)
  (group_concat(distinct ?roleLabel; separator = "||") as ?roles)
  (group_concat(distinct ?placeLabel; separator = "||") as ?places)
- 
+
 WHERE {
   ?event wdt:P3 wd:Q34;
          ?property  ?object .
   	?object prov:wasDerivedFrom ?provenance .
   	?provenance pr:P35 ?source .
-  		 
+
   ?event wdt:P81 ?type
   OPTIONAL {?event wdt:P12 ?place.
            ?place rdfs:label ?placeLabel}.
@@ -394,8 +394,8 @@ WHERE {
            ?event p:P38 ?roles.
            ?roles ps:P38 ?people.
            ?roles pq:P39 ?people}.
- 
-  
+
+
   OPTIONAL {?event wdt:P14 ?endDate
            BIND(str(YEAR(?endDate)) AS ?endyear)}.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
@@ -422,7 +422,7 @@ WHERE {
         ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?source .
-            
+
     ?event wdt:P81 ?type
     OPTIONAL {?event wdt:P12 ?place.
             ?place rdfs:label ?placeLabel}.
@@ -434,7 +434,7 @@ WHERE {
             ?roles ps:P38 ?people.
             ?roles pq:P39 ?people}.
 
-    
+
     OPTIONAL {?event wdt:P14 ?endDate
             BIND(str(YEAR(?endDate)) AS ?endyear)}.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
@@ -446,92 +446,48 @@ QUERY;
 
                 break;
             case 'events':
+                $eventQuery = "";
 
-                $genderQuery = "";
-                if (isset($filtersArray['gender'])){
-                    $gender = $filtersArray['gender'];
-                    $qGender = $gender == 'Male';
-                    if($gender == 'Male'){
-                        $genderQuery = "?agent wdt:P17 wd:Q48";
-                    }
-                    else if($gender == 'Female'){
-                        $genderQuery = "?agent wdt:P17 wd:Q47";
+                if (isset($filtersArray['event_type'])){
+                    $eventType = $filtersArray['event_type'];
+
+                    if (null !== eventTypes[$eventType]){
+                        $qType = eventTypes[$eventType];
+                        $eventQuery = "?event wdt:P81 wd:$qType";
+                    } else {
+                        continue;   // the event_type was not valid
                     }
                 }
 
                 $query = array('query' => "");
-            
+
                 $query['query'] = <<<QUERY
-SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
+SELECT ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countevent)
+(count(distinct ?event) as ?counterevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
-(group_concat(distinct ?roleLabel; separator = "||") as ?roles)
 (group_concat(distinct ?placeLabel; separator = "||") as ?places)
 
 WHERE {
-?event wdt:P3 wd:Q34;
-     ?property  ?object .
-  ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:P35 ?source .
-       
-?event wdt:P81 ?type
-OPTIONAL {?event wdt:P12 ?place.
-       ?place rdfs:label ?placeLabel}.
-OPTIONAL {?event wdt:P13 ?date.
-       BIND(str(YEAR(?date)) AS ?startyear)}.
-OPTIONAL {?event wdt:P38 ?roles.
-       ?roles rdfs:label ?roleLabel.
-       ?event p:P38 ?roles.
-       ?roles ps:P38 ?people.
-       ?roles pq:P39 ?people}.
+    ?event wdt:P3 wd:Q34;
+        ?property  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?source .
+        ?event wdt:P81 ?eventtype .
 
-
-OPTIONAL {?event wdt:P14 ?endDate
-       BIND(str(YEAR(?endDate)) AS ?endyear)}.
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
+            $eventQuery
+            OPTIONAL {?event wdt:P12 ?place.
+            ?place rdfs:label ?placeLabel}.
+    OPTIONAL {?event wdt:P13 ?date.
+            BIND(str(YEAR(?date)) AS ?startyear)}.
+    OPTIONAL {?event wdt:P14 ?endDate
+            BIND(str(YEAR(?endDate)) AS ?endyear)}.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 order by ?startyear
 limit $limit
 offset $offset
-QUERY;
-
-                array_push($queryArray, $query);
-
-                $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
-(count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countevent)
-(count(distinct ?place) as ?countplace)
-(count(distinct ?source) as ?countsource)
-(group_concat(distinct ?roleLabel; separator = "||") as ?roles)
-(group_concat(distinct ?placeLabel; separator = "||") as ?places)
-
-WHERE {
-?event wdt:P3 wd:Q34;
-    ?property  ?object .
-    ?object prov:wasDerivedFrom ?provenance .
-    ?provenance pr:P35 ?source .
-        
-?event wdt:P81 ?type
-OPTIONAL {?event wdt:P12 ?place.
-        ?place rdfs:label ?placeLabel}.
-OPTIONAL {?event wdt:P13 ?date.
-        BIND(str(YEAR(?date)) AS ?startyear)}.
-OPTIONAL {?event wdt:P38 ?roles.
-        ?roles rdfs:label ?roleLabel.
-        ?event p:P38 ?roles.
-        ?roles ps:P38 ?people.
-        ?roles pq:P39 ?people}.
-
-
-OPTIONAL {?event wdt:P14 ?endDate
-        BIND(str(YEAR(?endDate)) AS ?endyear)}.
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
-order by ?startyear
 QUERY;
 
                 array_push($queryArray, $query);
@@ -555,14 +511,14 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
             ?property  ?object .
     ?object prov:wasDerivedFrom ?provenance .
     ?provenance pr:P35 ?source .
-    
+
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-            
+
 }group by ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
 order by ?sourceLabel
 limit 12
-offset 0               
+offset 0
 QUERY;
 
                 array_push($queryArray, $query);
@@ -763,7 +719,7 @@ FILTER (?statementcount >3  ).
 ?agent wdt:P88 ?match. #and they have a match
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 } ORDER BY ?random
-LIMIT 8                     
+LIMIT 8
 QUERY;
                 }
                 if($templates[0] == 'Place'){
@@ -775,15 +731,15 @@ SELECT DISTINCT ?place ?placeLabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
         FILTER (?statementcount >3  )
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 } ORDER BY ?random
-LIMIT 8                
+LIMIT 8
 QUERY;
                 }
                 if($templates[0] == 'Event'){
                     $query = array('query' => "");
                     $query['query'] = <<<QUERY
-SELECT DISTINCT ?type (SAMPLE(?event) AS ?event) (SAMPLE(?elabel) AS ?label) 
+SELECT DISTINCT ?type (SAMPLE(?event) AS ?event) (SAMPLE(?elabel) AS ?label)
 (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random) WHERE {
-    
+
     ?event wdt:P3 wd:Q34;
             rdfs:label ?elabel;
                 wdt:P81 ?type;
@@ -791,19 +747,19 @@ SELECT DISTINCT ?type (SAMPLE(?event) AS ?event) (SAMPLE(?elabel) AS ?label)
         FILTER (?statementcount >3  ).
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
-GROUP BY ?type 
+GROUP BY ?type
 ORDER BY ?random
 LIMIT 8
 QUERY;
                 }
-            
+
                 array_push($queryArray, $query);
                 break;
 
             default:
                 die;
         }
-        
+
     }
     elseif (isset($_GET['query'])) {
         //Preset not supplied so query needs to be supplied instead
@@ -822,6 +778,8 @@ QUERY;
     $resultsArray = array();
     $first = true;
 
+    // print_r($queryArray);die;
+
     foreach ($queryArray as $i => $query) {
         $ch = curl_init(BLAZEGRAPH_URL);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -835,7 +793,7 @@ QUERY;
         curl_close($ch);
 
         $result = json_decode($result, true)['results']['bindings'];
-        
+
         if(!$result) continue;
 
         if ($first){
@@ -892,10 +850,10 @@ QUERY;
 
 /**
  * Creates the HTML for type of cards specified in $templates
- * 
+ *
  * \param $results : Array of results that the query returned
  * \param $templates : Array of the type of cards to make
- * \param $preset : 
+ * \param $preset :
  */
 function createCards($results, $templates, $preset = 'default', $count = 0){
 //    print_r($results);die;
@@ -1067,7 +1025,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
             <p>$name</p>
             <img src='$card_icon_url'>
         </div>
-        
+
         <div class="content-wrap">
             <div class='container cards'>
                 <div class='card-info'>
@@ -1358,9 +1316,9 @@ HTML;
 
                 //Event Type
                 $type = "Unidentified";
-                if (isset($record['typeLabel']) && isset($record['typeLabel']['value'])){
-                    if($record['typeLabel']['value'] != ''){
-                        $type = $record['typeLabel']['value'];
+                if (isset($record['eventtypeLabel']) && isset($record['eventtypeLabel']['value'])){
+                    if($record['eventtypeLabel']['value'] != ''){
+                        $type = $record['eventtypeLabel']['value'];
                     }
                 }
 
@@ -1430,8 +1388,8 @@ HTML;
                 } else {
                     $countpeople = '';
                 }
-                if(isset($record['countevent']) && isset($record['countevent']['value'])){
-                    $countevent = $record['countevent']['value'];
+                if(isset($record['counterevent']) && isset($record['counterevent']['value'])){
+                    $countevent = $record['counterevent']['value'];
                 } else {
                     $countevent = '';
                 }
@@ -1507,7 +1465,7 @@ HTML;
                     $placesHtml
                     $dateRangeHtml
                 </div>
-                
+
             </div>
             $connections
         </div>
@@ -1523,11 +1481,8 @@ HTML;
                             $headers = <<<HTML
 <tr>
     <th class="name">NAME</th>
-    <th class="gender">GENDER</th>
-    <th class="age">AGE</th>
-    <th class="status">STATUS</th>
-    <th class="origin">ORIGIN</th>
-    <th class="location">LOCATION</th>
+    <th class="type">TYPE</th>
+    <th class="places">PLACES</th>
     <th class="dateRange">DATE RANGE</th>
 </tr>
 HTML;
@@ -1542,11 +1497,8 @@ HTML;
     <td class='type'>
         <p><span class='first'>Type: </span>$type</p>
     </td>
-    <td class='role'>
-        <p><span class='first'>Role: </span>$roles</p>
-    </td>
-    <td class='place'>
-        <p><span class='first'>Place: </span>$places</p>
+    <td class='places'>
+        <p><span class='first'>Places: </span>$places</p>
     </td>
     <td class='dateRange'>
         <p><span class='first'>Date Range: </span>$dateRange</p>
@@ -1579,14 +1531,14 @@ HTML;
                     }
                 }
 
-                //Source Project 
+                //Source Project
                 $project = "";
                 if (isset($record['projectLabel']) && isset($record['projectLabel']['value'])){
                     if($record['projectLabel']['value'] != ''){
                         $project = $record['projectLabel']['value'];
                     }
                 }
-                
+
 
                 //Counts for connections
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
@@ -1621,7 +1573,7 @@ HTML;
                 $connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
                     '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
                     '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
+                    // '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
                     '</div></div></div></div>';
 
 
@@ -1635,9 +1587,9 @@ HTML;
                         if ($project != ""){
                             $projectHtml = "<p><span>Project: </span>$project</p>";
                         }
-  
 
-                        $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
+
+                        $card_icon_url = BASE_IMAGE_URL . 'Source-light.svg';
                         $source_url = BASE_URL . "record/sources/" . $sourceQ;
 
                         $card = <<<HTML
@@ -1653,7 +1605,7 @@ HTML;
                     $typeHtml
                     $projectHtml
                 </div>
-                
+
             </div>
             $connections
         </div>
