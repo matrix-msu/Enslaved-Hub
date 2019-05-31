@@ -451,7 +451,7 @@ QUERY;
                 if (isset($filtersArray['event_type'])){
                     $eventType = $filtersArray['event_type'];
 
-                    if (null !== eventTypes[$eventType]){
+                    if (array_key_exists($eventType, eventTypes) ){
                         $qType = eventTypes[$eventType];
                         $eventQuery = "?event wdt:P81 wd:$qType";
                     } else {
@@ -575,7 +575,7 @@ SELECT DISTINCT ?project ?projectLabel (count(distinct ?agent) as ?agentcount)
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?reference .
         ?reference wdt:P7 ?project
-                    
+
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
     GROUP BY ?project ?projectLabel
@@ -777,6 +777,8 @@ QUERY;
 
     $resultsArray = array();
     $first = true;
+    $oneQuery = count($queryArray) == 1;    // count results differently when there is only one query
+
 
     // print_r($queryArray);die;
 
@@ -799,18 +801,15 @@ QUERY;
         if ($first){
             $resultsArray = $result;
             $first = false;
-            // foreach($result as $count){
-            //     $record_total++;
-            // }
+
+            if ($oneQuery){ // this is needed for the search page counter to be working
+                $record_total = count($result);
+            }
         } else {
             if($preset == 'people' || $preset == 'places' || $preset == 'events' || $preset == 'sources' || $preset == 'singleProject'){
                 //Get the count of all the results
                 //for people, places, events, sources, and singleProject
                 $record_total += count($result);
-                
-                // foreach($result as $count){
-                //     $record_total++;
-                // }
             }
             else if ($preset != "projects2") {
                 $resultsArray = array_merge($resultsArray, $result);

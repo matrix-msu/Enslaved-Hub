@@ -317,6 +317,10 @@
 
             .detail-bottom{
 
+                .highlight {
+                    color: $sub-base;
+                }
+
                 div, a{
                     font-size: 18px;
                     color: $base-dark;
