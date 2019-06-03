@@ -3,7 +3,7 @@
 ///******************************************************************* */
 
 //Global vars used on whole page
-var search_type = JS_EXPLORE_FORM.toLowerCase();
+var search_type = "people"; //JS_EXPLORE_FORM.toLowerCase();
 var view;
 var result_array;
 var total_length = 0;

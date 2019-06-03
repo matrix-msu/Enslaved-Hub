@@ -6,14 +6,25 @@
             $typeTitle = array_keys($_GET)[0];
             $currentTitle = $_GET[$typeTitle];
             $currentTitle = str_replace('_', ' ', $currentTitle);
+
+            if($typeTitle == 'category' && count($_GET) > 1){
+                $typeTitle = array_keys($_GET)[1];
+                $currentTitle = $_GET[$typeTitle];
+                $currentTitle = str_replace('_', ' ', $currentTitle);
+            }
+            else{
+                $typeTitle = '';
+                $currentTitle = 'Search';
+            }
+            
         } else {
             $typeTitle = '';
             $currentTitle = 'Search';
         }
         $upperForm = ucfirst(EXPLORE_FORM);
 
-        //Conditions to put the previous page header in
-        if(EXPLORE_FORM != null && EXPLORE_FORM != 'all'){
+        //Conditions to put the previous page header in (Not being used right now)
+        if(EXPLORE_FORM != null && EXPLORE_FORM != 'results'){
             echo '<h4 class="last-page-header">';
             echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '"><span id="previous-title">' . $upperForm . ' // </span></a>';
         
