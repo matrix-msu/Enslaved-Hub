@@ -12,7 +12,7 @@
         </div>
         <div class="heading-search">
             <h3>Search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade ...</h3>
-            <form class="search-form" action="<?= BASE_URL ?>search/results">
+            <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
                 <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
                 <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>

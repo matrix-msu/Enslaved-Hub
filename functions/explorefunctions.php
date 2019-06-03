@@ -1295,7 +1295,7 @@ HTML;
             continue;
         }
         else{
-          $html .= '<a href="' . $baseurl . 'search/results?' . $lowerlabel . '=' . $statementArr[$x] . '">';
+          $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
         }
         $detailname = $statementArr[$x];
         $html .= "<div>" . $detailname;
