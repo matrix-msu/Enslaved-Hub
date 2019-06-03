@@ -112,6 +112,7 @@ function searchResults(preset, limit = 12, offset = 0)
 ///******************************************************************* */
 
 function appendCards(){
+    // return;
     $("ul.row").empty(); //empty row before appending more
     result_array['gridCard'].forEach(function (card) {
         $(card).appendTo("ul.row");
@@ -185,7 +186,10 @@ $(document).ready(function() {
 
     //SearchBar placeholder text
     var searchBarPlaceholder = "Search Across " + filters[0] + " Results";
-    $('.main-search').attr("placeholder", searchBarPlaceholder); 
+
+    if (typeof(filters[0]) != 'undefined'){
+        $('.main-search').attr("placeholder", searchBarPlaceholder); 
+    }
 
     $(document).click(function () { // close things with clicked-off
         $('span.results-per-page').find("img:first").removeClass('show');

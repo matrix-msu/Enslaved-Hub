@@ -60,7 +60,6 @@
         <h2>Representations</h2>
         <!-- <p>To see a more granular provenance of this record, you can download the following files:</p> -->
         <div class="advancedwrap">
-            <a href="https://creativecommons.org/licenses/by/4.0/"><img src="<?php echo BASE_IMAGE_URL;?>ccby4.svg"></a>
             <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".rdf";?>">Download RDF</a>
             <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".ttl";?>">Download Turtle</a>
             <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".json";?>">Download JSON</a>

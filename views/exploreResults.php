@@ -34,7 +34,7 @@
         <div class="heading-search">
             <form class="search-form">
 				<label for="searchbar" class="sr-only">searchbar</label>
-                <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Search Across 6,000 Male Results"/>
+                <input id="searchbar" class="search-field main-search" type="text" name="searchbar"/>
                 <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
@@ -685,7 +685,7 @@
 
 
     <div id="searchResults">
-        <h2 class="showing-results">Showing 24 of 6,000 Results</h2>
+        <h2 class="showing-results"></h2>
         <div id="search-result-controls">
             <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span>
             <span class="view-modes">
@@ -734,13 +734,6 @@
                 <table id="search-results">
                     <thead>
                         <tr>
-                            <th class="name">NAME</th>
-                            <th class="gender">GENDER</th>
-                            <th class="age">AGE</th>
-                            <th class="status">STATUS</th>
-                            <th class="origin">ORIGIN</th>
-                            <th class="location">LOCATION</th>
-                            <th class="dateRange">DATE RANGE</th>
                         </tr>
                     </thead>
                     <tbody>
