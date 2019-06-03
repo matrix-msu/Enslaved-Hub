@@ -1071,6 +1071,12 @@ function detailPersonHtml($statement,$label){
   $lowerlabel = strtolower($label);
   $html = '';
 
+  // don't show the label if it is empty
+  if (empty($statement)){
+    return "";
+  }
+
+
   if($label === "RolesA"){
     //Multiple roles in the roles array so match them up with the participant
     $lowerlabel = "roles";
@@ -1109,7 +1115,11 @@ HTML;
     <div>$roles[$i]
 HTML;
 
-      $html .= '<div class="detail-menu"> <h1>Metadata</h1> <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> </div>';
+      // roles tool tip
+      if(array_key_exists($roles[$i],controlledVocabulary)){
+          $detailinfo = ucfirst(controlledVocabulary[$roles[$i]]);
+          $html .= "<div class='detail-menu'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
+      }
 
       $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
     }
@@ -1162,6 +1172,90 @@ HTML;
         }
 
         $html .= "</div> - <a href='$eventUrl'>$eventRoleLabels[$i]</a></div>";
+    }
+    $html .= '</div>';
+} else if ($label == "closeMatchA"){
+    $lowerlabel = "close match";
+    $upperlabel = "CLOSE MATCH";
+    
+    $matchUrls = explode('||', $statement['matchUrls']);
+    $matchLabels = explode('||', $statement['matchLabels']);
+
+    if (end($matchUrls) == '' || end($matchUrls) == ' '){
+      array_pop($matchUrls);
+    }
+    if (end($matchLabels) == '' || end($matchLabels) == ' '){
+      array_pop($matchLabels);
+    }
+
+    $html .= <<<HTML
+<div class="detail $lowerlabel">
+  <h3>$upperlabel</h3>
+HTML;
+
+    //Loop through and match up
+    $matched = '';
+    for($i=0; $i < sizeof($matchLabels); $i++){
+        $explode = explode('/', $matchUrls[$i]);
+        $personQ = end($explode);
+        $matchUrl = $baseurl . 'record/person/' . $personQ;
+        $matched = $matchLabels[$i];
+
+        $html .= <<<HTML
+<div class="detail-bottom">
+    <a href='$matchUrl' class='highlight'>$matchLabels[$i]</a>
+</div>
+HTML;
+
+    }
+    $html .= '</div>';
+} else if ($label == "relationshipsA"){
+    // match relationships with people
+
+    //Multiple roles in the roles array so match them up with the participant
+    $lowerlabel = "relationships";
+    $upperlabel = "RELATIONSHIPS";
+    //Array for relationships means there are people to match
+    $relationships = explode('||', $statement['relationships']);
+    $relationshipUrls = explode('||', $statement['qrelationUrls']);
+    $relationshipLabels = explode('||', $statement['relationshipLabels']);
+
+    //Remove whitespace from end of arrays
+    if (end($relationships) == '' || end($relationships) == ' '){
+      array_pop($relationships);
+    }
+    if (end($relationshipUrls) == '' || end($relationshipUrls) == ' '){
+      array_pop($relationshipUrls);
+    }
+    if (end($relationshipLabels) == '' || end($relationshipLabels) == ' '){
+      array_pop($relationshipLabels);
+    }
+
+    $html .= <<<HTML
+<div class="detail $lowerlabel">
+  <h3>$upperlabel</h3>
+HTML;
+
+    //Loop through and match up
+    $matched = '';
+    for($i=0; $i < sizeof($relationshipUrls); $i++){
+        $explode = explode('/', $relationshipUrls[$i]);
+        $personQ = end($explode);
+        $personUrl = $baseurl . 'record/person/' . $personQ;
+        $matched = $relationships[$i] . ' - ' . $relationshipLabels[$i];
+
+        $html .= <<<HTML
+<div class="detail-bottom">
+    <div>$relationships[$i]
+HTML;
+
+        // relationship tool tip
+        if(array_key_exists($relationships[$i],controlledVocabulary)){
+            $detailinfo = ucfirst(controlledVocabulary[$relationships[$i]]);
+            $html .= "<div class='detail-menu'> <h1>$relationships[$i]</h1> <p>$detailinfo</p> </div>";
+        }
+
+        $html .= "</div> - <a href='$personUrl' class='highlight'>$relationshipLabels[$i]</a></div>";
     }
     $html .= '</div>';
 } else if ($label == "StatusA"){
@@ -1619,11 +1713,15 @@ QUERY;
     //Status
     if (isset($record['status']) && isset($record['status']['value']) ){
       if(isset($record['statusevent']) && isset($record['statusevent']['value']) && isset($record['eventstatusLabel']) && isset($record['eventstatusLabel']['value']) ){
-        $statusArr = ['statuses' => $record['status']['value'],
-                      'statusEvents' => $record['statusevent']['value'],
-                      'eventstatusLabels' => $record['eventstatusLabel']['value']
-                     ];
-        $recordVars['StatusA'] = $statusArr;
+        if (empty($record['status']['value'])) {
+          $recordVars['StatusA'] = [];
+        } else {
+          $statusArr = ['statuses' => $record['status']['value'],
+                        'statusEvents' => $record['statusevent']['value'],
+                        'eventstatusLabels' => $record['eventstatusLabel']['value']
+                      ];
+          $recordVars['StatusA'] = $statusArr;
+        }
       }
       else{
         $recordVars['Status'] = $record['status']['value'];
@@ -1663,7 +1761,9 @@ QUERY;
     //Source
     if (isset($record['sourceLabel']) && isset($record['sourceLabel']['value']) ){
       if(isset($record['source']['value'])){
-        $sourceArr = ['label' => $record['sourceLabel']['value'], 'qid' => $record['source']['value']];
+        $sourceArr = ['label' => $record['sourceLabel']['value'],
+                      'qid' => $record['source']['value']
+                     ];
         $recordVars['Sources'] = $sourceArr;
       }
       else{
@@ -1671,9 +1771,34 @@ QUERY;
       }
     }
 
+    //Relationships
+    if (isset($record['relationships']) && isset($record['relationships']['value']) ){
+      if(isset($record['qrelationname']) && isset($record['qrelationname']['value']) && isset($record['relationagentlabel']) && isset($record['relationagentlabel']['value'])){
+        if (empty($record['relationships']['value']) ){
+            $recordVars['relationshipsA'] = [];
+        } else {
+            $relationsipArr = ['relationships' => $record['relationships']['value'],
+                              'qrelationUrls' => $record['qrelationname']['value'],
+                              'relationshipLabels' => $record['relationagentlabel']['value']
+                              ];
+            $recordVars['relationshipsA'] = $relationsipArr;
+        }
+      }
+    }
+
+    //CloseMatch
+    if (isset($record['match']) && isset($record['match']['value']) ){
+      if(isset($record['matchlabel']) && isset($record['matchlabel']['value']) ){
+        $closeMatchArr = ['matchLabels' => $record['matchlabel']['value'],
+                           'matchUrls' => $record['match']['value']
+                          ];
+        $recordVars['closeMatchA'] = $closeMatchArr;
+      }
+    }
+
     //Project
     if (isset($record['projectlabel']) && isset($record['projectlabel']['value']) ){
-        if(isset($record['project']['value'])){
+        if(isset($record['project']) && isset($record['project']['value'])){
             $projectArr = ['label' => $record['projectlabel']['value'],
                            'qid' => $record['project']['value']
                           ];
@@ -1766,6 +1891,7 @@ HTML;
     // $html .= detailPersonHtml($code, "Code");
     // $html .= detailPersonHtml($sources, "Sources");
     // $html .= detailPersonHtml($projects, "Contributing Project");
+
     // print_r($recordVars);die;
     foreach($recordVars as $key => $value){
       $html .= detailPersonHtml($value, $key);
