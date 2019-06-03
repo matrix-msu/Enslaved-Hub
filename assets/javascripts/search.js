@@ -9,6 +9,9 @@ $(document).ready(function() {
     $('#sex').select2({
         placeholder: "Select Sex"
     });
+    $('#ethno').select2({
+        placeholder: "Search & Select Ethnodescriptor"
+    });
     $('#occupation').select2({
         placeholder: "Select Occupation"
     });
