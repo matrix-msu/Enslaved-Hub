@@ -45,4 +45,8 @@
         </form>
     </div>
 </main>
+<<<<<<< HEAD
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
+=======
+<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
+>>>>>>> 85413a105adcfb04a4875fee27012d97c114333f

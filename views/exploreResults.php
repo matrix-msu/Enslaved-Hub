@@ -49,7 +49,7 @@
             <h2>Show Results For</h2>
             <ul class="catmenu" id="submenu">
                 <li>
-                    <label id="catg">
+                    <label class="category">
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg" alt="person icon">
                         <p>People</p>
@@ -57,7 +57,7 @@
                     </label>
                 </li>
                 <li>
-                    <label id="catg">
+                    <label class="category">
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg" alt="location icon">
                         <p>Places</p>
@@ -65,7 +65,7 @@
                     </label>
                 </li>
                 <li>
-                    <label id="catg">
+                    <label class="category">
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg" alt="event icon">
                         <p>Events</p>
@@ -73,7 +73,7 @@
                     </label>
                 </li>
                 <li>
-                    <label id="catg">
+                    <label class="category">
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg" alt="source icon">
                         <p>Sources</p>
@@ -81,7 +81,7 @@
                     </label>
                 </li>
                 <li>
-                    <label id="catg">
+                    <label class="category">
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
                         <p>Projects</p>
@@ -99,21 +99,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="country">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="country">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="country">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -124,21 +124,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="region">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="region">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="region">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -149,21 +149,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="decade">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="decade">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="decade">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -174,21 +174,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="date_select">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="date_select">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="date_select">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -205,21 +205,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="gender">
                             <input id="checkBox" type="checkbox">
                             <p>Unidentified <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="gender">
                             <input id="checkBox" type="checkbox">
                             <p>Male <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="gender">
                             <input id="checkBox" type="checkbox">
                             <p>Female <em>(234)</em></p>
                             <span></span>
@@ -230,21 +230,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="origin">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="origin">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="origin">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -255,21 +255,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="age">
                             <input id="checkBox" type="checkbox">
                             <p>Age Range <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="age">
                             <input id="checkBox" type="checkbox">
                             <p>Age Range <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="age">
                             <input id="checkBox" type="checkbox">
                             <p>Age Range <em>(234)</em></p>
                             <span></span>
@@ -280,21 +280,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="age_cat">
                             <input id="checkBox" type="checkbox">
                             <p>Age Range <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="age_cat">
                             <input id="checkBox" type="checkbox">
                             <p>Age Range <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="age_cat">
                             <input id="checkBox" type="checkbox">
                             <p>Age Range <em>(234)</em></p>
                             <span></span>
@@ -305,21 +305,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="color">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="color">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="color">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -330,21 +330,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="occupation">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="occupation">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="occupation">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -355,21 +355,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="relationship">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="relationship">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="relationship">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -379,21 +379,21 @@
                 <li class="filter-cat">Role<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span></li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="role">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="role">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="role">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -411,21 +411,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="event_type">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="event_type">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="event_type">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -436,21 +436,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="event_date">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="event_date">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="event_date">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -468,21 +468,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="country">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="country">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="country">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -493,21 +493,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="region">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="region">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="region">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -518,21 +518,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="province">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="province">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="province">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -543,21 +543,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="city">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="city">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="city">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -575,21 +575,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="project">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="project">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="project">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -607,21 +607,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="madia">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="madia">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="madia">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -632,21 +632,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="repo">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="repo">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="repo">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
@@ -657,21 +657,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label>
+                        <label class="scholar">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="scholar">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label>
+                        <label class="scholar">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
