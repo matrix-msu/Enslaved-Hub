@@ -50,8 +50,28 @@
                     <input class="input-field" id="age" name="age" type="text" placeholder="Enter Numerical Age"/>
                 </div>
                 <div class="inputwrap">
-                    <label for="color">Color</label>
-                    <input class="input-field" id="color" name="color" type="text" placeholder="Enter Color"/>
+                    <label for="ethno">Ethnodescriptor</label>
+                    <select class="s2-single" name="ethno" id="ethno">
+                        <option value""></option>
+                        <optgroup>
+                            <option value="yoruba">Yoruba</option>
+                            <option value="aku-sierra_leone">Aku (Sierra Leone)</option>
+                            <option value="ioruba">Ioruba</option>
+                            <option value="joruba">Joruba</option>
+                            <option value="lacoom">Lacoom</option>
+                            <option value="lucumi">Lucumi</option>
+                            <option value="nago">Nago</option>
+                            <option value="nago-brazil">Nago (Brazil)</option>
+                        </optgroup>
+                        <optgroup label="test">
+                            <option value="congulo">Congulo</option>
+                            <option value="congola">Congola</option>
+                            <option value="congole">Congole</option>
+                            <option value="congolla">Congolla</option>
+                            <option value="congollo">Congollo</option>
+                            <option value="congolo">Congolo</option>
+                        </optgroup>
+                    </select>
                 </div>
                 <div class="inputwrap">
                     <label for="occupation">Occupation</label>

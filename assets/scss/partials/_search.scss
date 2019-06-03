@@ -327,6 +327,10 @@
                     color: $base-dark;
                     padding-left: 30px!important;
                     padding: 8px;
+
+                    .select2-results__group{
+                        display: none;
+                    }
                 }
                 .select2-results__option--highlighted[aria-selected]{
                     background-color: #ffffff;
