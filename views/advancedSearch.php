@@ -11,7 +11,7 @@
 </div>
 <main class="direct-search">
     <div class="searchwrap">
-        <form action="<?php echo BASE_URL;?>search/results" method="get" onsubmit="removeEmpty()">
+        <form action="<?php echo BASE_URL;?>search/all" method="get" onsubmit="removeEmpty()">
             <!-- PERSON -->
             <h2>Person</h2>
             <div class="search-section">
@@ -22,7 +22,7 @@
                 <div class="inputwrap">
                     <label for="status">Person Status</label>
                     <select class="s2-single" id="status" name="status">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="unidentified">Unidentified</option>
@@ -39,7 +39,7 @@
                 <div class="inputwrap">
                     <label for="sex">Sex</label>
                     <select class="s2-single" name="sex" id="sex">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="unidentified">Unidentified</option>
@@ -52,7 +52,7 @@
                 <div class="inputwrap">
                     <label for="ethno">Ethnodescriptor</label>
                     <select class="s2-single" name="ethno" id="ethno">
-                        <option value""></option>
+                        <option value=""></option>
                         <optgroup>
                             <option value="yoruba">Yoruba</option>
                             <option value="aku-sierra_leone">Aku (Sierra Leone)</option>
@@ -84,14 +84,14 @@
                 <div class="inputwrap datewrap">
                     <label for="person-from">Date Range</label>
                     <select class="s2-single date-from" id="person-from" name="personfrom">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
                     <label for="person-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="person-to" name="personto">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
@@ -116,14 +116,14 @@
                 <div class="inputwrap datewrap">
                     <label for="event-from">Date Range</label>
                     <select class="s2-single date-from" id="event-from" name="eventfrom">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
                     <label for="event-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="event-to" name="eventto">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
@@ -172,14 +172,14 @@
                 <div class="inputwrap datewrap">
                     <label for="place-from">Date Range</label>
                     <select class="s2-single date-from" id="place-from" name="placefrom">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
                     <label for="place-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="place-to" name="placeto">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>

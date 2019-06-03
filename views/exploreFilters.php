@@ -36,7 +36,7 @@ $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
 
       foreach (array_keys($typeCategories) as $category) { ?>
           <li class="hide-category">
-              <a href="<?php echo BASE_URL;?>search/results?category=<?php echo EXPLORE_FORM?>&<?php echo EXPLORE_FILTER;?>=<?php echo $category;?>">
+              <a href="<?php echo BASE_URL;?>search/<?php echo EXPLORE_FORM?>?<?php echo EXPLORE_FILTER;?>=<?php echo $category;?>">
                   <p class='type-title'><?php echo $category;?></p>
                   <div id="arrow"></div><span id="<?php echo $category;?>">0</span>
               </a>
