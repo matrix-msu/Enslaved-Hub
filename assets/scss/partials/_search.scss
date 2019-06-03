@@ -325,8 +325,8 @@
                 .select2-results__option{
                     font-size: 14px;
                     color: $base-dark;
-                    padding-left: 30px!important;
                     padding: 8px;
+                    padding-left: 30px;
 
                     .select2-results__group{
                         display: none;
@@ -339,6 +339,35 @@
                 .select2-results__option[aria-selected=true]{
                     background-color: #ffffff;
                     color: $sub-base;
+                }
+                .select2-results__option[role=group]{
+                    padding-top: 0;
+                    padding-bottom: 0;
+
+                    .select2-results__option[role=treeitem]{
+                        font-size: 14px;
+                        padding: 4px;
+                        padding-left: 0;
+                    }
+
+                    .select2-results__options--nested{
+                        padding: 0;
+                        padding-top: 15px;
+                        padding-bottom: 15px;
+                        border-bottom: 2px solid rgba(18,46,70,0.07);
+                    }
+
+                    &:first-child{
+                        .select2-results__options--nested{
+                            padding-top: 0;
+                        }
+                    }
+                    &:last-child{
+                        .select2-results__options--nested{
+                            border-bottom: none;
+                            padding-bottom: 0;
+                        }
+                    }
                 }
             }
         }
