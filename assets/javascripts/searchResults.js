@@ -11,11 +11,14 @@ var card_offset = 0;
 var card_limit = 12;
 var presets = {};
 var filters = {};
+var main_categories = [];
+var url_filters = {};
 
 // Get params from url
 var $_GET = {};
 var $_GET_length = 0;
-if(document.location.toString().indexOf('?') !== -1) {
+if(document.location.toString().indexOf('?') !== -1) 
+{
     var query = document.location
         .toString()
         // get the query string
@@ -39,8 +42,13 @@ for(var i=0; i < $_GET_length; i++){
         filter = '';
     }
     filters[type] = filter;
-    console.log("Filter: " + type + " = " + filter);
+    url_filters[type] = filter;
 }
+console.log(url_filters);
+
+// Get main categories
+if("categories" in filters)
+    main_categories = filters["categories"].split(',');
 
 /** 
  * Takes parameters for an ajax call that sets result_array to an array with
@@ -51,16 +59,13 @@ for(var i=0; i < $_GET_length; i++){
  * \param limit : limit to the number of cards per page : default value = 12
  * \param offset : number of cards offset from the first card (with 0 being the first card) : default value = 0
 */
-function searchResults(preset, limit = 12, offset = 0){
+function searchResults(preset, limit = 12, offset = 0)
+{
     filters['limit'] = limit;
     card_limit = limit;
     filters['offset'] = offset;
     card_offset = offset;
-
     var templates = ['gridCard', 'tableCard'];
-
-    console.log(preset, filters, templates);
-
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -138,34 +143,37 @@ $(document).ready(function() {
     //For form type
     var upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
     $(".filter-menu ul.catmenu li").each(function(){
-        if( $(this).find("p").html() === upperForm){
-            //Check a checkbox if EXPLORE_FORM is set to this type
-            $(this).find("input").prop('checked', true);
-        }
-        else if(upperForm === 'All'){
-            //Set all checkboxes to checked
-            $(this).find("input").prop('checked', true);
-        }
-    });
-    $(".filter-menu ul#mainmenu").each(function(){
-        $(this).find(".filter-cat").each(function(){
-            if($(this).attr("name") === "gender"){
+        if(main_categories.length > 0)
+        {
+            if(main_categories.indexOf( $(this).find("p").text() ) > -1)
                 $(this).find("input").prop('checked', true);
-            }
-        });
-        // if( $(this).find("p").html() === upperForm){
-        //     //Check a checkbox if EXPLORE_FORM is set to this type
-        //     $(this).find("input").prop('checked', true);
-        // }
-        // else if(upperForm === 'All'){
-        //     //set all checkboxes to checked
-        //     $(this).find("input").prop('checked', true);
-        // }
+        }
+        
+        //Check a checkbox if EXPLORE_FORM is set to this type
+        else if( $(this).find("p").text() === upperForm)
+            $(this).find("input").prop('checked', true);
+        
+        //Set all checkboxes to checked
+        else if(upperForm === 'All')
+            $(this).find("input").prop('checked', true);
     });
 
-    //Put setting of other filters here
+    // Show selected filters
+    $.each(url_filters, function(key, value) 
+    {
+        if(key) // inputs lable have classes with name as key
+        {
+            $("label."+key).each(function() 
+            {
+                var sel_filter = $(this).find('p').text();
+                var em = $(this).find('p').find("em").text();
+                sel_filter = sel_filter.replace(em, "").trim();
 
-
+                if(sel_filter == value)
+                    $(this).find("input").prop("checked", true);
+            });
+        }
+    });
 
     ///******************************************************************* */
     /// Event Handlers for the page
@@ -417,11 +425,79 @@ $(document).ready(function() {
 
 
     // click filters
-    $(document).on("change", "input[type=checkbox]", function() {
+    $(document).on("change", "input[type=checkbox]", function() 
+    {
+        // get filter value and key
+        var input_value = $(this).parent().find('p').text();
+        let em = $(this).parent().find('p').find("em").text();
+        input_value = input_value.replace(em, "").trim();
+
+        var input_key = $(this).parent().attr("class");
+        var page_url = document.location.href;
+
+        // handle categories
+        if(input_key == "category")
+        {
+           var categories = [];
+            $(".filter-menu ul.catmenu li").each(function()
+            {
+                if($(this).find("input").is(":checked"))
+                {
+                    categories.push($(this).find('p').text());
+                }
+            });
+
+            input_value = categories;
+            input_key = "categories";
+        }
+
+        // Add to filter object
+        if($(this).is(":checked") || input_key == "categories")
+            url_filters[input_key] = input_value;
+
+        // remove from filter object
+        else if(input_key in url_filters && url_filters[ input_key ] == input_value)
+            delete url_filters[input_key];
         
-        let value = $(this).parent().find('p').text();
-        let key = $(this).parent().attr("id");
+        // Split all parameter
+        var split_url = page_url.split('?');
+        if("categories" in url_filters)
+        {
+            var split_paths = split_url[0].split('/');
+            var path = split_paths[split_paths.length - 1];
+
+            if(url_filters["categories"].length == 1)
+            {
+                // One category path
+                split_url[0] = split_url[0].replace('/' + path, '/' +  url_filters["categories"][0].toLowerCase());
+                delete url_filters["categories"];
+            }
+            else if(url_filters["categories"].length == 5)
+            {
+                // All categories are selected
+                split_url[0] = split_url[0].replace('/' + path, '/all');
+                delete url_filters["categories"];
+            }
+            else {
+                // multiple categorise selected
+                split_url[0] = split_url[0].replace('/' + path, '/category');
+            }
+        }
+        page_url = split_url[0]+"?";
+
+        var counter = 0;
+        $.each(url_filters, function(key, value) 
+        {
+            if(key)
+            {   // Do not add deselected filter
+                if(!counter) page_url += key + '=' + value;
+                else page_url += '&' + key + '=' + value;
+                ++counter;
+            }
+        });
+
+        // console.log(page_url);
+        document.location = page_url;
         
-        console.log(key +" "+ value);
     });
 });

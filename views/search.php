@@ -19,7 +19,7 @@
 </div>
 <main class="direct-search">
     <div class="searchwrap">
-        <form  action="<?php echo BASE_URL;?>search/all">
+        <form  action="<?php echo BASE_URL;?>search/people" method="get" onsubmit="removeEmpty()">
             <h2>Direct Search</h2>
             <div class="search-section">
                 <div class="inputwrap">
@@ -45,3 +45,8 @@
         </form>
     </div>
 </main>
+<<<<<<< HEAD
+<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
+=======
+<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
+>>>>>>> 85413a105adcfb04a4875fee27012d97c114333f

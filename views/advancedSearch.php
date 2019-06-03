@@ -22,7 +22,7 @@
                 <div class="inputwrap">
                     <label for="status">Person Status</label>
                     <select class="s2-single" id="status" name="status">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="unidentified">Unidentified</option>
@@ -39,7 +39,7 @@
                 <div class="inputwrap">
                     <label for="sex">Sex</label>
                     <select class="s2-single" name="sex" id="sex">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="unidentified">Unidentified</option>
@@ -50,8 +50,28 @@
                     <input class="input-field" id="age" name="age" type="text" placeholder="Enter Numerical Age"/>
                 </div>
                 <div class="inputwrap">
-                    <label for="color">Color</label>
-                    <input class="input-field" id="color" name="color" type="text" placeholder="Enter Color"/>
+                    <label for="ethno">Ethnodescriptor</label>
+                    <select class="s2-single" name="ethno" id="ethno">
+                        <option value=""></option>
+                        <optgroup>
+                            <option value="yoruba">Yoruba</option>
+                            <option value="aku-sierra_leone">Aku (Sierra Leone)</option>
+                            <option value="ioruba">Ioruba</option>
+                            <option value="joruba">Joruba</option>
+                            <option value="lacoom">Lacoom</option>
+                            <option value="lucumi">Lucumi</option>
+                            <option value="nago">Nago</option>
+                            <option value="nago-brazil">Nago (Brazil)</option>
+                        </optgroup>
+                        <optgroup label="test">
+                            <option value="congulo">Congulo</option>
+                            <option value="congola">Congola</option>
+                            <option value="congole">Congole</option>
+                            <option value="congolla">Congolla</option>
+                            <option value="congollo">Congollo</option>
+                            <option value="congolo">Congolo</option>
+                        </optgroup>
+                    </select>
                 </div>
                 <div class="inputwrap">
                     <label for="occupation">Occupation</label>
@@ -64,14 +84,14 @@
                 <div class="inputwrap datewrap">
                     <label for="person-from">Date Range</label>
                     <select class="s2-single date-from" id="person-from" name="personfrom">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
                     <label for="person-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="person-to" name="personto">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
@@ -96,14 +116,14 @@
                 <div class="inputwrap datewrap">
                     <label for="event-from">Date Range</label>
                     <select class="s2-single date-from" id="event-from" name="eventfrom">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
                     <label for="event-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="event-to" name="eventto">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
@@ -152,14 +172,14 @@
                 <div class="inputwrap datewrap">
                     <label for="place-from">Date Range</label>
                     <select class="s2-single date-from" id="place-from" name="placefrom">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
                     <label for="place-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="place-to" name="placeto">
-                        <option value""></option>
+                        <option value=""></option>
                         <option value="1800">1800</option>
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
