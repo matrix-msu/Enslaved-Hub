@@ -1209,6 +1209,21 @@ HTML;
 
     }
     $html .= '</div>';
+} else if ($label == "Secondary Source"){
+    $lowerlabel = "secondary source";
+    $upperlabel = "SECONDARY SOURCE";
+    
+    $source = $statement;
+
+    $html .= <<<HTML
+<div class="detail $lowerlabel">
+  <h3>$upperlabel</h3>
+
+<div class="detail-bottom">
+    <a>$source</a>
+</div>
+</div>
+HTML;
 } else if ($label == "relationshipsA"){
     // match relationships with people
 
@@ -1258,6 +1273,39 @@ HTML;
         $html .= "</div> - <a href='$personUrl' class='highlight'>$relationshipLabels[$i]</a></div>";
     }
     $html .= '</div>';
+} else if ($label == "projectsA"){
+    $lowerlabel = "contributing projects";
+    $upperlabel = "CONTRIBUTING PROJECTS";
+
+    $projectUrls = explode('||', $statement['projectUrl']);
+    $projectNames = explode('||', $statement['projectName']);
+
+    if (end($projectUrls) == '' || end($projectUrls) == ' '){
+      array_pop($projectUrls);
+    }
+    if (end($projectNames) == '' || end($projectNames) == ' '){
+      array_pop($projectNames);
+    }
+
+    $html .= <<<HTML
+<div class="detail $lowerlabel">
+  <h3>$upperlabel</h3>
+HTML;
+
+    //Loop through and match up
+    $matched = '';
+    for($i=0; $i < sizeof($projectUrls); $i++){
+        $explode = explode('/', $projectUrls[$i]);
+        $projectQ = end($explode);
+        $projectUrl = $baseurl . 'project/' . $projectQ;
+        $matched = $projectNames[$i];
+
+        $html .= <<<HTML
+<div class="detail-bottom">
+    <a href='$projectUrl'>$projectNames[$i]</a>
+HTML;
+    }
+    $html .= '</div></div>';
 } else if ($label == "StatusA"){
     // match statuses with events
     $lowerlabel = "status";
@@ -1807,15 +1855,19 @@ QUERY;
         else{
             $recordVars['Contributing Projects'] = $record['projectlabel']['value'];
         }
-    } else if (isset($record['project']) && isset($record['project']['value']) ){     // project for source page
-        $recordVars['Projects'] = $record['pname']['value'];
-        // $recordVars['projectUrl'] = $record['project']['value']; //todo make this work
+    } else if (isset($record['project']) && isset($record['project']['value']) ){     // projects for source page
+        if (isset($record['pname']) && isset($record['pname']['value']) ) {
+            $projectArr = ['projectUrl' => $record['project']['value'],
+                           'projectName' => $record['pname']['value']
+                          ];
+            $recordVars['projectsA'] = $projectArr;
+        }  
     }
 
     //secondarysource
-    // if (isset($record['secondarysource']) && isset($record['secondarysource']['value']) ){
-    //   $recordVars['Secondary Source'] = $record['secondarysource']['value'];
-    // }
+    if (isset($record['secondarysource']) && isset($record['secondarysource']['value']) ){
+      $recordVars['Secondary Source'] = $record['secondarysource']['value'];
+    }
 
 
     //Roles
