@@ -194,26 +194,6 @@ QUERY;
 
             case 'people':
 
-                $sexQuery = "";
-                if (isset($filtersArray['sex'])){
-                    $sex = $filtersArray['sex'];
-                    if (array_key_exists($sex, sexTypes)){
-                        $qSex = sexTypes[$sex];
-                        $sexQuery = "?person wdt:P17 wd:$qSex.";
-
-                    }
-                }
-
-                $roleQuery = '';
-                if (isset($filtersArray['Role Types'])){
-                    $role = $filtersArray['Role Types'];
-                    if (array_key_exists($role, roleTypes)){
-                        $qRole = roleTypes[$role];
-                        $roleQuery = "?person wdt:P39 wd:$qRole.";
-
-                    }
-                }
-
                 $genderQuery = "";
                 if (isset($filtersArray['gender'])){
                     $gender = $filtersArray['gender'];
@@ -226,73 +206,137 @@ QUERY;
                     }
                 }
 
+                $nameQuery = "";
+                if (isset($filtersArray['person'])){
+                    $name = $filtersArray['person'];
+                    $nameQuery = "FILTER regex(?name, '^$name', 'i') .";
+                }
+
                 $query = array('query' => "");
 
+//                 $query['query'] = <<<QUERY
+// SELECT DISTINCT ?agent ?event ?startyear ?endyear
+// (count(distinct ?people) as ?countpeople)
+// (count(distinct ?event) as ?countevent)
+// (count(distinct ?place) as ?countplace)
+// (count(distinct ?source) as ?countsource)
+
+// (group_concat(distinct ?name; separator = "||") as ?name) #name
+
+// (group_concat(distinct ?placelab; separator = "||") as ?place) #place
+
+// (group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+
+// (group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+
+// (group_concat(distinct ?match; separator = "||") as ?closeMatch)
+
+// WHERE {
+
+//     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+
+//     ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+//             ?property  ?object .
+//         ?object prov:wasDerivedFrom ?provenance .
+//         ?provenance pr:P35 ?source .
+
+
+//     ?agent wdt:P82 ?name. #name is mandatory
+
+//     OPTIONAL{?agent  wdt:P39 ?role}. #optional role
+//     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+
+//     $genderQuery
+//     $nameQuery
+
+//     OPTIONAL { ?agent wdt:P24 ?status.
+//             ?status rdfs:label ?statuslab}
+
+//     OPTIONAL { ?agent wdt:P17 ?sex.
+//             ?sex rdfs:label ?sexlab}
+
+//     OPTIONAL { ?agent wdt:P88 ?match}.
+
+//     ?agent p:P82 ?statement.
+//     ?statement ps:P82 ?name.
+//     OPTIONAL{ ?statement pq:P30 ?event.
+//                 ?event	wdt:P13 ?startdate.
+//             BIND(str(YEAR(?startdate)) AS ?startyear).
+//             OPTIONAL {?event wdt:P14 ?enddate.
+//             BIND(str(YEAR(?enddate)) AS ?endyear)}.
+//             OPTIONAL {?event wdt:P12 ?place.
+//                     ?place rdfs:label ?placelab}
+
+//             }.
+//     OPTIONAL {?agent wdt:P25 ?people}
+//     OPTIONAL {?agent p:P39 ?roles.
+//                 ?roles ps:P39 ?event.
+//             ?roles pq:P98 ?event}.
+//     OPTIONAL {?agent p:P24 ?status.
+//                 ?status ps:P24 ?event.
+//             ?status pq:P99 ?event}.
+
+
+
+// } group by ?agent ?event ?startyear ?endyear
+// order by ?agent
+// limit $limit
+// offset $offset
+// QUERY;
+
                 $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent ?event ?startyear ?endyear
-(count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countevent)
-(count(distinct ?place) as ?countplace)
-(count(distinct ?source) as ?countsource)
+SELECT DISTINCT ?agent 
+(group_concat(distinct ?startyear; separator = "||") as ?startyear) #daterange
+(group_concat(distinct ?endyear; separator = "||") as ?endyear) 
 
 (group_concat(distinct ?name; separator = "||") as ?name) #name
-
 (group_concat(distinct ?placelab; separator = "||") as ?place) #place
-
 (group_concat(distinct ?statuslab; separator = "||") as ?status) #status
-
 (group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
 
-(group_concat(distinct ?match; separator = "||") as ?closeMatch)
 
+(count(distinct ?relations) as ?countpeople)
+(count(distinct ?event) as ?countevent)
+(count(distinct ?place) as ?countplace)
+(count(distinct ?reference) as ?countsource)
 WHERE {
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-    ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
-            ?property  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
+    ?agent wdt:P3/wdt:P2 wd:Q2;
 
-
-    ?agent wdt:P82 ?name. #name is mandatory
-
-    OPTIONAL{?agent  wdt:P39 ?role}. #optional role
-    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-
+            wdt:P82 ?name; #name is mandatory
+                p:P3  ?object .
+    ?object prov:wasDerivedFrom ?provenance .
+    ?provenance pr:P35 ?reference .
+                
     $genderQuery
+    $nameQuery
 
-    OPTIONAL { ?agent wdt:P24 ?status.
+    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    
+    OPTIONAL { ?agent wdt:P24 ?status. 
             ?status rdfs:label ?statuslab}
-
-    OPTIONAL { ?agent wdt:P17 ?sex.
+    
+    OPTIONAL { ?agent wdt:P17 ?sex. 
             ?sex rdfs:label ?sexlab}
 
-    OPTIONAL { ?agent wdt:P88 ?match}.
-
-    ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name.
-    OPTIONAL{ ?statement pq:P30 ?event.
+    OPTIONAL { ?agent wdt:P25 ?relations}.
+    OPTIONAL { ?agent wdt:P88 ?relations}.
+    
+    OPTIONAL{ ?reference wdt:P8 ?event.
                 ?event	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
             OPTIONAL {?event wdt:P14 ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
             OPTIONAL {?event wdt:P12 ?place.
                     ?place rdfs:label ?placelab}
-
+            
             }.
-    OPTIONAL {?agent wdt:P25 ?people}
-    OPTIONAL {?agent p:P39 ?roles.
-                ?roles ps:P39 ?event.
-            ?roles pq:P98 ?event}.
-    OPTIONAL {?agent p:P24 ?status.
-                ?status ps:P24 ?event.
-            ?status pq:P99 ?event}.
 
 
-
-} group by ?agent ?event ?startyear ?endyear
-order by ?agent
+} group by ?agent 
+order by ?agent 
 limit $limit
 offset $offset
 QUERY;
@@ -301,53 +345,58 @@ QUERY;
 
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent ?event ?startyear ?endyear
+SELECT DISTINCT ?agent 
+(group_concat(distinct ?startyear; separator = "||") as ?startyear) #daterange
+(group_concat(distinct ?endyear; separator = "||") as ?endyear) 
+
 (group_concat(distinct ?name; separator = "||") as ?name) #name
-
 (group_concat(distinct ?placelab; separator = "||") as ?place) #place
-
 (group_concat(distinct ?statuslab; separator = "||") as ?status) #status
-
 (group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
 
-(group_concat(distinct ?match; separator = "||") as ?closeMatch)
 
+(count(distinct ?relations) as ?countpeople)
+(count(distinct ?event) as ?countevent)
+(count(distinct ?place) as ?countplace)
+(count(distinct ?reference) as ?countsource)
 WHERE {
 
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-?agent wdt:P3/wdt:P2 wd:Q2;
+    ?agent wdt:P3/wdt:P2 wd:Q2;
 
-        wdt:P82 ?name. #name is mandatory
+            wdt:P82 ?name; #name is mandatory
+                p:P3  ?object .
+    ?object prov:wasDerivedFrom ?provenance .
+    ?provenance pr:P35 ?reference .
+                
+    $genderQuery
+    $nameQuery
 
-OPTIONAL{?agent  wdt:P39 ?role}. #optional role
-MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    
+    OPTIONAL { ?agent wdt:P24 ?status. 
+            ?status rdfs:label ?statuslab}
+    
+    OPTIONAL { ?agent wdt:P17 ?sex. 
+            ?sex rdfs:label ?sexlab}
 
-$genderQuery
-
-OPTIONAL { ?agent wdt:P24 ?status.
-        ?status rdfs:label ?statuslab}
-
-OPTIONAL { ?agent wdt:P17 ?sex.
-        ?sex rdfs:label ?sexlab}
-
-OPTIONAL { ?agent wdt:P88 ?match}.
-
-?agent p:P82 ?statement.
-?statement ps:P82 ?name.
-OPTIONAL{ ?statement pq:P30 ?event.
-            ?event	wdt:P13 ?startdate.
-        BIND(str(YEAR(?startdate)) AS ?startyear).
-        OPTIONAL {?event wdt:P14 ?enddate.
-        BIND(str(YEAR(?enddate)) AS ?endyear)}.
-        OPTIONAL {?event wdt:P12 ?place.
-                ?place rdfs:label ?placelab}
-
-        }.
+    OPTIONAL { ?agent wdt:P25 ?relations}.
+    OPTIONAL { ?agent wdt:P88 ?relations}.
+    
+    OPTIONAL{ ?reference wdt:P8 ?event.
+                ?event	wdt:P13 ?startdate.
+            BIND(str(YEAR(?startdate)) AS ?startyear).
+            OPTIONAL {?event wdt:P14 ?enddate.
+            BIND(str(YEAR(?enddate)) AS ?endyear)}.
+            OPTIONAL {?event wdt:P12 ?place.
+                    ?place rdfs:label ?placelab}
+            
+            }.
 
 
-} group by ?agent ?event ?startyear ?endyear
-order by ?agent
+} group by ?agent 
+order by ?agent 
 QUERY;
 
                 array_push($queryArray, $query);
@@ -446,22 +495,119 @@ QUERY;
 
                 break;
             case 'events':
-                $eventQuery = "";
 
+            
+                $eventQuery = "";
                 if (isset($filtersArray['event_type'])){
                     $eventType = $filtersArray['event_type'];
 
                     if (array_key_exists($eventType, eventTypes) ){
                         $qType = eventTypes[$eventType];
-                        $eventQuery = "?event wdt:P81 wd:$qType";
+                        $eventQuery = "?event wdt:P81 wd:$qType .";
                     } else {
                         continue;   // the event_type was not valid
                     }
                 }
 
-                $query = array('query' => "");
+                $dateRangeQuery = "";
+                if (isset($filtersArray['daterange'])){
+                    $dateRange = $filtersArray['daterange'];
+                    $dateRangeQuery = $dateRange;
+                }
 
-                $query['query'] = <<<QUERY
+                //Bad way of doing this but it works for now
+                if($dateRangeQuery !== ""){
+                    $query = array('query' => "");
+
+                    $query['query'] = <<<QUERY
+SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
+(count(distinct ?people) as ?countpeople)
+(count(distinct ?event) as ?countervent)
+(count(distinct ?place) as ?countplace)
+(count(distinct ?source) as ?countsource)
+(group_concat(distinct ?placeLabel; separator = "||") as ?places)
+
+WHERE {
+    ?event wdt:P3 wd:Q34;
+        ?property  ?object;
+            wdt:P13 ?date.
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?source .
+            
+    ?event wdt:P81 ?type .
+
+    $eventQuery
+    OPTIONAL {?event wdt:P12 ?place.
+            ?place rdfs:label ?placeLabel}.
+        
+
+    OPTIONAL {?event p:P38 ?roles.
+            ?roles ps:P38 ?qualifier.
+            ?roles pq:P39 ?people}.
+    
+    OPTIONAL {?event wdt:P14 ?endsAt.
+                FILTER (?endsAt <= "1900-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
+                    BIND(str(YEAR(?endsAt)) AS ?endYear).
+                }.
+        FILTER (?date >= "1800-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date <= "1900-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        BIND(str(YEAR(?date)) AS ?startyear).
+    
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
+order by ?startyear
+limit $limit
+offset $offset
+QUERY;
+
+                    array_push($queryArray, $query);
+
+                    $query = array('query' => "");
+                    $query['query'] = <<<QUERY
+SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
+(count(distinct ?people) as ?countpeople)
+(count(distinct ?event) as ?countervent)
+(count(distinct ?place) as ?countplace)
+(count(distinct ?source) as ?countsource)
+(group_concat(distinct ?placeLabel; separator = "||") as ?places)
+
+WHERE {
+    ?event wdt:P3 wd:Q34;
+        ?property  ?object;
+            wdt:P13 ?date.
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?source .
+            
+    ?event wdt:P81 ?type .
+
+    $eventQuery
+    OPTIONAL {?event wdt:P12 ?place.
+            ?place rdfs:label ?placeLabel}.
+        
+
+    OPTIONAL {?event p:P38 ?roles.
+            ?roles ps:P38 ?qualifier.
+            ?roles pq:P39 ?people}.
+    
+    OPTIONAL {?event wdt:P14 ?endsAt.
+                FILTER (?endsAt <= "1900-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
+                    BIND(str(YEAR(?endsAt)) AS ?endYear).
+                }.
+        FILTER (?date >= "1800-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date <= "1900-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        BIND(str(YEAR(?date)) AS ?startyear).
+    
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
+order by ?startyear
+QUERY;
+
+                    array_push($queryArray, $query);
+                }
+                else{
+                    $query = array('query' => "");
+
+                    $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 (count(distinct ?people) as ?countpeople)
 (count(distinct ?event) as ?counterevent)
@@ -490,7 +636,40 @@ limit $limit
 offset $offset
 QUERY;
 
-                array_push($queryArray, $query);
+                    array_push($queryArray, $query);
+
+                    $query = array('query' => "");
+                    $query['query'] = <<<QUERY
+SELECT ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
+(count(distinct ?people) as ?countpeople)
+(count(distinct ?event) as ?counterevent)
+(count(distinct ?place) as ?countplace)
+(count(distinct ?source) as ?countsource)
+(group_concat(distinct ?placeLabel; separator = "||") as ?places)
+
+WHERE {
+    ?event wdt:P3 wd:Q34;
+        ?property  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?source .
+        ?event wdt:P81 ?eventtype .
+
+            $eventQuery
+            OPTIONAL {?event wdt:P12 ?place.
+            ?place rdfs:label ?placeLabel}.
+    OPTIONAL {?event wdt:P13 ?date.
+            BIND(str(YEAR(?date)) AS ?startyear)}.
+    OPTIONAL {?event wdt:P14 ?endDate
+            BIND(str(YEAR(?endDate)) AS ?endyear)}.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
+order by ?startyear
+QUERY;
+
+                    array_push($queryArray, $query);
+                }
+
+
                 break;
             case 'sources':
                 $query = array('query' => "");
