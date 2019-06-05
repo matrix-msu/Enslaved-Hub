@@ -1,10 +1,12 @@
+var connectionsArray;   // array of all connections
+
 $(document).ready( function() {
     //when page loads trigger click on first category to load cards
-    $('#people').trigger('click');
+    loadConnections();
 });
 //Global variables for the card type(CARDT) and card amount(CARDA)
 var CARDT;
-var CARDA;
+var CARDA;  //going to be removed, the connection queries will have the limit
 
 $('li.unselected').click(function(){
     $('.selected').removeClass('selected');
@@ -59,9 +61,17 @@ function displayConnections(cardType, cardAmount){
         $(".load-more").addClass('loaded');
     }
 
+    var connections = connectionsArray[cardType];
+    console.log(connections);
+
     if( cardType == "Person"){
-        for(i = 0; i < displayAmount; i++){
-            $('.connect-row').append('<li><div class="cards"><img src="'+BASE_IMAGE_URL+cardType+'-light.svg" alt="'+cardType+' icon"><h3>Firstname Lastname</h3></div></li>');
+        for (var i in connections){
+            var conn = connections[i];
+            var name = conn['agentlabel']['value'];
+            var agentQ = conn['agent']['value'];
+            agentQ = agentQ.substring(agentQ.lastIndexOf('/') + 1);
+            var personUrl = BASE_URL + 'record/person/' + agentQ;
+            $('.connect-row').append('<li><a href=' + personUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div></a></li>');
         }
     }else{
         for(i = 0; i < displayAmount; i++){
@@ -73,4 +83,23 @@ function displayConnections(cardType, cardAmount){
 }
 function removeConnections(){
     $('.connect-row li').remove();
+}
+
+
+function loadConnections(){
+    console.log(QID, recordform)
+
+    $.ajax({
+        url: BASE_URL+'api/getFullRecordConnections',
+        type: "GET",
+        data: {
+                Qid: QID,
+                recordForm: recordform
+              },
+        success: function (data) {
+            connectionsArray = JSON.parse(data);
+            console.log('success', connectionsArray);
+            $('#people').trigger('click');  // start off on the people connections tab
+        }
+    });
 }

@@ -100,7 +100,8 @@
 
 <!-- Featured Stories-->
 
-<?php if(RECORD_FORM !== 'place'){ ?>
+<?php 
+if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
 <div class="container column featured-card">
     <div class="container cardheader-wrap">
         <h2 class="column-header">Featured in these Stories</h2>

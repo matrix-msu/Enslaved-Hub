@@ -10,6 +10,7 @@ $GLOBALS['api_routes'] = array(
 	'api/getPersonRecordHtml' => array('explorefunctions.php', 'getPersonRecordHtml'),
     'api/getDateRange' => array('explorefunctions.php', 'getEventDateRange'),
     'api/getProjectFullInfo' => array('explorefunctions.php', 'getProjectFullInfo'),
+    'api/getFullRecordConnections' => array('explorefunctions.php', 'getFullRecordConnections'),
 );
 
 $GLOBALS['routes'] = array(

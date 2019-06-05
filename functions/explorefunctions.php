@@ -1171,7 +1171,7 @@ HTML;
             $html .= "<div class='detail-menu'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
         }
 
-        $html .= "</div> - <a href='$eventUrl'>$eventRoleLabels[$i]</a></div>";
+        $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventRoleLabels[$i]</a></div>";
     }
     $html .= '</div>';
 } else if ($label == "closeMatchA"){
@@ -1351,7 +1351,7 @@ HTML;
             $html .= "<div class='detail-menu'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
         }
 
-        $html .= "</div> - <a href='$eventUrl'>$eventstatusLabels[$i]</a></div>";
+        $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventstatusLabels[$i]</a></div>";
     }
     $html .= '</div>';
 } else{
@@ -2053,7 +2053,70 @@ HTML;
     return json_encode($htmlArray);
 }
 
+function getFullRecordConnections(){
+  if (!isset($_REQUEST['Qid']) || !isset($_REQUEST['recordForm'])){
+    echo 'missing params';
+    return;
+  }
 
+  $QID = $_REQUEST['Qid'];
+  $recordform = $_REQUEST['recordForm'];
+  // echo $QID.' '.$recordform;die;
+
+  if ($recordform == 'source'){
+    return getSourcePageConnections($QID);
+  }
+
+
+
+
+}
+
+
+// connections for the source full record page
+function getSourcePageConnections($QID) {
+  $connections = array();
+
+
+  // people connections
+  $peopleQuery['query'] = <<<QUERY
+SELECT DISTINCT ?agent ?agentlabel (SHA512(CONCAT(STR(?agent), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?source {wd:$QID} #Q number needs to be changed for every source. 
+  ?source wdt:P3 wd:Q16.
+  ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+  		?property  ?object .
+  ?object prov:wasDerivedFrom ?provenance .
+  ?provenance pr:P35 ?source .
+  ?agent rdfs:label ?agentlabel
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+LIMIT 8
+
+QUERY;
+    
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($peopleQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+
+    $connections['Person'] = $result;
+
+    return json_encode($connections);
+  }
 
 
 function debugfunc($debugobject){?>
