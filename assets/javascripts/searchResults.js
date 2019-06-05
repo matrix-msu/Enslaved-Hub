@@ -12,7 +12,6 @@ var card_limit = 12;
 var presets = {};
 var filters = {};
 var main_categories = [];
-var url_filters = {};
 
 // Get params from url
 var $_GET = {};
@@ -26,15 +25,16 @@ if(document.location.toString().indexOf('?') !== -1)
         .replace(/#.*$/, '')
         .split('&');
 
-    for(var i=0; i < query.length; i++) {
+    for(var i=0; i < query.length; i++) 
+    {
         var aux = decodeURIComponent(query[i]).split('=');
         $_GET[aux[0]] = aux[1];
         $_GET_length++;
     }
 }
-
 // Set all the filters from the URL
-for(var i=0; i < $_GET_length; i++){
+for(var i=0; i < $_GET_length; i++)
+{
     var type = Object.keys($_GET)[i];
     var filter = $_GET[type];
 
@@ -42,9 +42,7 @@ for(var i=0; i < $_GET_length; i++){
         filter = '';
     }
     filters[type] = filter;
-    url_filters[type] = filter;
 }
-console.log(url_filters);
 
 // Get main categories
 if("categories" in filters)
@@ -111,7 +109,8 @@ function searchResults(preset, limit = 12, offset = 0)
 /// Append Cards
 ///******************************************************************* */
 
-function appendCards(){
+function appendCards()
+{
     // return;
     $("ul.row").empty(); //empty row before appending more
     result_array['gridCard'].forEach(function (card) {
@@ -145,7 +144,7 @@ $(document).ready(function() {
     $(".filter-menu ul.catmenu li").each(function(){
         if(main_categories.length > 0)
         {
-            if(main_categories.indexOf( $(this).find("p").text() ) > -1)
+            if(main_categories.indexOf( $(this).find("p").text().toUpperCase() ) > -1)
                 $(this).find("input").prop('checked', true);
         }
         
@@ -159,15 +158,15 @@ $(document).ready(function() {
     });
 
     // Show selected filters
-    $.each(url_filters, function(key, value) 
+    $.each(filters, function(key, value) 
     {
-        if(key) // inputs lable have classes with name as key
+        if(key && key != "limit" && key != "offset") // inputs lable have classes with name as key
         {
             $("label."+key).each(function() 
             {
                 var sel_filter = $(this).find('p').text();
                 var em = $(this).find('p').find("em").text();
-                sel_filter = sel_filter.replace(em, "").trim();
+                sel_filter = sel_filter.replace(em, "").trim().toUpperCase();
 
                 if(sel_filter == value)
                     $(this).find("input").prop("checked", true);
@@ -430,10 +429,12 @@ $(document).ready(function() {
         // get filter value and key
         var input_value = $(this).parent().find('p').text();
         let em = $(this).parent().find('p').find("em").text();
-        input_value = input_value.replace(em, "").trim();
+        input_value = input_value.replace(em, "").trim().toLowerCase();
 
         var input_key = $(this).parent().attr("class");
         var page_url = document.location.href;
+
+        console.log(page_url);
 
         // handle categories
         if(input_key == "category")
@@ -443,7 +444,7 @@ $(document).ready(function() {
             {
                 if($(this).find("input").is(":checked"))
                 {
-                    categories.push($(this).find('p').text());
+                    categories.push($(this).find('p').text().toLowerCase());
                 }
             });
 
@@ -453,42 +454,45 @@ $(document).ready(function() {
 
         // Add to filter object
         if($(this).is(":checked") || input_key == "categories")
-            url_filters[input_key] = input_value;
+            filters[input_key] = input_value;
 
         // remove from filter object
-        else if(input_key in url_filters && url_filters[ input_key ] == input_value)
-            delete url_filters[input_key];
+        else if(input_key in filters && filters[ input_key ] == input_value)
+            delete filters[input_key];
         
         // Split all parameter
         var split_url = page_url.split('?');
-        if("categories" in url_filters)
+        if("categories" in filters)
         {
             var split_paths = split_url[0].split('/');
             var path = split_paths[split_paths.length - 1];
 
-            if(url_filters["categories"].length == 1)
+            if(filters["categories"].length == 1)
             {
+                search_type = filters["categories"][0];
                 // One category path
-                split_url[0] = split_url[0].replace('/' + path, '/' +  url_filters["categories"][0].toLowerCase());
-                delete url_filters["categories"];
+                split_url[0] = split_url[0].replace('/' + path, '/' +  filters["categories"][0].toLowerCase());
+                delete filters["categories"];
             }
-            else if(url_filters["categories"].length == 5)
+            else if(filters["categories"].length == 5)
             {
+                search_type = "all";
                 // All categories are selected
                 split_url[0] = split_url[0].replace('/' + path, '/all');
-                delete url_filters["categories"];
+                delete filters["categories"];
             }
-            else {
-                // multiple categorise selected
+            else // multiple categorise selected
+            {
+                search_type = "categories";
                 split_url[0] = split_url[0].replace('/' + path, '/category');
             }
         }
         page_url = split_url[0]+"?";
 
         var counter = 0;
-        $.each(url_filters, function(key, value) 
+        $.each(filters, function(key, value) 
         {
-            if(key)
+            if(key && key != "limit" && key != "offset")
             {   // Do not add deselected filter
                 if(!counter) page_url += key + '=' + value;
                 else page_url += '&' + key + '=' + value;
@@ -496,8 +500,15 @@ $(document).ready(function() {
             }
         });
 
-        // console.log(page_url);
-        document.location = page_url;
+        // window.history.pushState(“object or string”, “Title”, “/new-url”); // Back button works
+        var newstate = (history.state || 0) + 1; // You can also passed data as state objects
+        // window.history.pushState(newstate, "", page_url);
+        // window.history.replaceState(“object or string”, “Title”, “/another-new-url”); // Back button doesn't work
+        window.history.replaceState(newstate, "", page_url);
+        // document.location = page_url; // reload the page to new url
+
+        // make an ajax call now with the new filters
+        searchResults(search_type);
         
     });
 });

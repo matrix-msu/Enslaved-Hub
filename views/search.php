@@ -19,7 +19,7 @@
 </div>
 <main class="direct-search">
     <div class="searchwrap">
-        <form  action="<?php echo BASE_URL;?>search/people" method="get" onsubmit="removeEmpty()">
+        <form  action="<?php echo BASE_URL;?>search/all" method="get" onsubmit="removeEmpty()">
             <h2>Direct Search</h2>
             <div class="search-section">
                 <div class="inputwrap">
@@ -32,11 +32,16 @@
                 </div>
                 <div class="inputwrap">
                     <label for="year">Year</label>
-                    <input class="input-field" id="year" name="year" type="text" placeholder="Enter Year"/>
+                    <input class="input-field" id="year" name="year" type="text" placeholder="Enter Year" onkeypress='validate(event)' maxlength="4"/>
                 </div>
                 <div class="inputwrap">
-                    <label for="event">Life Event</label>
-                    <input class="input-field" id="event" name="event" type="text" placeholder="Enter Life Event"/>
+                    <label for="life-event">Life Event</label>
+                    <select class="s2-multiple" name="event" id="life-event" multiple="multiple">
+                        <option value=""></option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="unidentified">Unidentified</option>
+                    </select>
                 </div>
             </div>
             <div class="buttonwrap">
@@ -45,8 +50,4 @@
         </form>
     </div>
 </main>
-<<<<<<< HEAD
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
-=======
-<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
->>>>>>> 85413a105adcfb04a4875fee27012d97c114333f

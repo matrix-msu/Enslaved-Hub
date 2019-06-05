@@ -45,6 +45,11 @@ $(document).ready(function() {
     $('#endYear').select2({
         placeholder: "Select or Input the End Year"
     });
+
+    //Basic search page
+    $('#life-event').select2({
+        placeholder: "Select Life Event"
+    });
     
     $('b[role="presentation"]').hide();
     $('.select2-selection--multiple').append('<span class="select2-selection__arrow" role="presentation"></span>');
@@ -74,3 +79,21 @@ function removeEmpty() {
         }
     }
 }
+
+function validate(evt) {
+    var theEvent = evt || window.event;
+  
+    // Handle paste
+    if (theEvent.type === 'paste') {
+        key = event.clipboardData.getData('text/plain');
+    } else {
+    // Handle key press
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+    }
+    var regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
