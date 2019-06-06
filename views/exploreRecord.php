@@ -76,24 +76,37 @@
         <h2>Connections</h2>
         <div class="categories">
             <ul>
+            <?php
+                if(RECORD_FORM == 'source'){
+            ?>
+                <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
+                <li class="unselected" id="event"><div class="event-image"></div>Events</li>
+                <li class="unselected" id="place"><div class="place-image"></div>Places</li>
+            <?php
+                } else {
+            ?>
                 <li class="unselected selected" id="people"><div class="person-image"></div>10 People</li>
                 <li class="unselected" id="event"><div class="event-image"></div>3 Events</li>
                 <li class="unselected" id="place"><div class="place-image"></div>3 Places</li>
                 <li class="unselected" id="project"><div class="project-image"></div>2 Projects</li>
                 <li class="unselected" id="source"><div class="source-image"></div>15 Sources</li>
+            <?php
+                }
+            ?>
                 <hr>
             </ul>
         </div>
         <div class="connection-cards">
             <ul class="connect-row">
-                <li>
+                <!-- <li>
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
                     </div>
-                </li>
+                </li> -->
             </ul>
-            <div class="load-more"><h4>Load More</h4></div>
+            <a class="search-all"></a>
+            <!-- <div class="load-more"><h4>Load More</h4></div> -->
         </div>
     </div>
 </div>

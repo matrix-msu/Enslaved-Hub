@@ -2063,8 +2063,11 @@ function getFullRecordConnections(){
   $recordform = $_REQUEST['recordForm'];
   // echo $QID.' '.$recordform;die;
 
+  // these need to be filled in for each type of form
   if ($recordform == 'source'){
     return getSourcePageConnections($QID);
+  } else {
+    return '';
   }
 
 
@@ -2114,6 +2117,42 @@ QUERY;
     $result = json_decode($result, true)['results']['bindings'];
 
     $connections['Person'] = $result;
+
+
+
+  // events connections
+  $peopleQuery['query'] = <<<QUERY
+SELECT DISTINCT ?event ?eventname (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?source {wd:$QID} #Q number needs to be changed for every source. 
+  ?source wdt:P3 wd:Q16.
+  ?source wdt:P8 ?event.
+  ?event rdfs:label ?eventname
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+LIMIT 8
+
+QUERY;
+    
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($peopleQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+
+    $connections['Event'] = $result;
 
     return json_encode($connections);
   }

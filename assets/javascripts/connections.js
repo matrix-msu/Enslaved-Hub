@@ -4,63 +4,65 @@ $(document).ready( function() {
     //when page loads trigger click on first category to load cards
     loadConnections();
 });
-//Global variables for the card type(CARDT) and card amount(CARDA)
+//Global variables for the card type(CARDT)
 var CARDT;
-var CARDA;  //going to be removed, the connection queries will have the limit
+var SEARCHTYPE;      // used to create search urls
 
 $('li.unselected').click(function(){
     $('.selected').removeClass('selected');
     $(this).addClass('selected');
-    $(".load-more").removeClass('loaded');
     removeConnections();
+
+    var searchAllText = "Search For All ";
+
     //People
     if($("#people").hasClass("selected")){
         CARDT="Person";
-        CARDA = 10;
-        displayConnections(CARDT,CARDA);
+        SEARCHTYPE="people";
+        displayConnections(CARDT);
+        $('.search-all').html(searchAllText+'People');
     }
     //Events
     if($("#event").hasClass("selected")){
         CARDT="Event";
-        CARDA = 3;
-        displayConnections(CARDT,CARDA);
+        SEARCHTYPE = "events";
+        displayConnections(CARDT);
+        $('.search-all').html(searchAllText + 'Events');
     }
     //Places
     if($("#place").hasClass("selected")){
         CARDT="Place";
-        CARDA = 3;
-        displayConnections(CARDT,CARDA);
+        SEARCHTYPE = "places";
+        displayConnections(CARDT);
+        $('.search-all').html(searchAllText + 'Places');
     }
     //Projects
     if($("#project").hasClass("selected")){
         CARDT="Project";
-        CARDA = 2;
-        displayConnections(CARDT,CARDA);
+        SEARCHTYPE = "projects";
+        displayConnections(CARDT);
+        $('.search-all').html(searchAllText + 'Projects');
     }
     //Sources
     if($("#source").hasClass("selected")){
         CARDT="Source";
-        CARDA = 15;
-        displayConnections(CARDT,CARDA);
+        SEARCHTYPE = "sources";
+        displayConnections(CARDT);
+        $('.search-all').html(searchAllText + 'Sources');
     }
+
+    // set the search all button url
+    $('.search-all').attr('href', BASE_URL + 'search/' + SEARCHTYPE);
 });
 
-$('.load-more').click(function(){
-    $(this).addClass('loaded');
-    removeConnections();
-    displayConnections(CARDT,CARDA);
+$('.search-all').click(function () {
+    var searchUrl = BASE_URL + 'search/' + SEARCHTYPE;
+    window.location = searchUrl;
 });
 
 //since cardType and cardAmount were changed to global variables, they could technically be removed here and replaced with the globals
 //but this is clear enought at the moment
-function displayConnections(cardType, cardAmount){
-    var displayAmount = cardAmount;
-    if( cardAmount > 8 && !$(".load-more").hasClass("loaded") ){
-        displayAmount = 8;
-    }else if( cardAmount < 8 ){
-        $(".load-more").addClass('loaded');
-    }
-
+function displayConnections(cardType){
     var connections = connectionsArray[cardType];
     console.log(connections);
 
@@ -73,10 +75,17 @@ function displayConnections(cardType, cardAmount){
             var personUrl = BASE_URL + 'record/person/' + agentQ;
             $('.connect-row').append('<li><a href=' + personUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div></a></li>');
         }
-    }else{
-        for(i = 0; i < displayAmount; i++){
-            $('.connect-row').append('<li><div class="cards"><img src="'+BASE_IMAGE_URL+cardType+'-light.svg" alt="'+cardType+' icon"><h3>'+cardType+' Name</h3></div></li>');
+    } else if (cardType == "Event") {
+        for (var i in connections){
+            var conn = connections[i];
+            var name = conn['eventname']['value'];
+            var eventQ = conn['event']['value'];
+            eventQ = eventQ.substring(eventQ.lastIndexOf('/') + 1);
+            var eventUrl = BASE_URL + 'record/event/' + eventQ;
+            $('.connect-row').append('<li><a href=' + eventUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div></a></li>');
         }
+    }else{
+
     }
     $('.connect-row li').css("background-image", "url("+BASE_IMAGE_URL+cardType+"Card.jpg)");
     //There does need to be a certain naming convention for the image names due to this function
@@ -97,9 +106,21 @@ function loadConnections(){
                 recordForm: recordform
               },
         success: function (data) {
+            if (data == " "){
+                return;
+            }
             connectionsArray = JSON.parse(data);
             console.log('success', connectionsArray);
             $('#people').trigger('click');  // start off on the people connections tab
+            
+            // display the counts for connections
+            for (var form in connectionsArray){
+                if (form == 'Person'){
+                    $('#people').html('<div class="person-image"></div>'+connectionsArray[form].length + ' People');
+                } else if (form == 'Event'){
+                    $('#event').html('<div class="event-image"></div>' + connectionsArray[form].length + ' Events');
+                }
+            }
         }
     });
 }

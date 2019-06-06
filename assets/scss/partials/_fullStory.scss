@@ -391,7 +391,7 @@
                 }
             }
         }
-        .load-more{
+        .load-more, .search-all{
             margin: 0 auto;
             max-width: 140px;
             h4{
@@ -409,6 +409,23 @@
         }
         .loaded{
             display: none;
+        }
+
+
+        .search-all{
+            margin: 0 auto;
+            max-width: 140px;
+
+            cursor: pointer;
+            color: #122E46;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 55px;
+            transition: color .3s;
+
+            &:hover{
+                color: $sub-base;
+            }
         }
     }
 }
