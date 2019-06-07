@@ -36,7 +36,7 @@
                 </div>
                 <div class="inputwrap">
                     <label for="life-event">Life Event</label>
-                    <select class="s2-single" name="event" id="life-event">
+                    <select class="s2-multiple" name="event" id="life-event" multiple="multiple">
                         <option value=""></option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
