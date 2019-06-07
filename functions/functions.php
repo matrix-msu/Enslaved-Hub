@@ -936,7 +936,7 @@ QUERY;
                 break;
 
             default:
-                die;
+                return json_encode(["gridCard"=>array(), "tableCard" => array(), "total" => 0]);
         }
 
     }
@@ -950,7 +950,7 @@ QUERY;
         $preset = 'default';
     }
     else{
-        die;
+        return json_encode(["gridCard"=>array(), "tableCard" => array(), "total" => 0]);
     }
 
 
@@ -1190,7 +1190,8 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
-                            $dateRangeHtml = "<p><span>Date Range: </span>$dateRange</p>";
+                            $dateName = ($startYear != '' && $endYear != '') ? "Date Range" : "Date";
+                            $dateRangeHtml = "<p><span>$dateName: </span>$dateRange</p>";
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Person-light.svg';
@@ -1622,7 +1623,8 @@ HTML;
 
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
-                            $dateRangeHtml = "<p><span>Date Range: </span>$dateRange</p>";
+                            $dateName = ($startYear != '' && $endYear != '') ? "Date Range" : "Date";
+                           $dateRangeHtml = "<p><span>$dateName: </span>$dateRange</p>";
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';

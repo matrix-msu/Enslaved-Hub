@@ -1,10 +1,4 @@
  <?php
-const ageCategory=[
-'Adult'	 => 'Q66',
-'Infant'	 => 'Q68',
-'Child'	 => 'Q69',
-'Old'	 => 'Q71'];
-
  const qages=[
 'Q64' => 'Age 20',
 'Q72' => 'Age 1 Month',
