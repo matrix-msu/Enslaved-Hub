@@ -1,5 +1,4 @@
  <?php
-
  const qages=[
 'Q64' => 'Age 20',
 'Q72' => 'Age 1 Month',
