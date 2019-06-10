@@ -195,20 +195,33 @@ QUERY;
             case 'people':
 
                 $genderQuery = "";
-                if (isset($filtersArray['gender'])){
+                if (isset($filtersArray['gender']))
+                {
                     $gender = $filtersArray['gender'];
                     $qGender = $gender == 'Male';
-                    if($gender == 'Male'){
-                        $genderQuery = "?agent wdt:P17 wd:Q48";
+
+                    if(count($filtersArray['gender']) > 1)
+                    {
+                        // handle multiple gender (Male, Female, and Unidentified)
                     }
-                    else if($gender == 'Female'){
-                        $genderQuery = "?agent wdt:P17 wd:Q47";
+                    else // handle single gender search
+                    {
+                        if( in_array("Male", $gender) ){
+                            $genderQuery = "?agent wdt:P17 wd:Q48";
+                        }
+                        else if( in_array("Female", $gender) ){
+                            $genderQuery = "?agent wdt:P17 wd:Q47";
+                        }
+                        else // Handle unidentified
+                        {
+                            // code here
+                        }
                     }
                 }
 
                 $nameQuery = "";
                 if (isset($filtersArray['person'])){
-                    $name = $filtersArray['person'];
+                    $name = $filtersArray['person'][0];
                     $nameQuery = "FILTER regex(?name, '^$name', 'i') .";
                 }
 
@@ -408,11 +421,23 @@ QUERY;
                 if (isset($filtersArray['gender'])){
                     $gender = $filtersArray['gender'];
                     $qGender = $gender == 'Male';
-                    if($gender == 'Male'){
-                        $genderQuery = "?agent wdt:P17 wd:Q48";
+
+                    if( count( $filtersArray["gender"] ) > 1)
+                    {
+                        // handle multiple gender values
                     }
-                    else if($gender == 'Female'){
-                        $genderQuery = "?agent wdt:P17 wd:Q47";
+                    else // handle single gender search
+                    {
+                        if( in_array("Male", $gender)){
+                            $genderQuery = "?agent wdt:P17 wd:Q48";
+                        }
+                        else  if( in_array("Female", $gender)){
+                            $genderQuery = "?agent wdt:P17 wd:Q47";
+                        }
+                        else 
+                        {
+                            // handle unidentified
+                        }
                     }
                 }
 
@@ -499,7 +524,7 @@ QUERY;
             
                 $eventQuery = "";
                 if (isset($filtersArray['event_type'])){
-                    $eventType = $filtersArray['event_type'];
+                    $eventType = $filtersArray['event_type'][0];
 
                     if (array_key_exists($eventType, eventTypes) ){
                         $qType = eventTypes[$eventType];
@@ -511,7 +536,7 @@ QUERY;
 
                 $dateRangeQuery = "";
                 if (isset($filtersArray['daterange'])){
-                    $dateRange = $filtersArray['daterange'];
+                    $dateRange = $filtersArray['daterange'][0];
                     $dateRangeQuery = $dateRange;
                 }
 
