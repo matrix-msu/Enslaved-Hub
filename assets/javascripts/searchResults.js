@@ -13,6 +13,12 @@ var presets = {};
 var filters = {};
 var main_categories = [];
 
+var showPath = false;
+var upperForm = "";
+var titleType = "";
+var currentTitle = "Search";
+
+
 // Get params from url
 var $_GET = {};
 var $_GET_length = 0;
@@ -57,13 +63,25 @@ if("categories" in filters)
  * \param limit : limit to the number of cards per page : default value = 12
  * \param offset : number of cards offset from the first card (with 0 being the first card) : default value = 0
 */
+
+var isSearching  = false;
+
 function searchResults(preset, limit = 12, offset = 0)
 {
+    if(isSearching)
+    {
+        return;
+    }
+
+    isSearching = true;
+
     filters['limit'] = limit;
     card_limit = limit;
     filters['offset'] = offset;
     card_offset = offset;
     var templates = ['gridCard', 'tableCard'];
+
+    
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -74,7 +92,9 @@ function searchResults(preset, limit = 12, offset = 0)
             templates: templates
         },
         'success': function (data) {
-            // console.log(data);
+
+            // console.log("|" + data + "|");
+
             result_array = JSON.parse(data);
             
             console.log('result array', result_array);
@@ -95,6 +115,8 @@ function searchResults(preset, limit = 12, offset = 0)
             }
             $('.showing-results').html(showingResultsText);
 
+            isSearching = false;
+
             //Wait till doc is ready
             $(document).ready(function(){
                 appendCards();
@@ -103,6 +125,7 @@ function searchResults(preset, limit = 12, offset = 0)
             
         }
     });
+
 }
 
 ///******************************************************************* */
@@ -140,7 +163,7 @@ $(document).ready(function() {
     ///******************************************************************* */
     
     //For form type
-    var upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
+    upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
     $(".filter-menu ul.catmenu li").each(function(){
         if(main_categories.length > 0)
         {
@@ -149,7 +172,7 @@ $(document).ready(function() {
         }
         
         //Check a checkbox if EXPLORE_FORM is set to this type
-        else if( $(this).find("p").text() === upperForm)
+        else if( $(this).find("p").text() == upperForm)
             $(this).find("input").prop('checked', true);
         
         //Set all checkboxes to checked
@@ -166,7 +189,9 @@ $(document).ready(function() {
             {
                 var sel_filter = $(this).find('p').text();
                 var em = $(this).find('p').find("em").text();
-                sel_filter = sel_filter.replace(em, "").trim().toUpperCase();
+                sel_filter = sel_filter.replace(em, "").trim();
+
+                console.log(sel_filter, value);
 
                 if(sel_filter == value)
                     $(this).find("input").prop("checked", true);
@@ -422,6 +447,23 @@ $(document).ready(function() {
         $(".show-filter").trigger("click");
     }
 
+    // searchbar
+    $(".search-form").submit(function(e) {
+        e.preventDefault();
+
+        var pparam = $(this).serialize();
+        var splitParam = pparam.split('=');
+
+        splitParam[1] = splitParam[1].replace(/\+/g, ' ');
+
+        $(".search-title h1").text(splitParam[1]);
+        $(".last-page-header #current-title").text("//" + splitParam[1]);
+
+        filters[splitParam[0]] = splitParam[1];
+        searchResults(search_type);
+        $(this).find("input").val("");
+    });
+
 
     // click filters
     $(document).on("change", "input[type=checkbox]", function() 
@@ -429,12 +471,10 @@ $(document).ready(function() {
         // get filter value and key
         var input_value = $(this).parent().find('p').text();
         let em = $(this).parent().find('p').find("em").text();
-        input_value = input_value.replace(em, "").trim().toLowerCase();
+        input_value = input_value.replace(em, "").trim();
 
         var input_key = $(this).parent().attr("class");
         var page_url = document.location.href;
-
-        console.log(page_url);
 
         // handle categories
         if(input_key == "category")
@@ -444,7 +484,7 @@ $(document).ready(function() {
             {
                 if($(this).find("input").is(":checked"))
                 {
-                    categories.push($(this).find('p').text().toLowerCase());
+                    categories.push($(this).find('p').text());
                 }
             });
 
@@ -469,13 +509,19 @@ $(document).ready(function() {
 
             if(filters["categories"].length == 1)
             {
-                search_type = filters["categories"][0];
+                showPath = true;
+                upperForm = filters["categories"][0];
+                titleType = "";
+                currentTitle = "Search";
+
+                search_type = filters["categories"][0].toLowerCase();
                 // One category path
                 split_url[0] = split_url[0].replace('/' + path, '/' +  filters["categories"][0].toLowerCase());
                 delete filters["categories"];
             }
             else if(filters["categories"].length == 5)
             {
+                showPath = false;
                 search_type = "all";
                 // All categories are selected
                 split_url[0] = split_url[0].replace('/' + path, '/all');
@@ -483,11 +529,27 @@ $(document).ready(function() {
             }
             else // multiple categorise selected
             {
+                showPath = false;
                 search_type = "categories";
                 split_url[0] = split_url[0].replace('/' + path, '/category');
             }
         }
         page_url = split_url[0]+"?";
+
+        if(showPath)
+        {
+            $(".last-page-header").show();
+
+            if(upperForm != "") $(".last-page-header .prev1 span").text(upperForm).show();
+            else $(".last-page-header .prev1 span").hide();
+
+            if(titleType != "") $(".last-page-header .prev2 span").text("//" + titleType).show();
+            else $(".last-page-header .prev2 span").hide();
+
+            if(currentTitle != "") $(".last-page-header #current-title").text("//" + currentTitle).show();
+            else $(".last-page-header #current-title").hide();
+
+        } else $(".last-page-header").hide();
 
         var counter = 0;
         $.each(filters, function(key, value) 
@@ -500,10 +562,7 @@ $(document).ready(function() {
             }
         });
 
-        // window.history.pushState(“object or string”, “Title”, “/new-url”); // Back button works
-        var newstate = (history.state || 0) + 1; // You can also passed data as state objects
-        // window.history.pushState(newstate, "", page_url);
-        // window.history.replaceState(“object or string”, “Title”, “/another-new-url”); // Back button doesn't work
+        var newstate = (history.state || 0) + 1; // Can also passed data as state objects
         window.history.replaceState(newstate, "", page_url);
         // document.location = page_url; // reload the page to new url
 
