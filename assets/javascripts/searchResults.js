@@ -34,6 +34,13 @@ if(document.location.toString().indexOf('?') !== -1)
     {
         var aux = decodeURIComponent(query[i]).split('=');
         if(!aux || aux[0] == "" || aux[1] == "") continue;
+        
+        // Get searchbar keywords
+        if(aux[0] == "searchbar") 
+        {
+            filters[aux[0]] = aux[1].split('+');
+            continue;
+        }
 
         filters[aux[0]] = aux[1].split(',');
 
@@ -96,7 +103,7 @@ function searchResults(preset, limit = 12, offset = 0)
 
             searchBarFilter = filters != undefined ? filters : '';
             // searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
-            searchBarPlaceholder = "Search Across "  + searchBarFilter + " Results";
+            searchBarPlaceholder = "Search Across "  + total_length + " Results";
             $('.main-search').attr("placeholder", searchBarPlaceholder);
 
             var showingResultsText = '';
@@ -444,6 +451,7 @@ $(document).ready(function() {
         var pparam = $(this).serialize();
         var splitParam = pparam.split('=');
         splitParam[1] = splitParam[1].replace(/\+/g, ' ');
+        filters[splitParam[0]] = splitParam[1].split(' ');
 
         // update views
         $(".search-title h1").text(splitParam[1]);
@@ -451,12 +459,24 @@ $(document).ready(function() {
         $(this).find("input").val("");
 
         // update URL
+        var url_address = document.location.href;
+        var split_address = url_address.split('?');
+        url_address = split_address[0] + '?';
 
+        var counter = 0;
+        $.each(filters, function(key, value) 
+        {
+            if(key && value && key != "limit" && key != "offset")
+            { 
+                if(!counter) url_address += key + '=' + value;
+                else url_address += '&' + key + '=' + value;
+                ++counter;
+            }
+        });
+        window.history.replaceState(0, "", url_address);
 
         // make ajax request
-        filters[splitParam[0]] = splitParam[1];
         searchResults(search_type);
-        
     });
 
 
@@ -558,7 +578,7 @@ $(document).ready(function() {
         $.each(filters, function(key, value) 
         {
             if(key && value && key != "limit" && key != "offset")
-            {   // Do not add deselected filter
+            { 
                 if(!counter) page_url += key + '=' + value;
                 else page_url += '&' + key + '=' + value;
                 ++counter;
