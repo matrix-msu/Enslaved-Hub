@@ -73,23 +73,31 @@
 <!-- Story Connections -->
 <div class="story-connections record-connections">
     <div class="connectionwrap">
-        <h2>Connections</h2>
+        <h2>Related Records</h2>
         <div class="categories">
             <ul>
             <?php
+                // decide which connnections should be displayed based on the type of record
                 if(RECORD_FORM == 'source'){
             ?>
                 <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
                 <li class="unselected" id="event"><div class="event-image"></div>Events</li>
                 <li class="unselected" id="place"><div class="place-image"></div>Places</li>
             <?php
+                } else if (RECORD_FORM == 'event') {
+            ?>
+                <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
+                <li class="unselected" id="place"><div class="place-image"></div>Places</li>
+                <li class="unselected" id="project"><div class="project-image"></div>Projects</li>
+                <li class="unselected" id="source"><div class="source-image"></div>Sources</li>
+            <?php
                 } else {
             ?>
-                <li class="unselected selected" id="people"><div class="person-image"></div>10 People</li>
-                <li class="unselected" id="event"><div class="event-image"></div>3 Events</li>
-                <li class="unselected" id="place"><div class="place-image"></div>3 Places</li>
-                <li class="unselected" id="project"><div class="project-image"></div>2 Projects</li>
-                <li class="unselected" id="source"><div class="source-image"></div>15 Sources</li>
+                <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
+                <li class="unselected" id="event"><div class="event-image"></div>Events</li>
+                <li class="unselected" id="place"><div class="place-image"></div>Places</li>
+                <li class="unselected" id="project"><div class="project-image"></div>Projects</li>
+                <li class="unselected" id="source"><div class="source-image"></div>Sources</li>
             <?php
                 }
             ?>

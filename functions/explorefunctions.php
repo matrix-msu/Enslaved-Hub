@@ -1251,9 +1251,10 @@ HTML;
   <h3>$upperlabel</h3>
 HTML;
 
+
     //Loop through and match up
     $matched = '';
-    for($i=0; $i < sizeof($relationshipUrls); $i++){
+    for($i=0; $i < sizeof($relationships); $i++){
         $explode = explode('/', $relationshipUrls[$i]);
         $personQ = end($explode);
         $personUrl = $baseurl . 'record/person/' . $personQ;
@@ -1760,7 +1761,9 @@ QUERY;
 
     //Status
     if (isset($record['status']) && isset($record['status']['value']) ){
-      if(isset($record['statusevent']) && isset($record['statusevent']['value']) && isset($record['eventstatusLabel']) && isset($record['eventstatusLabel']['value']) ){
+      if(isset($record['statusevent']) && isset($record['statusevent']['value']) &&
+         isset($record['eventstatusLabel']) && isset($record['eventstatusLabel']['value']) &&
+         $record['eventstatusLabel']['value'] != '' && $record['statusevent']['value'] ){
         if (empty($record['status']['value'])) {
           $recordVars['StatusA'] = [];
         } else {
@@ -1836,7 +1839,8 @@ QUERY;
 
     //CloseMatch
     if (isset($record['match']) && isset($record['match']['value']) ){
-      if(isset($record['matchlabel']) && isset($record['matchlabel']['value']) ){
+      if(isset($record['matchlabel']) && isset($record['matchlabel']['value']) &&  
+         $record['matchlabel']['value'] != '' ){
         $closeMatchArr = ['matchLabels' => $record['matchlabel']['value'],
                            'matchUrls' => $record['match']['value']
                           ];
@@ -1873,7 +1877,8 @@ QUERY;
     //Roles
     //Gets the roles, participants, and pqID if they exist and matches them together
     if (isset($record['roles']) && isset($record['roles']['value']) ){
-      if(isset($record['participant']) && isset($record['participant']['value'])){
+      if(isset($record['participant']) && isset($record['participant']['value']) && 
+         $record['participant']['value'] != '' &&  $record['pq']['value'] != ''){
         //There are participants to match with their roles and qIDs
         $rolesArr = ['roles' => $record['roles']['value'],
                      'participant' => $record['participant']['value'],
@@ -1882,7 +1887,8 @@ QUERY;
         $recordVars['RolesA'] = $rolesArr;
       }
       else if(isset($record['eventRole']) && isset($record['eventRole']['value'])){
-          if(isset($record['eventRoleLabel']) && isset($record['eventRoleLabel']['value'])){
+          if(isset($record['eventRoleLabel']) && isset($record['eventRoleLabel']['value']) &&
+              $record['eventRoleLabel']['value'] != '' && $record['eventRole']['value'] != '' ){
             //There are participants to match with their roles and qIDs
             $rolesArr = ['roles' => $record['roles']['value'],
                          'eventRoles' => $record['eventRole']['value'],
@@ -2066,6 +2072,8 @@ function getFullRecordConnections(){
   // these need to be filled in for each type of form
   if ($recordform == 'source'){
     return getSourcePageConnections($QID);
+  } else if ($recordform == 'event') {
+    return getEventPageConnections($QID);
   } else {
     return '';
   }
@@ -2083,17 +2091,17 @@ function getSourcePageConnections($QID) {
 
   // people connections
   $peopleQuery['query'] = <<<QUERY
-SELECT DISTINCT ?agent ?agentlabel (SHA512(CONCAT(STR(?agent), STR(RAND()))) as ?random)
+SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
 
  WHERE
 {
  VALUES ?source {wd:$QID} #Q number needs to be changed for every source. 
   ?source wdt:P3 wd:Q16.
-  ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+  ?people wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:P35 ?source .
-  ?agent rdfs:label ?agentlabel
+  ?people rdfs:label ?peoplename
   
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2153,6 +2161,111 @@ QUERY;
     $result = json_decode($result, true)['results']['bindings'];
 
     $connections['Event'] = $result;
+
+    return json_encode($connections);
+  }
+
+
+// connections for the event full record page
+function getEventPageConnections($QID) {
+  $connections = array();
+
+  // people connections
+  $peopleQuery['query'] = <<<QUERY
+SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?event {wd:$QID} #Q number needs to be changed for every event. 
+  ?event wdt:P3 wd:Q34.
+  ?event p:P38 ?statement.
+  ?statement ps:P38 ?name. 
+  ?statement pq:P39 ?people.
+  ?people rdfs:label ?peoplename.
+
+  
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+LIMIT 8
+
+
+QUERY;
+    
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($peopleQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+
+    $connections['Person'] = $result;
+
+
+  // project and source connections
+  $projectSourceQuery['query'] = <<<QUERY
+SELECT DISTINCT ?source ?refName ?project ?projectName (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random)
+
+ WHERE
+{
+VALUES ?event {wd:$QID} #Q number needs to be changed for every event. 
+  ?event wdt:P3 wd:Q34;
+  		?property  ?object .
+  ?object prov:wasDerivedFrom ?provenance .
+  ?provenance pr:P35 ?source .
+  ?source rdfs:label ?refName;
+          wdt:P7 ?project.
+  ?project rdfs:label ?projectName.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+LIMIT 8
+
+
+QUERY;
+    
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($projectSourceQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+
+
+    $projectConnections = array();
+    $sourceConnections = array();
+
+    // split the results into project connections and source connections
+    foreach ($result as $res){
+        if (isset($res['project']) && isset($res['projectName'])){
+          $projectConnections[] = array('project' => $res['project'], 'projectName' => $res['projectName']);
+        }
+
+        if (isset($res['source']) && isset($res['refName'])){
+          $sourceConnections[] = array('source' => $res['source'], 'sourceName' => $res['refName']);
+        }
+    }
+
+    $connections['Project'] = $projectConnections;
+    $connections['Source'] = $sourceConnections;
+
+
+
 
     return json_encode($connections);
   }
