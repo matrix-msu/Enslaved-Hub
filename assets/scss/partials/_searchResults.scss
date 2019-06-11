@@ -26,7 +26,7 @@ div.searched-term {
         box-shadow: 0 10px 15px 0 rgba(0,0,0,0.05);
         box-sizing: border-box;
         height: calc(100% - 40px);
-        overflow: hidden;
+        overflow: auto;
         position: absolute;
         top: 40px;
         left: -270px;
@@ -749,7 +749,7 @@ span.align-right.show {
         .cardwrap{
             .row{
                 li{
-                    width: 49%;
+                    width: 48%;
                 }
             }
         }

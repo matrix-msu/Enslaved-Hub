@@ -49,7 +49,7 @@
             <h2>Show Results For</h2>
             <ul class="catmenu" id="submenu">
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg" alt="person icon">
                         <p>People</p>
@@ -57,7 +57,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg" alt="location icon">
                         <p>Places</p>
@@ -65,7 +65,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg" alt="event icon">
                         <p>Events</p>
@@ -73,7 +73,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg" alt="source icon">
                         <p>Sources</p>
@@ -81,7 +81,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
                         <p>Projects</p>

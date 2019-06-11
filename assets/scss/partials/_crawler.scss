@@ -1,0 +1,165 @@
+.crawler{
+    margin: 60px auto 100px;
+    max-width: 1000px;
+    padding: 0 6%;
+
+    .crawler-tabs{
+        padding: 0;
+        max-width: unset;
+        margin: 0;
+    }
+
+    .search-filter{
+        margin: 25px 0 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .crawler-search{
+            position: relative;
+        
+            form{
+                position: relative;
+                width: fit-content;
+        
+                .search-field{
+                    border: 1px solid #CED0D2;
+                    border-radius: 100px;
+                    box-shadow: 0 4px 36px 0 rgba(0,0,0,0.05);
+                    color: $base-dark;
+                    font-size: 16px;
+                    font-family: aleoregular;
+                    margin: 0;
+                    outline: none;
+                    padding-left: 20px;
+                    padding-right: 60px;
+                    transition: border 0.3s ease;
+                    height: 60px;
+                    width: 380px;
+        
+                    &:hover{
+                        border: 1px solid $base-dark;
+                    }
+                    &:focus-within{
+                            border: 1px solid $base-dark;
+                    }
+                    &::placeholder {
+                        color: rgba($base-dark, .75);
+                        font-size: 14px;
+                    }
+                }
+                ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    color: #253449;
+                    opacity: 1; /* Firefox */
+                    font-style: italic;
+                }
+        
+                :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color: #253449;
+                    font-style: italic;
+                }
+        
+                ::-ms-input-placeholder { /* Microsoft Edge */
+                    color: #253449;
+                    font-style: italic;
+                }
+            }
+        }
+        .sorting-dropdowns{
+            padding: 10px 15px;
+            cursor: pointer;
+            color: $base-dark;
+            font-size: 14px;
+            min-width: 180px;
+
+            img {
+                transition: 200ms;
+            }
+            img.show {
+                transform: rotate(-180deg);
+            }
+    
+            span{
+                position: relative;
+            }
+            span.results-per-page{
+                margin-left: 20px;
+            }
+            ul {
+                background: $base-dark;
+                box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+                color: $base-light;
+                display: none;
+                list-style: none;
+                padding: 20px;
+                position: absolute;
+                right: 0;
+                width: max-content;
+                z-index: 1;
+                li {
+                    cursor: pointer;
+                    font-size: 12px;
+                    line-height: 15px;
+                    padding: 5px 3px;
+                }
+                li:hover {
+                    color: $sub-base;
+                }
+            }
+            ul.show {
+                display: block;
+            }
+            span {
+                img {
+                    height: 7px;
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+    .results-wrap{
+        width: 100%;
+
+        .result{
+            width: 100%;
+            height: 60px;
+            border: 1px solid #CED0D2;
+            background-color: #FFFDFB;
+            box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+            display: flex;
+            margin-bottom: 20px;
+
+            .link-wrap{
+                width: calc(100% - 60px);
+                height: 60px;
+                display: flex;
+                line-height: 60px;
+                color: $base-dark;
+                font-size: 14px;
+
+                .link-name{
+                    width: 50%;
+                    height: 60px;
+                    border-right: 1px solid rgba(206,208,210,0.5);
+                    padding-left: 20px;
+                }
+
+                .link{
+                    width: 50%;
+                    height: 60px;
+                    border-right: 1px solid rgba(206,208,210,0.5);
+                    padding-left: 20px;
+
+                    a{
+                        color: $base-dark;
+                    }
+                }
+            }
+            .trash{
+                width: 60px;
+                height: 60px;
+            }
+        }
+    }
+}
