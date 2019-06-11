@@ -11,7 +11,12 @@ var card_offset = 0;
 var card_limit = 12;
 var presets = {};
 var filters = {};
-var main_categories = [];
+
+var showPath = false;
+var upperForm = "";
+var titleType = "";
+var currentTitle = "Search";
+
 
 // Get params from url
 var $_GET = {};
@@ -28,25 +33,36 @@ if(document.location.toString().indexOf('?') !== -1)
     for(var i=0; i < query.length; i++) 
     {
         var aux = decodeURIComponent(query[i]).split('=');
-        $_GET[aux[0]] = aux[1];
-        $_GET_length++;
+        if(!aux || aux[0] == "" || aux[1] == "") continue;
+        
+        // Get searchbar keywords
+        if(aux[0] == "searchbar") 
+        {
+            filters[aux[0]] = aux[1].split('+');
+            continue;
+        }
+
+        filters[aux[0]] = aux[1].split(',');
+
+        // $_GET[aux[0]] = aux[1];
+        // $_GET_length++;
     }
 }
 // Set all the filters from the URL
-for(var i=0; i < $_GET_length; i++)
-{
-    var type = Object.keys($_GET)[i];
-    var filter = $_GET[type];
+// for(var i=0; i < $_GET_length; i++)
+// {
+//     var type = Object.keys($_GET)[i];
+//     var filter = $_GET[type];
 
-    if (typeof(filter) == "undefined"){
-        filter = '';
-    }
-    filters[type] = filter;
-}
+//     if (typeof(filter) == "undefined"){
+//         filter = '';
+//     }
+//     filters[type] = filter;
+// }
 
 // Get main categories
-if("categories" in filters)
-    main_categories = filters["categories"].split(',');
+// if("categories" in filters)
+//     filters["categories"] = filters["categories"].split(',');
 
 /** 
  * Takes parameters for an ajax call that sets result_array to an array with
@@ -57,8 +73,14 @@ if("categories" in filters)
  * \param limit : limit to the number of cards per page : default value = 12
  * \param offset : number of cards offset from the first card (with 0 being the first card) : default value = 0
 */
+
+var isSearching  = false;
+
 function searchResults(preset, limit = 12, offset = 0)
 {
+    if(isSearching) return;
+    isSearching = true;
+
     filters['limit'] = limit;
     card_limit = limit;
     filters['offset'] = offset;
@@ -73,18 +95,15 @@ function searchResults(preset, limit = 12, offset = 0)
             filters: filters,
             templates: templates
         },
-        'success': function (data) {
-            // console.log(data);
+        'success': function (data) 
+        {
             result_array = JSON.parse(data);
-            
-            console.log('result array', result_array);
-
             var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
-        
 
-            searchBarFilter = filter != undefined ? filter : '';
-            searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
+            searchBarFilter = filters != undefined ? filters : '';
+            // searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
+            searchBarPlaceholder = "Search Across "  + total_length + " Results";
             $('.main-search').attr("placeholder", searchBarPlaceholder);
 
             var showingResultsText = '';
@@ -95,6 +114,8 @@ function searchResults(preset, limit = 12, offset = 0)
             }
             $('.showing-results').html(showingResultsText);
 
+            isSearching = false;
+
             //Wait till doc is ready
             $(document).ready(function(){
                 appendCards();
@@ -103,6 +124,7 @@ function searchResults(preset, limit = 12, offset = 0)
             
         }
     });
+
 }
 
 ///******************************************************************* */
@@ -140,16 +162,16 @@ $(document).ready(function() {
     ///******************************************************************* */
     
     //For form type
-    var upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
+    upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
     $(".filter-menu ul.catmenu li").each(function(){
-        if(main_categories.length > 0)
+        if("categories" in filters && filters["categories"].length > 0)
         {
-            if(main_categories.indexOf( $(this).find("p").text().toUpperCase() ) > -1)
+            if(filters["categories"].indexOf( $(this).find("p").text().toUpperCase() ) > -1)
                 $(this).find("input").prop('checked', true);
         }
         
         //Check a checkbox if EXPLORE_FORM is set to this type
-        else if( $(this).find("p").text() === upperForm)
+        else if( $(this).find("p").text() == upperForm)
             $(this).find("input").prop('checked', true);
         
         //Set all checkboxes to checked
@@ -164,11 +186,12 @@ $(document).ready(function() {
         {
             $("label."+key).each(function() 
             {
-                var sel_filter = $(this).find('p').text();
+                var filt =  $(this).find('p');
+                var sel_filter = filt.text();
                 var em = $(this).find('p').find("em").text();
-                sel_filter = sel_filter.replace(em, "").trim().toUpperCase();
-
-                if(sel_filter == value)
+                sel_filter = sel_filter.replace(em, "").trim();
+                
+                if(value.indexOf(sel_filter) > -1)
                     $(this).find("input").prop("checked", true);
             });
         }
@@ -181,7 +204,6 @@ $(document).ready(function() {
     //Change in current-page input so call searchResults function
     $('#pagination .current-page').change(function(){
         var val = $('#pagination .current-page').val();
-        console.log("Value: " + val);
         //Call searchResults normally except calculate new offset
         searchResults(search_type, card_limit, (val - 1) * card_limit);
     });
@@ -422,6 +444,41 @@ $(document).ready(function() {
         $(".show-filter").trigger("click");
     }
 
+    // searchbar
+    $(".search-form").submit(function(e) {
+        e.preventDefault();
+        // Get search key and value
+        var pparam = $(this).serialize();
+        var splitParam = pparam.split('=');
+        splitParam[1] = splitParam[1].replace(/\+/g, ' ');
+        filters[splitParam[0]] = splitParam[1].split(' ');
+
+        // update views
+        $(".search-title h1").text(splitParam[1]);
+        $(".last-page-header #current-title").text("//" + splitParam[1]);
+        $(this).find("input").val("");
+
+        // update URL
+        var url_address = document.location.href;
+        var split_address = url_address.split('?');
+        url_address = split_address[0] + '?';
+
+        var counter = 0;
+        $.each(filters, function(key, value) 
+        {
+            if(key && value && key != "limit" && key != "offset")
+            { 
+                if(!counter) url_address += key + '=' + value;
+                else url_address += '&' + key + '=' + value;
+                ++counter;
+            }
+        });
+        window.history.replaceState(0, "", url_address);
+
+        // make ajax request
+        searchResults(search_type);
+    });
+
 
     // click filters
     $(document).on("change", "input[type=checkbox]", function() 
@@ -429,12 +486,10 @@ $(document).ready(function() {
         // get filter value and key
         var input_value = $(this).parent().find('p').text();
         let em = $(this).parent().find('p').find("em").text();
-        input_value = input_value.replace(em, "").trim().toLowerCase();
+        input_value = input_value.replace(em, "").trim();
 
         var input_key = $(this).parent().attr("class");
         var page_url = document.location.href;
-
-        console.log(page_url);
 
         // handle categories
         if(input_key == "category")
@@ -444,7 +499,7 @@ $(document).ready(function() {
             {
                 if($(this).find("input").is(":checked"))
                 {
-                    categories.push($(this).find('p').text().toLowerCase());
+                    categories.push($(this).find('p').text());
                 }
             });
 
@@ -452,13 +507,21 @@ $(document).ready(function() {
             input_key = "categories";
         }
 
-        // Add to filter object
-        if($(this).is(":checked") || input_key == "categories")
-            filters[input_key] = input_value;
-
-        // remove from filter object
-        else if(input_key in filters && filters[ input_key ] == input_value)
-            delete filters[input_key];
+        // Add/Remove param from filter
+        if(input_key == "categories") filters[input_key] = input_value;
+        else if($(this).is(":checked"))
+        {   
+            if(input_key in filters)
+            {
+                if(filters[input_key].indexOf(input_value) < 0) filters[input_key].push(input_value);
+            }
+            else filters[input_key] = [input_value];
+        }
+        else if(input_key in filters)
+        {   
+            filters[input_key] = filters[input_key].filter(function(value, index, arr) { return value != input_value; });
+            if(filters[input_key].length == 0) delete filters[input_key];
+        }
         
         // Split all parameter
         var split_url = page_url.split('?');
@@ -469,13 +532,19 @@ $(document).ready(function() {
 
             if(filters["categories"].length == 1)
             {
-                search_type = filters["categories"][0];
+                showPath = true;
+                upperForm = filters["categories"][0];
+                titleType = "";
+                currentTitle = "Search";
+
+                search_type = filters["categories"][0].toLowerCase();
                 // One category path
                 split_url[0] = split_url[0].replace('/' + path, '/' +  filters["categories"][0].toLowerCase());
                 delete filters["categories"];
             }
             else if(filters["categories"].length == 5)
             {
+                showPath = false;
                 search_type = "all";
                 // All categories are selected
                 split_url[0] = split_url[0].replace('/' + path, '/all');
@@ -483,27 +552,40 @@ $(document).ready(function() {
             }
             else // multiple categorise selected
             {
+                showPath = false;
                 search_type = "categories";
                 split_url[0] = split_url[0].replace('/' + path, '/category');
             }
         }
         page_url = split_url[0]+"?";
 
+        if(showPath)
+        {
+            $(".last-page-header").show();
+
+            if(upperForm != "") $(".last-page-header .prev1 span").text(upperForm).show();
+            else $(".last-page-header .prev1 span").hide();
+
+            if(titleType != "") $(".last-page-header .prev2 span").text("//" + titleType).show();
+            else $(".last-page-header .prev2 span").hide();
+
+            if(currentTitle != "") $(".last-page-header #current-title").text("//" + currentTitle).show();
+            else $(".last-page-header #current-title").hide();
+
+        } else $(".last-page-header").hide();
+
         var counter = 0;
         $.each(filters, function(key, value) 
         {
-            if(key && key != "limit" && key != "offset")
-            {   // Do not add deselected filter
+            if(key && value && key != "limit" && key != "offset")
+            { 
                 if(!counter) page_url += key + '=' + value;
                 else page_url += '&' + key + '=' + value;
                 ++counter;
             }
         });
 
-        // window.history.pushState(“object or string”, “Title”, “/new-url”); // Back button works
-        var newstate = (history.state || 0) + 1; // You can also passed data as state objects
-        // window.history.pushState(newstate, "", page_url);
-        // window.history.replaceState(“object or string”, “Title”, “/another-new-url”); // Back button doesn't work
+        var newstate = (history.state || 0) + 1; // Can also passed data as state objects
         window.history.replaceState(newstate, "", page_url);
         // document.location = page_url; // reload the page to new url
 

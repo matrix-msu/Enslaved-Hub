@@ -2,33 +2,43 @@
 <div class="container header">
 	<div class="container middlewrap">
         <?php
+        $typeTitle = "";
+        $currentTitle = 'Search';
+
         if (count($_GET) > 0){
             $typeTitle = array_keys($_GET)[0];
             $currentTitle = $_GET[$typeTitle];
             $currentTitle = str_replace('_', ' ', $currentTitle);
-            
-        } else {
-            $typeTitle = '';
-            $currentTitle = 'Search';
         }
+
         $upperForm = ucfirst(EXPLORE_FORM);
+        $showPath = false;
 
         //Conditions to put the previous page header in (Not being used right now)
         if(EXPLORE_FORM != null && EXPLORE_FORM != 'all' && EXPLORE_FORM != 'results'){
-            echo '<h4 class="last-page-header">';
-            echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '"><span id="previous-title">' . $upperForm . ' // </span></a>';
+             $showPath = true;
+            // echo '<h4 class="last-page-header">';
+            // echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '"><span id="previous-title">' . $upperForm . ' // </span></a>';
         
-            if($typeTitle != '' && $typeTitle != 'searchbar'){
-                echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '/' . $typeTitle . '"><span id="previous-title">' . ucwords(str_replace('_', ' ', $typeTitle)) . ' // </span></a>';
-            }
-            if($currentTitle != ''){
-                echo '<span id="current-title">' . $currentTitle . '</span>';
-            }
+            // if($typeTitle != '' && $typeTitle != 'searchbar'){
+            //     echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '/' . $typeTitle . '"><span id="previous-title">' . ucwords(str_replace('_', ' ', $typeTitle)) . ' // </span></a>';
+            // }
+            // if($currentTitle != ''){
+            //     echo '<span id="current-title">' . $currentTitle . '</span>';
+            // }
 
-            echo '</h4>';
+            // echo '</h4>';
         }
        ?>
-        <!-- <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM?>"><span id="previous-title"><?php echo $upperForm ?> // </span></a><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM.'/'.$typeTitle?>"><span id="previous-title"><?php echo ucwords(str_replace('_', ' ', $typeTitle));?> // </span></a><span id="current-title"><?php echo $currentTitle;?></span></h4> -->
+        <h4 class="last-page-header" style="<?php  echo (!$showPath) ? 'display:none' : '' ?> ">
+            <a id="last-page" class="prev1" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM ?>">
+                <span id="previous-title"><?php echo $upperForm ?> </span>
+            </a>
+            <a id="last-page" class="prev2" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM. '/' .$typeTitle ?>">
+                <span id="previous-title"><?php echo ($typeTitle != "") ? "//" . ucwords(str_replace('_', ' ', $typeTitle)) : "" ?></span>
+            </a>
+            <span id="current-title"><?php echo ($currentTitle != "") ? "//" . $currentTitle : "" ?></span>
+        </h4>
         <div class="search-title">
             <h1><?php echo $currentTitle;?></h1>
         </div>

@@ -195,20 +195,33 @@ QUERY;
             case 'people':
 
                 $genderQuery = "";
-                if (isset($filtersArray['gender'])){
+                if (isset($filtersArray['gender']))
+                {
                     $gender = $filtersArray['gender'];
                     $qGender = $gender == 'Male';
-                    if($gender == 'Male'){
-                        $genderQuery = "?agent wdt:P17 wd:Q48 .";
+
+                    if(count($filtersArray['gender']) > 1)
+                    {
+                        // handle multiple gender (Male, Female, and Unidentified)
                     }
-                    else if($gender == 'Female'){
-                        $genderQuery = "?agent wdt:P17 wd:Q47 .";
+                    else // handle single gender search
+                    {
+                        if( in_array("Male", $gender) ){
+                            $genderQuery = "?agent wdt:P17 wd:Q48";
+                        }
+                        else if( in_array("Female", $gender) ){
+                            $genderQuery = "?agent wdt:P17 wd:Q47";
+                        }
+                        else // Handle unidentified
+                        {
+                            // code here
+                        }
                     }
                 }
 
                 $nameQuery = "";
                 if (isset($filtersArray['person'])){
-                    $name = $filtersArray['person'];
+                    $name = $filtersArray['person'][0];
                     $nameQuery = "FILTER regex(?name, '^$name', 'i') .";
                 }
 
@@ -427,11 +440,23 @@ QUERY;
                 if (isset($filtersArray['gender'])){
                     $gender = $filtersArray['gender'];
                     $qGender = $gender == 'Male';
-                    if($gender == 'Male'){
-                        $genderQuery = "?agent wdt:P17 wd:Q48";
+
+                    if( count( $filtersArray["gender"] ) > 1)
+                    {
+                        // handle multiple gender values
                     }
-                    else if($gender == 'Female'){
-                        $genderQuery = "?agent wdt:P17 wd:Q47";
+                    else // handle single gender search
+                    {
+                        if( in_array("Male", $gender)){
+                            $genderQuery = "?agent wdt:P17 wd:Q48";
+                        }
+                        else  if( in_array("Female", $gender)){
+                            $genderQuery = "?agent wdt:P17 wd:Q47";
+                        }
+                        else 
+                        {
+                            // handle unidentified
+                        }
                     }
                 }
 
@@ -518,7 +543,7 @@ QUERY;
             
                 $eventQuery = "";
                 if (isset($filtersArray['event_type'])){
-                    $eventType = $filtersArray['event_type'];
+                    $eventType = $filtersArray['event_type'][0];
                     $eventQuery = "?event wdt:P81 wd:$eventType .";
 
                     // if (array_key_exists($eventType, eventTypes) ){
@@ -533,7 +558,7 @@ QUERY;
                 $from = '';
                 $to = '';
                 if (isset($filtersArray['eventDate'])){
-                    $dateRange = $filtersArray['eventDate'];
+                    $dateRange = $filtersArray['eventDate'][0];
                     //Have date range here ex. 1800-1900 so split it and create the query to add in
                     $dateArr = explode('-', $dateRange);
                     $from = $dateArr[0];
@@ -962,7 +987,7 @@ QUERY;
                 break;
 
             default:
-                die;
+                return json_encode(["gridCard"=>array(), "tableCard" => array(), "total" => 0]);
         }
 
     }
@@ -976,7 +1001,7 @@ QUERY;
         $preset = 'default';
     }
     else{
-        die;
+        return json_encode(["gridCard"=>array(), "tableCard" => array(), "total" => 0]);
     }
 
 
@@ -1219,7 +1244,8 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
-                            $dateRangeHtml = "<p><span>Date Range: </span>$dateRange</p>";
+                            $dateName = ($startYear != '' && $endYear != '') ? "Date Range" : "Date";
+                            $dateRangeHtml = "<p><span>$dateName: </span>$dateRange</p>";
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Person-light.svg';
@@ -1650,7 +1676,8 @@ HTML;
 
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
-                            $dateRangeHtml = "<p><span>Date Range: </span>$dateRange</p>";
+                            $dateName = ($startYear != '' && $endYear != '') ? "Date Range" : "Date";
+                           $dateRangeHtml = "<p><span>$dateName: </span>$dateRange</p>";
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
