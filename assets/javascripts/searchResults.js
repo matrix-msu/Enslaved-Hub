@@ -11,7 +11,6 @@ var card_offset = 0;
 var card_limit = 12;
 var presets = {};
 var filters = {};
-var main_categories = [];
 
 var showPath = false;
 var upperForm = "";
@@ -34,25 +33,36 @@ if(document.location.toString().indexOf('?') !== -1)
     for(var i=0; i < query.length; i++) 
     {
         var aux = decodeURIComponent(query[i]).split('=');
-        $_GET[aux[0]] = aux[1];
-        $_GET_length++;
+        if(!aux || aux[0] == "" || aux[1] == "") continue;
+        
+        // Get searchbar keywords
+        if(aux[0] == "searchbar") 
+        {
+            filters[aux[0]] = aux[1].split('+');
+            continue;
+        }
+
+        filters[aux[0]] = aux[1].split(',');
+
+        // $_GET[aux[0]] = aux[1];
+        // $_GET_length++;
     }
 }
 // Set all the filters from the URL
-for(var i=0; i < $_GET_length; i++)
-{
-    var type = Object.keys($_GET)[i];
-    var filter = $_GET[type];
+// for(var i=0; i < $_GET_length; i++)
+// {
+//     var type = Object.keys($_GET)[i];
+//     var filter = $_GET[type];
 
-    if (typeof(filter) == "undefined"){
-        filter = '';
-    }
-    filters[type] = filter;
-}
+//     if (typeof(filter) == "undefined"){
+//         filter = '';
+//     }
+//     filters[type] = filter;
+// }
 
 // Get main categories
-if("categories" in filters)
-    main_categories = filters["categories"].split(',');
+// if("categories" in filters)
+//     filters["categories"] = filters["categories"].split(',');
 
 /** 
  * Takes parameters for an ajax call that sets result_array to an array with
@@ -68,11 +78,7 @@ var isSearching  = false;
 
 function searchResults(preset, limit = 12, offset = 0)
 {
-    if(isSearching)
-    {
-        return;
-    }
-
+    if(isSearching) return;
     isSearching = true;
 
     filters['limit'] = limit;
@@ -80,8 +86,6 @@ function searchResults(preset, limit = 12, offset = 0)
     filters['offset'] = offset;
     card_offset = offset;
     var templates = ['gridCard', 'tableCard'];
-
-    
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -91,20 +95,15 @@ function searchResults(preset, limit = 12, offset = 0)
             filters: filters,
             templates: templates
         },
-        'success': function (data) {
-
-            // console.log("|" + data + "|");
-
+        'success': function (data) 
+        {
             result_array = JSON.parse(data);
-            
-            console.log('result array', result_array);
-
             var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
-        
 
-            searchBarFilter = filter != undefined ? filter : '';
-            searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
+            searchBarFilter = filters != undefined ? filters : '';
+            // searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
+            searchBarPlaceholder = "Search Across "  + total_length + " Results";
             $('.main-search').attr("placeholder", searchBarPlaceholder);
 
             var showingResultsText = '';
@@ -165,9 +164,9 @@ $(document).ready(function() {
     //For form type
     upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
     $(".filter-menu ul.catmenu li").each(function(){
-        if(main_categories.length > 0)
+        if("categories" in filters && filters["categories"].length > 0)
         {
-            if(main_categories.indexOf( $(this).find("p").text().toUpperCase() ) > -1)
+            if(filters["categories"].indexOf( $(this).find("p").text().toUpperCase() ) > -1)
                 $(this).find("input").prop('checked', true);
         }
         
@@ -187,13 +186,12 @@ $(document).ready(function() {
         {
             $("label."+key).each(function() 
             {
-                var sel_filter = $(this).find('p').text();
+                var filt =  $(this).find('p');
+                var sel_filter = filt.text();
                 var em = $(this).find('p').find("em").text();
                 sel_filter = sel_filter.replace(em, "").trim();
-
-                console.log(sel_filter, value);
-
-                if(sel_filter == value)
+                
+                if(value.indexOf(sel_filter) > -1)
                     $(this).find("input").prop("checked", true);
             });
         }
@@ -206,7 +204,6 @@ $(document).ready(function() {
     //Change in current-page input so call searchResults function
     $('#pagination .current-page').change(function(){
         var val = $('#pagination .current-page').val();
-        console.log("Value: " + val);
         //Call searchResults normally except calculate new offset
         searchResults(search_type, card_limit, (val - 1) * card_limit);
     });
@@ -450,18 +447,36 @@ $(document).ready(function() {
     // searchbar
     $(".search-form").submit(function(e) {
         e.preventDefault();
-
+        // Get search key and value
         var pparam = $(this).serialize();
         var splitParam = pparam.split('=');
-
         splitParam[1] = splitParam[1].replace(/\+/g, ' ');
+        filters[splitParam[0]] = splitParam[1].split(' ');
 
+        // update views
         $(".search-title h1").text(splitParam[1]);
         $(".last-page-header #current-title").text("//" + splitParam[1]);
-
-        filters[splitParam[0]] = splitParam[1];
-        searchResults(search_type);
         $(this).find("input").val("");
+
+        // update URL
+        var url_address = document.location.href;
+        var split_address = url_address.split('?');
+        url_address = split_address[0] + '?';
+
+        var counter = 0;
+        $.each(filters, function(key, value) 
+        {
+            if(key && value && key != "limit" && key != "offset")
+            { 
+                if(!counter) url_address += key + '=' + value;
+                else url_address += '&' + key + '=' + value;
+                ++counter;
+            }
+        });
+        window.history.replaceState(0, "", url_address);
+
+        // make ajax request
+        searchResults(search_type);
     });
 
 
@@ -492,13 +507,21 @@ $(document).ready(function() {
             input_key = "categories";
         }
 
-        // Add to filter object
-        if($(this).is(":checked") || input_key == "categories")
-            filters[input_key] = input_value;
-
-        // remove from filter object
-        else if(input_key in filters && filters[ input_key ] == input_value)
-            delete filters[input_key];
+        // Add/Remove param from filter
+        if(input_key == "categories") filters[input_key] = input_value;
+        else if($(this).is(":checked"))
+        {   
+            if(input_key in filters)
+            {
+                if(filters[input_key].indexOf(input_value) < 0) filters[input_key].push(input_value);
+            }
+            else filters[input_key] = [input_value];
+        }
+        else if(input_key in filters)
+        {   
+            filters[input_key] = filters[input_key].filter(function(value, index, arr) { return value != input_value; });
+            if(filters[input_key].length == 0) delete filters[input_key];
+        }
         
         // Split all parameter
         var split_url = page_url.split('?');
@@ -554,8 +577,8 @@ $(document).ready(function() {
         var counter = 0;
         $.each(filters, function(key, value) 
         {
-            if(key && key != "limit" && key != "offset")
-            {   // Do not add deselected filter
+            if(key && value && key != "limit" && key != "offset")
+            { 
                 if(!counter) page_url += key + '=' + value;
                 else page_url += '&' + key + '=' + value;
                 ++counter;
