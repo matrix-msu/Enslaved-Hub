@@ -53,7 +53,9 @@ $GLOBALS['routes'] = array(
     'fullStory' => 'fullStory.php',
     'project' => 'fullProject.php',
     'timeSub' => 'timeSub.php',
-    'enslavedOntology' => 'ontology.php'
+    'enslavedOntology' => 'ontology.php',
+    'crawler' => 'crawler.php',
+    'current' => 'current.php'
 );
 
 $location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";

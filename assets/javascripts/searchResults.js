@@ -191,8 +191,10 @@ $(document).ready(function() {
                 var em = $(this).find('p').find("em").text();
                 sel_filter = sel_filter.replace(em, "").trim();
                 
-                if(value.indexOf(sel_filter) > -1)
+                //Looks for input where value = QID
+                if($(this).find('input').val() == value) {
                     $(this).find("input").prop("checked", true);
+                }
             });
         }
     });
@@ -484,9 +486,11 @@ $(document).ready(function() {
     $(document).on("change", "input[type=checkbox]", function() 
     {
         // get filter value and key
-        var input_value = $(this).parent().find('p').text();
-        let em = $(this).parent().find('p').find("em").text();
-        input_value = input_value.replace(em, "").trim();
+        // var input_value = $(this).parent().find('p').text();
+        // let em = $(this).parent().find('p').find("em").text();
+        // input_value = input_value.replace(em, "").trim();
+
+        var input_value = $(this).val(); //Changed to check value of checkbox which will be QID
 
         var input_key = $(this).parent().attr("class");
         var page_url = document.location.href;

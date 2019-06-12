@@ -313,9 +313,16 @@
         border: 1px solid #CED0D2;
 
         .select2-search--dropdown{
+            height: 0;
+            padding: 0;
+            -webkit-appearance: none;
             .select2-search__field{
                 outline: none;
-                color: $base-dark;
+                border: none;
+                padding: 0;
+                color: transparent;
+                height: 0;
+                -webkit-appearance: none;
             }
         }
 
@@ -371,9 +378,9 @@
                 }
             }
         }
-        .select2-search{
-            display: none;
-        }
+        // .select2-search{
+        //     display: none;
+        // }
     }
 }
 

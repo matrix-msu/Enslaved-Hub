@@ -20,8 +20,8 @@
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>header.js"></script>
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>modal.js"></script>
     <!-- select2 cdn links -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <link href="<?php echo BASE_URL;?>assets/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+    <script src="<?php echo BASE_URL;?>assets/select2/4.0.7/js/select2.js"></script>
     <!-- leaflet -->
     <link rel="stylesheet" href="<?php echo BASE_LEAFLET_URL;?>leaflet.css" />
     <script src="<?php echo BASE_LEAFLET_URL;?>leaflet.js"></script>

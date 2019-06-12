@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="18px" viewBox="0 0 16 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>Delete</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Web-Crawler-and-Current" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="Web-Crawler" transform="translate(-877.000000, -491.000000)" stroke="#E27567" stroke-width="2">
+            <g id="Link-Group" transform="translate(110.000000, 470.000000)">
+                <g id="Delete" transform="translate(768.000000, 22.000000)">
+                    <polyline id="Path" points="0 3.11111111 1.55555556 3.11111111 14 3.11111111"></polyline>
+                    <path d="M12.4444444,3.11111111 L12.4444444,14 C12.4444444,14.8591096 11.7479985,15.5555556 10.8888889,15.5555556 L3.11111111,15.5555556 C2.2520015,15.5555556 1.55555556,14.8591096 1.55555556,14 L1.55555556,3.11111111 M3.88888889,3.11111111 L3.88888889,1.55555556 C3.88888889,0.696445945 4.58533483,0 5.44444444,0 L8.55555556,0 C9.41466517,0 10.1111111,0.696445945 10.1111111,1.55555556 L10.1111111,3.11111111" id="Shape"></path>
+                    <path d="M5.44444444,7 L5.44444444,11.6666667" id="Path"></path>
+                    <path d="M8.55555556,7 L8.55555556,11.6666667" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
