@@ -223,7 +223,6 @@ QUERY;
                     $nameQuery = "FILTER regex(?name, '^$name', 'i') .";
                 }
 
-<<<<<<< HEAD
 
                 $sourceQuery = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
@@ -235,7 +234,8 @@ QUERY;
                                     ?object prov:wasDerivedFrom ?provenance .
                                     ?provenance pr:P35 ?source .
                                     ?people rdfs:label ?peoplename";
-=======
+                }
+
                 $ageQuery = "";
                 if (isset($filtersArray['age_category'])){
                     $age = $filtersArray['age_category'][0];
@@ -246,7 +246,6 @@ QUERY;
                 if (isset($filtersArray['ethnodescriptor'])){
                     $ethno = $filtersArray['ethnodescriptor'][0];
                     $ethnoQuery = "?agent wdt:P86 wd:$ethno .";
->>>>>>> 7bed938171a7a24318f1b90761dc4ac4a0405d0e
                 }
 
                 $roleQuery = "";
@@ -266,10 +265,7 @@ QUERY;
                                     ?people rdfs:label ?peoplename";
                 }
 
-<<<<<<< HEAD
-=======
                 //Query with limit and offset
->>>>>>> 7bed938171a7a24318f1b90761dc4ac4a0405d0e
                 $query = array('query' => "");
 
                 $query['query'] = <<<QUERY
