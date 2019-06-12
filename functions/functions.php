@@ -196,25 +196,34 @@ QUERY;
                 break;
 
             case 'people':
+                ///*********************************** */
+                /// PEOPLE
+                ///*********************************** */
+
+                //Filtering for Query
 
                 $genderQuery = "";
-                if (isset($filtersArray['gender'])){
-                    $gender = $filtersArray['gender'];
-                    $qGender = $gender == 'Male';
-                    if($gender == 'Male'){
-                        $genderQuery = "?agent wdt:P17 wd:Q48";
+                if (isset($filtersArray['gender'])) {
+                    $genders = $filtersArray['gender'];
+
+                    if(count($filtersArray['gender']) > 1) {
+                        // handle multiple gender (Male, Female, and Unidentified)
                     }
-                    else if($gender == 'Female'){
-                        $genderQuery = "?agent wdt:P17 wd:Q47";
+                    else { // handle single gender search
+                        $gender = $genders[0]; //ex. Q48
+                        if($gender != 'U'){ //U is the value passed for unidentified
+                            $genderQuery = "?agent wdt:P17 wd:$gender";
+                        }
                     }
                 }
 
                 $nameQuery = "";
                 if (isset($filtersArray['person'])){
-                    $name = $filtersArray['person'];
+                    $name = $filtersArray['person'][0];
                     $nameQuery = "FILTER regex(?name, '^$name', 'i') .";
                 }
 
+<<<<<<< HEAD
 
                 $sourceQuery = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
@@ -226,8 +235,25 @@ QUERY;
                                     ?object prov:wasDerivedFrom ?provenance .
                                     ?provenance pr:P35 ?source .
                                     ?people rdfs:label ?peoplename";
+=======
+                $ageQuery = "";
+                if (isset($filtersArray['age_category'])){
+                    $age = $filtersArray['age_category'][0];
+                    $ageQuery = "?agent wdt:P32 wd:$age .";
                 }
 
+                $ethnoQuery = "";
+                if (isset($filtersArray['ethnodescriptor'])){
+                    $ethno = $filtersArray['ethnodescriptor'][0];
+                    $ethnoQuery = "?agent wdt:P86 wd:$ethno .";
+>>>>>>> 7bed938171a7a24318f1b90761dc4ac4a0405d0e
+                }
+
+                $roleQuery = "";
+                if (isset($filtersArray['role_types'])){
+                    $role = $filtersArray['role_types'][0];
+                    $roleQuery = "?agent wdt:P39 wd:$role .";
+                }
 
                 $eventQuery = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
@@ -240,23 +266,33 @@ QUERY;
                                     ?people rdfs:label ?peoplename";
                 }
 
+<<<<<<< HEAD
+=======
+                //Query with limit and offset
+>>>>>>> 7bed938171a7a24318f1b90761dc4ac4a0405d0e
                 $query = array('query' => "");
 
                 $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent 
-(group_concat(distinct ?startyear; separator = "||") as ?startyear) #daterange
-(group_concat(distinct ?endyear; separator = "||") as ?endyear) 
-
-(group_concat(distinct ?name; separator = "||") as ?name) #name
-(group_concat(distinct ?placelab; separator = "||") as ?place) #place
-(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
-(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
-
-
-(count(distinct ?relations) as ?countpeople)
+SELECT DISTINCT ?agent   
+(count(distinct ?people) as ?countpeople)
 (count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
-(count(distinct ?reference) as ?countsource)
+(count(distinct ?source) as ?countsource)
+
+(group_concat(distinct ?name; separator = "||") as ?name) #name
+
+(group_concat(distinct ?placelab; separator = "||") as ?place) #place
+
+(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+
+(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+
+(group_concat(distinct ?match; separator = "||") as ?closeMatch)
+
+(group_concat(distinct ?startyear; separator = "||") as ?startyear)
+
+(group_concat(distinct ?endyear; separator = "||") as ?endyear)
+
 WHERE {
 
     $sourceQuery
@@ -264,62 +300,72 @@ WHERE {
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-    ?agent wdt:P3/wdt:P2 wd:Q2;
+    ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+            ?property  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?source .
 
-            wdt:P82 ?name; #name is mandatory
-                p:P3  ?object .
-    ?object prov:wasDerivedFrom ?provenance .
-    ?provenance pr:P35 ?reference .
-                
+    ?agent wdt:P82 ?name. #name is mandatory
+                             
     $genderQuery
     $nameQuery
+    $ageQuery
+    $ethnoQuery
+    $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-    
+ 
     OPTIONAL { ?agent wdt:P24 ?status. 
-            ?status rdfs:label ?statuslab}
+                ?status rdfs:label ?statuslab}
     
     OPTIONAL { ?agent wdt:P17 ?sex. 
-            ?sex rdfs:label ?sexlab}
+                ?sex rdfs:label ?sexlab}
 
-    OPTIONAL { ?agent wdt:P25 ?relations}.
-    OPTIONAL { ?agent wdt:P88 ?relations}.
+    OPTIONAL { ?agent wdt:P88 ?match}.
     
-    OPTIONAL{ ?reference wdt:P8 ?event.
+    OPTIONAL{ ?source wdt:P8 ?event.
                 ?event	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
             OPTIONAL {?event wdt:P14 ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
             OPTIONAL {?event wdt:P12 ?place.
-                    ?place rdfs:label ?placelab}
+                        ?place rdfs:label ?placelab}
             
             }.
-
+    OPTIONAL {?agent wdt:P25 ?people}
 
 } group by ?agent 
-order by ?agent 
-$limitQuery
-$offsetQuery
+order by ?agent
+
+limit $limit
+offset $offset
 QUERY;
 
                 array_push($queryArray, $query);
 
+                //Query for Total Count
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent 
-(group_concat(distinct ?startyear; separator = "||") as ?startyear) #daterange
-(group_concat(distinct ?endyear; separator = "||") as ?endyear) 
-
-(group_concat(distinct ?name; separator = "||") as ?name) #name
-(group_concat(distinct ?placelab; separator = "||") as ?place) #place
-(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
-(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
-
-
-(count(distinct ?relations) as ?countpeople)
+SELECT DISTINCT ?agent   
+(count(distinct ?people) as ?countpeople)
 (count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
-(count(distinct ?reference) as ?countsource)
+(count(distinct ?source) as ?countsource)
+
+(group_concat(distinct ?name; separator = "||") as ?name) #name
+
+(group_concat(distinct ?placelab; separator = "||") as ?place) #place
+
+(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+
+(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+
+(group_concat(distinct ?match; separator = "||") as ?closeMatch)
+
+(group_concat(distinct ?startyear; separator = "||") as ?startyear)
+
+(group_concat(distinct ?endyear; separator = "||") as ?endyear)
+
 WHERE {
 
     $sourceQuery
@@ -327,40 +373,42 @@ WHERE {
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-    ?agent wdt:P3/wdt:P2 wd:Q2;
+    ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+            ?property  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?source .
 
-            wdt:P82 ?name; #name is mandatory
-                p:P3  ?object .
-    ?object prov:wasDerivedFrom ?provenance .
-    ?provenance pr:P35 ?reference .
-                
+    ?agent wdt:P82 ?name. #name is mandatory
+                                
     $genderQuery
     $nameQuery
+    $ageQuery
+    $ethnoQuery
+    $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
     
     OPTIONAL { ?agent wdt:P24 ?status. 
-            ?status rdfs:label ?statuslab}
+                ?status rdfs:label ?statuslab}
     
     OPTIONAL { ?agent wdt:P17 ?sex. 
-            ?sex rdfs:label ?sexlab}
+                ?sex rdfs:label ?sexlab}
 
-    OPTIONAL { ?agent wdt:P25 ?relations}.
-    OPTIONAL { ?agent wdt:P88 ?relations}.
+    OPTIONAL { ?agent wdt:P88 ?match}.
     
-    OPTIONAL{ ?reference wdt:P8 ?event.
+    OPTIONAL{ ?source wdt:P8 ?event.
                 ?event	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
             OPTIONAL {?event wdt:P14 ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
             OPTIONAL {?event wdt:P12 ?place.
-                    ?place rdfs:label ?placelab}
+                        ?place rdfs:label ?placelab}
             
             }.
-
+    OPTIONAL {?agent wdt:P25 ?people}
 
 } group by ?agent 
-order by ?agent 
+order by ?agent
 QUERY;
 
                 array_push($queryArray, $query);
@@ -368,16 +416,33 @@ QUERY;
                 // print_r($queryArray);die;
                 break;
             case 'places':
+                ///*********************************** */
+                /// PLACES
+                ///*********************************** */
+
+                /// NOT WORKING YET
 
                 $genderQuery = "";
                 if (isset($filtersArray['gender'])){
                     $gender = $filtersArray['gender'];
                     $qGender = $gender == 'Male';
-                    if($gender == 'Male'){
-                        $genderQuery = "?agent wdt:P17 wd:Q48";
+
+                    if( count( $filtersArray["gender"] ) > 1)
+                    {
+                        // handle multiple gender values
                     }
-                    else if($gender == 'Female'){
-                        $genderQuery = "?agent wdt:P17 wd:Q47";
+                    else // handle single gender search
+                    {
+                        if( in_array("Male", $gender)){
+                            $genderQuery = "?agent wdt:P17 wd:Q48";
+                        }
+                        else  if( in_array("Female", $gender)){
+                            $genderQuery = "?agent wdt:P17 wd:Q47";
+                        }
+                        else 
+                        {
+                            // handle unidentified
+                        }
                     }
                 }
 
@@ -460,23 +525,33 @@ QUERY;
 
                 break;
             case 'events':
+                ///*********************************** */
+                /// EVENTS
+                ///*********************************** */
 
-            
+                //Filtering for Query
                 $eventQuery = "";
                 if (isset($filtersArray['event_type'])){
-                    $eventType = $filtersArray['event_type'];
+                    $eventType = $filtersArray['event_type'][0];
+                    $eventQuery = "?event wdt:P81 wd:$eventType .";
 
-                    if (array_key_exists($eventType, eventTypes) ){
-                        $qType = eventTypes[$eventType];
-                        $eventQuery = "?event wdt:P81 wd:$qType .";
-                    } else {
-                        continue;   // the event_type was not valid
-                    }
+                    // if (array_key_exists($eventType, eventTypes) ){
+                    //     $qType = eventTypes[$eventType];
+                    //     $eventQuery = "?event wdt:P81 wd:$qType .";
+                    // } else {
+                    //     continue;   // the event_type was not valid
+                    // }
                 }
 
                 $dateRangeQuery = "";
-                if (isset($filtersArray['daterange'])){
-                    $dateRange = $filtersArray['daterange'];
+                $from = '';
+                $to = '';
+                if (isset($filtersArray['eventDate'])){
+                    $dateRange = $filtersArray['eventDate'][0];
+                    //Have date range here ex. 1800-1900 so split it and create the query to add in
+                    $dateArr = explode('-', $dateRange);
+                    $from = $dateArr[0];
+                    $to = $dateArr[1];
                     $dateRangeQuery = $dateRange;
                 }
 
@@ -496,7 +571,7 @@ QUERY;
                     $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countervent)
+(count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 (group_concat(distinct ?placeLabel; separator = "||") as ?places)
@@ -542,7 +617,7 @@ QUERY;
                     $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countervent)
+(count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 (group_concat(distinct ?placeLabel; separator = "||") as ?places)
@@ -588,7 +663,7 @@ QUERY;
                     $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?counterevent)
+(count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 (group_concat(distinct ?placeLabel; separator = "||") as ?places)
@@ -623,7 +698,7 @@ QUERY;
                     $query['query'] = <<<QUERY
 SELECT ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?counterevent)
+(count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 (group_concat(distinct ?placeLabel; separator = "||") as ?places)
@@ -655,6 +730,9 @@ QUERY;
 
                 break;
             case 'sources':
+                ///*********************************** */
+                /// SOURCES
+                ///*********************************** */
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
@@ -997,6 +1075,7 @@ QUERY;
             }
         }
     }
+    // return json_encode($resultsArray);
     // var_dump($resultsArray);
     // $path = "functions/queries.json";
     // $contents = file_get_contents($path);
@@ -1046,7 +1125,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 $personQ = end($xplode);
 
                 //Person Sex
-                $sex = "Unidentified";
+                $sex = "";
                 if (isset($record['sex']) && isset($record['sex']['value'])){
                     if($record['sex']['value'] != ''){
                         $sex = $record['sex']['value'];
@@ -1152,7 +1231,10 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 foreach ($templates as $template) {
                     if ($template == 'gridCard'){
 
-                        $sexHtml = "<p><span>Sex: </span>$sex</p>";
+                        $sexHtml = '';
+                        if ($sex != ''){
+                            $sexHtml = "<p><span>Sex: </span>$sex</p>";
+                        }
 
                         $statusHtml = '';
                         // if a person has multiple statuses, display them in a tooltip
@@ -1550,8 +1632,8 @@ HTML;
                 } else {
                     $countpeople = '';
                 }
-                if(isset($record['counterevent']) && isset($record['counterevent']['value'])){
-                    $countevent = $record['counterevent']['value'];
+                if(isset($record['countevent']) && isset($record['countevent']['value'])){
+                    $countevent = $record['countevent']['value'];
                 } else {
                     $countevent = '';
                 }
@@ -1570,16 +1652,15 @@ HTML;
                 $connection_lists = Array(
                     '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
                     '<h1>'.$countplace.' Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
-                    '<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
+                //'<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
 
                 $connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
                     '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
+                    '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[2].
                     '</div></div></div></div>';
-
+                //'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
 
                 // create the html for each template
                 foreach ($templates as $template) {
@@ -1891,7 +1972,8 @@ HTML;
                         </div>
                     </a>
                 </li>";
-                    }
+                    
+                    } else continue;
 
                     array_push($cards[$template], $card);
                 }

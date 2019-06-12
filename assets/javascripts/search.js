@@ -3,9 +3,9 @@ $(document).ready(function() {
     $('#status').select2({
         placeholder: "Select Status"
     });
-    $('#origin').select2({
-        placeholder: "Select Origin"
-    });
+    // $('#origin').select2({
+    //     placeholder: "Select Origin"
+    // });
     $('#sex').select2({
         placeholder: "Select Sex"
     });
@@ -26,9 +26,6 @@ $(document).ready(function() {
     });
     $('#region').select2({
         placeholder: "Select Region"
-    });
-    $('#country').select2({
-        placeholder: "Select Country"
     });
     $('#country').select2({
         placeholder: "Select Country"
@@ -62,6 +59,7 @@ $(document).ready(function() {
       });
 });
 
+//On form submit "removes" the empty inputs so they don't show up in the $_GET
 function removeEmpty() {
     var form = $('form');
     var allInputs = form.find('input');
@@ -80,6 +78,7 @@ function removeEmpty() {
     }
 }
 
+//Called by the Date input on Basic Search so that user can only enter numbers
 function validate(evt) {
     var theEvent = evt || window.event;
   
@@ -96,4 +95,27 @@ function validate(evt) {
       theEvent.returnValue = false;
       if(theEvent.preventDefault) theEvent.preventDefault();
     }
-  }
+}
+
+//Combines the dates entered to make a date range
+function combineDates() {
+    if($('select#person-from').val() !== '' || $('select#person-to').val() !== ''){
+        var personDate = $('select#person-from').val() + '-' + $('select#person-to').val();
+    }
+    if($('select#event-from').val() !== '' || $('select#event-to').val() !== ''){
+        var eventDate = $('select#event-from').val() + '-' + $('select#event-to').val();
+    }
+    if($('select#place-from').val() !== '' || $('select#place-to').val() !== ''){
+        var placeDate = $('select#place-from').val() + '-' + $('select#place-to').val();
+    }
+    
+    $('.person-date-range').val(personDate);
+    $('.event-date-range').val(eventDate);
+    $('.place-date-range').val(placeDate);
+}
+
+//Calls the removeEmpty function and combineDates function
+function handleSubmit(){
+    combineDates();
+    removeEmpty();
+}
