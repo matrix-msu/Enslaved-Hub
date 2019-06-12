@@ -290,21 +290,21 @@
                 </li>
                 <ul id="submenu">
                     <li>
-                        <label class="age_cat">
+                        <label class="age_category">
                             <input id="checkBox" type="checkbox">
                             <p>Age Range <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label class="age_cat">
+                        <label class="age_category">
                             <input id="checkBox" type="checkbox">
                             <p>Age Range <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label class="age_cat">
+                        <label class="age_category">
                             <input id="checkBox" type="checkbox">
                             <p>Age Range <em>(234)</em></p>
                             <span></span>
@@ -389,21 +389,21 @@
                 <li class="filter-cat">Role<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span></li>
                 <ul id="submenu">
                     <li>
-                        <label class="role">
+                        <label class="role_types">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label class="role">
+                        <label class="role_types">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>
                         </label>
                     </li>
                     <li>
-                        <label class="role">
+                        <label class="role_types">
                             <input id="checkBox" type="checkbox">
                             <p>Undefined <em>(234)</em></p>
                             <span></span>

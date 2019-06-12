@@ -1039,6 +1039,7 @@ QUERY;
             }
         }
     }
+    // return json_encode($resultsArray);
     // var_dump($resultsArray);
     // $path = "functions/queries.json";
     // $contents = file_get_contents($path);
@@ -1933,7 +1934,8 @@ HTML;
                         </div>
                     </a>
                 </li>";
-                    }
+                    
+                    } else continue;
 
                     array_push($cards[$template], $card);
                 }

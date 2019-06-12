@@ -21,6 +21,7 @@
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/events">Events</a>
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/places">Places</a>
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/sources">Sources</a>
+                            <a class="nav-sublink" href="<?php echo BASE_URL;?>projects">Projects</a>
                         </li>
                     </ul>
                 </li>
@@ -36,7 +37,7 @@
                     </ul>
                 </li> -->
                 <li class="nav-item"><a class="nav-link unselected" id="stories" href="<?php echo BASE_URL;?>stories">Stories</a></li>
-                <li class="nav-item"><a class="nav-link unselected" id="projects" href="<?php echo BASE_URL;?>projects">Projects</a></li>
+                <!-- <li class="nav-item"><a class="nav-link unselected" id="projects" href="<?php echo BASE_URL;?>projects">Projects</a></li> -->
                 <li class="nav-item drop-link">
                     <a class="nav-link unselected" id="about" href="<?php echo BASE_URL;?>about">About</a>
                     <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg" alt="dropdown arrow"/></span>
