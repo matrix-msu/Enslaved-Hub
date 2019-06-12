@@ -1307,10 +1307,54 @@ HTML;
 HTML;
     }
     $html .= '</div></div>';
-} else if ($label == "StatusA"){
+} else if ($label == "ecvoA"){
+    // print_r($statement);die;
+    $lowerlabel = "ecvo";
+    $upperlabel = "ECVO";
+
+    $ecvos = explode('||', $statement['ecvo']);
+    $originUrls = explode('||', $statement['placeofOrigin']);
+    $originLabels = explode('||', $statement['placeOriginlabel']);
+
+    if (end($ecvos) == '' || end($ecvos) == ' '){
+      array_pop($ecvos);
+    }
+    if (end($originUrls) == '' || end($originUrls) == ' '){
+      array_pop($originUrls);
+    }
+    if (end($originLabels) == '' || end($originLabels) == ' '){
+      array_pop($originLabels);
+    }
+
+    $html .= <<<HTML
+<div class="detail $lowerlabel">
+  <h3>$upperlabel</h3>
+HTML;
+
+    //Loop through and match up
+    for($i=0; $i < sizeof($originUrls); $i++){
+        $explode = explode('/', $originUrls[$i]);
+        $originQ = end($explode);
+        $placeUrl = $baseurl . 'record/place/' . $originQ;
+
+        $html .= <<<HTML
+<div class="detail-bottom">
+    <div>$ecvos[$i]
+HTML;
+
+        // ecvo tool tip
+        if(array_key_exists($ecvos[$i],controlledVocabulary)){
+            $detailinfo = ucfirst(controlledVocabulary[$ecvos[$i]]);
+            $html .= "<div class='detail-menu'> <h1>$ecvos[$i]</h1> <p>$detailinfo</p> </div>";
+        }
+
+        $html .= "</div> - <a href='$placeUrl' class='highlight'>$originLabels[$i]</a></div>";
+    }
+    $html .= '</div>';
+}else if ($label == "StatusA"){
     // match statuses with events
     $lowerlabel = "status";
-    $upperlabel = "Status";
+    $upperlabel = "STATUS";
 
     //Array for ststueses means there are events and labels match
     $statuses = explode('||', $statement['statuses']);
@@ -1529,14 +1573,17 @@ function getPersonRecordHtml(){
 SELECT ?name ?desc ?sextype  ?race
 (group_concat(distinct ?refName; separator = "||") as ?sources)
 (group_concat(distinct ?pname; separator = "||") as ?researchprojects)
-(group_concat(distinct ?roleslabel; separator = "||") as ?roles)
-(group_concat(distinct ?eventrole; separator = "||") as ?eventRole)
-(group_concat(distinct ?eventLabel; separator = "||") as ?eventRoleLabel)
+(group_concat(distinct ?roleslabel; separator = "||") as ?roleslabel)
+(group_concat(distinct ?roleevent; separator = "||") as ?roleevent)
+(group_concat(distinct ?roleeventlabel; separator = "||") as ?roleeventlabel)
 (group_concat(distinct ?statuslabel; separator = "||") as ?status)
 (group_concat(distinct ?statusevent; separator = "||") as ?statusevent)
-(group_concat(distinct ?eventstatusLabel; separator = "||") as ?eventstatusLabel)
+(group_concat(distinct ?eventstatuslabel; separator = "||") as ?eventstatuslabel)
 
 (group_concat(distinct ?ecvo; separator = "||") as ?ecvo)
+(group_concat(distinct ?placeofOrigin; separator = "||") as ?placeofOrigin)
+(group_concat(distinct ?placeOriginlabel; separator = "||") as ?placeOriginlabel)
+
 (group_concat(distinct ?occupationlabel; separator = "||") as ?occupation)
 (group_concat(distinct ?relationslabel; separator = "||") as ?relationships)
 (group_concat(distinct ?relationname; separator = "||") as ?qrelationname)
@@ -1545,55 +1592,56 @@ SELECT ?name ?desc ?sextype  ?race
 (group_concat(distinct ?matchlabel; separator = "||") as ?matchlabel)
 
 
-WHERE
+ WHERE
 {
-VALUES ?agent {wd:$qid} #Q number needs to be changed for every event.
-?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
-		 ?property  ?object .
-?object prov:wasDerivedFrom ?provenance .
-?provenance pr:P35 ?source .
-?source rdfs:label ?refName;
-        wdt:P7 ?project.
-?project rdfs:label ?pname.
-?agent wdt:P82 ?name.
-OPTIONAL{?agent schema:description ?desc}.
-OPTIONAL{?agent wdt:P17 ?sex.
-        ?sex rdfs:label ?sextype}.
-OPTIONAL{?agent wdt:P37 ?race}.
-
-OPTIONAL {?agent wdt:P24 ?status.
-         ?status rdfs:label ?statuslabel}.
-
-OPTIONAL {?agent wdt:P86 ?ethnodescriptor.
-         ?ethnodescriptor rdfs:label ?ecvo}.
-OPTIONAL {?agent wdt:P21 ?occupation.
-         ?occupation rdfs:label ?occupationlabel}.
-OPTIONAL {?agent wdt:P88 ?match}.
-OPTIONAL {?agent p:P39 ?statement.
-          ?statement ps:P39 ?roles.
-         ?roles rdfs:label ?roleslabel.
-         ?statement pq:P98 ?eventrole.
-         ?eventrole rdfs:label ?eventLabel}.
-OPTIONAL {?agent p:P24 ?statstatus.
-         ?statstatus ps:P24 ?status.
-         ?status rdfs:label ?statusLabel.
-         ?statstatus pq:P99 ?statusevent.
-         ?statusevent rdfs:label ?eventstatusLabel}.
-
-OPTIONAL{
-  ?agent p:P25 ?staterel .
+ VALUES ?agent {wd:$qid} #Q number needs to be changed for every event. 
+  ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+  		 ?property  ?object .
+  ?object prov:wasDerivedFrom ?provenance .
+  ?provenance pr:P35 ?source .
+  ?source rdfs:label ?refName;
+          wdt:P7 ?project.
+  ?project rdfs:label ?pname.
+  ?agent wdt:P82 ?name.
+  OPTIONAL{?agent schema:description ?desc}.
+  OPTIONAL{?agent wdt:P17 ?sex. 
+          ?sex rdfs:label ?sextype}.
+  OPTIONAL{?agent wdt:P37 ?race}.
+  
+  OPTIONAL {?agent wdt:P24 ?status.
+           ?status rdfs:label ?statuslabel}.
+ 
+  OPTIONAL {?agent p:P86 ?statement.
+           ?statement ps:P86 ?ethnodescriptor.
+           ?ethnodescriptor rdfs:label ?ecvo.
+           OPTIONAL{?statement pq:P31 ?placeofOrigin.
+           ?placeofOrigin rdfs:label ?placeOriginlabel.}
+           }.
+  OPTIONAL {?agent wdt:P21 ?occupation.
+           ?occupation rdfs:label ?occupationlabel}.
+  OPTIONAL {?agent wdt:P88 ?match}.
+OPTIONAL {?agent p:P39 ?statementrole.
+           ?statementrole ps:P39 ?roles.
+           ?roles rdfs:label ?roleslabel.
+           ?statementrole pq:P98 ?roleevent.
+           ?roleevent rdfs:label ?roleeventlabel}.
+  
+ OPTIONAL {?agent p:P24 ?statstatus.
+           ?statstatus ps:P24 ?status.
+           ?status rdfs:label ?statuslabel.
+           ?statstatus pq:P99 ?statusevent.
+           ?statusevent rdfs:label ?eventstatuslabel}.
+  
+  OPTIONAL{
+    ?agent p:P25 ?staterel .            
 	?staterel ps:P25 ?relations .
-	?relations rdfs:label ?relationslabel.
+  	?relations rdfs:label ?relationslabel.
 	?staterel pq:P104 ?relationname.
-	?relationname rdfs:label ?relationagentlabel}.
-OPTIONAL {?agent wdt:P88 ?match.
-          ?match rdfs:label ?matchlabel}.
-
-
-
-
-
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+  	?relationname rdfs:label ?relationagentlabel}.
+  OPTIONAL {?agent wdt:P88 ?match.
+            ?match rdfs:label ?matchlabel}.
+        
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }GROUP BY ?name ?desc ?sextype  ?race
 QUERY;
     }
@@ -1750,26 +1798,26 @@ QUERY;
     */
 
     //Sex
-    if (isset($record['sextype']) && isset($record['sextype']['value']) ){
+    if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
       $recordVars['Sex'] = $record['sextype']['value'];
     }
 
     //Race
-    if (isset($record['race']) && isset($record['race']['value']) ){
+    if (isset($record['race']) && isset($record['race']['value']) && $record['race']['value'] != '' ){
       $recordVars['Race'] = $record['race']['value'];
     }
 
     //Status
-    if (isset($record['status']) && isset($record['status']['value']) ){
+    if (isset($record['status']) && isset($record['status']['value']) && $record['status']['value'] != ''){
       if(isset($record['statusevent']) && isset($record['statusevent']['value']) &&
-         isset($record['eventstatusLabel']) && isset($record['eventstatusLabel']['value']) &&
-         $record['eventstatusLabel']['value'] != '' && $record['statusevent']['value'] ){
+         isset($record['eventstatuslabel']) && isset($record['eventstatuslabel']['value']) &&
+         $record['eventstatuslabel']['value'] != '' && $record['statusevent']['value'] ){
         if (empty($record['status']['value'])) {
           $recordVars['StatusA'] = [];
         } else {
           $statusArr = ['statuses' => $record['status']['value'],
                         'statusEvents' => $record['statusevent']['value'],
-                        'eventstatusLabels' => $record['eventstatusLabel']['value']
+                        'eventstatusLabels' => $record['eventstatuslabel']['value']
                       ];
           $recordVars['StatusA'] = $statusArr;
         }
@@ -1779,38 +1827,55 @@ QUERY;
       }
     }
 
+
+
     //ECVO
-    if (isset($record['ecvo']) && isset($record['ecvo']['value']) ){
-      $recordVars['ECVO'] = $record['ecvo']['value'];
+    if (isset($record['ecvo']) && isset($record['ecvo']['value']) && $record['ecvo']['value'] != ''){
+      if(isset($record['placeofOrigin']) && isset($record['placeofOrigin']['value']) &&
+         isset($record['placeOriginlabel']) && isset($record['placeOriginlabel']['value']) &&
+         $record['placeofOrigin']['value'] != '' && $record['placeOriginlabel']['value'] ){
+        if (empty($record['ecvo']['value'])) {
+          $recordVars['ecvoA'] = [];
+        } else {
+          $ecvoArr = ['ecvo' => $record['ecvo']['value'],
+                        'placeofOrigin' => $record['placeofOrigin']['value'],
+                        'placeOriginlabel' => $record['placeOriginlabel']['value']
+                      ];
+          $recordVars['ecvoA'] = $ecvoArr;
+        }
+      }
+      else{
+        $recordVars['ECVO'] = $record['ecvo']['value'];
+      }
     }
 
     //Date
-    if (isset($record['date']) && isset($record['date']['value']) ){
+    if (isset($record['date']) && isset($record['date']['value']) && $record['date']['value'] != '' ){
       $recordVars['Date'] = $record['date']['value'];
     }
 
     //Location
-    if (isset($record['located']) && isset($record['located']['value']) ){
+    if (isset($record['located']) && isset($record['located']['value']) && $record['located']['value'] != '' ){
       $recordVars['Location'] = $record['located']['value'];
     }
 
     //Type
-    if (isset($record['type']) && isset($record['type']['value']) ){
+    if (isset($record['type']) && isset($record['type']['value']) && $record['type']['value'] != '' ){
       $recordVars['Type'] = $record['type']['value'];
     }
 
     //Geonames
-    if (isset($record['geonames']) && isset($record['geonames']['value']) ){
+    if (isset($record['geonames']) && isset($record['geonames']['value']) && $record['geonames']['value'] != '' ){
       $recordVars['Geoname Identifier'] = $record['geonames']['value'];
     }
 
     //Code
-    if (isset($record['code']) && isset($record['code']['value']) ){
+    if (isset($record['code']) && isset($record['code']['value']) && $record['code']['value'] != ''){
       $recordVars['Modern Country Code'] = $record['code']['value'];
     }
 
     //Source
-    if (isset($record['sourceLabel']) && isset($record['sourceLabel']['value']) ){
+    if (isset($record['sourceLabel']) && isset($record['sourceLabel']['value']) && $record['sourceLabel']['value'] != '' ){
       if(isset($record['source']['value'])){
         $sourceArr = ['label' => $record['sourceLabel']['value'],
                       'qid' => $record['source']['value']
@@ -1823,7 +1888,7 @@ QUERY;
     }
 
     //Relationships
-    if (isset($record['relationships']) && isset($record['relationships']['value']) ){
+    if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
       if(isset($record['qrelationname']) && isset($record['qrelationname']['value']) && isset($record['relationagentlabel']) && isset($record['relationagentlabel']['value'])){
         if (empty($record['relationships']['value']) ){
             $recordVars['relationshipsA'] = [];
@@ -1838,7 +1903,7 @@ QUERY;
     }
 
     //CloseMatch
-    if (isset($record['match']) && isset($record['match']['value']) ){
+    if (isset($record['match']) && isset($record['match']['value']) && $record['match']['value'] != ''  ){
       if(isset($record['matchlabel']) && isset($record['matchlabel']['value']) &&  
          $record['matchlabel']['value'] != '' ){
         $closeMatchArr = ['matchLabels' => $record['matchlabel']['value'],
@@ -1849,8 +1914,8 @@ QUERY;
     }
 
     //Project
-    if (isset($record['projectlabel']) && isset($record['projectlabel']['value']) ){
-        if(isset($record['project']) && isset($record['project']['value'])){
+    if (isset($record['projectlabel']) && isset($record['projectlabel']['value'])  && $record['projectlabel']['value'] != '' ){
+        if(isset($record['project']) && isset($record['project']['value'])  && $record['project']['value'] != '' ){
             $projectArr = ['label' => $record['projectlabel']['value'],
                            'qid' => $record['project']['value']
                           ];
@@ -1859,8 +1924,8 @@ QUERY;
         else{
             $recordVars['Contributing Projects'] = $record['projectlabel']['value'];
         }
-    } else if (isset($record['project']) && isset($record['project']['value']) ){     // projects for source page
-        if (isset($record['pname']) && isset($record['pname']['value']) ) {
+    } else if (isset($record['project']) && isset($record['project']['value'])  && $record['project']['value'] != '' ){     // projects for source page
+        if (isset($record['pname']) && isset($record['pname']['value'])  && $record['pname']['value'] != '' ) {
             $projectArr = ['projectUrl' => $record['project']['value'],
                            'projectName' => $record['pname']['value']
                           ];
@@ -1869,16 +1934,16 @@ QUERY;
     }
 
     //secondarysource
-    if (isset($record['secondarysource']) && isset($record['secondarysource']['value']) ){
+    if (isset($record['secondarysource']) && isset($record['secondarysource']['value'])  && $record['secondarysource']['value'] != '' ){
       $recordVars['Secondary Source'] = $record['secondarysource']['value'];
     }
 
 
     //Roles
     //Gets the roles, participants, and pqID if they exist and matches them together
-    if (isset($record['roles']) && isset($record['roles']['value']) ){
+    if (isset($record['roles']) && isset($record['roles']['value']) &&  $record['roles']['value'] != ''){
       if(isset($record['participant']) && isset($record['participant']['value']) && 
-         $record['participant']['value'] != '' &&  $record['pq']['value'] != ''){
+         $record['participant']['value'] != '' &&  $record['pq']['value'] != '' ){
         //There are participants to match with their roles and qIDs
         $rolesArr = ['roles' => $record['roles']['value'],
                      'participant' => $record['participant']['value'],
@@ -1886,21 +1951,18 @@ QUERY;
                     ];
         $recordVars['RolesA'] = $rolesArr;
       }
-      else if(isset($record['eventRole']) && isset($record['eventRole']['value'])){
-          if(isset($record['eventRoleLabel']) && isset($record['eventRoleLabel']['value']) &&
-              $record['eventRoleLabel']['value'] != '' && $record['eventRole']['value'] != '' ){
-            //There are participants to match with their roles and qIDs
-            $rolesArr = ['roles' => $record['roles']['value'],
-                         'eventRoles' => $record['eventRole']['value'],
-                         'eventRoleLabels' => $record['eventRoleLabel']['value']
-                        ];
-            $recordVars['eventRolesA'] = $rolesArr;
-          }
-      }
-      else{
-        $recordVars['Roles'] = $record['roles']['value'];
-      }
+    } else if(isset($record['roleevent']) && isset($record['roleevent']['value'])){
+        if(isset($record['roleeventlabel']) && isset($record['roleeventlabel']['value']) &&
+            $record['roleeventlabel']['value'] != '' && $record['roleevent']['value'] != '' ){
+          //There are participants to match with their roles and qIDs
+          $rolesArr = ['roles' => $record['roleslabel']['value'],
+                        'eventRoles' => $record['roleevent']['value'],
+                        'eventRoleLabels' => $record['roleeventlabel']['value']
+                      ];
+          $recordVars['eventRolesA'] = $rolesArr;
+        }
     }
+    
 
 
 

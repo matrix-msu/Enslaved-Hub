@@ -50,7 +50,7 @@ $('li.unselected').click(function(){
     }
 
     // set the search all button url
-    $('.search-all').attr('href', BASE_URL + 'search/' + SEARCHTYPE);
+    $('.search-all').attr('href', BASE_URL + 'search/' + SEARCHTYPE + '?' + recordform + '=' + QID);
 });
 
 //since cardType and cardAmount were changed to global variables, they could technically be removed here and replaced with the globals

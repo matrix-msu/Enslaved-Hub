@@ -12,43 +12,43 @@
             <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur aadipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum.</p>
         </div>
         <div class="section-content">
-            <a href="<?php echo BASE_URL;?>explore/people">
+            <a href="<?php echo BASE_URL;?>search/people">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
-                    <h2>People</h2>
-                    <span>3643</span>
+                    <h3>People</h3>
+                    <span><?php echo queryAllAgentsCounter();?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explore/events">
+            <a href="<?php echo BASE_URL;?>search/events">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
-                    <h2>Events</h2>
-                    <span>1234</span>
+                    <h3>Events</h3>
+                    <span><?php echo queryEventCounter();?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explore/places">
+            <a href="<?php echo BASE_URL;?>search/places">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
-                    <h2>Places</h2>
-                    <span>1008</span>
+                    <h3>Places</h3>
+                    <span><?php echo queryPlaceCounter();?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
             <a href="<?php echo BASE_URL;?>projects">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
-                    <h2>Projects</h2>
-                    <span>34</span>
+                    <h3>Projects</h3>
+                    <span><?php echo queryProjectsCounter();?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explore/sources">
+            <a href="<?php echo BASE_URL;?>search/sources">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
-                    <h2>Sources</h2>
-                    <span>4798</span>
+                    <h3>Sources</h3>
+                    <span><?php echo querySourceCounter();?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>

@@ -42,20 +42,23 @@ function blazegraph()
 
     if (isset($_GET['filters'])){
         $filtersArray = $_GET['filters'];
+        // print_r($filtersArray);die;
 
+        $limitQuery = '';
         if (isset($filtersArray['limit'])){
             $limit = $filtersArray['limit'];
-        } else {
-            $limit = '';
+            $limitQuery = "limit $limit";
         }
+        $offsetQuery = '';
         if (isset($filtersArray['offset'])){
             $offset = $filtersArray['offset'];
-        } else {
-            $offset = '';
+            $offsetQuery = "offset $offset";
         }
     } else {
         $filtersArray = Array();
     }
+
+    // print_r($filtersArray);die;
 
     $templates = $_GET['templates'];
 
@@ -212,77 +215,32 @@ QUERY;
                     $nameQuery = "FILTER regex(?name, '^$name', 'i') .";
                 }
 
+
+                $sourceQuery = "";
+                if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
+                    $sourceQ = $filtersArray['source'];
+                    $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source. 
+                                    ?source wdt:P3 wd:Q16.
+                                    ?people wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+                                            ?property  ?object .
+                                    ?object prov:wasDerivedFrom ?provenance .
+                                    ?provenance pr:P35 ?source .
+                                    ?people rdfs:label ?peoplename";
+                }
+
+
+                $eventQuery = "";
+                if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
+                    $eventQ = $filtersArray['event'];
+                    $eventQuery = "VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event. 
+                                    ?event wdt:P3 wd:Q34.
+                                    ?event p:P38 ?statement.
+                                    ?statement ps:P38 ?name. 
+                                    ?statement pq:P39 ?people.
+                                    ?people rdfs:label ?peoplename";
+                }
+
                 $query = array('query' => "");
-
-//                 $query['query'] = <<<QUERY
-// SELECT DISTINCT ?agent ?event ?startyear ?endyear
-// (count(distinct ?people) as ?countpeople)
-// (count(distinct ?event) as ?countevent)
-// (count(distinct ?place) as ?countplace)
-// (count(distinct ?source) as ?countsource)
-
-// (group_concat(distinct ?name; separator = "||") as ?name) #name
-
-// (group_concat(distinct ?placelab; separator = "||") as ?place) #place
-
-// (group_concat(distinct ?statuslab; separator = "||") as ?status) #status
-
-// (group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
-
-// (group_concat(distinct ?match; separator = "||") as ?closeMatch)
-
-// WHERE {
-
-//     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-
-//     ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
-//             ?property  ?object .
-//         ?object prov:wasDerivedFrom ?provenance .
-//         ?provenance pr:P35 ?source .
-
-
-//     ?agent wdt:P82 ?name. #name is mandatory
-
-//     OPTIONAL{?agent  wdt:P39 ?role}. #optional role
-//     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-
-//     $genderQuery
-//     $nameQuery
-
-//     OPTIONAL { ?agent wdt:P24 ?status.
-//             ?status rdfs:label ?statuslab}
-
-//     OPTIONAL { ?agent wdt:P17 ?sex.
-//             ?sex rdfs:label ?sexlab}
-
-//     OPTIONAL { ?agent wdt:P88 ?match}.
-
-//     ?agent p:P82 ?statement.
-//     ?statement ps:P82 ?name.
-//     OPTIONAL{ ?statement pq:P30 ?event.
-//                 ?event	wdt:P13 ?startdate.
-//             BIND(str(YEAR(?startdate)) AS ?startyear).
-//             OPTIONAL {?event wdt:P14 ?enddate.
-//             BIND(str(YEAR(?enddate)) AS ?endyear)}.
-//             OPTIONAL {?event wdt:P12 ?place.
-//                     ?place rdfs:label ?placelab}
-
-//             }.
-//     OPTIONAL {?agent wdt:P25 ?people}
-//     OPTIONAL {?agent p:P39 ?roles.
-//                 ?roles ps:P39 ?event.
-//             ?roles pq:P98 ?event}.
-//     OPTIONAL {?agent p:P24 ?status.
-//                 ?status ps:P24 ?event.
-//             ?status pq:P99 ?event}.
-
-
-
-// } group by ?agent ?event ?startyear ?endyear
-// order by ?agent
-// limit $limit
-// offset $offset
-// QUERY;
 
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent 
@@ -300,6 +258,9 @@ SELECT DISTINCT ?agent
 (count(distinct ?place) as ?countplace)
 (count(distinct ?reference) as ?countsource)
 WHERE {
+
+    $sourceQuery
+    $eventQuery
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
@@ -337,8 +298,8 @@ WHERE {
 
 } group by ?agent 
 order by ?agent 
-limit $limit
-offset $offset
+$limitQuery
+$offsetQuery
 QUERY;
 
                 array_push($queryArray, $query);
@@ -360,6 +321,9 @@ SELECT DISTINCT ?agent
 (count(distinct ?place) as ?countplace)
 (count(distinct ?reference) as ?countsource)
 WHERE {
+
+    $sourceQuery
+    $eventQuery
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
@@ -401,6 +365,7 @@ QUERY;
 
                 array_push($queryArray, $query);
 
+                // print_r($queryArray);die;
                 break;
             case 'places':
 
@@ -515,6 +480,15 @@ QUERY;
                     $dateRangeQuery = $dateRange;
                 }
 
+                $sourceQuery = "";
+                if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
+                    $sourceQ = $filtersArray['source'];
+                    $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source. 
+                                    ?source wdt:P3 wd:Q16.
+                                    ?source wdt:P8 ?event.
+                                    ?event rdfs:label ?eventname";
+                }
+
                 //Bad way of doing this but it works for now
                 if($dateRangeQuery !== ""){
                     $query = array('query' => "");
@@ -552,6 +526,8 @@ WHERE {
         FILTER (?date >= "1800-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
         FILTER (?date <= "1900-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
         BIND(str(YEAR(?date)) AS ?startyear).
+
+        $sourceQuery
     
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
@@ -597,6 +573,8 @@ WHERE {
         FILTER (?date <= "1900-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
         BIND(str(YEAR(?date)) AS ?startyear).
     
+        $sourceQuery
+
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
 order by ?startyear
@@ -629,6 +607,9 @@ WHERE {
             BIND(str(YEAR(?date)) AS ?startyear)}.
     OPTIONAL {?event wdt:P14 ?endDate
             BIND(str(YEAR(?endDate)) AS ?endyear)}.
+
+    $sourceQuery
+
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 order by ?startyear
@@ -661,6 +642,9 @@ WHERE {
             BIND(str(YEAR(?date)) AS ?startyear)}.
     OPTIONAL {?event wdt:P14 ?endDate
             BIND(str(YEAR(?endDate)) AS ?endyear)}.
+
+    $sourceQuery
+
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 order by ?startyear
@@ -668,7 +652,6 @@ QUERY;
 
                     array_push($queryArray, $query);
                 }
-
 
                 break;
             case 'sources':
@@ -1770,7 +1753,7 @@ HTML;
 
 
                         $card_icon_url = BASE_IMAGE_URL . 'Source-light.svg';
-                        $source_url = BASE_URL . "record/sources/" . $sourceQ;
+                        $source_url = BASE_URL . "record/source/" . $sourceQ;
 
                         $card = <<<HTML
 <li>
