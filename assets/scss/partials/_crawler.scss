@@ -1,5 +1,5 @@
 .crawler{
-    margin: 60px auto 100px;
+    margin: 60px auto 180px;
     max-width: 1000px;
     padding: 0 6%;
 
@@ -159,6 +159,11 @@
             .trash{
                 width: 60px;
                 height: 60px;
+
+                p{
+                    line-height: 64px;
+                    text-align: center;
+                }
             }
         }
     }

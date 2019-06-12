@@ -193,28 +193,23 @@ QUERY;
                 break;
 
             case 'people':
+                ///*********************************** */
+                /// PEOPLE
+                ///*********************************** */
+
+                //Filtering for Query
 
                 $genderQuery = "";
-                if (isset($filtersArray['gender']))
-                {
-                    $gender = $filtersArray['gender'];
-                    $qGender = $gender == 'Male';
+                if (isset($filtersArray['gender'])) {
+                    $genders = $filtersArray['gender'];
 
-                    if(count($filtersArray['gender']) > 1)
-                    {
+                    if(count($filtersArray['gender']) > 1) {
                         // handle multiple gender (Male, Female, and Unidentified)
                     }
-                    else // handle single gender search
-                    {
-                        if( in_array("Male", $gender) ){
-                            $genderQuery = "?agent wdt:P17 wd:Q48";
-                        }
-                        else if( in_array("Female", $gender) ){
-                            $genderQuery = "?agent wdt:P17 wd:Q47";
-                        }
-                        else // Handle unidentified
-                        {
-                            // code here
+                    else { // handle single gender search
+                        $gender = $genders[0]; //ex. Q48
+                        if($gender != 'U'){ //U is the value passed for unidentified
+                            $genderQuery = "?agent wdt:P17 wd:$gender";
                         }
                     }
                 }
@@ -227,81 +222,25 @@ QUERY;
 
                 $ageQuery = "";
                 if (isset($filtersArray['age_category'])){
-                    $age = $filtersArray['age_category'];
+                    $age = $filtersArray['age_category'][0];
                     $ageQuery = "?agent wdt:P32 wd:$age .";
                 }
 
+                $ethnoQuery = "";
+                if (isset($filtersArray['ethnodescriptor'])){
+                    $ethno = $filtersArray['ethnodescriptor'][0];
+                    $ethnoQuery = "?agent wdt:P86 wd:$ethno .";
+                }
+
+                $roleQuery = "";
+                if (isset($filtersArray['role_types'])){
+                    $role = $filtersArray['role_types'][0];
+                    $roleQuery = "?agent wdt:P39 wd:$role .";
+                }
+
+
+                //Query with limit and offset
                 $query = array('query' => "");
-
-//                 $query['query'] = <<<QUERY
-// SELECT DISTINCT ?agent ?event ?startyear ?endyear
-// (count(distinct ?people) as ?countpeople)
-// (count(distinct ?event) as ?countevent)
-// (count(distinct ?place) as ?countplace)
-// (count(distinct ?source) as ?countsource)
-
-// (group_concat(distinct ?name; separator = "||") as ?name) #name
-
-// (group_concat(distinct ?placelab; separator = "||") as ?place) #place
-
-// (group_concat(distinct ?statuslab; separator = "||") as ?status) #status
-
-// (group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
-
-// (group_concat(distinct ?match; separator = "||") as ?closeMatch)
-
-// WHERE {
-
-//     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-
-//     ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
-//             ?property  ?object .
-//         ?object prov:wasDerivedFrom ?provenance .
-//         ?provenance pr:P35 ?source .
-
-
-//     ?agent wdt:P82 ?name. #name is mandatory
-
-//     OPTIONAL{?agent  wdt:P39 ?role}. #optional role
-//     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-
-//     $genderQuery
-//     $nameQuery
-
-//     OPTIONAL { ?agent wdt:P24 ?status.
-//             ?status rdfs:label ?statuslab}
-
-//     OPTIONAL { ?agent wdt:P17 ?sex.
-//             ?sex rdfs:label ?sexlab}
-
-//     OPTIONAL { ?agent wdt:P88 ?match}.
-
-//     ?agent p:P82 ?statement.
-//     ?statement ps:P82 ?name.
-//     OPTIONAL{ ?statement pq:P30 ?event.
-//                 ?event	wdt:P13 ?startdate.
-//             BIND(str(YEAR(?startdate)) AS ?startyear).
-//             OPTIONAL {?event wdt:P14 ?enddate.
-//             BIND(str(YEAR(?enddate)) AS ?endyear)}.
-//             OPTIONAL {?event wdt:P12 ?place.
-//                     ?place rdfs:label ?placelab}
-
-//             }.
-//     OPTIONAL {?agent wdt:P25 ?people}
-//     OPTIONAL {?agent p:P39 ?roles.
-//                 ?roles ps:P39 ?event.
-//             ?roles pq:P98 ?event}.
-//     OPTIONAL {?agent p:P24 ?status.
-//                 ?status ps:P24 ?event.
-//             ?status pq:P99 ?event}.
-
-
-
-// } group by ?agent ?event ?startyear ?endyear
-// order by ?agent
-// limit $limit
-// offset $offset
-// QUERY;
 
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent   
@@ -338,6 +277,8 @@ WHERE {
     $genderQuery
     $nameQuery
     $ageQuery
+    $ethnoQuery
+    $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
  
@@ -369,6 +310,7 @@ QUERY;
 
                 array_push($queryArray, $query);
 
+                //Query for Total Count
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent   
@@ -405,6 +347,8 @@ WHERE {
     $genderQuery
     $nameQuery
     $ageQuery
+    $ethnoQuery
+    $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
     
@@ -435,6 +379,11 @@ QUERY;
 
                 break;
             case 'places':
+                ///*********************************** */
+                /// PLACES
+                ///*********************************** */
+
+                /// NOT WORKING YET
 
                 $genderQuery = "";
                 if (isset($filtersArray['gender'])){
@@ -539,8 +488,11 @@ QUERY;
 
                 break;
             case 'events':
+                ///*********************************** */
+                /// EVENTS
+                ///*********************************** */
 
-            
+                //Filtering for Query
                 $eventQuery = "";
                 if (isset($filtersArray['event_type'])){
                     $eventType = $filtersArray['event_type'][0];
@@ -723,6 +675,9 @@ QUERY;
 
                 break;
             case 'sources':
+                ///*********************************** */
+                /// SOURCES
+                ///*********************************** */
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
