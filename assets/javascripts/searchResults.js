@@ -97,6 +97,8 @@ function searchResults(preset, limit = 12, offset = 0)
         },
         'success': function (data) 
         {
+            isSearching = false;
+
             result_array = JSON.parse(data);
             var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
@@ -113,8 +115,6 @@ function searchResults(preset, limit = 12, offset = 0)
                 showingResultsText = "Showing " + card_limit + " of " + total_length + " Results";
             }
             $('.showing-results').html(showingResultsText);
-
-            isSearching = false;
 
             //Wait till doc is ready
             $(document).ready(function(){
@@ -495,6 +495,8 @@ $(document).ready(function() {
         var input_key = $(this).parent().attr("class");
         var page_url = document.location.href;
 
+        console.log(input_value);
+
         // handle categories
         if(input_key == "category")
         {
@@ -521,6 +523,7 @@ $(document).ready(function() {
             }
             else filters[input_key] = [input_value];
         }
+        // Remove from params
         else if(input_key in filters)
         {   
             filters[input_key] = filters[input_key].filter(function(value, index, arr) { return value != input_value; });
@@ -563,6 +566,7 @@ $(document).ready(function() {
         }
         page_url = split_url[0]+"?";
 
+        // Show path on top of page before title
         if(showPath)
         {
             $(".last-page-header").show();
@@ -578,6 +582,7 @@ $(document).ready(function() {
 
         } else $(".last-page-header").hide();
 
+        // updating url
         var counter = 0;
         $.each(filters, function(key, value) 
         {

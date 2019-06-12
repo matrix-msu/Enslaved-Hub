@@ -27,7 +27,7 @@
                 $currentTitle = $currentQ;
             }
         }
-
+ 
         $upperForm = ucfirst(EXPLORE_FORM);
         $showPath = false;
         $fromBrowse = false;
@@ -127,8 +127,7 @@
             
             <li class="cat-cat">People Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
             </li>
-            <ul id="mainmenu">
-            
+            <ul id="mainmenu">            
                 <?php foreach ($GLOBALS["FILTER_ARRAY"]['people'] as $type) { 
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
                     <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>

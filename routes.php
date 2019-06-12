@@ -42,8 +42,6 @@ $GLOBALS['routes'] = array(
     'exploreFilters' => 'exploreFilters.php',
     'exploreResults' => 'exploreResults.php',
     'recordForm' => 'exploreRecord.php',
-
-	'projects' => 'projects.php',
 	'stories' => 'stories.php',
 	'about' => 'about.php',
 	'getInvolved' => 'getInvolved.php',
@@ -54,6 +52,7 @@ $GLOBALS['routes'] = array(
     'project' => 'fullProject.php',
     'timeSub' => 'timeSub.php',
     'enslavedOntology' => 'ontology.php',
+    'projects' => 'projects.php',
     'crawler' => 'crawler.php',
     'current' => 'current.php'
 );
@@ -95,10 +94,8 @@ if ($fileArray[0] == 'project'){
     define('QID', $projectQ);
     $currentFile = $fileArray[0];
 }
-if($fileArray[0] == 'explore' && count($fileArray) > 1){
-    if($fileArray[1] == 'sources'){
-        $fileArray[2] = 'source_type';
-    }
+if($fileArray[0] == 'explore' && count($fileArray) > 1 && $fileArray[1] == 'sources'){
+    $fileArray[2] = 'source_type';
 }
 
 $EXPLORE_JS_VARS = '';
@@ -111,12 +108,15 @@ if ($fileArray[0] == 'explore' && count($fileArray) > 2){ //filter
         $currentFile = 'timeSub';
     }
     $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';var JS_EXPLORE_FILTERS = '".ucwords(str_replace("_", " ", EXPLORE_FILTER))."';</script>\n";
+
+}elseif( $fileArray[0] == 'explore' && count($fileArray) > 1 && $fileArray[1] == 'projects' ){
+    $currentFile = 'projects';
+
 }elseif ($fileArray[0] == 'explore' && count($fileArray) > 1){ //form
     define('EXPLORE_FORM', $fileArray[1]);
     $currentFile = 'exploreForm';
     $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';</script>\n";
-}
-elseif ($fileArray[0] == 'search' && count($fileArray) > 1){ //search
+}elseif ($fileArray[0] == 'search' && count($fileArray) > 1){ //search
     define('EXPLORE_FORM', $fileArray[1]);
     $currentFile = 'exploreResults';
     $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';</script>\n";
@@ -129,8 +129,6 @@ if( isset($GLOBALS['api_routes'][$currentFile]) ){
     echo $currentApiFile[1]();
     die;
 }elseif( !isset($GLOBALS['routes'][$currentFile]) ){
-    echo ($actualLink);
-    die;
     header('HTTP/1.0 404 Not Found');
     define('CURRENT_VIEW', '404.php');
 }else{
