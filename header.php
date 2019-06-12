@@ -21,7 +21,7 @@
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/events">Events</a>
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/places">Places</a>
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/sources">Sources</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>projects">Projects</a>
+                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/projects">Projects</a>
                         </li>
                     </ul>
                 </li>
@@ -33,7 +33,7 @@
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>">Space</a>
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>">Time</a>
                             <a class="nav-sublink" href="<?php echo BASE_URL;?>">Data</a>
-                        </li>
+                        </li> 
                     </ul>
                 </li> -->
                 <li class="nav-item"><a class="nav-link unselected" id="stories" href="<?php echo BASE_URL;?>stories">Stories</a></li>

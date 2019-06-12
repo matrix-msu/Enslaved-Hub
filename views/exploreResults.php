@@ -1,22 +1,41 @@
 <!-- Heading image and title container-->
-<div class="container header">
+<div class="container header explore-results">
 	<div class="container middlewrap">
         <?php
         $typeTitle = "";
+        $typeLower = "";
         $currentTitle = 'Search';
 
         if (count($_GET) > 0){
-            $typeTitle = array_keys($_GET)[0];
-            $currentTitle = $_GET[$typeTitle];
-            $currentTitle = str_replace('_', ' ', $currentTitle);
-        }
+            $typeLower = array_keys($_GET)[0];
+            $typeTitle = ucwords(str_replace('_', ' ', $typeLower));
 
+            $currentQ = $_GET[$typeLower];
+            // $currentQ = str_replace('_', ' ', $currentQitle);
+            
+            if (array_key_exists($typeTitle, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                $typeCategories = $GLOBALS['FILTER_TO_FILE_MAP'][$typeTitle];
+                $currentTitle = array_search($currentQ, $typeCategories);
+
+                if(!$currentTitle){
+                    //QID not found, shouldn't get here
+                    $currentTitle = "QID ERROR";
+                }
+            }
+            else{
+                //Must have been a search for a name, daterange
+                $currentTitle = $currentQ;
+            }
+        }
+ 
         $upperForm = ucfirst(EXPLORE_FORM);
         $showPath = false;
+        $fromBrowse = false;
 
         //Conditions to put the previous page header in (Not being used right now)
         if(EXPLORE_FORM != null && EXPLORE_FORM != 'all' && EXPLORE_FORM != 'results'){
              $showPath = true;
+             $fromBrowse = true;
             // echo '<h4 class="last-page-header">';
             // echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '"><span id="previous-title">' . $upperForm . ' // </span></a>';
         
@@ -34,32 +53,35 @@
             <a id="last-page" class="prev1" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM ?>">
                 <span id="previous-title"><?php echo $upperForm ?> </span>
             </a>
-            <a id="last-page" class="prev2" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM. '/' .$typeTitle ?>">
-                <span id="previous-title"><?php echo ($typeTitle != "") ? "//" . ucwords(str_replace('_', ' ', $typeTitle)) : "" ?></span>
+            <a id="last-page" class="prev2" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM. '/' .$typeLower ?>">
+                <span id="previous-title"><?php echo ($typeTitle != "") ? "//" . $typeTitle : "" ?></span>
             </a>
             <span id="current-title"><?php echo ($currentTitle != "") ? "//" . $currentTitle : "" ?></span>
         </h4>
         <div class="search-title">
             <h1><?php echo $currentTitle;?></h1>
         </div>
-        <div class="heading-search">
-            <form class="search-form">
-				<label for="searchbar" class="sr-only">searchbar</label>
-                <input id="searchbar" class="search-field main-search" type="text" name="searchbar"/>
-                <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
-                <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
-            </form>
-        </div>
+        <?php if(!$fromBrowse) { ?>
+            <div class="heading-search">
+                <form class="search-form">
+                    <label for="searchbar" class="sr-only">searchbar</label>
+                    <input id="searchbar" class="search-field main-search" type="text" name="searchbar"/>
+                    <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
+                    <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
+                </form>
+            </div>
+        <?php } ?>
   </div>
 </div>
 
 <main class="search-results">
     <div class="filter-menu">
         <ul>
+            <?php if(!$fromBrowse) { ?>
             <h2>Show Results For</h2>
             <ul class="catmenu" id="submenu">
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg" alt="person icon">
                         <p>People</p>
@@ -67,7 +89,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg" alt="location icon">
                         <p>Places</p>
@@ -75,7 +97,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg" alt="event icon">
                         <p>Events</p>
@@ -83,7 +105,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg" alt="source icon">
                         <p>Sources</p>
@@ -91,7 +113,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="category">
+                    <label>
                         <input id="checkBox" type="checkbox">
                         <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
                         <p>Projects</p>
@@ -99,317 +121,35 @@
                     </label>
                 </li>
             </ul>
-            <!-- General Filtering -->
             <hr>
-            <li class="cat-cat">General Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-            </li>
-            <ul id="mainmenu">
-
-                <li class="filter-cat">Country<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="country">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="country">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="country">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Region<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="region">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="region">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="region">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Decade<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="decade">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="decade">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="decade">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Date Select<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="date_select">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="date_select">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="date_select">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-            </ul>
+            <?php } ?>
             <!-- People Filtering -->
-            <hr>
+            
             <li class="cat-cat">People Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
             </li>
-            <ul id="mainmenu">
-                <li class="filter-cat" name="gender">Gender<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="gender">
-                            <input id="checkBox" type="checkbox">
-                            <p>Unidentified <em>(234)</em></p>
-                            <span></span>
-                        </label>
+            <ul id="mainmenu">            
+                <?php foreach ($GLOBALS["FILTER_ARRAY"]['people'] as $type) { 
+                    $catLower = strtolower(str_replace(" ", "_", $type)); ?>
+                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
                     </li>
-                    <li>
-                        <label class="gender">
-                            <input id="checkBox" type="checkbox">
-                            <p>Male <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="gender">
-                            <input id="checkBox" type="checkbox">
-                            <p>Female <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
+                    <ul id="submenu">
+                    <?php
+                    $typeCats = array();
+                    if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                        $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
+                    }
+                    foreach ($typeCats as $category => $qid) { ?>
+                        <li>
+                            <label class="<?php echo $catLower; ?>">
+                                <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
+                                <p><?php echo $category; ?> <em>(234)</em></p>
+                                <span></span>
+                            </label>
+                        </li>
+                    <?php } ?>
                 </ul>
-                <li class="filter-cat">Origin<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="origin">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="origin">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="origin">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Age<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="age">
-                            <input id="checkBox" type="checkbox">
-                            <p>Age Range <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="age">
-                            <input id="checkBox" type="checkbox">
-                            <p>Age Range <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="age">
-                            <input id="checkBox" type="checkbox">
-                            <p>Age Range <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Age Category<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="age_category">
-                            <input id="checkBox" type="checkbox">
-                            <p>Age Range <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="age_category">
-                            <input id="checkBox" type="checkbox">
-                            <p>Age Range <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="age_category">
-                            <input id="checkBox" type="checkbox">
-                            <p>Age Range <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Color<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="color">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="color">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="color">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Occupation<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="occupation">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="occupation">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="occupation">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Relationship<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="relationship">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="relationship">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="relationship">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Role<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span></li>
-                <ul id="submenu">
-                    <li>
-                        <label class="role_types">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="role_types">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="role_types">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
+                <?php } ?>
+
             </ul>
             <!-- Event Filtering -->
             <hr>
@@ -417,56 +157,28 @@
             </li>
             <ul id="mainmenu">
 
-                <li class="filter-cat">Event Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="event_type">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
+                <?php foreach ($GLOBALS["FILTER_ARRAY"]['events'] as $type) { 
+                    $catLower = strtolower(str_replace(" ", "_", $type)); ?>
+                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
                     </li>
-                    <li>
-                        <label class="event_type">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="event_type">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
+                    <ul id="submenu">
+                    <?php
+                    $typeCats = array();
+                    if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                        $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
+                    }
+                    foreach ($typeCats as $category => $qid) { ?>
+                        <li>
+                            <label class="<?php echo $catLower; ?>">
+                                <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
+                                <p><?php echo $category; ?> <em>(234)</em></p>
+                                <span></span>
+                            </label>
+                        </li>
+                    <?php } ?>
                 </ul>
-                <li class="filter-cat">Event Date<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="event_date">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="event_date">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="event_date">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
+                <?php } ?>
+
             </ul>
             <!-- Place Filtering -->
             <hr>
@@ -474,106 +186,28 @@
             </li>
             <ul id="mainmenu">
 
-                <li class="filter-cat">Country<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="country">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
+                <?php foreach ($GLOBALS["FILTER_ARRAY"]['places'] as $type) { 
+                    $catLower = strtolower(str_replace(" ", "_", $type)); ?>
+                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
                     </li>
-                    <li>
-                        <label class="country">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="country">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
+                    <ul id="submenu">
+                    <?php
+                    $typeCats = array();
+                    if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                        $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
+                    }
+                    foreach ($typeCats as $category => $qid) { ?>
+                        <li>
+                            <label class="<?php echo $catLower; ?>">
+                                <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
+                                <p><?php echo $category; ?> <em>(234)</em></p>
+                                <span></span>
+                            </label>
+                        </li>
+                    <?php } ?>
                 </ul>
-                <li class="filter-cat">Region<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="region">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="region">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="region">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Province<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="province">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="province">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="province">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">City<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="city">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="city">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="city">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
+                <?php } ?>
+
             </ul>
             <!-- Project Filtering -->
             <hr>
@@ -607,89 +241,6 @@
                     </li>
                 </ul>
             </ul>
-            <!-- Media Filtering -->
-            <hr>
-            <li class="cat-cat">Media Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-            </li>
-            <ul id="mainmenu">
-
-                <li class="filter-cat">Media Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="madia">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="madia">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="madia">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Repository<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="repo">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="repo">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="repo">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-                <li class="filter-cat">Contributing Scholar<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="scholar">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="scholar">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="scholar">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
-            </ul>
-
 
         </ul>
     </div>

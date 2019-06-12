@@ -1,3 +1,14 @@
+.explore-results{
+    .middlewrap{
+        .search-title{
+            margin: 0;
+        }
+        .heading-search{
+            margin-top: 60px;
+        }
+    }
+}
+
 div.searched-term {
     background-color: rgba(13,18,48,0.8);
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
@@ -26,7 +37,7 @@ div.searched-term {
         box-shadow: 0 10px 15px 0 rgba(0,0,0,0.05);
         box-sizing: border-box;
         height: calc(100% - 40px);
-        overflow: hidden;
+        overflow: auto;
         position: absolute;
         top: 40px;
         left: -270px;
@@ -749,7 +760,7 @@ span.align-right.show {
         .cardwrap{
             .row{
                 li{
-                    width: 49%;
+                    width: 48%;
                 }
             }
         }

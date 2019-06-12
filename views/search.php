@@ -19,7 +19,7 @@
 </div>
 <main class="direct-search">
     <div class="searchwrap">
-        <form  action="<?php echo BASE_URL;?>search/all" method="get" onsubmit="removeEmpty()">
+        <form  action="<?php echo BASE_URL;?>search/all" method="get" onsubmit="handleSubmit()">
             <h2>Direct Search</h2>
             <div class="search-section">
                 <div class="inputwrap">
@@ -38,9 +38,9 @@
                     <label for="life-event">Life Event</label>
                     <select class="s2-multiple" name="event" id="life-event" multiple="multiple">
                         <option value=""></option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="unidentified">Unidentified</option>
+                        <?php foreach (eventTypes as $type => $qid) { ?>
+                            <option value="<?php echo $qid;//strtolower(str_replace(" ", "_", $type)); ?>"><?php echo $type; ?></option>
+                        <?php } ?>
                     </select>
                 </div>
             </div>
