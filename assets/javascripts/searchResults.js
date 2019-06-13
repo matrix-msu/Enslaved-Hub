@@ -9,7 +9,6 @@ var result_array;
 var total_length = 0;
 var card_offset = 0;
 var card_limit = 12;
-var presets = {};
 var filters = {};
 
 var showPath = false;
@@ -19,8 +18,6 @@ var currentTitle = "Search";
 
 
 // Get params from url
-var $_GET = {};
-var $_GET_length = 0;
 if(document.location.toString().indexOf('?') !== -1) 
 {
     var query = document.location
@@ -41,28 +38,9 @@ if(document.location.toString().indexOf('?') !== -1)
             filters[aux[0]] = aux[1].split('+');
             continue;
         }
-
         filters[aux[0]] = aux[1].split(',');
-
-        // $_GET[aux[0]] = aux[1];
-        // $_GET_length++;
     }
 }
-// Set all the filters from the URL
-// for(var i=0; i < $_GET_length; i++)
-// {
-//     var type = Object.keys($_GET)[i];
-//     var filter = $_GET[type];
-
-//     if (typeof(filter) == "undefined"){
-//         filter = '';
-//     }
-//     filters[type] = filter;
-// }
-
-// Get main categories
-// if("categories" in filters)
-//     filters["categories"] = filters["categories"].split(',');
 
 /** 
  * Takes parameters for an ajax call that sets result_array to an array with
@@ -186,11 +164,6 @@ $(document).ready(function() {
         {
             $("label."+key).each(function() 
             {
-                var filt =  $(this).find('p');
-                var sel_filter = filt.text();
-                var em = $(this).find('p').find("em").text();
-                sel_filter = sel_filter.replace(em, "").trim();
-                
                 //Looks for input where value = QID
                 if($(this).find('input').val() == value) {
                     $(this).find("input").prop("checked", true);
@@ -494,8 +467,6 @@ $(document).ready(function() {
 
         var input_key = $(this).parent().attr("class");
         var page_url = document.location.href;
-
-        console.log(input_value);
 
         // handle categories
         if(input_key == "category")
