@@ -1265,6 +1265,7 @@ HTML;
     <div>$relationships[$i]
 HTML;
 
+// print_r(controlledVocabulary);die;
         // relationship tool tip
         if(array_key_exists($relationships[$i],controlledVocabulary)){
             $detailinfo = ucfirst(controlledVocabulary[$relationships[$i]]);
@@ -1309,8 +1310,8 @@ HTML;
     $html .= '</div></div>';
 } else if ($label == "ecvoA"){
     // print_r($statement);die;
-    $lowerlabel = "ecvo";
-    $upperlabel = "ECVO";
+    $lowerlabel = "ecvo - place of origin";
+    $upperlabel = "ECVO - PLACE OF ORIGIN";
 
     $ecvos = explode('||', $statement['ecvo']);
     $originUrls = explode('||', $statement['placeofOrigin']);
@@ -2136,6 +2137,8 @@ function getFullRecordConnections(){
     return getSourcePageConnections($QID);
   } else if ($recordform == 'event') {
     return getEventPageConnections($QID);
+  } else if ($recordform == 'person') {
+    return getPersonPageConnections($QID);
   } else {
     return '';
   }
@@ -2145,6 +2148,14 @@ function getFullRecordConnections(){
 
 }
 
+
+
+// connections for the person full record page
+function getPersonPageConnections($QID) {
+  $connections = array();
+
+
+}
 
 // connections for the source full record page
 function getSourcePageConnections($QID) {
@@ -2167,8 +2178,6 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
   
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
-LIMIT 8
-
 QUERY;
     
 
@@ -2185,9 +2194,11 @@ QUERY;
     curl_close($ch);
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
+    $connections['Person-count'] = count($result);
 
-    $connections['Person'] = $result;
+    $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
 
+    
 
 
   // events connections
@@ -2203,8 +2214,6 @@ SELECT DISTINCT ?event ?eventname (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?
   
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
-LIMIT 8
-
 QUERY;
     
 
@@ -2222,10 +2231,12 @@ QUERY;
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
 
-    $connections['Event'] = $result;
+    $connections['Event-count'] = count($result);
+
+    $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
 
     return json_encode($connections);
-  }
+}
 
 
 // connections for the event full record page
@@ -2244,14 +2255,8 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
   ?statement ps:P38 ?name. 
   ?statement pq:P39 ?people.
   ?people rdfs:label ?peoplename.
-
-  
-  
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
-LIMIT 8
-
-
 QUERY;
     
 
@@ -2268,8 +2273,9 @@ QUERY;
     curl_close($ch);
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
+    $connections['Person-count'] = count($result);
 
-    $connections['Person'] = $result;
+    $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
 
 
   // project and source connections
@@ -2288,9 +2294,6 @@ VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
   ?project rdfs:label ?projectName.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
-LIMIT 8
-
-
 QUERY;
     
 
@@ -2323,14 +2326,14 @@ QUERY;
         }
     }
 
-    $connections['Project'] = $projectConnections;
-    $connections['Source'] = $sourceConnections;
+    $connections['Project-count'] = count($projectConnections);
+    $connections['Project'] = array_slice($projectConnections, 0, 8);  // return the first 8 results
 
-
-
+    $connections['Source-count'] = count($sourceConnections);
+    $connections['Source'] = array_slice($sourceConnections, 0, 8);  // return the first 8 results
 
     return json_encode($connections);
-  }
+}
 
 
 function debugfunc($debugobject){?>

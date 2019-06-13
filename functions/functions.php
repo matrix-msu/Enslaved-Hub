@@ -226,7 +226,7 @@ QUERY;
 
                 $sourceQuery = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
-                    $sourceQ = $filtersArray['source'];
+                    $sourceQ = $filtersArray['source'][0];
                     $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source. 
                                     ?source wdt:P3 wd:Q16.
                                     ?people wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
@@ -256,7 +256,7 @@ QUERY;
 
                 $eventQuery = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
-                    $eventQ = $filtersArray['event'];
+                    $eventQ = $filtersArray['event'][0];
                     $eventQuery = "VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event. 
                                     ?event wdt:P3 wd:Q34.
                                     ?event p:P38 ?statement.
@@ -409,7 +409,7 @@ QUERY;
 
                 array_push($queryArray, $query);
 
-                // print_r($queryArray);die;
+                print_r($queryArray);die;
                 break;
             case 'places':
                 ///*********************************** */
