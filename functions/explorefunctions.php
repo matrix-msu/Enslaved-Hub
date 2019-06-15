@@ -196,14 +196,24 @@ function counterOfRole(){
 
 // Count the number of people in each age category
 function counterOfAge(){
-//  $adultQueries = '';
-//
-//  foreach (AgeCategoryAdult as $qAge) {
-//    $adultQueries .= "?person wdt:P32 wd:$qAge. ";
-//  }
-//  echo $adultQueries;
-//  die;
 
+  $agecategoryQuery ='SELECT  ?agecategoryLabel (count(?agent) as ?count) where{
+                        ?agecategory wdt:P3 wd:Q604.
+                        ?agent wdt:P3 wd:Q602.
+                        ?agent wdt:P32 ?agecategory.
+                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+
+                      }group by ?agecategoryLabel
+                      ';
+
+  $encode=urlencode($agecategoryQuery);
+  $call=API_URL.$encode;
+  $agecategoryResult=callAPI($call,'',''); 
+  $agecategoryResult = json_decode($agecategoryResult);
+
+  return json_encode($agecategoryResult->results->bindings);
+
+/*
   $InfantQuery = 'SELECT ?person ?personLabel ?age ?agecategoryLabel ?name ?originLabel
                         (group_concat(distinct ?status; separator = "||") as ?status)
                         (group_concat(distinct ?place; separator = "||") as ?place)
@@ -369,6 +379,8 @@ function counterOfAge(){
 //  }else{
 //    return $res;
 //  }
+
+*/
 }
 
 function counterOfEthnodescriptor(){

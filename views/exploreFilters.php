@@ -31,7 +31,9 @@ $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
       if (array_key_exists($upperWithSpaces, $GLOBALS['FILTER_TO_FILE_MAP'])){
 
           $typeCategories = $GLOBALS['FILTER_TO_FILE_MAP'][$upperWithSpaces];
+          // var_dump($typeCategories);
           ksort($typeCategories);
+          // var_dump($typeCategories);
       }
 
       foreach ($typeCategories as $category => $qid) { ?>
@@ -52,7 +54,7 @@ $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
 
 <script>
     $(document).ready(function () {
-
+ 
         // fill in the counts for the Explore By types
 //        $.ajax({
 //            url: BASE_URL + 'api/counterOfType',
