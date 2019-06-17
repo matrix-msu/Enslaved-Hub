@@ -47,6 +47,7 @@ $(document).ready(function(){
             data: {type: JS_EXPLORE_FILTERS,  category:JS_EXPLORE_FORM},
             'success': function (data) {
                 data = JSON.parse(data);
+                
                 data.forEach(function(record) {
                     var label = "";
                     var count = "";
