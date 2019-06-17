@@ -1,3 +1,5 @@
+// connections has been renamed as related records 
+
 var connectionsArray;   // array of all connections
 
 $(document).ready( function() {
@@ -18,35 +20,35 @@ $('li.unselected').click(function(){
         CARDT="Person";
         SEARCHTYPE="people";
         displayConnections(CARDT);
-        $('.search-all').html('View All People Connections');
+        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' People');
     }
     //Events
     if($("#event").hasClass("selected")){
         CARDT="Event";
         SEARCHTYPE = "events";
         displayConnections(CARDT);
-        $('.search-all').html('View All Event Connections');
+        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Events');
     }
     //Places
     if($("#place").hasClass("selected")){
         CARDT="Place";
         SEARCHTYPE = "places";
         displayConnections(CARDT);
-        $('.search-all').html('View All Place Connections');
+        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] +  ' Places');
     }
     //Projects
     if($("#project").hasClass("selected")){
         CARDT="Project";
         SEARCHTYPE = "projects";
         displayConnections(CARDT);
-        $('.search-all').html('View All Project Connections');
+        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Projects');
     }
     //Sources
     if($("#source").hasClass("selected")){
         CARDT="Source";
         SEARCHTYPE = "sources";
         displayConnections(CARDT);
-        $('.search-all').html('View All Source Connections');
+        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count']+ ' Sources');
     }
 
     // set the search all button url
@@ -65,6 +67,9 @@ function displayConnections(cardType){
         $('.search-all').show();
     }
 
+    // $('.search-all').show();        // ALWAYS SHOWING JUST FOR TESTING
+
+
     if( cardType == "Person"){
         for (var i in connections){
             var conn = connections[i];
@@ -77,7 +82,7 @@ function displayConnections(cardType){
     } else if (cardType == "Event") {
         for (var i in connections){
             var conn = connections[i];
-            var name = conn['eventname']['value'];
+            var name = conn['eventlabel']['value'];
             var eventQ = conn['event']['value'];
             eventQ = eventQ.substring(eventQ.lastIndexOf('/') + 1);
             var eventUrl = BASE_URL + 'record/event/' + eventQ;
@@ -95,7 +100,7 @@ function displayConnections(cardType){
     } else if (cardType == "Source") {
         for (var i in connections) {
             var conn = connections[i];
-            var name = conn['sourceName']['value'];
+            var name = conn['sourcelabel']['value'];
             var sourceQ = conn['source']['value'];
             sourceQ = sourceQ.substring(sourceQ.lastIndexOf('/') + 1);
             var sourceUrl = BASE_URL + 'record/source/' + sourceQ;
@@ -104,7 +109,7 @@ function displayConnections(cardType){
     } else if (cardType == "Place") {
         for (var i in connections) {
             var conn = connections[i];
-            var name = conn['placeName']['value'];
+            var name = conn['placelabel']['value'];
             var placeQ = conn['place']['value'];
             placeQ = placeQ.substring(placeQ.lastIndexOf('/') + 1);
             var placeUrl = BASE_URL + 'record/place/' + placeQ;
@@ -149,6 +154,8 @@ function loadConnections(){
                     $('#project').html('<div class="project-image"></div>' + connectionsArray['Project-count'] + ' Projects');
                 } else if (form == 'Source') {
                     $('#source').html('<div class="source-image"></div>' + connectionsArray['Source-count'] + ' Sources');
+                } else if (form == 'Place') {
+                    $('#place').html('<div class="place-image"></div>' + connectionsArray['Place-count'] + ' Places');
                 }
             }
         }

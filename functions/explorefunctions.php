@@ -2195,22 +2195,18 @@ QUERY;
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
     $connections['Person-count'] = count($result);
-
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
 
-    
-
-
+  
   // events connections
-  $peopleQuery['query'] = <<<QUERY
-SELECT DISTINCT ?event ?eventname (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
+  $eventsQuery['query'] = <<<QUERY
+SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
 
  WHERE
 {
  VALUES ?source {wd:$QID} #Q number needs to be changed for every source. 
-  ?source wdt:P3 wd:Q16.
   ?source wdt:P8 ?event.
-  ?event rdfs:label ?eventname
+  ?event rdfs:label ?eventlabel
   
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2220,7 +2216,7 @@ QUERY;
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($peopleQuery));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($eventsQuery));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
@@ -2230,10 +2226,42 @@ QUERY;
     curl_close($ch);
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
-
     $connections['Event-count'] = count($result);
-
     $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+  // place connections
+  $placeQuery['query'] = <<<QUERY
+SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?source {wd:$QID} #Q number needs to be changed for every source. 
+  ?source wdt:P8 ?event.
+  ?event wdt:P12 ?place.
+  ?place rdfs:label ?placelabel
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+QUERY;
+    
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($placeQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['Place-count'] = count($result);
+    $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
+
 
     return json_encode($connections);
 }
@@ -2278,8 +2306,8 @@ QUERY;
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
 
 
-  // project and source connections
-  $projectSourceQuery['query'] = <<<QUERY
+  // project connections
+  $projectQuery['query'] = <<<QUERY
 SELECT DISTINCT ?source ?refName ?project ?projectName (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random)
 
  WHERE
@@ -2300,7 +2328,7 @@ QUERY;
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($projectSourceQuery));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($projectQuery));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
@@ -2313,24 +2341,87 @@ QUERY;
 
 
     $projectConnections = array();
-    $sourceConnections = array();
 
-    // split the results into project connections and source connections
+    // clean up the data
     foreach ($result as $res){
         if (isset($res['project']) && isset($res['projectName'])){
           $projectConnections[] = array('project' => $res['project'], 'projectName' => $res['projectName']);
-        }
-
-        if (isset($res['source']) && isset($res['refName'])){
-          $sourceConnections[] = array('source' => $res['source'], 'sourceName' => $res['refName']);
         }
     }
 
     $connections['Project-count'] = count($projectConnections);
     $connections['Project'] = array_slice($projectConnections, 0, 8);  // return the first 8 results
 
-    $connections['Source-count'] = count($sourceConnections);
-    $connections['Source'] = array_slice($sourceConnections, 0, 8);  // return the first 8 results
+
+
+    // places connections
+  $placesQuery['query'] = <<<QUERY
+SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?event {wd:$QID} #Q number needs to be changed for every event. 
+  ?event wdt:P12 ?place.
+  ?place rdfs:label ?placelabel
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+QUERY;
+    
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($placesQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['Place-count'] = count($result);
+
+    $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+    // source connections
+  $sourceQuery['query'] = <<<QUERY
+SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?event {wd:$QID} #Q number needs to be changed for every event. 
+  ?event wdt:P3 wd:Q34;
+          ?property  ?object .
+  	?object prov:wasDerivedFrom ?provenance .
+  	?provenance pr:P35 ?source .
+	?source rdfs:label ?sourcelabel
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+QUERY;
+    
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($sourceQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['Source-count'] = count($result);
+    $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
 
     return json_encode($connections);
 }
