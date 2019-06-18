@@ -199,6 +199,8 @@ QUERY;
                 ///*********************************** */
                 /// PEOPLE
                 ///*********************************** */
+                //Query with limit and offset
+                $query = array('query' => "");
 
                 //Filtering for Query
 
@@ -254,19 +256,37 @@ QUERY;
                     $roleQuery = "?agent wdt:P39 wd:$role .";
                 }
 
+                // people connected to an event
                 $eventQuery = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
                     $eventQ = $filtersArray['event'][0];
-                    $eventQuery = "VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event. 
-                                    ?event wdt:P3 wd:Q34.
-                                    ?event p:P38 ?statement.
-                                    ?statement ps:P38 ?name. 
-                                    ?statement pq:P39 ?people.
-                                    ?people rdfs:label ?peoplename";
+                    // $eventQuery = "VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event. 
+                    //                 ?event wdt:P3 wd:Q34.
+                    //                 ?event p:P38 ?statement.
+                    //                 ?statement ps:P38 ?name. 
+                    //                 ?statement pq:P39 ?people.
+                    //                 ?people rdfs:label ?peoplename";
+
+                    $query['query'] = <<<QUERY
+SELECT DISTINCT ?agent ?name (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event. 
+  ?event wdt:P3 wd:Q34.
+  ?event p:P38 ?statement.
+  ?statement ps:P38 ?personname. 
+  ?statement pq:P39 ?agent.
+  ?agent rdfs:label ?name.
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}
+QUERY;
+                    array_push($queryArray, $query);
+                    break;
                 }
 
-                //Query with limit and offset
-                $query = array('query' => "");
+
 
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent   
@@ -1263,6 +1283,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
     foreach ($results as $index => $record) {  ///foreach result
         switch ($preset){
             case 'people':
+                // print_r($record);die;
                 //Person Name
                 $name = $record['name']['value'];
                 // $nameArray = explode(' ', $name);

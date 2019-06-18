@@ -1222,8 +1222,8 @@ HTML;
     }
     $html .= '</div>';
 } else if ($label == "Secondary Source"){
-    $lowerlabel = "secondary source";
-    $upperlabel = "SECONDARY SOURCE";
+    $lowerlabel = "source";
+    $upperlabel = "SOURCE";
     
     $source = $statement;
 
@@ -1288,8 +1288,8 @@ HTML;
     }
     $html .= '</div>';
 } else if ($label == "projectsA"){
-    $lowerlabel = "contributing projects";
-    $upperlabel = "CONTRIBUTING PROJECTS";
+    $lowerlabel = "contributing project(s)";
+    $upperlabel = "CONTRIBUTING PROJECT(S)";
 
     $projectUrls = explode('||', $statement['projectUrl']);
     $projectNames = explode('||', $statement['projectName']);

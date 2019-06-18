@@ -430,6 +430,7 @@ $(document).ready(function() {
 
         // update views
         $(".search-title h1").text(splitParam[1]);
+        console.log('setting ehre', splitParam)
         $(".last-page-header #current-title").text("//" + splitParam[1]);
         $(this).find("input").val("");
 
