@@ -148,14 +148,29 @@ function loadConnections(){
             for (var form in connectionsArray){
                 if (form == 'Person'){
                     $('#people').html('<div class="person-image"></div>'+connectionsArray['Person-count'] + ' People');
+                    if (connectionsArray['Person-count'] <= 0){
+                        $('#people').hide();
+                    }
                 } else if (form == 'Event'){
                     $('#event').html('<div class="event-image"></div>' + connectionsArray['Event-count'] + ' Events');
+                    if (connectionsArray['Event-count'] <= 0) {
+                        $('#event').hide();
+                    }
                 } else if (form == 'Project') {
                     $('#project').html('<div class="project-image"></div>' + connectionsArray['Project-count'] + ' Projects');
+                    if (connectionsArray['Project-count'] <= 0) {
+                        $('#project').hide();
+                    }
                 } else if (form == 'Source') {
                     $('#source').html('<div class="source-image"></div>' + connectionsArray['Source-count'] + ' Sources');
+                    if (connectionsArray['Source-count'] <= 0) {
+                        $('#source').hide();
+                    }
                 } else if (form == 'Place') {
                     $('#place').html('<div class="place-image"></div>' + connectionsArray['Place-count'] + ' Places');
+                    if (connectionsArray['Place-count'] <= 0) {
+                        $('#place').hide();
+                    }
                 }
             }
         }
