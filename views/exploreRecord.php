@@ -39,21 +39,6 @@
     </div>
 </div>
 
-<!-- Extra Info -->
-<div class="extra-info">
-    <div class="copyright">
-        <h2>Copyright Info</h2>
-        <p>Info on copyright provided</p>
-        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg" alt="copyrights"/>
-    </div>
-    <!-- <div class="share-links">
-        <h2>Share this Record</h2>
-        <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg" alt="facebook"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg" alt="twitter"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/>
-    </div> -->
-</div>
 
 <div class="advanced-section">
     <div class="advanced-details">
@@ -73,34 +58,73 @@
 <!-- Story Connections -->
 <div class="story-connections record-connections">
     <div class="connectionwrap">
-        <h2>Connections</h2>
+        <h2>Related Records</h2>
         <div class="categories">
             <ul>
-                <li class="unselected selected" id="people"><div class="person-image"></div>10 People</li>
-                <li class="unselected" id="event"><div class="event-image"></div>3 Events</li>
-                <li class="unselected" id="place"><div class="place-image"></div>3 Places</li>
-                <li class="unselected" id="project"><div class="project-image"></div>2 Projects</li>
-                <li class="unselected" id="source"><div class="source-image"></div>15 Sources</li>
+            <?php
+                // decide which connnections should be displayed based on the type of record
+                if(RECORD_FORM == 'source'){
+            ?>
+                <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
+                <li class="unselected" id="event"><div class="event-image"></div>Events</li>
+                <li class="unselected" id="place"><div class="place-image"></div>Places</li>
+            <?php
+                } else if (RECORD_FORM == 'event') {
+            ?>
+                <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
+                <li class="unselected" id="place"><div class="place-image"></div>Places</li>
+                <li class="unselected" id="project"><div class="project-image"></div>Projects</li>
+                <li class="unselected" id="source"><div class="source-image"></div>Sources</li>
+            <?php
+                } else {
+            ?>
+                <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
+                <li class="unselected" id="event"><div class="event-image"></div>Events</li>
+                <li class="unselected" id="place"><div class="place-image"></div>Places</li>
+                <li class="unselected" id="project"><div class="project-image"></div>Projects</li>
+                <li class="unselected" id="source"><div class="source-image"></div>Sources</li>
+            <?php
+                }
+            ?>
                 <hr>
             </ul>
         </div>
         <div class="connection-cards">
             <ul class="connect-row">
-                <li>
+                <!-- <li>
                     <div class="cards">
                         <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
                         <h3>Firstname Lastname</h3>
                     </div>
-                </li>
+                </li> -->
             </ul>
-            <div class="load-more"><h4>Load More</h4></div>
+            <a class="search-all"></a>
+            <!-- <div class="load-more"><h4>Load More</h4></div> -->
         </div>
     </div>
 </div>
 
+
+<!-- Extra Info -->
+<div class="extra-info">
+    <div class="copyright">
+        <h2>Copyright Info</h2>
+        <p>Info on copyright provided</p>
+        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg" alt="copyrights"/>
+    </div>
+    <!-- <div class="share-links">
+        <h2>Share this Record</h2>
+        <img src="<?php echo BASE_URL;?>/assets/images/FacebookButtonSmall.svg" alt="facebook"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/TwitterButtonSmall.svg" alt="twitter"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/>
+    </div> -->
+</div>
+
 <!-- Featured Stories-->
 
-<?php if(RECORD_FORM !== 'place'){ ?>
+<?php 
+if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
 <div class="container column featured-card">
     <div class="container cardheader-wrap">
         <h2 class="column-header">Featured in these Stories</h2>
