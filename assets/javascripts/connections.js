@@ -50,7 +50,13 @@ $('li.unselected').click(function(){
         displayConnections(CARDT);
         $('.search-all').html('View All ' + connectionsArray[CARDT + '-count']+ ' Sources');
     }
-
+    //Close matches on the person page
+    if ($("#closeMatch").hasClass("selected")) {
+        CARDT = "CloseMatch";
+        SEARCHTYPE = "closeMatch";
+        displayConnections(CARDT);
+        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Close Matches');
+    }
     // set the search all button url
     $('.search-all').attr('href', BASE_URL + 'search/' + SEARCHTYPE + '?' + recordform + '=' + QID);
 });
@@ -77,7 +83,16 @@ function displayConnections(cardType){
             var agentQ = conn['people']['value'];
             agentQ = agentQ.substring(agentQ.lastIndexOf('/') + 1);
             var personUrl = BASE_URL + 'record/person/' + agentQ;
-            $('.connect-row').append('<li><a href=' + personUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div></a></li>');
+
+            var relationshipLabel = '';
+
+            // display a person relationships if they are given
+            if (typeof(conn['relationslabel']) != 'undefined'){
+                relationshipLabel = conn['relationslabel']['value'];
+                $('.connect-row').append('<li><a href=' + personUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + ' - ' + relationshipLabel+'</h3></div></a></li>');
+            } else {
+                $('.connect-row').append('<li><a href=' + personUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div></a></li>');
+            }
         }
     } else if (cardType == "Event") {
         for (var i in connections){
@@ -115,6 +130,17 @@ function displayConnections(cardType){
             var placeUrl = BASE_URL + 'record/place/' + placeQ;
             $('.connect-row').append('<li><a href=' + placeUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div></a></li>');
         }
+    } else if (cardType == "CloseMatch") {
+        cardType = 'Person';
+        for (var i in connections) {
+            var conn = connections[i];
+            var name = conn['matchlabel']['value'];
+            var matchQ = conn['match']['value'];
+            matchQ = matchQ.substring(matchQ.lastIndexOf('/') + 1);
+            var matchUrl = BASE_URL + 'record/person/' + matchQ;
+            
+            $('.connect-row').append('<li><a href=' + matchUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div></a></li>');
+        }
     } else {
 
     }
@@ -146,6 +172,7 @@ function loadConnections(){
             
             // display the counts for connections
             for (var form in connectionsArray){
+                console.log(form)
                 if (form == 'Person'){
                     $('#people').html('<div class="person-image"></div>'+connectionsArray['Person-count'] + ' People');
                     if (connectionsArray['Person-count'] <= 0){
@@ -170,6 +197,11 @@ function loadConnections(){
                     $('#place').html('<div class="place-image"></div>' + connectionsArray['Place-count'] + ' Places');
                     if (connectionsArray['Place-count'] <= 0) {
                         $('#place').hide();
+                    }
+                } else if (form == 'CloseMatch') {
+                    $('#closeMatch').html('<div class="person-image"></div>' + connectionsArray['CloseMatch-count'] + ' Close Matches');
+                    if (connectionsArray['CloseMatch-count'] <= 0) {
+                        $('#closeMatch').hide();
                     }
                 }
             }

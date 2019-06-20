@@ -2072,19 +2072,18 @@ HTML;
                   'type' => $eventType  
                 ];
                 array_push($events, $eventArray);
-            }
-
-            
+            }  
          }
-
-        // dont do timeline stuff if there are less than 3 events
-        if (count($events) < 3){
-              return json_encode($htmlArray);
-        }
-        //  print_r($events);die;            
         }
     }
 
+      // dont do timeline stuff if there are less than 3 events
+      if (count($events) < 3){
+          return json_encode($htmlArray);
+      }
+
+
+    
     $timeline_event_dates = [];
     foreach ($events as $event) {
         // If there are months and days, put the year into decimal format
@@ -2247,10 +2246,176 @@ function getFullRecordConnections(){
 
 // connections for the person full record page
 function getPersonPageConnections($QID) {
-  $connections = array();
+    $connections = array();
+
+    $personQuery['query'] = <<<QUERY
+SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every person. 
+ 	?agent p:P25 ?staterel .            
+	?staterel ps:P25 ?relations .
+  	?relations rdfs:label ?relationslabel.
+	?staterel pq:P104 ?people.
+  	?people rdfs:label ?peoplename.
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+
+QUERY;
 
 
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($personQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['Person-count'] = count($result);
+    $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+    // places connected to a person
+    $placeQuery['query'] = <<<QUERY
+SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every person. 
+  ?agent p:P82 ?statement.
+  ?statement ps:P82 ?name. 
+  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+            bind(?recordedAt as ?allevents)}
+  OPTIONAL {?agent p:P39 ?statementrole.
+           ?statementrole ps:P39 ?roles.
+           ?statementrole pq:P98 ?roleevent.
+           bind(?roleevent as ?allevents)
+
+         }.
+  
+ OPTIONAL {?agent p:P24 ?statstatus.
+           ?statstatus ps:P24 ?status.
+           ?statstatus pq:P99 ?statusevent.
+          bind(?statusevent as ?allevents)}.
+  ?allevents wdt:P12 ?place.
+  ?place rdfs:label ?placelabel.
+  
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+QUERY;
+
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($placeQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['Place-count'] = count($result);
+    $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+
+  $closeMatchQuery['query'] = <<<QUERY
+SELECT DISTINCT ?match ?matchlabel (SHA512(CONCAT(STR(?match), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every person. 
+ 	?agent wdt:P88 ?match.
+    ?match rdfs:label ?matchlabel
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+QUERY;
+
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($closeMatchQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['CloseMatch-count'] = count($result);
+    $connections['CloseMatch'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+
+
+    //events connected to a person
+    $eventQuery['query'] = <<<QUERY
+SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every source. 
+  ?agent p:P82 ?statement.
+  ?statement ps:P82 ?name. 
+  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+            bind(?recordedAt as ?event)}
+  OPTIONAL {?agent p:P39 ?statementrole.
+           ?statementrole ps:P39 ?roles.
+           ?statementrole pq:P98 ?roleevent.
+           bind(?roleevent as ?event)
+
+         }.
+  
+ OPTIONAL {?agent p:P24 ?statstatus.
+           ?statstatus ps:P24 ?status.
+           ?statstatus pq:P99 ?statusevent.
+          bind(?statusevent as ?event)}.
+  ?event rdfs:label ?eventlabel.
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+
+QUERY;
+
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($eventQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['Event-count'] = count($result);
+    $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+    return json_encode($connections);
 }
+
+
 
 // connections for the source full record page
 function getSourcePageConnections($QID) {
