@@ -25,6 +25,41 @@
             else{
                 //Must have been a search for a name, daterange
                 $currentTitle = $currentQ;
+
+                $query = array('query' => "");
+
+                // get the label for the q value from a quick blazegraph search
+                $query['query'] = <<<QUERY
+SELECT ?item ?label
+
+ WHERE
+{
+BIND(wd:$currentQ AS ?item).
+    ?item rdfs:label ?label.
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}GROUP BY ?item ?label
+QUERY;
+
+                //Execute query
+                $ch = curl_init(BLAZEGRAPH_URL);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept: application/sparql-results+json'
+                ));
+                $result = curl_exec($ch);
+                curl_close($ch);
+                //Get result
+                $result = json_decode($result, true)['results']['bindings'];
+
+                if (!empty($result)){
+                    if (isset($result[0]['label']) && isset($result[0]['label']['value'])){
+                        $currentTitle = $result[0]['label']['value'];
+                    }
+                }
             }
         }
  
