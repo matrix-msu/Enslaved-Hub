@@ -204,6 +204,24 @@
                 });
             }
         });
+
+        // Update json cache files for Navigations and webpages
+        // $.ajax({
+            // url: BASE_URL + "api/blazegraph",
+            // type: "GET",
+            // data: {
+            //     preset: 'projects',
+            //     filters:  {limit: 2},
+            //     templates: ['homeCard']
+
+            // },
+            // 'success': function (data) {
+            //     result_array = JSON.parse(data);
+            //     result_array['homeCard'].forEach(function (card) {
+            //         $(card).appendTo("#projects-list");
+            //     });
+            // }
+        // });
     });
 
 </script>
