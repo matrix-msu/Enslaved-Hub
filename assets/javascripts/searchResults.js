@@ -78,6 +78,8 @@ function searchResults(preset, limit = 12, offset = 0)
             isSearching = false;
 
             result_array = JSON.parse(data);
+            
+            console.log(result_array);
             var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
 
@@ -430,7 +432,6 @@ $(document).ready(function() {
 
         // update views
         $(".search-title h1").text(splitParam[1]);
-        console.log('setting ehre', splitParam)
         $(".last-page-header #current-title").text("//" + splitParam[1]);
         $(this).find("input").val("");
 

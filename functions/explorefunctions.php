@@ -1353,63 +1353,6 @@ function getPersonRecordHtml(){
     $qid = $_REQUEST['QID'];
     $type = $_REQUEST['type'];
 
-    //Timeline
-    // Code for creating events on Timeline
-    // Replace with Kora 3 events
-        $events = [
-        ['kid' => '1', 'title' => 'birth', 'description' => 'Person was born', 'year' => 1730],
-        ['kid' => '2', 'title' => 'event 1', 'description' => 'Example description 1', 'year' => 1739],
-        ['kid' => '3', 'title' => 'event 2', 'description' => 'Example description 2', 'year' => 1741],
-        ['kid' => '4', 'title' => 'event 3', 'description' => 'Example description 3', 'year' => 1745],
-        ['kid' => '5', 'title' => 'event 4', 'description' => 'Example description 4', 'year' => 1756],
-        ['kid' => '6', 'title' => 'event 5', 'description' => 'Example description 5', 'year' => 1756.5],
-        ['kid' => '7', 'title' => 'event 6', 'description' => 'Example description 6', 'year' => 1760],
-        ['kid' => '8', 'title' => 'event 7', 'description' => 'Example description 7', 'year' => 1763],
-        ['kid' => '9', 'title' => 'event 8', 'description' => 'Example description 8', 'year' => 1774],
-        ['kid' => '10', 'title' => 'event 9', 'description' => 'Example description 9', 'year' => 1789],
-        ['kid' => '11', 'title' => 'event 10', 'description' => 'Example description 10', 'year' => 1789.5],
-        ['kid' => '12', 'title' => 'event 11', 'description' => 'Example description 11', 'year' => 1794],
-        ['kid' => '13', 'title' => 'event 12', 'description' => 'Example description 12', 'year' => 1796],
-        ['kid' => '14', 'title' => 'event 13', 'description' => 'Example description 13', 'year' => 1799],
-        ['kid' => '15', 'title' => 'event 14', 'description' => 'Example description 14', 'year' => 1800],
-        ['kid' => '16', 'title' => 'event 15', 'description' => 'Example description 15', 'year' => 1801],
-        ['kid' => '17', 'title' => 'event 16', 'description' => 'Example description 16', 'year' => 1803],
-        ['kid' => '18', 'title' => 'event 17', 'description' => 'Example description 17', 'year' => 1804],
-        ['kid' => '19', 'title' => 'event 18', 'description' => 'Example description 18', 'year' => 1806],
-        ['kid' => '20', 'title' => 'event 19', 'description' => 'Example description 19', 'year' => 1807],
-    ];
-
-    $timeline_event_dates = [];
-    foreach ($events as $event) {
-        // If there are months and days, put the year into decimal format
-        // Ex: March 6, 1805 = 1805.18
-        array_push($timeline_event_dates, $event['year']);
-    }
-
-    $first_date = min($timeline_event_dates);
-    $final_date = max($timeline_event_dates);
-    $diff = $final_date - $first_date;
-
-    if ($diff < 10) {
-        $increment = 1;
-    } elseif ($diff < 20) {
-        $increment = 2;
-    } elseif ($diff < 40) {
-        $increment = 5;
-    } elseif ($diff < 90) {
-        $increment = 10;
-    } else {
-        $increment = 20;
-    }
-
-    // Hash starts at year that is divisible by incrememnt and before the first event
-    $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
-    $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
-
-    $hashes = range($first_date_hash, $final_date_hash, $increment);
-    $hash_count = count($hashes);
-    $hash_range = end($hashes) - $hashes[0];
-
     //QUERY FOR RECORD INFO
     $query = [];
     if($type === "person"){
@@ -1434,6 +1377,12 @@ SELECT ?name ?desc ?sextype  ?race
 (group_concat(distinct ?relationagentlabel; separator = "||") as ?relationagentlabel)
 (group_concat(distinct ?match; separator = "||") as ?match)
 (group_concat(distinct ?matchlabel; separator = "||") as ?matchlabel)
+(group_concat(distinct ?allevents; separator = "||") as ?allevents)
+(group_concat(distinct ?alleventslabel; separator = "||") as ?alleventslabel)
+(group_concat(distinct ?startyear; separator = "||") as ?startyear)
+(group_concat(distinct ?endyear; separator = "||") as ?endyear)
+(group_concat(distinct ?allplaces; separator = "||") as ?allplaces)
+(group_concat(distinct ?allplaceslabel; separator = "||") as ?allplaceslabel)
 
 
  WHERE
@@ -1446,7 +1395,12 @@ SELECT ?name ?desc ?sextype  ?race
   ?source rdfs:label ?refName;
           wdt:P7 ?project.
   ?project rdfs:label ?pname.
-  ?agent wdt:P82 ?name.
+  ?agent p:P82 ?statement.
+  ?statement ps:P82 ?name. 
+  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+            bind(?recordedAt as ?allevents)}
+
+  
   OPTIONAL{?agent schema:description ?desc}.
   OPTIONAL{?agent wdt:P17 ?sex. 
           ?sex rdfs:label ?sextype}.
@@ -1468,13 +1422,17 @@ OPTIONAL {?agent p:P39 ?statementrole.
            ?statementrole ps:P39 ?roles.
            ?roles rdfs:label ?roleslabel.
            ?statementrole pq:P98 ?roleevent.
-           ?roleevent rdfs:label ?roleeventlabel}.
+           ?roleevent rdfs:label ?roleeventlabel.
+           bind(?roleevent as ?allevents)
+
+         }.
   
  OPTIONAL {?agent p:P24 ?statstatus.
            ?statstatus ps:P24 ?status.
            ?status rdfs:label ?statuslabel.
            ?statstatus pq:P99 ?statusevent.
-           ?statusevent rdfs:label ?eventstatuslabel}.
+           ?statusevent rdfs:label ?eventstatuslabel.
+          bind(?statusevent as ?allevents)}.
   
   OPTIONAL{
     ?agent p:P25 ?staterel .            
@@ -1484,7 +1442,19 @@ OPTIONAL {?agent p:P39 ?statementrole.
   	?relationname rdfs:label ?relationagentlabel}.
   OPTIONAL {?agent wdt:P88 ?match.
             ?match rdfs:label ?matchlabel}.
+  ?allevents rdfs:label ?alleventslabel.
+  OPTIONAL {?allevents wdt:P12 ?allplaces.
+           ?allplaces rdfs:label ?allplaceslabel
+           }.
         
+  OPTIONAL {?allevents	wdt:P13 ?startdate.
+            ?allevents rdfs:label ?elabel.
+            ?allevents wdt:P81 ?etype.
+            ?etype rdfs:label ?etypelabel.
+           BIND(CONCAT(str(?elabel)," - ",str(?etypelabel)," - ",str(YEAR(?startdate))) AS ?startyear).
+           OPTIONAL {?allevents wdt:P14 ?enddate.
+		   BIND(str(YEAR(?enddate)) AS ?endyear)}}.
+          
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }GROUP BY ?name ?desc ?sextype  ?race
 QUERY;
@@ -1865,6 +1835,117 @@ HTML;
     $htmlArray['details'] = $html;
 
     //Timeline section
+
+
+
+    //Timeline
+    // Code for creating events on Timeline
+    // Replace with Kora 3 events
+    $events = [];
+
+    //Creating the events array for the timeline
+    if (isset($record['allevents']) && isset($record['allevents']['value']) &&  $record['allevents']['value'] != ''){
+        if(isset($record['alleventslabel']) && isset($record['alleventslabel']['value']) && $record['alleventslabel']['value'] != ''){
+            $allEventUrls = explode('||', $record['allevents']['value']);
+            $allEventLabels = explode('||', $record['alleventslabel']['value']);
+            
+            $allEventQids = array();
+            foreach($allEventUrls as $url){
+                $explode = explode('/', $url);
+                $eventQ = end($explode);
+                array_push($allEventQids, $eventQ);
+            }
+
+            $allEventStartYears = array();
+            $allEventTypes = array();
+
+
+        if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
+              $eventsAndStartYears = explode('||', $record['startyear']['value']);
+        }
+
+        // match events to start years
+        // there is also an event type in this string but its not being used right now
+        foreach ($eventsAndStartYears as $eventInfo){
+            $pieces = explode(' - ', $eventInfo);
+            $eName = $pieces[0];
+            $eType = $pieces[1];
+            $year = end($pieces);
+            $allEventStartYears[$eName] = $year;
+            $allEventTypes[$eName] = $eType;
+        }
+
+        // end year stuff hasn't been tested or working yet
+        if (isset($record['endyear']) && isset($record['endyear']['value']) && $record['startyear']['value'] != '' ){
+           $allEventEndYears = explode('||', $record['endyear']['value']);
+         }
+
+
+         // create the events array
+         foreach($allEventQids as $i => $eventQ){
+            $eventLabel = $allEventLabels[$i];
+            $eventStartYear = '';
+            if (isset($allEventStartYears[$eventLabel])){
+              $eventStartYear = $allEventStartYears[$eventLabel];
+            }
+
+            $eventType = '';
+            if (isset($allEventTypes[$eventLabel])){
+              $eventType = $allEventTypes[$eventLabel];
+            }
+
+            if ($eventStartYear != ''){
+                $eventArray = [
+                  'kid' => $eventQ,
+                  'title' => $eventLabel,
+                  'description' => 'Example description '.$i,
+                  'year' => $eventStartYear,
+                  'type' => $eventType  
+                ];
+                array_push($events, $eventArray);
+            }  
+         }
+        }
+    }
+
+      // dont do timeline stuff if there are less than 3 events
+      if (count($events) < 3){
+          return json_encode($htmlArray);
+      }
+
+
+    
+    $timeline_event_dates = [];
+    foreach ($events as $event) {
+        // If there are months and days, put the year into decimal format
+        // Ex: March 6, 1805 = 1805.18
+        array_push($timeline_event_dates, $event['year']);
+    }
+
+    $first_date = min($timeline_event_dates);
+    $final_date = max($timeline_event_dates);
+    $diff = $final_date - $first_date;
+
+    if ($diff < 10) {
+        $increment = 1;
+    } elseif ($diff < 20) {
+        $increment = 2;
+    } elseif ($diff < 40) {
+        $increment = 5;
+    } elseif ($diff < 90) {
+        $increment = 10;
+    } else {
+        $increment = 20;
+    }
+
+    // Hash starts at year that is divisible by incrememnt and before the first event
+    $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
+    $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
+
+    $hashes = range($first_date_hash, $final_date_hash, $increment);
+    $hash_count = count($hashes);
+    $hash_range = end($hashes) - $hashes[0];
+
     $html = '';
 
     $html = <<<HTML
@@ -1876,7 +1957,7 @@ HTML;
       <div class="arrow-pointer-bottom"></div>
       <div class="arrow-pointer-top"></div>
 
-      <div class="info-header">
+      <!-- <div class="info-header">
           <div class="info-select info-select-event active" data-select="event">
               <p>Event</p>
               <p class="large-text">Birth</p>
@@ -1885,27 +1966,24 @@ HTML;
               <p>Place</p>
               <p class="large-text">Batendu</p>
           </div>
-      </div>
+      </div> -->
 HTML;
 
+    $first = true;//to set the first timeline event as active
     foreach($events as $index => $event) {
       $html .= '
       <div class="event-info-'.$event['kid'].' infowrap '.($index == 0 ? 'active' : '').'">
           <div class="info-column">
-              <p><span class="bold">Start Date:</span> 1804</p>
+              <p>Event</p>
+              <p class="large-text">'.$event['title'].'</p>
+
+              <p><span class="bold">Start Date:</span>'.$event['year'].'</p>
               <p><span class="bold">End Date:</span> N/A</p>
-              <p><span class="bold">Age:</span> 0</p>
-              <p><span class="bold">Status:</span> Free</p>
-              <p><span class="bold">Age Category:</span> Infant</p>
+              <p><span class="bold">Event Type:</span> '.$event['type'].'</p>
               <p><span class="bold">Description</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           </div><div class="info-column">
-              <p><span class="bold">Ocupation:</span> N/A</p>
-              <p><span class="bold">Relationship:</span> Son - Kayawon</p>
-              <p><span class="bold">Religion:</span> N/A</p>
-              <p><span class="bold">Sources:</span> Koelle Polyglotta, 1</p>
-              <p><span class="bold">Place:</span> Batendu</p>
-              <p><span class="bold">Testing Kid:</span>'.$event['kid'].'</p>
+              <p><span class="bold">Qid:</span>'.$event['kid'].'</p>
           </div>
       </div>
       <div class="place-info-'.$event['kid'].' infowrap">
@@ -1958,7 +2036,11 @@ HTML;
     </section>
     </div>';
 
+
+    
     $htmlArray['timeline'] = $html;
+    
+
 
 
     // return $htmlArray;
@@ -1995,10 +2077,176 @@ function getFullRecordConnections(){
 
 // connections for the person full record page
 function getPersonPageConnections($QID) {
-  $connections = array();
+    $connections = array();
+
+    $personQuery['query'] = <<<QUERY
+SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every person. 
+ 	?agent p:P25 ?staterel .            
+	?staterel ps:P25 ?relations .
+  	?relations rdfs:label ?relationslabel.
+	?staterel pq:P104 ?people.
+  	?people rdfs:label ?peoplename.
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+
+QUERY;
 
 
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($personQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['Person-count'] = count($result);
+    $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+    // places connected to a person
+    $placeQuery['query'] = <<<QUERY
+SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every person. 
+  ?agent p:P82 ?statement.
+  ?statement ps:P82 ?name. 
+  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+            bind(?recordedAt as ?allevents)}
+  OPTIONAL {?agent p:P39 ?statementrole.
+           ?statementrole ps:P39 ?roles.
+           ?statementrole pq:P98 ?roleevent.
+           bind(?roleevent as ?allevents)
+
+         }.
+  
+ OPTIONAL {?agent p:P24 ?statstatus.
+           ?statstatus ps:P24 ?status.
+           ?statstatus pq:P99 ?statusevent.
+          bind(?statusevent as ?allevents)}.
+  ?allevents wdt:P12 ?place.
+  ?place rdfs:label ?placelabel.
+  
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+QUERY;
+
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($placeQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['Place-count'] = count($result);
+    $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+
+  $closeMatchQuery['query'] = <<<QUERY
+SELECT DISTINCT ?match ?matchlabel (SHA512(CONCAT(STR(?match), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every person. 
+ 	?agent wdt:P88 ?match.
+    ?match rdfs:label ?matchlabel
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+QUERY;
+
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($closeMatchQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['CloseMatch-count'] = count($result);
+    $connections['CloseMatch'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+
+
+    //events connected to a person
+    $eventQuery['query'] = <<<QUERY
+SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
+
+ WHERE
+{
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every source. 
+  ?agent p:P82 ?statement.
+  ?statement ps:P82 ?name. 
+  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+            bind(?recordedAt as ?event)}
+  OPTIONAL {?agent p:P39 ?statementrole.
+           ?statementrole ps:P39 ?roles.
+           ?statementrole pq:P98 ?roleevent.
+           bind(?roleevent as ?event)
+
+         }.
+  
+ OPTIONAL {?agent p:P24 ?statstatus.
+           ?statstatus ps:P24 ?status.
+           ?statstatus pq:P99 ?statusevent.
+          bind(?statusevent as ?event)}.
+  ?event rdfs:label ?eventlabel.
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}ORDER BY ?random
+
+QUERY;
+
+
+    //Execute query
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($eventQuery));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    //Get result
+    $result = json_decode($result, true)['results']['bindings'];
+    $connections['Event-count'] = count($result);
+    $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+    return json_encode($connections);
 }
+
+
 
 // connections for the source full record page
 function getSourcePageConnections($QID) {
