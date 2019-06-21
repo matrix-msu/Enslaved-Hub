@@ -1,6 +1,7 @@
 <?php
 
 $GLOBALS['api_routes'] = array(
+    'api/getWebPages' => array('configFunctions.php', 'Kora_GetNavigationData'),
     'api/testing' => array('functions.php', 'testingFunction'),
     'api/printEpisodes' => array('functions.php', 'printEpisodes'),
     'api/admin' => array('functions.php', 'admin'),
@@ -126,7 +127,8 @@ define('EXPLORE_JS_VARS', $EXPLORE_JS_VARS);
 
 if( isset($GLOBALS['api_routes'][$currentFile]) ){
     $currentApiFile = $GLOBALS['api_routes'][$currentFile];
-    include_once(BASE_FUNCTIONS_PATH.$currentApiFile[0]);
+    if($currentApiFile[0] == 'configFunctions.php') include_once(BASE_LIB_PATH.$currentApiFile[0]);
+    else include_once(BASE_FUNCTIONS_PATH.$currentApiFile[0]);
     echo $currentApiFile[1]();
     die;
 }elseif( !isset($GLOBALS['routes'][$currentFile]) ){
