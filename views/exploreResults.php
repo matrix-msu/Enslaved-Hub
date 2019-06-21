@@ -25,28 +25,52 @@
             else{
                 //Must have been a search for a name, daterange
                 $currentTitle = $currentQ;
+
+                $query = array('query' => "");
+
+                // get the label for the q value from a quick blazegraph search
+                $query['query'] = <<<QUERY
+SELECT ?item ?label
+
+ WHERE
+{
+BIND(wd:$currentQ AS ?item).
+    ?item rdfs:label ?label.
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}GROUP BY ?item ?label
+QUERY;
+
+                //Execute query
+                $ch = curl_init(BLAZEGRAPH_URL);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept: application/sparql-results+json'
+                ));
+                $result = curl_exec($ch);
+                curl_close($ch);
+                //Get result
+                $result = json_decode($result, true)['results']['bindings'];
+
+                if (!empty($result)){
+                    if (isset($result[0]['label']) && isset($result[0]['label']['value'])){
+                        $currentTitle = $result[0]['label']['value'];
+                    }
+                }
             }
         }
-
+ 
         $upperForm = ucfirst(EXPLORE_FORM);
         $showPath = false;
         $fromBrowse = false;
 
         //Conditions to put the previous page header in (Not being used right now)
-        if(EXPLORE_FORM != null && EXPLORE_FORM != 'all' && EXPLORE_FORM != 'results'){
+        if(EXPLORE_FORM != null && EXPLORE_FORM != 'all' && EXPLORE_FORM != 'results' && EXPLORE_FORM != 'category'){
              $showPath = true;
              $fromBrowse = true;
-            // echo '<h4 class="last-page-header">';
-            // echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '"><span id="previous-title">' . $upperForm . ' // </span></a>';
-        
-            // if($typeTitle != '' && $typeTitle != 'searchbar'){
-            //     echo '<a id="last-page" href="' . BASE_URL . 'explore/' . EXPLORE_FORM . '/' . $typeTitle . '"><span id="previous-title">' . ucwords(str_replace('_', ' ', $typeTitle)) . ' // </span></a>';
-            // }
-            // if($currentTitle != ''){
-            //     echo '<span id="current-title">' . $currentTitle . '</span>';
-            // }
-
-            // echo '</h4>';
         }
        ?>
         <h4 class="last-page-header" style="<?php  echo (!$showPath) ? 'display:none' : '' ?> ">
@@ -81,40 +105,40 @@
             <h2>Show Results For</h2>
             <ul class="catmenu" id="submenu">
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
+                    <label class="category">
+                        <input id="checkBox" type="checkbox" value="people">
                         <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg" alt="person icon">
                         <p>People</p>
                         <span></span>
                     </label>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
+                    <label class="category">
+                        <input id="checkBox" type="checkbox" value="places">
                         <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg" alt="location icon">
                         <p>Places</p>
                         <span></span>
                     </label>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
+                    <label class="category">
+                        <input id="checkBox" type="checkbox" value="events">
                         <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg" alt="event icon">
                         <p>Events</p>
                         <span></span>
                     </label>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
+                    <label class="category">
+                        <input id="checkBox" type="checkbox" value="sources">
                         <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg" alt="source icon">
                         <p>Sources</p>
                         <span></span>
                     </label>
                 </li>
                 <li>
-                    <label>
-                        <input id="checkBox" type="checkbox">
+                    <label class="category">
+                        <input id="checkBox" type="checkbox" value="projects">
                         <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
                         <p>Projects</p>
                         <span></span>

@@ -11,43 +11,29 @@
         </div>
         <div class="rightnav">
             <ul class="nav-menu">
-                <li class="nav-item"><img class="search-icon" src="<?php echo BASE_IMAGE_URL;?>Search.svg" alt="search icon"/><a class="nav-link unselected" id="search" href="<?php echo BASE_URL;?>search">Search</a></li>
+            <?php 
+            $navigations = Json_GetNavigationData();
+            foreach ($navigations as $nav) 
+            {
+                if($nav[0] == "Home") continue;
+                $toUrl = ($nav[0] == "Explore") ? BASE_URL."explore/" : BASE_URL;
+
+                if(count($nav[1]) > 0) { ?>
                 <li class="nav-item drop-link">
-                    <a class="nav-link unselected" id="explore" href="<?php echo BASE_URL;?>explore">Explore</a>
+                    <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo BASE_URL.strtolower($nav[0])?>"><?php echo $nav[0]?></a>
                     <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg" alt="dropdown carrat"/></span>
                     <ul class="sub-list">
                         <li class="subwrap" id="explore-sub">
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/people">People</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/events">Events</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/places">Places</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>explore/sources">Sources</a>
+                            <?php foreach ($nav[1] as $sub_nav) { ?>
+                                <a class="nav-sublink" href="<?php echo $toUrl.lcfirst(str_replace(' ', "", $sub_nav))?>"><?php echo $sub_nav ?></a>
+                            <?php } ?>
                         </li>
                     </ul>
                 </li>
-                <!-- <li class="nav-item drop-link visualize-hide">
-                    <a class="nav-link unselected" id="visualize" href="<?php echo BASE_URL;?>">Visualize</a>
-                    <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg"/></span>
-                    <ul class="sub-list">
-                        <li class="subwrap" id="visualize-sub">
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>">Space</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>">Time</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>">Data</a>
-                        </li>
-                    </ul>
-                </li> -->
-                <li class="nav-item"><a class="nav-link unselected" id="stories" href="<?php echo BASE_URL;?>stories">Stories</a></li>
-                <li class="nav-item"><a class="nav-link unselected" id="projects" href="<?php echo BASE_URL;?>projects">Projects</a></li>
-                <li class="nav-item drop-link">
-                    <a class="nav-link unselected" id="about" href="<?php echo BASE_URL;?>about">About</a>
-                    <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg" alt="dropdown arrow"/></span>
-                    <ul class="sub-list">
-                        <li class="subwrap" id="about-sub">
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>getInvolved">Get Involved</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>ourPartners">Our Partners</a>
-                            <a class="nav-sublink" href="<?php echo BASE_URL;?>contactUs">Contact Us</a>
-                        </li>
-                    </ul>
-                </li>
+                <?php continue;} ?> 
+                <li class="nav-item"><?php echo ($nav[0] == "Search") ? '<img class="search-icon" src="'.BASE_IMAGE_URL.'search.svg" alt="search icon" />' : "" ?>
+                <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo BASE_URL.lcfirst($nav[0])?>"><?php echo $nav[0]?></a></li>
+            <?php } ?>
             </ul>
         </div>
     </div>

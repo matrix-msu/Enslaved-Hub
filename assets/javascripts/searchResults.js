@@ -9,7 +9,6 @@ var result_array;
 var total_length = 0;
 var card_offset = 0;
 var card_limit = 12;
-var presets = {};
 var filters = {};
 
 var showPath = false;
@@ -19,8 +18,6 @@ var currentTitle = "Search";
 
 
 // Get params from url
-var $_GET = {};
-var $_GET_length = 0;
 if(document.location.toString().indexOf('?') !== -1) 
 {
     var query = document.location
@@ -41,28 +38,9 @@ if(document.location.toString().indexOf('?') !== -1)
             filters[aux[0]] = aux[1].split('+');
             continue;
         }
-
         filters[aux[0]] = aux[1].split(',');
-
-        // $_GET[aux[0]] = aux[1];
-        // $_GET_length++;
     }
 }
-// Set all the filters from the URL
-// for(var i=0; i < $_GET_length; i++)
-// {
-//     var type = Object.keys($_GET)[i];
-//     var filter = $_GET[type];
-
-//     if (typeof(filter) == "undefined"){
-//         filter = '';
-//     }
-//     filters[type] = filter;
-// }
-
-// Get main categories
-// if("categories" in filters)
-//     filters["categories"] = filters["categories"].split(',');
 
 /** 
  * Takes parameters for an ajax call that sets result_array to an array with
@@ -97,7 +75,11 @@ function searchResults(preset, limit = 12, offset = 0)
         },
         'success': function (data) 
         {
+            isSearching = false;
+
             result_array = JSON.parse(data);
+            
+            console.log(result_array);
             var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
 
@@ -113,8 +95,6 @@ function searchResults(preset, limit = 12, offset = 0)
                 showingResultsText = "Showing " + card_limit + " of " + total_length + " Results";
             }
             $('.showing-results').html(showingResultsText);
-
-            isSearching = false;
 
             //Wait till doc is ready
             $(document).ready(function(){
@@ -186,11 +166,6 @@ $(document).ready(function() {
         {
             $("label."+key).each(function() 
             {
-                var filt =  $(this).find('p');
-                var sel_filter = filt.text();
-                var em = $(this).find('p').find("em").text();
-                sel_filter = sel_filter.replace(em, "").trim();
-                
                 //Looks for input where value = QID
                 if($(this).find('input').val() == value) {
                     $(this).find("input").prop("checked", true);
@@ -521,6 +496,7 @@ $(document).ready(function() {
             }
             else filters[input_key] = [input_value];
         }
+        // Remove from params
         else if(input_key in filters)
         {   
             filters[input_key] = filters[input_key].filter(function(value, index, arr) { return value != input_value; });
@@ -563,6 +539,7 @@ $(document).ready(function() {
         }
         page_url = split_url[0]+"?";
 
+        // Show path on top of page before title
         if(showPath)
         {
             $(".last-page-header").show();
@@ -578,6 +555,7 @@ $(document).ready(function() {
 
         } else $(".last-page-header").hide();
 
+        // updating url
         var counter = 0;
         $.each(filters, function(key, value) 
         {

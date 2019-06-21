@@ -52,7 +52,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>projects">
+            <a href="<?php echo BASE_URL;?>search/projects">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
                     <h3>Projects</h3>
@@ -204,6 +204,24 @@
                 });
             }
         });
+
+        // Update json cache files for Navigations and webpages
+        // $.ajax({
+            // url: BASE_URL + "api/blazegraph",
+            // type: "GET",
+            // data: {
+            //     preset: 'projects',
+            //     filters:  {limit: 2},
+            //     templates: ['homeCard']
+
+            // },
+            // 'success': function (data) {
+            //     result_array = JSON.parse(data);
+            //     result_array['homeCard'].forEach(function (card) {
+            //         $(card).appendTo("#projects-list");
+            //     });
+            // }
+        // });
     });
 
 </script>
