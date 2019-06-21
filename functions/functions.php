@@ -383,66 +383,40 @@ QUERY;
                 /// PLACES
                 ///*********************************** */
 
-                /// NOT WORKING YET
-
-                $genderQuery = "";
-                if (isset($filtersArray['gender'])){
-                    $gender = $filtersArray['gender'];
-                    $qGender = $gender == 'Male';
-
-                    if( count( $filtersArray["gender"] ) > 1)
-                    {
-                        // handle multiple gender values
-                    }
-                    else // handle single gender search
-                    {
-                        if( in_array("Male", $gender)){
-                            $genderQuery = "?agent wdt:P17 wd:Q48";
-                        }
-                        else  if( in_array("Female", $gender)){
-                            $genderQuery = "?agent wdt:P17 wd:Q47";
-                        }
-                        else 
-                        {
-                            // handle unidentified
-                        }
-                    }
+                $typeQuery = "";
+                if (isset($filtersArray['place_type'])){
+                    $type = $filtersArray['place_type'][0];
+                    $typeQuery = "?place wdt:P80 wd:$type .";
                 }
 
                 $query = array('query' => "");
 
                 $query['query'] = <<<QUERY
-SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
- (count(distinct ?people) as ?countpeople)
- (count(distinct ?event) as ?countevent)
- (count(distinct ?place) as ?countplace)
- (count(distinct ?source) as ?countsource)
- (group_concat(distinct ?roleLabel; separator = "||") as ?roles)
- (group_concat(distinct ?placeLabel; separator = "||") as ?places)
+SELECT ?place ?placeLabel ?locatedInLabel
+(count(distinct ?person) as ?countpeople)
+(count(distinct ?event) as ?countevent)
+(count(distinct ?source) as ?countsource)
 
 WHERE {
-  ?event wdt:P3 wd:Q34;
-         ?property  ?object .
-  	?object prov:wasDerivedFrom ?provenance .
-  	?provenance pr:P35 ?source .
+    ?event wdt:P3 wd:Q34;
+        ?property  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?source .
+            
+        ?event wdt:P12 ?place;
+            p:P38 ?statement.
+        ?statement ps:P38 ?role.
+        ?statement pq:P39 ?person.
+    
+        
+    ?place rdfs:label ?placeLabel.
 
-  ?event wdt:P81 ?type
-  OPTIONAL {?event wdt:P12 ?place.
-           ?place rdfs:label ?placeLabel}.
-  OPTIONAL {?event wdt:P13 ?date.
-           BIND(str(YEAR(?date)) AS ?startyear)}.
-  OPTIONAL {?event wdt:P38 ?roles.
-           ?roles rdfs:label ?roleLabel.
-           ?event p:P38 ?roles.
-           ?roles ps:P38 ?people.
-           ?roles pq:P39 ?people}.
+    $typeQuery
 
-
-  OPTIONAL {?event wdt:P14 ?endDate
-           BIND(str(YEAR(?endDate)) AS ?endyear)}.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
- }GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
-order by ?startyear
+    OPTIONAL {?place wdt:P10 ?locatedIn}.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?place ?placeLabel ?locatedInLabel
+order by ?placeLabel
 limit $limit
 offset $offset
 QUERY;
@@ -451,37 +425,31 @@ QUERY;
 
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
-SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
-(count(distinct ?people) as ?countpeople)
+SELECT ?place ?placeLabel ?locatedInLabel
+(count(distinct ?person) as ?countpeople)
 (count(distinct ?event) as ?countevent)
-(count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
-(group_concat(distinct ?roleLabel; separator = "||") as ?roles)
-(group_concat(distinct ?placeLabel; separator = "||") as ?places)
 
 WHERE {
     ?event wdt:P3 wd:Q34;
         ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?source .
+            
+        ?event wdt:P12 ?place;
+            p:P38 ?statement.
+        ?statement ps:P38 ?role.
+        ?statement pq:P39 ?person.
+    
+        
+    ?place rdfs:label ?placeLabel.
 
-    ?event wdt:P81 ?type
-    OPTIONAL {?event wdt:P12 ?place.
-            ?place rdfs:label ?placeLabel}.
-    OPTIONAL {?event wdt:P13 ?date.
-            BIND(str(YEAR(?date)) AS ?startyear)}.
-    OPTIONAL {?event wdt:P38 ?roles.
-            ?roles rdfs:label ?roleLabel.
-            ?event p:P38 ?roles.
-            ?roles ps:P38 ?people.
-            ?roles pq:P39 ?people}.
+    $typeQuery
 
-
-    OPTIONAL {?event wdt:P14 ?endDate
-            BIND(str(YEAR(?endDate)) AS ?endyear)}.
+    OPTIONAL {?place wdt:P10 ?locatedIn}.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
-order by ?startyear
+}GROUP BY ?place ?placeLabel ?locatedInLabel
+order by ?placeLabel
 QUERY;
 
                 array_push($queryArray, $query);
@@ -1279,15 +1247,16 @@ HTML;
                 break;
             case 'places':
                 //NEEDS TO BE UPDATE FROM EVENT TO PLACE
-                //Event name
-                $name = $record['eventLabel']['value'];
+                //Place name
+                $name = $record['placeLabel']['value'];
 
-                //Event URL
-                $eventUrl = $record['event']['value'];
-                $xplode = explode('/', $eventUrl);
-                $eventQ = end($xplode); //qid
+                //Place URL
+                $placeUrl = $record['place']['value'];
+                $xplode = explode('/', $placeUrl);
+                $placeQ = end($xplode); //qid
 
-                //Event Type
+                //ADD ONCE PLACE TYPE IS IN QUERY
+                //Place Type
                 $type = "Unidentified";
                 if (isset($record['typeLabel']) && isset($record['typeLabel']['value'])){
                     if($record['typeLabel']['value'] != ''){
@@ -1295,64 +1264,12 @@ HTML;
                     }
                 }
 
-                //Event Roles
-                $roles = '';
-                $rolesCount = 0;
-                if (isset($record['roles']) && isset($record['roles']['value'])){
-                    $rolesArray = explode('||', $record['roles']['value']);
-
-                    foreach ($rolesArray as $role) {
-                        if (!empty($role)){
-                            if ($rolesCount > 0){
-                                $roles .= ", $role";
-                            } else {
-                                $roles .= "$role";
-                            }
-                            $rolesCount++;
-                        }
+                //Located In
+                $located = "";
+                if (isset($record['locatedInLabel']) && isset($record['locatedInLabel']['value'])){
+                    if($record['locatedInLabel']['value'] != ''){
+                        $type = $record['locatedInLabel']['value'];
                     }
-                }
-
-                // Event Places
-                $places = '';
-                $placesCount = 0;
-                if (isset($record['places']) && isset($record['places']['value'])){
-                    $placesArray = explode('||', $record['places']['value']);
-
-                    foreach ($placesArray as $place) {
-                        if (!empty($place)){
-                            if ($placesCount > 0){
-                                $places .= ", $place";
-                            } else {
-                                $places .= "$place";
-                            }
-                            $placesCount++;
-                        }
-                    }
-                }
-
-                //Event Start Year
-                $startYear = '';
-                if (isset($record['startyear']) && isset($record['startyear']['value'])){
-                    $startYears = explode('||', $record['startyear']['value']);
-                    $startYear = min($startYears);
-                }
-
-                //Event End Year
-                $endYear = '';
-                if (isset($record['endyear']) && isset($record['endyear']['value'])){
-                    $endYears = explode('||', $record['endyear']['value']);
-                    $endYear = max($endYears);
-                }
-
-                //Date range
-                $dateRange = '';
-                if ($startYear != '' && $endYear != ''){
-                    $dateRange = "$startYear - $endYear";
-                } elseif ($endYear == ''){
-                    $dateRange = $startYear;
-                } elseif ($startYear == '') {
-                    $dateRange = $endYear;
                 }
 
                 //Counts for connections
@@ -1398,34 +1315,18 @@ HTML;
 
                         $typeHtml = "<p><span>Type: </span>$type</p>";
 
-                        $rolesHtml = '';
-                        // Check for multiple roles
-                        if ($rolesCount == 1){
-                            $rolesHtml = "<p><span>Role: </span>$roles</p>";
-                        }
-                        if ($rolesCount > 1){
-                            $rolesHtml = "<p><span>Role: </span><span class='multiple'>Multiple<span class='tooltip'>$roles</span></span></p>";
-                        }
-                        // Check for multiple places
-                        $placesHtml = '';
-                        if ($placesCount == 1){
-                            $placesHtml = "<p><span>Place: </span>$places</p>";
-                        }
-                        if ($placesCount > 1){
-                            $placesHtml = "<p><span>Place: </span><span class='multiple'>Multiple<span class='tooltip'>$places</span></span></p>";
+
+                        $locatedHtml = '';
+                        if ($located != ''){
+                            $locatedHtml = "<p><span>Date Range: </span>$located</p>";
                         }
 
-                        $dateRangeHtml = '';
-                        if ($dateRange != ''){
-                            $dateRangeHtml = "<p><span>Date Range: </span>$dateRange</p>";
-                        }
-
-                        $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
-                        $event_url = BASE_URL . "record/event/" . $eventQ;
+                        $card_icon_url = BASE_IMAGE_URL . 'Place-light.svg';
+                        $place_url = BASE_URL . "record/place/" . $placeQ;
 
                         $card = <<<HTML
 <li>
-    <a href='$event_url'>
+    <a href='$place_url'>
         <div class='container card-image'>
             <p>$name</p>
             <img src='$card_icon_url'>
@@ -1434,9 +1335,7 @@ HTML;
             <div class='container cards'>
                 <div class='card-info'>
                     $typeHtml
-                    $rolesHtml
-                    $placesHtml
-                    $dateRangeHtml
+                    $locatedHtml
                 </div>
             </div>
             $connections
@@ -1453,12 +1352,8 @@ HTML;
                             $headers = <<<HTML
 <tr>
     <th class="name">NAME</th>
-    <th class="gender">GENDER</th>
-    <th class="age">AGE</th>
-    <th class="status">STATUS</th>
-    <th class="origin">ORIGIN</th>
-    <th class="location">LOCATION</th>
-    <th class="dateRange">DATE RANGE</th>
+    <th class="gender">TYPE</th>
+    <th class="located">LOCATED</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
@@ -1473,14 +1368,8 @@ HTML;
     <td class='type'>
         <p><span class='first'>Type: </span>$type</p>
     </td>
-    <td class='role'>
-        <p><span class='first'>Role: </span>$roles</p>
-    </td>
-    <td class='place'>
-        <p><span class='first'>Place: </span>$places</p>
-    </td>
-    <td class='dateRange'>
-        <p><span class='first'>Date Range: </span>$dateRange</p>
+    <td class='located'>
+        <p><span class='first'>Located: </span>$located</p>
     </td>
     <td class='meta'>
 

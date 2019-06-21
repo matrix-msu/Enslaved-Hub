@@ -129,26 +129,32 @@
             </li>
             <ul id="mainmenu">
             
-                <?php foreach ($GLOBALS["FILTER_ARRAY"]['people'] as $type) { 
+                <?php 
+                $fullArray = $GLOBALS["FILTER_ARRAY"]['people'];
+                $extraCats = ['Status', 'Occupation'];
+                foreach($extraCats as $extra){
+                    $fullArray[] = $extra;
+                }
+                foreach ($fullArray as $type) { 
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
                     <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
                     </li>
                     <ul id="submenu">
-                    <?php
-                    $typeCats = array();
-                    if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
-                        $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
-                    }
-                    foreach ($typeCats as $category => $qid) { ?>
-                        <li>
-                            <label class="<?php echo $catLower; ?>">
-                                <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
-                                <p><?php echo $category; ?> <em>(234)</em></p>
-                                <span></span>
-                            </label>
-                        </li>
-                    <?php } ?>
-                </ul>
+                        <?php
+                        $typeCats = array();
+                        if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                            $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
+                        }
+                        foreach ($typeCats as $category => $qid) { ?>
+                            <li>
+                                <label class="<?php echo $catLower; ?>">
+                                    <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <span></span>
+                                </label>
+                            </li>
+                        <?php } ?>
+                    </ul>
                 <?php } ?>
 
             </ul>
@@ -188,6 +194,35 @@
             <ul id="mainmenu">
 
                 <?php foreach ($GLOBALS["FILTER_ARRAY"]['places'] as $type) { 
+                    $catLower = strtolower(str_replace(" ", "_", $type)); ?>
+                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
+                    </li>
+                    <ul id="submenu">
+                    <?php
+                    $typeCats = array();
+                    if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                        $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
+                    }
+                    foreach ($typeCats as $category => $qid) { ?>
+                        <li>
+                            <label class="<?php echo $catLower; ?>">
+                                <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
+                                <p><?php echo $category; ?> <em>(234)</em></p>
+                                <span></span>
+                            </label>
+                        </li>
+                    <?php } ?>
+                </ul>
+                <?php } ?>
+
+            </ul>
+            <!-- Source Filtering -->
+            <hr>
+            <li class="cat-cat">Source Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
+            </li>
+            <ul id="mainmenu">
+
+                <?php foreach ($GLOBALS["FILTER_ARRAY"]['sources'] as $type) { 
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
                     <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
                     </li>
