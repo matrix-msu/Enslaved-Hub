@@ -11,9 +11,13 @@ function Kora_GetNavigationData()
 	$koraResults = koraWrapperSearch(WEBPAGES_FORM, "ALL", array("Display_16_49_"), "TRUE", array('NavigationOrder_16_49_','ASC','SubNavigationOrder_16_49_','ASC'));
 	
 	// Error checking
-	if(!$koraResults) return;
+	if(!$koraResults) return json_encode("failed");
 	$decode_results = json_decode($koraResults, true);
-	if(array_key_exists("error", $decode_results)) return;
+	if(array_key_exists("error", $decode_results)) return json_encode("failed");
+
+	// Read from the webPages file and compare to the kora results
+	$cached_data = file_get_contents(BASE_PATH . "/wikiconstants/webPages.json");
+	if($cached_data == json_encode(json_decode($koraResults)->records[0])) return json_encode("similar");
 
 	// put content to webPages.json file
 	file_put_contents( BASE_PATH . "/wikiconstants/webPages.json", json_encode(json_decode($koraResults)->records[0]));
@@ -43,6 +47,8 @@ function Kora_GetNavigationData()
 	// echo '<script>console.log('.json_encode($navs).')</script>';
 	// put navigations to navContents.json file
 	file_put_contents( BASE_PATH . "/wikiconstants/navContents.json", json_encode($navs));
+
+	return json_encode("updated");
 }
 
 // Read navigations from file navContents.json
