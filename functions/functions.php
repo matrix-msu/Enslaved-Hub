@@ -291,7 +291,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent   
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countevent)
+(count(distinct ?allevents) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 
@@ -321,8 +321,12 @@ WHERE {
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?source .
 
-    ?agent wdt:P82 ?name. #name is mandatory
-                             
+
+        ?agent p:P82 ?statement.
+    ?statement ps:P82 ?name. 
+    OPTIONAL{ ?statement pq:P30 ?recordeAt.
+            bind(?recordedAt as ?allevents)}
+                                
     $genderQuery
     $nameQuery
     $ageQuery
@@ -330,21 +334,32 @@ WHERE {
     $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
- 
-    OPTIONAL { ?agent wdt:P24 ?status. 
-                ?status rdfs:label ?statuslab}
+    
+    OPTIONAL {?agent p:P39 ?statementrole.
+            ?statementrole ps:P39 ?roles.
+            ?statementrole pq:P98 ?roleevent.
+            bind(?roleevent as ?allevents)
+
+            }.
+    
+    OPTIONAL {?agent p:P24 ?statstatus.
+            ?statstatus ps:P24 ?status.
+            ?status rdfs:label ?statuslabel.
+            ?statstatus pq:P99 ?statusevent.
+            bind(?statusevent as ?allevents)}.
+    
     
     OPTIONAL { ?agent wdt:P17 ?sex. 
                 ?sex rdfs:label ?sexlab}
 
     OPTIONAL { ?agent wdt:P88 ?match}.
     
-    OPTIONAL{ ?source wdt:P8 ?event.
-                ?event	wdt:P13 ?startdate.
+
+    OPTIONAL{?allevents	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?event wdt:P14 ?enddate.
+            OPTIONAL {?allevents wdt:P14 ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?event wdt:P12 ?place.
+            OPTIONAL {?allevents wdt:P12 ?place.
                         ?place rdfs:label ?placelab}
             
             }.
@@ -364,7 +379,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent   
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countevent)
+(count(distinct ?allevents) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 
@@ -390,11 +405,15 @@ WHERE {
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
     ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
-            ?property  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
+  		 ?property  ?object .
+  	?object prov:wasDerivedFrom ?provenance .
+  	?provenance pr:P35 ?source .
 
-    ?agent wdt:P82 ?name. #name is mandatory
+
+ 	 ?agent p:P82 ?statement.
+    ?statement ps:P82 ?name. 
+    OPTIONAL{ ?statement pq:P30 ?recordeAt.
+            bind(?recordedAt as ?allevents)}
                                 
     $genderQuery
     $nameQuery
@@ -403,21 +422,32 @@ WHERE {
     $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+ 
+    OPTIONAL {?agent p:P39 ?statementrole.
+            ?statementrole ps:P39 ?roles.
+            ?statementrole pq:P98 ?roleevent.
+            bind(?roleevent as ?allevents)
+
+            }.
     
-    OPTIONAL { ?agent wdt:P24 ?status. 
-                ?status rdfs:label ?statuslab}
+    OPTIONAL {?agent p:P24 ?statstatus.
+            ?statstatus ps:P24 ?status.
+            ?status rdfs:label ?statuslabel.
+            ?statstatus pq:P99 ?statusevent.
+            bind(?statusevent as ?allevents)}.
+    
     
     OPTIONAL { ?agent wdt:P17 ?sex. 
                 ?sex rdfs:label ?sexlab}
 
     OPTIONAL { ?agent wdt:P88 ?match}.
     
-    OPTIONAL{ ?source wdt:P8 ?event.
-                ?event	wdt:P13 ?startdate.
+
+    OPTIONAL{?allevents	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?event wdt:P14 ?enddate.
+            OPTIONAL {?allevents wdt:P14 ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?event wdt:P12 ?place.
+            OPTIONAL {?allevents wdt:P12 ?place.
                         ?place rdfs:label ?placelab}
             
             }.
@@ -1407,7 +1437,7 @@ HTML;
                 $placeQ = end($xplode); //qid
 
                 //Place Type
-                $type = "Unidentified";
+                $type = "";
                 if (isset($record['placetype']) && isset($record['placetype']['value'])){
                     if($record['placetype']['value'] != ''){
                         $type = $record['placetype']['value'];
@@ -1418,7 +1448,7 @@ HTML;
                 $located = "";
                 if (isset($record['locatedInLabel']) && isset($record['locatedInLabel']['value'])){
                     if($record['locatedInLabel']['value'] != ''){
-                        $type = $record['locatedInLabel']['value'];
+                        $located = $record['locatedInLabel']['value'];
                     }
                 }
 
@@ -1463,12 +1493,15 @@ HTML;
                 foreach ($templates as $template) {
                     if ($template == 'gridCard'){
 
-                        $typeHtml = "<p><span>Type: </span>$type</p>";
+                        $typeHtml = '';
+                        if ($type != ''){
+                            $typeHtml = "<p><span>Type: </span>$type</p>";
+                        }
 
 
                         $locatedHtml = '';
                         if ($located != ''){
-                            $locatedHtml = "<p><span>Date Range: </span>$located</p>";
+                            $locatedHtml = "<p><span>Located In: </span>$located</p>";
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Place-light.svg';

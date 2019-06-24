@@ -57,17 +57,7 @@ $GLOBALS['FILTER_ARRAY'] = Array(
         "Province"
     ),
     "sources" => array(
-        "Bill of Sale or Receipt",
-        "Census or Register",
-        "Civil Document",
-        "Criminal Document",
-        "Freedom or Emancipation Document",
-        "Narrative",
-        "Registry",
-        "Runaway Ad",
-        "Sacramental or Religious Document",
-        "Ship Registry or Manifest",
-        "Will"
+        "Source Type"
     )
 );
 /*
