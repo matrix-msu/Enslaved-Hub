@@ -175,36 +175,43 @@ function loadConnections(){
                 console.log(form)
                 if (form == 'Person'){
                     $('#people').html('<div class="person-image"></div>'+connectionsArray['Person-count'] + ' People');
-                    if (connectionsArray['Person-count'] <= 0){
-                        $('#people').hide();
-                    }
                 } else if (form == 'Event'){
                     $('#event').html('<div class="event-image"></div>' + connectionsArray['Event-count'] + ' Events');
-                    if (connectionsArray['Event-count'] <= 0) {
-                        $('#event').hide();
-                    }
                 } else if (form == 'Project') {
+                    console.log('project count = ', )
                     $('#project').html('<div class="project-image"></div>' + connectionsArray['Project-count'] + ' Projects');
-                    if (connectionsArray['Project-count'] <= 0) {
-                        $('#project').hide();
-                    }
                 } else if (form == 'Source') {
                     $('#source').html('<div class="source-image"></div>' + connectionsArray['Source-count'] + ' Sources');
-                    if (connectionsArray['Source-count'] <= 0) {
-                        $('#source').hide();
-                    }
+
                 } else if (form == 'Place') {
                     $('#place').html('<div class="place-image"></div>' + connectionsArray['Place-count'] + ' Places');
-                    if (connectionsArray['Place-count'] <= 0) {
-                        $('#place').hide();
-                    }
+
                 } else if (form == 'CloseMatch') {
                     $('#closeMatch').html('<div class="person-image"></div>' + connectionsArray['CloseMatch-count'] + ' Close Matches');
-                    if (connectionsArray['CloseMatch-count'] <= 0) {
-                        $('#closeMatch').hide();
-                    }
                 }
             }
+
+            // hide tabs when they have no results
+            if (!connectionsArray['Person-count']) {
+                $('#people').hide();
+            }
+            if (!connectionsArray['Event-count']) {
+                $('#event').hide();
+            }
+            if (!connectionsArray['Project-count']) {
+                $('#project').hide();
+            }
+            if (!connectionsArray['Source-count']) {
+                $('#source').hide();
+            }
+            if (!connectionsArray['Place-count']) {
+                $('#place').hide();
+            }
+            if (!connectionsArray['CloseMatch-count']) {
+                $('#closeMatch').hide();
+            }
+
+
         }
     });
 }

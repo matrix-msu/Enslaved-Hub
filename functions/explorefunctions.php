@@ -1972,6 +1972,10 @@ HTML;
       </div> -->
 HTML;
 
+    // put the events in order to be displayed
+    $dates = array_column($events, 'year');
+    array_multisort($dates, SORT_ASC, $events);
+
     $first = true;//to set the first timeline event as active
     foreach($events as $index => $event) {
       $html .= '
