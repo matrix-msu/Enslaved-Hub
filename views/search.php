@@ -19,7 +19,7 @@
 </div>
 <main class="direct-search">
     <div class="searchwrap">
-        <form  action="<?php echo BASE_URL;?>search/all" method="get" onsubmit="handleSubmit()">
+        <form  action="<?php echo BASE_URL;?>search/people" method="get" onsubmit="handleSubmit()">
             <h2>Direct Search</h2>
             <div class="search-section">
                 <div class="inputwrap">
