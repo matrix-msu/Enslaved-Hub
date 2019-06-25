@@ -1220,10 +1220,13 @@ HTML;
 <div class="detail $lowerlabel">
   <h3>$upperlabel</h3>
 HTML;
-
     //Loop through and match up
     $matched = '';
-    for($i=0; $i < sizeof($statuses); $i++){
+    for($i=0; $i < sizeof($statusEventUrls); $i++){
+      if (!isset($eventstatusLabels[$i])){
+        continue;
+      }
+
         $explode = explode('/', $statusEventUrls[$i]);
         $eventQid = end($explode);
         $eventUrl = $baseurl . 'record/event/' . $eventQid;
@@ -1968,6 +1971,10 @@ HTML;
           </div>
       </div> -->
 HTML;
+
+    // put the events in order to be displayed
+    $dates = array_column($events, 'year');
+    array_multisort($dates, SORT_ASC, $events);
 
     $first = true;//to set the first timeline event as active
     foreach($events as $index => $event) {
