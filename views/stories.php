@@ -26,34 +26,20 @@ if ($page < 1) {
 }
 
 
-// Dynamically pull data from cache file (webPages.json)
-$cached_data = file_get_contents(BASE_PATH . "/wikiconstants/webPages.json");
-// echo '<script>console.log('.$cached_data.')</script>';
-$cached_data = json_decode($cached_data, true); // Convert the json string to a php array
-
-$title = "Stories";
-$description = "";
-foreach ($cached_data as $content) {
-    if(array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"]["value"] == "FALSE") continue;
-    if(array_key_exists("Title", $content) && $content["Title"]["value"] == "Stories")
-    {
-        $title = $content["Title"]["value"];
-        $description = $content["Description"]["value"];
-        break;
-    }
-}
+// Get Title and Description from cache file
+$cache_Data = Json_GetData_ByTitle("Stories");
 ?>
 <!-- Stories page-->
 <!-- Heading image and title container-->
 <div class="container header stories">
     <div class="container middlewrap">
-        <h1><?php echo $title; ?></h1>
+        <h1><?php echo $cache_Data['title'] ?></h1>
     </div>
 </div>
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p><?php echo $description; ?></p>
+        <p><?php echo $cache_Data['descr'] ?></p>
     </div>
 </div>
 <!-- featured stories container-->

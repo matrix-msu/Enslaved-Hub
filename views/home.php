@@ -1,4 +1,5 @@
 <!-- Author: Drew Schineller-->
+<?php $cache_data = Json_GetData_ByTitle("Home", true) ?>
 <!-- Main page-->
 <!-- Heading image and title container-->
 <div class="container header">
@@ -8,7 +9,7 @@
                 <img class="logo-main" src="<?php echo BASE_IMAGE_URL;?>Logo-Landing.svg" width="780" height="99" alt="Enslaved People of Historic Slave Trade"/>
                 <img class="logo-mobile" src="<?php echo BASE_IMAGE_URL;?>Logo-Landing-Mobile.svg" width="409" height="132" alt="Enslaved People of Historic Slave Trade"/>
             </div>
-            <p>Project Intro lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore, sed do eiusmod tempor incididunt ut labore. <a href="<?php echo BASE_URL?>about">Learn More</a></p>
+            <p><?php echo $cache_data["descr"] ?> </p>
         </div>
         <div class="heading-search">
             <h3>Search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade ...</h3>
@@ -25,7 +26,7 @@
     <div class="section-wrap">
         <div class="section-info">
             <a href="<?php echo BASE_URL;?>explore"><h2>Explore<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
-            <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
+            <p><?php echo array_key_exists("Explore", $cache_data) ? $cache_data["Explore"] : "" ?></p>
         </div>
         <div class="section-content">
             <a href="<?php echo BASE_URL;?>search/people">
@@ -73,7 +74,7 @@
     <div class="section-wrap visualize-hide">
         <div class="section-info">
             <a href="<?php echo BASE_URL;?>visualize"><h2>Visualize<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="arrow"/></h2></a>
-            <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur  …</p>
+            <p><?php echo array_key_exists("Visualize", $cache_data) ? $cache_data["Visualize"] : "" ?></p>
         </div>
         <div class="section-content">
             <div class="content-link">
@@ -96,52 +97,11 @@
     <div class="section-wrap">
         <div class="section-info">
             <a href="<?php echo BASE_URL;?>stories"><h2>Stories<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
-            <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
+            <p><?php echo array_key_exists("Stories", $cache_data) ? $cache_data["Stories"] : "" ?></p>
         </div>
         <div class="section-content">
             <ul class="row" id="stories-list">
-               <!-- <li>-->
-<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory">-->
-<!--                        <div class="container cards">-->
-<!--                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>-->
-<!--                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory">-->
-<!--                        <div class="container cards">-->
-<!--                            <p class="card-title">Title of Featured Story Goes Here Like This.</p>-->
-<!--                            <h4 class="card-view-story">View Story <div class="view-arrow"></h4>-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="section-wrap">
-        <div class="section-info">
-            <a href="<?php echo BASE_URL;?>projects"><h2>Projects<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
-            <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  …</p>
-        </div>
-        <div class="section-content">
-            <ul class="row" id="projects-list">
-<!            <li>-->
-<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory">-->
-<!--                        <div class="container cards">-->
-<!--                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>-->
-<!--                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="--><?php //echo BASE_URL?><!--fullStory">-->
-<!--                        <div class="container cards">-->
-<!--                            <p class="card-title">Title of Featured Project Goes Here Like This.</p>-->
-<!--                            <h4 class="card-view-story">View Project <div class="view-arrow"></h4>-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </li>-->
+                <!-- featured Stories goes here -->
             </ul>
         </div>
     </div>
@@ -152,7 +112,7 @@
             <h2>Inspirational, Attention Grabbing Heading Goes Here Like This.</h2>
         </div>
         <div class="description">
-            <p>Brief info on Project. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p><?php echo array_key_exists("About", $cache_data) ? $cache_data["About"] : "" ?></p>
         </div>
         <div class="about-card">
             <a href="<?php echo BASE_URL?>fullStory">
