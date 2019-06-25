@@ -291,7 +291,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent   
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countevent)
+(count(distinct ?allevents) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 
@@ -321,8 +321,12 @@ WHERE {
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?source .
 
-    ?agent wdt:P82 ?name. #name is mandatory
-                             
+
+        ?agent p:P82 ?statement.
+    ?statement ps:P82 ?name. 
+    OPTIONAL{ ?statement pq:P30 ?recordeAt.
+            bind(?recordedAt as ?allevents)}
+                                
     $genderQuery
     $nameQuery
     $ageQuery
@@ -330,21 +334,32 @@ WHERE {
     $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
- 
-    OPTIONAL { ?agent wdt:P24 ?status. 
-                ?status rdfs:label ?statuslab}
+    
+    OPTIONAL {?agent p:P39 ?statementrole.
+            ?statementrole ps:P39 ?roles.
+            ?statementrole pq:P98 ?roleevent.
+            bind(?roleevent as ?allevents)
+
+            }.
+    
+    OPTIONAL {?agent p:P24 ?statstatus.
+            ?statstatus ps:P24 ?status.
+            ?status rdfs:label ?statuslabel.
+            ?statstatus pq:P99 ?statusevent.
+            bind(?statusevent as ?allevents)}.
+    
     
     OPTIONAL { ?agent wdt:P17 ?sex. 
                 ?sex rdfs:label ?sexlab}
 
     OPTIONAL { ?agent wdt:P88 ?match}.
     
-    OPTIONAL{ ?source wdt:P8 ?event.
-                ?event	wdt:P13 ?startdate.
+
+    OPTIONAL{?allevents	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?event wdt:P14 ?enddate.
+            OPTIONAL {?allevents wdt:P14 ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?event wdt:P12 ?place.
+            OPTIONAL {?allevents wdt:P12 ?place.
                         ?place rdfs:label ?placelab}
             
             }.
@@ -364,7 +379,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent   
 (count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countevent)
+(count(distinct ?allevents) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 
@@ -390,11 +405,15 @@ WHERE {
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
     ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
-            ?property  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
+  		 ?property  ?object .
+  	?object prov:wasDerivedFrom ?provenance .
+  	?provenance pr:P35 ?source .
 
-    ?agent wdt:P82 ?name. #name is mandatory
+
+ 	 ?agent p:P82 ?statement.
+    ?statement ps:P82 ?name. 
+    OPTIONAL{ ?statement pq:P30 ?recordeAt.
+            bind(?recordedAt as ?allevents)}
                                 
     $genderQuery
     $nameQuery
@@ -403,21 +422,32 @@ WHERE {
     $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+ 
+    OPTIONAL {?agent p:P39 ?statementrole.
+            ?statementrole ps:P39 ?roles.
+            ?statementrole pq:P98 ?roleevent.
+            bind(?roleevent as ?allevents)
+
+            }.
     
-    OPTIONAL { ?agent wdt:P24 ?status. 
-                ?status rdfs:label ?statuslab}
+    OPTIONAL {?agent p:P24 ?statstatus.
+            ?statstatus ps:P24 ?status.
+            ?status rdfs:label ?statuslabel.
+            ?statstatus pq:P99 ?statusevent.
+            bind(?statusevent as ?allevents)}.
+    
     
     OPTIONAL { ?agent wdt:P17 ?sex. 
                 ?sex rdfs:label ?sexlab}
 
     OPTIONAL { ?agent wdt:P88 ?match}.
     
-    OPTIONAL{ ?source wdt:P8 ?event.
-                ?event	wdt:P13 ?startdate.
+
+    OPTIONAL{?allevents	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?event wdt:P14 ?enddate.
+            OPTIONAL {?allevents wdt:P14 ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?event wdt:P12 ?place.
+            OPTIONAL {?allevents wdt:P12 ?place.
                         ?place rdfs:label ?placelab}
             
             }.
@@ -436,142 +466,40 @@ QUERY;
                 /// PLACES
                 ///*********************************** */
 
-
-                // search for places connected to a source
-                $sourceQuery = "";
-                if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
-                    $sourceQ = $filtersArray['source'][0];
-
-                    $query['query'] = <<<QUERY
-SELECT ?place ?placeLabel ?placetype
- (count(distinct ?people) as ?countpeople)
- (count(distinct ?event) as ?countervent)
- (count(distinct ?place) as ?countplace)
- (count(distinct ?source) as ?countsource)
-
-WHERE {
-  VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source. 
-  ?source wdt:P8 ?event.
-  ?event wdt:P12 ?place.
-  ?place rdfs:label ?placeLabel.
-  ?place wdt:P80 ?type.
-  ?type rdfs:label ?placetype.
-  
-  OPTIONAL {?event p:P38 ?roles.
-           ?roles ps:P38 ?qualifier.
-           ?roles pq:P39 ?people}.
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
- }GROUP BY ?place ?placeLabel ?placetype
-order by ?placeLabel
-QUERY;
-                    array_push($queryArray, $query);
-                    break;
-                }
-
-
-                // search for places connected to an event
-                 $eventQuery = "";
-                if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
-                    $eventQ = $filtersArray['event'][0];
-
-                    $query['query'] = <<<QUERY
-SELECT ?place ?placeLabel ?placetype
- (count(distinct ?people) as ?countpeople)
- (count(distinct ?event) as ?countervent)
- (count(distinct ?place) as ?countplace)
- (count(distinct ?source) as ?countsource)
-
-WHERE {
-  VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event. 
-  ?event wdt:P12 ?place.
-  ?place rdfs:label ?placeLabel.
-  ?place wdt:P80 ?type.
-  ?type rdfs:label ?placetype.
-  ?event wdt:P3 wd:Q34;
-          ?property  ?object .
-  	?object prov:wasDerivedFrom ?provenance .
-  	?provenance pr:P35 ?source .
-
-  
-  OPTIONAL {?event p:P38 ?roles.
-           ?roles ps:P38 ?qualifier.
-           ?roles pq:P39 ?people}.
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
- }GROUP BY ?place ?placeLabel ?placetype
-order by ?placeLabel
-
-QUERY;
-                    array_push($queryArray, $query);
-                    break;
-                }
-
-
-
-
-
-
-                /// NOT WORKING YET
-
-                $genderQuery = "";
-                if (isset($filtersArray['gender'])){
-                    $gender = $filtersArray['gender'];
-                    $qGender = $gender == 'Male';
-
-                    if( count( $filtersArray["gender"] ) > 1)
-                    {
-                        // handle multiple gender values
-                    }
-                    else // handle single gender search
-                    {
-                        if( in_array("Male", $gender)){
-                            $genderQuery = "?agent wdt:P17 wd:Q48";
-                        }
-                        else  if( in_array("Female", $gender)){
-                            $genderQuery = "?agent wdt:P17 wd:Q47";
-                        }
-                        else 
-                        {
-                            // handle unidentified
-                        }
-                    }
+                $typeQuery = "";
+                if (isset($filtersArray['place_type'])){
+                    $type = $filtersArray['place_type'][0];
+                    $typeQuery = "?place wdt:P80 wd:$type .";
                 }
 
                 $query = array('query' => "");
 
                 $query['query'] = <<<QUERY
-SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
- (count(distinct ?people) as ?countpeople)
- (count(distinct ?event) as ?countevent)
- (count(distinct ?place) as ?countplace)
- (count(distinct ?source) as ?countsource)
- (group_concat(distinct ?roleLabel; separator = "||") as ?roles)
- (group_concat(distinct ?placeLabel; separator = "||") as ?places)
+SELECT ?place ?placeLabel ?locatedInLabel
+(count(distinct ?person) as ?countpeople)
+(count(distinct ?event) as ?countevent)
+(count(distinct ?source) as ?countsource)
 
 WHERE {
-  ?event wdt:P3 wd:Q34;
-         ?property  ?object .
-  	?object prov:wasDerivedFrom ?provenance .
-  	?provenance pr:P35 ?source .
+    ?event wdt:P3 wd:Q34;
+        ?property  ?object .
+        ?object prov:wasDerivedFrom ?provenance .
+        ?provenance pr:P35 ?source .
+            
+        ?event wdt:P12 ?place;
+            p:P38 ?statement.
+        ?statement ps:P38 ?role.
+        ?statement pq:P39 ?person.
+    
+        
+    ?place rdfs:label ?placeLabel.
 
-  ?event wdt:P81 ?type
-  OPTIONAL {?event wdt:P12 ?place.
-           ?place rdfs:label ?placeLabel}.
-  OPTIONAL {?event wdt:P13 ?date.
-           BIND(str(YEAR(?date)) AS ?startyear)}.
-  OPTIONAL {?event wdt:P38 ?roles.
-           ?roles rdfs:label ?roleLabel.
-           ?event p:P38 ?roles.
-           ?roles ps:P38 ?people.
-           ?roles pq:P39 ?people}.
+    $typeQuery
 
-
-  OPTIONAL {?event wdt:P14 ?endDate
-           BIND(str(YEAR(?endDate)) AS ?endyear)}.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
- }GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
-order by ?startyear
+    OPTIONAL {?place wdt:P10 ?locatedIn}.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?place ?placeLabel ?locatedInLabel
+order by ?placeLabel
 limit $limit
 offset $offset
 QUERY;
@@ -580,37 +508,31 @@ QUERY;
 
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
-SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
-(count(distinct ?people) as ?countpeople)
+SELECT ?place ?placeLabel ?locatedInLabel
+(count(distinct ?person) as ?countpeople)
 (count(distinct ?event) as ?countevent)
-(count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
-(group_concat(distinct ?roleLabel; separator = "||") as ?roles)
-(group_concat(distinct ?placeLabel; separator = "||") as ?places)
 
 WHERE {
     ?event wdt:P3 wd:Q34;
         ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?source .
+            
+        ?event wdt:P12 ?place;
+            p:P38 ?statement.
+        ?statement ps:P38 ?role.
+        ?statement pq:P39 ?person.
+    
+        
+    ?place rdfs:label ?placeLabel.
 
-    ?event wdt:P81 ?type
-    OPTIONAL {?event wdt:P12 ?place.
-            ?place rdfs:label ?placeLabel}.
-    OPTIONAL {?event wdt:P13 ?date.
-            BIND(str(YEAR(?date)) AS ?startyear)}.
-    OPTIONAL {?event wdt:P38 ?roles.
-            ?roles rdfs:label ?roleLabel.
-            ?event p:P38 ?roles.
-            ?roles ps:P38 ?people.
-            ?roles pq:P39 ?people}.
+    $typeQuery
 
-
-    OPTIONAL {?event wdt:P14 ?endDate
-            BIND(str(YEAR(?endDate)) AS ?endyear)}.
+    OPTIONAL {?place wdt:P10 ?locatedIn}.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
-order by ?startyear
+}GROUP BY ?place ?placeLabel ?locatedInLabel
+order by ?placeLabel
 QUERY;
 
                 array_push($queryArray, $query);
@@ -1505,8 +1427,7 @@ HTML;
 
                 break;
             case 'places':
-                // print_r($record);die;
-                //NEEDS TO BE UPDATE FROM EVENT TO PLACE
+            
                 //Place name
                 $name = $record['placeLabel']['value'];
 
@@ -1516,10 +1437,18 @@ HTML;
                 $placeQ = end($xplode); //qid
 
                 //Place Type
-                $type = "Unidentified";
+                $type = "";
                 if (isset($record['placetype']) && isset($record['placetype']['value'])){
                     if($record['placetype']['value'] != ''){
                         $type = $record['placetype']['value'];
+                    }
+                }
+
+                //Located In
+                $located = "";
+                if (isset($record['locatedInLabel']) && isset($record['locatedInLabel']['value'])){
+                    if($record['locatedInLabel']['value'] != ''){
+                        $located = $record['locatedInLabel']['value'];
                     }
                 }
 
@@ -1564,14 +1493,23 @@ HTML;
                 foreach ($templates as $template) {
                     if ($template == 'gridCard'){
 
-                        $typeHtml = "<p><span>Type: </span>$type</p>";
+                        $typeHtml = '';
+                        if ($type != ''){
+                            $typeHtml = "<p><span>Type: </span>$type</p>";
+                        }
 
-                        $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
-                        $event_url = BASE_URL . "record/place/" . $placeQ;
+
+                        $locatedHtml = '';
+                        if ($located != ''){
+                            $locatedHtml = "<p><span>Located In: </span>$located</p>";
+                        }
+
+                        $card_icon_url = BASE_IMAGE_URL . 'Place-light.svg';
+                        $place_url = BASE_URL . "record/place/" . $placeQ;
 
                         $card = <<<HTML
 <li>
-    <a href='$event_url'>
+    <a href='$place_url'>
         <div class='container card-image'>
             <p>$name</p>
             <img src='$card_icon_url'>
@@ -1580,6 +1518,7 @@ HTML;
             <div class='container cards'>
                 <div class='card-info'>
                     $typeHtml
+                    $locatedHtml
                 </div>
             </div>
             $connections
@@ -1596,7 +1535,8 @@ HTML;
                             $headers = <<<HTML
 <tr>
     <th class="name">NAME</th>
-    <th class="type">TYPE</th>
+    <th class="gender">TYPE</th>
+    <th class="located">LOCATED</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
@@ -1610,6 +1550,9 @@ HTML;
     </td>
     <td class='type'>
         <p><span class='first'>Type: </span>$type</p>
+    </td>
+    <td class='located'>
+        <p><span class='first'>Located: </span>$located</p>
     </td>
     <td class='meta'>
 

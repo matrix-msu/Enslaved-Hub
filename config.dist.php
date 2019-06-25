@@ -57,15 +57,19 @@ $GLOBALS['FILTER_ARRAY'] = Array(
         "Province"
     ),
     "sources" => array(
-        "Media Type",
-        "Repository",
-        "Contributing Scholar",
-        "Natory",
-        "Time",
-        "Place"
+        "Source Type"
     )
 );
-
+/*
+"sources" => array(
+    "Source Type",
+    "Repository",
+    "Contributing Scholar",
+    "Natory",
+    "Time",
+    "Place"
+)
+*/
 
 //useful javascript globals constants and functions
 define("JS_GLOBALS",
@@ -95,7 +99,9 @@ $GLOBALS['FILTER_TO_FILE_MAP'] = Array(
     "Place Type" => placeTypes,
     "City" => cities,
     "Province" => provinces,
-    "Source Type" => sourceTypes
+    "Source Type" => sourceTypes,
+    "Status" => personstatus,
+    "Occupation" => occupation
 );
 
 //include the lib files

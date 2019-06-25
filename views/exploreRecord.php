@@ -161,47 +161,13 @@ if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
 </div>
 <?php } ?>
 
-<script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>
-<script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
-<script src="<?php echo BASE_URL;?>assets/javascripts/timeline.js"></script>
-
 <script>
     var QID = "<?php echo QID;?>";
     var recordform = "<?php echo RECORD_FORM ?>";
-    console.log(QID);
-    // load the page data with ajax here
-    $(document).ready(function () {
-        // name, details, timeline, connections, featured stories
-
-        $.ajax({
-            url: BASE_URL + "api/getPersonRecordHtml",
-            type: "GET",
-            data: {
-                QID: QID,
-                type: recordform
-            },
-            'success': function (json) {
-                console.log(json);
-                var html = JSON.parse(json);
-                console.log(html);
-                $('.middlewrap').html(html.header);
-                $('.infowrap').html(html.description);
-                $('.detail-section').html(html.details);
-                // $('.timeline-container').html(html.timeline);
-                // initializeTimeline();
-                <?php
-                    if(RECORD_FORM == 'person'){
-                        echo "$('.timeline-container').html(html.timeline);\n";
-                        echo "initializeTimeline(); //function in timeline.js\n";
-                    }
-                ?>
-            },
-            'error': function (xhr, status, error){
-                console.log('fail');
-            }
-        });
-
-    });
-
-
 </script>
+
+<script src="<?php echo BASE_URL;?>assets/javascripts/exploreRecord.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/timeline.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>
+

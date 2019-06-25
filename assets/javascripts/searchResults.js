@@ -64,6 +64,7 @@ function searchResults(preset, limit = 12, offset = 0)
     filters['offset'] = offset;
     card_offset = offset;
     var templates = ['gridCard', 'tableCard'];
+    console.log(preset, filters, templates)
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
