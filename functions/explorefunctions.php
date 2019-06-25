@@ -1847,7 +1847,7 @@ HTML;
     $events = [];
 
     //Creating the events array for the timeline
-    if (isset($record['allevents']) && isset($record['allevents']['value']) &&  $record['allevents']['value'] != ''){
+    if (isset($record['allevents']) && isset($record['allevents']['value']) &&  $record['allevents']['value'] != '' ){
         if(isset($record['alleventslabel']) && isset($record['alleventslabel']['value']) && $record['alleventslabel']['value'] != ''){
             $allEventUrls = explode('||', $record['allevents']['value']);
             $allEventLabels = explode('||', $record['alleventslabel']['value']);
@@ -1879,30 +1879,48 @@ HTML;
         }
 
         // end year stuff hasn't been tested or working yet
-        if (isset($record['endyear']) && isset($record['endyear']['value']) && $record['startyear']['value'] != '' ){
+        if (isset($record['endyear']) && isset($record['endyear']['value']) ){
            $allEventEndYears = explode('||', $record['endyear']['value']);
+         }
+
+        // descriptions hasn't been tested or working yet
+        if (isset($record['desc']) && isset($record['desc']['value']) ){
+           $allEventDescritions = explode('||', $record['desc']['value']);
          }
 
 
          // create the events array
          foreach($allEventQids as $i => $eventQ){
             $eventLabel = $allEventLabels[$i];
+            
+            // start year
             $eventStartYear = '';
             if (isset($allEventStartYears[$eventLabel])){
               $eventStartYear = $allEventStartYears[$eventLabel];
             }
-
+            // end year
+            $eventEndYear = '';
+            if (isset($allEventEndYears[$eventLabel])){
+              $eventEndYear = $allEventEndYears[$eventLabel];
+            }
+            // event type
             $eventType = '';
             if (isset($allEventTypes[$eventLabel])){
               $eventType = $allEventTypes[$eventLabel];
+            }
+            // event descriptions
+            $eventDesc = '';
+            if (isset($allEventDescritions[$eventLabel])){
+              $eventDesc = $allEventDescritions[$eventLabel];
             }
 
             if ($eventStartYear != ''){
                 $eventArray = [
                   'kid' => $eventQ,
                   'title' => $eventLabel,
-                  'description' => 'Example description '.$i,
-                  'year' => $eventStartYear,
+                  'description' => $eventDesc,
+                  'startYear' => $eventStartYear,
+                  'endYear' => $eventEndYear,
                   'type' => $eventType  
                 ];
                 array_push($events, $eventArray);
@@ -1922,7 +1940,7 @@ HTML;
     foreach ($events as $event) {
         // If there are months and days, put the year into decimal format
         // Ex: March 6, 1805 = 1805.18
-        array_push($timeline_event_dates, $event['year']);
+        array_push($timeline_event_dates, $event['startYear']);
     }
 
     $first_date = min($timeline_event_dates);
@@ -1973,32 +1991,72 @@ HTML;
 HTML;
 
     // put the events in order to be displayed
-    $dates = array_column($events, 'year');
+    $dates = array_column($events, 'startYear');
     array_multisort($dates, SORT_ASC, $events);
 
     $first = true;//to set the first timeline event as active
     foreach($events as $index => $event) {
       $html .= '
-      <div class="event-info-'.$event['kid'].' infowrap '.($index == 0 ? 'active' : '').'">
-          <div class="info-column">
-              <p>Event</p>
-              <p class="large-text">'.$event['title'].'</p>
+        <div class="event-info-'.$event['kid'].' infowrap '.($index == 0 ? 'active' : '').'">
+      ';
 
-              <p><span class="bold">Start Date:</span>'.$event['year'].'</p>
-              <p><span class="bold">End Date:</span> N/A</p>
-              <p><span class="bold">Event Type:</span> '.$event['type'].'</p>
-              <p><span class="bold">Description</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+
+
+      // title html
+      $titleHtml = "";
+      if (isset($event['title']) && $event['title'] != ''){
+        $titleHtml = "<p class='large-text'>".$event['title']."</p>";
+      }
+      // date html
+      $dateHtml = "";
+      if (isset($event['startYear']) && $event['startYear'] != ''){
+        if (isset($event['endYear']) && $event['endYear'] != ''){
+          $dateHtml = "              
+              <p><span class='bold'>Start Date: </span>".$event['startYear']."</p>
+              <p><span class='bold'>End Date: </span>".$event['endYear']."</p>";
+        } else {
+           $dateHtml = "<p><span class='bold'>Date: </span>".$event['startYear']."</p>";
+        }
+      }
+      // event type html
+      $eventTypeHtml = "";
+      if (isset($event['type']) && $event['type'] != ''){
+        $eventTypeHtml = "<p><span class='bold'>Event Type: </span>".$event['type']."</p>";
+      }
+      // event description html
+      $eventDescHtml = "";
+      if (isset($event['description']) && $event['description'] != ''){
+        $eventDescHtml = "<p><span class='bold'>Description: </span>".$event['description']."</p>";
+      }
+
+
+
+
+
+
+
+      $html .= '
+          <div class="info-column">
+              <p>Event</p>';
+      $html .= "
+              $titleHtml
+              $dateHtml
+              $eventTypeHtml
+              $eventDescHtml
+              ";
+      $html .= '
           </div><div class="info-column">
-              <p><span class="bold">Qid:</span>'.$event['kid'].'</p>
+              <p><span class="bold">Qid: </span>'.$event['kid'].'</p>
           </div>
       </div>
       <div class="place-info-'.$event['kid'].' infowrap">
           <div class="info-column">
-              <p><span class="bold">Place Info:</span> Place Info</p>
-              <p><span class="bold">Testing Kid:</span> '.$event['kid'].'</p>
+              <p><span class="bold">Place Info: </span>Place Info</p>
+              <p><span class="bold">Testing Kid: </span>'.$event['kid'].'</p>
           </div>
-      </div>';
+      </div>
+';
     }
 
     $html .= '</div>';
@@ -2020,14 +2078,14 @@ HTML;
 
       foreach ($events as $index => $event) {
           // Convert year, month, day into decimal form
-          $left = ($event['year'] - $first_date_hash) * 100 / $hash_range;
+          $left = ($event['startYear'] - $first_date_hash) * 100 / $hash_range;
 
           $html .= '
           <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
           style="left:calc('.$left.'% - 5px)"
           data-kid="'.$event['kid'].'"
           data-index="'.$index.'">
-          <span class="event-title">'.$event['title'].' - '.$event['year'].'</span>
+          <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
           </div>';
       }
 
