@@ -1,15 +1,17 @@
 <!-- Author: Drew Schineller-->
 <!-- Main page-->
+
+<?php $cache_data = Json_GetData_ByTitle("Explore") ?>
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="container middlewrap">
-        <h1>Explore</h1>
+        <h1><?php echo $cache_data['title'] ?></h1>
     </div>
 </div>
 <main class="explore">
     <div class="section-wrap">
         <div class="section-info">
-            <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur aadipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum.</p>
+            <p><?php echo $cache_data['descr'] ?></p>
         </div>
         <div class="section-content">
             <a href="<?php echo BASE_URL;?>search/people">

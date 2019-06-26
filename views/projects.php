@@ -1,14 +1,32 @@
 <!-- Page author: Drew Schineller-->
+<?php 
+
+// Dynamically pull data from cache file (webPages.json)
+$cached_data = file_get_contents(BASE_PATH . "/wikiconstants/webPages.json");
+$cached_data = json_decode($cached_data, true); // Convert the json string to a php array
+
+$title = "Projects";
+$description = "";
+foreach ($cached_data as $content) {
+    if(array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"]["value"] == "FALSE") continue;
+    if(array_key_exists("Title", $content) && $content["Title"]["value"] == "Projects")
+    {
+        $title = $content["Title"]["value"];
+        $description = $content["Description"]["value"];
+        break;
+    }
+}
+?>
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="container middlewrap">
-        <h1>Projects</h1>
+        <h1><?php echo $title ?></h1>
     </div>
 </div>
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur.</p>
+        <p><?php echo $description ?></p>
     </div>
 </div>
 
