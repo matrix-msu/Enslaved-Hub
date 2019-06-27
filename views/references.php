@@ -1,65 +1,21 @@
-<!-- Author: Drew Schineller-->
-<?php $cache_data = Json_GetData_ByTitle("About") ?>
-<!-- About page-->
+<!-- Get Involved page-->
+<?php $cache_data = Json_GetData_ByTitle("References"); ?>
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="container middlewrap">
+         <div class="container middlewrap">
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about">
+            <span id="previous-title">About // </span></a>
+            <span id="current-title"><?php echo $cache_data['title'] ?></span>
+        </h4>
         <h1><?php echo $cache_data['title'] ?></h1>
+    </div>
     </div>
 </div>
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p><?php echo $cache_data['descr'] ?></p>
-    </div>
-</div>
-<!-- about cards -->
-<div class="about-cards">
-    <div class="cardwrap">
-        <ul class="row">
-            <li id="getinvolved">
-                <a href="<?php echo BASE_URL?>getInvolved">
-                    <div class="cards">
-                        <h2>Learn How to Get Involved</h2>
-                    </div>
-                </a>
-            </li>
-            <li id="viewpartners">
-                <a href="<?php echo BASE_URL?>ourPartners">
-                    <div class="cards">
-                        <h2>View our Partners</h2>
-                    </div>
-                </a>
-            </li>
-            <li id="contactus">
-                <a href="<?php echo BASE_URL?>contactUs">
-                    <div class="cards">
-                        <h2>Contact Us</h2>
-                    </div>
-                </a>
-            </li>
-            <li id="contactus">
-                <a href="<?php echo BASE_URL?>ourTeam">
-                    <div class="cards">
-                        <h2>View our Team</h2>
-                    </div>
-                </a>
-            </li>
-            <li id="viewpartners">
-                <a href="<?php echo BASE_URL?>references">
-                    <div class="cards">
-                        <h2>See our References</h2>
-                    </div>
-                </a>
-            </li>
-            <li id="getinvolved">
-                <a href="#">
-                    <div class="cards">
-                        <h2>Back To Top</h2>
-                    </div>
-                </a>
-            </li>
-        </ul>
+        <p><?php echo $cache_data["descr"] ?></p>
     </div>
 </div>
 <!-- text sections -->

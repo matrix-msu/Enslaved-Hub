@@ -15,7 +15,6 @@
             $navigations = Json_GetNavigationData();
             foreach ($navigations as $nav) 
             {
-                if($nav[0] == "Home") continue;
                 $toUrl = ($nav[0] == "Explore") ? BASE_URL."explore/" : BASE_URL;
 
                 if(count($nav[1]) > 0) { ?>

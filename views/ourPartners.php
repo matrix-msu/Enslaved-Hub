@@ -1,14 +1,23 @@
 <!-- Author: Drew Schineller-->
 <!-- Our Partners page-->
+<?php $cache_data = Json_GetData_ByTitle("Partner Projects") ?>
 <!-- Heading image and title container-->
 <div class="container header">
-    <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about"><span id="previous-title">About // </span></a><span id="current-title">Our Partners</span></h4>
-        <h1>Our Partners</h1>
+     <div class="container middlewrap">
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about">
+            <span id="previous-title">About // </span></a>
+            <span id="current-title"><?php echo $cache_data['title'] ?></span>
+        </h4>
+        <h1><?php echo $cache_data['title'] ?></h1>
     </div>
 </div>
 <!-- text sections -->
 <div class="container partner-text">
+    <div class="container textwrap">
+        <p><?php echo $cache_data["descr"] ?></p>
+    </div>
+
+    <!-- 
     <div class="container textwrap">
         <h2>British Library [London, England] (<a>www.bl.uk</a>)</h2>
         <p>The British Library houses treasures from around the world, some over 3,000 years old. Located in London, England, it serves as the United Kingdom's national library. It is also one of the world's largest libraries serving businesses, industries, researchers, scholars, and students worldwide. Through its Endangered Archives Programme, the British Library provides funding to researchers, including those working with AODL, to extend collection development for the library. To learn more, visit <a>www.bl.uk</a></p>
@@ -36,5 +45,7 @@
     <div class="container textwrap">
         <h2>U.S. Department of State [Washington, D.C, USA] (<a>www.state.gov</a>)</h2>
         <p>The U.S. Department of State is the federal executive department responsible for the international relations of the United States. It aims to create a more democratic, prosperous, and stable world for the benefit of U.S citizens and the international community. This mission is furthered in multiple ways, including through educational and cultural exchange programs. To learn more, visit www.state.gov/. Bureau of Educational and Cultural Affairs, Citizen's Exchange [Washington, D.C, USA] (<a>eca.state.gov</a>)</p>
-    </div>
+    </div> 
+    -->
+
 </div>
