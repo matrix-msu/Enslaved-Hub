@@ -17,6 +17,12 @@ var titleType = "";
 var currentTitle = "Search";
 
 
+var fields = [];    // fields for the table view 
+var sort = 'ASC';
+var formattedData = {};
+console.log(search_type)
+
+
 // Get params from url
 if(document.location.toString().indexOf('?') !== -1) 
 {
@@ -79,8 +85,12 @@ function searchResults(preset, limit = 12, offset = 0)
             isSearching = false;
 
             result_array = JSON.parse(data);
-            
-            console.log(result_array);
+            if (typeof (result_array['formatted_data']) != 'undefined'){
+                formattedData = result_array['formatted_data'];
+            }
+            if (typeof (result_array['fields']) != 'undefined') {
+                fields = result_array['fields'];
+            }
             var result_length = result_array['gridCard'].length;
             total_length = result_array['total'];
 
@@ -576,4 +586,66 @@ $(document).ready(function() {
         searchResults(search_type);
         
     });
+
+
+    // Onclick, download visible selected data as csv file
+    var page = 0;
+    var resultSize = 0;
+
+    $("#Download_selected").click(function () {
+        get_download_content(fields, formattedData, (page - 1) * resultSize, resultSize);
+    });
+    // Onclick, download all data for the query as csv file
+    $("#Download_all").click(function () {
+        get_download_content(fields, formattedData, (page - 1) * resultSize, resultSize);
+        // get_download_content(fields, sort, query, (page - 1) * resultSize, null);
+    });
+
 });
+
+
+/*
+    Split the data based on the page
+*/
+function get_download_content(fields, data, index, size) {    
+    download_csv(data, fields);
+}
+
+
+/*
+    Build csv style string and
+    Convert to csv and download
+*/
+function download_csv(data, fields) {
+    console.log(data, fields)
+    var qids = Object.keys(data);
+    var csvString = [];
+    csvString.push("QID," + fields.join(',')); // Headers
+
+    // Build csv style string
+    for (const qid of qids) {
+        let csvS = qid;
+        let obj = data[qid];
+
+        for (const field of fields) {
+            // Note: Making sure commas wihin a field are escaped
+            if (field in obj) {
+                csvS += obj[field] ? ",\"" + obj[field] + "\"" : ",undefined";
+            }
+            else csvS += ",undefined";
+        }
+        csvString.push(csvS);
+    }
+    csvString = csvString.join("\r\n");
+
+    // Convert to csv and download
+    var a_tag = document.createElement('a');
+    a_tag.href = "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvString);
+    a_tag.target = '_blank';
+    a_tag.textContent = 'download';
+    a_tag.download = 'data.csv';
+    a_tag.id = "download_selected_data";
+
+    document.body.appendChild(a_tag);
+    a_tag.click();
+}

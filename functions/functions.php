@@ -1111,7 +1111,6 @@ QUERY;
     $first = true;
     $oneQuery = count($queryArray) == 1;    // count results differently when there is only one query
 
-
     // print_r($queryArray);die;
 
     foreach ($queryArray as $i => $query) {
@@ -1190,6 +1189,7 @@ QUERY;
 function createCards($results, $templates, $preset = 'default', $count = 0){
 //    print_r($results);die;
     $cards = Array();
+    $formattedData = array();   // data formatted to be turned into csv
 
     foreach ($templates as $template) {
         $cards[$template] = array();
@@ -1394,6 +1394,7 @@ HTML;
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
+                            $cards['fields'] = ['NAME', 'GENDER', 'AGE', 'STATUS', 'ORIGIN', 'LOCATION', 'DATE RANGE'];
                         }
 
 
@@ -1405,8 +1406,14 @@ HTML;
     <td class='gender'>
         <p><span class='first'>Gender: </span>$sex</p>
     </td>
+    <td class='age'>
+        <p><span class='first'>Age: </span></p>
+    </td>
     <td class='status'>
         <p><span class='first'>Status: </span>$status</p>
+    </td>
+    <td class='origin'>
+        <p><span class='first'>Origin: </span></p>
     </td>
     <td class='location'>
         <p><span class='first'>Location: </span>$places</p>
@@ -1419,6 +1426,20 @@ HTML;
     </td>
 </tr>
 HTML;
+                    // format this row for csv download
+                    $formattedData[$personQ] = array(
+                        'NAME' => $name,
+                        'GENDER' => $sex,
+                        'AGE' => '',
+                        'STATUS' => $status,
+                        'ORIGIN' => '',
+                        'LOCATION' => $places,
+                        'DATE RANGE' => $dateRange
+                    );
+
+
+
+
                     }
 
 
@@ -2187,6 +2208,7 @@ HTML;
 
     }
 
+    $cards['formatted_data'] = $formattedData;
     return json_encode($cards);
 }
 
