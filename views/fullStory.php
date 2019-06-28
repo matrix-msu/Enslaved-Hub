@@ -1,8 +1,15 @@
 
 <?php
 if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
-    $story = storyContent($_GET['kid']);
-    // print_r($story);
+    // $story = storyContent($_GET['kid']);
+
+    // Getting Story using korawrappper
+    $fields = ['Title_16_23', 'Images_16_23', 'Caption_16_23', 'Text_16_23', 'Resources_16_23', 'Source_16_23', 'Timeline_16_23', 'Story_Associator_16_23'];
+    $koraResult = koraWrapperSearch(STORY_SID, $fields, "kid", $_GET['kid']);
+    $koraResult = json_decode($koraResult, true);
+    if(!array_key_exists("error", $koraResult)) $story = $koraResult['records'][0][ $_GET['kid'] ];
+
+
     $images = [];
     $caption = [];
     if (isset($story['Images'])) {
