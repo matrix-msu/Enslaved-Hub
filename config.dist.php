@@ -40,16 +40,13 @@ define('PID', 16);
 $GLOBALS['FILTER_ARRAY'] = Array(
     "events" => array(
         "Event Type",
-        "Time",
-        "Place"
+        "Date"
     ),
     "people" => array(
         "Gender",
         "Age Category",
         "Ethnodescriptor",
-        "Role Types",
-        "Time",
-        "Place"
+        "Role Types"
     ),
     "places" => array(
         "Place Type",

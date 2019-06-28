@@ -70,13 +70,15 @@ div.searched-term {
 
             li.cat-cat{
                 cursor: pointer;
-                font-size: 20px;
-                padding: 35px 0 20px;
+                font-size: 14px;
+                letter-spacing: 1px;
+                padding: 20px 0;
                 position: relative;
+                text-transform: uppercase;
                 transition: 200ms;
                 z-index: 0;
+                opacity: .8;
                 span.align-right{
-                    margin-top: 6px;
                     img {
                         height: 10px;
                     }
