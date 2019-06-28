@@ -1399,7 +1399,7 @@ HTML;
 
 
                         $card = <<<HTML
-<tr class='tr'>
+<tr class='tr' data-qid='$personQ'>
     <td class='name td-name'>
         <span>$name</span>
     </td>
@@ -1561,11 +1561,13 @@ HTML;
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
+                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED'];
+
                         }
 
 
                         $card = <<<HTML
-<tr class='tr'>
+<tr class='tr' data-qid='$placeQ'>
     <td class='name td-name'>
         <span>$name</span>
     </td>
@@ -1580,6 +1582,13 @@ HTML;
     </td>
 </tr>
 HTML;
+
+                        // format this row for csv download
+                        $formattedData[$placeQ] = array(
+                            'NAME' => $name,
+                            'TYPE' => $type,
+                            'LOCATED' => $located,
+                        );
                     }
 
 
@@ -1731,6 +1740,8 @@ HTML;
                         $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
                         $event_url = BASE_URL . "record/event/" . $eventQ;
 
+
+
                         $card = <<<HTML
 <li>
     <a href='$event_url'>
@@ -1753,7 +1764,6 @@ HTML;
     </a>
 </li>
 HTML;
-
                     } elseif ($template == 'tableCard'){
                         if ($first) {
                             //todo: create the correct event headers
@@ -1768,10 +1778,11 @@ HTML;
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
+                            $cards['fields'] = ['NAME', 'TYPE', 'PLACES', 'DATE RANGE'];
                         }
 
                         $card = <<<HTML
-<tr class='tr'>
+<tr class='tr'  data-qid='$eventQ'>
     <td class='name td-name'>
         <span>$name</span>
     </td>
@@ -1789,6 +1800,13 @@ HTML;
     </td>
 </tr>
 HTML;
+                        // format this row for csv download
+                        $formattedData[$eventQ] = array(
+                            'NAME' => $name,
+                            'TYPE' => $type,
+                            'PLACES' => $places,
+                            'DATE RANGE' => $dateRange
+                        );
                     }
 
 
@@ -1906,10 +1924,11 @@ HTML;
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
+                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT'];
                         }
 
                         $card = <<<HTML
-<tr class='tr'>
+<tr class='tr' data-qid='$sourceQ'>
     <td class='name td-name'>
         <span>$name</span>
     </td>
@@ -1924,6 +1943,14 @@ HTML;
     </td>
 </tr>
 HTML;
+
+                        // format this row for csv download
+                        $formattedData[$sourceQ] = array(
+                            'NAME' => $name,
+                            'TYPE' => $type,
+                            'PROJECT' => $project
+                        );
+
                     }
 
 

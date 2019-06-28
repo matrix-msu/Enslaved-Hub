@@ -226,7 +226,8 @@ $(document).ready(function() {
     $('span.results-per-page > span').html(card_limit);
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
-        card_limit = $(this).find('span:first').html();
+        console.log('setting to ', $(this).find('span:first').html())
+        card_limit = parseInt($(this).find('span:first').html());
         localStorage.setItem('display_amount', card_limit);
         card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
         searchResults(search_type, card_limit, card_offset);
@@ -593,12 +594,11 @@ $(document).ready(function() {
     var resultSize = 0;
 
     $("#Download_selected").click(function () {
-        get_download_content(fields, formattedData, (page - 1) * resultSize, resultSize);
+        get_download_content(fields, formattedData);
     });
     // Onclick, download all data for the query as csv file
     $("#Download_all").click(function () {
-        get_download_content(fields, formattedData, (page - 1) * resultSize, resultSize);
-        // get_download_content(fields, sort, query, (page - 1) * resultSize, null);
+        get_download_content(fields, formattedData);
     });
 
 });
@@ -607,7 +607,7 @@ $(document).ready(function() {
 /*
     Split the data based on the page
 */
-function get_download_content(fields, data, index, size) {    
+function get_download_content(fields, data) {
     download_csv(data, fields);
 }
 
