@@ -1,14 +1,20 @@
 <!-- Page author: Drew Schineller-->
 <?php
-
 // Pagination Vars
 $sortField = (isset($_GET['field']) ? ucwords($_GET['field']) : 'Title');
 $sortDirection = (isset($_GET['direction']) ? strtoupper($_GET['direction']) : 'ASC');
 $storiesPerPage = (isset($_GET['count']) && is_numeric($_GET['count']) ? $_GET['count'] : '8');
 $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1');
 
-$stories = getStories($page, $storiesPerPage, [$sortField, $sortDirection]);
+// $stories = getStories($page, $storiesPerPage, [$sortField, $sortDirection]);
 
+// Getting Stories using korawrappper
+$fields =  ['Title_16_23', 'Featured_16_23'];
+$sort = [$sortField.'_16_23', $sortDirection];
+$startIndex = ($page - 1) * $storiesPerPage;
+$koraResults = koraWrapperSearch(STORY_SID, $fields, array("Display_16_23"), "TRUE", $sort, $startIndex, $storiesPerPage, array("size" => true));
+
+$stories = json_decode($koraResults, true);
 $count = $stories["counts"]["global"]; // Total count of stories
 
 $featured = [];
