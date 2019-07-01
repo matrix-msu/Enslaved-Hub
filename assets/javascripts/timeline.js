@@ -14,6 +14,12 @@
       var currentIndex = 0;
       var currentKid = $($eventPoints[0]).data('kid');
       var eventsCount = $eventPoints.length;
+      
+      // dont show timeline for 3 or less events
+      if (eventsCount <= 3){
+        $('.jump-button').hide(); // hide the jump to timeline button
+        return;
+      }
     
       //Set info arrow to point at current point
       var pointLeft = Math.round($($eventPoints[0]).offset().left - $tlInfoContainer.offset().left) + 5;
