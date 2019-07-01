@@ -229,7 +229,7 @@ QUERY;
                 $sourceQuery = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
-                    $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source. 
+                    $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
                                     ?source wdt:P3 wd:Q16.
                                     ?people wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
                                             ?property  ?object .
@@ -260,10 +260,10 @@ QUERY;
                 $eventQuery = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
                     $eventQ = $filtersArray['event'][0];
-                    // $eventQuery = "VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event. 
+                    // $eventQuery = "VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
                     //                 ?event wdt:P3 wd:Q34.
                     //                 ?event p:P38 ?statement.
-                    //                 ?statement ps:P38 ?name. 
+                    //                 ?statement ps:P38 ?name.
                     //                 ?statement pq:P39 ?people.
                     //                 ?people rdfs:label ?peoplename";
 
@@ -272,10 +272,10 @@ SELECT DISTINCT ?agent ?name (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?rand
 
  WHERE
 {
- VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event. 
+ VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
   ?event wdt:P3 wd:Q34.
   ?event p:P38 ?statement.
-  ?statement ps:P38 ?personname. 
+  ?statement ps:P38 ?personname.
   ?statement pq:P39 ?agent.
   ?agent rdfs:label ?name.
 
@@ -289,7 +289,7 @@ QUERY;
 
 
                 $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent   
+SELECT DISTINCT ?agent
 (count(distinct ?people) as ?countpeople)
 (count(distinct ?allevents) as ?countevent)
 (count(distinct ?place) as ?countplace)
@@ -323,10 +323,10 @@ WHERE {
 
 
         ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name. 
+    ?statement ps:P82 ?name.
     OPTIONAL{ ?statement pq:P30 ?recordeAt.
             bind(?recordedAt as ?allevents)}
-                                
+
     $genderQuery
     $nameQuery
     $ageQuery
@@ -334,26 +334,26 @@ WHERE {
     $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
-    
+
     OPTIONAL {?agent p:P39 ?statementrole.
             ?statementrole ps:P39 ?roles.
             ?statementrole pq:P98 ?roleevent.
             bind(?roleevent as ?allevents)
 
             }.
-    
+
     OPTIONAL {?agent p:P24 ?statstatus.
             ?statstatus ps:P24 ?status.
             ?status rdfs:label ?statuslabel.
             ?statstatus pq:P99 ?statusevent.
             bind(?statusevent as ?allevents)}.
-    
-    
-    OPTIONAL { ?agent wdt:P17 ?sex. 
+
+
+    OPTIONAL { ?agent wdt:P17 ?sex.
                 ?sex rdfs:label ?sexlab}
 
     OPTIONAL { ?agent wdt:P88 ?match}.
-    
+
 
     OPTIONAL{?allevents	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
@@ -361,14 +361,14 @@ WHERE {
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
             OPTIONAL {?allevents wdt:P12 ?place.
                         ?place rdfs:label ?placelab}
-            
+
             }.
     OPTIONAL {?agent wdt:P25 ?people}
 
-} group by ?agent 
+} group by ?agent
 order by ?agent
 
-limit $limit
+$limitQuery
 offset $offset
 QUERY;
 
@@ -377,7 +377,7 @@ QUERY;
                 //Query for Total Count
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent   
+SELECT DISTINCT ?agent
 (count(distinct ?people) as ?countpeople)
 (count(distinct ?allevents) as ?countevent)
 (count(distinct ?place) as ?countplace)
@@ -411,10 +411,10 @@ WHERE {
 
 
  	 ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name. 
+    ?statement ps:P82 ?name.
     OPTIONAL{ ?statement pq:P30 ?recordeAt.
             bind(?recordedAt as ?allevents)}
-                                
+
     $genderQuery
     $nameQuery
     $ageQuery
@@ -422,26 +422,26 @@ WHERE {
     $roleQuery
 
     MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
- 
+
     OPTIONAL {?agent p:P39 ?statementrole.
             ?statementrole ps:P39 ?roles.
             ?statementrole pq:P98 ?roleevent.
             bind(?roleevent as ?allevents)
 
             }.
-    
+
     OPTIONAL {?agent p:P24 ?statstatus.
             ?statstatus ps:P24 ?status.
             ?status rdfs:label ?statuslabel.
             ?statstatus pq:P99 ?statusevent.
             bind(?statusevent as ?allevents)}.
-    
-    
-    OPTIONAL { ?agent wdt:P17 ?sex. 
+
+
+    OPTIONAL { ?agent wdt:P17 ?sex.
                 ?sex rdfs:label ?sexlab}
 
     OPTIONAL { ?agent wdt:P88 ?match}.
-    
+
 
     OPTIONAL{?allevents	wdt:P13 ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
@@ -449,11 +449,11 @@ WHERE {
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
             OPTIONAL {?allevents wdt:P12 ?place.
                         ?place rdfs:label ?placelab}
-            
+
             }.
     OPTIONAL {?agent wdt:P25 ?people}
 
-} group by ?agent 
+} group by ?agent
 order by ?agent
 QUERY;
 
@@ -485,13 +485,13 @@ WHERE {
         ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?source .
-            
+
         ?event wdt:P12 ?place;
             p:P38 ?statement.
         ?statement ps:P38 ?role.
         ?statement pq:P39 ?person.
-    
-        
+
+
     ?place rdfs:label ?placeLabel.
 
     $typeQuery
@@ -500,7 +500,7 @@ WHERE {
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?place ?placeLabel ?locatedInLabel
 order by ?placeLabel
-limit $limit
+$limitQuery
 offset $offset
 QUERY;
 
@@ -518,13 +518,13 @@ WHERE {
         ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?source .
-            
+
         ?event wdt:P12 ?place;
             p:P38 ?statement.
         ?statement ps:P38 ?role.
         ?statement pq:P39 ?person.
-    
-        
+
+
     ?place rdfs:label ?placeLabel.
 
     $typeQuery
@@ -572,7 +572,7 @@ QUERY;
                 $sourceQuery = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
-                    $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source. 
+                    $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
                                     ?source wdt:P3 wd:Q16.
                                     ?source wdt:P8 ?event.
                                     ?event rdfs:label ?eventname";
@@ -584,9 +584,9 @@ SELECT ?event ?eventLabel ?startyear ?endyear ?type ?eventtypeLabel
  (count(distinct ?place) as ?countplace)
  (count(distinct ?source) as ?countsource)
  (group_concat(distinct ?placeLabel; separator = "||") as ?places)
- 
+
 WHERE {
-  VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source. 
+  VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
   ?source wdt:P8 ?event.
   ?event rdfs:label ?eventlabel.
   ?event wdt:P81 ?type .
@@ -598,7 +598,7 @@ WHERE {
            BIND(str(YEAR(?date)) AS ?startyear)}.
   OPTIONAL {?event wdt:P14 ?endDate
            BIND(str(YEAR(?endDate)) AS ?endyear)}.
-  
+
     OPTIONAL {?event p:P38 ?roles.
            ?roles ps:P38 ?qualifier.
            ?roles pq:P39 ?people}.
@@ -633,18 +633,18 @@ WHERE {
             wdt:P13 ?date.
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?source .
-            
+
     ?event wdt:P81 ?type .
 
     $eventQuery
     OPTIONAL {?event wdt:P12 ?place.
             ?place rdfs:label ?placeLabel}.
-        
+
 
     OPTIONAL {?event p:P38 ?roles.
             ?roles ps:P38 ?qualifier.
             ?roles pq:P39 ?people}.
-    
+
     OPTIONAL {?event wdt:P14 ?endsAt.
                 FILTER (?endsAt <= "1900-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
                     BIND(str(YEAR(?endsAt)) AS ?endYear).
@@ -654,11 +654,11 @@ WHERE {
         BIND(str(YEAR(?date)) AS ?startyear).
 
         $sourceQuery
-    
+
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
 order by ?startyear
-limit $limit
+$limitQuery
 offset $offset
 QUERY;
 
@@ -679,18 +679,18 @@ WHERE {
             wdt:P13 ?date.
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:P35 ?source .
-            
+
     ?event wdt:P81 ?type .
 
     $eventQuery
     OPTIONAL {?event wdt:P12 ?place.
             ?place rdfs:label ?placeLabel}.
-        
+
 
     OPTIONAL {?event p:P38 ?roles.
             ?roles ps:P38 ?qualifier.
             ?roles pq:P39 ?people}.
-    
+
     OPTIONAL {?event wdt:P14 ?endsAt.
                 FILTER (?endsAt <= "1900-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
                     BIND(str(YEAR(?endsAt)) AS ?endYear).
@@ -698,7 +698,7 @@ WHERE {
         FILTER (?date >= "1800-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
         FILTER (?date <= "1900-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
         BIND(str(YEAR(?date)) AS ?startyear).
-    
+
         $sourceQuery
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
@@ -739,7 +739,7 @@ WHERE {
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 order by ?startyear
-limit $limit
+$limitQuery
 offset $offset
 QUERY;
 
@@ -793,14 +793,14 @@ QUERY;
                     $eventQ = $filtersArray['event'][0];
 
                     $query['query'] = <<<QUERY
-SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel 
- 
+SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
+
  (count(distinct ?agent) as ?countpeople)
  (count(distinct ?event) as ?countervent)
  (count(distinct ?place) as ?countplace)
  (count(distinct ?source) as ?countsource)
 {
-  VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event. 
+  VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
   ?source wdt:P3 wd:Q16. #entity with provenance
   ?source wdt:P9 ?sourcetype.
   ?source wdt:P7 ?project.
@@ -810,10 +810,10 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:P35 ?source .
-  
- 
+
+
    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-           
+
 }group by ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
 order by ?sourceLabel
 QUERY;
@@ -890,7 +890,7 @@ SELECT ?person ?personLabel ?name ?originLabel
         OPTIONAL { ?person wdt:P88 ?match. }
 
     } group by ?person ?personLabel ?name ?originLabel
-    limit $limit
+    $limitQuery
 QUERY;
 
                 array_push($queryArray, $query);
@@ -1035,7 +1035,7 @@ SELECT ?person ?personLabel ?name ?originLabel
         OPTIONAL { ?person wdt:P88 ?match. }
 
     } group by ?person ?personLabel ?name ?originLabel
-    limit $limit
+    $limitQuery
 QUERY;
                 array_push($queryArray, $query);
                 break;
@@ -1216,6 +1216,8 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 $personUrl = $record['agent']['value'];
                 $xplode = explode('/', $personUrl);
                 $personQ = end($xplode);
+                $person_url = BASE_URL . "record/person/" . $personQ;
+
 
                 //Person Sex
                 $sex = "";
@@ -1353,7 +1355,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Person-light.svg';
-                        $person_url = BASE_URL . "record/person/" . $personQ;
 
                         $card = <<<HTML
 <li>
@@ -1448,7 +1449,7 @@ HTML;
 
                 break;
             case 'places':
-            
+
                 //Place name
                 $name = $record['placeLabel']['value'];
 
@@ -2036,7 +2037,7 @@ HTML;
                         </div>
                     </a>
                 </li>";
-                    
+
                     } else continue;
 
                     array_push($cards[$template], $card);

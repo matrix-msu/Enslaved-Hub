@@ -17,14 +17,14 @@ var titleType = "";
 var currentTitle = "Search";
 
 
-var fields = [];    // fields for the table view 
+var fields = [];    // fields for the table view
 var sort = 'ASC';
 var formattedData = {};
 console.log(search_type)
 
 
 // Get params from url
-if(document.location.toString().indexOf('?') !== -1) 
+if(document.location.toString().indexOf('?') !== -1)
 {
     var query = document.location
         .toString()
@@ -33,13 +33,13 @@ if(document.location.toString().indexOf('?') !== -1)
         .replace(/#.*$/, '')
         .split('&');
 
-    for(var i=0; i < query.length; i++) 
+    for(var i=0; i < query.length; i++)
     {
         var aux = decodeURIComponent(query[i]).split('=');
         if(!aux || aux[0] == "" || aux[1] == "") continue;
-        
+
         // Get searchbar keywords
-        if(aux[0] == "searchbar") 
+        if(aux[0] == "searchbar")
         {
             filters[aux[0]] = aux[1].split('+');
             continue;
@@ -48,11 +48,11 @@ if(document.location.toString().indexOf('?') !== -1)
     }
 }
 
-/** 
+/**
  * Takes parameters for an ajax call that sets result_array to an array with
  * the array of Grid View cards html, array of Table View cards html, and the total amount of results found
  * instead of taking in parameters it references global variables
- * 
+ *
  * \param presets : Array of presets that determines type of query call (ex: 'person', 'event') (singular right now)
  * \param limit : limit to the number of cards per page : default value = 12
  * \param offset : number of cards offset from the first card (with 0 being the first card) : default value = 0
@@ -80,7 +80,7 @@ function searchResults(preset, limit = 12, offset = 0)
             filters: filters,
             templates: templates
         },
-        'success': function (data) 
+        'success': function (data)
         {
             isSearching = false;
 
@@ -112,7 +112,7 @@ function searchResults(preset, limit = 12, offset = 0)
                 appendCards();
                 setPagination(total_length, card_limit, card_offset);
             });
-            
+
         }
     });
 
@@ -130,7 +130,7 @@ function appendCards()
         $(card).appendTo("ul.row");
     });
 
-    $("thead").empty(); //empty headers before adding them 
+    $("thead").empty(); //empty headers before adding them
     var headers = result_array['tableCard']['headers'];
     $(headers).appendTo("thead");
 
@@ -151,7 +151,7 @@ $(document).ready(function() {
     ///******************************************************************* */
     /// Set Filter Checkboxes
     ///******************************************************************* */
-    
+
     //For form type
     upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
     $(".filter-menu ul.catmenu li").each(function(){
@@ -160,22 +160,22 @@ $(document).ready(function() {
             if(filters["categories"].indexOf( $(this).find("p").text().toUpperCase() ) > -1)
                 $(this).find("input").prop('checked', true);
         }
-        
+
         //Check a checkbox if EXPLORE_FORM is set to this type
         else if( $(this).find("p").text() == upperForm)
             $(this).find("input").prop('checked', true);
-        
+
         //Set all checkboxes to checked
         else if(upperForm === 'All')
             $(this).find("input").prop('checked', true);
     });
 
     // Show selected filters
-    $.each(filters, function(key, value) 
+    $.each(filters, function(key, value)
     {
         if(key && key != "limit" && key != "offset") // inputs lable have classes with name as key
         {
-            $("label."+key).each(function() 
+            $("label."+key).each(function()
             {
                 //Looks for input where value = QID
                 if($(this).find('input').val() == value) {
@@ -200,7 +200,7 @@ $(document).ready(function() {
     var searchBarPlaceholder = "Search Across " + filters[0] + " Results";
 
     if (typeof(filters[0]) != 'undefined'){
-        $('.main-search').attr("placeholder", searchBarPlaceholder); 
+        $('.main-search').attr("placeholder", searchBarPlaceholder);
     }
 
     $(document).click(function () { // close things with clicked-off
@@ -212,17 +212,17 @@ $(document).ready(function() {
             $(".show-filter").trigger('click');
         }
     });
-    
+
     $('div.container.main').click(function (e) {
         e.stopPropagation();
     })
-    
+
     $(".sorting-dropdowns .align-center").click(function (e) { // toggle show/hide per-page submenu
         e.stopPropagation();
         $(this).find("img:first").toggleClass('show');
         $(this).find("#sortmenu").toggleClass('show');
     });
-    
+
     $('span.results-per-page > span').html(card_limit);
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
@@ -234,7 +234,7 @@ $(document).ready(function() {
         $('span.results-per-page > span').html(card_limit);
         $(document).trigger('click');
     });
-    
+
     var timer;
     $("span.view-toggle").mouseenter(function () { // show tooltips on hover
         var that = this;
@@ -351,7 +351,7 @@ $(document).ready(function() {
     //     $('span.results-per-page > span').html(num_of_results);
     //     $('#searchResults-showing >span:first-child').html(num_of_results);
     // }
-    
+
 
     ///******************************************************************* */
     /// Filter
@@ -457,10 +457,10 @@ $(document).ready(function() {
         url_address = split_address[0] + '?';
 
         var counter = 0;
-        $.each(filters, function(key, value) 
+        $.each(filters, function(key, value)
         {
             if(key && value && key != "limit" && key != "offset")
-            { 
+            {
                 if(!counter) url_address += key + '=' + value;
                 else url_address += '&' + key + '=' + value;
                 ++counter;
@@ -474,7 +474,7 @@ $(document).ready(function() {
 
 
     // click filters
-    $(document).on("change", "input[type=checkbox]", function() 
+    $(document).on("change", "input[type=checkbox]", function()
     {
         // get filter value and key
         // var input_value = $(this).parent().find('p').text();
@@ -505,7 +505,7 @@ $(document).ready(function() {
         // Add/Remove param from filter
         if(input_key == "categories") filters[input_key] = input_value;
         else if($(this).is(":checked"))
-        {   
+        {
             if(input_key in filters)
             {
                 if(filters[input_key].indexOf(input_value) < 0) filters[input_key].push(input_value);
@@ -514,11 +514,11 @@ $(document).ready(function() {
         }
         // Remove from params
         else if(input_key in filters)
-        {   
+        {
             filters[input_key] = filters[input_key].filter(function(value, index, arr) { return value != input_value; });
             if(filters[input_key].length == 0) delete filters[input_key];
         }
-        
+
         // Split all parameter
         var split_url = page_url.split('?');
         if("categories" in filters)
@@ -573,10 +573,10 @@ $(document).ready(function() {
 
         // updating url
         var counter = 0;
-        $.each(filters, function(key, value) 
+        $.each(filters, function(key, value)
         {
             if(key && value && key != "limit" && key != "offset")
-            { 
+            {
                 if(!counter) page_url += key + '=' + value;
                 else page_url += '&' + key + '=' + value;
                 ++counter;
@@ -589,7 +589,7 @@ $(document).ready(function() {
 
         // make an ajax call now with the new filters
         searchResults(search_type);
-        
+
     });
 
 
@@ -598,11 +598,11 @@ $(document).ready(function() {
     var resultSize = 0;
 
     $("#Download_selected").click(function () {
-        get_download_content(fields, formattedData);
+        get_download_content(fields, formattedData, false);
     });
     // Onclick, download all data for the query as csv file
     $("#Download_all").click(function () {
-        get_download_content(fields, formattedData);
+        get_download_content(fields, formattedData, true);
     });
 
 });
@@ -611,8 +611,32 @@ $(document).ready(function() {
 /*
     Split the data based on the page
 */
-function get_download_content(fields, data) {
-    download_csv(data, fields);
+function get_download_content(fields, data, isAllData) {
+
+    if (isAllData){     // make a blazegraph call to get all of the data
+        var templates = ['tableCard'];
+        filters['offset'] = 0;
+        delete filters['limit'];
+
+        $.ajax({
+            url: BASE_URL + "api/blazegraph",
+            type: "GET",
+            data: {
+                preset: search_type,
+                filters: filters,
+                templates: templates
+            },
+            'success': function (data)
+            {
+                var allResults = JSON.parse(data);
+                if (typeof (allResults['formatted_data']) != 'undefined'){
+                    download_csv(allResults['formatted_data'], fields);
+                }
+            }
+        });
+    } else {
+        download_csv(data, fields);
+    }
 }
 
 

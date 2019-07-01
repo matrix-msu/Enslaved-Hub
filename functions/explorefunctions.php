@@ -208,7 +208,7 @@ function counterOfAge(){
 
   $encode=urlencode($ageCategoryQuery);
   $call=API_URL.$encode;
-  $ageCategoryResult=callAPI($call,'',''); 
+  $ageCategoryResult=callAPI($call,'','');
   $ageCategoryResult = json_decode($ageCategoryResult);
 
   return json_encode($ageCategoryResult->results->bindings);
@@ -1020,7 +1020,7 @@ HTML;
 } else if ($label == "closeMatchA"){
     $lowerlabel = "close match";
     $upperlabel = "CLOSE MATCH";
-    
+
     $matchUrls = explode('||', $statement['matchUrls']);
     $matchLabels = explode('||', $statement['matchLabels']);
 
@@ -1055,7 +1055,7 @@ HTML;
 } else if ($label == "Secondary Source"){
     $lowerlabel = "source";
     $upperlabel = "SOURCE";
-    
+
     $source = $statement;
 
     $html .= <<<HTML
@@ -1390,7 +1390,7 @@ SELECT ?name ?desc ?sextype  ?race
 
  WHERE
 {
- VALUES ?agent {wd:$qid} #Q number needs to be changed for every event. 
+ VALUES ?agent {wd:$qid} #Q number needs to be changed for every event.
   ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
   		 ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
@@ -1399,19 +1399,19 @@ SELECT ?name ?desc ?sextype  ?race
           wdt:P7 ?project.
   ?project rdfs:label ?pname.
   ?agent p:P82 ?statement.
-  ?statement ps:P82 ?name. 
+  ?statement ps:P82 ?name.
   OPTIONAL{ ?statement pq:P30 ?recordeAt.
             bind(?recordedAt as ?allevents)}
 
-  
+
   OPTIONAL{?agent schema:description ?desc}.
-  OPTIONAL{?agent wdt:P17 ?sex. 
+  OPTIONAL{?agent wdt:P17 ?sex.
           ?sex rdfs:label ?sextype}.
   OPTIONAL{?agent wdt:P37 ?race}.
-  
+
   OPTIONAL {?agent wdt:P24 ?status.
            ?status rdfs:label ?statuslabel}.
- 
+
   OPTIONAL {?agent p:P86 ?statement.
            ?statement ps:P86 ?ethnodescriptor.
            ?ethnodescriptor rdfs:label ?ecvo.
@@ -1429,16 +1429,16 @@ OPTIONAL {?agent p:P39 ?statementrole.
            bind(?roleevent as ?allevents)
 
          }.
-  
+
  OPTIONAL {?agent p:P24 ?statstatus.
            ?statstatus ps:P24 ?status.
            ?status rdfs:label ?statuslabel.
            ?statstatus pq:P99 ?statusevent.
            ?statusevent rdfs:label ?eventstatuslabel.
           bind(?statusevent as ?allevents)}.
-  
+
   OPTIONAL{
-    ?agent p:P25 ?staterel .            
+    ?agent p:P25 ?staterel .
 	?staterel ps:P25 ?relations .
   	?relations rdfs:label ?relationslabel.
 	?staterel pq:P104 ?relationname.
@@ -1449,7 +1449,7 @@ OPTIONAL {?agent p:P39 ?statementrole.
   OPTIONAL {?allevents wdt:P12 ?allplaces.
            ?allplaces rdfs:label ?allplaceslabel
            }.
-        
+
   OPTIONAL {?allevents	wdt:P13 ?startdate.
             ?allevents rdfs:label ?elabel.
             ?allevents wdt:P81 ?etype.
@@ -1457,7 +1457,7 @@ OPTIONAL {?agent p:P39 ?statementrole.
            BIND(CONCAT(str(?elabel)," - ",str(?etypelabel)," - ",str(YEAR(?startdate))) AS ?startyear).
            OPTIONAL {?allevents wdt:P14 ?enddate.
 		   BIND(str(YEAR(?enddate)) AS ?endyear)}}.
-          
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }GROUP BY ?name ?desc ?sextype  ?race
 QUERY;
@@ -1721,7 +1721,7 @@ QUERY;
 
     //CloseMatch
     if (isset($record['match']) && isset($record['match']['value']) && $record['match']['value'] != ''  ){
-      if(isset($record['matchlabel']) && isset($record['matchlabel']['value']) &&  
+      if(isset($record['matchlabel']) && isset($record['matchlabel']['value']) &&
          $record['matchlabel']['value'] != '' ){
         $closeMatchArr = ['matchLabels' => $record['matchlabel']['value'],
                            'matchUrls' => $record['match']['value']
@@ -1747,7 +1747,7 @@ QUERY;
                            'projectName' => $record['pname']['value']
                           ];
             $recordVars['projectsA'] = $projectArr;
-        }  
+        }
     }
 
     //secondarysource
@@ -1759,7 +1759,7 @@ QUERY;
     //Roles
     //Gets the roles, participants, and pqID if they exist and matches them together
     if (isset($record['roles']) && isset($record['roles']['value']) &&  $record['roles']['value'] != ''){
-      if(isset($record['participant']) && isset($record['participant']['value']) && 
+      if(isset($record['participant']) && isset($record['participant']['value']) &&
          $record['participant']['value'] != '' &&  $record['pq']['value'] != '' ){
         //There are participants to match with their roles and qIDs
         $rolesArr = ['roles' => $record['roles']['value'],
@@ -1779,7 +1779,7 @@ QUERY;
           $recordVars['eventRolesA'] = $rolesArr;
         }
     }
-    
+
 
 
 
@@ -1839,8 +1839,6 @@ HTML;
 
     //Timeline section
 
-
-
     //Timeline
     // Code for creating events on Timeline
     // Replace with Kora 3 events
@@ -1851,7 +1849,7 @@ HTML;
         if(isset($record['alleventslabel']) && isset($record['alleventslabel']['value']) && $record['alleventslabel']['value'] != ''){
             $allEventUrls = explode('||', $record['allevents']['value']);
             $allEventLabels = explode('||', $record['alleventslabel']['value']);
-            
+
             $allEventQids = array();
             foreach($allEventUrls as $url){
                 $explode = explode('/', $url);
@@ -1881,18 +1879,45 @@ HTML;
         // end year stuff hasn't been tested or working yet
         if (isset($record['endyear']) && isset($record['endyear']['value']) ){
            $allEventEndYears = explode('||', $record['endyear']['value']);
-         }
+        }
 
         // descriptions hasn't been tested or working yet
         if (isset($record['desc']) && isset($record['desc']['value']) ){
            $allEventDescritions = explode('||', $record['desc']['value']);
-         }
+        }
 
+        // roles per event
+        if (isset($recordVars['eventRolesA'])){
+            $allRoles = explode('||', $recordVars['eventRolesA']['roles']);
+            $allLabels = explode('||', $recordVars['eventRolesA']['eventRoleLabels']);
+            $allEventRoles = array();
+
+            // match roles with event labels
+            for($i=0; $i < sizeof($allRoles); $i++){
+                if (isset($allLabels[$i]) && isset($allRoles[$i])){
+                    $allEventRoles[$allLabels[$i]] = $allRoles[$i];
+                }
+            }
+        }
+
+        // statuses per event
+        if (isset($recordVars['StatusA'])){
+            $allStatuses= explode('||', $recordVars['StatusA']['statuses']);
+            $allLabels = explode('||', $recordVars['StatusA']['eventstatusLabels']);
+            $allEventStatuses = array();
+
+            // match statuses with event labels
+            for($i=0; $i < sizeof($allStatuses); $i++){
+                if (isset($allLabels[$i]) && isset($allStatuses[$i])){
+                    $allEventStatuses[$allLabels[$i]] = $allStatuses[$i];
+                }
+            }
+        }
 
          // create the events array
          foreach($allEventQids as $i => $eventQ){
             $eventLabel = $allEventLabels[$i];
-            
+
             // start year
             $eventStartYear = '';
             if (isset($allEventStartYears[$eventLabel])){
@@ -1913,6 +1938,17 @@ HTML;
             if (isset($allEventDescritions[$eventLabel])){
               $eventDesc = $allEventDescritions[$eventLabel];
             }
+            // event roles
+            $eventRole = '';
+            if (isset($allEventRoles[$eventLabel])){
+                $eventRole = $allEventRoles[$eventLabel];
+            }
+
+            // event status
+            $eventStatus = '';
+            if (isset($allEventStatuses[$eventLabel])){
+                $eventStatus = $allEventStatuses[$eventLabel];
+            }
 
             if ($eventStartYear != ''){
                 $eventArray = [
@@ -1921,10 +1957,12 @@ HTML;
                   'description' => $eventDesc,
                   'startYear' => $eventStartYear,
                   'endYear' => $eventEndYear,
-                  'type' => $eventType  
+                  'type' => $eventType,
+                  'role' => $eventRole,
+                  'status' => $eventStatus
                 ];
                 array_push($events, $eventArray);
-            }  
+            }
          }
         }
     }
@@ -1935,7 +1973,7 @@ HTML;
       }
 
 
-    
+
     $timeline_event_dates = [];
     foreach ($events as $event) {
         // If there are months and days, put the year into decimal format
@@ -2012,7 +2050,7 @@ HTML;
       $dateHtml = "";
       if (isset($event['startYear']) && $event['startYear'] != ''){
         if (isset($event['endYear']) && $event['endYear'] != ''){
-          $dateHtml = "              
+          $dateHtml = "
               <p><span class='bold'>Start Date: </span>".$event['startYear']."</p>
               <p><span class='bold'>End Date: </span>".$event['endYear']."</p>";
         } else {
@@ -2028,6 +2066,16 @@ HTML;
       $eventDescHtml = "";
       if (isset($event['description']) && $event['description'] != ''){
         $eventDescHtml = "<p><span class='bold'>Description: </span>".$event['description']."</p>";
+      }
+      // event role html
+      $eventRoleHtml = "";
+      if (isset($event['role']) && $event['role'] != ''){
+        $eventRoleHtml = "<p><span class='bold'>Role: </span>".$event['role']."</p>";
+      }
+      // event status html
+      $eventStatusHtml = "";
+      if (isset($event['status']) && $event['status'] != ''){
+        $eventStatusHtml = "<p><span class='bold'>Status: </span>".$event['status']."</p>";
       }
 
 
@@ -2047,7 +2095,8 @@ HTML;
               ";
       $html .= '
           </div><div class="info-column">
-              <p><span class="bold">Qid: </span>'.$event['kid'].'</p>
+          '.$eventRoleHtml.'
+          '.$eventStatusHtml.'
           </div>
       </div>
       <div class="place-info-'.$event['kid'].' infowrap">
@@ -2102,9 +2151,9 @@ HTML;
     </div>';
 
 
-    
+
     $htmlArray['timeline'] = $html;
-    
+
 
 
 
@@ -2149,8 +2198,8 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
 
  WHERE
 {
- VALUES ?agent {wd:$QID} #Q number needs to be changed for every person. 
- 	?agent p:P25 ?staterel .            
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
+ 	?agent p:P25 ?staterel .
 	?staterel ps:P25 ?relations .
   	?relations rdfs:label ?relationslabel.
 	?staterel pq:P104 ?people.
@@ -2185,9 +2234,9 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?agent {wd:$QID} #Q number needs to be changed for every person. 
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
   ?agent p:P82 ?statement.
-  ?statement ps:P82 ?name. 
+  ?statement ps:P82 ?name.
   OPTIONAL{ ?statement pq:P30 ?recordeAt.
             bind(?recordedAt as ?allevents)}
   OPTIONAL {?agent p:P39 ?statementrole.
@@ -2196,14 +2245,14 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
            bind(?roleevent as ?allevents)
 
          }.
-  
+
  OPTIONAL {?agent p:P24 ?statstatus.
            ?statstatus ps:P24 ?status.
            ?statstatus pq:P99 ?statusevent.
           bind(?statusevent as ?allevents)}.
   ?allevents wdt:P12 ?place.
   ?place rdfs:label ?placelabel.
-  
+
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2233,7 +2282,7 @@ SELECT DISTINCT ?match ?matchlabel (SHA512(CONCAT(STR(?match), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?agent {wd:$QID} #Q number needs to be changed for every person. 
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
  	?agent wdt:P88 ?match.
     ?match rdfs:label ?matchlabel
 
@@ -2267,9 +2316,9 @@ SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?agent {wd:$QID} #Q number needs to be changed for every source. 
+ VALUES ?agent {wd:$QID} #Q number needs to be changed for every source.
   ?agent p:P82 ?statement.
-  ?statement ps:P82 ?name. 
+  ?statement ps:P82 ?name.
   OPTIONAL{ ?statement pq:P30 ?recordeAt.
             bind(?recordedAt as ?event)}
   OPTIONAL {?agent p:P39 ?statementrole.
@@ -2278,7 +2327,7 @@ SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as 
            bind(?roleevent as ?event)
 
          }.
-  
+
  OPTIONAL {?agent p:P24 ?statstatus.
            ?statstatus ps:P24 ?status.
            ?statstatus pq:P99 ?statusevent.
@@ -2324,18 +2373,18 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 
  WHERE
 {
- VALUES ?source {wd:$QID} #Q number needs to be changed for every source. 
+ VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
   ?source wdt:P3 wd:Q16.
   ?people wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:P35 ?source .
   ?people rdfs:label ?peoplename
-  
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-    
+
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2353,21 +2402,21 @@ QUERY;
     $connections['Person-count'] = count($result);
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
 
-  
+
   // events connections
   $eventsQuery['query'] = <<<QUERY
 SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
 
  WHERE
 {
- VALUES ?source {wd:$QID} #Q number needs to be changed for every source. 
+ VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
   ?source wdt:P8 ?event.
   ?event rdfs:label ?eventlabel
-  
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-    
+
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2392,15 +2441,15 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?source {wd:$QID} #Q number needs to be changed for every source. 
+ VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
   ?source wdt:P8 ?event.
   ?event wdt:P12 ?place.
   ?place rdfs:label ?placelabel
-  
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-    
+
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2433,16 +2482,16 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 
  WHERE
 {
- VALUES ?event {wd:$QID} #Q number needs to be changed for every event. 
+ VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
   ?event wdt:P3 wd:Q34.
   ?event p:P38 ?statement.
-  ?statement ps:P38 ?name. 
+  ?statement ps:P38 ?name.
   ?statement pq:P39 ?people.
   ?people rdfs:label ?peoplename.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-    
+
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2468,7 +2517,7 @@ SELECT DISTINCT ?source ?refName ?project ?projectName (SHA512(CONCAT(STR(?sourc
 
  WHERE
 {
-VALUES ?event {wd:$QID} #Q number needs to be changed for every event. 
+VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
   ?event wdt:P3 wd:Q34;
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
@@ -2479,7 +2528,7 @@ VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-    
+
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2516,14 +2565,14 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?event {wd:$QID} #Q number needs to be changed for every event. 
+ VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
   ?event wdt:P12 ?place.
   ?place rdfs:label ?placelabel
-  
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-    
+
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2549,17 +2598,17 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
 
  WHERE
 {
- VALUES ?event {wd:$QID} #Q number needs to be changed for every event. 
+ VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
   ?event wdt:P3 wd:Q34;
           ?property  ?object .
   	?object prov:wasDerivedFrom ?provenance .
   	?provenance pr:P35 ?source .
 	?source rdfs:label ?sourcelabel
-  
+
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-    
+
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
