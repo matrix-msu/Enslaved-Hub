@@ -349,7 +349,7 @@ QUERY;
             <span class="align-left">
                 <a class="modal">Configure Table Columns</a>
             </span>
-            <span class="align-right"><b>Download:</b> <span>Current View</span> | <span>All Results</span></span>
+            <span class="align-right"><b>Download:</b> <span id="Download_selected">Current View</span> | <span id="Download_all">All Results</span></span>
         </div>
         <div id="search-result-wrap">
             <div id="search-result-table">
