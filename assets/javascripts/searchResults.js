@@ -418,6 +418,10 @@ $(document).ready(function() {
     });
 
     //Main categories
+    $("li.cat-cat").each(function(){
+      $(this).find("span:first").toggleClass("show");
+        $(this).next().toggleClass("show");
+    });
     $("li.cat-cat").click(function () { // toggle show/hide filter-by submenus
         $(this).find("span:first").toggleClass("show");
         $(this).next().toggleClass("show");

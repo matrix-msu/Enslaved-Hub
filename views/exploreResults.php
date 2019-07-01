@@ -149,7 +149,7 @@ QUERY;
             <?php } ?>
             <!-- People Filtering -->
             
-            <li class="cat-cat">People Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
+            <li class="cat-cat">People<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
             </li>
             <ul id="mainmenu">
             
@@ -184,7 +184,7 @@ QUERY;
             </ul>
             <!-- Event Filtering -->
             <hr>
-            <li class="cat-cat">Event Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
+            <li class="cat-cat">Event<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
             </li>
             <ul id="mainmenu">
 
@@ -213,7 +213,7 @@ QUERY;
             </ul>
             <!-- Place Filtering -->
             <hr>
-            <li class="cat-cat">Place Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
+            <li class="cat-cat">Place<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
             </li>
             <ul id="mainmenu">
 
@@ -242,7 +242,7 @@ QUERY;
             </ul>
             <!-- Source Filtering -->
             <hr>
-            <li class="cat-cat">Source Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
+            <li class="cat-cat">Source<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
             </li>
             <ul id="mainmenu">
 
@@ -271,11 +271,36 @@ QUERY;
             </ul>
             <!-- Project Filtering -->
             <hr>
-            <li class="cat-cat">Project Filtering<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
+            <li class="cat-cat">Project<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
             </li>
             <ul id="mainmenu">
 
                 <li class="filter-cat">Project<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
+                </li>
+                <ul id="submenu">
+                    <li>
+                        <label class="project">
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="project">
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="project">
+                            <input id="checkBox" type="checkbox">
+                            <p>Undefined <em>(234)</em></p>
+                            <span></span>
+                        </label>
+                    </li>
+                </ul>
+                <li class="filter-cat">Document Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
                 </li>
                 <ul id="submenu">
                     <li>
