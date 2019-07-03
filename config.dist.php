@@ -36,6 +36,7 @@ define('API_URL', BASE_BLAZEGRAPH_URL.'sparql?query=');
 define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');
 define('STORY_SID', 23);
 define('PID', 16);
+define('WEBPAGES_FORM', 49);
 
 $GLOBALS['FILTER_ARRAY'] = Array(
     "events" => array(
