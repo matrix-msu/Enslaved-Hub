@@ -1,6 +1,5 @@
 <?php
-//require_once(dirname(__FILE__).'/../config.php');ffds
-//require_once(dirname(__FILE__).'/../wikiconstants/properties.php');
+
 
 function callAPI($url,$limit,$offset){
     $url.='&format=json';
@@ -12,8 +11,8 @@ function callAPI($url,$limit,$offset){
 function queryAllAgentsCounter(){
   $query='SELECT  (COUNT(distinct ?agent) AS ?count)
     WHERE {
-        ?agent wdt:P3/wdt:P2 wd:Q2;        #find agents{
-        MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+        ?agent wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].';        #find agents{
+        MINUS{ ?agent wdt:'.properties["hasParticipantRoleRecord"].' wd:'.roleTypes["Researcher"].' }. #remove all researchers
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
 
@@ -33,7 +32,7 @@ function queryAllAgentsCounter(){
 
 //get all events counter
 function queryEventCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:P3 wd:Q34 .}';
+  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:'.classes["Event"].' .}';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -49,7 +48,7 @@ function queryEventCounter(){
 
 //get all places counter
 function queryPlaceCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:P3 wd:Q50 .}';
+  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:'.classes['Place'].' .}';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -65,7 +64,7 @@ function queryPlaceCounter(){
 
 //get all contributing projects counter
 function queryProjectsCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:P3 wd:Q264 .}';
+  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:'.classes["Research Project"].' .}';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -81,7 +80,7 @@ function queryProjectsCounter(){
 
 //get entity with provenance  counter
 function querySourceCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:P3 wd:Q16 .}';
+  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:Q16 .}';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -98,11 +97,11 @@ function querySourceCounter(){
 //get counter for people, event, sources, projects...
 function counterofAllitems(){
   $query='SELECT (COUNT(?item) AS ?count) WHERE
-  {{?item wdt:P3 wd:Q264 .}
-   UNION{ ?item wdt:P3/wdt:P2 wd:Q2 .}
-   UNION{ ?item wdt:P3 wd:Q16 .}
-   UNION{?item wdt:P3 wd:Q50 .}
-   UNION{?item wdt:P3 wd:Q34 .}
+  {{?item wdt:'.properties["instance of"].' wd:Q264 .}
+   UNION{ ?item wdt:'.properties["instance of"].'/wdt:P2 wd:Q2 .}
+   UNION{ ?item wdt:'.properties["instance of"].' wd:Q16 .}
+   UNION{?item wdt:'.properties["instance of"].' wd:Q50 .}
+   UNION{?item wdt:'.properties["instance of"].' wd:Q34 .}
 
   }';
   $encode=urlencode($query);
@@ -119,9 +118,9 @@ function counterofAllitems(){
 }
 //counter of a specific gender
 function counterOfGender(){
-  $query="SELECT (COUNT(?item) AS ?count) WHERE {
-    ?item wdt:P3/wdt:P2  wd:Q2 .
-  	?item wdt:P17 wd:".$_GET['gender']."}";
+  $query='SELECT (COUNT(?item) AS ?count) WHERE {
+    ?item wdt:'.properties["instance of"].'/wdt:P2  wd:Q2 .
+  	?item wdt:P17 wd:'.$_GET["gender"].'}';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -137,20 +136,13 @@ function counterOfGender(){
 
 //counter of all genders
 function counterOfAllGenders(){
-    $query="SELECT ?sex ?sexLabel ?count
-      WHERE
-      {
-        {
-          SELECT ?sex (COUNT(?human) AS ?count) WHERE {
-    		?human wdt:P3/wdt:P2  wd:Q2 .
-            ?human wdt:P17 ?sex.
-          }
-          GROUP BY ?sex
-        }
-        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-      }
-      ORDER BY DESC(?count)
-      LIMIT 100";
+    $query='SELECT ?sex ?sexLabel (COUNT(?human) AS ?count) WHERE{
+  ?human wdt:P3/wdt:P2  wd:Q2 .
+  ?human wdt:P17 ?sex.
+
+ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+} GROUP BY ?sex ?sexLabel
+ORDER BY DESC(?count)';
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -166,13 +158,13 @@ function counterOfAllGenders(){
 
 //get the roles and their counts
 function counterOfRole(){
-  $query="SELECT ?role ?roleLabel ?count
+  $query='SELECT ?role ?roleLabel ?count
       WHERE
       {
         {
           SELECT ?role (COUNT(?human) AS ?count) WHERE {
-            ?human wdt:P3 wd:Q602.
-            ?human wdt:P39 ?role.
+            ?human wdt:'.properties["instance of"].' wd:Q602.
+            ?human wdt:'.properties["hasParticipantRoleRecord"].' ?role.
           }
           GROUP BY ?role
         }
@@ -180,7 +172,7 @@ function counterOfRole(){
       }
       ORDER BY DESC(?count)
       LIMIT 100
-      ";
+      ';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -198,9 +190,9 @@ function counterOfRole(){
 function counterOfAge(){
 
   $ageCategoryQuery ='SELECT  ?agecategoryLabel (count(?agent) as ?count) where{
-                        ?agecategory wdt:P3 wd:Q604.
-                        ?agent wdt:P3 wd:Q602.
-                        ?agent wdt:P32 ?agecategory.
+                        ?agecategory wdt:'.properties["instance of"].' wd:Q604.
+                        ?agent wdt:'.properties["instance of"].' wd:Q602.
+                        ?agent wdt:'.properties["instance of"].'2 ?agecategory.
                         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 
                       }group by ?agecategoryLabel
@@ -215,21 +207,14 @@ function counterOfAge(){
 }
 
 function counterOfEthnodescriptor(){
-  $query="SELECT ?ethno ?ethnoLabel ?count
-          WHERE
-          {
-            {
-              SELECT ?ethno (COUNT(?human) AS ?count) WHERE {
-                ?human wdt:P3 wd:Q602.
-                ?human wdt:P86 ?ethno.
-              }
-              GROUP BY ?ethno
-            }
-            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-          }
-          ORDER BY DESC(?count)
-          LIMIT 100
-      ";
+  $query='SELECT ?ethno ?ethnoLabel (COUNT(?human) as ?count)
+{?human wdt:'.properties["instance of"].' wd:Q602.
+ ?human wdt:P86 ?ethno.
+ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}GROUP BY ?ethno ?ethnoLabel
+ORDER BY ?ethnoLabel';
+
+
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -278,12 +263,12 @@ QUERY;
 }
 
 function counterOfEventType() {
-  $query="SELECT ?eventType ?eventTypeLabel ?count
+  $query='SELECT ?eventType ?eventTypeLabel ?count
       WHERE
       {
         {
           SELECT ?eventType (COUNT(?event) AS ?count) WHERE {
-            ?event wdt:P3 wd:Q34.
+            ?event wdt:'.properties["instance of"].' wd:Q34.
             ?event wdt:P81 ?eventType.
           }
           GROUP BY ?eventType
@@ -291,7 +276,7 @@ function counterOfEventType() {
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
       }
       ORDER BY DESC(?count)
-    ";
+    ';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -306,12 +291,12 @@ function counterOfEventType() {
 }
 
 function counterOfEventPlace(){
-    $query="SELECT ?place ?placeLabel ?count
+    $query='SELECT ?place ?placeLabel ?count
             WHERE
             {
               {
                 SELECT ?place (COUNT(?event) AS ?count) WHERE {
-                  ?event wdt:P3 wd:Q34.
+                  ?event wdt:'.properties["instance of"].' wd:Q34.
                   ?event wdt:P12 ?place.
                 }
                 GROUP BY ?place
@@ -319,7 +304,7 @@ function counterOfEventPlace(){
               SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
             }
             ORDER BY ASC(?placeLabel)
-      ";
+      ';
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
