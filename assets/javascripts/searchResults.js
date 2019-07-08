@@ -658,9 +658,9 @@ function download_csv(data, fields) {
         for (const field of fields) {
             // Note: Making sure commas wihin a field are escaped
             if (field in obj) {
-                csvS += obj[field] ? ",\"" + obj[field] + "\"" : ",undefined";
+                csvS += obj[field] ? ",\"" + obj[field] + "\"" : ",";
             }
-            else csvS += ",undefined";
+            else csvS += ",";
         }
         csvString.push(csvS);
     }
