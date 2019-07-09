@@ -10,8 +10,8 @@ if (isset($_GET['prev'])){
 <!-- Heading image and title container-->
 <div class="container header stories">
     <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM;?>"><span id="previous-title"><?php echo ucwords(EXPLORE_FORM);?> // </span></a><span id="current-title">Time</span></h4>
-        <h1>Time</h1>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM;?>"><span id="previous-title"><?php echo ucwords(EXPLORE_FORM);?> // </span></a><span id="current-title">Date</span></h4>
+        <h1>Date</h1>
     </div>
 </div>
 <!-- info container-->

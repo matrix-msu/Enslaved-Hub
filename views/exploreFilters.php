@@ -38,7 +38,7 @@ $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
 
       foreach ($typeCategories as $category => $qid) { ?>
           <li class="hide-category">
-              <a href="<?php echo BASE_URL;?>search/<?php echo EXPLORE_FORM?>?<?php echo EXPLORE_FILTER;?>=<?php echo $qid;?>">
+              <a href="<?php echo BASE_URL;?>search/<?php echo EXPLORE_FORM?>?<?php echo EXPLORE_FILTER;?>=<?php echo $category;?>">
                   <p class='type-title'><?php echo $category;?></p>
                   <div id="arrow"></div><span id="<?php echo $category;?>">0</span>
               </a>
@@ -50,56 +50,4 @@ $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js">
     var type = "<?php echo $upperWithSpaces ?>";
     var category = "<?php echo ucwords(EXPLORE_FORM) ?>";
-</script>
-
-<script>
-    $(document).ready(function () {
- 
-        // fill in the counts for the Explore By types
-//        $.ajax({
-//            url: BASE_URL + 'api/counterOfType',
-//            method: "GET",
-//            data: {type: type,  category:category},
-//            'success': function (data) {
-//                data = JSON.parse(data);
-//
-//                console.log('data', data);
-//
-//                data.forEach(function(record) {
-//                    console.log(record)
-//                    var label = "";
-//                    for(var key in record) {
-//                        if(key.match("Label$")) {
-//                            label = record[key]['value']
-//                        }
-//                    }
-//
-//                    if (label != ""){
-//                        var count = record['count']['value'];
-//                        var span = $("a:contains("+label+")").find('span');
-//
-//                        if ($(span).length > 0){
-//                            $(span).html(count)
-//                        }
-//                    }
-//
-//                });
-//            }
-//        });
-
-
-//        $.each(<?php //echo json_encode(sexTypes);?>//, function(){
-//            var temp = this;
-//            $.ajax({
-//                url: BASE_URL + 'api/counterOfGender',
-//                method: "GET",
-//                data: {gender: temp},
-//                'success': function (data) {
-//                    console.log('hhhhhh', data)
-//                    $('#gender-'+temp).html(data);
-//                }
-//            });
-//        });
-
-    });
 </script>

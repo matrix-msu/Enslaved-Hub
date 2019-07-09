@@ -23,4 +23,13 @@ $(document).ready(function(){
         $('span.results-per-page > span').html(card_limit);
         $(document).trigger('click');
     });
+
+    $('.crawler-tabs li').click(function(){
+        $('.crawler-tabs li').removeClass('tabbed');
+        $(this).addClass('tabbed');
+        var name = $(this).attr('id');
+
+        $('.result-container').removeClass('show');
+        $('.result-container#'+name).addClass('show');
+    });
 });

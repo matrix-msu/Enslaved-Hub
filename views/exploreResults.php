@@ -11,56 +11,56 @@
             $typeTitle = ucwords(str_replace('_', ' ', $typeLower));
 
             $currentQ = $_GET[$typeLower];
-            // $currentQ = str_replace('_', ' ', $currentQitle);
+            $currentTitle = str_replace('_', ' ', $currentQ);
             
-            if (array_key_exists($typeTitle, $GLOBALS['FILTER_TO_FILE_MAP'])){
-                $typeCategories = $GLOBALS['FILTER_TO_FILE_MAP'][$typeTitle];
-                $currentTitle = array_search($currentQ, $typeCategories);
+//             if (array_key_exists($typeTitle, $GLOBALS['FILTER_TO_FILE_MAP'])){
+//                 $typeCategories = $GLOBALS['FILTER_TO_FILE_MAP'][$typeTitle];
+//                 $currentTitle = array_search($currentQ, $typeCategories);
 
-                if(!$currentTitle){
-                    //QID not found, shouldn't get here
-                    $currentTitle = "QID ERROR";
-                }
-            }
-            else{
-                //Must have been a search for a name, daterange
-                $currentTitle = $currentQ;
+//                 if(!$currentTitle){
+//                     //QID not found, shouldn't get here
+//                     $currentTitle = "QID ERROR";
+//                 }
+//             }
+//             else{
+//                 //Must have been a search for a name, daterange
+//                 $currentTitle = $currentQ;
 
-                $query = array('query' => "");
+//                 $query = array('query' => "");
 
-                // get the label for the q value from a quick blazegraph search
-                $query['query'] = <<<QUERY
-SELECT ?item ?label
+//                 // get the label for the q value from a quick blazegraph search
+//                 $query['query'] = <<<QUERY
+// SELECT ?item ?label
 
- WHERE
-{
-BIND(wd:$currentQ AS ?item).
-    ?item rdfs:label ?label.
+//  WHERE
+// {
+// BIND(wd:$currentQ AS ?item).
+//     ?item rdfs:label ?label.
 
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?item ?label
-QUERY;
+//   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+// }GROUP BY ?item ?label
+// QUERY;
 
-                //Execute query
-                $ch = curl_init(BLAZEGRAPH_URL);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
-                //Get result
-                $result = json_decode($result, true)['results']['bindings'];
+//                 //Execute query
+//                 $ch = curl_init(BLAZEGRAPH_URL);
+//                 curl_setopt($ch, CURLOPT_POST, 1);
+//                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+//                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//                 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+//                     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+//                     'Accept: application/sparql-results+json'
+//                 ));
+//                 $result = curl_exec($ch);
+//                 curl_close($ch);
+//                 //Get result
+//                 $result = json_decode($result, true)['results']['bindings'];
 
-                if (!empty($result)){
-                    if (isset($result[0]['label']) && isset($result[0]['label']['value'])){
-                        $currentTitle = $result[0]['label']['value'];
-                    }
-                }
-            }
+//                 if (!empty($result)){
+//                     if (isset($result[0]['label']) && isset($result[0]['label']['value'])){
+//                         $currentTitle = $result[0]['label']['value'];
+//                     }
+//                 }
+//             }
         }
  
         $upperForm = ucfirst(EXPLORE_FORM);
@@ -172,7 +172,7 @@ QUERY;
                         foreach ($typeCats as $category => $qid) { ?>
                             <li>
                                 <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
                                     <p><?php echo $category; ?> <em>(234)</em></p>
                                     <span></span>
                                 </label>
@@ -201,7 +201,7 @@ QUERY;
                     foreach ($typeCats as $category => $qid) { ?>
                         <li>
                             <label class="<?php echo $catLower; ?>">
-                                <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
+                                <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
                                 <p><?php echo $category; ?> <em>(234)</em></p>
                                 <span></span>
                             </label>
@@ -227,10 +227,55 @@ QUERY;
                     if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
                         $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                     }
+                    else{
+                        //Condition for the key not being in the FILE_MAP ex. Countries and Regions which have queries
+                        $queryQ = '';
+                        if($type == "Countries"){
+                            $queryQ = 'Q32';
+                        }
+                        else if($type == "Regions"){
+                            $queryQ = 'Q333';
+                        }
+                        else{
+                            $queryQ = 'Q1';
+                        }
+                        
+                        $query = array('query' => "");
+
+                        // get the categories from a blazegraph search
+                        $query['query'] = <<<QUERY
+SELECT ?country ?countryLabel WHERE {
+?country wdt:P3 wd:Q50 .
+?country wdt:P80 wd:$queryQ .
+
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}                        
+QUERY;
+
+                        //Execute query
+                        $ch = curl_init(BLAZEGRAPH_URL);
+                        curl_setopt($ch, CURLOPT_POST, 1);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                            'Accept: application/sparql-results+json'
+                        ));
+                        $result = curl_exec($ch);
+                        curl_close($ch);
+                        //Get result
+                        $result = json_decode($result, true)['results']['bindings'];
+
+                        if (!empty($result)){
+                            foreach($result as $row){
+                                $typeCats[$row['countryLabel']['value']] = 'Q32';
+                            }
+                        }
+                    }
                     foreach ($typeCats as $category => $qid) { ?>
                         <li>
                             <label class="<?php echo $catLower; ?>">
-                                <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
+                                <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
                                 <p><?php echo $category; ?> <em>(234)</em></p>
                                 <span></span>
                             </label>
@@ -248,9 +293,9 @@ QUERY;
 
                 <?php foreach ($GLOBALS["FILTER_ARRAY"]['sources'] as $type) { 
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
-                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
+                    <li class="filter-cat hidden" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
                     </li>
-                    <ul id="submenu">
+                    <ul id="submenu"  class="show">
                     <?php
                     $typeCats = array();
                     if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
@@ -259,7 +304,7 @@ QUERY;
                     foreach ($typeCats as $category => $qid) { ?>
                         <li>
                             <label class="<?php echo $catLower; ?>">
-                                <input id="checkBox" type="checkbox" value="<?php echo $qid; ?>">
+                                <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
                                 <p><?php echo $category; ?> <em>(234)</em></p>
                                 <span></span>
                             </label>
@@ -275,56 +320,57 @@ QUERY;
             </li>
             <ul id="mainmenu">
 
-                <li class="filter-cat">Project<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="project">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
+                <?php foreach (['Projects'] as $type) { 
+                    $catLower = strtolower(str_replace(" ", "_", $type)); ?>
+                    <li class="filter-cat hidden" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
                     </li>
-                    <li>
-                        <label class="project">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="project">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
+                    <ul id="submenu" class="show">
+                    <?php
+                    $typeCats = array();
+
+                    $query = array('query' => "");
+
+                    // get the categories from a blazegraph search
+                    $query['query'] = <<<QUERY
+SELECT ?project ?projectLabel WHERE {
+  	?project wdt:P3 wd:Q264.
+  
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+}                     
+QUERY;
+
+                    //Execute query
+                    $ch = curl_init(BLAZEGRAPH_URL);
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                        'Accept: application/sparql-results+json'
+                    ));
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                    //Get result
+                    $result = json_decode($result, true)['results']['bindings'];
+
+                    if (!empty($result)){
+                        foreach($result as $row){
+                            $typeCats[$row['projectLabel']['value']] = 'Q264';
+                        }
+                    }
+
+                    foreach ($typeCats as $category => $qid) { ?>
+                        <li>
+                            <label class="<?php echo $catLower; ?>">
+                                <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
+                                <p><?php echo $category; ?> <em>(234)</em></p>
+                                <span></span>
+                            </label>
+                        </li>
+                    <?php } ?>
                 </ul>
-                <li class="filter-cat">Document Type<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-                </li>
-                <ul id="submenu">
-                    <li>
-                        <label class="project">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="project">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="project">
-                            <input id="checkBox" type="checkbox">
-                            <p>Undefined <em>(234)</em></p>
-                            <span></span>
-                        </label>
-                    </li>
-                </ul>
+                <?php } ?>
+
             </ul>
 
         </ul>

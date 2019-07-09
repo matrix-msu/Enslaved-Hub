@@ -52,7 +52,9 @@ $GLOBALS['FILTER_ARRAY'] = Array(
     "places" => array(
         "Place Type",
         "City",
-        "Province"
+        "Province",
+        "Countries",
+        "Regions"
     ),
     "sources" => array(
         "Source Type"
