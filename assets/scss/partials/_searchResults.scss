@@ -200,6 +200,14 @@ ul#submenu {
 ul#submenu.show{
     display: block;
 }
+ul#submenu.hidden{
+    display: none;
+
+
+}
+li.filter-cat.hidden{
+    display: none;
+}
 .filter-menu.show {
     left: 0;
 }

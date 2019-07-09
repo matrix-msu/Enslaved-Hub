@@ -212,9 +212,10 @@ QUERY;
                         // handle multiple gender (Male, Female, and Unidentified)
                     }
                     else { // handle single gender search
-                        $gender = $genders[0]; //ex. Q48
-                        if($gender != 'U'){ //U is the value passed for unidentified
-                            $genderQuery = "?agent wdt:P17 wd:$gender";
+                        $gender = $genders[0]; //ex. Male
+                        if (array_key_exists($gender, sexTypes)){
+                            $qGender = sexTypes[$gender];
+                            $genderQuery = "?agent wdt:P17 wd:$qGender .";
                         }
                     }
                 }
@@ -241,19 +242,30 @@ QUERY;
                 $ageQuery = "";
                 if (isset($filtersArray['age_category'])){
                     $age = $filtersArray['age_category'][0];
-                    $ageQuery = "?agent wdt:P32 wd:$age .";
+                    if (array_key_exists($age, ageCategory)){
+                        $qAge = ageCategory[$age];
+                        $ageQuery = "?agent wdt:P32 wd:$qAge .";
+                    }
+                    
                 }
 
                 $ethnoQuery = "";
                 if (isset($filtersArray['ethnodescriptor'])){
                     $ethno = $filtersArray['ethnodescriptor'][0];
-                    $ethnoQuery = "?agent wdt:P86 wd:$ethno .";
+                    if (array_key_exists($ethno, ethnodescriptor)){
+                        $qEthno = ethnodescriptor[$ethno];
+                        $ethnoQuery = "?agent wdt:P86 wd:$qEthno .";
+                    }
                 }
 
                 $roleQuery = "";
                 if (isset($filtersArray['role_types'])){
                     $role = $filtersArray['role_types'][0];
-                    $roleQuery = "?agent wdt:P39 wd:$role .";
+                    if (array_key_exists($role, roleTypes)){
+                        $qRole = roleTypes[$role];
+                        $roleQuery = "?agent wdt:P39 wd:$qRole .";
+                    }
+                    
                 }
 
                 // people connected to an event
@@ -469,7 +481,11 @@ QUERY;
                 $typeQuery = "";
                 if (isset($filtersArray['place_type'])){
                     $type = $filtersArray['place_type'][0];
-                    $typeQuery = "?place wdt:P80 wd:$type .";
+                    if (array_key_exists($type, placeTypes)){
+                        $qType = placeTypes[$type];
+                        $typeQuery = "?place wdt:P80 wd:$qType .";
+                    }
+                    
                 }
 
                 $query = array('query' => "");
@@ -546,8 +562,11 @@ QUERY;
                 //Filtering for Query
                 $eventQuery = "";
                 if (isset($filtersArray['event_type'])){
-                    $eventType = $filtersArray['event_type'][0];
-                    $eventQuery = "?event wdt:P81 wd:$eventType .";
+                    $type = $filtersArray['event_type'][0];
+                    if (array_key_exists($type, eventTypes)){
+                        $qType = eventTypes[$type];
+                        $eventQuery = "?event wdt:P81 wd:$qType .";
+                    }
 
                     // if (array_key_exists($eventType, eventTypes) ){
                     //     $qType = eventTypes[$eventType];

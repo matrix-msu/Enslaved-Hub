@@ -6,7 +6,7 @@ const placeTypes=[
 'Country or Parish'	 => 'Q520',
 'Other Place Type'	 => 'Q39',
 'Province'	 => 'Q31',
-'Region'	 => '333',
+'Region'	 => 'Q333',
 'Worship Site'	 => 'Q435'
 ];
 ?>

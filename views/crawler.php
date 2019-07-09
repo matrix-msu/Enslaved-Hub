@@ -8,9 +8,9 @@
 <div class="crawler">
     <div class="project-tab crawler-tabs">
         <ul>
-            <li class="tabbed">Results</li>
-            <li>Broken Links</li>
-            <li>Seeds</li>
+            <li class="tabbed" id="results">Results</li>
+            <li id="broken">Broken Links</li>
+            <li id="seeds">Seeds</li>
             <hr>
         </ul>
     </div>
@@ -40,164 +40,115 @@
         </div>
     </div>
     
-    <div class="results-wrap">
+    <div class="results-wrap result-container show" id="results">
         <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
+            <div class="link-name">
+                <p>Name of Link Goes Here</p>
             </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
+            <div class="link-wrap">
+                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
+                <div class="trash">
+                    <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
+                </div>
             </div>
         </div>
         <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
+            <div class="link-name">
+                <p>Name of Link Goes Here</p>
             </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
+            <div class="link-wrap">
+                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
+                <div class="trash">
+                    <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
+                </div>
             </div>
         </div>
         <div class="result">
+            <div class="link-name">
+                <p>Name of Link Goes Here</p>
+            </div>
             <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
+                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
+                <div class="trash">
+                    <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
                 </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <div class="link-name">
-                    <p>Name of Link Goes Here</p>
-                </div>
-                <div class="link">
-                    <p><a href="google.com">www.nameoflinkgoeshere.com</a></p>
-                </div>
-            </div>
-            <div class="trash">
-                <p><img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg"></p>
             </div>
         </div>
     </div>
+    <div class="broken-wrap result-container" id="broken">
+        <p class="link-info">The following (12) links are broken. They can be updated or deleted entirely.</p>
+        <div class="result">
+            <div class="link-wrap">
+                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
+                <div class="right">
+                    <div class="trash">
+                        <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
+                    </div>
+                    <div class="update">
+                        <p>Update Link</p>
+                    </div>
+                </div>
+            </div>
+            <div class="message">
+                <p>No Response from server, check website.</p>
+                <p>The server is down or unable to get a response from the server.</p>
+            </div>
+        </div>
+        <div class="result">
+            <div class="link-wrap">
+                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
+                <div class="right">
+                    <div class="trash">
+                        <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
+                    </div>
+                    <div class="update">
+                        <p>Update Link</p>
+                    </div>
+                </div>
+            </div>
+            <div class="message">
+                <p>No Response from server, check website.</p>
+                <p>The server is down or unable to get a response from the server.</p>
+            </div>
+        </div>
+    </div>
+    <div class="seed-wrap result-container" id="seeds">
+    <p class="link-info">The following (12) links are broken. They can be updated or deleted entirely.</p>
+        <div class="result">
+            <div class="link-wrap">
+                <p><span>URL:</span><a class="link" href="google.com">www.nameoflinkgoeshere.com</a></p>
+                <div class="right">
+                    <div class="trash">
+                        <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
+                    </div>
+                    <div class="update">
+                        <p>Update Seed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="details">
+                <div class="row">
+                    <div class="cell">
+                        <p><span>NAME:</span>Pea Soup</p>
+                    </div>
+                    <div class="cell">
+                        <p><span>TITLE:</span>Pea Soup</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cell">
+                        <p><span>TWITTER:</span><a href="">@peasoup</a></p>
+                    </div>
+                    <div class="cell">
+                        <p><span>RSS:</span><a href="">www.nameoflinkgoeshere.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div id="pagination">
         <input class="current-page" type="hidden" value="1">
         <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
