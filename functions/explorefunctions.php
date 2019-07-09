@@ -80,7 +80,7 @@ function queryProjectsCounter(){
 
 //get entity with provenance  counter
 function querySourceCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:Q16 .}';
+  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:'.classes["Entity with Provenance"].' .}';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -97,11 +97,12 @@ function querySourceCounter(){
 //get counter for people, event, sources, projects...
 function counterofAllitems(){
   $query='SELECT (COUNT(?item) AS ?count) WHERE
-  {{?item wdt:'.properties["instance of"].' wd:Q264 .}
-   UNION{ ?item wdt:'.properties["instance of"].'/wdt:P2 wd:Q2 .}
-   UNION{ ?item wdt:'.properties["instance of"].' wd:Q16 .}
-   UNION{?item wdt:'.properties["instance of"].' wd:Q50 .}
-   UNION{?item wdt:'.properties["instance of"].' wd:Q34 .}
+  {
+   {?item wdt:'.properties["instance of"].' wd:'.classes["Research Project"].' .}
+   UNION{ ?item wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].' .}
+   UNION{ ?item wdt:'.properties["instance of"].' wd:'.classes["Entity with Provenance"].' .}
+   UNION{?item wdt:'.properties["instance of"].' wd:'.classes["Place"].' .}
+   UNION{?item wdt:'.properties["instance of"].' wd:'.classes["Event"].' .}
 
   }';
   $encode=urlencode($query);
@@ -119,8 +120,8 @@ function counterofAllitems(){
 //counter of a specific gender
 function counterOfGender(){
   $query='SELECT (COUNT(?item) AS ?count) WHERE {
-    ?item wdt:'.properties["instance of"].'/wdt:P2  wd:Q2 .
-  	?item wdt:P17 wd:'.$_GET["gender"].'}';
+    ?item wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].'.
+  	?item wdt:'.properties["hasSexRecord"].' wd:'.$_GET["gender"].'}';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -137,8 +138,8 @@ function counterOfGender(){
 //counter of all genders
 function counterOfAllGenders(){
     $query='SELECT ?sex ?sexLabel (COUNT(?human) AS ?count) WHERE{
-  ?human wdt:P3/wdt:P2  wd:Q2 .
-  ?human wdt:P17 ?sex.
+  ?human wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].' .
+  ?human wdt:'.properties["hasSexRecord"].' ?sex.
 
  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 } GROUP BY ?sex ?sexLabel

@@ -22,6 +22,7 @@ const classes=[
 'License Information' => 'Q740',
 'Occupation' => 'Q198',
 'Origin' => 'Q592',
+'Person' => 'Q602',
 'Person Status' => 'Q57',
 'Place' => 'Q50',
 'Place Type' => 'Q439',
