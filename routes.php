@@ -111,7 +111,7 @@ if ($fileArray[0] == 'explore' && count($fileArray) > 2){ //filter
     define('EXPLORE_FILTER', $fileArray[2]);
     $currentFile = 'exploreFilters';
     //GET RID OF THIS AS SOON AS FUNCTIONS TO HANDLE TIME PROPERLY EXIST
-    if ($fileArray[2] == "time") {
+    if ($fileArray[2] == "date") {
         $currentFile = 'timeSub';
     }
     $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';var JS_EXPLORE_FILTERS = '".ucwords(str_replace("_", " ", EXPLORE_FILTER))."';</script>\n";

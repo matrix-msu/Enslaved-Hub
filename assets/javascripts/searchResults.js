@@ -477,11 +477,11 @@ $(document).ready(function() {
     $(document).on("change", "input[type=checkbox]", function()
     {
         // get filter value and key
-        // var input_value = $(this).parent().find('p').text();
-        // let em = $(this).parent().find('p').find("em").text();
-        // input_value = input_value.replace(em, "").trim();
+        var input_value = $(this).parent().find('p').text();
+        let em = $(this).parent().find('p').find("em").text();
+        input_value = input_value.replace(em, "").trim();
 
-        var input_value = $(this).val(); //Changed to check value of checkbox which will be QID
+        // var input_value = $(this).val(); //Changed to check value of checkbox which will be QID
 
         var input_key = $(this).parent().attr("class");
         var page_url = document.location.href;
