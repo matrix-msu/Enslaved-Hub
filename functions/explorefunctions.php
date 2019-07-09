@@ -1935,6 +1935,8 @@ HTML;
                 $eventStatus = $allEventStatuses[$eventLabel];
             }
 
+            //todo: place records
+
             if ($eventStartYear != ''){
                 $eventArray = [
                   'kid' => $eventQ,
@@ -1960,10 +1962,15 @@ HTML;
 
 
     $timeline_event_dates = [];
+    $unknownEvents = [];
     foreach ($events as $event) {
         // If there are months and days, put the year into decimal format
         // Ex: March 6, 1805 = 1805.18
-        array_push($timeline_event_dates, $event['startYear']);
+        if (isset($event['startYear']) && $event['startYear'] != ''){
+            array_push($timeline_event_dates, $event['startYear']);
+        } else {
+            array_push($unknownEvents, array($event['kid'] => $event));
+        }
     }
 
     $first_date = min($timeline_event_dates);
@@ -1989,29 +1996,137 @@ HTML;
     $hashes = range($first_date_hash, $final_date_hash, $increment);
     $hash_count = count($hashes);
     $hash_range = end($hashes) - $hashes[0];
+    
+    $html = '
+    <div class="timelinewrap">
+    <section class="fr-section timeline-section">
+    <h2 class="section-title">Person Timeline</h2>
+    
+    <div class="timeline-info-container" kid="{$events[0][\'kid\']}">
+    <div class="arrow-pointer-bottom"></div>
+    <div class="arrow-pointer-top"></div>';
+    
+    // <div class="info-header">
+    //     <div class="info-select info-select-event active" data-select="event">
+    //         <p>Event</p>
+    //         <p class="large-text">Birth</p>
+    //     </div>
+    //     <div class="info-select info-select-place" data-select="place">
+    //         <p>Place</p>
+    //         <p class="large-text">Batendu</p>
+    //     </div>
+    // </div>
+    
+    
+    
+    
+    // print_r($events);die;
 
-    $html = '';
+    $html .= '<div class="info-header">';
+    $timeline_event_dates = array_unique($timeline_event_dates);
+    
+    foreach ($timeline_event_dates as $year) {
+        $places = array();
+        foreach ($events as $event) {
+            if (isset($event['startYear']) && $event['startYear'] == $year) {
+                $kid = $event['kid'];
+            // todo
+            //   // Building unique places
+            //   $placeResult = getPlace($event);
+            //   if (is_array($placeResult)) {
+            //     // This guarantees a unique set of kids
+            //     $places[$placeResult['kid']] = $placeResult['place'];
+            //   }
+                        
+                $html .= '
+                    <div
+                    class="info-select info-select-event"
+                    data-select="event"
+                    data-year="'.$year.'"
+                    data-kid="'.$kid.'"
+                    >
+                    <p>Event</p>
+                    <p class="large-text">'.$event['type'].'</p>
+                    </div>';
+            }
+        }
+        
+        // todo
+        if (!empty($places)) {
+            foreach ($places as $kid => $place) {
+                if (isset($place['Country Colony'])) {
+        
+                    $html .= '
+                        <div
+                        class="info-select info-select-place"
+                        data-select="place"
+                        data-year="'.$year.'"
+                        data-kid="'.$kid.'"
+                        >
+                        <p>Place</p>
+                        <p class="large-text">'.$place['Country Colony'].'</p>
+                        </div>';
+                }
+            }
+        }
+    }
 
-    $html = <<<HTML
-<div class="timelinewrap">
-  <section class="fr-section timeline-section">
-  <h2 class="section-title">Person Timeline</h2>
+          $unknownPlaces = array();
+          foreach ($unknownEvents as $event) {
+            $kid = $event['kid'];
+            $placeResult = getPlace($event[$kid]);
+            if (is_array($placeResult)) {
+              $unknownPlaces[$placeResult['kid']] = array(
+                'place' => $placeResult['place'],
+                'eventKid' => $kid
+              );
+            }
+          
 
-  <div class="timeline-info-container" kid="{$events[0]['kid']}">
-      <div class="arrow-pointer-bottom"></div>
-      <div class="arrow-pointer-top"></div>
+            $html .= '
+              <div
+                class="info-select info-select-event"
+                data-select="event"
+                data-year="'.$kid.'"
+                data-kid="'.$kid.'"
+              >
+                <p>Event</p>
+                <p class="large-text">'.$event[$kid]['Event Type']['value'].'</p>
+              </div>';
+        
+          }
 
-      <!-- <div class="info-header">
-          <div class="info-select info-select-event active" data-select="event">
-              <p>Event</p>
-              <p class="large-text">Birth</p>
-          </div>
-          <div class="info-select info-select-place" data-select="place">
-              <p>Place</p>
-              <p class="large-text">Batendu</p>
-          </div>
-      </div> -->
-HTML;
+          if (!empty($unknownPlaces)) {
+            foreach ($unknownPlaces as $kid => $place) {
+              if (isset($place['place']['Country Colony'])) {
+        
+                  $html .= '
+                      <div
+                        class="info-select info-select-place"
+                        data-select="place"
+                        data-kid="'.$kid.'"
+                        data-event-kid="'.$place['eventKid'].'"
+                      >
+                        <p>Place</p>
+                        <p class="large-text">'.$place['place']['Country Colony'].'</p>
+                      </div>';
+              }
+            }
+          }
+        
+          $html .= '</div>';
+
+
+
+
+
+
+
+
+
+
+
+
 
     // put the events in order to be displayed
     $dates = array_column($events, 'startYear');
@@ -2069,32 +2184,29 @@ HTML;
 
 
 
-      $html .= '
-          <div class="info-column">
-              <p>Event</p>';
+      $html .= '<div class="info-column">';
       $html .= "
               $titleHtml
               $dateHtml
               $eventTypeHtml
-              $eventDescHtml
-              ";
+              $eventDescHtml";
       $html .= '
           </div><div class="info-column">
           '.$eventRoleHtml.'
           '.$eventStatusHtml.'
           </div>
-      </div>
-      <div class="place-info-'.$event['kid'].' infowrap">
-          <div class="info-column">
-              <p><span class="bold">Place Info: </span>Place Info</p>
-              <p><span class="bold">Testing Kid: </span>'.$event['kid'].'</p>
-          </div>
-      </div>
-';
+      </div>';
+
+      // <div class="place-info-'.$event['kid'].' infowrap">
+      //     <div class="info-column">
+      //         <p><span class="bold">Place Info: </span>Place Info</p>
+      //         <p><span class="bold">Testing Kid: </span>'.$event['kid'].'</p>
+      //     </div>
+      // </div>
     }
 
     $html .= '</div>';
-
+    
     $html .= '<div class="timeline-container">
     <div class="timeline">
       <div class="line"></div>
@@ -2107,10 +2219,16 @@ HTML;
 
     $html .= '
       </div>
-      <div class="points-container">
-      ';
+      <div class="points-container">';
 
+      $timelineIndex = 0;
+
+      $yearsFound = array();  // make sure no duplicate years
       foreach ($events as $index => $event) {
+          if (in_array($event['startYear'], $yearsFound)){
+            continue;
+          }
+          $yearsFound[] = $event['startYear'];
           // Convert year, month, day into decimal form
           $left = ($event['startYear'] - $first_date_hash) * 100 / $hash_range;
 
@@ -2118,6 +2236,7 @@ HTML;
           <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
           style="left:calc('.$left.'% - 5px)"
           data-kid="'.$event['kid'].'"
+          data-year="'.$event['startYear'].'"
           data-index="'.$index.'">
           <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
           </div>';
