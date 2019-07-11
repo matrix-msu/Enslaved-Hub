@@ -75,12 +75,12 @@
        ?>
         <h4 class="last-page-header" style="<?php  echo (!$showPath) ? 'display:none' : '' ?> ">
             <a id="last-page" class="prev1" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM ?>">
-                <span id="previous-title"><?php echo $upperForm ?> </span>
+                <span id="previous-title"><?php echo $upperForm ?></span>
             </a>
             <a id="last-page" class="prev2" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM. '/' .$typeLower ?>">
-                <span id="previous-title"><?php echo ($typeTitle != "") ? "//" . $typeTitle : "" ?></span>
+                <span id="previous-title"><?php echo ($typeTitle != "") ? "// " . $typeTitle : "" ?></span>
             </a>
-            <span id="current-title"><?php echo ($currentTitle != "") ? "//" . $currentTitle : "" ?></span>
+            <span id="current-title"><?php echo ($currentTitle != "") ? "// " . $currentTitle : "" ?></span>
         </h4>
         <div class="search-title">
             <h1><?php echo $currentTitle;?></h1>

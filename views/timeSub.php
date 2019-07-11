@@ -25,11 +25,11 @@ if (isset($_GET['prev'])){
 <!-- Time Select -->
 <main class="direct-search timesub">
     <div class="searchwrap">
-        <form action="<?php echo BASE_URL;?>searchResults">
+        <form action="<?php echo BASE_URL;?>search/events" onsubmit="handleSubmit()">
             <div class="search-section">
                 <div class="inputwrap">
                     <label for="startYear">Start Year</label>
-                    <select class="s2-single" id="startYear" name="startYear">
+                    <select class="s2-single date-from" id="event-from" name="">
                         <option value""></option>
                         <!-- <option value="1840">1840</option>
                         <option value="1841">1841</option>
@@ -41,7 +41,7 @@ if (isset($_GET['prev'])){
                 </div>
                 <div class="inputwrap">
                     <label for="endYear">End Year</label>
-                    <select class="s2-single" id="endYear" name="endYear">
+                    <select class="s2-single date-to" id="event-to" name="">
                         <option value""></option>
                         <!-- <option value="1840">1840</option>
                         <option value="1841">1841</option>
@@ -51,12 +51,12 @@ if (isset($_GET['prev'])){
                         <option value="1842">1845</option> -->
                     </select>
                 </div>
-
+                <input class="event-date-range" type="hidden" name="date" value=""/>
             </div>
 
 
             <div class="buttonwrap">
-                <button id="direct-submit" name="submit" type="submit" data-submit="...Sending">Search</button>
+                <button id="direct-submit" type="submit" data-submit="...Sending">Search</button>
             </div>
         </form>
     </div>

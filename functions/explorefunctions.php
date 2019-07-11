@@ -451,8 +451,8 @@ function counterOfType() {
         if ($type == "Event Type"){
             return counterOfEventType();
         }
-        if ($type == "Time"){
-            return counterOfTime(); // not real
+        if ($type == "Date"){
+            return getEventDateRange();
         }
         if ($type == "Place"){
             return counterOfEventPlace();

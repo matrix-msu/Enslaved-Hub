@@ -579,8 +579,8 @@ QUERY;
                 $dateRangeQuery = "";
                 $from = '';
                 $to = '';
-                if (isset($filtersArray['eventDate'])){
-                    $dateRange = $filtersArray['eventDate'][0];
+                if (isset($filtersArray['date'])){
+                    $dateRange = $filtersArray['date'][0];
                     //Have date range here ex. 1800-1900 so split it and create the query to add in
                     $dateArr = explode('-', $dateRange);
                     $from = $dateArr[0];
@@ -665,11 +665,11 @@ WHERE {
             ?roles pq:P39 ?people}.
 
     OPTIONAL {?event wdt:P14 ?endsAt.
-                FILTER (?endsAt <= "1900-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
+                FILTER (?endsAt <= "$to-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
                     BIND(str(YEAR(?endsAt)) AS ?endYear).
                 }.
-        FILTER (?date >= "1800-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
-        FILTER (?date <= "1900-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date >= "$from-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date <= "$to-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
         BIND(str(YEAR(?date)) AS ?startyear).
 
         $sourceQuery
@@ -711,11 +711,11 @@ WHERE {
             ?roles pq:P39 ?people}.
 
     OPTIONAL {?event wdt:P14 ?endsAt.
-                FILTER (?endsAt <= "1900-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
+                FILTER (?endsAt <= "$to-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
                     BIND(str(YEAR(?endsAt)) AS ?endYear).
                 }.
-        FILTER (?date >= "1800-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
-        FILTER (?date <= "1900-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date >= "$from-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date <= "$to-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
         BIND(str(YEAR(?date)) AS ?startyear).
 
         $sourceQuery

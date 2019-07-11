@@ -1,3 +1,22 @@
+<?php
+    /**
+     * Template Name: Web Crawler
+     */
+
+    // get_header();
+    // $isCrawlerAdmin=isCrawlerAdmin($_SESSION['sess_username']);
+	$isCrawlerAdmin = true;
+    // $user_arrays=perm_roles();
+    // $i = 0;
+	// $roleIndex = 1;
+	// $permissionIndex = 1;
+    // $roles=getRoles();
+    // $permissions=getPermissions();
+    require (BASE_PATH . "webcrawler/config.php");
+	require (BASE_PATH . "webcrawler/models/crawler_keywords.php");
+    require (BASE_PATH . "webcrawler/models/crawler_deleted_keywords.php");
+?>
+
 <div class="container header">
     <div class="container middlewrap">
         <div class="advanced-title">
@@ -39,8 +58,29 @@
             </span>
         </div>
     </div>
+    <?php if($isCrawlerAdmin) {	 ?>
+        <?php  // hidden field to store seeds value
+        $crawler_keywords =new crawler_keywords();
+        if(isset($_GET['seeds']))
+        {
+        ?>
+            <input type="text" id="seeds_is_set" value="seeds" style="display:none">
+        <?php
+        }
+        ?>
     
     <div class="results-wrap result-container show" id="results">
+        <?php
+		//********** results are displayed here ***********//
+		// connect to keywords data base and get the first list of keywords
+		$limit=20;
+
+        //need to add crawler keywords variable
+		$results=$crawler_keywords->get_keywords($limit,0);
+		if($results!="no more data")
+		echo($results);
+
+		?>
         <div class="result">
             <div class="link-name">
                 <p>Name of Link Goes Here</p>
@@ -146,7 +186,10 @@
             </div>
         </div>
     </div>
-
+    <?php } else { ?>
+		<p><strong id="permissions_inv">Whoops, this is embarassing...<br>
+			You don't have the permissions to view this page, sorry!</strong></p>
+    <?php } ?>
 
 
     <div id="pagination">
@@ -168,3 +211,10 @@
 </div>
 <script src="<?php echo BASE_URL;?>assets/javascripts/crawler.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
+
+<?php if($isCrawlerAdmin) { ?>
+    <script src="<?php echo BASE_URL;?>webcrawler/js/webcrawler.js"></script>
+    <script src="<?php echo BASE_URL;?>webcrawler/js/crawler_results.js"></script>
+	<script src="<?php echo BASE_URL;?>webcrawler/js/crawler_seeds.js"></script>
+	<script src="<?php echo BASE_URL;?>webcrawler/js/crawler_broken_links.js"></script>
+<?php } ?>
