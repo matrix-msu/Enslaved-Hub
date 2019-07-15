@@ -159,21 +159,15 @@ ORDER BY DESC(?count)';
 
 //get the roles and their counts
 function counterOfRole(){
-  $query='SELECT ?role ?roleLabel ?count
-      WHERE
-      {
-        {
-          SELECT ?role (COUNT(?human) AS ?count) WHERE {
-            ?human wdt:'.properties["instance of"].' wd:Q602.
-            ?human wdt:'.properties["hasParticipantRoleRecord"].' ?role.
-          }
-          GROUP BY ?role
-        }
-        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-      }
-      ORDER BY DESC(?count)
-      LIMIT 100
-      ';
+  $query= 'SELECT  ?roleLabel (COUNT(?human) AS ?count)WHERE
+ {  ?human wdt:'.properties["instance of"].' wd:'.classes["Person"].'.
+    ?human wdt:'.properties["hasParticipantRoleRecord"].' ?role.
+
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+  }GROUP BY ?roleLabel
+ ORDER BY DESC(?count)';
+
+
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -191,9 +185,9 @@ function counterOfRole(){
 function counterOfAge(){
 
   $ageCategoryQuery ='SELECT  ?agecategoryLabel (count(?agent) as ?count) where{
-                        ?agecategory wdt:'.properties["instance of"].' wd:Q604.
-                        ?agent wdt:'.properties["instance of"].' wd:Q602.
-                        ?agent wdt:'.properties["instance of"].'2 ?agecategory.
+                        ?agecategory wdt:'.properties["instance of"].' wd:'.classes["Age Category"].'.
+                        ?agent wdt:'.properties["instance of"].' wd:'.classes["Person"].'.
+                        ?agent wdt:'.properties["hasAgeCategory"].' ?agecategory.
                         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 
                       }group by ?agecategoryLabel
@@ -264,20 +258,16 @@ QUERY;
 }
 
 function counterOfEventType() {
-  $query='SELECT ?eventType ?eventTypeLabel ?count
-      WHERE
-      {
-        {
-          SELECT ?eventType (COUNT(?event) AS ?count) WHERE {
-            ?event wdt:'.properties["instance of"].' wd:Q34.
-            ?event wdt:P81 ?eventType.
-          }
-          GROUP BY ?eventType
-        }
-        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-      }
-      ORDER BY DESC(?count)
-    ';
+  $query='SELECT ?eventTypeLabel (COUNT(?event) AS ?count)  WHERE{
+     ?event wdt:'.properties["instance of"].' wd:'.classes["Event"].'.
+     ?event wdt:'.properties["hasEventType"].' ?eventType.
+
+
+     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+} GROUP BY ?eventTypeLabel
+ORDER BY DESC(?count)
+ ';
+  
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
