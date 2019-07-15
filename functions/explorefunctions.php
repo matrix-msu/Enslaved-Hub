@@ -159,21 +159,15 @@ ORDER BY DESC(?count)';
 
 //get the roles and their counts
 function counterOfRole(){
-  $query='SELECT ?role ?roleLabel ?count
-      WHERE
-      {
-        {
-          SELECT ?role (COUNT(?human) AS ?count) WHERE {
-            ?human wdt:'.properties["instance of"].' wd:Q602.
-            ?human wdt:'.properties["hasParticipantRoleRecord"].' ?role.
-          }
-          GROUP BY ?role
-        }
-        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-      }
-      ORDER BY DESC(?count)
-      LIMIT 100
-      ';
+  $query= 'SELECT  ?roleLabel (COUNT(?human) AS ?count)WHERE
+ {  ?human wdt:'.properties["instance of"].' wd:'.classes["Person"].'.
+    ?human wdt:'.properties["hasParticipantRoleRecord"].' ?role.
+
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+  }GROUP BY ?roleLabel
+ ORDER BY DESC(?count)';
+
+
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -190,13 +184,13 @@ function counterOfRole(){
 // Count the number of people in each age category
 function counterOfAge(){
 
-  $ageCategoryQuery ='SELECT  ?agecategoryLabel (count(?agent) as ?count) where{
-                        ?agecategory wdt:'.properties["instance of"].' wd:Q604.
-                        ?agent wdt:'.properties["instance of"].' wd:Q602.
-                        ?agent wdt:'.properties["instance of"].'2 ?agecategory.
+  $ageCategoryQuery ='SELECT ?agecategoryLabel (count(?agent) as ?count) where{
+                        ?agecategory wdt:'.properties["instance of"].' wd:'.classes["Age Category"].'.
+                        ?agent wdt:'.properties["instance of"].' wd:'.classes["Person"].'.
+                        ?agent wdt:'.properties["hasAgeCategory"].' ?agecategory.
                         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 
-                      }group by ?agecategoryLabel
+                      }group by  ?agecategoryLabel
                       ';
 
   $encode=urlencode($ageCategoryQuery);
@@ -209,8 +203,8 @@ function counterOfAge(){
 
 function counterOfEthnodescriptor(){
   $query='SELECT ?ethno ?ethnoLabel (COUNT(?human) as ?count)
-{?human wdt:'.properties["instance of"].' wd:Q602.
- ?human wdt:P86 ?ethno.
+{?human wdt:'.properties["instance of"].' wd:'.classes["Person"].'.
+ ?human wdt:'.properties["hasECVO"].' ?ethno.
  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?ethno ?ethnoLabel
 ORDER BY ?ethnoLabel';
@@ -264,20 +258,16 @@ QUERY;
 }
 
 function counterOfEventType() {
-  $query='SELECT ?eventType ?eventTypeLabel ?count
-      WHERE
-      {
-        {
-          SELECT ?eventType (COUNT(?event) AS ?count) WHERE {
-            ?event wdt:'.properties["instance of"].' wd:Q34.
-            ?event wdt:P81 ?eventType.
-          }
-          GROUP BY ?eventType
-        }
-        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-      }
-      ORDER BY DESC(?count)
-    ';
+  $query='SELECT ?eventTypeLabel (COUNT(?event) AS ?count)  WHERE{
+     ?event wdt:'.properties["instance of"].' wd:'.classes["Event"].'.
+     ?event wdt:'.properties["hasEventType"].' ?eventType.
+
+
+     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+} GROUP BY ?eventTypeLabel
+ORDER BY DESC(?count)
+ ';
+
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -292,20 +282,14 @@ function counterOfEventType() {
 }
 
 function counterOfEventPlace(){
-    $query='SELECT ?place ?placeLabel ?count
-            WHERE
-            {
-              {
-                SELECT ?place (COUNT(?event) AS ?count) WHERE {
-                  ?event wdt:'.properties["instance of"].' wd:Q34.
-                  ?event wdt:P12 ?place.
-                }
-                GROUP BY ?place
-              }
+    $query='SELECT ?place ?placeLabel ?(COUNT(?event) AS ?count) WHERE {
+                  ?event wdt:'.properties["instance of"].'wd:'.classes["Event"].'.
+                  ?event wdt:'.properties["atPlace"].'?place.
+
               SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-            }
+            }GROUP BY ?place ?placeLabel
             ORDER BY ASC(?placeLabel)
-      ';
+            ';
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
@@ -403,20 +387,15 @@ QUERY;
 }
 
 function counterOfSourceType(){
-  $query="SELECT ?sourcetype ?sourcetypeLabel ?count
-          WHERE
-          {
-            {
-              SELECT ?sourcetype (COUNT(?source) AS ?count) WHERE {
-                ?source wdt:P3 wd:Q16.
-                ?source wdt:P9 ?sourcetype.
-              }
-              GROUP BY ?sourcetype
-            }
-            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-          }
-          ORDER BY ASC(?sourcetypeLabel)
-    ";
+
+ $query='SELECT ?sourcetypeLabel (COUNT(?source) AS ?count)  WHERE{
+     ?source wdt:'.properties["instance of"].' wd:'.classes["Entity with Provenance"].'.
+     ?source wdt:'.properties["hasOriginalSourceType"].' ?sourcetype.
+
+
+     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+} GROUP BY ?sourcetypeLabel
+ORDER BY DESC(?count)';
 
   $encode=urlencode($query);
   $call=API_URL.$encode;
@@ -1997,16 +1976,16 @@ HTML;
     $hashes = range($first_date_hash, $final_date_hash, $increment);
     $hash_count = count($hashes);
     $hash_range = end($hashes) - $hashes[0];
-    
+
     $html = '
     <div class="timelinewrap">
     <section class="fr-section timeline-section">
     <h2 class="section-title">Person Timeline</h2>
-    
+
     <div class="timeline-info-container" kid="{$events[0][\'kid\']}">
     <div class="arrow-pointer-bottom"></div>
     <div class="arrow-pointer-top"></div>';
-    
+
     // <div class="info-header">
     //     <div class="info-select info-select-event active" data-select="event">
     //         <p>Event</p>
@@ -2017,15 +1996,15 @@ HTML;
     //         <p class="large-text">Batendu</p>
     //     </div>
     // </div>
-    
-    
-    
-    
+
+
+
+
     // print_r($events);die;
 
     $html .= '<div class="info-header">';
     $timeline_event_dates = array_unique($timeline_event_dates);
-    
+
     foreach ($timeline_event_dates as $year) {
         $places = array();
         foreach ($events as $event) {
@@ -2038,7 +2017,7 @@ HTML;
             //     // This guarantees a unique set of kids
             //     $places[$placeResult['kid']] = $placeResult['place'];
             //   }
-                        
+
                 $html .= '
                     <div
                     class="info-select info-select-event"
@@ -2051,12 +2030,12 @@ HTML;
                     </div>';
             }
         }
-        
+
         // todo
         if (!empty($places)) {
             foreach ($places as $kid => $place) {
                 if (isset($place['Country Colony'])) {
-        
+
                     $html .= '
                         <div
                         class="info-select info-select-place"
@@ -2082,7 +2061,7 @@ HTML;
                 'eventKid' => $kid
               );
             }
-          
+
 
             $html .= '
               <div
@@ -2094,13 +2073,13 @@ HTML;
                 <p>Event</p>
                 <p class="large-text">'.$event[$kid]['Event Type']['value'].'</p>
               </div>';
-        
+
           }
 
           if (!empty($unknownPlaces)) {
             foreach ($unknownPlaces as $kid => $place) {
               if (isset($place['place']['Country Colony'])) {
-        
+
                   $html .= '
                       <div
                         class="info-select info-select-place"
@@ -2114,7 +2093,7 @@ HTML;
               }
             }
           }
-        
+
           $html .= '</div>';
 
 
@@ -2207,7 +2186,7 @@ HTML;
     }
 
     $html .= '</div>';
-    
+
     $html .= '<div class="timeline-container">
     <div class="timeline">
       <div class="line"></div>

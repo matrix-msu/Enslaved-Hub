@@ -1,6 +1,7 @@
 <?php
 const classes=[
 'Agent' => 'Q2',
+'Age Category' => 'Q604',
 'AgeRecord' => 'Q65',
 'Agent Record' => 'Q46',
 'Controlled Vocabulary for Age Category' => 'Q316',
