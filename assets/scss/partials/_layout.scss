@@ -1,0 +1,81 @@
+// For defining global page and section layouts
+.section {
+  background: $base-light;
+  padding: 50px 0;
+
+  .section-content {
+    margin: auto;
+    max-width: $max-width-content;
+    width: 90%;
+
+    &.full-width {
+      max-width: unset;
+      width: 100%;
+    }
+  }
+
+  &.dark {
+    background: $base-dark;
+    color: $text-color-light;
+  }
+
+  &.no-padding {
+    padding: 0;
+  }
+}
+
+// Rows & Columns (preferably used inside section content)
+.row {
+  display: flex;
+  flex-flow: row wrap;
+
+  // Default to half columns
+  .col {
+    padding: 0 $column-spacing;
+    width: 50%;
+
+    // Thirds columns
+    &-3 {
+      width: calc(100% / 3);
+    }
+
+    &-4 {
+      width: 25%;
+    }
+
+    &:first-child {
+      padding-left: 0;
+      padding-right: $column-spacing;
+    }
+
+    &:last-child {
+      padding-left: $column-spacing;
+      padding-right: 0;
+    }
+  }
+
+  @media screen and (max-width: $max-width-tablet) {
+    .col {
+      &-4 {
+        width: 50%;
+      }
+    }
+  }
+
+  @media screen and (max-width: $max-width-mobile) {
+    .col {
+      width: 100%;
+
+      &-3,
+      &-4 {
+        width: 100%;
+      }
+
+      &:first-child,
+      &:last-child {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}

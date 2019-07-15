@@ -73,5 +73,16 @@
          url('../fonts/aleo/Light-Italic/aleo-lightitalic-webfont.svg#aleo') format('svg');
     font-weight: normal;
     font-style: normal;
+}
 
+@font-face {
+  font-family: 'ebgaramond';
+  src: url('../fonts/ebgaramond/ebgaramond-bold.eot');
+  src: url('../fonts/ebgaramond/ebgaramond-bold.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/ebgaramond/ebgaramond-bold.woff2') format('woff2'),
+  url('../fonts/ebgaramond/ebgaramond-bold.woff') format('woff'),
+  url('../fonts/ebgaramond/ebgaramond-bold.ttf') format('truetype'),
+  url('../fonts/ebgaramond/ebgaramond-bold.svg#ebgaramond') format('svg');
+  font-weight: bold;
+  font-style: normal;
 }

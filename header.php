@@ -30,8 +30,10 @@
                     </ul>
                 </li>
                 <?php continue;} ?> 
-                <li class="nav-item"><?php echo ($nav[0] == "Search") ? '<img class="search-icon" src="'.BASE_IMAGE_URL.'search.svg" alt="search icon" />' : "" ?>
-                <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo BASE_URL.lcfirst($nav[0])?>"><?php echo $nav[0]?></a></li>
+                <li class="nav-item">
+                    <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo BASE_URL.lcfirst($nav[0])?>"><?php echo $nav[0]?></a>
+                    <?php echo ($nav[0] == "Search") ? '<img class="search-icon" src="'.BASE_IMAGE_URL.'search.svg" alt="search icon" />' : "" ?>
+                </li>
             <?php } ?>
             </ul>
         </div>

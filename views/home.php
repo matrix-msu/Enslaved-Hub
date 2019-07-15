@@ -3,6 +3,7 @@
 <!-- Main page-->
 <!-- Heading image and title container-->
 <div class="container header">
+    <img class="header-background" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg.jpg" alt="Enslaved Background Image">
     <div class="container middlewrap">
         <div class="heading-text">
             <div class="heading-title">
@@ -12,7 +13,8 @@
             <p><?php echo $cache_data["descr"] ?> </p>
         </div>
         <div class="heading-search">
-            <h3>Search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade ...</h3>
+            <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="">Go to Advanced Search</a></p>
+            <p class="hide-desktop-only mt-xs"><a class="text-link" href="">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
                 <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
@@ -23,54 +25,68 @@
     </div>
 </div>
 <main class="home">
-    <div class="section-wrap">
-        <div class="section-info">
-            <a href="<?php echo BASE_URL;?>explore"><h2>Explore<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
-            <p><?php echo array_key_exists("Explore", $cache_data) ? $cache_data["Explore"] : "" ?></p>
-        </div>
+    <section class="section">
         <div class="section-content">
-            <a href="<?php echo BASE_URL;?>search/people">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
-                    <h3>People</h3>
-                    <span><?php echo queryAllAgentsCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
+            <div class="row">
+                <div class="col">
+                    <h2 class="section-title">Explore</h2>
+                    <p class="paragraph"><?php echo array_key_exists("Explore", $cache_data) ? $cache_data["Explore"] : "" ?></p>
                 </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>search/events">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
-                    <h3>Events</h3>
-                    <span><?php echo queryEventCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
+
+                <div class="col">
+                    <a class="content-link" href="<?php echo BASE_URL;?>search/people">
+                        <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
+                        <p class="type">People</p>
+                        <p class="count"><?php echo queryAllAgentsCounter();?></p>
+                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
+                    </a>
+                    <a  class="content-link"href="<?php echo BASE_URL;?>search/events">
+                        <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
+                        <p class="type">Events</p>
+                        <p class="count"><?php echo queryEventCounter();?></p>
+                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
+                    </a>
+                    <a class="content-link" href="<?php echo BASE_URL;?>search/places">
+                        <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
+                        <p class="type">Places</p>
+                        <p class="count"><?php echo queryPlaceCounter();?></p>
+                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
+                    </a>
+                    <a class="content-link" href="<?php echo BASE_URL;?>search/projects">
+                        <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
+                        <p class="type">Projects</p>
+                        <p class="count"><?php echo queryProjectsCounter();?></p>
+                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
+                    </a>
+                    <a class="content-link" href="<?php echo BASE_URL;?>search/sources">
+                        <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
+                        <p class="type">Sources</p>
+                        <p class="count"><?php echo querySourceCounter();?></p>
+                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
+                    </a>
                 </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>search/places">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
-                    <h3>Places</h3>
-                    <span><?php echo queryPlaceCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>search/projects">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
-                    <h3>Projects</h3>
-                    <span><?php echo queryProjectsCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
-                </div>
-            </a>
-            <a href="<?php echo BASE_URL;?>search/sources">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
-                    <h3>Sources</h3>
-                    <span><?php echo querySourceCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
-                </div>
-            </a>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section class="section dark">
+        <div class="section-content">
+            <div class="row">
+                <div class="col">
+                    <h2 class="section-title">Stories</h2>
+                    <p class="paragraph"><?php echo array_key_exists("Stories", $cache_data) ? $cache_data["Stories"] : "" ?></p>
+                    <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL;?>stories">View All Stories</a></p>
+                </div>
+
+                <div class="col">
+                    <ul id="stories-list">
+                        <!-- featured Stories goes here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="section-wrap visualize-hide">
         <div class="section-info">
             <a href="<?php echo BASE_URL;?>visualize"><h2>Visualize<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="arrow"/></h2></a>
@@ -128,7 +144,6 @@
 <script>
 
     $(document).ready(function () {
-
         // Create the 2 stories cards
         $.ajax({
             url: BASE_URL + "api/blazegraph",
@@ -141,6 +156,7 @@
             },
             'success': function (data) {
                 result_array = JSON.parse(data);
+                console.log(result_array);
                 result_array['homeCard'].forEach(function (card) {
                     $(card).appendTo("#stories-list");
                 });

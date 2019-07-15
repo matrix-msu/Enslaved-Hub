@@ -1,7 +1,18 @@
-//frequently used colors
-$base-dark: #122E46;
-$base-light: #FBF9F5;
-$sub-base: #EF9708;
+// Raw Colors
+$black: #000;
+$white: #fff;
+
+// Frequently Used Colors
+$base-dark: #0E3232;
+$base-light: #FAF7F2;
+$base-shadow: $black;
+$base-white: $white;
+$sub-base: #C24F3C; // Remove all uses of sub-base and use accent instead
+$accent: #C24F3C;
+
+// Text Colors
+$text-color: $base-dark;
+$text-color-light: $white;
 
 //responsive width variables for different pages
 
@@ -14,3 +25,12 @@ $mobile-width-400:          400px;
 
 $mobile-button-breakpoint:  768px;
 $mobile-button-breakpoint-2:450px;
+
+// Site Variables
+$max-width-content: 1000px;
+$column-spacing: 20px;
+
+// Universally Accepted Media Query Breakpoints
+$max-width-desktop: 1200px;
+$max-width-tablet: 900px;
+$max-width-mobile: 600px;

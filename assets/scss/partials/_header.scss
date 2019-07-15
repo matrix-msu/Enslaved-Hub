@@ -52,13 +52,10 @@
                         }
                     }
 
-                    #search{
-                        border-right: 1px solid #FFFFFF;
-                        padding: 5px 20px 5px 0;
-                        margin-left: 15px;
-                    }
                     .search-icon{
+                        height: 12px;
                         margin-bottom: -2px;
+                        margin-left: 2px;
                     }
                     
                     .selected{
@@ -174,7 +171,7 @@
 
 .fixedheader{
     box-shadow: 0 5px 10px 0 rgba(13,18,48,0.16);
-    background-color: rgb(18, 46, 70); //opacity was .5
+    background-color: $base-dark;
     position: fixed;
     // top: -50px;
     transition: top 0.3s;
