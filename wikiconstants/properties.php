@@ -24,7 +24,7 @@ const properties =
 'hasInterAgentRelationship' => 'P25',
 'hasParticipantRoleType' => 'P26',
 'equivalent class' => 'P27',
-'contributors' => 'P28',
+'hasContributor' => 'P28',
 'hasLink' => 'P29',
 'recordedAt' => 'P30',
 'referstoPlaceofOrigin' => 'P31',
@@ -82,6 +82,7 @@ const properties =
 'equivalent property' => 'P87',
 'closeMatch' => 'P88',
 'hasDescription'=>'P89',
-'hasEthnodescriptor'=>'P90'];
+'hasEthnodescriptor'=>'P90',
+'hasPI' => 'P95'];
 
 ?>

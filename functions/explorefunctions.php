@@ -222,7 +222,7 @@ ORDER BY ?ethnoLabel';
     return $res;
   }
 }
-
+/*no using browse by place on people for now
 function counterOfPeoplePlace() {
   $query= <<<QUERY
 SELECT DISTINCT ?placeLabel (COUNT(?agent) as ?count)  WHERE {
@@ -255,7 +255,7 @@ QUERY;
   }else{
       return $res;
   }
-}
+}*/
 
 function counterOfEventType() {
   $query='SELECT ?eventTypeLabel (COUNT(?event) AS ?count)  WHERE{
@@ -305,17 +305,16 @@ function counterOfEventPlace(){
 }
 
 function counterOfPlaceType(){
+  $instanceof=properties["instance of"];
+  $placeclass = classes["Place"];
+  $placetype= properties["hasPlaceType"];
   $query= <<<QUERY
-SELECT ?placeType ?placeTypeLabel (COUNT(?place) AS ?count)
-WHERE
-{     ?place wdt:P3 wd:Q50.
-      ?place wdt:P80 ?placeType.
-
-
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?placeType ?placeTypeLabel
-ORDER BY ASC(?placeTypeLabel)
+  SELECT DISTINCT ?placetype ?placetypeLabel (COUNT(?place) AS ?count) WHERE {
+    ?place wdt:$instanceof wd:$placeclass; #it's a place
+        wdt:$placetype ?placetype.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
+  }GROUP BY ?placetype ?placetypeLabel
+  order by ?placetypeLabel
 QUERY;
 
   $encode=urlencode($query);
@@ -330,13 +329,18 @@ QUERY;
       return $res;
   }
 }
-
+//not using this function for now
 function counterOfCity(){
+
+  $instanceof=properties["instance of"];
+  $placeclass = classes["Place"];
+  $placetype= properties["hasPlaceType"];
+  $locatedIn = properties["locatedIn"];
   $query= <<<QUERY
 SELECT DISTINCT ?city ?cityLabel (COUNT(?place) AS ?count) WHERE {
-  ?city wdt:P3 wd:Q50; #it's a place
-      wdt:P80 wd:Q29.#?city is a city
-OPTIONAL {?place wdt:P10 ?city.} #place is locatedIn a city
+  ?city wdt:$instanceof wd:$placeclass; #it's a place
+      wdt:$placetype wd:Q29.#?city is a city
+OPTIONAL {?place wdt:$locatedIn ?city.} #place is locatedIn a city
 
 SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
 }GROUP BY ?city ?cityLabel
@@ -356,7 +360,7 @@ QUERY;
       return $res;
   }
 }
-
+//no using this function for now
 function counterOfProvince(){
   $query= <<<QUERY
 SELECT DISTINCT ?provinceLabel (COUNT(?city) as ?cityCount) (COUNT(?place) as ?placeCount) WHERE {
@@ -391,8 +395,6 @@ function counterOfSourceType(){
  $query='SELECT ?sourcetypeLabel (COUNT(?source) AS ?count)  WHERE{
      ?source wdt:'.properties["instance of"].' wd:'.classes["Entity with Provenance"].'.
      ?source wdt:'.properties["hasOriginalSourceType"].' ?sourcetype.
-
-
      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 } GROUP BY ?sourcetypeLabel
 ORDER BY DESC(?count)';
@@ -480,34 +482,22 @@ function getEventDateRange() {
     $fullResults = [];
     $query='SELECT ?year ?yearend WHERE {
             {SELECT ?year WHERE {
-              ?event wdt:P3 wd:Q34; #event
-                     wdt:P13 ?date.
+              ?event '.properties["instance of"].' wd:'.classes["Event"].' #event
+                     wdt:'.properties["startsAt"].' ?date.
                 BIND(str(YEAR(?date)) AS ?year).
               }ORDER BY desc(?year)
             LIMIT 1}
             UNION
             {
             select ?yearend where {
-              ?event wdt:P3 wd:Q34; #event
-                     wdt:P14 ?enddate.
+              ?event '.properties["instance of"].' wd:'.classes["Event"].'; #event
+                     wdt:'.properties["endsAt"].' ?enddate.
                 BIND(str(YEAR(?enddate)) AS ?yearend).
               }ORDER BY desc(?yearend)
             LIMIT 1
             }
             }';
-    // $query='SELECT ?startyear ?endyear
-    //         WHERE {
-    //           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-    //           ?event wdt:P3 wd:Q34.
-    //           ?event wdt:P13 ?startdate.
-    //           BIND(str(YEAR(?startdate)) AS ?startyear).
-    //
-    //           OPTIONAL {?event wdt:P14 ?enddate.}
-    //           BIND(str(YEAR(?enddate)) AS ?endyear).
-    //
-    //
-    //         } ORDER BY desc(?startyear) desc(?endyear)
-    //         LIMIT 1';
+
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -521,24 +511,11 @@ function getEventDateRange() {
     }
 
     $query='SELECT ?year WHERE {
-            ?event wdt:P3 wd:Q34; #event
-                   wdt:P13 ?date.
+            ?event '.properties["instance of"].' wd:'.classes["Event"].'; #event
+                   wdt:'.properties["startsAt"].' ?date.
               BIND(str(YEAR(?date)) AS ?year).
             }ORDER BY ASC(?year)
           LIMIT 1';
-    // $query='SELECT ?startyear ?endyear
-    //         WHERE {
-    //           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-    //           ?event wdt:P3 wd:Q34.
-    //           ?event wdt:P13 ?startdate.
-    //           BIND(str(YEAR(?startdate)) AS ?startyear).
-    //
-    //           OPTIONAL {?event wdt:P14 ?enddate.}
-    //           BIND(str(YEAR(?enddate)) AS ?endyear).
-    //
-    //
-    //         } ORDER BY asc(?startyear) asc(?endyear)
-    //         LIMIT 1';
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -675,6 +652,8 @@ function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
   return $onestatement;
 
 }
+
+//finish to display ranks here. Error now it only displays PI with higher rank.
 function getProjectFullInfo() {
     $query = 'SELECT  ?title ?desc ?link
              (group_concat(distinct ?pinames; separator = "||") as ?piNames)
@@ -682,12 +661,12 @@ function getProjectFullInfo() {
             WHERE
             {
              VALUES ?project {wd:'.$_GET['qid'].'} #Q number needs to be changed for every project.
-              ?project wdt:P3 wd:Q264. #all projects
-              OPTIONAL{?project wdt:P29 ?link. }
+              ?project wdt:'.properties["instance of"].' wd:'.classes["Research Project"].'. #all projects
+              OPTIONAL{?project wdt:'.properties["hasLink"].' ?link. }
               ?project schema:description ?desc.
               ?project rdfs:label ?title.
-              OPTIONAL{ ?project wdt:P28 ?contributor.}
-              ?project wdt:P95 ?pi.
+              OPTIONAL{ ?project wdt:'.properties["hasContributor"].' ?contributor.}
+              ?project wdt:'.properties["hasPI"].' ?pi.
               ?pi rdfs:label ?pinames.
               SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
             }GROUP BY ?title ?desc ?link';
