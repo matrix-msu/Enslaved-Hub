@@ -222,40 +222,8 @@ ORDER BY ?ethnoLabel';
     return $res;
   }
 }
-/*no using browse by place on people for now
-function counterOfPeoplePlace() {
-  $query= <<<QUERY
-SELECT DISTINCT ?placeLabel (COUNT(?agent) as ?count)  WHERE {
-  ?place wdt:P3 wd:Q50 . #it's a place
-  ?event wdt:P12 ?place.
-  ?agent wdt:P3/wdt:P2 wd:Q2;
-      p:P82 [ #with property "hasName" mandatory
 
-            pq:P30 ?event #recordeAt Event
 
-        ];
-
-  SERVICE wikibase:label {
-      bd:serviceParam wikibase:language "en" .
-
-  }
-}GROUP BY ?placeLabel
-ORDER BY ?placeLabel
-
-QUERY;
-
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
-
-  $res= json_decode($res);
-
-  if (!empty($res)){
-      return json_encode($res->results->bindings);
-  }else{
-      return $res;
-  }
-}*/
 
 function counterOfEventType() {
   $query='SELECT ?eventTypeLabel (COUNT(?event) AS ?count)  WHERE{
@@ -345,35 +313,6 @@ OPTIONAL {?place wdt:$locatedIn ?city.} #place is locatedIn a city
 SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
 }GROUP BY ?city ?cityLabel
 order by ?cityLabel
-
-QUERY;
-
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
-
-  $res= json_decode($res);
-
-  if (!empty($res)){
-      return json_encode($res->results->bindings);
-  }else{
-      return $res;
-  }
-}
-//no using this function for now
-function counterOfProvince(){
-  $query= <<<QUERY
-SELECT DISTINCT ?provinceLabel (COUNT(?city) as ?cityCount) (COUNT(?place) as ?placeCount) WHERE {
-  ?province wdt:P80 wd:Q31 . #it's a province
-  ?city wdt:P10 ?province. #city located in province
-  OPTIONAL{?place wdt:P10 ?city} #optional places located in city
-  SERVICE wikibase:label {
-      bd:serviceParam wikibase:language "en" .
-
-  }
-}GROUP BY ?provinceLabel
-ORDER BY ?provinceLabel
-
 
 QUERY;
 
@@ -1299,6 +1238,31 @@ HTML;
 function getPersonRecordHtml(){
     $qid = $_REQUEST['QID'];
     $type = $_REQUEST['type'];
+    $instanceof = properties["instance of"];
+    $subclassof = properties ["subclass of"];
+    $agent = classes["Agent"];
+    $refprop = properties["isDirectlyBasedOn"];
+    $generatedBy = properties["generatedBy"];
+    $hasName = properties ["hasName"];
+    $recordedAt = properties["recordeAt"];
+    $hasSex = properties["hasSex"];
+    $hasRace= properties["hasRace"];
+    $hasPersonStatus = properties["hasPersonStatus"];
+    $hasECVO = properties["hasECVO"];
+    $referstoPlaceofOrigin = properties["referstoPlaceofOrigin"];
+    $hasOccupation = properties ["hasOccupation"];
+    $closeMatch = properties ["closeMatch"];
+    $hasParticipantRole = properties ["hasParticipantRole"];
+    $roleProvidedBy = properties ["roleProvidedBy"];
+    $hasStatusGeneratingEvent = properties ["hasStatusGeneratingEvent"];
+    $isRelationshipTo = properties ["isRelationshipTo"];
+    $atPlace = properties ["atPlace"];
+    $startsAt = properties ["startsAt"];
+    $endsAt = properties ["endsAt"];
+    $hasEventType = properties ["hasEventType"];
+    $locatedIn = properties ["locatedIn"];
+    $$geonamesID = properties["Geonames ID"];
+    $moderncountrycode = properties["modern country code"];
 
     //QUERY FOR RECORD INFO
     $query = [];
@@ -1335,71 +1299,71 @@ SELECT ?name ?desc ?sextype  ?race
  WHERE
 {
  VALUES ?agent {wd:$qid} #Q number needs to be changed for every event.
-  ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+  ?agent wdt:$instanceof/wdt:$subclassof wd:$agent; #agent or subclass of agent
   		 ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:P35 ?source .
+  ?provenance pr:$refprop ?source .
   ?source rdfs:label ?refName;
-          wdt:P7 ?project.
+          wdt:$generatedBy ?project.
   ?project rdfs:label ?pname.
-  ?agent p:P82 ?statement.
-  ?statement ps:P82 ?name.
-  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+  ?agent p:$hasName ?statement.
+  ?statement ps:$hasName ?name.
+  OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
             bind(?recordedAt as ?allevents)}
 
 
   OPTIONAL{?agent schema:description ?desc}.
-  OPTIONAL{?agent wdt:P17 ?sex.
+  OPTIONAL{?agent wdt:$hasSex ?sex.
           ?sex rdfs:label ?sextype}.
-  OPTIONAL{?agent wdt:P37 ?race}.
+  OPTIONAL{?agent wdt:$hasRace ?race}.
 
-  OPTIONAL {?agent wdt:P24 ?status.
+  OPTIONAL {?agent wdt:$hasPersonStatus ?status.
            ?status rdfs:label ?statuslabel}.
 
-  OPTIONAL {?agent p:P86 ?statement.
-           ?statement ps:P86 ?ethnodescriptor.
+  OPTIONAL {?agent p:$hasECVO ?statement.
+           ?statement ps:$hasECVO ?ethnodescriptor.
            ?ethnodescriptor rdfs:label ?ecvo.
-           OPTIONAL{?statement pq:P31 ?placeofOrigin.
+           OPTIONAL{?statement pq:$referstoPlaceofOrigin ?placeofOrigin.
            ?placeofOrigin rdfs:label ?placeOriginlabel.}
            }.
-  OPTIONAL {?agent wdt:P21 ?occupation.
+  OPTIONAL {?agent wdt:$hasOccupation ?occupation.
            ?occupation rdfs:label ?occupationlabel}.
-  OPTIONAL {?agent wdt:P88 ?match}.
-OPTIONAL {?agent p:P39 ?statementrole.
-           ?statementrole ps:P39 ?roles.
+  OPTIONAL {?agent wdt:$closeMatch ?match}.
+OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
+           ?statementrole ps:$hasParticipantRole ?roles.
            ?roles rdfs:label ?roleslabel.
-           ?statementrole pq:P98 ?roleevent.
+           ?statementrole pq:$roleProvidedBy ?roleevent.
            ?roleevent rdfs:label ?roleeventlabel.
            bind(?roleevent as ?allevents)
 
          }.
 
- OPTIONAL {?agent p:P24 ?statstatus.
-           ?statstatus ps:P24 ?status.
+ OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
+           ?statstatus ps:$hasPersonStatus ?status.
            ?status rdfs:label ?statuslabel.
-           ?statstatus pq:P99 ?statusevent.
+           ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
            ?statusevent rdfs:label ?eventstatuslabel.
           bind(?statusevent as ?allevents)}.
 
   OPTIONAL{
-    ?agent p:P25 ?staterel .
-	?staterel ps:P25 ?relations .
+    ?agent p:$hasInterAgentRelationship ?staterel .
+	?staterel ps:$hasInterAgentRelationship ?relations .
   	?relations rdfs:label ?relationslabel.
-	?staterel pq:P104 ?relationname.
+	?staterel pq:$isRelationshipTo ?relationname.
   	?relationname rdfs:label ?relationagentlabel}.
-  OPTIONAL {?agent wdt:P88 ?match.
+  OPTIONAL {?agent wdt:$closeMatch ?match.
             ?match rdfs:label ?matchlabel}.
   ?allevents rdfs:label ?alleventslabel.
-  OPTIONAL {?allevents wdt:P12 ?allplaces.
+  OPTIONAL {?allevents wdt:$atPlace ?allplaces.
            ?allplaces rdfs:label ?allplaceslabel
            }.
 
-  OPTIONAL {?allevents	wdt:P13 ?startdate.
+  OPTIONAL {?allevents	wdt:$startsAt ?startdate.
             ?allevents rdfs:label ?elabel.
-            ?allevents wdt:P81 ?etype.
+            ?allevents wdt:$hasEventType ?etype.
             ?etype rdfs:label ?etypelabel.
            BIND(CONCAT(str(?elabel)," - ",str(?etypelabel)," - ",str(YEAR(?startdate))) AS ?startyear).
-           OPTIONAL {?allevents wdt:P14 ?enddate.
+           OPTIONAL {?allevents wdt:$endsAt ?enddate.
 		   BIND(str(YEAR(?enddate)) AS ?endyear)}}.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -1417,21 +1381,21 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
   WHERE
 {
   VALUES ?place {wd:$qid} #Q number needs to be changed for every place.
-  ?place wdt:P3 wd:Q50;
+  ?place wdt:$instanceof wd:Q50;
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:P35 ?source .
+  ?provenance pr:$refprop ?source .
   ?source rdfs:label ?refName;
-          wdt:P7 ?project.
+          wdt:$generatedBy ?project.
   ?project rdfs:label ?pname.
   ?place schema:description ?desc.
   ?place rdfs:label ?name.
-  ?place wdt:P80 ?placetype.
+  ?place wdt:$placetype ?placetype.
   ?placetype rdfs:label ?type.
-  OPTIONAL{?place wdt:P10 ?locatedIn.
+  OPTIONAL{?place wdt:$locatedIn ?locatedIn.
           ?locatedIn rdfs:label ?located}.
-  OPTIONAL{ ?place wdt:P71 ?geonames.}
-    OPTIONAL{ ?place wdt:P96 ?code.}
+  OPTIONAL{ ?place wdt:$geonamesID ?geonames.}
+    OPTIONAL{ ?place wdt:$moderncountrycode ?code.}
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }GROUP BY ?name ?desc ?located  ?type ?geonames ?code
@@ -1766,14 +1730,7 @@ HTML;
     $html = '';
 
     $html .= '<div class="detailwrap">';
-    // $html .= detailPersonHtml($name, "Name");
-    // $html .= detailPersonHtml($located, "Location");
-    // $html .= detailPersonHtml($geoname, "Geoname");
-    // $html .= detailPersonHtml($code, "Code");
-    // $html .= detailPersonHtml($sources, "Sources");
-    // $html .= detailPersonHtml($projects, "Contributing Project");
 
-    // print_r($recordVars);die;
     foreach($recordVars as $key => $value){
       $html .= detailPersonHtml($value, $key);
     }
@@ -1965,21 +1922,6 @@ HTML;
     <div class="arrow-pointer-bottom"></div>
     <div class="arrow-pointer-top"></div>';
 
-    // <div class="info-header">
-    //     <div class="info-select info-select-event active" data-select="event">
-    //         <p>Event</p>
-    //         <p class="large-text">Birth</p>
-    //     </div>
-    //     <div class="info-select info-select-place" data-select="place">
-    //         <p>Place</p>
-    //         <p class="large-text">Batendu</p>
-    //     </div>
-    // </div>
-
-
-
-
-    // print_r($events);die;
 
     $html .= '<div class="info-header">';
     $timeline_event_dates = array_unique($timeline_event_dates);
@@ -2156,12 +2098,6 @@ HTML;
           </div>
       </div>';
 
-      // <div class="place-info-'.$event['kid'].' infowrap">
-      //     <div class="info-column">
-      //         <p><span class="bold">Place Info: </span>Place Info</p>
-      //         <p><span class="bold">Testing Kid: </span>'.$event['kid'].'</p>
-      //     </div>
-      // </div>
     }
 
     $html .= '</div>';
