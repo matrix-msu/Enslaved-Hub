@@ -246,7 +246,7 @@ QUERY;
                         $qAge = ageCategory[$age];
                         $ageQuery = "?agent wdt:P32 wd:$qAge .";
                     }
-                    
+
                 }
 
                 $ethnoQuery = "";
@@ -265,19 +265,13 @@ QUERY;
                         $qRole = roleTypes[$role];
                         $roleQuery = "?agent wdt:P39 wd:$qRole .";
                     }
-                    
+
                 }
 
                 // people connected to an event
                 $eventQuery = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
                     $eventQ = $filtersArray['event'][0];
-                    // $eventQuery = "VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
-                    //                 ?event wdt:P3 wd:Q34.
-                    //                 ?event p:P38 ?statement.
-                    //                 ?statement ps:P38 ?name.
-                    //                 ?statement pq:P39 ?people.
-                    //                 ?people rdfs:label ?peoplename";
 
                     $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent ?name (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
@@ -485,7 +479,7 @@ QUERY;
                         $qType = placeTypes[$type];
                         $typeQuery = "?place wdt:P80 wd:$qType .";
                     }
-                    
+
                 }
 
                 $query = array('query' => "");
