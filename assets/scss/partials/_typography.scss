@@ -13,13 +13,26 @@ h1, h2, h3 {
 }
 
 h4,h5,p,a,span,li,label,input {
-  font-family: aleoregular;
+  font-family: aleobold;
   font-weight: 300;
+}
+
+.background-image {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
 }
 
 .paragraph {
   font-size: 16px;
-  font-weight: bold;
   line-height: 24px;
 
   a {
@@ -34,12 +47,20 @@ h4,h5,p,a,span,li,label,input {
 
 .text-link {
   border-bottom: 2px solid $sub-base;
-  color: $text-color-light;
+  color: inherit;
   font-style: italic;
   padding-bottom: 2px;
   text-decoration: none;
   transition: .1s;
   white-space: nowrap;
+
+  &.dark {
+    color: $text-color;
+  }
+
+  &.light {
+    color: $text-color-light;
+  }
 
   &:hover {
     padding-bottom: 4px;

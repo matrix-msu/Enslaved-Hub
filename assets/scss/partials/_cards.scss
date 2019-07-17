@@ -1,3 +1,47 @@
+// Story Cards
+.story-card {
+    border-radius: 5px;
+    color: $text-color-light;
+    display: block;
+    min-height: 175px;
+    overflow: hidden;
+    padding: 20px 25px;
+    position: relative;
+    text-decoration: none;
+
+    width: 100%;
+
+    img {
+        height: 100%;
+        left: 0;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .card-title {
+        position: relative;
+    }
+
+    .cover {
+        border: 4px solid rgba($accent, 0);
+        border-radius: 5px;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition: .3s all ease;
+        width: 100%;
+    }
+
+    &:hover {
+        .cover {
+            border: 4px solid $accent;
+        }
+    }
+}
+
 .column{
     height: auto;
     padding: 40px 0;

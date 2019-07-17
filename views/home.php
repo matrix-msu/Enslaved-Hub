@@ -25,7 +25,7 @@
     </div>
 </div>
 <main class="home">
-    <section class="section">
+    <section class="section section-explore">
         <div class="section-content">
             <div class="row">
                 <div class="col">
@@ -69,7 +69,7 @@
         </div>
     </section>
 
-    <section class="section dark">
+    <section class="section dark section-stories">
         <div class="section-content">
             <div class="row">
                 <div class="col">
@@ -79,13 +79,36 @@
                 </div>
 
                 <div class="col">
-                    <ul id="stories-list">
-                        <!-- featured Stories goes here -->
-                    </ul>
+                    <a class="story-card" href="#story">
+                        <img src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Story Image">
+                        <h2 class="card-title">Title of Featured Story Goes Here Like This.</h2>
+                        <div class="cover"></div>
+                    </a>
+
+                    <a class="story-card" href="#story">
+                        <img src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Story Image">
+                        <h2 class="card-title">Title of Featured Story Goes Here Like This.</h2>
+                        <div class="cover"></div>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="section no-padding section-project">
+        <div class="section-content full-width">
+            <div class="row">
+                <div class="col col-text py-xl">
+                    <p class="paragraph">Brief info on Project. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                    <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL;?>">Learn More</a></p>
+                </div>
+
+                <div class="col col-image">
+                    <img class="background-image" src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Project Image of Market Stand">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="section-wrap visualize-hide">
         <div class="section-info">
@@ -110,36 +133,7 @@
             </div>
         </div>
     </div>
-    <div class="section-wrap">
-        <div class="section-info">
-            <a href="<?php echo BASE_URL;?>stories"><h2>Stories<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/></h2></a>
-            <p><?php echo array_key_exists("Stories", $cache_data) ? $cache_data["Stories"] : "" ?></p>
-        </div>
-        <div class="section-content">
-            <ul class="row" id="stories-list">
-                <!-- featured Stories goes here -->
-            </ul>
-        </div>
-    </div>
 </main>
-<div class="about-preview">
-    <div class="preview-wrap">
-        <div class="heading">
-            <h2>Inspirational, Attention Grabbing Heading Goes Here Like This.</h2>
-        </div>
-        <div class="description">
-            <p><?php echo array_key_exists("About", $cache_data) ? $cache_data["About"] : "" ?></p>
-        </div>
-        <div class="about-card">
-            <a href="<?php echo BASE_URL?>fullStory">
-                <div class="container cards">
-                    <h2 class="card-title">Learn More About the Project.</h2>
-                    <h3 class="card-view-story">Go to About Page <div class="view-arrow"></h3>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
 
 <script>
 

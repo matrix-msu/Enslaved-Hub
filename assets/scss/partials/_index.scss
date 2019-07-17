@@ -17,16 +17,21 @@
         right: 0;
         top: 0;
         width: 100%;
+
+        &.full-height {
+            height: 100%;
+        }
     }
 
     .middlewrap{
         color: $base-light;
         margin: 0 auto;
-        max-width: 1000px;
+        max-width: $max-width-content;
         position: relative;
-        padding: 250px 6% 70px;
+        padding: 250px 0 70px;
         font-size: 28px;
         transition: 400ms;
+        width: 90%;
 
         h1{
             font-size: 50px;
@@ -99,7 +104,6 @@
                 }
                 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
                     color: $base-dark;
-                    font-weight: bold;
                     opacity: 1; /* Firefox */
                     font-style: italic;
                 }
@@ -107,13 +111,11 @@
                 :-ms-input-placeholder { /* Internet Explorer 10-11 */
                     color: $base-dark;
                     font-style: italic;
-                    font-weight: bold;
                 }
                 
                 ::-ms-input-placeholder { /* Microsoft Edge */
                     color: $base-dark;
                     font-style: italic;
-                    font-weight: bold;
                 }
             }
 
@@ -186,6 +188,31 @@
             background: $base-white;
             border-bottom: 4px solid $accent;
             box-shadow: 0 10px 25px 0 rgba($base-shadow,.07);
+        }
+    }
+
+    .section-explore {
+        background: url('../images/bg-map.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .section-project {
+        .col-image {
+            max-height: 500px;
+        }
+
+        .col-text {
+            margin-left: auto;
+            max-width: calc(500px + 5%);
+            padding-left: 5%;
+        }
+    }
+
+    .section-stories {
+        .story-card:not(:last-child) {
+            margin-bottom: 25px;
         }
     }
 
@@ -303,6 +330,15 @@
             }
         }
     }
+
+    @media screen and (max-width: $max-width-mobile) {
+        .section-project {
+            .col-text {
+                max-width: unset;
+                padding-right: 5%;
+            }
+        }
+    }
 }
 .about-preview{
     width: 100%;
@@ -411,7 +447,6 @@
 
 @media screen and (max-width: 780px) {
     .home{
-        padding: 60px 6%;
         .section-wrap{
             margin-bottom: 60px;
             padding-bottom: 60px;
