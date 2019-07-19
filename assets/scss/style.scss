@@ -2,8 +2,11 @@
 
 @import "partials/colors";
 //colors needs to be loaded before base since base uses variables defined in colors
-@import "partials/base";
 @import "partials/fonts";
+@import "partials/typography";
+@import "partials/spacing";
+@import "partials/base";
+@import "partials/layout";
 @import "partials/header";
 @import "partials/index";
 @import "partials/blog";

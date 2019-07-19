@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 html{
     margin: 0 0 0 0;
     padding: 0;
@@ -7,12 +11,6 @@ body{
     padding: 0;
     box-sizing: border-box;
     background-color: $base-light;
-}
-h1,h2,h3,h4,h5,p,a,span,li,label,input{
-    font-weight: 300;
-    margin: 0;
-    padding: 0;
-    font-family: aleoregular;
 }
 
 .btn-next,
@@ -58,6 +56,7 @@ input:not([type="image"]), textarea {
     box-sizing: border-box;
 }
 
+// Accessibility
 .sr-only {
   position: absolute;
   top: -9999px;
@@ -90,5 +89,24 @@ input:not([type="image"]), textarea {
         margin: auto;
         max-width: 1000px;
         width: 90%;
+    }
+}
+
+// Media query show and hide classes
+.hide {
+    display: none;
+
+    @media screen and (min-width: $max-width-tablet) {
+        &-desktop-only {
+            display: none;
+        }
+    }
+}
+
+.show {
+    @media screen and (max-width: $max-width-tablet) {
+        &-desktop-only {
+            display: none;
+        }
     }
 }

@@ -438,18 +438,22 @@
 }
 
 .search-icon-2 {
-  cursor: pointer;
-  height: 60px;
-  width: 60px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  background: none;
-  border: none;
-  outline: none;
-  img {
+    background: $accent;
+    border: none;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    cursor: pointer;
+    height: 60px;
     position: absolute;
-    top: 37%;
-    left: 35%;
-  }
+    right: 0;
+    top: 0;
+    width: 60px;
+
+    outline: none;
+
+    img {
+        position: absolute;
+        top: 37%;
+        left: 35%;
+    }
 }

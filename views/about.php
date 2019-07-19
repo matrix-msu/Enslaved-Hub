@@ -3,6 +3,7 @@
 <!-- About page-->
 <!-- Heading image and title container-->
 <div class="container header">
+    <img class="header-background full-height" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg.jpg" alt="Header Background Image">
     <div class="container middlewrap">
         <h1><?php echo $cache_data['title'] ?></h1>
     </div>
