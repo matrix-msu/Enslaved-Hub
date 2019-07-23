@@ -5,6 +5,7 @@ define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
 define('BASE_WIKI_URL','https://sandro-16.matrix.msu.edu/');
 define('BASE_BLAZEGRAPH_URL', 'https://sandro-33.matrix.msu.edu/');
 define("KORA_BASE_URL", "https://enslaved.kora3.matrix.msu.edu/");
+define("SANDRO_BASE_URL", "https://sandro-16.matrix.msu.edu/");
 
 //project specific urls - you should never use relative paths
 define("BASE_JS_URL", BASE_URL . "assets/javascripts/");
@@ -110,6 +111,12 @@ require_once( BASE_LIB_PATH . "mySqlWrapper.php" );
 require_once( BASE_FUNCTIONS_PATH . "explorefunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "storyfunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "functions.php");
+
+//database info for crawler
+define("Host", "rush.matrix.msu.edu");
+define("Username", "schleusener_dev");
+define("DBName", "schleusener_dev");
+define("Password","u8xzh4isos");
 
 //require the routes file
 require_once( "routes.php" );
