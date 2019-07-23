@@ -3,7 +3,9 @@
 <!-- Main page-->
 <!-- Heading image and title container-->
 <div class="container header">
-    <img class="header-background" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg.jpg" alt="Enslaved Background Image">
+  <div class="image-container">
+      <div class="image-background-overlay"></div>
+      <img class="header-background" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg.jpg" alt="Enslaved Background Image"></div>
     <div class="container middlewrap">
         <div class="heading-text">
             <div class="heading-title">
