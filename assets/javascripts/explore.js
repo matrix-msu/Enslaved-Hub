@@ -23,8 +23,8 @@ $(document).ready(function(){
                 method: "GET",
                 data: {type: JS_EXPLORE_FILTERS,  category:JS_EXPLORE_FORM},
                 'success': function (data) {
+                    console.log(data);
                     data = JSON.parse(data);
-                    console.log('data', data);
                     // var min = data['min'][0]['startyear']['value'];
                     // var max = data['max'][0]['startyear']['value'];
                     var min = data['min'][0]['year']['value'];
@@ -47,6 +47,7 @@ $(document).ready(function(){
                 method: "GET",
                 data: {type: JS_EXPLORE_FILTERS,  category:JS_EXPLORE_FORM},
                 'success': function (data) {
+                    console.log(data);
                     data = JSON.parse(data);
                     
                     data.forEach(function(record) {
