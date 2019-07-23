@@ -36,8 +36,8 @@ class crawler_keywords {
 		$result=$conn->query($query);
 		mysqli_close($conn);
 		if($result->num_rows >0){
-		$texty='';
-		$i=0;
+			$texty='';
+			$i=0;
 			while($row = $result->fetch_array())
 			{
 				$xd=$offset+$i;
@@ -46,12 +46,12 @@ class crawler_keywords {
 				$texty .= <<<HTML
 <div class="result" id="r$xd">
 	<div class="link-name">
-		<p><a href="https://www.google.com/search?hl=en&num=100&q=$row[keyword]" target="_blank">$row[keyword]</a></p>
+		<a href="https://www.google.com/search?hl=en&num=100&q=$row[keyword]" target="_blank">$row[keyword]</a>
 	</div>
 	<div class="link-wrap">
-		<a target="_blank" href="$row[url]">$row[url]</a>
-		<div class="trash">
-			<img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
+		<a class="link" target="_blank" href="$row[url]">$row[url]</a>
+		<div class="trash crawler-modal-open" id="delete-link">
+			<img class="trash-icon" src="./assets/images/Delete.svg">
 		</div>
 	</div>
 </div>

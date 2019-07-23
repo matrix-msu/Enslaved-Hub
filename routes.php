@@ -12,6 +12,7 @@ $GLOBALS['api_routes'] = array(
     'api/getDateRange' => array('explorefunctions.php', 'getEventDateRange'),
     'api/getProjectFullInfo' => array('explorefunctions.php', 'getProjectFullInfo'),
     'api/getFullRecordConnections' => array('explorefunctions.php', 'getFullRecordConnections'),
+    'api/getCrawlerResults' => array('crawler_jquery.php', '')
 );
 
 $GLOBALS['routes'] = array(
@@ -134,7 +135,9 @@ if( isset($GLOBALS['api_routes'][$currentFile]) ){
     $currentApiFile = $GLOBALS['api_routes'][$currentFile];
     if($currentApiFile[0] == 'configFunctions.php') include_once(BASE_LIB_PATH.$currentApiFile[0]);
     else include_once(BASE_FUNCTIONS_PATH.$currentApiFile[0]);
-    echo $currentApiFile[1]();
+    
+    if($currentApiFile[1] !== '') echo $currentApiFile[1]();
+
     die;
 }elseif( !isset($GLOBALS['routes'][$currentFile]) ){
     header('HTTP/1.0 404 Not Found');

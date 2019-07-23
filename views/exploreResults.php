@@ -416,11 +416,11 @@ QUERY;
                 </span>
             </span>
         </div>
-        <div id="search-result-configure-download-row">
-            <span class="align-left">
-                <a class="modal">Configure Table Columns</a>
-            </span>
-            <span class="align-right"><b>Download:</b> <span id="Download_selected">Current View</span> | <span id="Download_all">All Results</span></span>
+        <div class="filter-cards">
+            <div class="option-wrap">
+                <p>Option Title</p>
+                <img class="remove" src="<?php echo BASE_IMAGE_URL;?>x-dark.svg" />
+            </div>
         </div>
         <div id="search-result-wrap">
             <div id="search-result-table">

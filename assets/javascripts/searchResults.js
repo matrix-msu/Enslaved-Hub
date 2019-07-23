@@ -70,7 +70,8 @@ function searchResults(preset, limit = 12, offset = 0)
     filters['offset'] = offset;
     card_offset = offset;
     var templates = ['gridCard', 'tableCard'];
-    console.log(preset, filters, templates)
+    console.log(preset, filters, templates);
+    generateFilterCards();
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -171,16 +172,19 @@ $(document).ready(function() {
     });
 
     // Show selected filters
-    $.each(filters, function(key, value)
+    $.each(filters, function(key, values)
     {
         if(key && key != "limit" && key != "offset") // inputs lable have classes with name as key
         {
             $("label."+key).each(function()
             {
-                //Looks for input where value = QID
-                if($(this).find('input').val() == value) {
-                    $(this).find("input").prop("checked", true);
-                }
+                var that = this;
+                $.each(values, function(indx, value){
+                    //Looks for input where value = value
+                    if($(that).find('input').val() == value) {
+                        $(that).find("input").prop("checked", true);
+                    }
+                });
             });
         }
     });
@@ -484,7 +488,6 @@ $(document).ready(function() {
         // var input_value = $(this).val(); //Changed to check value of checkbox which will be QID
 
         var input_key = $(this).parent().attr("class");
-        var page_url = document.location.href;
 
         // handle categories
         if(input_key == "category")
@@ -519,77 +522,7 @@ $(document).ready(function() {
             if(filters[input_key].length == 0) delete filters[input_key];
         }
 
-        // Split all parameter
-        var split_url = page_url.split('?');
-        if("categories" in filters)
-        {
-            var split_paths = split_url[0].split('/');
-            var path = split_paths[split_paths.length - 1];
-
-            if(filters["categories"].length == 1)
-            {
-                showPath = true;
-                upperForm = filters["categories"][0];
-                titleType = "";
-                currentTitle = "Search";
-
-                search_type = filters["categories"][0].toLowerCase();
-                // One category path
-                split_url[0] = split_url[0].replace('/' + path, '/' +  filters["categories"][0].toLowerCase());
-                delete filters["categories"];
-            }
-            else if(filters["categories"].length == 5)
-            {
-                showPath = false;
-                search_type = "all";
-                // All categories are selected
-                split_url[0] = split_url[0].replace('/' + path, '/all');
-                delete filters["categories"];
-            }
-            else // multiple categorise selected
-            {
-                showPath = false;
-                search_type = "categories";
-                split_url[0] = split_url[0].replace('/' + path, '/category');
-            }
-        }
-        page_url = split_url[0]+"?";
-
-        // Show path on top of page before title
-        if(showPath)
-        {
-            $(".last-page-header").show();
-
-            if(upperForm != "") $(".last-page-header .prev1 span").text(upperForm).show();
-            else $(".last-page-header .prev1 span").hide();
-
-            if(titleType != "") $(".last-page-header .prev2 span").text("//" + titleType).show();
-            else $(".last-page-header .prev2 span").hide();
-
-            if(currentTitle != "") $(".last-page-header #current-title").text("//" + currentTitle).show();
-            else $(".last-page-header #current-title").hide();
-
-        } else $(".last-page-header").hide();
-
-        // updating url
-        var counter = 0;
-        $.each(filters, function(key, value)
-        {
-            if(key && value && key != "limit" && key != "offset")
-            {
-                if(!counter) page_url += key + '=' + value;
-                else page_url += '&' + key + '=' + value;
-                ++counter;
-            }
-        });
-
-        var newstate = (history.state || 0) + 1; // Can also passed data as state objects
-        window.history.replaceState(newstate, "", page_url);
-        // document.location = page_url; // reload the page to new url
-
-        // make an ajax call now with the new filters
-        searchResults(search_type);
-
+        updateURL();
     });
 
 
@@ -606,6 +539,81 @@ $(document).ready(function() {
     });
 
 });
+
+function updateURL(){
+    var page_url = document.location.href;
+
+    // Split all parameter
+    var split_url = page_url.split('?');
+    if("categories" in filters)
+    {
+        var split_paths = split_url[0].split('/');
+        var path = split_paths[split_paths.length - 1];
+
+        if(filters["categories"].length == 1)
+        {
+            showPath = true;
+            upperForm = filters["categories"][0];
+            titleType = "";
+            currentTitle = "Search";
+
+            search_type = filters["categories"][0].toLowerCase();
+            // One category path
+            split_url[0] = split_url[0].replace('/' + path, '/' +  filters["categories"][0].toLowerCase());
+            delete filters["categories"];
+        }
+        else if(filters["categories"].length == 5)
+        {
+            showPath = false;
+            search_type = "all";
+            // All categories are selected
+            split_url[0] = split_url[0].replace('/' + path, '/all');
+            delete filters["categories"];
+        }
+        else // multiple categorise selected
+        {
+            showPath = false;
+            search_type = "categories";
+            split_url[0] = split_url[0].replace('/' + path, '/category');
+        }
+    }
+    page_url = split_url[0]+"?";
+
+    // Show path on top of page before title
+    if(showPath)
+    {
+        $(".last-page-header").show();
+
+        if(upperForm != "") $(".last-page-header .prev1 span").text(upperForm).show();
+        else $(".last-page-header .prev1 span").hide();
+
+        if(titleType != "") $(".last-page-header .prev2 span").text("//" + titleType).show();
+        else $(".last-page-header .prev2 span").hide();
+
+        if(currentTitle != "") $(".last-page-header #current-title").text("//" + currentTitle).show();
+        else $(".last-page-header #current-title").hide();
+
+    } else $(".last-page-header").hide();
+
+    // updating url
+    var counter = 0;
+    $.each(filters, function(key, value)
+    {
+        if(key && value && key != "limit" && key != "offset")
+        {
+            if(!counter) page_url += key + '=' + value;
+            else page_url += '&' + key + '=' + value;
+            ++counter;
+        }
+    });
+
+    var newstate = (history.state || 0) + 1; // Can also passed data as state objects
+    window.history.replaceState(newstate, "", page_url);
+    // document.location = page_url; // reload the page to new url
+
+    // make an ajax call now with the new filters
+    searchResults(search_type);
+}
 
 
 /*
@@ -676,4 +684,50 @@ function download_csv(data, fields) {
 
     document.body.appendChild(a_tag);
     a_tag.click();
+}
+
+/*
+    Adds a filter card to the filter-cards section
+*/
+function addFilterCard(filterCategory, filterName){
+    var filterHtml = '<div class="option-wrap" id="'+ filterCategory +'"><p>'+ filterName +'</p><img class="remove" src="'+ BASE_IMAGE_URL + 'x-dark.svg' +'" /></div>';
+    $('div.filter-cards').append(filterHtml);
+}
+/*
+    Generates the cards for each Filter selected
+*/
+function generateFilterCards(){
+    //Clear filters
+    $('div.filter-cards').empty();
+
+    //Generate filters
+    $.each(filters, function(key, values)
+    {
+        if(key && values && key != "limit" && key != "offset")
+        {
+            //Add filter cards
+            $.each(values, function(indx, value)
+            {
+                addFilterCard(key, value);
+                console.log(value); 
+            });
+        }
+    });
+
+    //Click x on filter-cards
+    $('.filter-cards .option-wrap img.remove').click(function(){
+        var fcat = $(this).parent().attr('id');
+        var fname = $(this).parent().find('p').text();
+
+        filters[fcat] = filters[fcat].filter(function(value, index, arr) { return value != fname; });
+        if(filters[fcat].length == 0) delete filters[fcat];
+
+        $(this).parent().remove();
+        console.log(filters);
+
+        updateURL();
+
+        //Trigger the selector in the filter side menu
+        $('label.'+fcat+' input[value="'+fname+'"]').trigger('click');
+    });
 }

@@ -85,14 +85,14 @@ $(document).ready(function(){
 	$("#webCrawlBroken").click(function(){
 		var x="sure";
 		jQuery.ajax({
-		method:'POST',
-		url:"ajax/crawler_jquery.php",
-		data:{get_links:x},
-		success:function(data){show_broken(data);  },
-		dataType: "JSON",
-	});//ajax
-	$("#results_related").hide();
-	$("#seeds_results_related").hide();
+			method:'POST',
+			url:"ajax/crawler_jquery.php",
+			data:{get_links:x},
+			success:function(data){show_broken(data);  },
+			dataType: "JSON",
+		});//ajax
+		$("#results_related").hide();
+		$("#seeds_results_related").hide();
 		$("#webCrawlBroken").addClass("active");
 		$("#webCrawlResults").removeClass("active");
 		$("#webCrawlSeeds").removeClass("active");
@@ -128,7 +128,7 @@ $(document).ready(function(){
 			success:function(data){show_seeds(data);  },
 			dataType: "JSON",
 		});//ajax
-	$('#no-more-broken').hide();
+		$('#no-more-broken').hide();
 		$("#webCrawlSeeds").addClass("active");
 		$("#webCrawlResults").removeClass("active");
 		$("#webCrawlBroken").removeClass("active");
