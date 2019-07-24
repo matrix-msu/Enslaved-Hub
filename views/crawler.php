@@ -1,20 +1,5 @@
 <?php
-    /**
-     * Template Name: Web Crawler
-     */
-
-    // get_header();
-    // $isCrawlerAdmin=isCrawlerAdmin($_SESSION['sess_username']);
-	$isCrawlerAdmin = true;
-    // $user_arrays=perm_roles();
-    // $i = 0;
-	// $roleIndex = 1;
-	// $permissionIndex = 1;
-    // $roles=getRoles();
-    // $permissions=getPermissions();
-    require (BASE_PATH . "webcrawler/config.php");
-	require (BASE_PATH . "webcrawler/models/crawler_keywords.php");
-    require (BASE_PATH . "webcrawler/models/crawler_deleted_keywords.php");
+    $isCrawlerAdmin = true;
 ?>
 
 <div class="container header">
@@ -37,7 +22,7 @@
         <div class="crawler-search">
             <form action="submit">
                 <label for="searchbar" class="sr-only">searchbar</label>
-                <input id="searchbar" class="search-field" type="text" name="searchbar" placeholder="Find a Story By Title or Keyword"/>
+                <input id="searchbar" class="search-field" type="text" name="searchbar" placeholder="Find a URL"/>
                 <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
             </form>
         </div>
@@ -58,110 +43,54 @@
             </span>
         </div>
     </div>
+    
     <?php if($isCrawlerAdmin) {	 ?>
-        <?php  // hidden field to store seeds value
-        $crawler_keywords =new crawler_keywords();
-        if(isset($_GET['seeds']))
-        {
-        ?>
-            <input type="text" id="seeds_is_set" value="seeds" style="display:none">
-        <?php
-        }
-        ?>
     
     <div class="results-wrap result-container show" id="results">
-        <?php
-		//********** results are displayed here ***********//
-		// connect to keywords data base and get the first list of keywords
-		$limit=20;
-
-        //need to add crawler keywords variable
-		$results=$crawler_keywords->get_keywords($limit,0);
-		if($results!="no more data")
-		echo($results);
-
-		?>
-        <div class="result">
+        <div class="result" id="keep">
             <div class="link-name">
-                <p>Name of Link Goes Here</p>
+                <a class="link" href="http://www.google.com" target="_blank">Name of Link Goes Here</a>
             </div>
             <div class="link-wrap">
-                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
-                <div class="trash">
-                    <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
-                </div>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-name">
-                <p>Name of Link Goes Here</p>
-            </div>
-            <div class="link-wrap">
-                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
-                <div class="trash">
-                    <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
-                </div>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-name">
-                <p>Name of Link Goes Here</p>
-            </div>
-            <div class="link-wrap">
-                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
-                <div class="trash">
+                <a class="link" href="http://www.google.com" target="_blank">www.nameoflinkgoeshere.com</a>
+                <div class="trash crawler-modal-open" id="delete-link">
                     <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
                 </div>
             </div>
         </div>
     </div>
+
     <div class="broken-wrap result-container" id="broken">
         <p class="link-info">The following (12) links are broken. They can be updated or deleted entirely.</p>
-        <div class="result">
+        <div class="result" id="keep">
             <div class="link-wrap">
-                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
+                <a class="link" href="http://www.google.com" target="_blank">www.nameoflinkgoeshere.com</a>
                 <div class="right">
-                    <div class="trash">
+                    <div class="trash crawler-modal-open" id="delete-link">
                         <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
                     </div>
-                    <div class="update">
+                    <div class="update crawler-modal-open" id="update-link">
                         <p>Update Link</p>
                     </div>
                 </div>
             </div>
             <div class="message">
-                <p>No Response from server, check website.</p>
-                <p>The server is down or unable to get a response from the server.</p>
-            </div>
-        </div>
-        <div class="result">
-            <div class="link-wrap">
-                <a class="link" href="google.com">www.nameoflinkgoeshere.com</a>
-                <div class="right">
-                    <div class="trash">
-                        <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
-                    </div>
-                    <div class="update">
-                        <p>Update Link</p>
-                    </div>
-                </div>
-            </div>
-            <div class="message">
-                <p>No Response from server, check website.</p>
+                <p>No Response from server, <a href="http://www.google.com" target="_blank">check website.</a></p>
                 <p>The server is down or unable to get a response from the server.</p>
             </div>
         </div>
     </div>
+
     <div class="seed-wrap result-container" id="seeds">
-    <p class="link-info">The following (12) links are broken. They can be updated or deleted entirely.</p>
-        <div class="result">
+        <p class="link-info">There are (12) Seeds. They can be updated or deleted entirely.</p>
+        <div class="result" id="keep">
             <div class="link-wrap">
-                <p><span>URL:</span><a class="link" href="google.com">www.nameoflinkgoeshere.com</a></p>
+                <p><span>URL:</span><a class="link" href="http://www.google.com" target="_blank">www.nameoflinkgoeshere.com</a></p>
                 <div class="right">
-                    <div class="trash">
+                    <div class="trash crawler-modal-open" id="delete-seed">
                         <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
                     </div>
-                    <div class="update">
+                    <div class="update crawler-modal-open" id="update-seed">
                         <p>Update Seed</p>
                     </div>
                 </div>
@@ -169,23 +98,24 @@
             <div class="details">
                 <div class="row">
                     <div class="cell">
-                        <p><span>NAME:</span>Pea Soup</p>
+                        <p><span class="label">NAME:</span>Pea Soup</p>
                     </div>
                     <div class="cell">
-                        <p><span>TITLE:</span>Pea Soup</p>
+                        <p><span class="label">TITLE:</span>Pea Soup</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="cell">
-                        <p><span>TWITTER:</span><a href="">@peasoup</a></p>
+                        <p><span class="label">TWITTER:</span><a href="" target="_blank">@peasoup</a></p>
                     </div>
                     <div class="cell">
-                        <p><span>RSS:</span><a href="">www.nameoflinkgoeshere.com</a></p>
+                        <p><span class="label">RSS:</span><a href="" target="_blank">www.nameoflinkgoeshere.com</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <?php } else { ?>
 		<p><strong id="permissions_inv">Whoops, this is embarassing...<br>
 			You don't have the permissions to view this page, sorry!</strong></p>
@@ -209,12 +139,68 @@
         <span id="pagiRight" class="align-right"><div id="pagiRightArrow"></div></span>
     </div>
 </div>
-<script src="<?php echo BASE_URL;?>assets/javascripts/crawler.js"></script>
-<script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
+
+<!-- Modals -->
+<div class="crawler-modal delete-link-modal">
+    <div class="canvas">
+        <div class="body">
+            <h1 class="title">Delete Link?</h1>
+            <p class="link">www.nameoflinkgoeshere.com</p>
+            <div class="confirm delete"><p>Delete Link</p></div>
+            <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
+        </div>
+    </div>
+</div>
+<div class="crawler-modal update-link-modal">
+    <div class="canvas">
+        <div class="body">
+            <h1 class="title">Update Link</h1>
+            <p class="link">www.nameoflinkgoeshere.com</p>
+            <div class="info-inputs">
+                <div class="input-wrap">
+                    <label for="url">Enter the updated URL here</label>
+                    <input id="url" type="text" placeholder="Enter updated URL">
+                </div>
+            </div>
+            <div class="confirm update"><p>Update Link</p></div>
+            <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
+        </div>
+    </div>
+</div>
+<div class="crawler-modal delete-seed-modal">
+    <div class="canvas">
+        <div class="body">
+            <h1 class="title">Delete Seed?</h1>
+            <p class="link">www.nameoflinkgoeshere.com</p>
+            <div class="confirm delete"><p>Delete Seed</p></div>
+            <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
+        </div>
+    </div>
+</div>
+<div class="crawler-modal update-seed-modal">
+    <div class="canvas">
+        <div class="body">
+            <h1 class="title">Update Seed</h1>
+            <p class="link">www.nameoflinkgoeshere.com</p>
+            <div class="info-inputs">
+                <div class="input-wrap">
+                    <label for="url">Enter the updated URL here</label>
+                    <input id="url" type="text" placeholder="Enter updated URL">
+                </div>
+            </div>
+            <div class="confirm update"><p>Update Seed</p></div>
+            <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
+        </div>
+    </div>
+</div>
+
+
+<script src="<?php echo BASE_JS_URL;?>crawler.js"></script>
+<script src="<?php echo BASE_JS_URL;?>pagination.js"></script>
 
 <?php if($isCrawlerAdmin) { ?>
-    <script src="<?php echo BASE_URL;?>webcrawler/js/webcrawler.js"></script>
-    <script src="<?php echo BASE_URL;?>webcrawler/js/crawler_results.js"></script>
-	<script src="<?php echo BASE_URL;?>webcrawler/js/crawler_seeds.js"></script>
-	<script src="<?php echo BASE_URL;?>webcrawler/js/crawler_broken_links.js"></script>
+    <script src="<?php echo BASE_JS_URL;?>webcrawler.js"></script>
+    <script src="<?php echo BASE_JS_URL;?>crawler_results.js"></script>
+	<script src="<?php echo BASE_JS_URL;?>crawler_seeds.js"></script>
+	<script src="<?php echo BASE_JS_URL;?>crawler_broken_links.js"></script>
 <?php } ?>

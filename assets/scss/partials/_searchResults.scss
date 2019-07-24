@@ -235,12 +235,11 @@ span.align-right.show {
     .showing-results{
         color: $base-dark;
         font-size: 32px;
-        margin: 45px auto 0;
-        max-width: 1000px;
+        margin: 45px 0 0;
     }
 	#search-result-controls {
         font-size: 14px;
-		padding: 45px 0 10px;
+		padding: 45px 0 20px;
 		position: relative;
         // text-align: center;
         width:100%;
@@ -351,32 +350,38 @@ span.align-right.show {
         }
     }
 
-    #search-result-configure-download-row {
-        font-size: 12px;
-        padding: 25px 5% 50px;
-        position: relative;
-        width: 90%;
-        span {
-            cursor: pointer;
-        }
-        .align-left {
-            .modal {
-                transition: 200ms;
+    div.filter-cards{
+        width: 100%;
+        display: flex;
+        margin-bottom: 70px;
+
+        .option-wrap{
+            width: fit-content;
+            border: 1.5px solid rgba(14,50,50,0.1);
+            border-radius: 5px;
+            background-color: #FFFFFF;
+            box-shadow: 0 3px 5px 0 rgba(44,44,44,0.05);
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+
+            p{
+                color: #0E3232;
+                font-family: aleobold;
+                font-size: 14px;
             }
-            .modal:hover {
-                color: $sub-base;
-            }
-        }
-        .align-right,.align-left {
-            color: $base-dark;
-            b {
-                cursor: default;
-            }
-            span:hover {
-                color: $sub-base;
+
+            img{
+                margin-left: 10px;
+                width: 9px;
+                height: 9px;
+                opacity: .7;
+                cursor: pointer;
             }
         }
     }
+
     div#search-result-wrap {
         position: relative;
 
@@ -514,7 +519,7 @@ span.align-right.show {
             display: -webkit-flex;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: space-between;
             list-style-type: none;
             margin: 32px 0 0 0;
             padding: 0;
@@ -770,7 +775,7 @@ span.align-right.show {
         .cardwrap{
             .row{
                 li{
-                    width: 48%;
+                    width: 48.8%;
                 }
             }
         }

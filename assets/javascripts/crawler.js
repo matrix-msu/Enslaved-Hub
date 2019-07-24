@@ -30,6 +30,132 @@ $(document).ready(function(){
         var name = $(this).attr('id');
 
         $('.result-container').removeClass('show');
-        $('.result-container#'+name).addClass('show');
+		$('.result-container#'+name).addClass('show');
+		
+		console.log(name);
+		if(name == "results"){
+			show_results();
+		}
+		else if(name == "broken"){
+			show_broken();
+		}
+		else if(name == "seeds"){
+			show_seeds();
+		}
+		
+	});
+
+	//Trigger click on results when page loads
+	$('.crawler-tabs li#results').trigger('click');
+	
+	function show_results()
+	{
+		$('.results-wrap').find('.result').not('#keep').remove();
+		var x="sure";
+		$.ajax({
+			method:'POST',
+			url: BASE_URL + "api/getCrawlerResults",
+			data:{'get_results':x},
+			dataType: "JSON",
+			success:function(data){
+				if(data != "no more data"){
+					$(".results-wrap").append(data);
+					installModalListeners(); //install the modal listeners after content is generated
+				}
+				else {
+					console.log("No more results");
+					$('#no-more-results').show();
+				}
+			},
+			'error':function(xhr, status, error){
+				console.log(xhr.responseText);
+			}
+		});//ajax
+	}
+
+    function show_broken()
+	{
+		$('.broken-wrap').find('.result').not('#keep').remove();
+		var x="sure";
+		$.ajax({
+			method:'POST',
+			url: BASE_URL + "api/getCrawlerResults",
+			data:{'get_links':x},
+			dataType: "JSON",
+			success:function(data){
+				if(data != "no more data"){
+					$(".broken-wrap").append(data);
+					installModalListeners(); //install the modal listeners after content is generated
+				}
+				else {
+					console.log("No more broken links");
+					$('#no-more-broken').show();
+				}
+			},
+			'error':function(xhr, status, error){
+				console.log(xhr.responseText);
+			}
+		});//ajax
+	}
+
+	// function to append the seeds to the page
+	function show_seeds()
+	{
+		$('.seed-wrap').find('.result').not('#keep').remove();
+		var x="sure";
+		$.ajax({
+			method:'POST',
+			url: BASE_URL + "api/getCrawlerResults",
+			data:{'get_seeds':x},
+			dataType: "JSON",
+			success:function(data){
+				if(data != "no more data"){
+					$(".seed-wrap").append(data);
+					installModalListeners(); //install the modal listeners after content is generated
+				}
+				else {
+					console.log("No more seeds");
+					$('#no-more-seeds').show();
+				}  
+			},
+			'error':function(xhr, status, error){
+				console.log(xhr.responseText);
+			}
+		});//ajax
+	}
+
+	// Modals
+	$('.crawler-modal .canvas').css('opacity', '0');
+	$('.crawler-modal').css('background', 'rgba(0, 0, 0, 0.0)');
+
+    $('.canvas').click(function (e) {
+        e.stopPropagation();
     });
+    
+    $('.crawler-modal').click(function () {
+        $('.crawler-modal .close').trigger('click');
+    });
+    
+    $('.crawler-modal .close').click(function () {
+        $('.crawler-modal .canvas').css('opacity', '0');
+        $('.crawler-modal').css('background', 'rgba(0, 0, 0, 0.0)');
+        setTimeout(function(){
+            $('.crawler-modal').css('display', 'none');
+        }, 400);
+	});
+	
 });
+
+function installModalListeners(){
+	var crawlerModalButton = $('.crawler-modal-open');
+	
+	crawlerModalButton.on('click', function(){
+		var modalType = $(this).attr('id');
+
+		$('.'+ modalType +'-modal').css("display", "flex");
+		setTimeout(function(){
+			$('.'+ modalType +'-modal .canvas').css('opacity', '1');
+			$('.'+ modalType +'-modal').css('background', 'rgba(0, 0, 0, 0.7)');
+		}, 50);
+	});
+}
