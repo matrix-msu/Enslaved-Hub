@@ -1543,6 +1543,7 @@ SELECT ?name ?desc ?project ?pname ?type ?secondarysource
 }GROUP BY ?name ?desc ?project ?pname ?type ?secondarysource
 QUERY;
     }
+// print_r($query);die;
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -1766,10 +1767,6 @@ QUERY;
         }
     }
 
-
-
-
-
     // create the html based on the type of results
     $htmlArray = [];
 
@@ -1849,6 +1846,14 @@ HTML;
 
         if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
               $eventsAndStartYears = explode('||', $record['startyear']['value']);
+        }
+
+        // all places   // todo: connect these to events for timeline
+        if (isset($record['allplaces']) && isset($record['allplaces']['value']) && $record['allplaces']['value'] != ''  ){
+            if (isset($record['allplaceslabel']) && isset($record['allplaceslabel']['value']) && $record['allplaceslabel']['value'] != '' ){
+                $allPlaceLabels = explode('||', $record['allplaceslabel']['value']);
+                $allPlaceUrls = explode('||', $record['allplaces']['value']);
+            }
         }
 
         // match events to start years
@@ -1955,10 +1960,10 @@ HTML;
         }
     }
 
-      // dont do timeline stuff if there are less than 3 events
-      if (count($events) < 3){
-          return json_encode($htmlArray);
-      }
+    // dont do timeline stuff if there are less than 3 events
+    if (count($events) < 3){
+        return json_encode($htmlArray);
+    }
 
 
 
@@ -1970,7 +1975,7 @@ HTML;
         if (isset($event['startYear']) && $event['startYear'] != ''){
             array_push($timeline_event_dates, $event['startYear']);
         } else {
-            array_push($unknownEvents, array($event['kid'] => $event));
+            array_push($unknownEvents, $event);
         }
     }
 
@@ -2072,50 +2077,52 @@ HTML;
         }
     }
 
-          $unknownPlaces = array();
-          foreach ($unknownEvents as $event) {
+    
+    $unknownPlaces = array();
+    foreach ($unknownEvents as $kid => $event) {
             $kid = $event['kid'];
-            $placeResult = getPlace($event[$kid]);
-            if (is_array($placeResult)) {
-              $unknownPlaces[$placeResult['kid']] = array(
-                'place' => $placeResult['place'],
-                'eventKid' => $kid
-              );
-            }
-          
+            // todo: set unknown places here
+            // $placeResult = getPlace($event[$kid]);
+            // if (is_array($placeResult)) {
+            //     $unknownPlaces[$placeResult['kid']] = array(
+            //         'place' => $placeResult['place'],
+            //         'eventKid' => $kid
+            //         );
+            // }
+                
+        $html .= '
+            <div
+            class="info-select info-select-event"
+            data-select="event"
+            data-year="'.$kid.'"
+            data-kid="'.$kid.'"
+            >
+            <p>Event</p>
+            <p class="large-text">'.$event['type'].'</p>
+            </div>';
+    }
+                
+    // todo: unknown places
 
-            $html .= '
-              <div
-                class="info-select info-select-event"
-                data-select="event"
-                data-year="'.$kid.'"
-                data-kid="'.$kid.'"
-              >
-                <p>Event</p>
-                <p class="large-text">'.$event[$kid]['Event Type']['value'].'</p>
-              </div>';
-        
-          }
+    // if (!empty($unknownPlaces)) {
+    //     foreach ($unknownPlaces as $kid => $place) {
+    //         if (isset($place['place']['Country Colony'])) {
 
-          if (!empty($unknownPlaces)) {
-            foreach ($unknownPlaces as $kid => $place) {
-              if (isset($place['place']['Country Colony'])) {
-        
-                  $html .= '
-                      <div
-                        class="info-select info-select-place"
-                        data-select="place"
-                        data-kid="'.$kid.'"
-                        data-event-kid="'.$place['eventKid'].'"
-                      >
-                        <p>Place</p>
-                        <p class="large-text">'.$place['place']['Country Colony'].'</p>
-                      </div>';
-              }
-            }
-          }
-        
-          $html .= '</div>';
+    //             $html .= '
+    //                 <div
+    //                 class="info-select info-select-place"
+    //                 data-select="place"
+    //                 data-kid="'.$kid.'"
+    //                 data-event-kid="'.$place['eventKid'].'"
+    //                 >
+    //                 <p>Place</p>
+    //                 <p class="large-text">'.$place['place']['Country Colony'].'</p>
+    //                 </div>';
+    //         }
+    //     }
+    // }
+
+    $html .= '</div>';
 
 
 
@@ -2241,11 +2248,37 @@ HTML;
           data-index="'.$index.'">
           <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
           </div>';
+
+        $timelineIndex++;
       }
 
+    // $html .= '</div>
+    //         </div>';
+
+
+    // // events with unknown dates
+    // $html .= '
+    //     <div class="timeline dates-unknown">
+    //         <div class="line"></div>
+    //         <div class="points-container">';
+
+    // foreach ($unknownEvents as $event) {
+    //     $kid = $event['kid'];
+        
+    //     $html .= '
+    //         <div
+    //             class="event-point no-select '.($timelineIndex == 0 ? 'active' : '').'"
+    //             data-index="'.$timelineIndex.'"
+    //             data-year="'.$kid.'"
+    //         >
+    //             <span class="event-title">'.$event['type'].'</span>
+    //         </div>';
+    //     $timelineIndex++;
+    // }
+
+
     $html .= '
-      </div>
-    </div>
+    </div></div>
     <div class="timeline-controls">
       <div class="timeline-prev no-select"><img src="'.BASE_URL.'assets/images/chevron-down-dark.svg" alt="Previous Arrow"></div>
       <div class="timeline-next no-select"><img src="'.BASE_URL.'assets/images/chevron-down-dark.svg" alt="Next Arrow"></div>
