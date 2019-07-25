@@ -144,7 +144,7 @@
         });
 
         $('.info-select-place').each(function () {
-            if ($(this).data('year') == currentYear || $(this).data('kid') == currentKid) {
+            if ($(this).data('year') == currentYear || $(this).data('eventkid') == currentKid) {
                 $(this).show();
             } else {
                 $(this).hide();
@@ -169,7 +169,7 @@
 
 
 
-        $('.info-select-place').show();
+        // $('.info-select-place').show();
     
         // var event = $('.event-info-'+currentKid).data('event');
         // $('.info-select-event').children('.large-text').text(event);
