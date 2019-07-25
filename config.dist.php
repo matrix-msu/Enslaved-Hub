@@ -112,5 +112,11 @@ require_once( BASE_FUNCTIONS_PATH . "explorefunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "storyfunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "functions.php");
 
+//database info for crawler
+define("Host", "rush.matrix.msu.edu");
+define("Username", "schleusener_dev");
+define("DBName", "schleusener_dev");
+define("Password","u8xzh4isos");
+
 //require the routes file
 require_once( "routes.php" );

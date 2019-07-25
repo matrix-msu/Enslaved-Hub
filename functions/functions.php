@@ -246,7 +246,7 @@ QUERY;
                         $qAge = ageCategory[$age];
                         $ageQuery = "?agent wdt:P32 wd:$qAge .";
                     }
-                    
+
                 }
 
                 $ethnoQuery = "";
@@ -265,19 +265,13 @@ QUERY;
                         $qRole = roleTypes[$role];
                         $roleQuery = "?agent wdt:P39 wd:$qRole .";
                     }
-                    
+
                 }
 
                 // people connected to an event
                 $eventQuery = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
                     $eventQ = $filtersArray['event'][0];
-                    // $eventQuery = "VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
-                    //                 ?event wdt:P3 wd:Q34.
-                    //                 ?event p:P38 ?statement.
-                    //                 ?statement ps:P38 ?name.
-                    //                 ?statement pq:P39 ?people.
-                    //                 ?people rdfs:label ?peoplename";
 
                     $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent ?name (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
@@ -485,7 +479,7 @@ QUERY;
                         $qType = placeTypes[$type];
                         $typeQuery = "?place wdt:P80 wd:$qType .";
                     }
-                    
+
                 }
 
                 $query = array('query' => "");
@@ -579,8 +573,8 @@ QUERY;
                 $dateRangeQuery = "";
                 $from = '';
                 $to = '';
-                if (isset($filtersArray['eventDate'])){
-                    $dateRange = $filtersArray['eventDate'][0];
+                if (isset($filtersArray['date'])){
+                    $dateRange = $filtersArray['date'][0];
                     //Have date range here ex. 1800-1900 so split it and create the query to add in
                     $dateArr = explode('-', $dateRange);
                     $from = $dateArr[0];
@@ -665,11 +659,11 @@ WHERE {
             ?roles pq:P39 ?people}.
 
     OPTIONAL {?event wdt:P14 ?endsAt.
-                FILTER (?endsAt <= "1900-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
+                FILTER (?endsAt <= "$to-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
                     BIND(str(YEAR(?endsAt)) AS ?endYear).
                 }.
-        FILTER (?date >= "1800-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
-        FILTER (?date <= "1900-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date >= "$from-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date <= "$to-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
         BIND(str(YEAR(?date)) AS ?startyear).
 
         $sourceQuery
@@ -711,11 +705,11 @@ WHERE {
             ?roles pq:P39 ?people}.
 
     OPTIONAL {?event wdt:P14 ?endsAt.
-                FILTER (?endsAt <= "1900-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
+                FILTER (?endsAt <= "$to-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
                     BIND(str(YEAR(?endsAt)) AS ?endYear).
                 }.
-        FILTER (?date >= "1800-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
-        FILTER (?date <= "1900-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date >= "$from-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
+        FILTER (?date <= "$to-01-01T00:00:00Z"^^xsd:dateTime) .#include here year range
         BIND(str(YEAR(?date)) AS ?startyear).
 
         $sourceQuery

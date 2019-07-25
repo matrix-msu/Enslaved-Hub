@@ -1,0 +1,75 @@
+// Margin Padding
+$spacing: (
+  auto: auto,
+  0: 0,
+  xxs: 5px,
+  xs: 10px,
+  sm: 15px,
+  md: 20px,
+  lg: 30px,
+  xl: 50px,
+  xxl: 100px,
+  xxxl: 150px
+);
+
+@each $key, $size in $spacing {
+  .pa-#{$key} {
+    padding: #{$size};
+  }
+
+  .pt-#{$key} {
+    padding-top: #{$size};
+  }
+
+  .pr-#{$key} {
+    padding-right: #{$size};
+  }
+
+  .pb-#{$key} {
+    padding-bottom: #{$size};
+  }
+
+  .pl-#{$key} {
+    padding-left: #{$size};
+  }
+
+  .px-#{$key} {
+    padding-left: #{$size};
+    padding-right: #{$size};
+  }
+
+  .py-#{$key} {
+    padding-bottom: #{$size};
+    padding-top: #{$size};
+  }
+
+  .ma-#{$key} {
+    margin: #{$size};
+  }
+
+  .mt-#{$key} {
+    margin-top: #{$size};
+  }
+
+  .mr-#{$key} {
+    margin-right: #{$size};
+  }
+
+  .mb-#{$key} {
+    margin-bottom: #{$size};
+  }
+
+  .ml-#{$key} {
+    margin-left: #{$size};
+  }
+
+  .mx-#{$key} {
+    margin-left: #{$size};
+    margin-right: #{$size};
+  }
+
+  .my-#{$key} {
+    margin-bottom: #{$size};
+    margin-top: #{$size};
+  }
+}

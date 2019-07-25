@@ -45,9 +45,9 @@
         <h2>Representations</h2>
         <!-- <p>To see a more granular provenance of this record, you can download the following files:</p> -->
         <div class="advancedwrap">
-            <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".rdf";?>">Download RDF</a>
-            <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".ttl";?>">Download Turtle</a>
-            <a href="<?php echo SANDRO_BASE_URL . "entity/" . QID . ".json";?>">Download JSON</a>
+            <a href="<?php echo BASE_WIKI_URL . "entity/" . QID . ".rdf";?>">Download RDF</a>
+            <a href="<?php echo BASE_WIKI_URL . "entity/" . QID . ".ttl";?>">Download Turtle</a>
+            <a href="<?php echo BASE_WIKI_URL . "entity/" . QID . ".json";?>">Download JSON</a>
         </div>
     </div>
 </div>
@@ -132,7 +132,7 @@
 
 <!-- Featured Stories-->
 
-<?php 
+<?php
 if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
 <div class="container column featured-card">
     <div class="container cardheader-wrap">
@@ -170,4 +170,3 @@ if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/timeline.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>
-

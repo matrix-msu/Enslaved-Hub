@@ -129,7 +129,7 @@
                         <option value="1900">1900</option>
                         <option value="2000">2000</option>
                     </select>
-                    <input class="event-date-range" type="hidden" name="eventDate" value=""/>
+                    <input class="event-date-range" type="hidden" name="date" value=""/>
                 </div>
             </div>
             <!-- PLACE -->
