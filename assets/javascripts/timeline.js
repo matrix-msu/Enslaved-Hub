@@ -17,6 +17,7 @@
         // Info Select
         var $infoSelect = $('.info-select');
         var $info = $('.infowrap');
+        var $placeSelect = $('a#place-associator');
       
         // dont show timeline for 3 or less events
         if (eventsCount <= 3){
@@ -101,7 +102,18 @@
             $info.removeClass('active');
             $('.'+type+'-info-'+currentKid).addClass('active');
         });
-        
+
+
+        $placeSelect.click(function () {
+            let placeQid = $(this).data('placeqid');
+
+            $info.removeClass('active');
+            $infoSelect.removeClass('active');
+
+            $(`.info-select-place[data-placeqid=${placeQid}]`).addClass('active');
+            $(`.place-info-${placeQid}`).addClass('active');
+        });
+
         function setEventByKid(kid, $point) {
             // Set point on timeline
             $eventPoints.removeClass('active');
@@ -123,72 +135,73 @@
             setTimelineTitle(kid);
         }
     
-    function setTimelineTitle(kid) {
-        currentKid = kid;
+        function setTimelineTitle(kid) {
+            currentKid = kid;
 
-        let firstActive = true;
+            let firstActive = true;
+            console.log('aaa', $infoSelect)
 
-        $infoSelect.removeClass('active');
+            $infoSelect.removeClass('active');
 
-        $('.info-select-event').each(function () {
-            if ($(this).data('year') == currentYear || $(this).data('kid') == currentKid) {
-                $(this).show();
-                if (firstActive) {
-                    $(this).addClass('active');
-                    firstActive = false;
+            $('.info-select-event').each(function () {
+                if ($(this).data('year') == currentYear || $(this).data('kid') == currentKid) {
+                    $(this).show();
+                    if (firstActive) {
+                        $(this).addClass('active');
+                        firstActive = false;
+                    }
+                } else {
+                    $(this).removeClass('active');
+                    $(this).hide();
                 }
-            } else {
-                $(this).removeClass('active');
-                $(this).hide();
-            }
-        });
+            });
 
-        $('.info-select-place').each(function () {
-            if ($(this).data('year') == currentYear || $(this).data('eventkid') == currentKid) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
+            $('.info-select-place').each(function () {
+                if ($(this).data('year') == currentYear || $(this).data('eventkid') == currentKid) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+            
+            // var place = $('.place-info-'+currentKid).data('place');
+
+            // if (place) {
+            //   $('.info-select-place').children('.large-text').text(place);
+            // } else {
+            //   $('.info-select-place').hide();
+            // }
+
+            $($infoSelect).each(function () {
+                if ($(this).hasClass('active')) {
+                    $info.removeClass('active');
+                    $('.' + $(this).data('select') + '-info-' + $(this).data('kid')).addClass('active');
+                }
+            });
+
+
+
+
+            // $('.info-select-place').show();
         
-        // var place = $('.place-info-'+currentKid).data('place');
+            // var event = $('.event-info-'+currentKid).data('event');
+            // $('.info-select-event').children('.large-text').text(event);
+        
+            // var place = $('.place-info-'+currentKid).data('place');
+        
+            // if (place) {
+            //   $('.info-select-place').children('.large-text').text(place);
+            // } else {
+            //   $('.info-select-place').hide();
+            // }
 
-        // if (place) {
-        //   $('.info-select-place').children('.large-text').text(place);
-        // } else {
-        //   $('.info-select-place').hide();
-        // }
-
-        $($infoSelect).each(function () {
-            if ($(this).hasClass('active')) {
-                $info.removeClass('active');
-                $('.' + $(this).data('select') + '-info-' + $(this).data('kid')).addClass('active');
-            }
-        });
-
-
-
-
-        // $('.info-select-place').show();
-    
-        // var event = $('.event-info-'+currentKid).data('event');
-        // $('.info-select-event').children('.large-text').text(event);
-    
-        // var place = $('.place-info-'+currentKid).data('place');
-    
-        // if (place) {
-        //   $('.info-select-place').children('.large-text').text(place);
-        // } else {
-        //   $('.info-select-place').hide();
-        // }
-
-        //   $($infoSelect).each(function () {
-        //       if ($(this).hasClass('active')) {
-        //           $info.removeClass('active');
-        //           $('.' + $(this).data('select') + '-info-' + currentKid).addClass('active');
-        //       }
-        //   });
-      }
+            //   $($infoSelect).each(function () {
+            //       if ($(this).hasClass('active')) {
+            //           $info.removeClass('active');
+            //           $('.' + $(this).data('select') + '-info-' + currentKid).addClass('active');
+            //       }
+            //   });
+        }
     
       function setSourceByKid(kid) {
         $sourceSelect.removeClass('active');
