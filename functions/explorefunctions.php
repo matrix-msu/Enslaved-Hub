@@ -1766,156 +1766,158 @@ HTML;
             $allEventTypes = array();
 
 
-        if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
-              $eventsAndStartYears = explode('||', $record['startyear']['value']);
-        }
+            if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
+                $eventsAndStartYears = explode('||', $record['startyear']['value']);
+            }
 
-        // all places
-        if (isset($record['allplaces']) && isset($record['allplaces']['value']) && $record['allplaces']['value'] != ''  ){
-            if (isset($record['allplaceslabel']) && isset($record['allplaceslabel']['value']) && $record['allplaceslabel']['value'] != '' ){
-                $allPlaceLabels = explode('||', $record['allplaceslabel']['value']);
-                $allPlaceUrls = explode('||', $record['allplaces']['value']);
+            // all places
+            if (isset($record['allplaces']) && isset($record['allplaces']['value']) && $record['allplaces']['value'] != ''  ){
+                if (isset($record['allplaceslabel']) && isset($record['allplaceslabel']['value']) && $record['allplaceslabel']['value'] != '' ){
+                    $allPlaceLabels = explode('||', $record['allplaceslabel']['value']);
+                    $allPlaceUrls = explode('||', $record['allplaces']['value']);
 
-                $allEventPlaces = explode('||', $record['eventplace']['value']);
-                $allEventToPlaceMap = array();
-                foreach($allEventPlaces as $matchString){
-                    $parts = explode(' - ', $matchString);
-                    $eventUrl = $parts[0];
-                    $eventQ = end(explode('/', $eventUrl));
-                    $placeName = $parts[1];
-                    
-                    $placeUrlIndex = array_search($placeName, $allPlaceLabels);
-                    $placeUrl = $allPlaceUrls[$placeUrlIndex];
-                    $placeQ = end(explode('/', $placeUrl));
-                    // group the place name and q value with their events
-                    $allEventToPlaceMap[$eventQ] = array('name' => $placeName, 'placeQ' => $placeQ);
+                    $allEventPlaces = explode('||', $record['eventplace']['value']);
+                    $allEventToPlaceMap = array();
+                    foreach($allEventPlaces as $matchString){
+                        $parts = explode(' - ', $matchString);
+                        $eventUrl = $parts[0];
+                        $eventQ = end(explode('/', $eventUrl));
+                        $placeName = $parts[1];
+                        
+                        $placeUrlIndex = array_search($placeName, $allPlaceLabels);
+                        $placeUrl = $allPlaceUrls[$placeUrlIndex];
+                        $placeQ = end(explode('/', $placeUrl));
+                        // group the place name and q value with their events
+                        $allEventToPlaceMap[$eventQ] = array('name' => $placeName, 'placeQ' => $placeQ);
+                    }
                 }
             }
-        }
 
-        // match events to start years
-        // there is also an event type in this string but its not being used right now
-        foreach ($eventsAndStartYears as $eventInfo){
-            $pieces = explode(' - ', $eventInfo);
-            $eName = $pieces[0];
-            $eType = $pieces[1];
-            $year = end($pieces);
-            $allEventStartYears[$eName] = $year;
-            $allEventTypes[$eName] = $eType;
-        }
+            // match events to start years
+            // there is also an event type in this string but its not being used right now
+            foreach ($eventsAndStartYears as $eventInfo){
+                $pieces = explode(' - ', $eventInfo);
+                $eName = $pieces[0];
+                $eType = $pieces[1];
+                $year = end($pieces);
+                $allEventStartYears[$eName] = $year;
+                $allEventTypes[$eName] = $eType;
+            }
 
-        // end year stuff hasn't been tested or working yet
-        if (isset($record['endyear']) && isset($record['endyear']['value']) ){
-           $allEventEndYears = explode('||', $record['endyear']['value']);
-        }
+            // end year stuff hasn't been tested or working yet
+            if (isset($record['endyear']) && isset($record['endyear']['value']) ){
+            $allEventEndYears = explode('||', $record['endyear']['value']);
+            }
 
-        // descriptions hasn't been tested or working yet
-        if (isset($record['desc']) && isset($record['desc']['value']) ){
-           $allEventDescritions = explode('||', $record['desc']['value']);
-        }
+            // descriptions hasn't been tested or working yet
+            if (isset($record['desc']) && isset($record['desc']['value']) ){
+            $allEventDescritions = explode('||', $record['desc']['value']);
+            }
 
-        // roles per event
-        if (isset($recordVars['eventRolesA'])){
-            $allRoles = explode('||', $recordVars['eventRolesA']['roles']);
-            $allLabels = explode('||', $recordVars['eventRolesA']['eventRoleLabels']);
-            $allEventRoles = array();
+            // roles per event
+            if (isset($recordVars['eventRolesA'])){
+                $allRoles = explode('||', $recordVars['eventRolesA']['roles']);
+                $allLabels = explode('||', $recordVars['eventRolesA']['eventRoleLabels']);
+                $allEventRoles = array();
 
-            // match roles with event labels
-            for($i=0; $i < sizeof($allRoles); $i++){
-                if (isset($allLabels[$i]) && isset($allRoles[$i])){
-                    $allEventRoles[$allLabels[$i]] = $allRoles[$i];
+                // match roles with event labels
+                for($i=0; $i < sizeof($allRoles); $i++){
+                    if (isset($allLabels[$i]) && isset($allRoles[$i])){
+                        $allEventRoles[$allLabels[$i]] = $allRoles[$i];
+                    }
                 }
             }
-        }
 
-        // statuses per event
-        if (isset($recordVars['StatusA'])){
-            $allStatuses= explode('||', $recordVars['StatusA']['statuses']);
-            $allLabels = explode('||', $recordVars['StatusA']['eventstatusLabels']);
-            $allEventStatuses = array();
+            // statuses per event
+            if (isset($recordVars['StatusA'])){
+                $allStatuses= explode('||', $recordVars['StatusA']['statuses']);
+                $allLabels = explode('||', $recordVars['StatusA']['eventstatusLabels']);
+                $allEventStatuses = array();
 
-            // match statuses with event labels
-            for($i=0; $i < sizeof($allStatuses); $i++){
-                if (isset($allLabels[$i]) && isset($allStatuses[$i])){
-                    $allEventStatuses[$allLabels[$i]] = $allStatuses[$i];
+                // match statuses with event labels
+                for($i=0; $i < sizeof($allStatuses); $i++){
+                    if (isset($allLabels[$i]) && isset($allStatuses[$i])){
+                        $allEventStatuses[$allLabels[$i]] = $allStatuses[$i];
+                    }
                 }
             }
-        }
 
-         // create the events array
-         foreach($allEventQids as $i => $eventQ){
-            $eventLabel = $allEventLabels[$i];
+            // create the events array
+            foreach($allEventQids as $i => $eventQ){
+                $eventLabel = $allEventLabels[$i];
 
-            // start year
-            $eventStartYear = '';
-            if (isset($allEventStartYears[$eventLabel])){
-              $eventStartYear = $allEventStartYears[$eventLabel];
-            }
-            // end year
-            $eventEndYear = '';
-            if (isset($allEventEndYears[$eventLabel])){
-              $eventEndYear = $allEventEndYears[$eventLabel];
-            }
-            // event type
-            $eventType = '';
-            if (isset($allEventTypes[$eventLabel])){
-              $eventType = $allEventTypes[$eventLabel];
-            }
-            // event descriptions
-            $eventDesc = '';
-            if (isset($allEventDescritions[$eventLabel])){
-              $eventDesc = $allEventDescritions[$eventLabel];
-            }
-            // event roles
-            $eventRole = '';
-            if (isset($allEventRoles[$eventLabel])){
-                $eventRole = $allEventRoles[$eventLabel];
-            }
+                // start year
+                $eventStartYear = '';
+                if (isset($allEventStartYears[$eventLabel])){
+                    $eventStartYear = $allEventStartYears[$eventLabel];
+                    if ($eventStartYear == 1854){ $eventStartYear = '';}
+                }
+                // end year
+                $eventEndYear = '';
+                if (isset($allEventEndYears[$eventLabel])){
+                    $eventEndYear = $allEventEndYears[$eventLabel];
+                }
+                // event type
+                $eventType = '';
+                if (isset($allEventTypes[$eventLabel])){
+                    $eventType = $allEventTypes[$eventLabel];
+                }
+                // event descriptions
+                $eventDesc = '';
+                if (isset($allEventDescritions[$eventLabel])){
+                    $eventDesc = $allEventDescritions[$eventLabel];
+                }
+                // event roles
+                $eventRole = '';
+                if (isset($allEventRoles[$eventLabel])){
+                    $eventRole = $allEventRoles[$eventLabel];
+                }
 
-            // event status
-            $eventStatus = '';
-            if (isset($allEventStatuses[$eventLabel])){
-                $eventStatus = $allEventStatuses[$eventLabel];
-            }
+                // event status
+                $eventStatus = '';
+                if (isset($allEventStatuses[$eventLabel])){
+                    $eventStatus = $allEventStatuses[$eventLabel];
+                }
 
-            
-            // event places
-            $eventPlaces = '';
-            if (isset($allEventToPlaceMap[$eventQ])){
-                $eventPlaces = $allEventToPlaceMap[$eventQ];
-            }
-            
-            // save info per event
-            if ($eventStartYear != ''){
+
+                // event places
+                $eventPlaces = '';
+                if (isset($allEventToPlaceMap[$eventQ])){
+                    $eventPlaces = $allEventToPlaceMap[$eventQ];
+                }
+
+                // save info per event
                 $eventArray = [
-                  'kid' => $eventQ,
-                  'title' => $eventLabel,
-                  'description' => $eventDesc,
-                  'startYear' => $eventStartYear,
-                  'endYear' => $eventEndYear,
-                  'type' => $eventType,
-                  'role' => $eventRole,
-                  'status' => $eventStatus,
-                  'place' => $eventPlaces
+                    'kid' => $eventQ,
+                    'title' => $eventLabel,
+                    'description' => $eventDesc,
+                    'startYear' => $eventStartYear,
+                    'endYear' => $eventEndYear,
+                    'type' => $eventType,
+                    'role' => $eventRole,
+                    'status' => $eventStatus,
+                    'place' => $eventPlaces
                 ];
                 array_push($events, $eventArray);
             }
-         }
         }
     }
+
+    // print_r($events);die;
 
     // dont do timeline stuff if there are less than 3 events
     if (count($events) < 3){
         return json_encode($htmlArray);
     }
-
+    // print_r($events);die;
     $timeline_event_dates = [];
-    $unknownEvents = [];
+    $unknownEvents = [];    // events without dates
     foreach ($events as $event) {
         // If there are months and days, put the year into decimal format
         // Ex: March 6, 1805 = 1805.18
         if (isset($event['startYear']) && $event['startYear'] != ''){
             array_push($timeline_event_dates, $event['startYear']);
+
         } else {
             array_push($unknownEvents, $event);
         }
@@ -2000,16 +2002,82 @@ HTML;
                     </div>';
         }
     }
+
+    foreach ($events as $index => $event) {
+        if ($event['startYear'] == '') {
+            unset($events[$index]);
+        }
+    }
+    // todo unknown events/places tabs
+    $unknownPlaces = array();
+    foreach ($unknownEvents as $event) {
+        $kid = $event['kid'];
+        $typeText = "Event";
+
+        $html .= '
+            <div
+            class="info-select info-select-event"
+            data-select="event"
+            data-kid="'.$kid.'"
+            >';
+
+        if ($event['type'] != ''){
+            $html .= '
+                <p>Event</p>
+                <p class="large-text">'.$event['type'].'</p>
+            ';
+        } else {
+            $html .= '
+                <p class="large-text">Event</p>
+            ';
+        }
+
+        $html .= '</div>';
+
+
+        //get all unique places for this year
+        $eventPlace = $event['place'];
+        if (is_array($eventPlace)){
+            $unknownPlaces[$eventPlace['name']] = $eventPlace['placeQ'];
+        }
+    }
+    
+    // set the place info select buttons for this year
+    foreach ($unknownPlaces as $placeName => $placeQ) {
+        $html .= '
+            <div
+            class="info-select info-select-place"
+            data-select="place"
+            data-placeqid="'.$placeQ.'"
+            data-eventkid="'.$kid.'"
+            >
+            <p>Place</p>
+            <p class="large-text">'.$placeName.'</p>
+            </div>';
+    }
+
+
+
     $html .= '</div>';
 
     // put the events in order to be displayed
     $dates = array_column($events, 'startYear');
     array_multisort($dates, SORT_ASC, $events);
+    $events = array_merge($events, $unknownEvents);
 
-    $first = true;//to set the first timeline event as active
+    $activeSet = false; // set the first event with a date as active
+
+    // print_r($events);die;
     foreach($events as $index => $event) {
         $eventQ = $event['kid'];
-        $html .= '<div class="event-info-'.$eventQ.' infowrap '.($index == 0 ? 'active' : '').'">';
+
+        if (!$activeSet && isset($event['startYear']) && $event['startYear'] != ''){
+            $html .= '<div class="event-info-'.$eventQ.' infowrap active">';
+            $activeSet = true;
+        } else {
+            $html .= '<div class="event-info-'.$eventQ.' infowrap">';
+        }
+
 
         // title html
         $titleHtml = "";
@@ -2091,7 +2159,7 @@ HTML;
 
         $yearsFound = array();  // make sure no duplicate years
         foreach ($events as $index => $event) {
-            if (in_array($event['startYear'], $yearsFound)){
+            if (in_array($event['startYear'], $yearsFound) || $event['startYear'] == ''){
                 continue;
             }
             $yearsFound[] = $event['startYear'];
@@ -2110,30 +2178,29 @@ HTML;
             $timelineIndex++;
       }
 
-    // $html .= '</div>
-    //         </div>';
+    $html .= '</div>
+            </div>';
 
 
-    // // events with unknown dates todo
-    // $html .= '
-    //     <div class="timeline dates-unknown">
-    //         <div class="line"></div>
-    //         <div class="points-container">';
+    // events with unknown dates todo
+    $html .= '
+        <div class="timeline dates-unknown">
+            <div class="line"></div>
+            <div class="points-container">';
 
-    // foreach ($unknownEvents as $event) {
-    //     $kid = $event['kid'];
+    foreach ($unknownEvents as $event) {
+        $kid = $event['kid'];
         
-    //     $html .= '
-    //         <div
-    //             class="event-point no-select '.($timelineIndex == 0 ? 'active' : '').'"
-    //             data-index="'.$timelineIndex.'"
-    //             data-year="'.$kid.'"
-    //         >
-    //             <span class="event-title">'.$event['type'].'</span>
-    //         </div>';
-    //     $timelineIndex++;
-    // }
-
+        $html .= '
+            <div
+                class="event-point no-select '.($timelineIndex == 0 ? 'active' : '').'"
+                data-index="'.$timelineIndex.'"
+                data-kid="'.$kid.'"
+            >
+                <span class="event-title">Unknown Events</span>
+            </div>';
+        $timelineIndex++;
+    }
 
     $html .= '
     </div></div>

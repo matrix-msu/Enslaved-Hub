@@ -5,6 +5,7 @@
         var $tlInfoContainerArrowBottom = $tlInfoContainer.find('.arrow-pointer-bottom');
         var $tlInfoContainerArrowtop = $tlInfoContainer.find('.arrow-pointer-top');
         var $eventPoints = $('.event-point');
+        var $unknownEventPoints = $('.timeline').find('.points-container').eq(1).find('.event-point');
         var $sourceSelect = $('.source-select');
         var $nextButton = $tlContainer.find('.timeline-next');
         var $prevButton = $tlContainer.find('.timeline-prev');
@@ -18,6 +19,11 @@
         var $infoSelect = $('.info-select');
         var $info = $('.infowrap');
         var $placeSelect = $('a#place-associator');
+
+        eventsCount -= $unknownEventPoints.length;
+        if ($unknownEventPoints.length > 0){
+            eventsCount += 1;
+        }
       
         // dont show timeline for 3 or less events
         if (eventsCount <= 3){
@@ -61,7 +67,7 @@
         $nextButton.click(function() {
             currentIndex += 1;
             if (currentIndex >= eventsCount) {
-            currentIndex = 0;
+                currentIndex = 0;
             }
             var $point = $($eventPoints[currentIndex]);
             currentKid = $point.data('kid');
@@ -74,7 +80,7 @@
         $prevButton.click(function() {
             currentIndex -= 1;
             if (currentIndex < 0) {
-            currentIndex = eventsCount - 1;
+                currentIndex = eventsCount - 1;
             }
         
             var $point = $($eventPoints[currentIndex]);
@@ -83,8 +89,7 @@
 
             setEventByKid(currentKid, $point);
         });
-        
-
+    
         
         // Switch between Event and Place Info for an Event on the timeline
         $infoSelect.click(function() {
@@ -118,6 +123,11 @@
             // Set point on timeline
             $eventPoints.removeClass('active');
             $point.addClass('active');
+
+            // set the unknown events dots to active if needed
+            if ($point.parent().parent().hasClass('dates-unknown')) {
+                $unknownEventPoints.addClass('active')
+            }
         
             // Show corresponding info
             $info.removeClass('active');
@@ -137,10 +147,7 @@
     
         function setTimelineTitle(kid) {
             currentKid = kid;
-
             let firstActive = true;
-            console.log('aaa', $infoSelect)
-
             $infoSelect.removeClass('active');
 
             $('.info-select-event').each(function () {
@@ -212,6 +219,7 @@
       if (eventsCount <= 1){
         $tlContainer.remove();
       }
+
       //Set the arrow to the first event, or no event if there is only 1
       setEventByKid(currentKid, $($eventPoints[0]));
 
