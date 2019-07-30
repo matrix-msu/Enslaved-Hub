@@ -12,7 +12,7 @@ function queryAllAgentsCounter(){
   $query='SELECT  (COUNT(distinct ?agent) AS ?count)
     WHERE {
         ?agent wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].';        #find agents{
-        MINUS{ ?agent wdt:'.properties["hasParticipantRoleRecord"].' wd:'.roleTypes["Researcher"].' }. #remove all researchers
+        MINUS{ ?agent wdt:'.properties["hasParticipantRole"].' wd:'.roleTypes["Researcher"].' }. #remove all researchers
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
 
@@ -273,12 +273,12 @@ function counterOfEventPlace(){
 }
 
 function counterOfPlaceType(){
-  $instanceof=properties["instance of"];
+  $instanceOf=properties["instance of"];
   $placeclass = classes["Place"];
   $placetype= properties["hasPlaceType"];
   $query= <<<QUERY
   SELECT DISTINCT ?placetype ?placetypeLabel (COUNT(?place) AS ?count) WHERE {
-    ?place wdt:$instanceof wd:$placeclass; #it's a place
+    ?place wdt:$instanceOf wd:$placeclass; #it's a place
         wdt:$placetype ?placetype.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
   }GROUP BY ?placetype ?placetypeLabel
@@ -300,14 +300,15 @@ QUERY;
 //not using this function for now
 function counterOfCity(){
 
-  $instanceof=properties["instance of"];
+  $instanceOf=properties["instance of"];
   $placeclass = classes["Place"];
   $placetype= properties["hasPlaceType"];
   $locatedIn = properties["locatedIn"];
+  $cityTownVillage = classes["City, Town, or Village"];
   $query= <<<QUERY
 SELECT DISTINCT ?city ?cityLabel (COUNT(?place) AS ?count) WHERE {
-  ?city wdt:$instanceof wd:$placeclass; #it's a place
-      wdt:$placetype wd:Q29.#?city is a city
+  ?city wdt:$instanceOf wd:$placeclass; #it's a place
+      wdt:$placetype wd:$cityTownVillage.#?city is a city
 OPTIONAL {?place wdt:$locatedIn ?city.} #place is locatedIn a city
 
 SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
@@ -1239,7 +1240,7 @@ HTML;
 function getPersonRecordHtml(){
     $qid = $_REQUEST['QID'];
     $type = $_REQUEST['type'];
-    $instanceof = properties["instance of"];
+    $instanceOf = properties["instance of"];
     $subclassof = properties ["subclass of"];
     $agent = classes["Agent"];
     $refprop = properties["isDirectlyBasedOn"];
@@ -1266,6 +1267,14 @@ function getPersonRecordHtml(){
     $locatedIn = properties ["locatedIn"];
     $geonamesID = properties["Geonames ID"];
     $moderncountrycode = properties["modern country code"];
+    $hasOriginalSourceType = properties["hasOriginalSourceType"];
+    $hasOriginalSourceDepository = properties["hasOriginalSourceDepository"];
+    $hasOriginalSourceprovidesParticipantRoleDepository = properties["providesParticipantRole"];
+
+    $entityWithProvenance = classes["Entity with Provenance"];
+    $event = classes["Event"];
+    $place = classes["Place"];
+
 
     //QUERY FOR RECORD INFO
     $query = [];
@@ -1304,7 +1313,7 @@ SELECT ?name ?desc ?sextype  ?race
  WHERE
 {
  VALUES ?agent {wd:$qid} #Q number needs to be changed for every event.
-  ?agent wdt:$instanceof/wdt:$subclassof wd:$agent; #agent or subclass of agent
+  ?agent wdt:$instanceOf/wdt:$subclassof wd:$agent; #agent or subclass of agent
   		 ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:$refprop ?source .
@@ -1388,7 +1397,7 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
   WHERE
 {
   VALUES ?place {wd:$qid} #Q number needs to be changed for every place.
-  ?place wdt:$instanceof wd:Q50;
+  ?place wdt:$instanceOf wd:$place;
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:$refprop ?source .
@@ -1420,29 +1429,29 @@ SELECT ?name ?desc ?located  ?type ?date ?endDate
 WHERE
 {
 VALUES ?event {wd:$qid} #Q number needs to be changed for every event.
-?event wdt:P3 wd:Q34;
+?event wdt:$instanceOf wd:$event;
 		 ?property  ?object .
 ?object prov:wasDerivedFrom ?provenance .
-?provenance pr:P35 ?source .
+?provenance pr:$isDirectlyBasedOn ?source .
 ?source rdfs:label ?refName;
-        wdt:P7 ?project.
+        wdt:$generatedBy ?project.
 ?project rdfs:label ?pname.
 ?event rdfs:label ?name.
-?event wdt:P81 ?eventtype.
+?event wdt:$hasEventType ?eventtype.
 ?eventtype rdfs:label ?type.
 OPTIONAL{ ?event schema:description ?desc}.
-OPTIONAL{?event wdt:P12 ?place.
+OPTIONAL{?event wdt:$atPlace ?place.
         ?place rdfs:label ?located}.
-OPTIONAL{ ?event wdt:P13 ?datetime.
+OPTIONAL{ ?event wdt:$startsAt ?datetime.
         BIND(xsd:date(?datetime) AS ?date)}
- OPTIONAL{ ?event wdt:P14 ?endDatetime.
+ OPTIONAL{ ?event wdt:$endsAt ?endDatetime.
          BIND(xsd:date(?endDatetime) AS ?endDate)}
 
  OPTIONAL{
-  ?event p:P38 ?statement .
-	?statement ps:P38 ?roles .
+  ?event p:$providesParticipantRole ?statement .
+	?statement ps:$providesParticipantRole ?roles .
 	?roles rdfs:label ?rolename.
-	?statement pq:P39 ?participant.
+	?statement pq:$hasParticipantRole ?participant.
 	?participant rdfs:label ?participantname}.
 
 
@@ -1458,14 +1467,14 @@ SELECT ?name ?desc ?project ?pname ?type ?secondarysource
  WHERE
 {
  VALUES ?source {wd:$qid} #Q number needs to be changed for every source.
-  ?source wdt:P3 wd:Q16;
-         wdt:P7 ?project.
+  ?source wdt:$instanceOf wd:$entityWithProvenance;
+         wdt:$generatedBy ?project.
   ?project rdfs:label ?pname.
 
   ?source rdfs:label ?name.
-  ?source wdt:P9 ?sourcetype.
+  ?source wdt:$hasOriginalSourceType ?sourcetype.
   ?sourcetype rdfs:label ?type.
-  OPTIONAL{?source wdt:P84 ?secondarysource}.
+  OPTIONAL{?source wdt:$hasOriginalSourceDepository ?secondarysource}.
   OPTIONAL {?source schema:description ?desc}.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2252,16 +2261,27 @@ function getFullRecordConnections(){
 function getPersonPageConnections($QID) {
     $connections = array();
 
+    $isRelationshipTo = properties["isRelationshipTo"];
+    $atPlace = properties["atPlace"];
+    $hasPersonStatus = properties["hasPersonStatus"];
+    $hasInterAgentRelationship = properties["hasInterAgentRelationship"];
+    $hasStatusGeneratingEvent = properties["hasStatusGeneratingEvent"];
+    $roleProvidedBy = properties["roleProvidedBy"];
+    $hasName = properties["hasName"];
+    $closeMatch = properties["closeMatch"];
+    $recordedAt = properties["recordedAt"];
+    $hasParticipantRole = properties["hasParticipantRole"];
+
     $personQuery['query'] = <<<QUERY
 SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
 
  WHERE
 {
  VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
- 	?agent p:P25 ?staterel .
-	?staterel ps:P25 ?relations .
+ 	?agent p:$hasInterAgentRelationship ?staterel .
+	?staterel ps:$hasInterAgentRelationship ?relations .
   	?relations rdfs:label ?relationslabel.
-	?staterel pq:P104 ?people.
+	?staterel pq:$isRelationshipTo ?people.
   	?people rdfs:label ?peoplename.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2294,22 +2314,22 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
  WHERE
 {
  VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
-  ?agent p:P82 ?statement.
-  ?statement ps:P82 ?name.
-  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+  ?agent p:$hasName ?statement.
+  ?statement ps:$hasName ?name.
+  OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
             bind(?recordedAt as ?allevents)}
-  OPTIONAL {?agent p:P39 ?statementrole.
-           ?statementrole ps:P39 ?roles.
-           ?statementrole pq:P98 ?roleevent.
+  OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
+           ?statementrole ps:$hasParticipantRole ?roles.
+           ?statementrole pq:$roleProvidedBy ?roleevent.
            bind(?roleevent as ?allevents)
 
          }.
 
- OPTIONAL {?agent p:P24 ?statstatus.
-           ?statstatus ps:P24 ?status.
-           ?statstatus pq:P99 ?statusevent.
+ OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
+           ?statstatus ps:$hasPersonStatus ?status.
+           ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
           bind(?statusevent as ?allevents)}.
-  ?allevents wdt:P12 ?place.
+  ?allevents wdt:$atPlace ?place.
   ?place rdfs:label ?placelabel.
 
 
@@ -2342,7 +2362,7 @@ SELECT DISTINCT ?match ?matchlabel (SHA512(CONCAT(STR(?match), STR(RAND()))) as 
  WHERE
 {
  VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
- 	?agent wdt:P88 ?match.
+ 	?agent wdt:$closeMatch ?match.
     ?match rdfs:label ?matchlabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2376,20 +2396,20 @@ SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as 
  WHERE
 {
  VALUES ?agent {wd:$QID} #Q number needs to be changed for every source.
-  ?agent p:P82 ?statement.
-  ?statement ps:P82 ?name.
-  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+  ?agent p:$hasName ?statement.
+  ?statement ps:$hasName ?name.
+  OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
             bind(?recordedAt as ?event)}
-  OPTIONAL {?agent p:P39 ?statementrole.
-           ?statementrole ps:P39 ?roles.
-           ?statementrole pq:P98 ?roleevent.
+  OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
+           ?statementrole ps:$hasParticipantRole ?roles.
+           ?statementrole pq:$roleProvidedBy ?roleevent.
            bind(?roleevent as ?event)
 
          }.
 
- OPTIONAL {?agent p:P24 ?statstatus.
-           ?statstatus ps:P24 ?status.
-           ?statstatus pq:P99 ?statusevent.
+ OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
+           ?statstatus ps:$hasPersonStatus ?status.
+           ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
           bind(?statusevent as ?event)}.
   ?event rdfs:label ?eventlabel.
 
@@ -2425,6 +2445,13 @@ QUERY;
 function getSourcePageConnections($QID) {
   $connections = array();
 
+  $entityWithProvenance = classes["Entity with Provenance"];
+  $agent = classes["Agent"];
+  $atPlace = properties["atPlace"];
+  $subclassof = properties["subclass of"];
+  $reportsOn = properties["reportsOn"];
+  $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
+  $instanceOf = properties["instance of"];
 
   // people connections
   $peopleQuery['query'] = <<<QUERY
@@ -2433,11 +2460,11 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
  WHERE
 {
  VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
-  ?source wdt:P3 wd:Q16.
-  ?people wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+  ?source wdt:$instanceOf wd:$entityWithProvenance.
+  ?people wdt:$instanceOf/wdt:$subclassof wd:$agent; #agent or subclass of agent
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:P35 ?source .
+  ?provenance pr:$isDirectlyBasedOn ?source .
   ?people rdfs:label ?peoplename
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2469,7 +2496,7 @@ SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND(
  WHERE
 {
  VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
-  ?source wdt:P8 ?event.
+  ?source wdt:$reportsOn ?event.
   ?event rdfs:label ?eventlabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2501,8 +2528,8 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
  WHERE
 {
  VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
-  ?source wdt:P8 ?event.
-  ?event wdt:P12 ?place.
+  ?source wdt:$reportsOn ?event.
+  ?event wdt:$atPlace ?place.
   ?place rdfs:label ?placelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2535,6 +2562,15 @@ QUERY;
 function getEventPageConnections($QID) {
   $connections = array();
 
+  $event = classes["Event"];
+  $atPlace = classes["atPlace"];
+  $generatedBy = properties["generatedBy"];
+  $hasParticipantRole = properties["hasParticipantRole"];
+  $providesParticipantRole = properties["providesParticipantRole"];
+  $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
+  $instanceOf = properties["instance of"];
+
+
   // people connections
   $peopleQuery['query'] = <<<QUERY
 SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
@@ -2542,10 +2578,10 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
  WHERE
 {
  VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:P3 wd:Q34.
-  ?event p:P38 ?statement.
-  ?statement ps:P38 ?name.
-  ?statement pq:P39 ?people.
+  ?event wdt:$instanceOf wd:$event.
+  ?event p:$providesParticipantRole ?statement.
+  ?statement ps:$providesParticipantRole ?name.
+  ?statement pq:$hasParticipantRole ?people.
   ?people rdfs:label ?peoplename.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2577,12 +2613,12 @@ SELECT DISTINCT ?source ?refName ?project ?projectName (SHA512(CONCAT(STR(?sourc
  WHERE
 {
 VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:P3 wd:Q34;
+  ?event wdt:$instanceOf wd:$event;
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:P35 ?source .
+  ?provenance pr:$isDirectlyBasedOn ?source .
   ?source rdfs:label ?refName;
-          wdt:P7 ?project.
+          wdt:$generatedBy ?project.
   ?project rdfs:label ?projectName.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2625,7 +2661,7 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
  WHERE
 {
  VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:P12 ?place.
+  ?event wdt:$atPlace ?place.
   ?place rdfs:label ?placelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2658,10 +2694,10 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
  WHERE
 {
  VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:P3 wd:Q34;
+  ?event wdt:$instanceOf wd:$event;
           ?property  ?object .
   	?object prov:wasDerivedFrom ?provenance .
-  	?provenance pr:P35 ?source .
+  	?provenance pr:$isDirectlyBasedOn ?source .
 	?source rdfs:label ?sourcelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }

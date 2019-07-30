@@ -67,6 +67,42 @@ function blazegraph()
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
 
+        $agent = classes["Agent"];
+        $researcher = classes["Researcher"];
+        $person = classes["Person"];
+        $researchProject = classes["Research Project"];
+        $female = classes["Female"];
+        $place = classes["Place"];
+        $entitiyWithProvenance = classes["Entity with Provenance"];
+        $event = classes["Event"];
+
+        $instanceOf = properties["instance of"];
+        $subclassOf = properties["subclass of"];
+        $hasName = properties["hasName"];
+        $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
+        $generatedBy = properties["generatedBy"];
+        $hasParticipantRole = properties["hasParticipantRole"];
+        $hasPersonStatus = properties["hasPersonStatus"];
+        $hasSex = properties["hasSex"];
+        $hasInterAgentRelationship = properties ["hasInterAgentRelationship"];
+        $closeMatch = properties ["closeMatch"];
+        $reportsOn = properties ["reportsOn"];
+        $atPlace = properties ["atPlace"];
+        $startsAt = properties ["startsAt"];
+        $endsAt = properties ["endsAt"];
+        $recordedAt = properties ["recordedAt"];
+        $hasECVO = properties ["hasECVO"];
+        $hasPlaceType = properties ["recordedAt"];
+        $locatedIn = properties ["locatedIn"];
+        $hasOriginRecord = properties ["hasOriginRecord"];
+        $providesParticipantRole = properties ["providesParticipantRole"];
+        $hasAgeCategory = properties ["hasAgeCategory"];
+        $hasOwner = properties ["hasOwner"];
+        $hasStatusGeneratingEvent = properties ["hasStatusGeneratingEvent"];
+        $roleProvidedBy = properties ["roleProvidedBy"];
+        $hasOriginalSourceType = properties ["hasOriginalSourceType"];
+
+
         switch ($preset){
             case 'singleProject':
                 // QID is mandatory
@@ -79,6 +115,7 @@ function blazegraph()
                 // Get Limit and offset from GET
                 if(isset($_GET["limit"]) && !empty($_GET["limit"])) $Q_limit = $_GET["limit"];
                 if(isset($_GET["offset"]) && !empty($_GET["offset"])) $Q_offset = $_GET["offset"];
+
 
                 $query = array('query' => "");
                 $query['query'] = <<<QUERY
@@ -100,32 +137,32 @@ WHERE {
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-  ?agent wdt:P3/wdt:P2 wd:Q2;
+  ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent;
 
-         wdt:P82 ?name; #name is mandatory
-            p:P3  ?object .
+         wdt:$hasName ?name; #name is mandatory
+            p:$instanceOf  ?object .
   ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:P35 ?reference .
-  ?reference wdt:P7 wd:$Q_ID #include here the Q number of the project
+  ?provenance pr:$isDirectlyBasedOn ?reference .
+  ?reference wdt:$generatedBy wd:$Q_ID #include here the Q number of the project
 
 
-  MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+  MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
 
-  OPTIONAL { ?agent wdt:P24 ?status.
+  OPTIONAL { ?agent wdt:$hasPersonStatus ?status.
             ?status rdfs:label ?statuslab}
 
-  OPTIONAL { ?agent wdt:P17 ?sex.
+  OPTIONAL { ?agent wdt:$hasSex ?sex.
             ?sex rdfs:label ?sexlab}
 
-  OPTIONAL { ?agent wdt:P25 ?relations}.
-  OPTIONAL { ?agent wdt:P88 ?relations}.
+  OPTIONAL { ?agent wdt:$hasInterAgentRelationship ?relations}.
+  OPTIONAL { ?agent wdt:$closeMatch ?relations}.
 
-  OPTIONAL{ ?reference wdt:P8 ?event.
-            ?event  wdt:P13 ?startdate.
+  OPTIONAL{ ?reference wdt:$reportsOn ?event.
+            ?event  wdt:$startsAt ?startdate.
            BIND(str(YEAR(?startdate)) AS ?startyear).
-           OPTIONAL {?event wdt:P14 ?enddate.
+           OPTIONAL {?event wdt:$endsAt ?enddate.
            BIND(str(YEAR(?enddate)) AS ?endyear)}.
-           OPTIONAL {?event wdt:P12 ?place.
+           OPTIONAL {?event wdt:$atPlace ?place.
                     ?place rdfs:label ?placelab}
 
           }.
@@ -156,33 +193,33 @@ WHERE {
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-    ?agent wdt:P3/wdt:P2 wd:Q2;
+    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent;
 
-        wdt:P82 ?name; #name is mandatory
-            p:P3  ?object .
+        wdt:$hasName ?name; #name is mandatory
+            p:$instanceOf  ?object .
     ?object prov:wasDerivedFrom ?provenance .
-    ?provenance pr:P35 ?reference .
-    ?reference wdt:P7 wd:$Q_ID
+    ?provenance pr:$isDirectlyBasedOn ?reference .
+    ?reference wdt:$generatedBy wd:$Q_ID
 
-    OPTIONAL{?agent  wdt:P39 ?role}. #optional role
-    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    OPTIONAL{?agent  wdt:$hasParticipantRole ?role}. #optional role
+    MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
 
-    OPTIONAL { ?agent wdt:P24 ?status.
+    OPTIONAL { ?agent wdt:$hasPersonStatus ?status.
             ?status rdfs:label ?statuslab}
 
-    OPTIONAL { ?agent wdt:P17 ?sex.
+    OPTIONAL { ?agent wdt:$hasSex ?sex.
             ?sex rdfs:label ?sexlab}
 
-    OPTIONAL { ?agent wdt:P88 ?match}.
+    OPTIONAL { ?agent wdt:$closeMatch ?match}.
 
-    ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name.
-    OPTIONAL{ ?statement pq:P30 ?event.
-            ?event  wdt:P13 ?startdate.
+    ?agent p:$hasName ?statement.
+    ?statement ps:$hasName ?name.
+    OPTIONAL{ ?statement pq:$recordedAt ?event.
+            ?event  wdt:$startsAt ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?event wdt:P14 ?enddate.
+            OPTIONAL {?event wdt:$endsAt ?enddate.
         BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?event wdt:P12 ?place.
+            OPTIONAL {?event wdt:$atPlace ?place.
                     ?place rdfs:label ?placelab}
 
             }.
@@ -215,7 +252,7 @@ QUERY;
                         $gender = $genders[0]; //ex. Male
                         if (array_key_exists($gender, sexTypes)){
                             $qGender = sexTypes[$gender];
-                            $genderQuery = "?agent wdt:P17 wd:$qGender .";
+                            $genderQuery = "?agent wdt:$hasSex wd:$qGender .";
                         }
                     }
                 }
@@ -231,11 +268,11 @@ QUERY;
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
                     $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
-                                    ?source wdt:P3 wd:Q16.
-                                    ?people wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+                                    ?source wdt:$instanceOf wd:$entitiyWithProvenance.
+                                    ?people wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
                                             ?property  ?object .
                                     ?object prov:wasDerivedFrom ?provenance .
-                                    ?provenance pr:P35 ?source .
+                                    ?provenance pr:$isDirectlyBasedOn ?source .
                                     ?people rdfs:label ?peoplename";
                 }
 
@@ -244,7 +281,7 @@ QUERY;
                     $age = $filtersArray['age_category'][0];
                     if (array_key_exists($age, ageCategory)){
                         $qAge = ageCategory[$age];
-                        $ageQuery = "?agent wdt:P32 wd:$qAge .";
+                        $ageQuery = "?agent wdt:$hasAgeCategory wd:$qAge .";
                     }
 
                 }
@@ -254,7 +291,7 @@ QUERY;
                     $ethno = $filtersArray['ethnodescriptor'][0];
                     if (array_key_exists($ethno, ethnodescriptor)){
                         $qEthno = ethnodescriptor[$ethno];
-                        $ethnoQuery = "?agent wdt:P86 wd:$qEthno .";
+                        $ethnoQuery = "?agent wdt:$hasECVO wd:$qEthno .";
                     }
                 }
 
@@ -263,7 +300,7 @@ QUERY;
                     $role = $filtersArray['role_types'][0];
                     if (array_key_exists($role, roleTypes)){
                         $qRole = roleTypes[$role];
-                        $roleQuery = "?agent wdt:P39 wd:$qRole .";
+                        $roleQuery = "?agent wdt:$hasParticipantRole wd:$qRole .";
                     }
 
                 }
@@ -279,10 +316,10 @@ SELECT DISTINCT ?agent ?name (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?rand
  WHERE
 {
  VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
-  ?event wdt:P3 wd:Q34.
-  ?event p:P38 ?statement.
-  ?statement ps:P38 ?personname.
-  ?statement pq:P39 ?agent.
+  ?event wdt:$instanceOf wd:$event.
+  ?event p:$providesParticipantRole ?statement.
+  ?statement ps:$providesParticipantRole ?personname.
+  ?statement pq:$hasParticipantRole ?agent.
   ?agent rdfs:label ?name.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -322,15 +359,15 @@ WHERE {
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-    ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
             ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
+        ?provenance pr:$isDirectlyBasedOn ?source .
 
 
-        ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name.
-    OPTIONAL{ ?statement pq:P30 ?recordeAt.
+        ?agent p:$hasName ?statement.
+    ?statement ps:$hasName ?name.
+    OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
             bind(?recordedAt as ?allevents)}
 
     $genderQuery
@@ -339,37 +376,37 @@ WHERE {
     $ethnoQuery
     $roleQuery
 
-    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
 
-    OPTIONAL {?agent p:P39 ?statementrole.
-            ?statementrole ps:P39 ?roles.
-            ?statementrole pq:P98 ?roleevent.
+    OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
+            ?statementrole ps:$hasParticipantRole ?roles.
+            ?statementrole pq:$roleProvidedBy ?roleevent.
             bind(?roleevent as ?allevents)
 
             }.
 
-    OPTIONAL {?agent p:P24 ?statstatus.
-            ?statstatus ps:P24 ?status.
+    OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
+            ?statstatus ps:$hasPersonStatus ?status.
             ?status rdfs:label ?statuslabel.
-            ?statstatus pq:P99 ?statusevent.
+            ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
             bind(?statusevent as ?allevents)}.
 
 
-    OPTIONAL { ?agent wdt:P17 ?sex.
+    OPTIONAL { ?agent wdt:$hasSex ?sex.
                 ?sex rdfs:label ?sexlab}
 
-    OPTIONAL { ?agent wdt:P88 ?match}.
+    OPTIONAL { ?agent wdt:$closeMatch ?match}.
 
 
-    OPTIONAL{?allevents	wdt:P13 ?startdate.
+    OPTIONAL{?allevents	wdt:$startsAt ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?allevents wdt:P14 ?enddate.
+            OPTIONAL {?allevents wdt:$endsAt ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?allevents wdt:P12 ?place.
+            OPTIONAL {?allevents wdt:$atPlace ?place.
                         ?place rdfs:label ?placelab}
 
             }.
-    OPTIONAL {?agent wdt:P25 ?people}
+    OPTIONAL {?agent wdt:$hasInterAgentRelationship ?people}
 
 } group by ?agent
 order by ?agent
@@ -410,15 +447,15 @@ WHERE {
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-    ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
   		 ?property  ?object .
   	?object prov:wasDerivedFrom ?provenance .
-  	?provenance pr:P35 ?source .
+  	?provenance pr:$isDirectlyBasedOn ?source .
 
 
- 	 ?agent p:P82 ?statement.
-    ?statement ps:P82 ?name.
-    OPTIONAL{ ?statement pq:P30 ?recordeAt.
+ 	 ?agent p:$hasName ?statement.
+    ?statement ps:$hasName ?name.
+    OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
             bind(?recordedAt as ?allevents)}
 
     $genderQuery
@@ -427,37 +464,37 @@ WHERE {
     $ethnoQuery
     $roleQuery
 
-    MINUS{ ?agent wdt:P39 wd:Q536 }. #remove all researchers
+    MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
 
-    OPTIONAL {?agent p:P39 ?statementrole.
-            ?statementrole ps:P39 ?roles.
-            ?statementrole pq:P98 ?roleevent.
+    OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
+            ?statementrole ps:$hasParticipantRole ?roles.
+            ?statementrole pq:$roleProvidedBy ?roleevent.
             bind(?roleevent as ?allevents)
 
             }.
 
-    OPTIONAL {?agent p:P24 ?statstatus.
-            ?statstatus ps:P24 ?status.
+    OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
+            ?statstatus ps:$hasPersonStatus ?status.
             ?status rdfs:label ?statuslabel.
-            ?statstatus pq:P99 ?statusevent.
+            ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
             bind(?statusevent as ?allevents)}.
 
 
-    OPTIONAL { ?agent wdt:P17 ?sex.
+    OPTIONAL { ?agent wdt:$hasSex ?sex.
                 ?sex rdfs:label ?sexlab}
 
-    OPTIONAL { ?agent wdt:P88 ?match}.
+    OPTIONAL { ?agent wdt:$closeMatch ?match}.
 
 
-    OPTIONAL{?allevents	wdt:P13 ?startdate.
+    OPTIONAL{?allevents	wdt:$startsAt ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?allevents wdt:P14 ?enddate.
+            OPTIONAL {?allevents wdt:$endsAt ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?allevents wdt:P12 ?place.
+            OPTIONAL {?allevents wdt:$atPlace ?place.
                         ?place rdfs:label ?placelab}
 
             }.
-    OPTIONAL {?agent wdt:P25 ?people}
+    OPTIONAL {?agent wdt:$hasInterAgentRelationship ?people}
 
 } group by ?agent
 order by ?agent
@@ -477,7 +514,7 @@ QUERY;
                     $type = $filtersArray['place_type'][0];
                     if (array_key_exists($type, placeTypes)){
                         $qType = placeTypes[$type];
-                        $typeQuery = "?place wdt:P80 wd:$qType .";
+                        $typeQuery = "?place wdt:$hasPlaceType wd:$qType .";
                     }
 
                 }
@@ -491,22 +528,22 @@ SELECT ?place ?placeLabel ?locatedInLabel
 (count(distinct ?source) as ?countsource)
 
 WHERE {
-    ?event wdt:P3 wd:Q34;
+    ?event wdt:$instanceOf wd:$event;
         ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
+        ?provenance pr:$isDirectlyBasedOn ?source .
 
-        ?event wdt:P12 ?place;
-            p:P38 ?statement.
-        ?statement ps:P38 ?role.
-        ?statement pq:P39 ?person.
+        ?event wdt:$atPlace ?place;
+            p:$providesParticipantRole ?statement.
+        ?statement ps:$providesParticipantRole ?role.
+        ?statement pq:$hasParticipantRole ?person.
 
 
     ?place rdfs:label ?placeLabel.
 
     $typeQuery
 
-    OPTIONAL {?place wdt:P10 ?locatedIn}.
+    OPTIONAL {?place wdt:$locatedIn ?locatedIn}.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?place ?placeLabel ?locatedInLabel
 order by ?placeLabel
@@ -524,22 +561,22 @@ SELECT ?place ?placeLabel ?locatedInLabel
 (count(distinct ?source) as ?countsource)
 
 WHERE {
-    ?event wdt:P3 wd:Q34;
+    ?event wdt:$instanceOf wd:$event;
         ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
+        ?provenance pr:$isDirectlyBasedOn ?source .
 
-        ?event wdt:P12 ?place;
-            p:P38 ?statement.
-        ?statement ps:P38 ?role.
-        ?statement pq:P39 ?person.
+        ?event wdt:$atPlace ?place;
+            p:$providesParticipantRole ?statement.
+        ?statement ps:$providesParticipantRole ?role.
+        ?statement pq:$hasParticipantRole ?person.
 
 
     ?place rdfs:label ?placeLabel.
 
     $typeQuery
 
-    OPTIONAL {?place wdt:P10 ?locatedIn}.
+    OPTIONAL {?place wdt:$locatedIn ?locatedIn}.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }GROUP BY ?place ?placeLabel ?locatedInLabel
 order by ?placeLabel
@@ -559,12 +596,12 @@ QUERY;
                     $type = $filtersArray['event_type'][0];
                     if (array_key_exists($type, eventTypes)){
                         $qType = eventTypes[$type];
-                        $eventQuery = "?event wdt:P81 wd:$qType .";
+                        $eventQuery = "?event wdt:$hasEventType wd:$qType .";
                     }
 
                     // if (array_key_exists($eventType, eventTypes) ){
                     //     $qType = eventTypes[$eventType];
-                    //     $eventQuery = "?event wdt:P81 wd:$qType .";
+                    //     $eventQuery = "?event wdt:$hasEventType wd:$qType .";
                     // } else {
                     //     continue;   // the event_type was not valid
                     // }
@@ -586,8 +623,8 @@ QUERY;
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
                     $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
-                                    ?source wdt:P3 wd:Q16.
-                                    ?source wdt:P8 ?event.
+                                    ?source wdt:$instanceOf wd:$entitiyWithProvenance.
+                                    ?source wdt:$reportsOn ?event.
                                     ?event rdfs:label ?eventname";
 
                     $query['query'] = <<<QUERY
@@ -600,21 +637,21 @@ SELECT ?event ?eventLabel ?startyear ?endyear ?type ?eventtypeLabel
 
 WHERE {
   VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
-  ?source wdt:P8 ?event.
+  ?source wdt:$reportsOn ?event.
   ?event rdfs:label ?eventlabel.
-  ?event wdt:P81 ?type .
+  ?event wdt:$hasEventType ?type .
   ?type rdfs:label ?eventtypeLabel
 
-  OPTIONAL {?event wdt:P12 ?place.
+  OPTIONAL {?event wdt:$atPlace ?place.
            ?place rdfs:label ?placeLabel}.
-  OPTIONAL {?event wdt:P13 ?date.
+  OPTIONAL {?event wdt:$startsAt ?date.
            BIND(str(YEAR(?date)) AS ?startyear)}.
-  OPTIONAL {?event wdt:P14 ?endDate
+  OPTIONAL {?event wdt:$endsAt ?endDate
            BIND(str(YEAR(?endDate)) AS ?endyear)}.
 
-    OPTIONAL {?event p:P38 ?roles.
-           ?roles ps:P38 ?qualifier.
-           ?roles pq:P39 ?people}.
+    OPTIONAL {?event p:$providesParticipantRole ?roles.
+           ?roles ps:$providesParticipantRole ?qualifier.
+           ?roles pq:$hasParticipantRole ?people}.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
  }GROUP BY ?event ?eventLabel ?startyear ?endyear ?type ?eventtypeLabel
@@ -641,24 +678,24 @@ SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
 (group_concat(distinct ?placeLabel; separator = "||") as ?places)
 
 WHERE {
-    ?event wdt:P3 wd:Q34;
+    ?event wdt:$instanceOf wd:$event;
         ?property  ?object;
-            wdt:P13 ?date.
+            wdt:$startsAt ?date.
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
+        ?provenance pr:$isDirectlyBasedOn ?source .
 
-    ?event wdt:P81 ?type .
+    ?event wdt:$hasEventType ?type .
 
     $eventQuery
-    OPTIONAL {?event wdt:P12 ?place.
+    OPTIONAL {?event wdt:$atPlace ?place.
             ?place rdfs:label ?placeLabel}.
 
 
-    OPTIONAL {?event p:P38 ?roles.
-            ?roles ps:P38 ?qualifier.
-            ?roles pq:P39 ?people}.
+    OPTIONAL {?event p:$providesParticipantRole ?roles.
+            ?roles ps:$providesParticipantRole ?qualifier.
+            ?roles pq:$hasParticipantRole ?people}.
 
-    OPTIONAL {?event wdt:P14 ?endsAt.
+    OPTIONAL {?event wdt:$endsAt ?endsAt.
                 FILTER (?endsAt <= "$to-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
                     BIND(str(YEAR(?endsAt)) AS ?endYear).
                 }.
@@ -687,24 +724,24 @@ SELECT ?event ?eventLabel ?typeLabel ?startyear ?endyear
 (group_concat(distinct ?placeLabel; separator = "||") as ?places)
 
 WHERE {
-    ?event wdt:P3 wd:Q34;
+    ?event wdt:$instanceOf wd:$event;
         ?property  ?object;
-            wdt:P13 ?date.
+            wdt:$startsAt ?date.
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
+        ?provenance pr:$isDirectlyBasedOn ?source .
 
-    ?event wdt:P81 ?type .
+    ?event wdt:$hasEventType ?type .
 
     $eventQuery
-    OPTIONAL {?event wdt:P12 ?place.
+    OPTIONAL {?event wdt:$atPlace ?place.
             ?place rdfs:label ?placeLabel}.
 
 
-    OPTIONAL {?event p:P38 ?roles.
-            ?roles ps:P38 ?qualifier.
-            ?roles pq:P39 ?people}.
+    OPTIONAL {?event p:$providesParticipantRole ?roles.
+            ?roles ps:$providesParticipantRole ?qualifier.
+            ?roles pq:$hasParticipantRole ?people}.
 
-    OPTIONAL {?event wdt:P14 ?endsAt.
+    OPTIONAL {?event wdt:$endsAt ?endsAt.
                 FILTER (?endsAt <= "$to-01-01T00:00:00Z"^^xsd:dateTime).#include here year range
                     BIND(str(YEAR(?endsAt)) AS ?endYear).
                 }.
@@ -733,18 +770,18 @@ SELECT ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 (group_concat(distinct ?placeLabel; separator = "||") as ?places)
 
 WHERE {
-    ?event wdt:P3 wd:Q34;
+    ?event wdt:$instanceOf wd:$event;
         ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
-        ?event wdt:P81 ?eventtype .
+        ?provenance pr:$isDirectlyBasedOn ?source .
+        ?event wdt:$hasEventType ?eventtype .
 
             $eventQuery
-            OPTIONAL {?event wdt:P12 ?place.
+            OPTIONAL {?event wdt:$atPlace ?place.
             ?place rdfs:label ?placeLabel}.
-    OPTIONAL {?event wdt:P13 ?date.
+    OPTIONAL {?event wdt:$startsAt ?date.
             BIND(str(YEAR(?date)) AS ?startyear)}.
-    OPTIONAL {?event wdt:P14 ?endDate
+    OPTIONAL {?event wdt:$endsAt ?endDate
             BIND(str(YEAR(?endDate)) AS ?endyear)}.
 
     $sourceQuery
@@ -768,18 +805,18 @@ SELECT ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 (group_concat(distinct ?placeLabel; separator = "||") as ?places)
 
 WHERE {
-    ?event wdt:P3 wd:Q34;
+    ?event wdt:$instanceOf wd:$event;
         ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?source .
-        ?event wdt:P81 ?eventtype .
+        ?provenance pr:$isDirectlyBasedOn ?source .
+        ?event wdt:$hasEventType ?eventtype .
 
             $eventQuery
-            OPTIONAL {?event wdt:P12 ?place.
+            OPTIONAL {?event wdt:$atPlace ?place.
             ?place rdfs:label ?placeLabel}.
-    OPTIONAL {?event wdt:P13 ?date.
+    OPTIONAL {?event wdt:$startsAt ?date.
             BIND(str(YEAR(?date)) AS ?startyear)}.
-    OPTIONAL {?event wdt:P14 ?endDate
+    OPTIONAL {?event wdt:$endsAt ?endDate
             BIND(str(YEAR(?endDate)) AS ?endyear)}.
 
     $sourceQuery
@@ -814,15 +851,15 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
  (count(distinct ?source) as ?countsource)
 {
   VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
-  ?source wdt:P3 wd:Q16. #entity with provenance
-  ?source wdt:P9 ?sourcetype.
-  ?source wdt:P7 ?project.
-  ?source wdt:P8 ?event.
-  OPTIONAL{?event wdt:P12 ?place}.
-  ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+  ?source wdt:$instanceOf wd:$entitiyWithProvenance. #entity with provenance
+  ?source wdt:$hasOriginalSourceType ?sourcetype.
+  ?source wdt:$generatedBy ?project.
+  ?source wdt:$reportsOn ?event.
+  OPTIONAL{?event wdt:$atPlace ?place}.
+  ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:P35 ?source .
+  ?provenance pr:$isDirectlyBasedOn ?source .
 
 
    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
@@ -847,15 +884,15 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 {
-    ?source wdt:P3 wd:Q16. #entity with provenance
-    ?source wdt:P9 ?sourcetype.
-    ?source wdt:P7 ?project.
-    ?source wdt:P8 ?event.
-    OPTIONAL{?event wdt:P12 ?place}.
-    ?agent wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+    ?source wdt:$instanceOf wd:$entitiyWithProvenance. #entity with provenance
+    ?source wdt:$hasOriginalSourceType ?sourcetype.
+    ?source wdt:$generatedBy ?project.
+    ?source wdt:$reportsOn ?event.
+    OPTIONAL{?event wdt:$atPlace ?place}.
+    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
             ?property  ?object .
     ?object prov:wasDerivedFrom ?provenance .
-    ?provenance pr:P35 ?source .
+    ?provenance pr:$isDirectlyBasedOn ?source .
 
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
@@ -872,7 +909,7 @@ QUERY;
                 $query = array('query' => "");
 //                $query['query'] =
 //                    'SELECT ?project ?projectLabel  WHERE {
-//                      ?project wdt:P3 wd:Q264
+//                      ?project wdt:$instanceOf wd:$researchProject 
 //
 //                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 //                    }
@@ -885,22 +922,22 @@ SELECT ?person ?personLabel ?name ?originLabel
     (group_concat(distinct ?endyear; separator = "||") as ?endyear)
     WHERE {
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-        ?person wdt:P3 wd:Q602.
-        ?person wdt:P17 wd:Q47.
-        OPTIONAL {?person wdt:P3 wd:Q2.}
-        OPTIONAL {?person wdt:P82 ?name.}
-        OPTIONAL {?person wdt:P20 ?origin.}
-        OPTIONAL {?name wdt:P30 ?event.
-                ?event wdt:P13 ?startdate.}
+        ?person wdt:$instanceOf wd:$person.
+        ?person wdt:$hasSex wd:$female.
+        OPTIONAL {?person wdt:$instanceOf wd:$agent.}
+        OPTIONAL {?person wdt:$hasName ?name.}
+        OPTIONAL {?person wdt:$hasOriginRecord ?origin.}
+        OPTIONAL {?name wdt:$recordedAt ?event.
+                ?event wdt:$startsAt ?startdate.}
         BIND(str(YEAR(?startdate)) AS ?startyear).
 
-        OPTIONAL {?event wdt:P14 ?enddate.}
+        OPTIONAL {?event wdt:$endsAt ?enddate.}
         BIND(str(YEAR(?enddate)) AS ?endyear).
-        OPTIONAL {?event wdt:P12 ?place.}
-        OPTIONAL { ?person wdt:P17 ?sex. }
-        OPTIONAL { ?person wdt:P24 ?status. }
-        OPTIONAL { ?person wdt:P58 ?owner. }
-        OPTIONAL { ?person wdt:P88 ?match. }
+        OPTIONAL {?event wdt:$atPlace ?place.}
+        OPTIONAL { ?person wdt:$hasSex ?sex. }
+        OPTIONAL { ?person wdt:$hasPersonStatus ?status. }
+        OPTIONAL { ?person wdt:$hasOwner ?owner. }
+        OPTIONAL { ?person wdt:$closeMatch ?match. }
 
     } group by ?person ?personLabel ?name ?originLabel
     $limitQuery
@@ -915,11 +952,11 @@ QUERY;
 SELECT DISTINCT ?project ?projectLabel (count(distinct ?agent) as ?agentcount)
     WHERE {
         VALUES ?project {wd:$qid}
-        ?agent wdt:P3/wdt:P2 wd:Q2;        #find agents
-                p:P3  ?object .
+        ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent;        #find agents
+                p:$instanceOf  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?reference .
-        ?reference wdt:P7 ?project
+        ?provenance pr:$isDirectlyBasedOn ?reference .
+        ?reference wdt:$generatedBy ?project
 
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
@@ -930,13 +967,13 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?project ?projectLabel  (COUNT(*) AS ?eventcount)
     WHERE {
-        ?project wdt:P3 wd:Q264.         #find projects
-        ?item wdt:P3 wd:Q34;        #find events
-            p:P3  ?object .
+        ?project wdt:$instanceOf wd:$researchProject .         #find projects
+        ?item wdt:$instanceOf wd:$event;        #find events
+            p:$instanceOf  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?reference .
-        ?reference wdt:P7 ?project;
-                    wdt:P7 wd:$qid
+        ?provenance pr:$isDirectlyBasedOn ?reference .
+        ?reference wdt:$generatedBy ?project;
+                    wdt:$generatedBy wd:$qid
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
     GROUP BY ?project ?projectLabel
@@ -947,13 +984,13 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?project ?projectLabel  (COUNT(*) AS ?placecount)
     WHERE {
-        ?project wdt:P3 wd:Q264.         #find projects
-        ?item wdt:P3 wd:Q50;        #find places
-            p:P3  ?object .
+        ?project wdt:$instanceOf wd:$researchProject .         #find projects
+        ?item wdt:$instanceOf wd:$place;        #find places
+            p:$instanceOf  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?reference .
-        ?reference wdt:P7 ?project;
-                    wdt:P7 wd:$qid
+        ?provenance pr:$isDirectlyBasedOn ?reference .
+        ?reference wdt:$generatedBy ?project;
+                    wdt:$generatedBy wd:$qid
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
     GROUP BY ?project ?projectLabel
@@ -966,7 +1003,7 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?project ?projectLabel
     WHERE {
-    ?project wdt:P3 wd:Q264         #find projects
+    ?project wdt:$instanceOf wd:$researchProject          #find projects
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
 QUERY;
@@ -975,12 +1012,12 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?project ?projectLabel  (COUNT(distinct ?agent) AS ?count)
     WHERE {
-        ?project wdt:P3 wd:Q264.         #find projects
-        ?agent wdt:P3/wdt:P2 wd:Q2;        #find agents
-            p:P3  ?object .
+        ?project wdt:$instanceOf wd:$researchProject .         #find projects
+        ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent;        #find agents
+            p:$instanceOf  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?reference .
-        ?reference wdt:P7 ?project
+        ?provenance pr:$isDirectlyBasedOn ?reference .
+        ?reference wdt:$generatedBy ?project
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
     GROUP BY ?project ?projectLabel
@@ -991,12 +1028,12 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
     WHERE {
-        ?project wdt:P3 wd:Q264.         #find projects
-        ?item wdt:P3 wd:Q34;        #find events
-            p:P3  ?object .
+        ?project wdt:$instanceOf wd:$researchProject .         #find projects
+        ?item wdt:$instanceOf wd:$event;        #find events
+            p:$instanceOf  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?reference .
-        ?reference wdt:P7 ?project
+        ?provenance pr:$isDirectlyBasedOn ?reference .
+        ?reference wdt:$generatedBy ?project
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
     GROUP BY ?project ?projectLabel
@@ -1007,12 +1044,12 @@ QUERY;
                 $query['query'] = <<<QUERY
 SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
     WHERE {
-        ?project wdt:P3 wd:Q264.         #find projects
-        ?item wdt:P3 wd:Q50;        #find places
-            p:P3  ?object .
+        ?project wdt:$instanceOf wd:$researchProject .         #find projects
+        ?item wdt:$instanceOf wd:$place;        #find places
+            p:$instanceOf  ?object .
         ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:P35 ?reference .
-        ?reference wdt:P7 ?project
+        ?provenance pr:$isDirectlyBasedOn ?reference .
+        ?reference wdt:$generatedBy ?project
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
     GROUP BY ?project ?projectLabel
@@ -1030,22 +1067,22 @@ SELECT ?person ?personLabel ?name ?originLabel
     (group_concat(distinct ?endyear; separator = "||") as ?endyear)
     WHERE {
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-        ?person wdt:P3 wd:Q602.
-        ?person wdt:P17 wd:Q47.
-        OPTIONAL {?person wdt:P3 wd:Q2.}
-        OPTIONAL {?person wdt:P82 ?name.}
-        OPTIONAL {?person wdt:P20 ?origin.}
-        OPTIONAL {?name wdt:P30 ?event.
-                ?event wdt:P13 ?startdate.}
+        ?person wdt:$instanceOf wd:$atPlace.
+        ?person wdt:$hasSex wd:$female.
+        OPTIONAL {?person wdt:$instanceOf wd:$agent.}
+        OPTIONAL {?person wdt:$hasName ?name.}
+        OPTIONAL {?person wdt:$hasOriginRecord ?origin.}
+        OPTIONAL {?name wdt:$recordedAt ?event.
+                ?event wdt:$startsAt ?startdate.}
         BIND(str(YEAR(?startdate)) AS ?startyear).
 
-        OPTIONAL {?event wdt:P14 ?enddate.}
+        OPTIONAL {?event wdt:$endsAt ?enddate.}
         BIND(str(YEAR(?enddate)) AS ?endyear).
-        OPTIONAL {?event wdt:P12 ?place.}
-        OPTIONAL { ?person wdt:P17 ?sex. }
-        OPTIONAL { ?person wdt:P24 ?status. }
-        OPTIONAL { ?person wdt:P58 ?owner. }
-        OPTIONAL { ?person wdt:P88 ?match. }
+        OPTIONAL {?event wdt:$atPlace ?place.}
+        OPTIONAL { ?person wdt:$hasSex ?sex. }
+        OPTIONAL { ?person wdt:$hasPersonStatus ?status. }
+        OPTIONAL { ?person wdt:$hasOwner ?owner. }
+        OPTIONAL { ?person wdt:$closeMatch ?match. }
 
     } group by ?person ?personLabel ?name ?originLabel
     $limitQuery
@@ -1058,10 +1095,10 @@ QUERY;
                     $query = array('query' => "");
                     $query['query'] = <<<QUERY
 SELECT DISTINCT ?agent ?agentLabel (SHA512(CONCAT(STR(?agent), STR(RAND()))) as ?random) WHERE {
-?agent wdt:P3/wdt:P2 wd:Q2 . #all agents and people
+?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent . #all agents and people
 ?agent wikibase:statements ?statementcount . #with at least 4 core fields
 FILTER (?statementcount >3  ).
-?agent wdt:P88 ?match. #and they have a match
+?agent wdt:$closeMatch ?match. #and they have a match
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 } ORDER BY ?random
 LIMIT 8
@@ -1071,7 +1108,7 @@ QUERY;
                     $query = array('query' => "");
                     $query['query'] = <<<QUERY
 SELECT DISTINCT ?place ?placeLabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random) WHERE {
-?place wdt:P3 wd:Q50 .
+?place wdt:$instanceOf wd:$place .
 ?place wikibase:statements ?statementcount .
         FILTER (?statementcount >3  )
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
@@ -1085,9 +1122,9 @@ QUERY;
 SELECT DISTINCT ?type (SAMPLE(?event) AS ?event) (SAMPLE(?elabel) AS ?label)
 (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random) WHERE {
 
-    ?event wdt:P3 wd:Q34;
+    ?event wdt:$instanceOf wd:$event;
             rdfs:label ?elabel;
-                wdt:P81 ?type;
+                wdt:$hasEventType ?type;
             wikibase:statements ?statementcount .
         FILTER (?statementcount >3  ).
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
