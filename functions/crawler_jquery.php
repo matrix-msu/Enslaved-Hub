@@ -6,13 +6,24 @@ require_once(BASE_PATH . "assets/webcrawler/models/crawler_deleted_keywords.php"
 require_once(BASE_PATH . "assets/webcrawler/models/crawler_broken_links.php");
 require_once(BASE_PATH . "assets/webcrawler/models/crawler_seeds.php");
 
-$limit = 20;
+$limit = 40;
 $offset = 0;
 // connect to keywords, broken links and deleted keywords databases
 $crawler_keywords =new crawler_keywords();
 $crawler_deleted_keywords =new crawler_deleted_keywords();
 $broken_links=new crawler_broken_links();
 $seeds= new crawler_seeds();
+
+
+//Get limit and offset values
+if(isset($_POST["limit"]))
+{
+	$limit = $_POST["limit"];
+}
+if(isset($_POST["offset"]))
+{
+	$offset = $_POST["offset"];
+}
 
 
 //Gets results for results tab
@@ -23,16 +34,16 @@ if(isset($_POST["get_results"]))
 }
 
 // this functuion will just write a keyword to deleted file
-if(isset($_POST["deleted"]))
+if(isset($_POST["delete_result"]))
 {
-	$crawler_deleted_keywords->add_to_deleted($_POST["deleted"]);
+	$crawler_deleted_keywords->add_to_deleted($_POST["delete_result"]);
 	echo(json_encode("true"));
 }
 
 //Load more button
-if (isset($_POST["MORE"]))
+if (isset($_POST["more"]))
 {
-	$results = $crawler_keywords->get_keywords($limit,$_POST["MORE"]);
+	$results = $crawler_keywords->get_keywords($limit,$_POST["more"]);
 	echo(json_encode($results));
 }
 
@@ -43,6 +54,13 @@ if (isset($_POST["date"])&& isset($_POST["idx"]))
 	echo(json_encode($results));
 }
 
+//get results count
+if(isset($_POST["count_results"]))
+{
+	$result = $crawler_keywords->get_count();
+	echo(json_encode($result));
+}
+
 //filter by date
 //if (isset($_POST["date"])&& isset($_POST["MORE"]))
 //{
@@ -51,6 +69,13 @@ if (isset($_POST["date"])&& isset($_POST["idx"]))
 //}
 
 //**********************************************************************************   Broken Links Queries
+// this function gets broken links
+if(isset($_POST['get_links']))
+{
+	$results = $broken_links->get_broken_links($limit, $offset);
+	
+	echo(json_encode($results));
+}
 // this function edits a given link in the seeds file
 if(isset($_POST["update_link"]))
 {
@@ -63,43 +88,56 @@ if(isset($_POST["update_link"]))
 }
 
 //this function deletes a link from the seeds file and the broken links list
-if(isset($_POST["del_row"]))
+if(isset($_POST["delete_link"]))
 {
 	// delete from seeds first
-	$broken_links->delete_seeds($_POST["del_row"]);
+	$broken_links->delete_seeds($_POST["delete_link"]);
 
 	// broken links list
-	$broken_links->delete_broken_links($_POST["del_row"]);
+	$broken_links->delete_broken_links($_POST["delete_link"]);
 
 	echo(json_encode("true"));
 }
 
-// this function gets broken links
-if(isset($_POST['get_links']))
+//get broken links count
+if(isset($_POST["count_links"]))
 {
-	$results = $broken_links->get_broken_links($offset);
-	echo(json_encode($results));
+	$result = $broken_links->get_count();
+	echo(json_encode($result));
 }
 //*************************************************************************************   Seeds Queries
 
 if(isset($_POST['get_seeds']))
 {
 	$results = $seeds->get_seeds($limit, $offset);
+	
 	echo(json_encode($results));
 }
-if (isset($_POST["moreSeeds"]))
+if (isset($_POST["more_seeds"]))
 {
-	$results = $seeds->get_seeds($limit,$_POST["moreSeeds"]);
+	$results = $seeds->get_seeds($limit,$_POST["more_seeds"]);
+	
 	echo(json_encode($results));
 }
 
-if(isset($_POST['update_seed_id']))
+if(isset($_POST['update_seed']))
 {
-	$seeds->update_seed_info($_POST['update_seed_id'],$_POST['name'],$_POST['title'],$_POST['rss'],$_POST['url'],$_POST['twitter']);
+	$seeds->update_seed_info($_POST['update_seed'],$_POST['name'],$_POST['title'],$_POST['rss'],$_POST['url'],$_POST['twitter']);
+	
+	echo(json_encode("true"));
 }
 
-if(isset($_POST['delete_seed_id']))
+if(isset($_POST['delete_seed']))
 {
-	$seeds->delete_seed_info($_POST['delete_seed_id']);
+	$seeds->delete_seed_info($_POST['delete_seed']);
+
+	echo(json_encode("true"));
+}
+
+//get seeds count
+if(isset($_POST["count_seeds"]))
+{
+	$result = $seeds->get_count();
+	echo(json_encode($result));
 }
 ?>

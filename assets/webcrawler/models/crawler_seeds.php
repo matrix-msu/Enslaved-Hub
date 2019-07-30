@@ -50,7 +50,7 @@ class crawler_seeds {
 				$texty.= <<<HTML
 <div class="result" id="r$xd">
 	<div class="link-wrap">
-		<p><span>URL:</span><a class="link" href="$row[htmlURL]" target="_blank">$row[htmlURL]</a></p>
+		<p><span>URL:</span><a class="link" id="$row[id]" href="$row[htmlURL]" target="_blank">$row[htmlURL]</a></p>
 		<div class="right">
 			<div class="trash crawler-modal-open" id="delete-seed">
 				<img class="trash-icon" src="./assets/images/Delete.svg">
@@ -61,7 +61,7 @@ class crawler_seeds {
 		</div>
 	</div>
 	<div class="details">
-		<div class="row">
+		<div class="detail-row">
 			<div class="cell">
 				<p><span class="label">NAME:</span>$row[text_name]</p>
 			</div>
@@ -69,7 +69,7 @@ class crawler_seeds {
 				<p><span class="label">TITLE:</span>$row[title]</p>
 			</div>
 		</div>
-		<div class="row">
+		<div class="detail-row">
 			<div class="cell">
 				<p><span class="label">TWITTER:</span><a href="" target="_blank">$row[twitter_handle]</a></p>
 			</div>
@@ -129,6 +129,14 @@ HTML;
   }
 
 
+	public function get_count()
+	{
+		$conn=$this->connect();
+		$query = "SELECT * FROM ppj_seeds";
+		$result=$conn->query($query);
+		mysqli_close($conn);
+		return $result->num_rows;
+	}
 
 }
 
