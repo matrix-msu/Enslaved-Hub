@@ -25,7 +25,7 @@
         
                 .search-field{
                     border: 1px solid #CED0D2;
-                    border-radius: 100px;
+                    border-radius: 5px;
                     box-shadow: 0 4px 36px 0 rgba(0,0,0,0.05);
                     color: $base-dark;
                     font-size: 16px;
@@ -306,6 +306,7 @@
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     overflow: hidden;
+                    padding-left: 20px;
 
                     span{
                         opacity: .8;
@@ -314,7 +315,6 @@
                     }
 
                     a.link{
-                        padding-left: 20px;
                         color: $base-dark;
                         font-size: 14px;
                         white-space: nowrap;
@@ -351,6 +351,7 @@
                             color: $base-light;
                             font-size: 16px;
                             line-height: 60px;
+                            padding: 0;
                         }
                     }
                 }
@@ -361,7 +362,7 @@
                 display: flex;
                 flex-wrap: wrap;
 
-                .row{
+                .detail-row{
                     width: 100%;
                     border-bottom: 1px solid #CED0D2;
                     display: flex;
@@ -494,29 +495,27 @@
                 margin-bottom: 15px;
                 font-size: 30px;
                 color: $base-dark;
-                font-family: aleobold;
             }
             p.link{
                 font-size: 16px;
                 color: #C24F3C;
                 margin-bottom: 50px;
                 text-decoration: underline;
-                font-family: aleobold;
             }
-            .confirm{
-                background-color: #C24F3C;
-                box-shadow: 0 5px 15px 0 rgba(115,47,35,0.2);
-                border-radius: 5px;
-                padding: 20px 0;
-                width: 170px;
-                margin-left: auto;
-                margin-right: 0;
-                cursor: pointer;
+            .confirm-wrap{
+                text-align: right;
 
-                p{
-                    text-align: center;
-                    font-size: 20px;
+                input.confirm{
+                    background-color: #C24F3C;
+                    box-shadow: 0 5px 15px 0 rgba(115,47,35,0.2);
+                    border-radius: 5px;
+                    border: none;
+                    padding: 20px 0;
+                    width: 170px;
                     color: #FFFFFF;
+                    font-size: 20px;
+                    text-align: center;
+                    cursor: pointer;
                 }
             }
             .close{
@@ -541,10 +540,14 @@
 
             .info-inputs{
                 width: 100%;
-                margin-bottom: 40px;
+                margin-bottom: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
 
                 .input-wrap{
-                    width: 100%;
+                    width: 49%;
+                    margin-bottom: 20px;
     
                     label{
                         width: 100%;
@@ -566,6 +569,7 @@
                         padding-left: 25px;
                         padding-right: 25px;
                         margin-top: 10px;
+                        transition: all .3s;
 
                         &:hover{
                             border: 1px solid $sub-base;
@@ -588,6 +592,9 @@
                         color: $base-dark;
                         opacity: .8;
                     }
+                }
+                .url-input{
+                    width: 100%;
                 }
             }
             

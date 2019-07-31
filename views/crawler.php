@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div class="details">
-                <div class="row">
+                <div class="detail-row">
                     <div class="cell">
                         <p><span class="label">NAME:</span>Pea Soup</p>
                     </div>
@@ -104,7 +104,7 @@
                         <p><span class="label">TITLE:</span>Pea Soup</p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="detail-row">
                     <div class="cell">
                         <p><span class="label">TWITTER:</span><a href="" target="_blank">@peasoup</a></p>
                     </div>
@@ -146,7 +146,12 @@
         <div class="body">
             <h1 class="title">Delete Link?</h1>
             <p class="link">www.nameoflinkgoeshere.com</p>
-            <div class="confirm delete"><p>Delete Link</p></div>
+            <form action="" method="post">
+                <input type="hidden" class="link-info" name="" value="">
+                <div class="confirm-wrap">
+                    <input class="confirm" id="delete" type="submit" value="Delete Link">
+                </div>
+            </form>
             <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
         </div>
     </div>
@@ -156,13 +161,18 @@
         <div class="body">
             <h1 class="title">Update Link</h1>
             <p class="link">www.nameoflinkgoeshere.com</p>
-            <div class="info-inputs">
-                <div class="input-wrap">
-                    <label for="url">Enter the updated URL here</label>
-                    <input id="url" type="text" placeholder="Enter updated URL">
+            <form action="" method="post">
+                <div class="info-inputs">
+                    <input type="hidden" class="link-info" name="old_link" value="">
+                    <div class="input-wrap url-input">
+                        <label for="url">Enter the updated URL here</label>
+                        <input id="url" type="text" name="update_link" placeholder="Enter updated URL">
+                    </div>
                 </div>
-            </div>
-            <div class="confirm update"><p>Update Link</p></div>
+                <div class="confirm-wrap">
+                    <input class="confirm" id="update" type="submit" value="Update Link">
+                </div>
+            </form>
             <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
         </div>
     </div>
@@ -172,7 +182,12 @@
         <div class="body">
             <h1 class="title">Delete Seed?</h1>
             <p class="link">www.nameoflinkgoeshere.com</p>
-            <div class="confirm delete"><p>Delete Seed</p></div>
+            <form action="" method="post">
+                <input type="hidden" class="link-info" name="delete_seed" value="">
+                <div class="confirm-wrap">
+                    <input class="confirm" id="delete" type="submit" value="Delete Seed">
+                </div>
+            </form>
             <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
         </div>
     </div>
@@ -182,13 +197,34 @@
         <div class="body">
             <h1 class="title">Update Seed</h1>
             <p class="link">www.nameoflinkgoeshere.com</p>
-            <div class="info-inputs">
-                <div class="input-wrap">
-                    <label for="url">Enter the updated URL here</label>
-                    <input id="url" type="text" placeholder="Enter updated URL">
+            <form action="" method="post">
+                <input type="hidden" class="link-info" name="update_seed" value="">
+                <div class="info-inputs">
+                    <div class="input-wrap url-input">
+                        <label for="url">Enter the updated URL here</label>
+                        <input id="url" type="text" name="url" placeholder="Enter updated URL">
+                    </div>
+                    <div class="input-wrap">
+                        <label for="name">Name</label>
+                        <input id="name" type="text" name="name" placeholder="Enter updated URL">
+                    </div>
+                    <div class="input-wrap">
+                        <label for="title">Title</label>
+                        <input id="title" type="text" name="title" placeholder="Enter updated URL">
+                    </div>
+                    <div class="input-wrap">
+                        <label for="twitter">Twitter</label>
+                        <input id="twitter" type="text" name="twitter" placeholder="Enter updated URL">
+                    </div>
+                    <div class="input-wrap">
+                        <label for="rss">RSS</label>
+                        <input id="rss" type="text" name="rss" placeholder="Enter updated URL">
+                    </div>
                 </div>
-            </div>
-            <div class="confirm update"><p>Update Seed</p></div>
+                <div class="confirm-wrap">
+                        <input class="confirm" id="update" type="submit" value="Update Seed">
+                </div>
+            </form>
             <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
         </div>
     </div>
@@ -197,10 +233,3 @@
 
 <script src="<?php echo BASE_JS_URL;?>crawler.js"></script>
 <script src="<?php echo BASE_JS_URL;?>pagination.js"></script>
-
-<?php if($isCrawlerAdmin) { ?>
-    <script src="<?php echo BASE_JS_URL;?>webcrawler.js"></script>
-    <script src="<?php echo BASE_JS_URL;?>crawler_results.js"></script>
-	<script src="<?php echo BASE_JS_URL;?>crawler_seeds.js"></script>
-	<script src="<?php echo BASE_JS_URL;?>crawler_broken_links.js"></script>
-<?php } ?>
