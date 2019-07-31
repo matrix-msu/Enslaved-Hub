@@ -30,10 +30,10 @@ class crawler_broken_links {
 		return $con;
 	}
 	// fetch LIMIT number of keywords starting from OFFSET
-	public function get_broken_links($offset)
+	public function get_broken_links($limit, $offset)
 	{
 		$conn=$this->connect();
-		$query = "SELECT DISTINCT link_url, error_code FROM ppj_broken_links";
+		$query = "SELECT DISTINCT link_url, error_code FROM ppj_broken_links LIMIT ".$limit." OFFSET ".$offset;
 		$result=$conn->query($query);
 		mysqli_close($conn);
 		if($result->num_rows >0){
@@ -42,7 +42,7 @@ class crawler_broken_links {
 				while($row = $result->fetch_array())
 				{
 					$status='';
-					$orig = 'http://'.$row['link_url'];
+					$orig = $row['link_url'];
 					if(substr($row['link_url'],-1)=="/")
 					$row['link_url']=substr($row['link_url'],0,-1);
 					if($row['error_code']>=300&&$row['error_code']<400&&$row['error_code']!=0) {$status="Moved"; $note="Please check if there is a new link for this website";}
@@ -79,7 +79,7 @@ HTML;
 	// update entry from ppj_seeds
 	public function update_seeds($old_link,$new_link)
 	{
-		 $conn=$this->connect();
+		$conn=$this->connect();
 		$query = "UPDATE ppj_seeds set htmlURL='$new_link' WHERE htmlURL='$old_link' ";
 		$result=$conn->query($query);
 		mysqli_close($conn);
@@ -87,7 +87,7 @@ HTML;
 	//delete entry from ppj_seeds
 	public function delete_seeds($link)
 	{
-		 $conn=$this->connect();
+		$conn=$this->connect();
 		$query = "DELETE FROM ppj_seeds WHERE htmlURL='$link'";
 		$result=$conn->query($query);
 		mysqli_close($conn);
@@ -96,9 +96,18 @@ HTML;
 	public function delete_broken_links($link)
 	{
 		$conn=$this->connect();
-			$query = "DELETE FROM ppj_broken_links WHERE link_url='$link'";
-			$result=$conn->query($query);
-			mysqli_close($conn);
+		$query = "DELETE FROM ppj_broken_links WHERE link_url='$link'";
+		$result=$conn->query($query);
+		mysqli_close($conn);
+	}
+
+	public function get_count()
+	{
+		$conn=$this->connect();
+		$query = "SELECT DISTINCT link_url, error_code FROM ppj_broken_links";
+		$result=$conn->query($query);
+		mysqli_close($conn);
+		return $result->num_rows;
 	}
 
 }
