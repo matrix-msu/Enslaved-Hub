@@ -1,12 +1,44 @@
-.header{
-    .middlewrap{
+.header{ 
+  
+.image-container.search-page {
+  height: 250px;
+  
+  .header-background {
+    height: 250px;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    
+    &.full-height {
+        height: 100%;
+    }
+  }
+}
+  
+  .image-background-overlay.search-page {
+    top: 150px;
+     }
+  
+    .header-background.search-page {
+      height: 250px;
+      }
+
+      
+    .container.middlewrap.search-page{
+      margin-top: -55px;
+      padding: 0 0 55px;
+       
         .search-title{
-            margin: 0 0 60px;
+            margin: 0 0 20px;
             clear: both;
             overflow: hidden;
             transition: .2s;
             h1{
                 float: left;
+                font-size: 65px;
             }
             a{
                 text-decoration: none;
@@ -74,13 +106,13 @@
 }
 
 .direct-search{
-    padding: 0 6%;
+    width: 90%;
     max-width: 1000px;
     margin: 0 auto;
     .searchwrap{
         margin: 75px 0;
         h2{
-            font-size: 26px;
+            font-size: 40px;
             color: $base-dark;
             margin-bottom: 30px;
         }
@@ -95,7 +127,7 @@
 
                 .inputwrap{
                     width: 47.5%;
-                    margin-bottom: 22px;
+                    margin-bottom: 4%;
 
                     input, label{
                         display: block;
@@ -108,34 +140,40 @@
                     .input-field{
                         height: 60px;
                         width: 100%;
-                        border: 1px solid #CED0D2;
+                        border: 2px white solid;
+                        border-radius: 5px;
                         outline: none;
-                        background-color: #FFFDFB;
-                        box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
-                        padding-left: 30px;
+                        background-color: #FFF;
+                        box-shadow: 0 3px 10px 0 rgba(0,0,0,0.1);
+                        padding-left: 20px;
                         font-size: 14px;
-                        font-family: aleoregular;
+                        font-family: aleobold;
                         color: $base-dark;
                         transition: border 0.2s;
 
                         &:hover{
-                            border: 1px solid $sub-base;
+                            border: 2px solid $sub-base;
                         }
                         &:focus-within{
-                            border: 1px solid $sub-base;
+                            border: 2px solid $sub-base;
                         }
                     }
                     ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-                        color: #72818C;
-                        opacity: 1; /* Firefox */
+                        color: #0E3232;
+                        opacity: .8; /* Firefox */
+                        font-family: aleobolditalic;
                     }
 
                     :-ms-input-placeholder { /* Internet Explorer 10-11 */
-                        color: #72818C;
+                        color: #0E3232;
+                        opacity: .8;
+                        font-family: aleobolditalic;
                     }
 
                     ::-ms-input-placeholder { /* Microsoft Edge */
-                        color: #72818C;
+                        color: #0E3232;
+                        opacity: .8;
+                        font-family: aleobolditalic;
                     }
                     // .date-select{
                     //     width: 50%;
@@ -150,23 +188,26 @@
                         .select2-selection--single{
                             height: 60px;
                             border-radius: 0;
-                            border: 1px solid #CED0D2;
+                            border: 2px solid #FFF;
+                            border-radius:  5px;
                             outline: none;
-                            background-color: #FFFDFB;
-                            box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+                            background-color: #FFF;
+                            box-shadow: 0 3px 10px 0 rgba(0,0,0,0.1);
                             transition: border 0.2s;
                             &:hover{
-                                border: 1px solid $sub-base;
+                                border: 2px solid $sub-base;
                             }
                             .select2-selection__rendered{
                                 line-height: 58px;
                                 color: $base-dark;
                                 font-size: 14px;
-                                padding-left: 30px;
+                                padding-left: 20px;
                                 padding-right: 35px;
 
                                 .select2-selection__placeholder{
-                                    color: #72818C;
+                                    color: #0E3232;
+                                    opacity: .8;
+                                    font-family: aleobolditalic;
                                 }
                             }
                         }
@@ -174,32 +215,34 @@
                         .select2-selection--multiple{
                             min-height: 60px;
                             border-radius: 0;
-                            border: 1px solid #CED0D2;
+                            border: 2px solid #FFF;
+                            border-radius:  5px;
                             outline: none;
-                            background-color: #FFFDFB;
-                            box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+                            background-color: #FFF;
+                            box-shadow: 0 3px 10px 0 rgba(0,0,0,0.1);
                             transition: border 0.2s;
                             // overflow:auto;
                             cursor: pointer;
 
                             &:hover{
-                                border: 1px solid $sub-base;
+                                border: 2px solid $sub-base;
                             }
                             .select2-selection__rendered{
-                                padding-left: 15px;
+                                display: inherit;
+                                padding-left: 10px;
                                 padding-right: 35px;
 
                                 .select2-selection__choice{
-                                    margin: 10px 5px 10px 0;
-                                    padding: 0 15px;
-                                    height: 36px;
+                                    margin: 8px 10px 0 0;
+                                    padding: 0 10px;
+                                    height: 40px;
                                     line-height: 36px;
                                     font-size: 14px;
-                                    border-radius: 0;
-                                    background-color: #ffffff;
-                                    border: 1px solid #CED0D2;
-                                    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
-                                    color: #72818C;
+                                    border-radius: 5px;
+                                    background-color: rgba(14,50,50,.05);
+                                    border: 2px solid rgba(14,50,50,.1);
+                                    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.05);
+                                    color: $base-dark;
 
                                     .select2-selection__choice__remove{
                                         float: right;
@@ -215,7 +258,7 @@
                                     width: 0;
                                     .select2-search__field{
                                         margin-top: 0;
-                                        margin-left: 15px;
+                                        margin-left: 10px;
                                         font-size: 14px;
                                         line-height: 22px;
                                         color: $base-dark;
@@ -232,16 +275,16 @@
                             width: 8px;
                             top: 24px;
                             right: 25px;
-                            transform: rotate(-90deg);
+                            transform: rotate(90deg);
                             position: absolute;
                         }
                     }
                     .select2-container--open{
                         .select2-selection--single{
-                            border: 1px solid $sub-base;
+                            border: 2px solid $sub-base;
                         }
                         .select2-selection--multiple{
-                            border: 1px solid $sub-base;
+                            border: 2px solid $sub-base;
                         }
                     }
                 }
@@ -258,19 +301,20 @@
                 button{
                     cursor: pointer;
                     height: 60px;
-                    width: 225px;
+                    width: 160px;
                     border: none;
-                    color: $base-light;
+                    border-radius: 5px;
+                    color: #FFF;
                     font-size: 20px;
                     outline: none;
-                    font-family: aleoregular;
-                    border-radius: 100px;
-                    background: $base-dark;
+                    font-family: aleobold;
+                    box-shadow: 0 5px 15px 0 rgba(115,47,35,0.2);
+                    background: $accent;
                     transition: border 0.2s;
                     transition: .2s;
 
                     &:hover{
-                        border: 2px solid $sub-base;
+                        background: #CF5440;
                     }
                 }
             }
@@ -309,8 +353,9 @@
 //select2 dropdown
 .select2-container--open{
     .select2-dropdown{
-        border-radius: 0;
-        border: 1px solid #CED0D2;
+        border: 2px solid #FFF;
+        border-radius: 5px;
+        box-shadow: 0 3px 10px 0 rgba(0,0,0,0.1);
 
         .select2-search--dropdown{
             height: 0;
@@ -333,7 +378,7 @@
                     font-size: 14px;
                     color: $base-dark;
                     padding: 8px;
-                    padding-left: 30px;
+                    padding-left: 20px;
 
                     .select2-results__group{
                         display: none;
@@ -391,6 +436,7 @@
                 .search-section{
                     .inputwrap{
                         width: 100%;
+                        margin-bottom: 6%;
                     }
                 }
             }
@@ -448,8 +494,11 @@
     right: 0;
     top: 0;
     width: 60px;
-
     outline: none;
+    transition: .2s ease-in-out;
+      &:hover{
+         background: #CF5440;
+         }
 
     img {
         position: absolute;
