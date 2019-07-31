@@ -111,10 +111,10 @@
                     padding-right: 60px;
         
                     &:hover{
-                        border: 1px solid $sub-base;
+                        border: 2px solid $sub-base;
                     }
                     &:focus-within{
-                        border: 1px solid $sub-base;
+                        border: 2px solid $sub-base;
                     }
                 }
                 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -189,7 +189,6 @@
         }
 
         .arrow {
-            transform: scaleX(-1);
             position: absolute;
             right: 40px;
         }
@@ -504,10 +503,27 @@
     }
 }
 
+@media screen and (max-width: 900px){
+    .header{
+        .middlewrap{
+            margin-top: -60px;
+        }
+    }
+}
+
+@media screen and (max-width: 740px){
+    .header{
+        .middlewrap{
+            margin-top: -40px;
+        }
+    }
+}
+
 @media screen and (max-width: 550px){
 
     .header{
         .middlewrap{
+          margin-top: -60px;
             .heading-text{
                 .heading-title{
                     .logo-main{
@@ -515,6 +531,7 @@
                     }
                     .logo-mobile{
                         display: block;
+                        margin-bottom: 35px;
                     }
                 }
             }
