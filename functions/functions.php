@@ -101,6 +101,7 @@ function blazegraph()
         $hasStatusGeneratingEvent = properties ["hasStatusGeneratingEvent"];
         $roleProvidedBy = properties ["roleProvidedBy"];
         $hasOriginalSourceType = properties ["hasOriginalSourceType"];
+        $hasEventType = properties ["hasEventType"];
 
 
         switch ($preset){

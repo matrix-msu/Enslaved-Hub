@@ -833,6 +833,10 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($roles); $i++){
+      if (!isset($pq[$i]) || !isset($participants[$i]) || !isset($roles[$i])){
+        continue;
+      }
+
       $explode = explode('/', $pq[$i]);
       $pqid = end($explode);
       $pqurl = $baseurl . 'record/person/' . $pqid;
@@ -883,6 +887,9 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($roles); $i++){
+        if (!isset($eventRoleUrls[$i]) || !isset($eventRoleLabels[$i]) ){
+          continue;
+        }
         $explode = explode('/', $eventRoleUrls[$i]);
         $eventQid = end($explode);
         $eventUrl = $baseurl . 'record/event/' . $eventQid;
@@ -924,6 +931,10 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($matchLabels); $i++){
+        if (!isset($matchLabels[$i]) ){
+          continue;
+        }
+
         $explode = explode('/', $matchUrls[$i]);
         $personQ = end($explode);
         $matchUrl = $baseurl . 'record/person/' . $personQ;
@@ -983,6 +994,10 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($relationships); $i++){
+        if (!isset($relationshipUrls[$i]) || !isset($relationshipLabels[$i])){
+          continue;
+        }
+
         $explode = explode('/', $relationshipUrls[$i]);
         $personQ = end($explode);
         $personUrl = $baseurl . 'record/person/' . $personQ;
@@ -1025,6 +1040,10 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($projectUrls); $i++){
+        if (!isset($projectNames[$i]) ){
+          continue;
+        }
+
         $explode = explode('/', $projectUrls[$i]);
         $projectQ = end($explode);
         $projectUrl = $baseurl . 'project/' . $projectQ;
@@ -1062,6 +1081,10 @@ HTML;
 
     //Loop through and match up
     for($i=0; $i < sizeof($originUrls); $i++){
+        if (!isset($originLabels[$i]) ){
+          continue;
+        }
+
         $explode = explode('/', $originUrls[$i]);
         $originQ = end($explode);
         $placeUrl = $baseurl . 'record/place/' . $originQ;
@@ -1108,7 +1131,7 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($statusEventUrls); $i++){
-      if (!isset($eventstatusLabels[$i])){
+      if (!isset($eventstatusLabels[$i]) || !isset($statuses[$i])){
         continue;
       }
 
@@ -1244,6 +1267,7 @@ function getPersonRecordHtml(){
     $subclassof = properties ["subclass of"];
     $agent = classes["Agent"];
     $refprop = properties["isDirectlyBasedOn"];
+    $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
     $generatedBy = properties["generatedBy"];
     $hasName = properties ["hasName"];
     $recordedAt = properties["recordedAt"];
@@ -1269,7 +1293,7 @@ function getPersonRecordHtml(){
     $moderncountrycode = properties["modern country code"];
     $hasOriginalSourceType = properties["hasOriginalSourceType"];
     $hasOriginalSourceDepository = properties["hasOriginalSourceDepository"];
-    $hasOriginalSourceprovidesParticipantRoleDepository = properties["providesParticipantRole"];
+    $providesParticipantRole = properties["providesParticipantRole"];
 
     $entityWithProvenance = classes["Entity with Provenance"];
     $event = classes["Event"];
@@ -1496,7 +1520,11 @@ QUERY;
     curl_close($ch);
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
-// print_r($result);die;
+    
+    if (empty($result)){
+      echo json_encode(Array());
+      die;
+    }
 
     $record = $result[0];
 
@@ -1853,7 +1881,15 @@ HTML;
 
             // create the events array
             foreach($allEventQids as $i => $eventQ){
-                $eventLabel = $allEventLabels[$i];
+                if (!isset($allEventLabels[$i])){
+                  continue;
+                }
+
+                // event label
+                $eventLabel = '';
+                if (isset($allEventLabels[$i])){
+                    $eventLabel = $allEventLabels[$i];
+                }
 
                 // start year
                 $eventStartYear = '';
@@ -2563,7 +2599,7 @@ function getEventPageConnections($QID) {
   $connections = array();
 
   $event = classes["Event"];
-  $atPlace = classes["atPlace"];
+  $atPlace = properties["atPlace"];
   $generatedBy = properties["generatedBy"];
   $hasParticipantRole = properties["hasParticipantRole"];
   $providesParticipantRole = properties["providesParticipantRole"];
