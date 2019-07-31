@@ -27,17 +27,17 @@ class crawler_keywords {
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		}
 		return $con;
-}
+	}
 	// fetch LIMIT number of keywords starting from OFFSET
 	public function get_keywords($limit, $offset)
 	{
 		$conn=$this->connect();
 		$query = "SELECT DISTINCT keyword, url FROM ppj_crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM ppj_deleted_keywords WHERE ppj_crawler_keywords.keyword = ppj_deleted_keywords.keyword) LIMIT ".$limit." OFFSET ".$offset;
-		$result=$conn->query($query);
+		$result = $conn->query($query);
 		mysqli_close($conn);
 		if($result->num_rows >0){
-		$texty='';
-		$i=0;
+			$texty='';
+			$i=0;
 			while($row = $result->fetch_array())
 			{
 				$xd=$offset+$i;
@@ -46,12 +46,12 @@ class crawler_keywords {
 				$texty .= <<<HTML
 <div class="result" id="r$xd">
 	<div class="link-name">
-		<p><a href="https://www.google.com/search?hl=en&num=100&q=$row[keyword]" target="_blank">$row[keyword]</a></p>
+		<a class="link" href="https://www.google.com/search?hl=en&num=100&q=$row[keyword]" target="_blank">$row[keyword]</a>
 	</div>
 	<div class="link-wrap">
-		<a target="_blank" href="$row[url]">$row[url]</a>
-		<div class="trash">
-			<img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
+		<a class="link" target="_blank" href="$row[url]">$row[url]</a>
+		<div class="trash crawler-modal-open" id="delete-link">
+			<img class="trash-icon" src="./assets/images/Delete.svg">
 		</div>
 	</div>
 </div>
@@ -88,8 +88,9 @@ public function get_keywords_date($limit, $offset, $cur_date)
 		}
 		else return "no more data";
 	}
-// get unique dates from database
-public function get_dates()
+
+	// get unique dates from database
+	public function get_dates()
 	{
 		$conn=$this->connect();
 		$query = "SELECT DISTINCT keyword_date from ppj_crawler_keywords order by keyword_date desc;";
@@ -105,6 +106,14 @@ public function get_dates()
 		else return "no keywords";
 	}
 
+	public function get_count()
+	{
+		$conn=$this->connect();
+		$query = "SELECT DISTINCT keyword, url FROM ppj_crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM ppj_deleted_keywords WHERE ppj_crawler_keywords.keyword = ppj_deleted_keywords.keyword)";
+		$result=$conn->query($query);
+		mysqli_close($conn);
+		return $result->num_rows;
+	}
 
 }
 

@@ -121,7 +121,7 @@ function counterofAllitems(){
 function counterOfGender(){
   $query='SELECT (COUNT(?item) AS ?count) WHERE {
     ?item wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].'.
-  	?item wdt:'.properties["hasSexRecord"].' wd:'.$_GET["gender"].'}';
+  	?item wdt:'.properties["hasSex"].' wd:'.$_GET["gender"].'}';
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -139,7 +139,7 @@ function counterOfGender(){
 function counterOfAllGenders(){
     $query='SELECT ?sex ?sexLabel (COUNT(?human) AS ?count) WHERE{
   ?human wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].' .
-  ?human wdt:'.properties["hasSexRecord"].' ?sex.
+  ?human wdt:'.properties["hasSex"].' ?sex.
 
  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 } GROUP BY ?sex ?sexLabel
@@ -161,7 +161,7 @@ ORDER BY DESC(?count)';
 function counterOfRole(){
   $query= 'SELECT  ?roleLabel (COUNT(?human) AS ?count)WHERE
  {  ?human wdt:'.properties["instance of"].' wd:'.classes["Person"].'.
-    ?human wdt:'.properties["hasParticipantRoleRecord"].' ?role.
+    ?human wdt:'.properties["hasParticipantRole"].' ?role.
 
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
   }GROUP BY ?roleLabel
@@ -419,23 +419,24 @@ function counterOfType() {
 
 function getEventDateRange() {
     $fullResults = [];
-    $query='SELECT ?year ?yearend WHERE {
-            {SELECT ?year WHERE {
-              ?event '.properties["instance of"].' wd:'.classes["Event"].' #event
-                     wdt:'.properties["startsAt"].' ?date.
-                BIND(str(YEAR(?date)) AS ?year).
-              }ORDER BY desc(?year)
-            LIMIT 1}
-            UNION
-            {
-            select ?yearend where {
-              ?event '.properties["instance of"].' wd:'.classes["Event"].'; #event
-                     wdt:'.properties["endsAt"].' ?enddate.
-                BIND(str(YEAR(?enddate)) AS ?yearend).
-              }ORDER BY desc(?yearend)
-            LIMIT 1
-            }
-            }';
+    $query='
+    SELECT ?year ?yearend WHERE {
+      {SELECT ?year WHERE {
+        ?event wdt:'.properties["instance of"].' wd:'.classes["Event"].'; #event
+               wdt:'.properties["startsAt"].' ?date.
+          BIND(str(YEAR(?date)) AS ?year).
+        }ORDER BY desc(?year)
+      LIMIT 1}
+      UNION
+      {
+      select ?yearend where {
+        ?event wdt:'.properties["instance of"].' wd:'.classes["Event"].'; #event
+               wdt:'.properties["endsAt"].' ?enddate.
+          BIND(str(YEAR(?enddate)) AS ?yearend).
+        }ORDER BY desc(?yearend)
+      LIMIT 1
+      }
+      }';
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
@@ -450,7 +451,7 @@ function getEventDateRange() {
     }
 
     $query='SELECT ?year WHERE {
-            ?event '.properties["instance of"].' wd:'.classes["Event"].'; #event
+            ?event wdt:'.properties["instance of"].' wd:'.classes["Event"].'; #event
                    wdt:'.properties["startsAt"].' ?date.
               BIND(str(YEAR(?date)) AS ?year).
             }ORDER BY ASC(?year)

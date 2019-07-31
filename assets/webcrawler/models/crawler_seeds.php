@@ -27,7 +27,8 @@ class crawler_seeds {
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		}
 		return $con;
-}
+	}
+
 	// fetch LIMIT number of keywords starting from OFFSET
 	public function get_seeds($limit,$offset)
 	{
@@ -36,37 +37,52 @@ class crawler_seeds {
 		$result=$conn->query($query);
 		mysqli_close($conn);
 		if($result->num_rows >0){
-		$texty='';
-		$i=0;
+			$texty='';
+			$i=0;
 			while($row = $result->fetch_array())
-			{$xd=$offset+$i;
-			if(substr($row['htmlURL'],-1)=="/")
-				$row['htmlURL']=substr($row['htmlURL'],0,-1);
-			if(substr($row['xmlURL'],-1)=="/")
-				$row['xmlURL']=substr($row['xmlURL'],0,-1);
-			$texty.='<div class="resultSeeds" >
-		        <div class="rowSeed">
-			        <span class="labelInput">Name:</span>
-			        <div contenteditable="true" class="nameWeb" id="nm'.$row['id'].'">'.$row['text_name'].'</div>
-			        <span class="labelInput title">Title:</span>
-			        <div contenteditable="true" class="titleWeb"id="tt'.$row['id'].'">'.$row['title'].'</div>
-		        </div>
-				<div class="rowSeed">
-			        <span class="labelInput">URL:</span>
-			        <div contenteditable="true" class="urlSeed" id="ur'.$row['id'].'"><p>'.$row['htmlURL'].'</p></div>
-				</div>
-				<div class="rowSeed">
-			        <span class="labelInput">Twitter:</span>
-			        <div contenteditable="true" class="twitterWeb"id="tw'.$row['id'].'">'.$row['twitter_handle'].'</div>
-			        <span class="labelInput rss">RSS:</span>
-			        <div contenteditable="true" class="rssSeed" id="rs'.$row['id'].'">'.$row['xmlURL'].'</div>
-		        </div>
-		        <input type="button" class="update" value="UPDATE" id="us'.$row['id'].'">
-				<input type="button" class="delete" value="DELETE" id="ds'.$row['id'].'">
-	        </div>';
-			$i++;
+			{
+				$xd=$offset+$i;
+				if(substr($row['htmlURL'],-1)=="/")
+					$row['htmlURL']=substr($row['htmlURL'],0,-1);
+				if(substr($row['xmlURL'],-1)=="/")
+					$row['xmlURL']=substr($row['xmlURL'],0,-1);
+				
+				$texty.= <<<HTML
+<div class="result" id="r$xd">
+	<div class="link-wrap">
+		<p><span>URL:</span><a class="link" id="$row[id]" href="$row[htmlURL]" target="_blank">$row[htmlURL]</a></p>
+		<div class="right">
+			<div class="trash crawler-modal-open" id="delete-seed">
+				<img class="trash-icon" src="./assets/images/Delete.svg">
+			</div>
+			<div class="update crawler-modal-open" id="update-seed">
+				<p>Update Seed</p>
+			</div>
+		</div>
+	</div>
+	<div class="details">
+		<div class="detail-row">
+			<div class="cell">
+				<p><span class="label">NAME:</span>$row[text_name]</p>
+			</div>
+			<div class="cell">
+				<p><span class="label">TITLE:</span>$row[title]</p>
+			</div>
+		</div>
+		<div class="detail-row">
+			<div class="cell">
+				<p><span class="label">TWITTER:</span><a href="" target="_blank">$row[twitter_handle]</a></p>
+			</div>
+			<div class="cell">
+				<p><span class="label">RSS:</span><a href="" target="_blank">$row[xmlURL]</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+HTML;
+				$i++;
 			}
-		return $texty;
+			return $texty;
 		}
 		else return "no more data";
 	}
@@ -113,6 +129,14 @@ class crawler_seeds {
   }
 
 
+	public function get_count()
+	{
+		$conn=$this->connect();
+		$query = "SELECT * FROM ppj_seeds";
+		$result=$conn->query($query);
+		mysqli_close($conn);
+		return $result->num_rows;
+	}
 
 }
 
