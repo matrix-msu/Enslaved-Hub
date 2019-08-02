@@ -3,53 +3,10 @@
 }
 
 .header{
-    height: auto;
-    width: 100%;
-    background: $base-dark;
-    position: relative;
-    transition: 400ms;
-    
-    .image-container {
-      height: 333px;
-    
-    .image-background-overlay {
-      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
-      width: 100%;
-      height: 100px;
-      position: absolute;
-      top: 233px;
-      z-index: 1;
-    }
-
-    .header-background {
-        height: 333px;
-        left: 0;
-        object-fit: cover;
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 100%;
-
-        &.full-height {
-            height: 100%;
-        }
-    }
-    }
-
-    .middlewrap{
-        color: $base-light;
-        margin: 0 auto;
-        max-width: $max-width-content;
-        margin-top:-80px;
-        position: relative;
-        padding: 0px 0 70px;
-        font-size: 28px;
-        transition: 400ms;
-        width: 90%;
-        z-index: 2;
-
+	
         h1{
-            font-size: 50px;
+            font-size: 65px;
+            line-height: 1;
         }
 
         .heading-text {
@@ -142,7 +99,7 @@
                 float: right;
                 margin-left: 20px;
             }
-        }
+        
     }
 
     @media screen and (max-width: $max-width-tablet) {
@@ -506,7 +463,7 @@
 @media screen and (max-width: 900px){
     .header{
         .middlewrap{
-            margin-top: -60px;
+//            margin-top: -60px;
         }
     }
 }
@@ -514,7 +471,7 @@
 @media screen and (max-width: 740px){
     .header{
         .middlewrap{
-            margin-top: -40px;
+//           margin-top: -40px;
         }
     }
 }
@@ -523,7 +480,7 @@
 
     .header{
         .middlewrap{
-          margin-top: -60px;
+ //         margin-top: -60px;
             .heading-text{
                 .heading-title{
                     .logo-main{

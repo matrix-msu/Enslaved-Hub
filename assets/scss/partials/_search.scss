@@ -1,36 +1,5 @@
 .header{ 
-  
-.image-container.search-page {
-  height: 250px;
-  
-  .header-background {
-    height: 250px;
-    left: 0;
-    object-fit: cover;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
-    
-    &.full-height {
-        height: 100%;
-    }
-  }
-}
-  
-  .image-background-overlay.search-page {
-    top: 150px;
-     }
-  
-    .header-background.search-page {
-      height: 250px;
-      }
 
-      
-    .container.middlewrap.search-page{
-      margin-top: -55px;
-      padding: 0 0 55px;
-       
         .search-title{
             margin: 0 0 20px;
             clear: both;
@@ -78,31 +47,28 @@
             }
         }
         .last-page-header{
-            margin-bottom: 45px;
+            margin-bottom: 25px;
 
             #last-page {
-                color: $base-light;
+                color: #FFF;
                 font-size: 17px;
-                font-weight: 500;
                 text-decoration: none;
                 span#previous-title{
-                    color: rgb(185, 184, 180);
+                    color: rgba(255, 255, 255,.7);
                     transition: color .3s;
 
                     &:hover{
-                        color: #FBF9F5;
+                        color: #FFF;
                     }
                 }
             }
             span#current-title{
-                color: $base-light;
+                color: #FFF;
                 font-size: 17px;
-                font-weight: 500;
-                border-bottom: 3px solid $sub-base;
                 padding-bottom: 5px;
             }
         }
-    }
+    
 }
 
 .direct-search{
@@ -290,8 +256,7 @@
                 }
                 .datewrap{
                     .select2-container{
-                        width: 50%!important;
-                        margin-right: -5px;
+                        width: 49%!important;
                     }
                 }
             }
@@ -446,9 +411,7 @@
 @media screen and (max-width: 470px){
     .header{
         .middlewrap{
-            padding-bottom: 50px;
             .search-title{
-                margin: 0 0 35px;
                 h1{
                     margin-right: 50px;
                 }
