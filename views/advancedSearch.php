@@ -1,9 +1,9 @@
 <!-- Author: Drew Schineller-->
 <!-- Main page-->
 <!-- Heading image and title container-->
-<div class="container header image-only">
+<div class="container header">
     <div class="image-container search-page image-only">
-	    <div class="container middlewrap image-only">
+	    <div class="container middlewrap">
     <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>search"><span id="previous-title">Search / </span></a><span id="current-title">Advanced Search</span></h4>
         <div class="search-title">
             <h1>Advanced Search</h1>

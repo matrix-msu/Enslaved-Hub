@@ -1,6 +1,6 @@
 <!-- Author: Drew Schineller-->
 <!-- Heading image and title container-->
-<div class="container header">
+<div class="container header search-page">
     <div class="image-container search-page">
 	    <div class="container middlewrap search-page">
         <div class="search-title">

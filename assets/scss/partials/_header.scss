@@ -31,9 +31,8 @@
             float: right;
             .nav-menu{
                 list-style-type: none;
-                margin: 0;
+                margin: 21px 0 0 0;
                 padding: 0;
-                line-height: 60px;
             
                 .nav-item{
                     display: inline;
@@ -94,25 +93,29 @@
                         padding: 0;
                         position: absolute;
                         display: none;
-                        left: -10px;
+                        left: 7px;
+                        top: 30px;
     
                         .subwrap{
-                            background-color: $base-light;
+                            background-color: $base-dark;
                             box-shadow: 0 4px 8px 0 rgba(13,18,48,0.16);
+                            border-radius: 5px;
                             top: -1px;
                             margin: 0;
                             padding: 10px;
                             position: absolute;
                             text-align: center;
-                            width: 90px;
+                            min-width: 90px;
+                            max-width: 200px;
     
                             .nav-sublink{
                                 display: block;
-                                color: $base-dark;
+                                color: #FFF;
                                 cursor: pointer;
-                                font-family: aleoregular;
+                                font-family: aleobold;
                                 font-size: 14px;
-                                line-height: 35px;
+                                line-height: 1; 
+                                padding: 8px;
                                 text-decoration: none;
                                 transition: color 0.3s ease;
                             }
@@ -140,7 +143,7 @@
             }
         }
         .responsive-menu{
-            margin-right: 1vw;
+            margin: 6px;
             width: 100%;
         }
     
@@ -151,7 +154,7 @@
             .nav-link{
                 color: #FFFFFF;
                 cursor: pointer;
-                font-family: aleoregular;
+                font-family: aleobold;
                 font-size: 14px;
                 font-weight: 300;
                 line-height: 50px;
@@ -203,20 +206,20 @@
         }
         .rightnav{
             background-color: $base-dark;
+            border-radius: 5px 0 0 5px;
             display: none;
             height:550px;
             margin-right: 0px;
             overflow-x: hidden;
             overflow-y: auto;
             text-align: right;
-			width: 230px;
+            width: 230px;
 
             .nav-menu{
-                padding-top: 30px!important;
 
                 .nav-item{
                     display: block!important;
-                    margin-right: 70px;
+                    margin-right: 30px;
 
                     .drop-carat{
                         margin-left: -55px;
@@ -236,7 +239,7 @@
                     }
                 }
                 .drop-link{
-                    margin-right: 48px;
+                    margin-right: 30px;
                     .sub-list{
 						position: static!important;
 						margin-right: -35px;
@@ -244,6 +247,7 @@
                         .subwrap{
                             margin-left: 70px!important;
                             width: 75%!important;
+                            padding: 0 10px 10px!important;
                             position: static!important;
                             text-align: right!important;
                             background-color: $base-dark!important;
@@ -251,7 +255,6 @@
 
                             .nav-sublink{
                                 color: $base-light!important;
-                                margin-right: 40px;
                                 &:hover{
                                     color: $sub-base!important;
                                 }
@@ -274,12 +277,19 @@
 .header{
     height: auto;
     width: 100%;
-    background: $base-dark;
+    background: none;
     position: relative;
     transition: 400ms;
+    box-shadow: 0 5px 25px 0 rgba(0,0,0,0.3);
     
-    &.image-only {
-		background: none;
+    &.home-page {
+		background: $base-dark;
+		box-shadow: none;
+	}
+	
+	&.search-page {
+		background: $base-dark;
+		box-shadow: none;
 	}
 	
 	h1 {
@@ -351,7 +361,8 @@
         margin: 0 auto;
         max-width: $max-width-content;
         position: relative;
-        padding: 0px 0 60px;
+        padding-top: 90px;
+        padding-bottom: 30px;
         font-size: 28px;
         transition: 400ms;
         width: 90%;
@@ -359,6 +370,7 @@
         
         &.home-page {
 	        padding-top: 250px;
+	        padding-bottom: 60px;
         }
         
         &.search-page{
@@ -369,11 +381,6 @@
               padding-bottom: 30px;
             }
 			}
-      
-      &.image-only {
-	       padding-top: 90px;
-         padding-bottom: 30px;
-		}
    }  
 }
   

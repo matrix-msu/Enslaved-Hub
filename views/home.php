@@ -2,7 +2,7 @@
 <?php $cache_data = Json_GetData_ByTitle("Home", true) ?>
 <!-- Main page-->
 <!-- Heading image and title container-->
-<div class="container header">
+<div class="container header home-page">
   <div class="image-container">
     <div class="container middlewrap home-page">
         <div class="heading-text">
