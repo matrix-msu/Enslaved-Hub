@@ -12,7 +12,7 @@ function queryAllAgentsCounter(){
   $query='SELECT  (COUNT(distinct ?agent) AS ?count)
     WHERE {
         ?agent wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].';        #find agents{
-        MINUS{ ?agent wdt:'.properties["hasParticipantRoleRecord"].' wd:'.roleTypes["Researcher"].' }. #remove all researchers
+        MINUS{ ?agent wdt:'.properties["hasParticipantRole"].' wd:'.roleTypes["Researcher"].' }. #remove all researchers
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
     }
 
@@ -273,12 +273,12 @@ function counterOfEventPlace(){
 }
 
 function counterOfPlaceType(){
-  $instanceof=properties["instance of"];
+  $instanceOf=properties["instance of"];
   $placeclass = classes["Place"];
   $placetype= properties["hasPlaceType"];
   $query= <<<QUERY
   SELECT DISTINCT ?placetype ?placetypeLabel (COUNT(?place) AS ?count) WHERE {
-    ?place wdt:$instanceof wd:$placeclass; #it's a place
+    ?place wdt:$instanceOf wd:$placeclass; #it's a place
         wdt:$placetype ?placetype.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
   }GROUP BY ?placetype ?placetypeLabel
@@ -300,14 +300,15 @@ QUERY;
 //not using this function for now
 function counterOfCity(){
 
-  $instanceof=properties["instance of"];
+  $instanceOf=properties["instance of"];
   $placeclass = classes["Place"];
   $placetype= properties["hasPlaceType"];
   $locatedIn = properties["locatedIn"];
+  $cityTownVillage = classes["City, Town, or Village"];
   $query= <<<QUERY
 SELECT DISTINCT ?city ?cityLabel (COUNT(?place) AS ?count) WHERE {
-  ?city wdt:$instanceof wd:$placeclass; #it's a place
-      wdt:$placetype wd:Q29.#?city is a city
+  ?city wdt:$instanceOf wd:$placeclass; #it's a place
+      wdt:$placetype wd:$cityTownVillage.#?city is a city
 OPTIONAL {?place wdt:$locatedIn ?city.} #place is locatedIn a city
 
 SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
@@ -832,6 +833,10 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($roles); $i++){
+      if (!isset($pq[$i]) || !isset($participants[$i]) || !isset($roles[$i])){
+        continue;
+      }
+
       $explode = explode('/', $pq[$i]);
       $pqid = end($explode);
       $pqurl = $baseurl . 'record/person/' . $pqid;
@@ -882,6 +887,9 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($roles); $i++){
+        if (!isset($eventRoleUrls[$i]) || !isset($eventRoleLabels[$i]) ){
+          continue;
+        }
         $explode = explode('/', $eventRoleUrls[$i]);
         $eventQid = end($explode);
         $eventUrl = $baseurl . 'record/event/' . $eventQid;
@@ -923,6 +931,10 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($matchLabels); $i++){
+        if (!isset($matchLabels[$i]) ){
+          continue;
+        }
+
         $explode = explode('/', $matchUrls[$i]);
         $personQ = end($explode);
         $matchUrl = $baseurl . 'record/person/' . $personQ;
@@ -982,6 +994,10 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($relationships); $i++){
+        if (!isset($relationshipUrls[$i]) || !isset($relationshipLabels[$i])){
+          continue;
+        }
+
         $explode = explode('/', $relationshipUrls[$i]);
         $personQ = end($explode);
         $personUrl = $baseurl . 'record/person/' . $personQ;
@@ -1024,6 +1040,10 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($projectUrls); $i++){
+        if (!isset($projectNames[$i]) ){
+          continue;
+        }
+
         $explode = explode('/', $projectUrls[$i]);
         $projectQ = end($explode);
         $projectUrl = $baseurl . 'project/' . $projectQ;
@@ -1061,6 +1081,10 @@ HTML;
 
     //Loop through and match up
     for($i=0; $i < sizeof($originUrls); $i++){
+        if (!isset($originLabels[$i]) ){
+          continue;
+        }
+
         $explode = explode('/', $originUrls[$i]);
         $originQ = end($explode);
         $placeUrl = $baseurl . 'record/place/' . $originQ;
@@ -1107,7 +1131,7 @@ HTML;
     //Loop through and match up
     $matched = '';
     for($i=0; $i < sizeof($statusEventUrls); $i++){
-      if (!isset($eventstatusLabels[$i])){
+      if (!isset($eventstatusLabels[$i]) || !isset($statuses[$i])){
         continue;
       }
 
@@ -1239,16 +1263,18 @@ HTML;
 function getPersonRecordHtml(){
     $qid = $_REQUEST['QID'];
     $type = $_REQUEST['type'];
-    $instanceof = properties["instance of"];
+    $instanceOf = properties["instance of"];
     $subclassof = properties ["subclass of"];
     $agent = classes["Agent"];
     $refprop = properties["isDirectlyBasedOn"];
+    $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
     $generatedBy = properties["generatedBy"];
     $hasName = properties ["hasName"];
-    $recordedAt = properties["recordeAt"];
+    $recordedAt = properties["recordedAt"];
     $hasSex = properties["hasSex"];
     $hasRace= properties["hasRace"];
     $hasPersonStatus = properties["hasPersonStatus"];
+    $placetype= properties["hasPlaceType"];
     $hasECVO = properties["hasECVO"];
     $referstoPlaceofOrigin = properties["referstoPlaceofOrigin"];
     $hasOccupation = properties ["hasOccupation"];
@@ -1256,14 +1282,23 @@ function getPersonRecordHtml(){
     $hasParticipantRole = properties ["hasParticipantRole"];
     $roleProvidedBy = properties ["roleProvidedBy"];
     $hasStatusGeneratingEvent = properties ["hasStatusGeneratingEvent"];
+    $hasInterAgentRelationship = properties ["hasInterAgentRelationship"];
     $isRelationshipTo = properties ["isRelationshipTo"];
     $atPlace = properties ["atPlace"];
     $startsAt = properties ["startsAt"];
     $endsAt = properties ["endsAt"];
     $hasEventType = properties ["hasEventType"];
     $locatedIn = properties ["locatedIn"];
-    $$geonamesID = properties["Geonames ID"];
+    $geonamesID = properties["Geonames ID"];
     $moderncountrycode = properties["modern country code"];
+    $hasOriginalSourceType = properties["hasOriginalSourceType"];
+    $hasOriginalSourceDepository = properties["hasOriginalSourceDepository"];
+    $providesParticipantRole = properties["providesParticipantRole"];
+
+    $entityWithProvenance = classes["Entity with Provenance"];
+    $event = classes["Event"];
+    $place = classes["Place"];
+
 
     //QUERY FOR RECORD INFO
     $query = [];
@@ -1296,11 +1331,13 @@ SELECT ?name ?desc ?sextype  ?race
 (group_concat(distinct ?allplaces; separator = "||") as ?allplaces)
 (group_concat(distinct ?allplaceslabel; separator = "||") as ?allplaceslabel)
 
+(group_concat(distinct ?eventplace; separator = "||") as ?eventplace)
+
 
  WHERE
 {
  VALUES ?agent {wd:$qid} #Q number needs to be changed for every event.
-  ?agent wdt:$instanceof/wdt:$subclassof wd:$agent; #agent or subclass of agent
+  ?agent wdt:$instanceOf/wdt:$subclassof wd:$agent; #agent or subclass of agent
   		 ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:$refprop ?source .
@@ -1356,7 +1393,9 @@ OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
             ?match rdfs:label ?matchlabel}.
   ?allevents rdfs:label ?alleventslabel.
   OPTIONAL {?allevents wdt:$atPlace ?allplaces.
-           ?allplaces rdfs:label ?allplaceslabel
+            ?allevents rdfs:label ?evlabel.
+            ?allplaces rdfs:label ?allplaceslabel.
+           BIND(CONCAT(str(?allevents)," - ",str(?allplaceslabel)) as ?eventplace). 
            }.
 
   OPTIONAL {?allevents	wdt:$startsAt ?startdate.
@@ -1382,7 +1421,7 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
   WHERE
 {
   VALUES ?place {wd:$qid} #Q number needs to be changed for every place.
-  ?place wdt:$instanceof wd:Q50;
+  ?place wdt:$instanceOf wd:$place;
         ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:$refprop ?source .
@@ -1414,29 +1453,29 @@ SELECT ?name ?desc ?located  ?type ?date ?endDate
 WHERE
 {
 VALUES ?event {wd:$qid} #Q number needs to be changed for every event.
-?event wdt:P3 wd:Q34;
+?event wdt:$instanceOf wd:$event;
 		 ?property  ?object .
 ?object prov:wasDerivedFrom ?provenance .
-?provenance pr:P35 ?source .
+?provenance pr:$isDirectlyBasedOn ?source .
 ?source rdfs:label ?refName;
-        wdt:P7 ?project.
+        wdt:$generatedBy ?project.
 ?project rdfs:label ?pname.
 ?event rdfs:label ?name.
-?event wdt:P81 ?eventtype.
+?event wdt:$hasEventType ?eventtype.
 ?eventtype rdfs:label ?type.
 OPTIONAL{ ?event schema:description ?desc}.
-OPTIONAL{?event wdt:P12 ?place.
+OPTIONAL{?event wdt:$atPlace ?place.
         ?place rdfs:label ?located}.
-OPTIONAL{ ?event wdt:P13 ?datetime.
+OPTIONAL{ ?event wdt:$startsAt ?datetime.
         BIND(xsd:date(?datetime) AS ?date)}
- OPTIONAL{ ?event wdt:P14 ?endDatetime.
+ OPTIONAL{ ?event wdt:$endsAt ?endDatetime.
          BIND(xsd:date(?endDatetime) AS ?endDate)}
 
  OPTIONAL{
-  ?event p:P38 ?statement .
-	?statement ps:P38 ?roles .
+  ?event p:$providesParticipantRole ?statement .
+	?statement ps:$providesParticipantRole ?roles .
 	?roles rdfs:label ?rolename.
-	?statement pq:P39 ?participant.
+	?statement pq:$hasParticipantRole ?participant.
 	?participant rdfs:label ?participantname}.
 
 
@@ -1452,20 +1491,21 @@ SELECT ?name ?desc ?project ?pname ?type ?secondarysource
  WHERE
 {
  VALUES ?source {wd:$qid} #Q number needs to be changed for every source.
-  ?source wdt:P3 wd:Q16;
-         wdt:P7 ?project.
+  ?source wdt:$instanceOf wd:$entityWithProvenance;
+         wdt:$generatedBy ?project.
   ?project rdfs:label ?pname.
 
   ?source rdfs:label ?name.
-  ?source wdt:P9 ?sourcetype.
+  ?source wdt:$hasOriginalSourceType ?sourcetype.
   ?sourcetype rdfs:label ?type.
-  OPTIONAL{?source wdt:P84 ?secondarysource}.
+  OPTIONAL{?source wdt:$hasOriginalSourceDepository ?secondarysource}.
   OPTIONAL {?source schema:description ?desc}.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }GROUP BY ?name ?desc ?project ?pname ?type ?secondarysource
 QUERY;
     }
+// print_r($query);die;
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -1480,7 +1520,11 @@ QUERY;
     curl_close($ch);
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
-// print_r($result);die;
+    
+    if (empty($result)){
+      echo json_encode(Array());
+      die;
+    }
 
     $record = $result[0];
 
@@ -1689,10 +1733,6 @@ QUERY;
         }
     }
 
-
-
-
-
     // create the html based on the type of results
     $htmlArray = [];
 
@@ -1763,130 +1803,168 @@ HTML;
             $allEventTypes = array();
 
 
-        if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
-              $eventsAndStartYears = explode('||', $record['startyear']['value']);
-        }
+            if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
+                $eventsAndStartYears = explode('||', $record['startyear']['value']);
+            }
 
-        // match events to start years
-        // there is also an event type in this string but its not being used right now
-        foreach ($eventsAndStartYears as $eventInfo){
-            $pieces = explode(' - ', $eventInfo);
-            $eName = $pieces[0];
-            $eType = $pieces[1];
-            $year = end($pieces);
-            $allEventStartYears[$eName] = $year;
-            $allEventTypes[$eName] = $eType;
-        }
+            // all places
+            if (isset($record['allplaces']) && isset($record['allplaces']['value']) && $record['allplaces']['value'] != ''  ){
+                if (isset($record['allplaceslabel']) && isset($record['allplaceslabel']['value']) && $record['allplaceslabel']['value'] != '' ){
+                    $allPlaceLabels = explode('||', $record['allplaceslabel']['value']);
+                    $allPlaceUrls = explode('||', $record['allplaces']['value']);
 
-        // end year stuff hasn't been tested or working yet
-        if (isset($record['endyear']) && isset($record['endyear']['value']) ){
-           $allEventEndYears = explode('||', $record['endyear']['value']);
-        }
-
-        // descriptions hasn't been tested or working yet
-        if (isset($record['desc']) && isset($record['desc']['value']) ){
-           $allEventDescritions = explode('||', $record['desc']['value']);
-        }
-
-        // roles per event
-        if (isset($recordVars['eventRolesA'])){
-            $allRoles = explode('||', $recordVars['eventRolesA']['roles']);
-            $allLabels = explode('||', $recordVars['eventRolesA']['eventRoleLabels']);
-            $allEventRoles = array();
-
-            // match roles with event labels
-            for($i=0; $i < sizeof($allRoles); $i++){
-                if (isset($allLabels[$i]) && isset($allRoles[$i])){
-                    $allEventRoles[$allLabels[$i]] = $allRoles[$i];
+                    $allEventPlaces = explode('||', $record['eventplace']['value']);
+                    $allEventToPlaceMap = array();
+                    foreach($allEventPlaces as $matchString){
+                        $parts = explode(' - ', $matchString);
+                        $eventUrl = $parts[0];
+                        $eventQ = end(explode('/', $eventUrl));
+                        $placeName = $parts[1];
+                        
+                        $placeUrlIndex = array_search($placeName, $allPlaceLabels);
+                        $placeUrl = $allPlaceUrls[$placeUrlIndex];
+                        $placeQ = end(explode('/', $placeUrl));
+                        // group the place name and q value with their events
+                        $allEventToPlaceMap[$eventQ] = array('name' => $placeName, 'placeQ' => $placeQ);
+                    }
                 }
             }
-        }
 
-        // statuses per event
-        if (isset($recordVars['StatusA'])){
-            $allStatuses= explode('||', $recordVars['StatusA']['statuses']);
-            $allLabels = explode('||', $recordVars['StatusA']['eventstatusLabels']);
-            $allEventStatuses = array();
+            // match events to start years
+            // there is also an event type in this string but its not being used right now
+            foreach ($eventsAndStartYears as $eventInfo){
+                $pieces = explode(' - ', $eventInfo);
+                $eName = $pieces[0];
+                $eType = $pieces[1];
+                $year = end($pieces);
+                $allEventStartYears[$eName] = $year;
+                $allEventTypes[$eName] = $eType;
+            }
 
-            // match statuses with event labels
-            for($i=0; $i < sizeof($allStatuses); $i++){
-                if (isset($allLabels[$i]) && isset($allStatuses[$i])){
-                    $allEventStatuses[$allLabels[$i]] = $allStatuses[$i];
+            // end year stuff hasn't been tested or working yet
+            if (isset($record['endyear']) && isset($record['endyear']['value']) ){
+            $allEventEndYears = explode('||', $record['endyear']['value']);
+            }
+
+            // descriptions hasn't been tested or working yet
+            if (isset($record['desc']) && isset($record['desc']['value']) ){
+            $allEventDescritions = explode('||', $record['desc']['value']);
+            }
+
+            // roles per event
+            if (isset($recordVars['eventRolesA'])){
+                $allRoles = explode('||', $recordVars['eventRolesA']['roles']);
+                $allLabels = explode('||', $recordVars['eventRolesA']['eventRoleLabels']);
+                $allEventRoles = array();
+
+                // match roles with event labels
+                for($i=0; $i < sizeof($allRoles); $i++){
+                    if (isset($allLabels[$i]) && isset($allRoles[$i])){
+                        $allEventRoles[$allLabels[$i]] = $allRoles[$i];
+                    }
                 }
             }
-        }
 
-         // create the events array
-         foreach($allEventQids as $i => $eventQ){
-            $eventLabel = $allEventLabels[$i];
+            // statuses per event
+            if (isset($recordVars['StatusA'])){
+                $allStatuses= explode('||', $recordVars['StatusA']['statuses']);
+                $allLabels = explode('||', $recordVars['StatusA']['eventstatusLabels']);
+                $allEventStatuses = array();
 
-            // start year
-            $eventStartYear = '';
-            if (isset($allEventStartYears[$eventLabel])){
-              $eventStartYear = $allEventStartYears[$eventLabel];
-            }
-            // end year
-            $eventEndYear = '';
-            if (isset($allEventEndYears[$eventLabel])){
-              $eventEndYear = $allEventEndYears[$eventLabel];
-            }
-            // event type
-            $eventType = '';
-            if (isset($allEventTypes[$eventLabel])){
-              $eventType = $allEventTypes[$eventLabel];
-            }
-            // event descriptions
-            $eventDesc = '';
-            if (isset($allEventDescritions[$eventLabel])){
-              $eventDesc = $allEventDescritions[$eventLabel];
-            }
-            // event roles
-            $eventRole = '';
-            if (isset($allEventRoles[$eventLabel])){
-                $eventRole = $allEventRoles[$eventLabel];
+                // match statuses with event labels
+                for($i=0; $i < sizeof($allStatuses); $i++){
+                    if (isset($allLabels[$i]) && isset($allStatuses[$i])){
+                        $allEventStatuses[$allLabels[$i]] = $allStatuses[$i];
+                    }
+                }
             }
 
-            // event status
-            $eventStatus = '';
-            if (isset($allEventStatuses[$eventLabel])){
-                $eventStatus = $allEventStatuses[$eventLabel];
-            }
+            // create the events array
+            foreach($allEventQids as $i => $eventQ){
+                if (!isset($allEventLabels[$i])){
+                  continue;
+                }
 
-            //todo: place records
+                // event label
+                $eventLabel = '';
+                if (isset($allEventLabels[$i])){
+                    $eventLabel = $allEventLabels[$i];
+                }
 
-            if ($eventStartYear != ''){
+                // start year
+                $eventStartYear = '';
+                if (isset($allEventStartYears[$eventLabel])){
+                    $eventStartYear = $allEventStartYears[$eventLabel];
+                    if ($eventStartYear == 1854){ $eventStartYear = '';}
+                }
+                // end year
+                $eventEndYear = '';
+                if (isset($allEventEndYears[$eventLabel])){
+                    $eventEndYear = $allEventEndYears[$eventLabel];
+                }
+                // event type
+                $eventType = '';
+                if (isset($allEventTypes[$eventLabel])){
+                    $eventType = $allEventTypes[$eventLabel];
+                }
+                // event descriptions
+                $eventDesc = '';
+                if (isset($allEventDescritions[$eventLabel])){
+                    $eventDesc = $allEventDescritions[$eventLabel];
+                }
+                // event roles
+                $eventRole = '';
+                if (isset($allEventRoles[$eventLabel])){
+                    $eventRole = $allEventRoles[$eventLabel];
+                }
+
+                // event status
+                $eventStatus = '';
+                if (isset($allEventStatuses[$eventLabel])){
+                    $eventStatus = $allEventStatuses[$eventLabel];
+                }
+
+
+                // event places
+                $eventPlaces = '';
+                if (isset($allEventToPlaceMap[$eventQ])){
+                    $eventPlaces = $allEventToPlaceMap[$eventQ];
+                }
+
+                // save info per event
                 $eventArray = [
-                  'kid' => $eventQ,
-                  'title' => $eventLabel,
-                  'description' => $eventDesc,
-                  'startYear' => $eventStartYear,
-                  'endYear' => $eventEndYear,
-                  'type' => $eventType,
-                  'role' => $eventRole,
-                  'status' => $eventStatus
+                    'kid' => $eventQ,
+                    'title' => $eventLabel,
+                    'description' => $eventDesc,
+                    'startYear' => $eventStartYear,
+                    'endYear' => $eventEndYear,
+                    'type' => $eventType,
+                    'role' => $eventRole,
+                    'status' => $eventStatus,
+                    'place' => $eventPlaces
                 ];
                 array_push($events, $eventArray);
             }
-         }
         }
     }
 
-      // dont do timeline stuff if there are less than 3 events
-      if (count($events) < 3){
-          return json_encode($htmlArray);
-      }
+    // print_r($events);die;
 
-
-
+    // dont do timeline stuff if there are less than 3 events
+    if (count($events) < 3){
+        return json_encode($htmlArray);
+    }
+    // print_r($events);die;
     $timeline_event_dates = [];
-    $unknownEvents = [];
+    $unknownEvents = [];    // events without dates
     foreach ($events as $event) {
         // If there are months and days, put the year into decimal format
         // Ex: March 6, 1805 = 1805.18
         if (isset($event['startYear']) && $event['startYear'] != ''){
             array_push($timeline_event_dates, $event['startYear']);
+
         } else {
-            array_push($unknownEvents, array($event['kid'] => $event));
+            array_push($unknownEvents, $event);
         }
     }
 
@@ -1926,19 +2004,13 @@ HTML;
 
     $html .= '<div class="info-header">';
     $timeline_event_dates = array_unique($timeline_event_dates);
-
     foreach ($timeline_event_dates as $year) {
-        $places = array();
+        $yearUniquePlaces = array(); // all of the places for this year
+
+        // set the event info select buttons
         foreach ($events as $event) {
             if (isset($event['startYear']) && $event['startYear'] == $year) {
                 $kid = $event['kid'];
-            // todo
-            //   // Building unique places
-            //   $placeResult = getPlace($event);
-            //   if (is_array($placeResult)) {
-            //     // This guarantees a unique set of kids
-            //     $places[$placeResult['kid']] = $placeResult['place'];
-            //   }
 
                 $html .= '
                     <div
@@ -1950,155 +2022,166 @@ HTML;
                     <p>Event</p>
                     <p class="large-text">'.$event['type'].'</p>
                     </div>';
-            }
-        }
 
-        // todo
-        if (!empty($places)) {
-            foreach ($places as $kid => $place) {
-                if (isset($place['Country Colony'])) {
 
-                    $html .= '
-                        <div
-                        class="info-select info-select-place"
-                        data-select="place"
-                        data-year="'.$year.'"
-                        data-kid="'.$kid.'"
-                        >
-                        <p>Place</p>
-                        <p class="large-text">'.$place['Country Colony'].'</p>
-                        </div>';
+                //get all unique places for this year
+                $eventPlace = $event['place'];
+                if (is_array($eventPlace)){
+                    $yearUniquePlaces[$eventPlace['name']] = $eventPlace['placeQ'];
                 }
             }
         }
+
+        // set the place info select buttons for this year
+        foreach ($yearUniquePlaces as $placeName => $placeQ) {
+                $html .= '
+                    <div
+                    class="info-select info-select-place"
+                    data-select="place"
+                    data-year="'.$year.'"
+                    data-placeqid="'.$placeQ.'"
+                    data-eventkid="'.$kid.'"
+                    >
+                    <p>Place</p>
+                    <p class="large-text">'.$placeName.'</p>
+                    </div>';
+        }
     }
 
-          $unknownPlaces = array();
-          foreach ($unknownEvents as $event) {
-            $kid = $event['kid'];
-            $placeResult = getPlace($event[$kid]);
-            if (is_array($placeResult)) {
-              $unknownPlaces[$placeResult['kid']] = array(
-                'place' => $placeResult['place'],
-                'eventKid' => $kid
-              );
-            }
+    foreach ($events as $index => $event) {
+        if ($event['startYear'] == '') {
+            unset($events[$index]);
+        }
+    }
+    // todo unknown events/places tabs
+    $unknownPlaces = array();
+    foreach ($unknownEvents as $event) {
+        $kid = $event['kid'];
+        $typeText = "Event";
 
+        $html .= '
+            <div
+            class="info-select info-select-event"
+            data-select="event"
+            data-kid="'.$kid.'"
+            >';
 
+        if ($event['type'] != ''){
             $html .= '
-              <div
-                class="info-select info-select-event"
-                data-select="event"
-                data-year="'.$kid.'"
-                data-kid="'.$kid.'"
-              >
                 <p>Event</p>
-                <p class="large-text">'.$event[$kid]['Event Type']['value'].'</p>
-              </div>';
+                <p class="large-text">'.$event['type'].'</p>
+            ';
+        } else {
+            $html .= '
+                <p class="large-text">Event</p>
+            ';
+        }
 
-          }
-
-          if (!empty($unknownPlaces)) {
-            foreach ($unknownPlaces as $kid => $place) {
-              if (isset($place['place']['Country Colony'])) {
-
-                  $html .= '
-                      <div
-                        class="info-select info-select-place"
-                        data-select="place"
-                        data-kid="'.$kid.'"
-                        data-event-kid="'.$place['eventKid'].'"
-                      >
-                        <p>Place</p>
-                        <p class="large-text">'.$place['place']['Country Colony'].'</p>
-                      </div>';
-              }
-            }
-          }
-
-          $html .= '</div>';
+        $html .= '</div>';
 
 
-
-
-
-
-
-
-
+        //get all unique places for this year
+        $eventPlace = $event['place'];
+        if (is_array($eventPlace)){
+            $unknownPlaces[$eventPlace['name']] = $eventPlace['placeQ'];
+        }
+    }
+    
+    // set the place info select buttons for this year
+    foreach ($unknownPlaces as $placeName => $placeQ) {
+        $html .= '
+            <div
+            class="info-select info-select-place"
+            data-select="place"
+            data-placeqid="'.$placeQ.'"
+            data-eventkid="'.$kid.'"
+            >
+            <p>Place</p>
+            <p class="large-text">'.$placeName.'</p>
+            </div>';
+    }
 
 
 
+    $html .= '</div>';
 
     // put the events in order to be displayed
     $dates = array_column($events, 'startYear');
     array_multisort($dates, SORT_ASC, $events);
+    $events = array_merge($events, $unknownEvents);
 
-    $first = true;//to set the first timeline event as active
+    $activeSet = false; // set the first event with a date as active
+
+    // print_r($events);die;
     foreach($events as $index => $event) {
-      $html .= '
-        <div class="event-info-'.$event['kid'].' infowrap '.($index == 0 ? 'active' : '').'">
-      ';
+        $eventQ = $event['kid'];
 
-
-
-
-      // title html
-      $titleHtml = "";
-      if (isset($event['title']) && $event['title'] != ''){
-        $titleHtml = "<p class='large-text'>".$event['title']."</p>";
-      }
-      // date html
-      $dateHtml = "";
-      if (isset($event['startYear']) && $event['startYear'] != ''){
-        if (isset($event['endYear']) && $event['endYear'] != ''){
-          $dateHtml = "
-              <p><span class='bold'>Start Date: </span>".$event['startYear']."</p>
-              <p><span class='bold'>End Date: </span>".$event['endYear']."</p>";
+        if (!$activeSet && isset($event['startYear']) && $event['startYear'] != ''){
+            $html .= '<div class="event-info-'.$eventQ.' infowrap active">';
+            $activeSet = true;
         } else {
-           $dateHtml = "<p><span class='bold'>Date: </span>".$event['startYear']."</p>";
+            $html .= '<div class="event-info-'.$eventQ.' infowrap">';
         }
-      }
-      // event type html
-      $eventTypeHtml = "";
-      if (isset($event['type']) && $event['type'] != ''){
-        $eventTypeHtml = "<p><span class='bold'>Event Type: </span>".$event['type']."</p>";
-      }
-      // event description html
-      $eventDescHtml = "";
-      if (isset($event['description']) && $event['description'] != ''){
-        $eventDescHtml = "<p><span class='bold'>Description: </span>".$event['description']."</p>";
-      }
-      // event role html
-      $eventRoleHtml = "";
-      if (isset($event['role']) && $event['role'] != ''){
-        $eventRoleHtml = "<p><span class='bold'>Role: </span>".$event['role']."</p>";
-      }
-      // event status html
-      $eventStatusHtml = "";
-      if (isset($event['status']) && $event['status'] != ''){
-        $eventStatusHtml = "<p><span class='bold'>Status: </span>".$event['status']."</p>";
-      }
 
 
+        // title html
+        $titleHtml = "";
+        if (isset($event['title']) && $event['title'] != ''){
+            $titleHtml = "<p class='large-text'>".$event['title']."</p>";
+        }
+        // date html
+        $dateHtml = "";
+        if (isset($event['startYear']) && $event['startYear'] != ''){
+            if (isset($event['endYear']) && $event['endYear'] != ''){
+                $dateHtml = "
+                    <p><span class='bold'>Start Date: </span>".$event['startYear']."</p>
+                    <p><span class='bold'>End Date: </span>".$event['endYear']."</p>";
+            } else {
+                $dateHtml = "<p><span class='bold'>Date: </span>".$event['startYear']."</p>";
+            }
+        }
+        // event type html
+        $eventTypeHtml = "";
+        if (isset($event['type']) && $event['type'] != ''){
+            $eventTypeHtml = "<p><span class='bold'>Event Type: </span>".$event['type']."</p>";
+        }
+        // event description html
+        $eventDescHtml = "";
+        if (isset($event['description']) && $event['description'] != ''){
+            $eventDescHtml = "<p><span class='bold'>Description: </span>".$event['description']."</p>";
+        }
+        // event role html
+        $eventRoleHtml = "";
+        if (isset($event['role']) && $event['role'] != ''){
+            $eventRoleHtml = "<p><span class='bold'>Role: </span>".$event['role']."</p>";
+        }
+        // event status html
+        $eventStatusHtml = "";
+        if (isset($event['status']) && $event['status'] != ''){
+            $eventStatusHtml = "<p><span class='bold'>Status: </span>".$event['status']."</p>";
+        }
+        // event place html
+        $eventPlaceHtml = "";
+        if (isset($allEventToPlaceMap[$eventQ]) && $allEventToPlaceMap[$eventQ]['name'] != ''){
+            $placeName = $allEventToPlaceMap[$eventQ]['name'];
+            $placeQ = $allEventToPlaceMap[$eventQ]['placeQ'];
+            // $placeUrl = BASE_URL . 'place/' . $placeQ;
+            $eventPlaceHtml = "<p><span class='bold'>Place: </span><a id='place-associator' data-placeqid='$placeQ'>".$placeName."</a></p>";
+        }
 
-
-
-
-
-      $html .= '<div class="info-column">';
-      $html .= "
-              $titleHtml
-              $dateHtml
-              $eventTypeHtml
-              $eventDescHtml";
-      $html .= '
-          </div><div class="info-column">
-          '.$eventRoleHtml.'
-          '.$eventStatusHtml.'
-          </div>
-      </div>';
-
+        $html .= '<div class="info-column">';
+        $html .= "
+                $titleHtml
+                $dateHtml
+                $eventTypeHtml
+                $eventDescHtml";
+        $html .= '
+            </div><div class="info-column">
+            '.$eventRoleHtml.'
+            '.$eventStatusHtml.'
+            '.$eventPlaceHtml.'
+            </div>
+        </div>';
     }
 
     $html .= '</div>';
@@ -2110,37 +2193,62 @@ HTML;
 
 
     foreach ($hashes as $index => $year) {
-      $html .= '<div class="hash" style="left:calc('.($index / ($hash_count - 1)) * 100 .'% - 14px)"><p>'.$year.'</p></div>';
+        $html .= '<div class="hash" style="left:calc('.($index / ($hash_count - 1)) * 100 .'% - 14px)"><p>'.$year.'</p></div>';
     }
 
     $html .= '
-      </div>
-      <div class="points-container">';
+        </div>
+        <div class="points-container">';
 
-      $timelineIndex = 0;
+        $timelineIndex = 0;
 
-      $yearsFound = array();  // make sure no duplicate years
-      foreach ($events as $index => $event) {
-          if (in_array($event['startYear'], $yearsFound)){
-            continue;
-          }
-          $yearsFound[] = $event['startYear'];
-          // Convert year, month, day into decimal form
-          $left = ($event['startYear'] - $first_date_hash) * 100 / $hash_range;
+        $yearsFound = array();  // make sure no duplicate years
+        foreach ($events as $index => $event) {
+            if (in_array($event['startYear'], $yearsFound) || $event['startYear'] == ''){
+                continue;
+            }
+            $yearsFound[] = $event['startYear'];
+            // Convert year, month, day into decimal form
+            $left = ($event['startYear'] - $first_date_hash) * 100 / $hash_range;
 
-          $html .= '
-          <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
-          style="left:calc('.$left.'% - 5px)"
-          data-kid="'.$event['kid'].'"
-          data-year="'.$event['startYear'].'"
-          data-index="'.$index.'">
-          <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
-          </div>';
+            $html .= '
+            <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
+            style="left:calc('.$left.'% - 5px)"
+            data-kid="'.$event['kid'].'"
+            data-year="'.$event['startYear'].'"
+            data-index="'.$index.'">
+            <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
+            </div>';
+
+            $timelineIndex++;
       }
 
+    $html .= '</div>
+            </div>';
+
+
+    // events with unknown dates todo
     $html .= '
-      </div>
-    </div>
+        <div class="timeline dates-unknown">
+            <div class="line"></div>
+            <div class="points-container">';
+
+    foreach ($unknownEvents as $event) {
+        $kid = $event['kid'];
+        
+        $html .= '
+            <div
+                class="event-point no-select '.($timelineIndex == 0 ? 'active' : '').'"
+                data-index="'.$timelineIndex.'"
+                data-kid="'.$kid.'"
+            >
+                <span class="event-title">Unknown Events</span>
+            </div>';
+        $timelineIndex++;
+    }
+
+    $html .= '
+    </div></div>
     <div class="timeline-controls">
       <div class="timeline-prev no-select"><img src="'.BASE_URL.'assets/images/chevron-down-dark.svg" alt="Previous Arrow"></div>
       <div class="timeline-next no-select"><img src="'.BASE_URL.'assets/images/chevron-down-dark.svg" alt="Next Arrow"></div>
@@ -2150,16 +2258,12 @@ HTML;
     </section>
     </div>';
 
-
-
     $htmlArray['timeline'] = $html;
-
-
-
 
     // return $htmlArray;
     return json_encode($htmlArray);
 }
+
 
 function getFullRecordConnections(){
   if (!isset($_REQUEST['Qid']) || !isset($_REQUEST['recordForm'])){
@@ -2193,16 +2297,27 @@ function getFullRecordConnections(){
 function getPersonPageConnections($QID) {
     $connections = array();
 
+    $isRelationshipTo = properties["isRelationshipTo"];
+    $atPlace = properties["atPlace"];
+    $hasPersonStatus = properties["hasPersonStatus"];
+    $hasInterAgentRelationship = properties["hasInterAgentRelationship"];
+    $hasStatusGeneratingEvent = properties["hasStatusGeneratingEvent"];
+    $roleProvidedBy = properties["roleProvidedBy"];
+    $hasName = properties["hasName"];
+    $closeMatch = properties["closeMatch"];
+    $recordedAt = properties["recordedAt"];
+    $hasParticipantRole = properties["hasParticipantRole"];
+
     $personQuery['query'] = <<<QUERY
 SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
 
  WHERE
 {
  VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
- 	?agent p:P25 ?staterel .
-	?staterel ps:P25 ?relations .
+ 	?agent p:$hasInterAgentRelationship ?staterel .
+	?staterel ps:$hasInterAgentRelationship ?relations .
   	?relations rdfs:label ?relationslabel.
-	?staterel pq:P104 ?people.
+	?staterel pq:$isRelationshipTo ?people.
   	?people rdfs:label ?peoplename.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2235,22 +2350,22 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
  WHERE
 {
  VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
-  ?agent p:P82 ?statement.
-  ?statement ps:P82 ?name.
-  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+  ?agent p:$hasName ?statement.
+  ?statement ps:$hasName ?name.
+  OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
             bind(?recordedAt as ?allevents)}
-  OPTIONAL {?agent p:P39 ?statementrole.
-           ?statementrole ps:P39 ?roles.
-           ?statementrole pq:P98 ?roleevent.
+  OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
+           ?statementrole ps:$hasParticipantRole ?roles.
+           ?statementrole pq:$roleProvidedBy ?roleevent.
            bind(?roleevent as ?allevents)
 
          }.
 
- OPTIONAL {?agent p:P24 ?statstatus.
-           ?statstatus ps:P24 ?status.
-           ?statstatus pq:P99 ?statusevent.
+ OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
+           ?statstatus ps:$hasPersonStatus ?status.
+           ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
           bind(?statusevent as ?allevents)}.
-  ?allevents wdt:P12 ?place.
+  ?allevents wdt:$atPlace ?place.
   ?place rdfs:label ?placelabel.
 
 
@@ -2283,7 +2398,7 @@ SELECT DISTINCT ?match ?matchlabel (SHA512(CONCAT(STR(?match), STR(RAND()))) as 
  WHERE
 {
  VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
- 	?agent wdt:P88 ?match.
+ 	?agent wdt:$closeMatch ?match.
     ?match rdfs:label ?matchlabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2317,20 +2432,20 @@ SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as 
  WHERE
 {
  VALUES ?agent {wd:$QID} #Q number needs to be changed for every source.
-  ?agent p:P82 ?statement.
-  ?statement ps:P82 ?name.
-  OPTIONAL{ ?statement pq:P30 ?recordeAt.
+  ?agent p:$hasName ?statement.
+  ?statement ps:$hasName ?name.
+  OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
             bind(?recordedAt as ?event)}
-  OPTIONAL {?agent p:P39 ?statementrole.
-           ?statementrole ps:P39 ?roles.
-           ?statementrole pq:P98 ?roleevent.
+  OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
+           ?statementrole ps:$hasParticipantRole ?roles.
+           ?statementrole pq:$roleProvidedBy ?roleevent.
            bind(?roleevent as ?event)
 
          }.
 
- OPTIONAL {?agent p:P24 ?statstatus.
-           ?statstatus ps:P24 ?status.
-           ?statstatus pq:P99 ?statusevent.
+ OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
+           ?statstatus ps:$hasPersonStatus ?status.
+           ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
           bind(?statusevent as ?event)}.
   ?event rdfs:label ?eventlabel.
 
@@ -2366,6 +2481,13 @@ QUERY;
 function getSourcePageConnections($QID) {
   $connections = array();
 
+  $entityWithProvenance = classes["Entity with Provenance"];
+  $agent = classes["Agent"];
+  $atPlace = properties["atPlace"];
+  $subclassof = properties["subclass of"];
+  $reportsOn = properties["reportsOn"];
+  $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
+  $instanceOf = properties["instance of"];
 
   // people connections
   $peopleQuery['query'] = <<<QUERY
@@ -2374,11 +2496,11 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
  WHERE
 {
  VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
-  ?source wdt:P3 wd:Q16.
-  ?people wdt:P3/wdt:P2 wd:Q2; #agent or subclass of agent
+  ?source wdt:$instanceOf wd:$entityWithProvenance.
+  ?people wdt:$instanceOf/wdt:$subclassof wd:$agent; #agent or subclass of agent
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:P35 ?source .
+  ?provenance pr:$isDirectlyBasedOn ?source .
   ?people rdfs:label ?peoplename
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2410,7 +2532,7 @@ SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND(
  WHERE
 {
  VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
-  ?source wdt:P8 ?event.
+  ?source wdt:$reportsOn ?event.
   ?event rdfs:label ?eventlabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2442,8 +2564,8 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
  WHERE
 {
  VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
-  ?source wdt:P8 ?event.
-  ?event wdt:P12 ?place.
+  ?source wdt:$reportsOn ?event.
+  ?event wdt:$atPlace ?place.
   ?place rdfs:label ?placelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2476,6 +2598,15 @@ QUERY;
 function getEventPageConnections($QID) {
   $connections = array();
 
+  $event = classes["Event"];
+  $atPlace = properties["atPlace"];
+  $generatedBy = properties["generatedBy"];
+  $hasParticipantRole = properties["hasParticipantRole"];
+  $providesParticipantRole = properties["providesParticipantRole"];
+  $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
+  $instanceOf = properties["instance of"];
+
+
   // people connections
   $peopleQuery['query'] = <<<QUERY
 SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
@@ -2483,10 +2614,10 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
  WHERE
 {
  VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:P3 wd:Q34.
-  ?event p:P38 ?statement.
-  ?statement ps:P38 ?name.
-  ?statement pq:P39 ?people.
+  ?event wdt:$instanceOf wd:$event.
+  ?event p:$providesParticipantRole ?statement.
+  ?statement ps:$providesParticipantRole ?name.
+  ?statement pq:$hasParticipantRole ?people.
   ?people rdfs:label ?peoplename.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2518,12 +2649,12 @@ SELECT DISTINCT ?source ?refName ?project ?projectName (SHA512(CONCAT(STR(?sourc
  WHERE
 {
 VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:P3 wd:Q34;
+  ?event wdt:$instanceOf wd:$event;
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:P35 ?source .
+  ?provenance pr:$isDirectlyBasedOn ?source .
   ?source rdfs:label ?refName;
-          wdt:P7 ?project.
+          wdt:$generatedBy ?project.
   ?project rdfs:label ?projectName.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2566,7 +2697,7 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
  WHERE
 {
  VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:P12 ?place.
+  ?event wdt:$atPlace ?place.
   ?place rdfs:label ?placelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -2599,10 +2730,10 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
  WHERE
 {
  VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:P3 wd:Q34;
+  ?event wdt:$instanceOf wd:$event;
           ?property  ?object .
   	?object prov:wasDerivedFrom ?provenance .
-  	?provenance pr:P35 ?source .
+  	?provenance pr:$isDirectlyBasedOn ?source .
 	?source rdfs:label ?sourcelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
