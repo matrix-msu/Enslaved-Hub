@@ -243,12 +243,16 @@
                         }
                         
                         $query = array('query' => "");
+                        $instanceOf = properties["instance of"];
+                        $hasPlaceType = properties["hasPlaceType"];
+                        $researchProject = classes["Research Project"];
+                        $place = classes["Place"];
 
                         // get the categories from a blazegraph search
                         $query['query'] = <<<QUERY
 SELECT ?country ?countryLabel WHERE {
-?country wdt:P3 wd:Q50 .
-?country wdt:P80 wd:$queryQ .
+?country wdt:$instanceOf wd:$place .
+?country wdt:$hasPlaceType wd:$queryQ .
 
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }                        
@@ -331,11 +335,13 @@ QUERY;
                     $typeCats = array();
 
                     $query = array('query' => "");
+                    $instanceOf = properties["instance of"];
+                    $researchProject = classes["Research Project"];
 
                     // get the categories from a blazegraph search
                     $query['query'] = <<<QUERY
 SELECT ?project ?projectLabel WHERE {
-  	?project wdt:P3 wd:Q264.
+  	?project wdt:$instanceOf wd:$researchProject.
   
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 }                     

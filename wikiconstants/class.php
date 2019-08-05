@@ -1,9 +1,12 @@
 <?php
 const classes=[
 'Agent' => 'Q2',
+'Entity with Provenance' => 'Q16',
+'City, Town, or Village' => 'Q29',
 'Age Category' => 'Q604',
 'AgeRecord' => 'Q65',
 'Agent Record' => 'Q46',
+'Female' => 'Q47',
 'Controlled Vocabulary for Age Category' => 'Q316',
 'Controlled Vocabulary for Document Type' => 'Q556',
 'Controlled Vocabulary for Event Type' => 'Q227',
@@ -30,16 +33,19 @@ const classes=[
 'Research Project' => 'Q264',
 'Role in a Life Event' => 'Q515',
 'Sex' => 'Q45',
-'controlled vocabulary' => 'Q395'
+'controlled vocabulary' => 'Q395',
+'Researcher' => 'Q536'
 
 ];
 const qclass=[
 'Q2' => 'Agent',
 'Q16' => 'Entity with Provenance',
 'Q21' => 'Document Type',
+'Q29' => 'City, Town, or Village',
 'Q34' => 'Event',
 'Q45' => 'Sex',
 'Q46' => 'Agent Record',
+'Q47' => 'Female',
 'Q49' => 'Ethnolinguistic Descriptor',
 'Q50' => 'Place',
 'Q57' => 'Person Status',
@@ -57,9 +63,11 @@ const qclass=[
 'Q430' => 'Event Type',
 'Q439' => 'Place Type',
 'Q515' => 'Role in a Life Event',
+'Q536' => 'Researcher',
 'Q547' => 'Controlled Vocabulary for Role',
 'Q556' => 'Controlled Vocabulary for Document Type',
 'Q592' => 'Origin',
+'Q602' => 'Person',
 'Q740' => 'License Information',
 'Q766' => 'Controlled Vocabulary for Inter Agent Relationship',
 'Q771' => 'Interagent Relationship'
