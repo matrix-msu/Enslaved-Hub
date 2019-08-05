@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-    <title>7DFF9C75-86EC-45B8-97A2-1FC284E725B1</title>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 55.2 (78181) - https://sketchapp.com -->
+    <title>CE6FCBEB-3436-428C-8B63-0677242000DC</title>
     <desc>Created with sketchtool.</desc>
-    <defs></defs>
-    <g id="Single-Episode" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity=".88">
-        <g id="Single-Episode---Play@2x" transform="translate(-867.000000, -83.000000)" stroke="#FFFFFF">
-            <g id="Navigation" transform="translate(120.000000, 42.000000)">
-                <g id="Search" transform="translate(564.000000, 25.000000)">
-                    <g transform="translate(184.000000, 17.000000)">
-                        <circle id="Oval-1" cx="5.92105263" cy="5.92105263" r="5.92105263"></circle>
-                        <path d="M9.86842105,10.6578947 L13.8939628,14.6834365" id="Line" stroke-linecap="square"></path>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Home" transform="translate(-873.000000, -523.000000)" stroke="#FFFFFF" stroke-width="2">
+            <g id="Introduction" transform="translate(-2.000000, 256.000000)">
+                <g id="Start-a-Search" transform="translate(114.000000, 203.000000)">
+                    <g id="Search-Bar" transform="translate(0.000000, 43.000000)">
+                        <g id="Search" transform="translate(762.000000, 22.000000)">
+                            <circle id="Oval" cx="6.66666667" cy="6.66666667" r="6.66666667"></circle>
+                            <path d="M16,16 L11.3777778,11.3777778" id="Shape"></path>
+                        </g>
                     </g>
                 </g>
             </g>

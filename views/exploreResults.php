@@ -1,6 +1,6 @@
 <!-- Heading image and title container-->
-<div class="container header explore-results">
-	<div class="container middlewrap">
+<div class="container header search-page">
+	<div class="container middlewrap search-page">
         <?php
         $typeTitle = "";
         $typeLower = "";
@@ -78,21 +78,23 @@
                 <span id="previous-title"><?php echo $upperForm ?></span>
             </a>
             <a id="last-page" class="prev2" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM. '/' .$typeLower ?>">
-                <span id="previous-title"><?php echo ($typeTitle != "") ? "// " . $typeTitle : "" ?></span>
+                <span id="previous-title"><?php echo ($typeTitle != "") ? "/ " . $typeTitle : "" ?></span>
             </a>
-            <span id="current-title"><?php echo ($currentTitle != "") ? "// " . $currentTitle : "" ?></span>
+            <span id="current-title"><?php echo ($currentTitle != "") ? "/ " . $currentTitle : "" ?></span>
         </h4>
         <div class="search-title">
             <h1><?php echo $currentTitle;?></h1>
         </div>
         <?php if(!$fromBrowse) { ?>
             <div class="heading-search">
-                <form class="search-form">
-                    <label for="searchbar" class="sr-only">searchbar</label>
-                    <input id="searchbar" class="search-field main-search" type="text" name="searchbar"/>
-                    <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
-                    <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
-                </form>
+               <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="">Go to Advanced Search</a></p>
+            <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+            <form class="search-form" action="<?= BASE_URL ?>search/all">
+                <label for="searchbar" class="sr-only">searchbar</label>
+                <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
+                <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
+                <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
+            </form>
             </div>
         <?php } ?>
   </div>

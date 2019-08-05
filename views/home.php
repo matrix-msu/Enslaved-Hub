@@ -2,9 +2,9 @@
 <?php $cache_data = Json_GetData_ByTitle("Home", true) ?>
 <!-- Main page-->
 <!-- Heading image and title container-->
-<div class="container header">
-    <img class="header-background" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg.jpg" alt="Enslaved Background Image">
-    <div class="container middlewrap">
+<div class="container header home-page">
+  <div class="image-container">
+    <div class="container middlewrap home-page">
         <div class="heading-text">
             <div class="heading-title">
                 <img class="logo-main" src="<?php echo BASE_IMAGE_URL;?>Logo-Landing.svg" width="780" height="99" alt="Enslaved People of Historic Slave Trade"/>
@@ -14,7 +14,7 @@
         </div>
         <div class="heading-search">
             <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="">Go to Advanced Search</a></p>
-            <p class="hide-desktop-only mt-xs"><a class="text-link" href="">Go to Advanced Search</a></p>
+            <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
                 <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
@@ -23,6 +23,8 @@
             </form>
         </div>
     </div>
+    <div class="image-background-overlay home-page"></div>
+      <img class="header-background home-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg.jpg" alt="Enslaved Background Image"></div>
 </div>
 <main class="home">
     <section class="section section-explore">
@@ -99,7 +101,7 @@
         <div class="section-content full-width">
             <div class="row">
                 <div class="col col-text py-xl">
-                    <p class="paragraph">Brief info on Project. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                    <p class="paragraph">Enslaved links together data from participating projects, allowing students, researchers, and the general public to search over numerous datasets at once in order to better reconstruct the lives of the people involved in the historical slave trade. You can search or browse interconnected data, generate visualizations, and explore short biographies of enslaved people. </p>
                     <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL;?>">Learn More</a></p>
                 </div>
 

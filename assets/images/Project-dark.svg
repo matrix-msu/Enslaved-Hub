@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="27px" height="24px" viewBox="0 0 27 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-    <title>2A78E315-C0DB-4E8F-A479-B23153508D6D</title>
-    <desc>Created with sketchtool.</desc>
-    <defs></defs>
-    <g id="Stories" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="1">
-        <g id="Single-Story" transform="translate(-539.000000, -3010.000000)" stroke="#122E46">
-            <g id="Projects" transform="translate(539.000000, 3010.000000)">
-                <rect id="Rectangle-6" x="0.5" y="5.44117647" width="26" height="18.0588235"></rect>
-                <rect id="Rectangle-6-Copy" x="8.44117647" y="0.5" width="10.1176471" height="4.82352941"></rect>
+<svg width="23px" height="20px" viewBox="0 0 23 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.2 (81672) - https://sketch.com -->
+    <title>Projects</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home" transform="translate(-563.000000, -889.000000)" fill="#0E3232" fill-rule="nonzero">
+            <g id="Explore" transform="translate(0.000000, 622.000000)">
+                <g id="Explore-Buttons" transform="translate(537.000000, 50.000000)">
+                    <g id="Projects" transform="translate(26.000000, 217.000000)">
+                        <g id="Combined-Shape">
+                            <path d="M6.76470588,3.42710997 L6.76470588,1.00047132 C6.76470588,0.447926266 7.19624687,0 7.74255453,0 L15.2574455,0 C15.7974964,0 16.2352941,0.449390771 16.2352941,1.00047132 L16.2352941,3.42710997 L22.0117187,3.42710997 C22.5575314,3.42710997 23,3.87039475 23,4.42649633 L23,19.0006136 C23,19.5525595 22.5610822,20 22.0117187,20 L0.98828125,20 C0.442468587,20 0,19.5567152 0,19.0006136 L0,4.42649633 C0,3.87455049 0.438917756,3.42710997 0.98828125,3.42710997 L6.76470588,3.42710997 Z M8.72396514,3.42710997 L14.2760349,3.42710997 L14.2760349,2 L8.72396514,2 L8.72396514,3.42710997 Z M1.95925926,5.42710997 L1.95925926,18 L21.0407407,18 L21.0407407,5.42710997 L1.95925926,5.42710997 Z"></path>
+                        </g>
+                    </g>
+                </g>
             </g>
         </g>
     </g>

@@ -3,46 +3,18 @@
 }
 
 .header{
-    height: auto;
-    width: 100%;
-    background: $base-dark;
-    position: relative;
-    transition: 400ms;
-
-    .header-background {
-        height: 333px;
-        left: 0;
-        object-fit: cover;
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 100%;
-
-        &.full-height {
-            height: 100%;
-        }
-    }
-
-    .middlewrap{
-        color: $base-light;
-        margin: 0 auto;
-        max-width: $max-width-content;
-        position: relative;
-        padding: 250px 0 70px;
-        font-size: 28px;
-        transition: 400ms;
-        width: 90%;
-
+	
         h1{
-            font-size: 50px;
+            font-size: 65px;
+            line-height: 1;
         }
 
         .heading-text {
-            margin: 0 0 60px;
+            margin: 0 0 40px;
 
             .heading-title {
                 width: 100%;
-                margin-bottom: 20px;
+                margin-bottom: 5px;
 
                 .logo-main {
                     width: 100%;
@@ -80,7 +52,7 @@
                 margin: 20px 0 0;
                 
                 .search-field{
-                    border: 1px solid rgba(255,253,251,0.76);
+                    border: 2px solid #FFF;
                     border-radius: 5px;
                     box-shadow: 0 4px 16px 0 rgba(0,0,0,0.05);
                     color: $base-dark;
@@ -96,10 +68,10 @@
                     padding-right: 60px;
         
                     &:hover{
-                        border: 1px solid $sub-base;
+                        border: 2px solid $sub-base;
                     }
                     &:focus-within{
-                        border: 1px solid $sub-base;
+                        border: 2px solid $sub-base;
                     }
                 }
                 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -127,7 +99,7 @@
                 float: right;
                 margin-left: 20px;
             }
-        }
+        
     }
 
     @media screen and (max-width: $max-width-tablet) {
@@ -157,7 +129,6 @@
 
         p {
             color: $base-dark;
-            font-weight: bold;
         }
 
         .type {
@@ -175,7 +146,6 @@
         }
 
         .arrow {
-            transform: scaleX(-1);
             position: absolute;
             right: 40px;
         }
@@ -490,10 +460,27 @@
     }
 }
 
+@media screen and (max-width: 900px){
+    .header{
+        .middlewrap{
+//            margin-top: -60px;
+        }
+    }
+}
+
+@media screen and (max-width: 740px){
+    .header{
+        .middlewrap{
+//           margin-top: -40px;
+        }
+    }
+}
+
 @media screen and (max-width: 550px){
 
     .header{
         .middlewrap{
+ //         margin-top: -60px;
             .heading-text{
                 .heading-title{
                     .logo-main{
@@ -501,6 +488,7 @@
                     }
                     .logo-mobile{
                         display: block;
+                        margin-bottom: 35px;
                     }
                 }
             }
