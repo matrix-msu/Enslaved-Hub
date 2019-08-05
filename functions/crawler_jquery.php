@@ -138,6 +138,15 @@ if(isset($_POST['delete_seed']))
 if(isset($_POST["count_seeds"]))
 {
 	$result = $seeds->get_count();
+
 	echo(json_encode($result));
+}
+
+//add a seed
+if(isset($_POST["add_seed"]))
+{
+	$seeds->add_seed($_POST["add_seed"]);
+	
+	echo(json_encode("true"));
 }
 ?>

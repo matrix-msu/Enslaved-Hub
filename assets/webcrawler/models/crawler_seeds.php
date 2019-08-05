@@ -131,11 +131,19 @@ HTML;
 
 	public function get_count()
 	{
-		$conn=$this->connect();
+		$conn = $this->connect();
 		$query = "SELECT * FROM ppj_seeds";
-		$result=$conn->query($query);
+		$result = $conn->query($query);
 		mysqli_close($conn);
 		return $result->num_rows;
+	}
+
+	public function add_seed($link)
+	{
+		$conn = $this->connect();
+		$query = "INSERT INTO ppj_seeds (htmlURL) VALUES ('$link')";
+		$result = $conn->query($query);
+		mysqli_close($conn);
 	}
 
 }

@@ -47,7 +47,7 @@ $(document).ready(function(){
         $('.result-container').removeClass('show');
 		$('.result-container#'+name).addClass('show');
 		
-		$('.result-container').find('.result').off().remove(); //.not('#keep')
+		$('.result-container').find('.result').not('#keep').off().remove(); //.not('#keep')
 
 
 		console.log(name);
@@ -73,85 +73,6 @@ $(document).ready(function(){
 
 	//Trigger click on results when page loads
 	$('.crawler-tabs li#results').trigger('click');
-	
-	// function show_results()
-	// {
-	// 	var x="sure";
-	// 	$.ajax({
-	// 		method:'POST',
-	// 		url: BASE_URL + "api/getCrawlerResults",
-	// 		data:{'get_results':x},
-	// 		dataType: "JSON",
-	// 		success:function(data){
-	// 			if(data != "no more data"){
-	// 				$(".results-wrap").append(data);
-	// 				installModalListeners(); //install the modal listeners after content is generated
-	// 				$(document).ready(function(){
-	// 					setPagination(total_length, card_limit, card_offset);
-	// 				});
-	// 			}
-	// 			else {
-	// 				console.log("No more results");
-	// 			}
-	// 		},
-	// 		'error':function(xhr, status, error){
-	// 			console.log(xhr.responseText);
-	// 		}
-	// 	});//ajax
-	// }
-
-    // function show_broken()
-	// {
-	// 	var x="sure";
-	// 	$.ajax({
-	// 		method:'POST',
-	// 		url: BASE_URL + "api/getCrawlerResults",
-	// 		data:{'get_links':x},
-	// 		dataType: "JSON",
-	// 		success:function(data){
-	// 			if(data != "no more data"){
-	// 				$(".broken-wrap").append(data);
-	// 				installModalListeners(); //install the modal listeners after content is generated
-	// 				$(document).ready(function(){
-	// 					setPagination(total_length, card_limit, card_offset);
-	// 				});
-	// 			}
-	// 			else {
-	// 				console.log("No more broken links");
-	// 			}
-	// 		},
-	// 		'error':function(xhr, status, error){
-	// 			console.log(xhr.responseText);
-	// 		}
-	// 	});//ajax
-	// }
-
-	// // function to append the seeds to the page
-	// function show_seeds()
-	// {
-	// 	var x="sure";
-	// 	$.ajax({
-	// 		method:'POST',
-	// 		url: BASE_URL + "api/getCrawlerResults",
-	// 		data:{'get_seeds':x},
-	// 		dataType: "JSON",
-	// 		success:function(data){
-	// 			if(data != "no more data"){
-	// 				$(".seed-wrap").append(data);
-	// 				installModalListeners(); //install the modal listeners after content is generated
-	// 				$(document).ready(function(){
-	// 					setPagination(total_length, card_limit, card_offset);
-	// 				});
-	// 			}
-	// 			else {
-	// 				console.log("No more seeds");
-	// 			}  
-	// 		},
-	// 		'error':function(xhr, status, error){
-	// 			console.log(xhr.responseText);
-	// 		}
-	// 	});//ajax
-	// }
 
 	// Modals
 	$('.crawler-modal .canvas').css('opacity', '0');
@@ -171,6 +92,29 @@ $(document).ready(function(){
         setTimeout(function(){
             $('.crawler-modal').css('display', 'none');
         }, 400);
+	});
+
+	$('.seed-wrap form').submit(function(e){
+		e.preventDefault();
+
+		var form = $(this);
+		console.log(form.serialize());
+
+		$.ajax({
+			type: "POST",
+			url: BASE_URL + "api/getCrawlerResults",
+			data: form.serialize(),
+			dataType: "JSON",
+			success:function(data){
+				console.log(data);
+				//after ajax refresh tab
+				$('.crawler-tabs li.tabbed').trigger('click');
+				$('.seed-wrap form input.search-field').val('');
+			},
+			'error':function(xhr, status, error){
+				console.log(xhr.responseText);
+			}
+		});
 	});
 	
 });
@@ -245,8 +189,8 @@ function installModalListeners(){
 			var url = '';
 			if($(".crawler-tabs li#results").hasClass("tabbed")){
 				//On results tab, type = delete result
-				var keyword = $(this).parent().parent().find('.link-name a.link').text();
-				url = $(this).parent().parent().find('.link-wrap a.link').text();
+				var keyword = $(this).parent().parent().parent().find('.link-name a.link').text();
+				url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
 
 				$('.'+ modalType +'-modal .link-info').attr('name', 'delete_result');
 				$('.'+ modalType +'-modal .link-info').attr('value', keyword);
@@ -304,6 +248,34 @@ function installModalListeners(){
 				console.log(data);
 				//after ajax close modal and refresh tab
 				$('.crawler-modal .close').trigger('click');
+				$('.crawler-tabs li.tabbed').trigger('click');
+			},
+			'error':function(xhr, status, error){
+				console.log(xhr.responseText);
+			}
+		});
+	});
+
+
+	//Listeners for adding result to seeds
+	$('.add-seed').off().click(function(){
+		$(this).find('form').submit();
+	});
+
+	$('.add-seed form').off().submit(function(e){
+		e.preventDefault();
+
+		var form = $(this);
+		console.log(form.serialize());
+
+		$.ajax({
+			type: "POST",
+			url: BASE_URL + "api/getCrawlerResults",
+			data: form.serialize(),
+			dataType: "JSON",
+			success:function(data){
+				console.log(data);
+				//after ajax refresh tab
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
 			'error':function(xhr, status, error){

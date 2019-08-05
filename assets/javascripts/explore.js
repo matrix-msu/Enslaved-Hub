@@ -25,12 +25,22 @@ $(document).ready(function(){
                 'success': function (data) {
                     console.log(data);
                     data = JSON.parse(data);
-                    // var min = data['min'][0]['startyear']['value'];
-                    // var max = data['max'][0]['startyear']['value'];
+                    console.log(data);
                     var min = data['min'][0]['year']['value'];
-                    var max = data['max'][0]['year']['value'];
-                    if (parseInt(max) < parseInt(data['max'][1]['yearend']['value'])) {
-                        max = data['max'][1]['yearend']['value'];
+                    var max = '';
+                    var yearend = '';
+                    //have to do this weird check because year and yearend will randomly switch array positions every time query is executed
+                    if(data['max'][0]['year']){
+                        max = data['max'][0]['year']['value'];
+                        yearend = data['max'][1]['yearend']['value'];
+                    }
+                    else{
+                        max = data['max'][1]['year']['value'];
+                        yearend = data['max'][0]['yearend']['value'];
+                    }
+
+                    if (parseInt(max) < parseInt(yearend)) {
+                        max = yearend;
                     }
                     for (var i = min; i <= max; i++) {
                         console.log(i);
