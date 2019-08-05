@@ -5,6 +5,10 @@ config.json
 # htaccess files
 .htaccess
 
+# compiled css
+assets/stylesheets/style.css
+assets/stylesheets/style.css.map
+
 # Directories
 /.idea
 /.sass-cache
