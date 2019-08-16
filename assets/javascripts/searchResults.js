@@ -86,6 +86,7 @@ function searchResults(preset, limit = 12, offset = 0)
             isSearching = false;
 
             result_array = JSON.parse(data);
+            console.log(result_array)
             if (typeof (result_array['formatted_data']) != 'undefined'){
                 formattedData = result_array['formatted_data'];
             }

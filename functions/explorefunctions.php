@@ -1330,7 +1330,7 @@ SELECT ?name ?desc ?sextype  ?race
 (group_concat(distinct ?endyear; separator = "||") as ?endyear)
 (group_concat(distinct ?allplaces; separator = "||") as ?allplaces)
 (group_concat(distinct ?allplaceslabel; separator = "||") as ?allplaceslabel)
-
+(group_concat(distinct ?placetype; separator = "||") as ?placetype)
 (group_concat(distinct ?eventplace; separator = "||") as ?eventplace)
 
 
@@ -1395,6 +1395,9 @@ OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
   OPTIONAL {?allevents wdt:$atPlace ?allplaces.
             ?allevents rdfs:label ?evlabel.
             ?allplaces rdfs:label ?allplaceslabel.
+?allplaces wdt:$placetype ?allplacetypes.
+?allplacetypes rdfs:label ?allplacetypeslabel.
+           BIND(CONCAT(str(?allplaces)," - ",str(?allplacetypeslabel)) as ?placetype). 
            BIND(CONCAT(str(?allevents)," - ",str(?allplaceslabel)) as ?eventplace). 
            }.
 
@@ -1521,6 +1524,7 @@ QUERY;
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
     
+    // print_r($result);die;
     if (empty($result)){
       echo json_encode(Array());
       die;
@@ -1807,6 +1811,21 @@ HTML;
                 $eventsAndStartYears = explode('||', $record['startyear']['value']);
             }
 
+            //placeTypes
+            if (isset($record['placetype']) && isset($record['placetype']['value']) && $record['placetype']['value'] != ''  ){
+                $placeTypes = explode('||', $record['placetype']['value']);
+                $allPlacesToTypesMap = array();
+                foreach($placeTypes as $matchString){
+                    $parts = explode(' - ', $matchString);
+                    $placeUrl = $parts[0];
+                    $placeQ = end(explode('/', $placeUrl));
+                    $placeType = $parts[1];
+                    
+                    // group the place Qids with their types
+                    $allPlacesToTypesMap[$placeQ] = array('placeQ' => $placeQ, 'placeType' => $placeType);
+                }
+            }
+
             // all places
             if (isset($record['allplaces']) && isset($record['allplaces']['value']) && $record['allplaces']['value'] != ''  ){
                 if (isset($record['allplaceslabel']) && isset($record['allplaceslabel']['value']) && $record['allplaceslabel']['value'] != '' ){
@@ -1824,8 +1843,14 @@ HTML;
                         $placeUrlIndex = array_search($placeName, $allPlaceLabels);
                         $placeUrl = $allPlaceUrls[$placeUrlIndex];
                         $placeQ = end(explode('/', $placeUrl));
+
+                        $placeType = "";
+                        if (isset($allPlacesToTypesMap[$placeQ]) && isset($allPlacesToTypesMap[$placeQ]['placeType'])){
+                            $placeType = $allPlacesToTypesMap[$placeQ]['placeType'];
+                        }
+
                         // group the place name and q value with their events
-                        $allEventToPlaceMap[$eventQ] = array('name' => $placeName, 'placeQ' => $placeQ);
+                        $allEventToPlaceMap[$eventQ] = array('name' => $placeName, 'placeQ' => $placeQ, 'placeType' => $placeType);
                     }
                 }
             }
@@ -1924,7 +1949,6 @@ HTML;
                     $eventStatus = $allEventStatuses[$eventLabel];
                 }
 
-
                 // event places
                 $eventPlaces = '';
                 if (isset($allEventToPlaceMap[$eventQ])){
@@ -2001,7 +2025,6 @@ HTML;
     <div class="arrow-pointer-bottom"></div>
     <div class="arrow-pointer-top"></div>';
 
-
     $html .= '<div class="info-header">';
     $timeline_event_dates = array_unique($timeline_event_dates);
     foreach ($timeline_event_dates as $year) {
@@ -2033,19 +2056,19 @@ HTML;
         }
 
         // set the place info select buttons for this year
-        foreach ($yearUniquePlaces as $placeName => $placeQ) {
-                $html .= '
-                    <div
-                    class="info-select info-select-place"
-                    data-select="place"
-                    data-year="'.$year.'"
-                    data-placeqid="'.$placeQ.'"
-                    data-eventkid="'.$kid.'"
-                    >
-                    <p>Place</p>
-                    <p class="large-text">'.$placeName.'</p>
-                    </div>';
-        }
+        // foreach ($yearUniquePlaces as $placeName => $placeQ) {
+        //         $html .= '
+        //             <div
+        //             class="info-select info-select-place"
+        //             data-select="place"
+        //             data-year="'.$year.'"
+        //             data-placeqid="'.$placeQ.'"
+        //             data-eventkid="'.$kid.'"
+        //             >
+        //             <p>Place</p>
+        //             <p class="large-text">'.$placeName.'</p>
+        //             </div>';
+        // }
     }
 
     foreach ($events as $index => $event) {
@@ -2053,7 +2076,7 @@ HTML;
             unset($events[$index]);
         }
     }
-    // todo unknown events/places tabs
+
     $unknownPlaces = array();
     foreach ($unknownEvents as $event) {
         $kid = $event['kid'];
@@ -2088,18 +2111,18 @@ HTML;
     }
     
     // set the place info select buttons for this year
-    foreach ($unknownPlaces as $placeName => $placeQ) {
-        $html .= '
-            <div
-            class="info-select info-select-place"
-            data-select="place"
-            data-placeqid="'.$placeQ.'"
-            data-eventkid="'.$kid.'"
-            >
-            <p>Place</p>
-            <p class="large-text">'.$placeName.'</p>
-            </div>';
-    }
+    // foreach ($unknownPlaces as $placeName => $placeQ) {
+    //     $html .= '
+    //         <div
+    //         class="info-select info-select-place"
+    //         data-select="place"
+    //         data-placeqid="'.$placeQ.'"
+    //         data-eventkid="'.$kid.'"
+    //         >
+    //         <p>Place</p>
+    //         <p class="large-text">'.$placeName.'</p>
+    //         </div>';
+    // }
 
 
 
@@ -2162,11 +2185,17 @@ HTML;
         }
         // event place html
         $eventPlaceHtml = "";
+        $placeTypeHtml = "";
         if (isset($allEventToPlaceMap[$eventQ]) && $allEventToPlaceMap[$eventQ]['name'] != ''){
             $placeName = $allEventToPlaceMap[$eventQ]['name'];
             $placeQ = $allEventToPlaceMap[$eventQ]['placeQ'];
-            // $placeUrl = BASE_URL . 'place/' . $placeQ;
-            $eventPlaceHtml = "<p><span class='bold'>Place: </span><a id='place-associator' data-placeqid='$placeQ'>".$placeName."</a></p>";
+            $placeUrl = BASE_URL . 'record/place/' . $placeQ;
+            $eventPlaceHtml = "<p><span class='bold'>Place: </span><a id='place-associator' target='_blank' href='$placeUrl' data-placeqid='$placeQ'>".$placeName."</a></p>";
+
+            if (isset($allEventToPlaceMap[$eventQ]['placeType'])){
+                $placeType = $allEventToPlaceMap[$eventQ]['placeType'];
+                $placeTypeHtml = "<p><span class='bold'>Place Type: </span>".$placeType."</p>";
+            }
         }
 
         $html .= '<div class="info-column">';
@@ -2180,6 +2209,7 @@ HTML;
             '.$eventRoleHtml.'
             '.$eventStatusHtml.'
             '.$eventPlaceHtml.'
+            '.$placeTypeHtml.'
             </div>
         </div>';
     }

@@ -1,7 +1,7 @@
 <?php
 function storyContent($kid) {
     $search = ['token' => TOKEN, 'form' => STORY_SID];
-    $search['fields'] = ['Title_16_23', 'Images_16_23', 'Caption_16_23', 'Text_16_23', 'Resources_16_23', 'Source_16_23', 'Timeline_16_23', 'Story_Associator_16_23'];
+    $search['fields'] = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Timeline', 'Story_Associator'];
     $search['realnames'] = true;
     $query = [['search' => 'kid', 'kids' => [$kid]]];
     $search['query'] = $query;
@@ -19,7 +19,7 @@ function getStories($page = 1, $count = 8, $sort = []){
     $search = [
         'token' => TOKEN,
         'form' => STORY_SID,
-        'fields' => ['Title_16_23', 'Featured_16_23'],
+        'fields' => ['Title', 'Featured'],
         'realnames' => true,
         'size' => TRUE,
         'index' => ($page-1) * $count,
@@ -30,7 +30,7 @@ function getStories($page = 1, $count = 8, $sort = []){
       'search' => 'keyword',
       'keys' => 'True',
       'method' => 'EXACT',
-      'fields' => ['Display_16_23']
+      'fields' => ['Display']
     ]];
 
     $search['query'] = $query;
@@ -63,7 +63,7 @@ function displayStories($stories){
     foreach ($stories['records'][0] as $kid => $story) {
         echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
         echo '<div class="container cards">';
-        echo '<h2 class="card-title">'.$story['Title']['value'].'</h2>';
+        echo '<h2 class="card-title">'.$story['Title'].'</h2>';
         echo '<h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>';
         echo '</div></a></li>';
     }
@@ -80,6 +80,7 @@ function appendIds($name) {
 }
 
 function formatField($field) {
+    //todo do we need to append ids?
     // Formats real field names into kora unique field ids.
     // Caveat: the unique field ids and $field must match without formatting.
     if (is_array($field)) {

@@ -4,7 +4,7 @@ if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
     // $story = storyContent($_GET['kid']);
 
     // Getting Story using korawrappper
-    $fields = ['Title_16_23', 'Images_16_23', 'Caption_16_23', 'Text_16_23', 'Resources_16_23', 'Source_16_23', 'Timeline_16_23', 'Story_Associator_16_23'];
+    $fields = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Timeline', 'Story_Associator'];
     $koraResult = koraWrapperSearch(STORY_SID, $fields, "kid", $_GET['kid']);
     $koraResult = json_decode($koraResult, true);
     if(!array_key_exists("error", $koraResult)) $story = $koraResult['records'][0][ $_GET['kid'] ];
@@ -13,7 +13,7 @@ if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
     $images = [];
     $caption = [];
     if (isset($story['Images'])) {
-        foreach ($story['Images']['value'] as $image) {
+        foreach ($story['Images'] as $image) {
             $images[] = $image['url'];
             $caption[] = $image['caption'];
         }
@@ -30,7 +30,7 @@ else {
         <?php
         $Featured_title = "Featured Story Title Goes Here Like This";
         if (isset($story['Title'])) {
-            $Featured_title = $story['Title']['value'];
+            $Featured_title = $story['Title'];
         }
         ?>
         <!-- <h1>Ibrahima Abd al-Rahman</h1>
@@ -40,7 +40,7 @@ else {
 
         <?php
         if (isset($story['Title'])) {
-            echo '<h1>'.$story['Title']['value'].'</h1>';
+            echo '<h1>'.$story['Title'].'</h1>';
         }
         ?>
         <!-- <h2>Sub Title</h2> -->
@@ -54,7 +54,7 @@ else {
             <section>
                 <?php
                 if (isset($story['Text'])) {
-                    echo $story['Text']['value'];
+                    echo $story['Text'];
                 }
                 ?>
                 <!-- <p>Ibrahima Abd al-Rahman was one of only a few Africans enslaved and brought to America during the slave trade who was able to secure a return to Africa.  He was born c. 1762 in the Islamic kingdom of Futa Jallon, today located in Guinea. He was a son of the almaami of Futa Jallon, a Muslim theocratic ruler. Abd al-Rahman was raised in Timbo, the capital of Futa Jallon, where he studied the Koran as a young boy. He went on to study further in Jenne and Timbuktu, two major centers of learning, located in present day Mali.</p>
@@ -68,7 +68,7 @@ else {
                 <?php
                 if (isset($story['Online Resources'])) {
                     echo '<h2>Online Resources</h2>';
-                    echo $story['Online Resources']['value'];
+                    echo $story['Online Resources'];
                 }
                 ?>
                 <!-- <h3>Online Resources</h3>
@@ -80,7 +80,7 @@ else {
                 <?php
                 if (isset($story['Source'])) {
                     echo '<h3>Bibliography</h3>';
-                    echo $story['Source']['value'];
+                    echo $story['Source'];
                 }
                 ?>
                 <!-- <h3>Bibliography</h3>
@@ -116,7 +116,7 @@ else {
                 <?php
                 if (isset($story['Timeline'])) {
                     echo '<h3 class="key-events-title">Key Events</h3>';
-                    foreach ($story['Timeline']['value'] as $event) {
+                    foreach ($story['Timeline'] as $event) {
                         echo '<h3 class="key-events-date">'.$event['Date'].'</h3>';
                         echo '<p class="key-events-text">'.$event['Description'].'</p>';
                     }

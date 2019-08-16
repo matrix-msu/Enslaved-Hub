@@ -8,7 +8,7 @@
 function Kora_GetNavigationData()
 {
 	// Get Kora data with Display set to True
-	$koraResults = koraWrapperSearch(WEBPAGES_FORM, "ALL", array("Display_16_49_"), "TRUE", array('NavigationOrder_16_49_','ASC','SubNavigationOrder_16_49_','ASC'));
+	$koraResults = koraWrapperSearch(WEBPAGES_FORM, "ALL", array("Display"), "TRUE", array('NavigationOrder','ASC','SubNavigationOrder','ASC'));
 	
 	// Error checking
 	if(!$koraResults) return json_encode("failed");
@@ -29,8 +29,8 @@ function Kora_GetNavigationData()
 	// Extract All main navigations and sub navigations
 	foreach ($decode_results["records"][0] as $result)
 	{
-		if(!array_key_exists("Navigation", $result) || (array_key_exists("Navigation Order", $result) && $result["Navigation Order"]["value"] == 0)) continue;
-		$nav = $result["Navigation"]["value"][0];
+		if(!array_key_exists("Navigation", $result) || (array_key_exists("Navigation Order", $result) && $result["Navigation Order"] == 0)) continue;
+		$nav = $result["Navigation"][0];
 
 		if($nav != $prev)
 		{
@@ -40,9 +40,9 @@ function Kora_GetNavigationData()
 		}
 
 		if(!array_key_exists("SubNavigation", $result) || array_key_exists("SubNavigation Display", $result) && 
-			$result["SubNavigation Display"]["value"] == "FALSE") continue;
+			$result["SubNavigation Display"] == "FALSE") continue;
 		
-		array_push($navs[$index][1], $result["SubNavigation"]["value"]);
+		array_push($navs[$index][1], $result["SubNavigation"]);
 	}
 	// put navigations to navContents.json file
 	file_put_contents( BASE_PATH . "/wikiconstants/navContents.json", json_encode($navs));
@@ -69,11 +69,11 @@ function Json_GetData_ByTitle($title, $all_matches = false)
 	$output = ['title' => $title, 'descr' => ""];
 	$description = "";
 	foreach ($cached_data as $content) {
-	    if($content["Title"]["value"] == $title && array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"]["value"] != "FALSE")
+	    if($content["Title"] == $title && array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"] != "FALSE")
 	    {
 	    	// Only results for date with provided title
-	    	$output['title'] = $content["Title"]["value"];
-		    $output['descr'] = $content["Description"]["value"];
+	    	$output['title'] = $content["Title"];
+		    $output['descr'] = $content["Description"];
 
 	    	if(!$all_matches) break;
 	    	continue;
@@ -81,9 +81,11 @@ function Json_GetData_ByTitle($title, $all_matches = false)
 
 	    if(!$all_matches) continue;
 
+		// echo '<br>'.$title;
+		// var_dump($content);die;
 	    // return all data with provided title and all those navigation equals the provided title
-	    if(array_key_exists("Navigation", $content) && $content["Navigation"]["value"][0] == $title)
-	    	$output[ $content["Title"]["value"] ] = $content["Description"]["value"];
+	    if(array_key_exists("Navigation", $content) && isset($content["Navigation"]['value']) && $content["Navigation"]['value'][0] == $title)
+	    	$output[ $content["Title"]['value'] ] = $content["Description"]['value'];
 	}
 	return $output;
 }

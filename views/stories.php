@@ -9,21 +9,23 @@ $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1'
 // $stories = getStories($page, $storiesPerPage, [$sortField, $sortDirection]);
 
 // Getting Stories using korawrappper
-$fields =  ['Title_16_23', 'Featured_16_23'];
-$sort = [$sortField.'_16_23', $sortDirection];
+$fields =  ['Title', 'Featured'];
+$sort = [ [$sortField => $sortDirection] ];
 $startIndex = ($page - 1) * $storiesPerPage;
-$koraResults = koraWrapperSearch(STORY_SID, $fields, array("Display_16_23"), "TRUE", $sort, $startIndex, $storiesPerPage, array("size" => true));
+$koraResults = koraWrapperSearch(STORY_SID, $fields,
+ array("Display"), "TRUE", $sort, $startIndex, 
+ $storiesPerPage, array("size" => true)
+);
 
 $stories = json_decode($koraResults, true);
 $count = $stories["counts"]["global"]; // Total count of stories
 
 $featured = [];
 foreach ($stories['records'][0] as $kid => $story) {
-    if (isset($story['Featured']) && $story['Featured']['value'] == 'TRUE') {
+    if (isset($story['Featured']) && $story['Featured'] == 'TRUE') {
         $featured[$kid] = $story;
     }
 }
-
 $page_count = ceil($count / $storiesPerPage);
 if ($page < 1) {
     $page == 1;
@@ -59,7 +61,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
             foreach ($featured as $kid => $story) {
                 echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
                 echo '<div class="container cards">';
-                echo '<h2 class="card-title">'.$story['Title']['value'].'</h2>';
+                echo '<h2 class="card-title">'.$story['Title'].'</h2>';
                 echo '<h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>';
                 echo '</div></a></li>';
             }
