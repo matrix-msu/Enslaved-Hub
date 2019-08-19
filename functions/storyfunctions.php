@@ -64,7 +64,6 @@ function displayStories($stories){
         echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
         echo '<div class="container cards">';
         echo '<h2 class="card-title">'.$story['Title'].'</h2>';
-        echo '<h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>';
         echo '</div></a></li>';
     }
 }

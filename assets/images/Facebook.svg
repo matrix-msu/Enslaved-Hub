@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="57px" height="57px" viewBox="0 0 57 57" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 55.2 (78181) - https://sketchapp.com -->
+    <title>A083BE92-9A8F-410D-B165-42BEF1E6A2F6</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <circle id="path-1" cx="18.5" cy="18.5" r="18.5"></circle>
+        <filter x="-48.6%" y="-35.1%" width="197.3%" height="197.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="5" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="People---Full-Record" transform="translate(-101.000000, -3161.000000)">
+            <g id="Share" transform="translate(111.000000, 3132.000000)">
+                <g id="Social-Buttons" transform="translate(0.223077, 34.000000)">
+                    <g id="Facebook">
+                        <g id="Oval">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use stroke-opacity="0.2" stroke="#FFFFFF" stroke-width="1" fill="#4267B2" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        </g>
+                        <path d="M19.9621175,26.6957931 L19.9621175,18.6245021 L22.6540503,18.6245021 L23.0579196,15.4780434 L19.9621175,15.4780434 L19.9621175,13.4694884 C19.9621175,12.5588005 20.2124666,11.9381776 21.5120595,11.9381776 L23.1668804,11.9374932 L23.1668804,9.12318925 C22.8807024,9.08577622 21.8983544,9 20.755003,9 C18.3675028,9 16.7329773,10.4660661 16.7329773,13.1578652 L16.7329773,15.4780434 L14.032881,15.4780434 L14.032881,18.6245021 L16.7329773,18.6245021 L16.7329773,26.6957931 L19.9621175,26.6957931 Z" id="facebook" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

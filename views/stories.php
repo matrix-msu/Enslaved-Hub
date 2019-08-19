@@ -52,37 +52,63 @@ $cache_Data = Json_GetData_ByTitle("Stories");
     </div>
 </div>
 <!-- featured stories container-->
-<div class="container column storycard">
-    <div class="container cardheader-wrap">
-        <h2 class="column-header">Featured Stories</h2>
+<div class="card-slider featured-stories">
+    <h2>Featured Stories</h2>
+    <div class="cardwrap">
+        <div class="cardwrap2">
+            <ul class="cards">
+                <?php
+                foreach ($featured as $kid => $story) {
+                    echo '<li class="card card-story"><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
+                    echo '<h2 class="card-title">'.$story['Title'].'</h2>';
+                    echo '</a></li>';
+                }
+                ?>
+            </ul>
+        </div>
     </div>
-    <div class="container cardwrap" id="featured">
-        <ul class="row">
-            <?php
-            foreach ($featured as $kid => $story) {
-                echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
-                echo '<div class="container cards">';
-                echo '<h2 class="card-title">'.$story['Title'].'</h2>';
-                echo '<h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>';
-                echo '</div></a></li>';
-            }
-            ?>
-            <!-- <li>
-                <a href="<?php echo BASE_URL?>fullStory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
-                    </div>
-                </a>
-            </li> -->
-        </ul>
+    <div class="controls">
+        <div class="arrows">
+            <div class="prev"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
+            <div class="next"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
+        </div>
+        <div class="dots">
+        </div>
     </div>
 </div>
 <!-- all stories container-->
-<div class="container column storycard">
+<div class="container card-column storycard">
     <div id="all-header" class="container cardheader-wrap">
-        <div class="container header-search">
-            <h2 class="column-header">All Stories</h2>
+        <h2 class="column-header">All Stories</h2>
+        <div class="sort-search">
+            <div class="container sort-stories">
+                <?php
+                $sort_text = "Sort Stories By";
+                if (isset($_GET['field']) && isset($_GET['direction'])) {
+                    if ($_GET['field'] == 'title') {
+                        if ($_GET['direction'] == 'asc') {
+                            $sort_text = "Alphabetical (A-Z)";
+                        } else {
+                            $sort_text = "Alphabetical (Z-A)";
+                        }
+                    } else {
+                        // Date
+                        if ($_GET['direction'] == 'asc') {
+                            $sort_text = "Date (Newest First)";
+                        } else {
+                            $sort_text = "Date (Oldest First)";
+                        }
+                    }
+                }
+                ?>
+                <span class="sort-stories-text"><?= $sort_text; ?> <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"></span>
+                <ul id="submenu" class="sorting-menu">
+                    <li class="sort-option" data-field="title" data-direction="asc">Alphabetically (A-Z)</li>
+                    <li class="sort-option" data-field="title" data-direction="desc">Alphabetically (Z-A)</li>
+                    <li class="sort-option" data-field="start date" data-direction="desc">Date (Newest First)</li>
+                    <li class="sort-option" data-field="start date" data-direction="asc">Date (Oldest First)</li>
+                </ul>
+            </div>
             <div class="container search">
                 <form action="submit">
                     <label for="searchbar" class="sr-only">searchbar</label>
@@ -92,39 +118,10 @@ $cache_Data = Json_GetData_ByTitle("Stories");
             </div>
         </div>
     </div>
-    <div class="container cardwrap" id="allStories">
-        <div class="container sort-stories">
-            <?php
-            $sort_text = "Sort Stories By";
-            if (isset($_GET['field']) && isset($_GET['direction'])) {
-                if ($_GET['field'] == 'title') {
-                    if ($_GET['direction'] == 'asc') {
-                        $sort_text = "Alphabetical (A-Z)";
-                    } else {
-                        $sort_text = "Alphabetical (Z-A)";
-                    }
-                } else {
-                    // Date
-                    if ($_GET['direction'] == 'asc') {
-                        $sort_text = "Date (Newest First)";
-                    } else {
-                        $sort_text = "Date (Oldest First)";
-                    }
-                }
-            }
-            ?>
-            <span class="sort-stories-text"><?= $sort_text; ?> <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"></span>
-            <ul id="submenu" class="sorting-menu">
-                <li class="sort-option" data-field="title" data-direction="asc">Alphabetically (A-Z)</li>
-                <li class="sort-option" data-field="title" data-direction="desc">Alphabetically (Z-A)</li>
-                <li class="sort-option" data-field="start date" data-direction="desc">Date (Newest First)</li>
-                <li class="sort-option" data-field="start date" data-direction="asc">Date (Oldest First)</li>
-            </ul>
-        </div>
-        <ul class="row" id='AllStoriesContainer'>
+    <div class="container card-wrap" id="allStories">
+        <ul class="card-row" id='AllStoriesContainer'>
             <?php
             displayStories($stories);
-
             ?>
         </ul>
     </div>
@@ -208,5 +205,6 @@ $cache_Data = Json_GetData_ByTitle("Stories");
     </div>
 </div>
 
+<script src="<?php echo BASE_URL;?>assets/javascripts/cardSlider.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/stories.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/storyPagination.js"></script>

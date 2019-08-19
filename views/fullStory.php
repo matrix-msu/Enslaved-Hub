@@ -25,7 +25,7 @@ else {
 ?>
 <!-- Full Story page-->
 <!-- Heading image and title container-->
-<div class="container header fullStory">
+<div class="container header fullstory">
     <div class="container middlewrap">
         <?php
         $Featured_title = "Featured Story Title Goes Here Like This";
@@ -36,7 +36,7 @@ else {
         <!-- <h1>Ibrahima Abd al-Rahman</h1>
         <h3>(18th/19th century)</h3> -->
 
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories // </span></a><span id="current-title"><?php echo $Featured_title; ?></span></h4>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories / </span></a><span id="current-title"><?php echo $Featured_title; ?></span></h4>
 
         <?php
         if (isset($story['Title'])) {

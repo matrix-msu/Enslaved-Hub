@@ -9,7 +9,7 @@ $upper = ucfirst(EXPLORE_FORM);
 $cache_Data = Json_GetData_ByTitle($upper);
 ?>
 
-<div class="container header stories">
+<div class="container header explore-header people-page">
     <div class="container middlewrap">
         <h1><?php echo $cache_Data['title'] ?></h1>
     </div>
@@ -18,13 +18,13 @@ $cache_Data = Json_GetData_ByTitle($upper);
 <div class="container info">
     <div class="container infowrap">
         <p> <?php echo $cache_Data['descr'] ?></p>
+        <a href="" class="view-more">View All People</a>
     </div>
 </div>
 <!-- explore by -->
 <div class="container explore-by">
     <h1>Explore By</h1>
     <ul class="cards">
-
         <?php foreach ($GLOBALS["FILTER_ARRAY"][EXPLORE_FORM] as $type) { ?>
                 <li>
                     <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>">
@@ -32,25 +32,35 @@ $cache_Data = Json_GetData_ByTitle($upper);
                         <div id="arrow"></div>
                     </a>
                 </li>
-       <?php } ?>
-
+        <?php } ?>
     </ul>
 </div>
 <!-- Featured People -->
-<div class="explore-featured">
+<div class="card-slider explore-featured">
     <h2>Featured <?=$upper?></h2>
-    <div class="connection-cards">
-        <ul class="connect-row">
-        </ul>
+    <div class="cardwrap">
+        <div class="cardwrap2">
+            <ul class="cards">
+            </ul>
+        </div>
+    </div>
+    <div class="controls">
+        <div class="arrows">
+            <div class="prev"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
+            <div class="next"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
+        </div>
+        <div class="dots">
+        </div>
     </div>
 </div>
 <!-- Search Bar -->
 <div class="explore-search">
-    <h3>Find <?=$upper?></h3>
+    <h2>Find <?=$upper?></h2>
+    <p>Search across 2,213 people records</p>
     <form class="search-form" action="<?php echo BASE_URL;?>search/all" method="get">
         <label for="searchbar" class="sr-only">searchbar</label>
         <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Start Searching for <?=$upper?> By Name, Origin, Role, Etc."/>
-        <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
+        <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
     </form>
 </div>
 <!-- Visualize People -->
@@ -92,4 +102,5 @@ $cache_Data = Json_GetData_ByTitle($upper);
     </div>
 </div>
 
+<script src="<?php echo BASE_URL;?>assets/javascripts/cardSlider.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>

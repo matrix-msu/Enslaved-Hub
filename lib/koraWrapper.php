@@ -383,7 +383,6 @@ function koraWrapperSearch(
     }
 	$formsQueryArray = '['.implode(',',$formsQueryArray).']';
     $data = ['forms' => $formsQueryArray];
-    // var_dump($data);
 
 
     $ch = curl_init(KORA_SEARCH_URL);
@@ -391,7 +390,8 @@ function koraWrapperSearch(
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $result = curl_exec($ch);
-    curl_close($ch);
+	curl_close($ch);
+	
     return $result;
 }
 

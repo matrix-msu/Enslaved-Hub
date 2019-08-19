@@ -795,7 +795,7 @@ function detailPerson($statement,$label){
 
 function detailPersonHtml($statement,$label){
   $baseurl = BASE_URL;
-  $upperlabel = strtoupper($label);
+  $upperlabel = $label;
   $lowerlabel = strtolower($label);
   $html = '';
 
@@ -808,7 +808,7 @@ function detailPersonHtml($statement,$label){
   if($label === "RolesA"){
     //Multiple roles in the roles array so match them up with the participant
     $lowerlabel = "roles";
-    $upperlabel = "ROLES";
+    $upperlabel = "Roles";
     //Array for Roles means there are participants and pQIDs to match
     $roles = explode('||', $statement['roles']);
     $participants = explode('||', $statement['participant']);
@@ -862,7 +862,7 @@ HTML;
 
     //Multiple roles in the roles array so match them up with the participant
     $lowerlabel = "roles";
-    $upperlabel = "ROLES";
+    $upperlabel = "Roles";
     //Array for Roles means there are participants and pQIDs to match
     $roles = explode('||', $statement['roles']);
     $eventRoleUrls = explode('||', $statement['eventRoles']);
@@ -911,7 +911,7 @@ HTML;
     $html .= '</div>';
 } else if ($label == "closeMatchA"){
     $lowerlabel = "close match";
-    $upperlabel = "CLOSE MATCH";
+    $upperlabel = "Close Match";
 
     $matchUrls = explode('||', $statement['matchUrls']);
     $matchLabels = explode('||', $statement['matchLabels']);
@@ -968,7 +968,7 @@ HTML;
 
     //Multiple roles in the roles array so match them up with the participant
     $lowerlabel = "relationships";
-    $upperlabel = "RELATIONSHIPS";
+    $upperlabel = "Relationships";
     //Array for relationships means there are people to match
     $relationships = explode('||', $statement['relationships']);
     $relationshipUrls = explode('||', $statement['qrelationUrls']);
@@ -1020,7 +1020,7 @@ HTML;
     $html .= '</div>';
 } else if ($label == "projectsA"){
     $lowerlabel = "contributing project(s)";
-    $upperlabel = "CONTRIBUTING PROJECT(S)";
+    $upperlabel = "Contributing Project(s)";
 
     $projectUrls = explode('||', $statement['projectUrl']);
     $projectNames = explode('||', $statement['projectName']);
@@ -1058,7 +1058,7 @@ HTML;
 } else if ($label == "ecvoA"){
     // print_r($statement);die;
     $lowerlabel = "ecvo - place of origin";
-    $upperlabel = "ECVO - PLACE OF ORIGIN";
+    $upperlabel = "ECVO - Place Of Origin";
 
     $ecvos = explode('||', $statement['ecvo']);
     $originUrls = explode('||', $statement['placeofOrigin']);
@@ -1106,7 +1106,7 @@ HTML;
 }else if ($label == "StatusA"){
     // match statuses with events
     $lowerlabel = "status";
-    $upperlabel = "STATUS";
+    $upperlabel = "Status";
 
     //Array for ststueses means there are events and labels match
     $statuses = explode('||', $statement['statuses']);
@@ -2280,8 +2280,8 @@ HTML;
     $html .= '
     </div></div>
     <div class="timeline-controls">
-      <div class="timeline-prev no-select"><img src="'.BASE_URL.'assets/images/chevron-down-dark.svg" alt="Previous Arrow"></div>
-      <div class="timeline-next no-select"><img src="'.BASE_URL.'assets/images/chevron-down-dark.svg" alt="Next Arrow"></div>
+      <div class="timeline-prev no-select"><img src="'.BASE_URL.'assets/images/chevron.svg" alt="Previous Arrow"></div>
+      <div class="timeline-next no-select"><img src="'.BASE_URL.'assets/images/chevron.svg" alt="Next Arrow"></div>
     </div>
     </div>
 

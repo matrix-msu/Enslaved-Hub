@@ -50,8 +50,16 @@ class crawler_keywords {
 	</div>
 	<div class="link-wrap">
 		<a class="link" target="_blank" href="$row[url]">$row[url]</a>
-		<div class="trash crawler-modal-open" id="delete-link">
-			<img class="trash-icon" src="./assets/images/Delete.svg">
+		<div class="right">
+			<div class="trash crawler-modal-open" id="delete-link">
+				<img class="trash-icon" src="./assets/images/Delete.svg">
+			</div>
+			<div class="add-seed">
+				<p>Add to Seeds</p>
+				<form action="submit">
+					<input type="hidden" name="add_seed" value="$row[url]">
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
@@ -65,8 +73,8 @@ HTML;
 		else return "no more data";
 	}
 
-// get keywords with dates
-public function get_keywords_date($limit, $offset, $cur_date)
+	// get keywords with dates
+	public function get_keywords_date($limit, $offset, $cur_date)
 	{
 		$date=date_format(date_create($cur_date),"Y-m-d");
 		$conn=$this->connect();
