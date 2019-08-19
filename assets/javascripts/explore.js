@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     $('.cards li').click(function(){
         console.log("clicked");
         window.location = $(this).find("a").attr("href");
@@ -14,6 +15,23 @@ $(document).ready(function(){
         $('.sort-cards p').find("img:first").removeClass('show');
         $('.sort-cards p').next().removeClass('show');
     });
+
+    // $(window).on('resize', function(){
+    //     //Update max scroll width
+    //     max_card_scroll = $('.explore-featured .cardwrap').get(0).scrollWidth - $('.explore-featured .cardwrap').get(0).clientWidth;
+    //     //Update cards_per_page on window resize
+    //     var card_screen_width = $('.explore-featured .cardwrap2').width();     
+    //     cards_per_page = Math.floor(card_screen_width/card_width);
+
+    //     if(cards_per_page < 1){
+    //         cards_per_page = 1;
+    //     }
+
+    //     if(cards_per_page != old_per_page){
+    //         old_per_page = cards_per_page;
+    //         installFeaturedListeners();
+    //     }
+    // });
 
     //Get counts only if on explorefilter page
     if( typeof JS_EXPLORE_FILTERS !== 'undefined' ){
@@ -116,8 +134,9 @@ $(document).ready(function(){
             success: function (data) {
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
-                    $('.connect-row').append(e);
+                    $('.explore-featured .cards').append(e);
                 });
+                installFeaturedListeners('.explore-featured');
             }
         });
 

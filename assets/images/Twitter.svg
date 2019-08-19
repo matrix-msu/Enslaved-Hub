@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="57px" height="57px" viewBox="0 0 57 57" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 55.2 (78181) - https://sketchapp.com -->
+    <title>1EF96DC7-301D-4872-BA95-60E78649C407</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <circle id="path-1" cx="18.5" cy="18.5" r="18.5"></circle>
+        <filter x="-48.6%" y="-35.1%" width="197.3%" height="197.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="5" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="People---Full-Record" transform="translate(-148.000000, -3161.000000)">
+            <g id="Share" transform="translate(111.000000, 3132.000000)">
+                <g id="Social-Buttons" transform="translate(0.223077, 34.000000)">
+                    <g id="Twitter" transform="translate(47.000000, 0.000000)">
+                        <g id="Oval">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use stroke-opacity="0.2" stroke="#FFFFFF" stroke-width="1" fill="#1DA1F2" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        </g>
+                        <path d="M15.5034004,26 C22.1072008,26 25.7192011,20.6133625 25.7192011,15.9420938 C25.7192011,15.7890956 25.7192011,15.6367867 25.7087011,15.4851668 C26.4113831,14.98476 27.01795,14.3651646 27.5,13.6553914 C26.8447165,13.9412648 26.1495816,14.1287406 25.4378011,14.2115604 C26.1873219,13.769783 26.7482876,13.0749438 27.0163012,12.256354 C26.3115114,12.6681088 25.5404533,12.9582931 24.736401,13.1143843 C23.6234589,11.949251 21.8550044,11.6640805 20.4226852,12.4187801 C18.990366,13.1734797 18.2503931,14.7803592 18.6177006,16.3383729 C15.7308274,16.1958844 13.0411333,14.8534107 11.2180001,12.645052 C10.2650359,14.2602474 10.7517916,16.32656 12.3296002,17.3638742 C11.758219,17.3472012 11.1992956,17.1954474 10.7,16.92142 C10.7,16.9358928 10.7,16.9510548 10.7,16.9662168 C10.7004677,18.6489162 11.9052262,20.0982239 13.5805002,20.4314187 C13.0519089,20.5733487 12.4973066,20.5940959 11.9593001,20.4920666 C12.4296637,21.9320571 13.7776025,22.9185239 15.3137004,22.9469292 C14.0423148,23.9306882 12.4717418,24.4647316 10.8547001,24.4631274 C10.5690325,24.4625874 10.2836429,24.4455584 10,24.412128 C11.6419453,25.449536 13.5524396,25.9998059 15.5034004,25.9972442" id="twitter" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

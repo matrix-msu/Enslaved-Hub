@@ -2,63 +2,64 @@
 
 var connectionsArray;   // array of all connections
 
-$(document).ready( function() {
-    //when page loads trigger click on first category to load cards
-    loadConnections();
-});
 //Global variables for the card type(CARDT)
 var CARDT;
 var SEARCHTYPE;      // used to create search urls
 
-$('li.unselected').click(function(){
-    $('.selected').removeClass('selected');
-    $(this).addClass('selected');
-    removeConnections();
+$(document).ready( function() {
+    //when page loads trigger click on first category to load cards
+    loadConnections();
 
-    //People
-    if($("#people").hasClass("selected")){
-        CARDT="Person";
-        SEARCHTYPE="people";
-        displayConnections(CARDT);
-        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' People');
-    }
-    //Events
-    if($("#event").hasClass("selected")){
-        CARDT="Event";
-        SEARCHTYPE = "events";
-        displayConnections(CARDT);
-        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Events');
-    }
-    //Places
-    if($("#place").hasClass("selected")){
-        CARDT="Place";
-        SEARCHTYPE = "places";
-        displayConnections(CARDT);
-        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] +  ' Places');
-    }
-    //Projects
-    if($("#project").hasClass("selected")){
-        CARDT="Project";
-        SEARCHTYPE = "projects";
-        displayConnections(CARDT);
-        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Projects');
-    }
-    //Sources
-    if($("#source").hasClass("selected")){
-        CARDT="Source";
-        SEARCHTYPE = "sources";
-        displayConnections(CARDT);
-        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count']+ ' Sources');
-    }
-    //Close matches on the person page
-    if ($("#closeMatch").hasClass("selected")) {
-        CARDT = "CloseMatch";
-        SEARCHTYPE = "closeMatch";
-        displayConnections(CARDT);
-        $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Close Matches');
-    }
-    // set the search all button url
-    $('.search-all').attr('href', BASE_URL + 'search/' + SEARCHTYPE + '?' + recordform + '=' + QID);
+    $('li.unselected').click(function(){
+        $('.selected').removeClass('selected');
+        $(this).addClass('selected');
+        removeConnections();
+    
+        //People
+        if($("#people").hasClass("selected")){
+            CARDT="Person";
+            SEARCHTYPE="people";
+            displayConnections(CARDT);
+            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' People');
+        }
+        //Events
+        if($("#event").hasClass("selected")){
+            CARDT="Event";
+            SEARCHTYPE = "events";
+            displayConnections(CARDT);
+            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Events');
+        }
+        //Places
+        if($("#place").hasClass("selected")){
+            CARDT="Place";
+            SEARCHTYPE = "places";
+            displayConnections(CARDT);
+            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] +  ' Places');
+        }
+        //Projects
+        if($("#project").hasClass("selected")){
+            CARDT="Project";
+            SEARCHTYPE = "projects";
+            displayConnections(CARDT);
+            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Projects');
+        }
+        //Sources
+        if($("#source").hasClass("selected")){
+            CARDT="Source";
+            SEARCHTYPE = "sources";
+            displayConnections(CARDT);
+            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count']+ ' Sources');
+        }
+        //Close matches on the person page
+        if ($("#closeMatch").hasClass("selected")) {
+            CARDT = "CloseMatch";
+            SEARCHTYPE = "closeMatch";
+            displayConnections(CARDT);
+            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Close Matches');
+        }
+        // set the search all button url
+        $('.search-all').attr('href', BASE_URL + 'search/' + SEARCHTYPE + '?' + recordform + '=' + QID);
+    });
 });
 
 //since cardType and cardAmount were changed to global variables, they could technically be removed here and replaced with the globals
@@ -75,6 +76,23 @@ function displayConnections(cardType){
 
     // $('.search-all').show();        // ALWAYS SHOWING JUST FOR TESTING
 
+    var test_count = 1;
+    //Connection html
+    var connection_lists = Array(
+        '<h1>'+test_count+' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
+        '<h1>'+test_count+' Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
+        '<h1>'+test_count+' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
+        '<h1>'+test_count+' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
+    );
+
+    var connection_html = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="'+BASE_IMAGE_URL+'Person-dark.svg"><span>'+test_count+'</span><div class="connection-menu">'+connection_lists[0]+
+        '</div></div><div class="card-icons"><img src="'+BASE_IMAGE_URL+'Place-dark.svg"><span>'+test_count+'</span><div class="connection-menu">'+connection_lists[1]+
+        '</div></div><div class="card-icons"><img src="'+BASE_IMAGE_URL+'Event-dark.svg"><span>'+test_count+'</span><div class="connection-menu">'+connection_lists[2]+
+        '</div></div><div class="card-icons"><img src="'+BASE_IMAGE_URL+'Source-dark.svg"><span>'+test_count+'</span><div class="connection-menu">'+connection_lists[3]+
+        '</div></div></div></div></div>';
+
+    var details = '<div class="details"><div class="detail"><p class="detail-title">Person Status</p><p>Enslaved</p></div><div class="detail"><p class="detail-title">Sex</p><p>Unidentified</p></div><div class="detail"><p class="detail-title">Location</p><p>Location Name</p></div><div class="detail"><p class="detail-title">Origin</p><p>Location Name</p></div><div class="detail"><p class="detail-title">Date Range</p><p>1840-1864</p></div></div>';
+
 
     if( cardType == "Person"){
         for (var i in connections){
@@ -89,9 +107,9 @@ function displayConnections(cardType){
             // display a person relationships if they are given
             if (typeof(conn['relationslabel']) != 'undefined'){
                 relationshipLabel = conn['relationslabel']['value'];
-                $('.connect-row').append('<li><a href=' + personUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + ' - ' + relationshipLabel+'</h3></div></a></li>');
+                $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + ' - ' + relationshipLabel+'</h3></div>'+details+connection_html+'</a></li>');
             } else {
-                $('.connect-row').append('<li><a href=' + personUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div></a></li>');
+                $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
             }
         }
     } else if (cardType == "Event") {
@@ -101,7 +119,7 @@ function displayConnections(cardType){
             var eventQ = conn['event']['value'];
             eventQ = eventQ.substring(eventQ.lastIndexOf('/') + 1);
             var eventUrl = BASE_URL + 'record/event/' + eventQ;
-            $('.connect-row').append('<li><a href=' + eventUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div></a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + eventUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div>'+details+connection_html+'</a></li>');
         }
     } else if (cardType == "Project") {
         for (var i in connections) {
@@ -110,7 +128,7 @@ function displayConnections(cardType){
             var projectQ = conn['project']['value'];
             projectQ = projectQ.substring(projectQ.lastIndexOf('/') + 1);
             var projectUrl = BASE_URL + 'project/' + projectQ;
-            $('.connect-row').append('<li><a href=' + projectUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div></a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + projectUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
         }
     } else if (cardType == "Source") {
         for (var i in connections) {
@@ -119,7 +137,7 @@ function displayConnections(cardType){
             var sourceQ = conn['source']['value'];
             sourceQ = sourceQ.substring(sourceQ.lastIndexOf('/') + 1);
             var sourceUrl = BASE_URL + 'record/source/' + sourceQ;
-            $('.connect-row').append('<li><a href=' + sourceUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div></a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + sourceUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
         }
     } else if (cardType == "Place") {
         for (var i in connections) {
@@ -128,7 +146,7 @@ function displayConnections(cardType){
             var placeQ = conn['place']['value'];
             placeQ = placeQ.substring(placeQ.lastIndexOf('/') + 1);
             var placeUrl = BASE_URL + 'record/place/' + placeQ;
-            $('.connect-row').append('<li><a href=' + placeUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div></a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + placeUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
         }
     } else if (cardType == "CloseMatch") {
         cardType = 'Person';
@@ -139,12 +157,12 @@ function displayConnections(cardType){
             matchQ = matchQ.substring(matchQ.lastIndexOf('/') + 1);
             var matchUrl = BASE_URL + 'record/person/' + matchQ;
             
-            $('.connect-row').append('<li><a href=' + matchUrl + '><div class="cards"><img src="' + BASE_IMAGE_URL + cardType + '-light.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div></a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + matchUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
         }
     } else {
 
     }
-    $('.connect-row li').css("background-image", "url("+BASE_IMAGE_URL+cardType+"Card.jpg)");
+    //$('.connect-row li').css("background-image", "url("+BASE_IMAGE_URL+cardType+"Card.jpg)");
     //There does need to be a certain naming convention for the image names due to this function
 }
 function removeConnections(){

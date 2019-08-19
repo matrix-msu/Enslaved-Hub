@@ -2353,17 +2353,60 @@ HTML;
                         $uriarr = explode('/', $uri);
                         $qid = end($uriarr);
                     }
+
+                    $countpeople = '1';
+                    $countplace = '1';
+                    $countevent = '1';
+                    $countsource = '1';
+                    //Connection html
+                    $connection_lists = Array(
+                        '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
+                        '<h1>'.$countplace.' Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
+                        '<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
+                        '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
+                    );
+
+                    $connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
+                        '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
+                        '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
+                        '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
+                        '</div></div></div></div></div>';
+
+
                     $cardType = $template;
-                    $iconURL = BASE_IMAGE_URL . $template . "-light.svg";
+                    $iconURL = BASE_IMAGE_URL . $template . "-dark.svg";
                     $link = BASE_URL . "record/" . strtolower($cardType) . "/" . $qid;
-                    $background = "background-image: url(" . BASE_IMAGE_URL . $cardType . "Card.jpg)";
+                    // $background = "background-image: url(" . BASE_IMAGE_URL . $cardType . "Card.jpg)";
                     $card = <<<HTML
-<li style="$background">
+<li class="card card-featured">
     <a href="$link">
-        <div class="cards">
-            <img src="$iconURL" alt="Person icon">
+        <div class="card-title">
+            <img src="$iconURL" alt="Card Icon">
             <h3>$cardTitle</h3>
         </div>
+        <div class="details">
+            <div class="detail">
+                <p class="detail-title">Person Status</p>
+                <p>Enslaved</p>
+            </div>
+            <div class="detail">
+                <p class="detail-title">Sex</p>
+                <p>Unidentified</p>
+            </div>
+            <div class="detail">
+                <p class="detail-title">Location</p>
+                <p>Location Name</p>
+            </div>
+            <div class="detail">
+                <p class="detail-title">Origin</p>
+                <p>Location Name</p>
+            </div>
+            <div class="detail">
+                <p class="detail-title">Date Range</p>
+                <p>1840-1864</p>
+            </div>
+        </div>
+        $connections
     </a>
 </li>
 HTML;
