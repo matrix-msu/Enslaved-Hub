@@ -92,7 +92,9 @@ function blazegraph()
         $endsAt = properties ["endsAt"];
         $recordedAt = properties ["recordedAt"];
         $hasECVO = properties ["hasECVO"];
-        $hasPlaceType = properties ["recordedAt"];
+        $hasPlaceType = properties ["hasPlaceType"];
+        $geonamesID = properties["Geonames ID"];
+        $moderncountrycode = properties["modern country code"];
         $locatedIn = properties ["locatedIn"];
         $hasOriginRecord = properties ["hasOriginRecord"];
         $providesParticipantRole = properties ["providesParticipantRole"];
@@ -102,6 +104,7 @@ function blazegraph()
         $roleProvidedBy = properties ["roleProvidedBy"];
         $hasOriginalSourceType = properties ["hasOriginalSourceType"];
         $hasEventType = properties ["hasEventType"];
+        $hasOriginalSourceDepository = properties["hasOriginalSourceDepository"];
 
 
         switch ($preset){
@@ -501,7 +504,7 @@ WHERE {
 order by ?agent
 QUERY;
 
-                array_push($queryArray, $query);
+                // array_push($queryArray, $query);
 
                 // print_r($queryArray);die;
                 break;
@@ -517,36 +520,40 @@ QUERY;
                         $qType = placeTypes[$type];
                         $typeQuery = "?place wdt:$hasPlaceType wd:$qType .";
                     }
-
                 }
 
                 $query = array('query' => "");
 
                 $query['query'] = <<<QUERY
-SELECT ?place ?placeLabel ?locatedInLabel
+SELECT ?place ?placeLabel ?locatedInLabel ?type ?geonames ?code
 (count(distinct ?person) as ?countpeople)
 (count(distinct ?event) as ?countevent)
 (count(distinct ?source) as ?countsource)
 
 WHERE {
     ?event wdt:$instanceOf wd:$event;
-        ?property  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:$isDirectlyBasedOn ?source .
+    ?property  ?object .
+    ?object prov:wasDerivedFrom ?provenance .
+    ?provenance pr:$isDirectlyBasedOn ?source .
 
-        ?event wdt:$atPlace ?place;
-            p:$providesParticipantRole ?statement.
-        ?statement ps:$providesParticipantRole ?role.
-        ?statement pq:$hasParticipantRole ?person.
+    ?event wdt:$atPlace ?place;
+    p:$providesParticipantRole ?statement.
+    ?statement ps:$providesParticipantRole ?role.
+    ?statement pq:$hasParticipantRole ?person.
 
 
     ?place rdfs:label ?placeLabel.
 
+    ?place wdt:$hasPlaceType ?placetype.
+    ?placetype rdfs:label ?type.
+
     $typeQuery
 
+    OPTIONAL{ ?place wdt:$geonamesID ?geonames.}
+    OPTIONAL{ ?place wdt:$moderncountrycode ?code.}
     OPTIONAL {?place wdt:$locatedIn ?locatedIn}.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?place ?placeLabel ?locatedInLabel
+}GROUP BY ?place ?placeLabel ?locatedInLabel ?type ?geonames ?code
 order by ?placeLabel
 $limitQuery
 offset $offset
@@ -554,36 +561,36 @@ QUERY;
 
                 array_push($queryArray, $query);
 
-                $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT ?place ?placeLabel ?locatedInLabel
-(count(distinct ?person) as ?countpeople)
-(count(distinct ?event) as ?countevent)
-(count(distinct ?source) as ?countsource)
+//                 $query = array('query' => "");
+//                 $query['query'] = <<<QUERY
+// SELECT ?place ?placeLabel ?locatedInLabel
+// (count(distinct ?person) as ?countpeople)
+// (count(distinct ?event) as ?countevent)
+// (count(distinct ?source) as ?countsource)
 
-WHERE {
-    ?event wdt:$instanceOf wd:$event;
-        ?property  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:$isDirectlyBasedOn ?source .
+// WHERE {
+//     ?event wdt:$instanceOf wd:$event;
+//         ?property  ?object .
+//         ?object prov:wasDerivedFrom ?provenance .
+//         ?provenance pr:$isDirectlyBasedOn ?source .
 
-        ?event wdt:$atPlace ?place;
-            p:$providesParticipantRole ?statement.
-        ?statement ps:$providesParticipantRole ?role.
-        ?statement pq:$hasParticipantRole ?person.
+//         ?event wdt:$atPlace ?place;
+//             p:$providesParticipantRole ?statement.
+//         ?statement ps:$providesParticipantRole ?role.
+//         ?statement pq:$hasParticipantRole ?person.
 
 
-    ?place rdfs:label ?placeLabel.
+//     ?place rdfs:label ?placeLabel.
 
-    $typeQuery
+//     $typeQuery
 
-    OPTIONAL {?place wdt:$locatedIn ?locatedIn}.
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?place ?placeLabel ?locatedInLabel
-order by ?placeLabel
-QUERY;
+//     OPTIONAL {?place wdt:$locatedIn ?locatedIn}.
+//     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+// }GROUP BY ?place ?placeLabel ?locatedInLabel
+// order by ?placeLabel
+// QUERY;
 
-                array_push($queryArray, $query);
+//                 array_push($queryArray, $query);
 
                 break;
             case 'events':
@@ -621,6 +628,7 @@ QUERY;
                 }
 
                 $sourceQuery = "";
+                // event connected to a source?
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
                     $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
@@ -796,38 +804,38 @@ QUERY;
 
                     array_push($queryArray, $query);
 
-                    $query = array('query' => "");
-                    $query['query'] = <<<QUERY
-SELECT ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
-(count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countevent)
-(count(distinct ?place) as ?countplace)
-(count(distinct ?source) as ?countsource)
-(group_concat(distinct ?placeLabel; separator = "||") as ?places)
+//                     $query = array('query' => "");
+//                     $query['query'] = <<<QUERY
+// SELECT ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
+// (count(distinct ?people) as ?countpeople)
+// (count(distinct ?event) as ?countevent)
+// (count(distinct ?place) as ?countplace)
+// (count(distinct ?source) as ?countsource)
+// (group_concat(distinct ?placeLabel; separator = "||") as ?places)
 
-WHERE {
-    ?event wdt:$instanceOf wd:$event;
-        ?property  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:$isDirectlyBasedOn ?source .
-        ?event wdt:$hasEventType ?eventtype .
+// WHERE {
+//     ?event wdt:$instanceOf wd:$event;
+//         ?property  ?object .
+//         ?object prov:wasDerivedFrom ?provenance .
+//         ?provenance pr:$isDirectlyBasedOn ?source .
+//         ?event wdt:$hasEventType ?eventtype .
 
-            $eventQuery
-            OPTIONAL {?event wdt:$atPlace ?place.
-            ?place rdfs:label ?placeLabel}.
-    OPTIONAL {?event wdt:$startsAt ?date.
-            BIND(str(YEAR(?date)) AS ?startyear)}.
-    OPTIONAL {?event wdt:$endsAt ?endDate
-            BIND(str(YEAR(?endDate)) AS ?endyear)}.
+//             $eventQuery
+//             OPTIONAL {?event wdt:$atPlace ?place.
+//             ?place rdfs:label ?placeLabel}.
+//     OPTIONAL {?event wdt:$startsAt ?date.
+//             BIND(str(YEAR(?date)) AS ?startyear)}.
+//     OPTIONAL {?event wdt:$endsAt ?endDate
+//             BIND(str(YEAR(?endDate)) AS ?endyear)}.
 
-    $sourceQuery
+//     $sourceQuery
 
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
-order by ?startyear
-QUERY;
+//     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+// }GROUP BY ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
+// order by ?startyear
+// QUERY;
 
-                    array_push($queryArray, $query);
+//                     array_push($queryArray, $query);
                 }
 
                 break;
@@ -844,7 +852,7 @@ QUERY;
                     $eventQ = $filtersArray['event'][0];
 
                     $query['query'] = <<<QUERY
-SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
+SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondarysource ?desc
 
  (count(distinct ?agent) as ?countpeople)
  (count(distinct ?event) as ?countervent)
@@ -857,6 +865,12 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
   ?source wdt:$generatedBy ?project.
   ?source wdt:$reportsOn ?event.
   OPTIONAL{?event wdt:$atPlace ?place}.
+  OPTIONAL{?source wdt:$hasOriginalSourceDepository ?secondarysource}.
+  OPTIONAL {?source schema:description ?desc}.
+
+
+  
+  # might need to remove these next lines
   ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
   		?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
@@ -865,10 +879,9 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
 
    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 
-}group by ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
+}group by ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondarysource ?desc
 order by ?sourceLabel
 QUERY;
-
                     array_push($queryArray, $query);
                     break;
                 }
@@ -878,7 +891,7 @@ QUERY;
 
 
                 $query['query'] = <<<QUERY
-SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
+SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondarysource ?desc
 
 (count(distinct ?agent) as ?countpeople)
 (count(distinct ?event) as ?countevent)
@@ -890,15 +903,19 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
     ?source wdt:$generatedBy ?project.
     ?source wdt:$reportsOn ?event.
     OPTIONAL{?event wdt:$atPlace ?place}.
-    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
-            ?property  ?object .
-    ?object prov:wasDerivedFrom ?provenance .
-    ?provenance pr:$isDirectlyBasedOn ?source .
+    OPTIONAL{?source wdt:$hasOriginalSourceDepository ?secondarysource}.
+    OPTIONAL {?source schema:description ?desc}.
+
+    # might need to remove these next lines
+    # ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
+    #        ?property  ?object .
+    # ?object prov:wasDerivedFrom ?provenance .
+    # ?provenance pr:$isDirectlyBasedOn ?source .
 
 
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 
-}group by ?source ?sourceLabel ?projectLabel ?sourcetypeLabel
+}group by ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondarysource ?desc
 order by ?sourceLabel
 limit 12
 offset 0
@@ -1217,7 +1234,9 @@ QUERY;
             }
         }
     }
-    // return json_encode($resultsArray);
+
+
+    // print_r($resultsArray);die;
     // var_dump($resultsArray);
     // $path = "functions/queries.json";
     // $contents = file_get_contents($path);
@@ -1500,6 +1519,7 @@ HTML;
 
                 break;
             case 'places':
+                // print_r($record);die;
 
                 //Place name
                 $name = $record['placeLabel']['value'];
@@ -1546,6 +1566,21 @@ HTML;
                 } else {
                     $countsource = '';
                 }
+                 if(isset($record['type']) && isset($record['type']['value'])){
+                    $placeType = $record['type']['value'];
+                } else {
+                    $placeType = '';
+                }
+                if(isset($record['geonames']) && isset($record['geonames']['value'])){
+                    $geonames = $record['geonames']['value'];
+                } else {
+                    $geonames = '';
+                }
+                if(isset($record['code']) && isset($record['code']['value'])){
+                    $code = $record['code']['value'];
+                } else {
+                    $code = '';
+                }
 
                 //Connection html
                 $connection_lists = Array(
@@ -1567,14 +1602,23 @@ HTML;
                     if ($template == 'gridCard'){
 
                         $typeHtml = '';
-                        if ($type != ''){
-                            $typeHtml = "<p><span>Type: </span>$type</p>";
+                        if ($placeType != ''){
+                            $typeHtml = "<p><span>Type: </span>$placeType</p>";
                         }
-
 
                         $locatedHtml = '';
                         if ($located != ''){
                             $locatedHtml = "<p><span>Located In: </span>$located</p>";
+                        }
+
+                        $geonamesHtml = '';
+                        if ($geonames != ''){
+                            $geonames = "<p><span>Geoname Identifier: </span>$geonames</p>";
+                        }
+
+                        $codeHtml = '';
+                        if ($code != ''){
+                            $codeHtml = "<p><span>Modern Country Code: </span>$code</p>";
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Place-light.svg';
@@ -1592,6 +1636,8 @@ HTML;
                 <div class='card-info'>
                     $typeHtml
                     $locatedHtml
+                    $geonamesHtml
+                    $codeHtml
                 </div>
             </div>
             $connections
@@ -1610,10 +1656,12 @@ HTML;
     <th class="name">NAME</th>
     <th class="gender">TYPE</th>
     <th class="located">LOCATED</th>
+    <th class="geoname">GEONAME IDENTIFIER</th>
+    <th class="code">MODERN COUNTRY CODE</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED', 'GEONAME IDENTIFIER', 'MODERN COUNTRY CODE'];
 
                         }
 
@@ -1624,10 +1672,16 @@ HTML;
         <span>$name</span>
     </td>
     <td class='type'>
-        <p><span class='first'>Type: </span>$type</p>
+        <p><span class='first'>Type: </span>$placeType</p>
     </td>
     <td class='located'>
         <p><span class='first'>Located: </span>$located</p>
+    </td>
+    <td class='geoname'>
+        <p><span class='first'>Located: </span>$geonames</p>
+    </td>
+    <td class='code'>
+        <p><span class='first'>Located: </span>$code</p>
     </td>
     <td class='meta'>
 
@@ -1638,7 +1692,7 @@ HTML;
                         // format this row for csv download
                         $formattedData[$placeQ] = array(
                             'NAME' => $name,
-                            'TYPE' => $type,
+                            'TYPE' => $placeType,
                             'LOCATED' => $located,
                         );
                     }
@@ -1786,7 +1840,7 @@ HTML;
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
                             $dateName = ($startYear != '' && $endYear != '') ? "Date Range" : "Date";
-                           $dateRangeHtml = "<p><span>$dateName: </span>$dateRange</p>";
+                            $dateRangeHtml = "<p><span>$dateName: </span>$dateRange</p>";
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
@@ -1890,6 +1944,19 @@ HTML;
                     }
                 }
 
+                // description
+                if(isset($record['desc']) && isset($record['desc']['value'])){
+                    $desc = $record['desc']['value'];
+                } else {
+                    $desc = '';
+                }
+
+                // secondary source
+                if(isset($record['secondarysource']) && isset($record['secondarysource']['value'])){
+                    $secondarysource = $record['secondarysource']['value'];
+                } else {
+                    $secondarysource = '';
+                }
 
                 //Counts for connections
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
@@ -1912,6 +1979,8 @@ HTML;
                 } else {
                     $countsource = '';
                 }
+
+
 
                 //Connection html
                 $connection_lists = Array(
@@ -1939,6 +2008,17 @@ HTML;
                             $projectHtml = "<p><span>Project: </span>$project</p>";
                         }
 
+                        $descHtml = '';
+                        if ($desc != ""){
+                            $descHtml = "<p><span>Description: </span>$desc</p>";
+                        }
+
+                        
+                        $secondarysourceHtml = '';
+                        if ($secondarysource != ""){
+                            $secondarysourceHtml = "<p><span>Description: </span>$secondarysource</p>";
+                        }
+
 
                         $card_icon_url = BASE_IMAGE_URL . 'Source-light.svg';
                         $source_url = BASE_URL . "record/source/" . $sourceQ;
@@ -1955,6 +2035,8 @@ HTML;
                 <div class='card-info'>
                     $typeHtml
                     $projectHtml
+                    $descHtml
+                    $secondarysourceHtml
                 </div>
 
             </div>
@@ -1973,10 +2055,12 @@ HTML;
     <th class="name">NAME</th>
     <th class="type">TYPE</th>
     <th class="project">PROJECT</th>
+    <th class="desc">DESCRIPTION</th>
+    <th class="secondarySource">SECONDARY SOURCE</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION', 'SECONDARY SOURCE'];
                         }
 
                         $card = <<<HTML
@@ -1990,6 +2074,12 @@ HTML;
     <td class='project'>
         <p><span class='first'>Project: </span>$project</p>
     </td>
+    <td class='desc'>
+        <p><span class='first'>Description: </span>$desc</p>
+    </td>
+    <td class='secondarySource'>
+        <p><span class='first'>Secondary Source: </span>$secondarysource</p>
+    </td>
     <td class='meta'>
 
     </td>
@@ -2000,7 +2090,9 @@ HTML;
                         $formattedData[$sourceQ] = array(
                             'NAME' => $name,
                             'TYPE' => $type,
-                            'PROJECT' => $project
+                            'PROJECT' => $project,
+                            'DESCRIPTION' => $desc,
+                            'SECONDARY SOURCE' => $secondarysource
                         );
 
                     }

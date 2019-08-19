@@ -424,6 +424,13 @@ QUERY;
                 </span>
             </span>
         </div>
+        <div id="search-result-configure-download-row">
+            <span class="align-left">
+                <a class="modal">Configure Table Columns</a>
+            </span>
+            <span class="align-right"><b>Download:</b> <span id="Download_selected">Current View</span> | <span id="Download_all">All Results</span></span>
+        </div>
+
         <div class="filter-cards">
             <div class="option-wrap">
                 <p>Option Title</p>
@@ -528,3 +535,4 @@ QUERY;
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/pagination.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/searchResults.js"></script>
+<script src="<?php echo BASE_URL;?>modules/modal/modal.js"></script>

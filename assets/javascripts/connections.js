@@ -152,8 +152,28 @@ function removeConnections(){
 }
 
 
-function loadConnections(){
+function loadConnections(){    
+    if (typeof(QID) == 'undefined'){
+
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
+        // get story kid
+        QID = getUrlVars()["kid"];
+        recordForm = 'Story';
+
+
+
+
+
+    }
     console.log(QID, recordform)
+
 
     $.ajax({
         url: BASE_URL+'api/getFullRecordConnections',
@@ -167,22 +187,17 @@ function loadConnections(){
                 return;
             }
             connectionsArray = JSON.parse(data);
-            console.log('success', connectionsArray);
-            $('#people').trigger('click');  // start off on the people connections tab
-            
+
             // display the counts for connections
             for (var form in connectionsArray){
-                console.log(form)
                 if (form == 'Person'){
                     $('#people').html('<div class="person-image"></div>'+connectionsArray['Person-count'] + ' People');
                 } else if (form == 'Event'){
                     $('#event').html('<div class="event-image"></div>' + connectionsArray['Event-count'] + ' Events');
                 } else if (form == 'Project') {
-                    console.log('project count = ', )
                     $('#project').html('<div class="project-image"></div>' + connectionsArray['Project-count'] + ' Projects');
                 } else if (form == 'Source') {
                     $('#source').html('<div class="source-image"></div>' + connectionsArray['Source-count'] + ' Sources');
-
                 } else if (form == 'Place') {
                     $('#place').html('<div class="place-image"></div>' + connectionsArray['Place-count'] + ' Places');
 
@@ -211,6 +226,14 @@ function loadConnections(){
                 $('#closeMatch').hide();
             }
 
+            // select the first tab with content
+            var clickedFirst = false;
+            $('.categories li').each(function (e) {
+                if (!clickedFirst && $(this).css('display') != 'none') {
+                    $(this).trigger('click');
+                    clickedFirst = true;
+                }
+            })
 
         }
     });

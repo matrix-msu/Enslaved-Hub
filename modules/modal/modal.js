@@ -1,5 +1,5 @@
 var modals = document.getElementsByClassName('modal');
-var hidden_modals = document.getElementsByClassName('modal-view-image');
+var hidden_modals = document.getElementsByClassName('modal-view');
 var modalImage = $('img.modal-img-view');
 var height;
 
@@ -13,7 +13,7 @@ function showModal(i) {
         hidden_modals[i].style.display = 'block';
         hidden_modals[i].style.height = '100%';
         setTimeout(function(){
-            $('.modal-view-image').css('background', 'rgba(13, 18, 48, 0.7)');
+            $('.modal-view').css('background', 'rgba(13, 18, 48, 0.7)');
             setTimeout(function(){
                 hidden_modals[i].childNodes[1].style.marginTop = "15px";
                 height = modalImage.innerHeight();
@@ -38,7 +38,7 @@ $('#modal-img').click(function (e) {
     e.stopPropagation();
 })
 
-$(".modal-view-image").click(closeModal);
+$(".modal-view").click(closeModal);
 $("#modal-dim-background-img").click(closeModal);
 
 $('div.close').click(closeModal);
@@ -48,10 +48,10 @@ function closeModal () {
     $(".config-table-modal").css('margin-top', '');
     $(".modal-wrap").css('margin-top', '');
     setTimeout(function(){
-        $('.modal-view-image').css('background', 'rgba(13, 18, 48, -0.3)');
+        $('.modal-view').css('background', 'rgba(13, 18, 48, -0.3)');
         setTimeout(function(){
-            $(".modal-view-image").css('display', '');
-            $(".modal-view-image").css('height', '');
+            $(".modal-view").css('display', '');
+            $(".modal-view").css('height', '');
         }, 150);
     }, 100);
 }

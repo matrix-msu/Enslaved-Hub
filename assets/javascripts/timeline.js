@@ -109,15 +109,15 @@
         });
 
 
-        $placeSelect.click(function () {
-            let placeQid = $(this).data('placeqid');
+        // $placeSelect.click(function () {
+        //     let placeQid = $(this).data('placeqid');
 
-            $info.removeClass('active');
-            $infoSelect.removeClass('active');
+        //     $info.removeClass('active');
+        //     $infoSelect.removeClass('active');
 
-            $(`.info-select-place[data-placeqid=${placeQid}]`).addClass('active');
-            $(`.place-info-${placeQid}`).addClass('active');
-        });
+        //     $(`.info-select-place[data-placeqid=${placeQid}]`).addClass('active');
+        //     $(`.place-info-${placeQid}`).addClass('active');
+        // });
 
         function setEventByKid(kid, $point) {
             // Set point on timeline
