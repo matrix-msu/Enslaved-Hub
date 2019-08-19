@@ -21,6 +21,7 @@ $stories = json_decode($koraResults, true);
 $count = $stories["counts"]["global"]; // Total count of stories
 
 $featured = [];
+
 foreach ($stories['records'][0] as $kid => $story) {
     if (isset($story['Featured']) && $story['Featured'] == 'TRUE') {
         $featured[$kid] = $story;
