@@ -67,45 +67,58 @@ function blazegraph()
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
 
-        $agent = classes["Agent"];
-        $researcher = classes["Researcher"];
-        $person = classes["Person"];
-        $researchProject = classes["Research Project"];
-        $female = classes["Female"];
-        $place = classes["Place"];
-        $entitiyWithProvenance = classes["Entity with Provenance"];
-        $event = classes["Event"];
+        // $agent = classes["Agent"];
+        // $researcher = classes["Researcher"];
+        // $person = classes["Person"];
+        // $researchProject = classes["Research Project"];
+        // $female = classes["Female"];
+        // $place = classes["Place"];
+        // $entitiyWithProvenance = classes["Entity with Provenance"];
+        // $event = classes["Event"];
 
-        $instanceOf = properties["instance of"];
-        $subclassOf = properties["subclass of"];
-        $hasName = properties["hasName"];
-        $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
-        $generatedBy = properties["generatedBy"];
-        $hasParticipantRole = properties["hasParticipantRole"];
-        $hasPersonStatus = properties["hasPersonStatus"];
-        $hasSex = properties["hasSex"];
-        $hasInterAgentRelationship = properties ["hasInterAgentRelationship"];
-        $closeMatch = properties ["closeMatch"];
-        $reportsOn = properties ["reportsOn"];
-        $atPlace = properties ["atPlace"];
-        $startsAt = properties ["startsAt"];
-        $endsAt = properties ["endsAt"];
-        $recordedAt = properties ["recordedAt"];
-        $hasECVO = properties ["hasECVO"];
-        $hasPlaceType = properties ["hasPlaceType"];
-        $geonamesID = properties["Geonames ID"];
-        $moderncountrycode = properties["modern country code"];
-        $locatedIn = properties ["locatedIn"];
-        $hasOriginRecord = properties ["hasOriginRecord"];
-        $providesParticipantRole = properties ["providesParticipantRole"];
-        $hasAgeCategory = properties ["hasAgeCategory"];
-        $hasOwner = properties ["hasOwner"];
-        $hasStatusGeneratingEvent = properties ["hasStatusGeneratingEvent"];
-        $roleProvidedBy = properties ["roleProvidedBy"];
-        $hasOriginalSourceType = properties ["hasOriginalSourceType"];
-        $hasEventType = properties ["hasEventType"];
-        $hasOriginalSourceDepository = properties["hasOriginalSourceDepository"];
+        // $instanceOf = properties["instance of"];
+        // $subclassOf = properties["subclass of"];
+        // $hasName = properties["hasName"];
+        // $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
+        // $generatedBy = properties["generatedBy"];
+        // $hasParticipantRole = properties["hasParticipantRole"];
+        // $hasPersonStatus = properties["hasPersonStatus"];
+        // $hasSex = properties["hasSex"];
+        // $hasInterAgentRelationship = properties ["hasInterAgentRelationship"];
+        // $closeMatch = properties ["closeMatch"];
+        // $reportsOn = properties ["reportsOn"];
+        // $atPlace = properties ["atPlace"];
+        // $startsAt = properties ["startsAt"];
+        // $endsAt = properties ["endsAt"];
+        // $recordedAt = properties ["recordedAt"];
+        // $hasECVO = properties ["hasECVO"];
+        // $hasPlaceType = properties ["hasPlaceType"];
+        // $geonamesID = properties["Geonames ID"];
+        // $moderncountrycode = properties["modern country code"];
+        // $locatedIn = properties ["locatedIn"];
+        // $hasOriginRecord = properties ["hasOriginRecord"];
+        // $providesParticipantRole = properties ["providesParticipantRole"];
+        // $hasAgeCategory = properties ["hasAgeCategory"];
+        // $hasOwner = properties ["hasOwner"];
+        // $hasStatusGeneratingEvent = properties ["hasStatusGeneratingEvent"];
+        // $roleProvidedBy = properties ["roleProvidedBy"];
+        // $hasOriginalSourceType = properties ["hasOriginalSourceType"];
+        // $hasEventType = properties ["hasEventType"];
+        // $hasOriginalSourceDepository = properties["hasOriginalSourceDepository"];
 
+        foreach(properties as $property => $pId){
+            $property = ucwords($property);
+            $property = str_replace(" ", "", $property);
+            $property = lcfirst($property);
+            $$property = $pId;
+        }
+
+        foreach(classes as $class => $qId){
+            $class = ucwords($class);
+            $class = str_replace(" ", "", $class);
+            $class = lcfirst($class);
+            $$class = $qId;
+        }
 
         switch ($preset){
             case 'singleProject':
@@ -333,38 +346,68 @@ QUERY;
                     break;
                 }
 
-
-
-                $query['query'] = <<<QUERY
+                
+                    $idQuery['query'] = <<<QUERY
 SELECT DISTINCT ?agent
+WHERE {
+    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
+} 
+limit 12
+offset 0
+QUERY;
+
+        $ch = curl_init(BLAZEGRAPH_URL);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($idQuery));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+            'Accept: application/sparql-results+json'
+        ));
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($result, true)['results']['bindings'];
+        $peopleUrls = (array_column(array_column($result, 'agent'), 'value'));
+        // print_r($peopleUrls);die;
+
+        $peopleQids = [];
+        // get the qids from each url
+        foreach($peopleUrls as $url){
+            $peopleQids[] = end(explode('/', $url));
+        }
+
+        $peopleQidQuery = "";
+        // create the line in the query with the ids to search for
+
+        foreach($peopleQids as $qid){
+            $peopleQidQuery .= "wd:$qid ";
+        }
+
+
+        $query['query'] = <<<QUERY
+
+        SELECT DISTINCT ?agent
 (count(distinct ?people) as ?countpeople)
 (count(distinct ?allevents) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 
-(group_concat(distinct ?name; separator = "||") as ?name) #name
+(group_concat(distinct ?name; separator = "||") as ?name1) #name
 
-(group_concat(distinct ?placelab; separator = "||") as ?place) #place
+(group_concat(distinct ?statuslabel; separator = "||") as ?status1) #status
 
-(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+(group_concat(distinct ?sexlab; separator = "||") as ?sex1) #Sex
 
-(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+(group_concat(distinct ?startyear; separator = "||") as ?startyear1)
 
-(group_concat(distinct ?match; separator = "||") as ?closeMatch)
+(group_concat(distinct ?endyear; separator = "||") as ?endyear1)
+(group_concat(distinct ?placelab; separator = "||") as ?place1) #place
 
-(group_concat(distinct ?startyear; separator = "||") as ?startyear)
-
-(group_concat(distinct ?endyear; separator = "||") as ?endyear)
 
 WHERE {
-
-    $sourceQuery
-    $eventQuery
-
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-
-    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
-            ?property  ?object .
+  VALUES ?agent { $peopleQidQuery }
+    ?agent ?property  ?object .
         ?object prov:wasDerivedFrom ?provenance .
         ?provenance pr:$isDirectlyBasedOn ?source .
 
@@ -374,14 +417,6 @@ WHERE {
     OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
             bind(?recordedAt as ?allevents)}
 
-    $genderQuery
-    $nameQuery
-    $ageQuery
-    $ethnoQuery
-    $roleQuery
-
-    MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
-
     OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
             ?statementrole ps:$hasParticipantRole ?roles.
             ?statementrole pq:$roleProvidedBy ?roleevent.
@@ -399,110 +434,194 @@ WHERE {
     OPTIONAL { ?agent wdt:$hasSex ?sex.
                 ?sex rdfs:label ?sexlab}
 
-    OPTIONAL { ?agent wdt:$closeMatch ?match}.
 
-
-    OPTIONAL{?allevents	wdt:$startsAt ?startdate.
+    OPTIONAL{?allevents wdt:$startsAt ?startdate.
             BIND(str(YEAR(?startdate)) AS ?startyear).
             OPTIONAL {?allevents wdt:$endsAt ?enddate.
             BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?allevents wdt:$atPlace ?place.
+            
+            }.
+   OPTIONAL {?allevents wdt:$atPlace ?place.
                         ?place rdfs:label ?placelab}
 
-            }.
     OPTIONAL {?agent wdt:$hasInterAgentRelationship ?people}
 
 } group by ?agent
-order by ?agent
 
-$limitQuery
-offset $offset
+
 QUERY;
 
                 array_push($queryArray, $query);
 
-                //Query for Total Count
-                $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent
-(count(distinct ?people) as ?countpeople)
-(count(distinct ?allevents) as ?countevent)
-(count(distinct ?place) as ?countplace)
-(count(distinct ?source) as ?countsource)
 
-(group_concat(distinct ?name; separator = "||") as ?name) #name
+//                 $query['query'] = <<<QUERY
+// SELECT DISTINCT ?agent
+// (count(distinct ?people) as ?countpeople)
+// (count(distinct ?allevents) as ?countevent)
+// (count(distinct ?place) as ?countplace)
+// (count(distinct ?source) as ?countsource)
 
-(group_concat(distinct ?placelab; separator = "||") as ?place) #place
+// (group_concat(distinct ?name; separator = "||") as ?name) #name
 
-(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+// (group_concat(distinct ?placelab; separator = "||") as ?place) #place
 
-(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+// (group_concat(distinct ?statuslab; separator = "||") as ?status) #status
 
-(group_concat(distinct ?match; separator = "||") as ?closeMatch)
+// (group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
 
-(group_concat(distinct ?startyear; separator = "||") as ?startyear)
+// (group_concat(distinct ?match; separator = "||") as ?closeMatch)
 
-(group_concat(distinct ?endyear; separator = "||") as ?endyear)
+// (group_concat(distinct ?startyear; separator = "||") as ?startyear)
 
-WHERE {
+// (group_concat(distinct ?endyear; separator = "||") as ?endyear)
 
-    $sourceQuery
-    $eventQuery
+// WHERE {
 
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+//     $sourceQuery
+//     $eventQuery
 
-    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
-  		 ?property  ?object .
-  	?object prov:wasDerivedFrom ?provenance .
-  	?provenance pr:$isDirectlyBasedOn ?source .
+//     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 
-
- 	 ?agent p:$hasName ?statement.
-    ?statement ps:$hasName ?name.
-    OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
-            bind(?recordedAt as ?allevents)}
-
-    $genderQuery
-    $nameQuery
-    $ageQuery
-    $ethnoQuery
-    $roleQuery
-
-    MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
-
-    OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
-            ?statementrole ps:$hasParticipantRole ?roles.
-            ?statementrole pq:$roleProvidedBy ?roleevent.
-            bind(?roleevent as ?allevents)
-
-            }.
-
-    OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
-            ?statstatus ps:$hasPersonStatus ?status.
-            ?status rdfs:label ?statuslabel.
-            ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
-            bind(?statusevent as ?allevents)}.
+//     ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
+//             ?property  ?object .
+//         ?object prov:wasDerivedFrom ?provenance .
+//         ?provenance pr:$isDirectlyBasedOn ?source .
 
 
-    OPTIONAL { ?agent wdt:$hasSex ?sex.
-                ?sex rdfs:label ?sexlab}
+//         ?agent p:$hasName ?statement.
+//     ?statement ps:$hasName ?name.
+//     OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
+//             bind(?recordedAt as ?allevents)}
 
-    OPTIONAL { ?agent wdt:$closeMatch ?match}.
+//     $genderQuery
+//     $nameQuery
+//     $ageQuery
+//     $ethnoQuery
+//     $roleQuery
+
+//     MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
+
+//     OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
+//             ?statementrole ps:$hasParticipantRole ?roles.
+//             ?statementrole pq:$roleProvidedBy ?roleevent.
+//             bind(?roleevent as ?allevents)
+
+//             }.
+
+//     OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
+//             ?statstatus ps:$hasPersonStatus ?status.
+//             ?status rdfs:label ?statuslabel.
+//             ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
+//             bind(?statusevent as ?allevents)}.
 
 
-    OPTIONAL{?allevents	wdt:$startsAt ?startdate.
-            BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?allevents wdt:$endsAt ?enddate.
-            BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?allevents wdt:$atPlace ?place.
-                        ?place rdfs:label ?placelab}
+//     OPTIONAL { ?agent wdt:$hasSex ?sex.
+//                 ?sex rdfs:label ?sexlab}
 
-            }.
-    OPTIONAL {?agent wdt:$hasInterAgentRelationship ?people}
+//     OPTIONAL { ?agent wdt:$closeMatch ?match}.
 
-} group by ?agent
-order by ?agent
-QUERY;
+
+//     OPTIONAL{?allevents	wdt:$startsAt ?startdate.
+//             BIND(str(YEAR(?startdate)) AS ?startyear).
+//             OPTIONAL {?allevents wdt:$endsAt ?enddate.
+//             BIND(str(YEAR(?enddate)) AS ?endyear)}.
+//             OPTIONAL {?allevents wdt:$atPlace ?place.
+//                         ?place rdfs:label ?placelab}
+
+//             }.
+//     OPTIONAL {?agent wdt:$hasInterAgentRelationship ?people}
+
+// } group by ?agent
+// order by ?agent
+
+// $limitQuery
+// offset $offset
+// QUERY;
+
+//                 array_push($queryArray, $query);
+
+//                 //Query for Total Count
+//                 $query = array('query' => "");
+//                 $query['query'] = <<<QUERY
+// SELECT DISTINCT ?agent
+// (count(distinct ?people) as ?countpeople)
+// (count(distinct ?allevents) as ?countevent)
+// (count(distinct ?place) as ?countplace)
+// (count(distinct ?source) as ?countsource)
+
+// (group_concat(distinct ?name; separator = "||") as ?name) #name
+
+// (group_concat(distinct ?placelab; separator = "||") as ?place) #place
+
+// (group_concat(distinct ?statuslab; separator = "||") as ?status) #status
+
+// (group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
+
+// (group_concat(distinct ?match; separator = "||") as ?closeMatch)
+
+// (group_concat(distinct ?startyear; separator = "||") as ?startyear)
+
+// (group_concat(distinct ?endyear; separator = "||") as ?endyear)
+
+// WHERE {
+
+//     $sourceQuery
+//     $eventQuery
+
+//     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+
+//     ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
+//   		 ?property  ?object .
+//   	?object prov:wasDerivedFrom ?provenance .
+//   	?provenance pr:$isDirectlyBasedOn ?source .
+
+
+//  	 ?agent p:$hasName ?statement.
+//     ?statement ps:$hasName ?name.
+//     OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
+//             bind(?recordedAt as ?allevents)}
+
+//     $genderQuery
+//     $nameQuery
+//     $ageQuery
+//     $ethnoQuery
+//     $roleQuery
+
+//     MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
+
+//     OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
+//             ?statementrole ps:$hasParticipantRole ?roles.
+//             ?statementrole pq:$roleProvidedBy ?roleevent.
+//             bind(?roleevent as ?allevents)
+
+//             }.
+
+//     OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
+//             ?statstatus ps:$hasPersonStatus ?status.
+//             ?status rdfs:label ?statuslabel.
+//             ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
+//             bind(?statusevent as ?allevents)}.
+
+
+//     OPTIONAL { ?agent wdt:$hasSex ?sex.
+//                 ?sex rdfs:label ?sexlab}
+
+//     OPTIONAL { ?agent wdt:$closeMatch ?match}.
+
+
+//     OPTIONAL{?allevents	wdt:$startsAt ?startdate.
+//             BIND(str(YEAR(?startdate)) AS ?startyear).
+//             OPTIONAL {?allevents wdt:$endsAt ?enddate.
+//             BIND(str(YEAR(?enddate)) AS ?endyear)}.
+//             OPTIONAL {?allevents wdt:$atPlace ?place.
+//                         ?place rdfs:label ?placelab}
+
+//             }.
+//     OPTIONAL {?agent wdt:$hasInterAgentRelationship ?people}
+
+// } group by ?agent
+// order by ?agent
+// QUERY;
 
                 // array_push($queryArray, $query);
 
@@ -1277,7 +1396,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
             case 'people':
                 // print_r($record);die;
                 //Person Name
-                $name = $record['name']['value'];
+                $name = $record['name1']['value'];
                 // $nameArray = explode(' ', $name);
                 // $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $name);
                 // $lastName = $nameArray[count($nameArray)-1];
@@ -1291,17 +1410,17 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                 //Person Sex
                 $sex = "";
-                if (isset($record['sex']) && isset($record['sex']['value'])){
-                    if($record['sex']['value'] != ''){
-                        $sex = $record['sex']['value'];
+                if (isset($record['sex1']) && isset($record['sex1']['value'])){
+                    if($record['sex1']['value'] != ''){
+                        $sex = $record['sex1']['value'];
                     }
                 }
 
                 //Person Status
                 $status = '';
                 $statusCount = 0;
-                if (isset($record['status']) && isset($record['status']['value'])){
-                    $statusArray = explode('||', $record['status']['value']);
+                if (isset($record['status1']) && isset($record['status1']['value'])){
+                    $statusArray = explode('||', $record['status1']['value']);
 
                     foreach ($statusArray as $stat) {
                         if (!empty($stat)){
@@ -1318,8 +1437,8 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 //Person location
                 $places = '';
                 $placesCount = 0;
-                if (isset($record['place']) && isset($record['place']['value'])){
-                    $placesArray = explode('||', $record['place']['value']);
+                if (isset($record['place1']) && isset($record['place1']['value'])){
+                    $placesArray = explode('||', $record['place1']['value']);
 
                     foreach ($placesArray as $place) {
                         if (!empty($place)){
@@ -1335,14 +1454,14 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                 //Date Range
                 $startYear = '';
-                if (isset($record['startyear']) && isset($record['startyear']['value'])){
-                    $startYears = explode('||', $record['startyear']['value']);
+                if (isset($record['startyear1']) && isset($record['startyear1']['value'])){
+                    $startYears = explode('||', $record['startyear1']['value']);
                     $startYear = min($startYears);
                 }
 
                 $endYear = '';
-                if (isset($record['endyear']) && isset($record['endyear']['value'])){
-                    $endYears = explode('||', $record['endyear']['value']);
+                if (isset($record['endyear1']) && isset($record['endyear1']['value'])){
+                    $endYears = explode('||', $record['endyear1']['value']);
                     $endYear = max($endYears);
                 }
 
