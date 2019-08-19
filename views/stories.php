@@ -59,35 +59,13 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                 <?php
                 foreach ($featured as $kid => $story) {
                     echo '<li class="card card-story"><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
-                    echo '<h2 class="card-title">'.$story['Title']['value'].'</h2>';
+                    echo '<h2 class="card-title">'.$story['Title'].'</h2>';
                     echo '</a></li>';
                 }
                 ?>
             </ul>
         </div>
     </div>
-<<<<<<< HEAD
-    <div class="container cardwrap" id="featured">
-        <ul class="row">
-            <?php
-            foreach ($featured as $kid => $story) {
-                echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
-                echo '<div class="container cards">';
-                echo '<h2 class="card-title">'.$story['Title'].'</h2>';
-                echo '<h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>';
-                echo '</div></a></li>';
-            }
-            ?>
-            <!-- <li>
-                <a href="<?php echo BASE_URL?>fullStory">
-                    <div class="container cards">
-                        <p class="card-title">Title of Featured Story Goes Here Like This</p>
-                        <h4 class="card-view-story">View Story <div class="view-arrow"></div></h4>
-                    </div>
-                </a>
-            </li> -->
-        </ul>
-=======
     <div class="controls">
         <div class="arrows">
             <div class="prev"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
@@ -95,7 +73,6 @@ $cache_Data = Json_GetData_ByTitle("Stories");
         </div>
         <div class="dots">
         </div>
->>>>>>> Fixed card slider and updated stories
     </div>
 </div>
 <!-- all stories container-->
