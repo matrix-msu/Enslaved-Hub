@@ -41,15 +41,14 @@ body{
 
 .btn-prev {
     left: 0;
-}
-
-.btn-next {
-    right: 0;
-
     .chevron {
         left: 1px;
         transform: rotate(180deg);
     }
+}
+
+.btn-next {
+    right: 0;
 }
 
 input:not([type="image"]), textarea {

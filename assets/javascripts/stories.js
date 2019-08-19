@@ -27,4 +27,6 @@ $(document).ready(function(){ //limits number of featured stories to 6
         $(this).find("img:first").toggleClass('show');
         $(this).next().toggleClass('show');
     });
+
+    installFeaturedListeners('.featured-stories');
 });

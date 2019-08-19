@@ -459,13 +459,14 @@
     width: 60px;
     outline: none;
     transition: .2s ease-in-out;
-      &:hover{
-         background: #CF5440;
-         }
-
-    img {
-        position: absolute;
-        top: 37%;
-        left: 35%;
+    
+    &:hover{
+        background: $accent;
     }
+
+    // img {
+    //     position: absolute;
+    //     top: 37%;
+    //     left: 35%;
+    // }
 }

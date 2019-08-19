@@ -1,5 +1,8 @@
 .fullstory{
-    background-image: url(../images/Rectangle7Copy.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(../images/StoryLanding.jpg);
 
     .middlewrap{
         padding-bottom: 50px;
@@ -407,20 +410,19 @@
                 }
             }
         }
+        .search-all{
+            text-decoration: none;
+            max-width: 140px;
+            color: $sub-base;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+            transition: color .3s;
+        }
         .loaded{
             display: none;
         }
     }
-}
-
-.search-all{
-    text-decoration: none;
-    max-width: 140px;
-    color: $sub-base;
-    cursor: pointer;
-    font-size: 18px;
-    text-align: center;
-    transition: color .3s;
 }
 
 .related-card {
