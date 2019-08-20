@@ -43,29 +43,10 @@
             </span>
         </div>
     </div>
-    
+
     <?php if($isCrawlerAdmin) {	 ?>
-    
+
     <div class="results-wrap result-container show" id="results">
-        <div class="result" id="keep">
-            <div class="link-name">
-                <a class="link" href="http://www.google.com" target="_blank">Name of Link Goes Here</a>
-            </div>
-            <div class="link-wrap">
-                <a class="link" href="http://www.google.com" target="_blank">www.nameoflinkgoeshere.com</a>
-                <div class="right">
-                    <div class="trash crawler-modal-open" id="delete-link">
-                        <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
-                    </div>
-                    <div class="add-seed">
-                        <p>Add to Seeds</p>
-                        <form action="submit">
-                            <input type="hidden" name="add_seed" value="www.nameoflinkgoeshere.com">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="broken-wrap result-container" id="broken">
@@ -96,7 +77,7 @@
             <input id="seed-insert" class="search-field" type="text" name="add_seed" placeholder="Add a seed"/>
             <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
         </form>
-        
+
         <div class="result" id="keep">
             <div class="link-wrap">
                 <p><span>URL:</span><a class="link" href="http://www.google.com" target="_blank">www.nameoflinkgoeshere.com</a></p>
