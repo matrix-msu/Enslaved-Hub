@@ -24,13 +24,13 @@
         if ($unknownEventPoints.length > 0){
             eventsCount += 1;
         }
-      
         // dont show timeline for 3 or less events
         if (eventsCount <= 3){
             $('.jump-button').hide(); // hide the jump to timeline button
+            $tlContainer.hide(); // hide the timeline
             return;
         }
-        
+
         //Set info arrow to point at current point
         var pointLeft = Math.round($($eventPoints[0]).offset().left - $tlInfoContainer.offset().left) + 5;
         $tlInfoContainerArrowBottom.css('left', pointLeft);
