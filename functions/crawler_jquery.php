@@ -8,6 +8,7 @@ require_once(BASE_PATH . "assets/webcrawler/models/crawler_seeds.php");
 
 $limit = 40;
 $offset = 0;
+$sort = 'ASC';
 // connect to keywords, broken links and deleted keywords databases
 $crawler_keywords =new crawler_keywords();
 $crawler_deleted_keywords =new crawler_deleted_keywords();
@@ -15,7 +16,7 @@ $broken_links=new crawler_broken_links();
 $seeds= new crawler_seeds();
 
 
-//Get limit and offset values
+//Get limit, offset and sort values
 if(isset($_POST["limit"]))
 {
 	$limit = $_POST["limit"];
@@ -24,12 +25,16 @@ if(isset($_POST["offset"]))
 {
 	$offset = $_POST["offset"];
 }
+if(isset($_POST["sort"]))
+{
+	$sort = $_POST["sort"];
+}
 
 
 //Gets results for results tab
 if(isset($_POST["get_results"]))
 {
-	$results = $crawler_keywords->get_keywords($limit,$offset);
+	$results = $crawler_keywords->get_keywords($limit,$offset,$sort);
 	echo(json_encode($results));
 }
 
@@ -73,7 +78,7 @@ if(isset($_POST["count_results"]))
 if(isset($_POST['get_links']))
 {
 	$results = $broken_links->get_broken_links($limit, $offset);
-	
+
 	echo(json_encode($results));
 }
 // this function edits a given link in the seeds file
@@ -110,20 +115,20 @@ if(isset($_POST["count_links"]))
 if(isset($_POST['get_seeds']))
 {
 	$results = $seeds->get_seeds($limit, $offset);
-	
+
 	echo(json_encode($results));
 }
 if (isset($_POST["more_seeds"]))
 {
 	$results = $seeds->get_seeds($limit,$_POST["more_seeds"]);
-	
+
 	echo(json_encode($results));
 }
 
 if(isset($_POST['update_seed']))
 {
 	$seeds->update_seed_info($_POST['update_seed'],$_POST['name'],$_POST['title'],$_POST['rss'],$_POST['url'],$_POST['twitter']);
-	
+
 	echo(json_encode("true"));
 }
 
@@ -146,7 +151,7 @@ if(isset($_POST["count_seeds"]))
 if(isset($_POST["add_seed"]))
 {
 	$seeds->add_seed($_POST["add_seed"]);
-	
+
 	echo(json_encode("true"));
 }
 ?>

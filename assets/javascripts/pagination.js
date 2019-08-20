@@ -6,9 +6,9 @@
 var page = 1;
 var pages = 1;
 
-/** 
+/**
  * Sets the pagination HTML to it's initial numbers and hides unnecessary numbers
- * 
+ *
  * \param total : Total number of cards
  * \param limit : Limit on the number of cards per page
  * \param offset : Offset from the first card (with 0 being the first card)
@@ -18,7 +18,6 @@ function setPagination(total, limit, offset) {
     page = Math.ceil(offset / limit) + 1;
 
     $('span.pagi-last').html(pages); //last pagination number to number of pages
-    console.log("Test:" + total + ' ' + offset + ' ' + limit);
 
     if (pages < 2) { // sets pagination on page load
         $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
@@ -76,7 +75,7 @@ function setPagination(total, limit, offset) {
     paginate();
 }
 
-/** 
+/**
  * Called either after setting the initial pagination HTML or after a change in the page number
  * has occurred. When the current page number is changed it goes through and determines
  * the new values of the numbers that aren't active and if the dots and next page buttons should
@@ -212,7 +211,7 @@ function paginate() {
             $('span.five').hide();
             $('span.one').show();
             $('span.one').html(2);
-    
+
             if (pages > 2) {
                 $('span.two').show();
                 $('span.two').html(3);

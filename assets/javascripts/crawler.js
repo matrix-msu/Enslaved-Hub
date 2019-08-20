@@ -1,6 +1,7 @@
 var card_limit = 12;
 var card_offset = 0;
 var total_length = 12;
+var sort_direction = 'ASC'
 
 $(document).ready(function(){
 
@@ -11,20 +12,20 @@ $(document).ready(function(){
 		card_offset = (val - 1) * card_limit;
 		$('.crawler-tabs li.tabbed').trigger('click');
 	});
-	
+
     $(document).click(function () { // close things with clicked-off
         $('span.results-per-page').find("img:first").removeClass('show');
         $('span.results-per-page #sortmenu').removeClass('show');
         $('span.sort-by #sortmenu').removeClass('show');
         $('span.sort-by').find("img:first").removeClass('show');
     });
-    
+
     $(".sorting-dropdowns .align-center").click(function (e) { // toggle show/hide per-page submenu
 		e.stopPropagation();
         $(this).find("img:first").toggleClass('show');
         $(this).find("#sortmenu").toggleClass('show');
     });
-    
+
     $('span.results-per-page > span').html(card_limit);
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
@@ -32,6 +33,15 @@ $(document).ready(function(){
         localStorage.setItem('display_amount', card_limit);
         card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
         $('span.results-per-page > span').html(card_limit);
+		$(document).trigger('click');
+		$('.crawler-tabs li.tabbed').trigger('click');
+    });
+
+    $("ul.sort-by li").click(function (e) { // set the sorting
+        e.stopPropagation();
+        sort = $(this).data('sort');
+        sort_direction = sort;
+        localStorage.setItem('sort_direction', sort);
 		$(document).trigger('click');
 		$('.crawler-tabs li.tabbed').trigger('click');
     });
@@ -46,14 +56,13 @@ $(document).ready(function(){
 
         $('.result-container').removeClass('show');
 		$('.result-container#'+name).addClass('show');
-		
+
 		$('.result-container').find('.result').not('#keep').off().remove(); //.not('#keep')
 
 
-		console.log(name);
 		var type = {};
 		var count_type = '';
-		
+
 		if(name == "results"){
 			type['get_results'] = 'ok';
 			count_type = 'count_results';
@@ -68,7 +77,7 @@ $(document).ready(function(){
 		}
 
 		showResults(type, count_type);
-		
+
 	});
 
 	//Trigger click on results when page loads
@@ -81,11 +90,11 @@ $(document).ready(function(){
     $('.canvas').click(function (e) {
         e.stopPropagation();
     });
-    
+
     $('.crawler-modal').click(function () {
         $('.crawler-modal .close').trigger('click');
     });
-    
+
     $('.crawler-modal .close').click(function () {
         $('.crawler-modal .canvas').css('opacity', '0');
         $('.crawler-modal').css('background', 'rgba(0, 0, 0, 0.0)');
@@ -98,7 +107,6 @@ $(document).ready(function(){
 		e.preventDefault();
 
 		var form = $(this);
-		console.log(form.serialize());
 
 		$.ajax({
 			type: "POST",
@@ -106,7 +114,6 @@ $(document).ready(function(){
 			data: form.serialize(),
 			dataType: "JSON",
 			success:function(data){
-				console.log(data);
 				//after ajax refresh tab
 				$('.crawler-tabs li.tabbed').trigger('click');
 				$('.seed-wrap form input.search-field').val('');
@@ -116,7 +123,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
+
 });
 
 //Main function for showing results, gets total count of results first and then calls the ajax to get the results
@@ -124,9 +131,10 @@ function showResults(result_type, count_type)
 {
 	//Setup data to send for results
 	var get_data = result_type;
+	console.log(get_data)
 	get_data['limit'] = card_limit;
 	get_data['offset'] = card_offset;
-	console.log(get_data);
+	get_data['sort'] = sort_direction;
 
 	//Data to send for count
 	var count_data = {};
@@ -140,7 +148,6 @@ function showResults(result_type, count_type)
 		dataType: "JSON",
 		success:function(data){
 			//On success make ajax call to get the results
-			console.log(data);
 			total_length = data;
 			getResults(get_data);
 		},
@@ -148,7 +155,7 @@ function showResults(result_type, count_type)
 			console.log(xhr.responseText);
 		}
 	});//ajax
-	
+
 }
 
 //Gets the results for the selected tab
@@ -179,7 +186,7 @@ function getResults(get_data)
 
 function installModalListeners(){
 	var crawlerModalButton = $('.crawler-modal-open');
-	
+
 	// Call off before adding click listener so that the listeners dont stack
 	crawlerModalButton.off().on('click', function(){
 		var modalType = $(this).attr('id');
@@ -237,7 +244,6 @@ function installModalListeners(){
 		e.preventDefault();
 
 		var form = $(this);
-		console.log(form.serialize());
 
 		$.ajax({
 			type: "POST",
@@ -245,7 +251,6 @@ function installModalListeners(){
 			data: form.serialize(),
 			dataType: "JSON",
 			success:function(data){
-				console.log(data);
 				//after ajax close modal and refresh tab
 				$('.crawler-modal .close').trigger('click');
 				$('.crawler-tabs li.tabbed').trigger('click');
@@ -266,7 +271,6 @@ function installModalListeners(){
 		e.preventDefault();
 
 		var form = $(this);
-		console.log(form.serialize());
 
 		$.ajax({
 			type: "POST",
@@ -274,7 +278,6 @@ function installModalListeners(){
 			data: form.serialize(),
 			dataType: "JSON",
 			success:function(data){
-				console.log(data);
 				//after ajax refresh tab
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
