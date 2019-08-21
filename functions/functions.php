@@ -67,45 +67,6 @@ function blazegraph()
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
 
-        // $agent = classes["Agent"];
-        // $researcher = classes["Researcher"];
-        // $person = classes["Person"];
-        // $researchProject = classes["Research Project"];
-        // $female = classes["Female"];
-        // $place = classes["Place"];
-        // $entitiyWithProvenance = classes["Entity with Provenance"];
-        // $event = classes["Event"];
-
-        // $instanceOf = properties["instance of"];
-        // $subclassOf = properties["subclass of"];
-        // $hasName = properties["hasName"];
-        // $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
-        // $generatedBy = properties["generatedBy"];
-        // $hasParticipantRole = properties["hasParticipantRole"];
-        // $hasPersonStatus = properties["hasPersonStatus"];
-        // $hasSex = properties["hasSex"];
-        // $hasInterAgentRelationship = properties ["hasInterAgentRelationship"];
-        // $closeMatch = properties ["closeMatch"];
-        // $reportsOn = properties ["reportsOn"];
-        // $atPlace = properties ["atPlace"];
-        // $startsAt = properties ["startsAt"];
-        // $endsAt = properties ["endsAt"];
-        // $recordedAt = properties ["recordedAt"];
-        // $hasECVO = properties ["hasECVO"];
-        // $hasPlaceType = properties ["hasPlaceType"];
-        // $geonamesID = properties["Geonames ID"];
-        // $moderncountrycode = properties["modern country code"];
-        // $locatedIn = properties ["locatedIn"];
-        // $hasOriginRecord = properties ["hasOriginRecord"];
-        // $providesParticipantRole = properties ["providesParticipantRole"];
-        // $hasAgeCategory = properties ["hasAgeCategory"];
-        // $hasOwner = properties ["hasOwner"];
-        // $hasStatusGeneratingEvent = properties ["hasStatusGeneratingEvent"];
-        // $roleProvidedBy = properties ["roleProvidedBy"];
-        // $hasOriginalSourceType = properties ["hasOriginalSourceType"];
-        // $hasEventType = properties ["hasEventType"];
-        // $hasOriginalSourceDepository = properties["hasOriginalSourceDepository"];
-
         foreach(properties as $property => $pId){
             $property = ucwords($property);
             $property = str_replace(" ", "", $property);
@@ -258,22 +219,21 @@ QUERY;
 
                 //Filtering for Query
 
-                $genderQuery = "";
+                // filter by gender
+                $genderIdFilter = "";
                 if (isset($filtersArray['gender'])) {
                     $genders = $filtersArray['gender'];
 
-                    if(count($filtersArray['gender']) > 1) {
-                        // handle multiple gender (Male, Female, and Unidentified)
-                    }
-                    else { // handle single gender search
-                        $gender = $genders[0]; //ex. Male
+                    foreach ($genders as $gender){
                         if (array_key_exists($gender, sexTypes)){
                             $qGender = sexTypes[$gender];
-                            $genderQuery = "?agent wdt:$hasSex wd:$qGender .";
+                            $genderIdFilter .= "?agent wdt:$hasSex wd:$qGender. ";
                         }
                     }
                 }
 
+                // filter by name
+                //TODO: FIX NAME FILTER
                 $nameQuery = "";
                 if (isset($filtersArray['person'])){
                     $name = $filtersArray['person'][0];
@@ -281,11 +241,13 @@ QUERY;
                 }
 
 
+                //filter by source
+                //TODO: FIX SOURCE FILTER
                 $sourceQuery = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
                     $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
-                                    ?source wdt:$instanceOf wd:$entitiyWithProvenance.
+                                    ?source wdt:$instanceOf wd:$entityWithProvenance.
                                     ?people wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
                                             ?property  ?object .
                                     ?object prov:wasDerivedFrom ?provenance .
@@ -293,34 +255,72 @@ QUERY;
                                     ?people rdfs:label ?peoplename";
                 }
 
+                // filter by age category
                 $ageQuery = "";
+                $ageIdFilter = "";
                 if (isset($filtersArray['age_category'])){
-                    $age = $filtersArray['age_category'][0];
-                    if (array_key_exists($age, ageCategory)){
-                        $qAge = ageCategory[$age];
-                        $ageQuery = "?agent wdt:$hasAgeCategory wd:$qAge .";
-                    }
+                    $ages = $filtersArray['age_category'];
 
+                    foreach ($ages as $age){
+                        if (array_key_exists($age, ageCategory)){
+                            $qAge = ageCategory[$age];
+                            $ageIdFilter .= "?agent wdt:$hasAgeCategory wd:$qAge . ";
+                        }
+                    }
                 }
 
-                $ethnoQuery = "";
+                // filter by status
+                $statusIdFilter = "";
+                if (isset($filtersArray['status'])){
+                    $statuses = $filtersArray['status'];
+
+                    foreach ($statuses as $status){
+                        if (array_key_exists($status, personstatus)){
+                            $qStatus = personstatus[$status];
+                            $statusIdFilter .= "?agent wdt:$hasPersonStatus wd:$qStatus . ";
+                        }
+                    }
+                }
+
+                // filter by ethnodescriptor
+                $ethnoIdFilter = "";
                 if (isset($filtersArray['ethnodescriptor'])){
-                    $ethno = $filtersArray['ethnodescriptor'][0];
-                    if (array_key_exists($ethno, ethnodescriptor)){
-                        $qEthno = ethnodescriptor[$ethno];
-                        $ethnoQuery = "?agent wdt:$hasECVO wd:$qEthno .";
+                    $ethnos = $filtersArray['ethnodescriptor'];
+
+                    foreach ($ethnos as $ethno){
+                        if (array_key_exists($ethno, ethnodescriptor)){
+                            $qEthno = ethnodescriptor[$ethno];
+                            $ethnoIdFilter .= "?agent wdt:$hasECVO wd:$qEthno . ";
+                        }
                     }
                 }
 
-                $roleQuery = "";
+                // filter by role
+                $roleIdFilter = "";
                 if (isset($filtersArray['role_types'])){
-                    $role = $filtersArray['role_types'][0];
-                    if (array_key_exists($role, roleTypes)){
-                        $qRole = roleTypes[$role];
-                        $roleQuery = "?agent wdt:$hasParticipantRole wd:$qRole .";
-                    }
+                    $roles = $filtersArray['role_types'];
 
+                    foreach ($roles as $role){
+                        if (array_key_exists($role, roleTypes)){
+                            $qRole = roleTypes[$role];
+                            $roleIdFilter .= "?agent wdt:$hasParticipantRole wd:$qRole . ";
+                        }
+                    }
                 }
+
+                // filter by occupation
+                $occupationIdFilter = "";
+                if (isset($filtersArray['occupation'])){
+                    $occupations = $filtersArray['occupation'];
+
+                    foreach ($occupations as $occupation){
+                        if (array_key_exists($occupation, occupation)){
+                            $qOccupation = occupation[$occupation];
+                            $occupationIdFilter .= "?agent wdt:$hasOccupation wd:$qOccupation . ";
+                        }
+                    }
+                }
+
 
                 // people connected to an event
                 $eventQuery = "";
@@ -350,11 +350,19 @@ QUERY;
                     $idQuery['query'] = <<<QUERY
 SELECT DISTINCT ?agent
 WHERE {
-    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
+    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent. #agent or subclass of agent
+    $genderIdFilter
+    $ageIdFilter
+    $ethnoIdFilter
+    $roleIdFilter
+    $statusIdFilter
+    $occupationIdFilter
 } 
-limit 12
-offset 0
+$limitQuery
+$offsetQuery
 QUERY;
+
+// print_r($idQuery);die;
 
         $ch = curl_init(BLAZEGRAPH_URL);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -368,22 +376,19 @@ QUERY;
         curl_close($ch);
 
         $result = json_decode($result, true)['results']['bindings'];
-        $peopleUrls = (array_column(array_column($result, 'agent'), 'value'));
-        // print_r($peopleUrls);die;
 
-        $peopleQids = [];
         // get the qids from each url
+        $peopleUrls = (array_column(array_column($result, 'agent'), 'value'));
+        $peopleQids = [];
         foreach($peopleUrls as $url){
             $peopleQids[] = end(explode('/', $url));
         }
 
-        $peopleQidQuery = "";
         // create the line in the query with the ids to search for
-
+        $peopleQidQuery = "";
         foreach($peopleQids as $qid){
             $peopleQidQuery .= "wd:$qid ";
         }
-
 
         $query['query'] = <<<QUERY
 
@@ -430,8 +435,7 @@ WHERE {
             ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
             bind(?statusevent as ?allevents)}.
 
-
-    OPTIONAL { ?agent wdt:$hasSex ?sex.
+  	OPTIONAL { ?agent wdt:$hasSex ?sex.
                 ?sex rdfs:label ?sexlab}
 
 
@@ -447,9 +451,8 @@ WHERE {
     OPTIONAL {?agent wdt:$hasInterAgentRelationship ?people}
 
 } group by ?agent
-
-
 QUERY;
+// print_r($query);die;
 
                 array_push($queryArray, $query);
 
@@ -535,7 +538,7 @@ QUERY;
 // order by ?agent
 
 // $limitQuery
-// offset $offset
+// $offsetQuery
 // QUERY;
 
 //                 array_push($queryArray, $query);
@@ -675,7 +678,7 @@ WHERE {
 }GROUP BY ?place ?placeLabel ?locatedInLabel ?type ?geonames ?code
 order by ?placeLabel
 $limitQuery
-offset $offset
+$offsetQuery
 QUERY;
 
                 array_push($queryArray, $query);
@@ -751,7 +754,7 @@ QUERY;
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
                     $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
-                                    ?source wdt:$instanceOf wd:$entitiyWithProvenance.
+                                    ?source wdt:$instanceOf wd:$entityWithProvenance.
                                     ?source wdt:$reportsOn ?event.
                                     ?event rdfs:label ?eventname";
 
@@ -784,8 +787,8 @@ WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
  }GROUP BY ?event ?eventLabel ?startyear ?endyear ?type ?eventtypeLabel
 order by ?startyear
-limit 12
-offset 0
+$limitQuery
+$offsetQuery
 
 QUERY;
 
@@ -837,7 +840,7 @@ WHERE {
 }GROUP BY ?event ?eventLabel ?typeLabel ?startyear ?endyear
 order by ?startyear
 $limitQuery
-offset $offset
+$offsetQuery
 QUERY;
 
                     array_push($queryArray, $query);
@@ -918,7 +921,7 @@ WHERE {
 }GROUP BY ?event ?eventLabel ?startyear ?endyear ?eventtypeLabel
 order by ?startyear
 $limitQuery
-offset $offset
+$offsetQuery
 QUERY;
 
                     array_push($queryArray, $query);
@@ -979,7 +982,7 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondaryso
  (count(distinct ?source) as ?countsource)
 {
   VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
-  ?source wdt:$instanceOf wd:$entitiyWithProvenance. #entity with provenance
+  ?source wdt:$instanceOf wd:$entityWithProvenance. #entity with provenance
   ?source wdt:$hasOriginalSourceType ?sourcetype.
   ?source wdt:$generatedBy ?project.
   ?source wdt:$reportsOn ?event.
@@ -1017,7 +1020,7 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondaryso
 (count(distinct ?place) as ?countplace)
 (count(distinct ?source) as ?countsource)
 {
-    ?source wdt:$instanceOf wd:$entitiyWithProvenance. #entity with provenance
+    ?source wdt:$instanceOf wd:$entityWithProvenance. #entity with provenance
     ?source wdt:$hasOriginalSourceType ?sourcetype.
     ?source wdt:$generatedBy ?project.
     ?source wdt:$reportsOn ?event.
@@ -1036,8 +1039,8 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondaryso
 
 }group by ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondarysource ?desc
 order by ?sourceLabel
-limit 12
-offset 0
+$limitQuery
+$offsetQuery
 QUERY;
 
                 array_push($queryArray, $query);
@@ -1316,18 +1319,33 @@ QUERY;
 
         if(!$result) continue;
 
+        $presetToCounterFunction = [
+            'people' => 'queryAllAgentsCounter',
+            'place' => 'queryPlaceCounter',
+            'events' => 'queryEventCounter',
+            'sources' => 'querySourceCounter',
+            'singleProject' => 'queryProjectsCounter'
+        ];
+
+        $count = 0;
+        if(!isset($presetToCounterFunction[$preset])){
+            $count = count($result);
+        } else {
+            $count = $presetToCounterFunction[$preset]();
+        }
+
         if ($first){
             $resultsArray = $result;
             $first = false;
 
             if ($oneQuery){ // this is needed for the search page counter to be working
-                $record_total = count($result);
+                $record_total = $count;
             }
         } else {
             if($preset == 'people' || $preset == 'places' || $preset == 'events' || $preset == 'sources' || $preset == 'singleProject'){
                 //Get the count of all the results
                 //for people, places, events, sources, and singleProject
-                $record_total += count($result);
+                $record_total += $count;
             }
             else if ($preset != "projects2") {
                 $resultsArray = array_merge($resultsArray, $result);
