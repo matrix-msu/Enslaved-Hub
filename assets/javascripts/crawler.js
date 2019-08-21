@@ -3,6 +3,7 @@ var card_offset = 0;
 var total_length = 12;
 var sort_direction = 'ASC';
 var search_terms = '';
+var google_search_url = 'https://www.google.com/search?hl=en&num=100&q=';
 
 $(document).ready(function(){
 
@@ -49,6 +50,7 @@ $(document).ready(function(){
 	$("#crawler-search").submit(function (e) { // set the sorting
         e.stopPropagation();
         e.preventDefault();
+        console.log('hmm')
         search_terms = $(this).serializeArray()[0]['value'];
         localStorage.setItem('crawler_search_terms', search_terms);
 		$('.crawler-tabs li.tabbed').trigger('click');
@@ -176,21 +178,38 @@ function getResults(get_data)
 		data: get_data,
 		dataType: "JSON",
 		success:function(data){
-			if(data != "no more data"){
-				$(".result-container").append(data);
+			if(data) {
+				html = populateCrawlerResults(JSON.parse(data));
+				$(".result-container").append(html);
 				installModalListeners(); //install the modal listeners after content is generated
 				$(document).ready(function(){
 					setPagination(total_length, card_limit, card_offset);
 				});
-			}
-			else {
-				console.log("No more results");
 			}
 		},
 		'error':function(xhr, status, error){
 			console.log(xhr.responseText);
 		}
 	});//ajax
+}
+
+function populateCrawlerResults(data) {
+	row = '';
+	console.log(data.length)
+	for (var i = 0; i < data.length; i++) {
+		result = data[i];
+		row += `<div class="result" id="r${i+1}">`;
+		row += `<div class="link-name"><a class="link" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a></div>`;
+		row += `<div class="link-wrap"><a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
+		if (location.href.match(/crawler/)) {
+	        row += '<div class="right"><div class="trash crawler-modal-open" id="delete-link">';
+			row += '<img class="trash-icon" src="./assets/images/Delete.svg"></div>';
+			row += '<div class="add-seed"><p>Add to Seeds</p><form action="submit">';
+			row += `<input type="hidden" name="add_seed" value="${result['url']}"></form></div></div>`;
+	    }
+	    row += '</div></div>';
+	}
+	return row;
 }
 
 function installModalListeners(){
