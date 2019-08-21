@@ -1,7 +1,8 @@
 var card_limit = 12;
 var card_offset = 0;
 var total_length = 12;
-var sort_direction = 'ASC'
+var sort_direction = 'ASC';
+var search_terms = '';
 
 $(document).ready(function(){
 
@@ -39,10 +40,17 @@ $(document).ready(function(){
 
     $("ul.sort-by li").click(function (e) { // set the sorting
         e.stopPropagation();
-        sort = $(this).data('sort');
-        sort_direction = sort;
-        localStorage.setItem('sort_direction', sort);
+        sort_direction = $(this).data('sort');
+        localStorage.setItem('sort_direction', sort_direction);
 		$(document).trigger('click');
+		$('.crawler-tabs li.tabbed').trigger('click');
+    });
+
+	$("#crawler-search").submit(function (e) { // set the sorting
+        e.stopPropagation();
+        e.preventDefault();
+        search_terms = $(this).serializeArray()[0]['value'];
+        localStorage.setItem('crawler_search_terms', search_terms);
 		$('.crawler-tabs li.tabbed').trigger('click');
     });
 
@@ -135,6 +143,7 @@ function showResults(result_type, count_type)
 	get_data['limit'] = card_limit;
 	get_data['offset'] = card_offset;
 	get_data['sort'] = sort_direction;
+	get_data['terms'] = search_terms;
 
 	//Data to send for count
 	var count_data = {};

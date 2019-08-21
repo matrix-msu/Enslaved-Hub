@@ -29,10 +29,15 @@ class crawler_keywords {
 		return $con;
 	}
 	// fetch LIMIT number of keywords starting from OFFSET
-	public function get_keywords($limit, $offset, $sort)
+	public function get_keywords($limit, $offset, $sort, $terms)
 	{
+		// building full text search
+		$search = "";
+		if($terms){
+			$search = " AND keyword LIKE '%".$terms."%' OR url LIKE '%".$terms."%'";
+		}
 		$conn=$this->connect();
-		$query = "SELECT DISTINCT keyword, url FROM ppj_crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM ppj_deleted_keywords WHERE ppj_crawler_keywords.keyword = ppj_deleted_keywords.keyword) ORDER BY keyword ".$sort." LIMIT ".$limit." OFFSET ".$offset;
+		$query = "SELECT DISTINCT keyword, url FROM ppj_crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM ppj_deleted_keywords WHERE ppj_crawler_keywords.keyword = ppj_deleted_keywords.keyword)".$search." ORDER BY keyword ".$sort." LIMIT ".$limit." OFFSET ".$offset;
 		$result = $conn->query($query);
 		mysqli_close($conn);
 		if($result->num_rows >0){

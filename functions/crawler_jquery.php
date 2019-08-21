@@ -9,6 +9,7 @@ require_once(BASE_PATH . "assets/webcrawler/models/crawler_seeds.php");
 $limit = 40;
 $offset = 0;
 $sort = 'ASC';
+$terms = '';
 // connect to keywords, broken links and deleted keywords databases
 $crawler_keywords =new crawler_keywords();
 $crawler_deleted_keywords =new crawler_deleted_keywords();
@@ -29,12 +30,16 @@ if(isset($_POST["sort"]))
 {
 	$sort = $_POST["sort"];
 }
+if(isset($_POST["terms"]))
+{
+	$terms = $_POST["terms"];
+}
 
 
 //Gets results for results tab
 if(isset($_POST["get_results"]))
 {
-	$results = $crawler_keywords->get_keywords($limit,$offset,$sort);
+	$results = $crawler_keywords->get_keywords($limit,$offset,$sort,$terms);
 	echo(json_encode($results));
 }
 

@@ -20,7 +20,7 @@
     </div>
     <div class="search-filter">
         <div class="crawler-search">
-            <form action="submit">
+            <form action="submit" id="crawler-search">
                 <label for="searchbar" class="sr-only">searchbar</label>
                 <input id="searchbar" class="search-field" type="text" name="searchbar" placeholder="Find a URL"/>
                 <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
