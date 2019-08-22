@@ -2,6 +2,7 @@
 //******************************************************************************   Keywords Queries
 // initialize connection
 require_once(BASE_PATH . "assets/webcrawler/models/crawler_keywords.php");
+require_once(BASE_PATH . "assets/webcrawler/models/crawler_tags.php");
 require_once(BASE_PATH . "assets/webcrawler/models/crawler_deleted_keywords.php");
 require_once(BASE_PATH . "assets/webcrawler/models/crawler_broken_links.php");
 require_once(BASE_PATH . "assets/webcrawler/models/crawler_seeds.php");
@@ -11,10 +12,11 @@ $offset = 0;
 $sort = 'ASC';
 $terms = '';
 // connect to keywords, broken links and deleted keywords databases
-$crawler_keywords =new crawler_keywords();
-$crawler_deleted_keywords =new crawler_deleted_keywords();
-$broken_links=new crawler_broken_links();
-$seeds= new crawler_seeds();
+$crawler_keywords = new crawler_keywords();
+$crawler_tags = new crawler_tags();
+$crawler_deleted_keywords = new crawler_deleted_keywords();
+$broken_links = new crawler_broken_links();
+$seeds = new crawler_seeds();
 
 
 //Get limit, offset and sort values
@@ -48,6 +50,12 @@ if(isset($_POST["delete_result"]))
 {
 	$crawler_deleted_keywords->add_to_deleted($_POST["delete_result"]);
 	echo(json_encode("true"));
+}
+
+if(isset($_POST["get_tags"]))
+{
+	$results = $crawler_tags->get_tags();
+	echo(json_encode($results));
 }
 
 //Load more button

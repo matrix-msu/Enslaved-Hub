@@ -3,6 +3,7 @@ var card_offset = 0;
 var total_length = 12;
 var sort_direction = 'ASC';
 var search_terms = '';
+var tag_filter_ids = [];
 var google_search_url = 'https://www.google.com/search?hl=en&num=100&q=';
 
 $(document).ready(function(){
@@ -39,6 +40,17 @@ $(document).ready(function(){
 		$('.crawler-tabs li.tabbed').trigger('click');
     });
 
+    $("ul.tag-filter li").click(function (e) {
+        e.stopPropagation();
+        tag_filter_ids = [];
+        $("ul.tag-filter li").each(function () {
+        	if ($(this).find("input[type=checkbox]").prop("checked")) {
+        		tag_filter_ids.push($(this).data('id'));
+        	}
+        });
+		$('.crawler-tabs li.tabbed').trigger('click');
+    });
+
     $("ul.sort-by li").click(function (e) { // set the sorting
         e.stopPropagation();
         sort_direction = $(this).data('sort');
@@ -50,7 +62,6 @@ $(document).ready(function(){
 	$("#crawler-search").submit(function (e) { // set the sorting
         e.stopPropagation();
         e.preventDefault();
-        console.log('hmm')
         search_terms = $(this).serializeArray()[0]['value'];
         localStorage.setItem('crawler_search_terms', search_terms);
 		$('.crawler-tabs li.tabbed').trigger('click');
@@ -128,7 +139,7 @@ $(document).ready(function(){
 				$('.crawler-tabs li.tabbed').trigger('click');
 				$('.seed-wrap form input.search-field').val('');
 			},
-			'error':function(xhr, status, error){
+			error:function(xhr, status, error){
 				console.log(xhr.responseText);
 			}
 		});
@@ -141,7 +152,6 @@ function showResults(result_type, count_type)
 {
 	//Setup data to send for results
 	var get_data = result_type;
-	console.log(get_data)
 	get_data['limit'] = card_limit;
 	get_data['offset'] = card_offset;
 	get_data['sort'] = sort_direction;
@@ -162,11 +172,32 @@ function showResults(result_type, count_type)
 			total_length = data;
 			getResults(get_data);
 		},
-		'error':function(xhr, status, error){
+		error:function(xhr, status, error){
 			console.log(xhr.responseText);
 		}
 	});//ajax
 
+}
+
+function setTags() { //might not use this
+	$.ajax({
+		method:'POST',
+		url: BASE_URL + "api/getCrawlerResults",
+		data: {'get_tags': 'ok'},
+		dataType: "JSON",
+		success:function(data){
+			if(data){
+				html = '';
+				$.each(data, function (_, tag) {
+					html += `<li><input type="checkbox" data-id="${tag['id']}">${tag['tag_name']}</li>`;
+				});
+				$("ul.tag-filter").append(html);
+			}
+		},
+		error:function(xhr, status, error){
+			console.log(xhr.responseText);
+		}
+	});
 }
 
 //Gets the results for the selected tab
@@ -179,7 +210,7 @@ function getResults(get_data)
 		dataType: "JSON",
 		success:function(data){
 			if(data) {
-				html = populateCrawlerResults(JSON.parse(data));
+				html = populateCrawlerResults(data);
 				$(".result-container").append(html);
 				installModalListeners(); //install the modal listeners after content is generated
 				$(document).ready(function(){
@@ -187,7 +218,7 @@ function getResults(get_data)
 				});
 			}
 		},
-		'error':function(xhr, status, error){
+		error:function(xhr, status, error){
 			console.log(xhr.responseText);
 		}
 	});//ajax
@@ -195,7 +226,6 @@ function getResults(get_data)
 
 function populateCrawlerResults(data) {
 	row = '';
-	console.log(data.length)
 	for (var i = 0; i < data.length; i++) {
 		result = data[i];
 		row += `<div class="result" id="r${i+1}">`;
@@ -205,7 +235,8 @@ function populateCrawlerResults(data) {
 	        row += '<div class="right"><div class="trash crawler-modal-open" id="delete-link">';
 			row += '<img class="trash-icon" src="./assets/images/Delete.svg"></div>';
 			row += '<div class="add-seed"><p>Add to Seeds</p><form action="submit">';
-			row += `<input type="hidden" name="add_seed" value="${result['url']}"></form></div></div>`;
+			row += `<input type="hidden" name="add_seed" value="${result['url']}"></form></div>`;
+			row += `<div class="add-tag" id="add-tag"><p>Add Tag</p></div></div>`
 	    }
 	    row += '</div></div>';
 	}
@@ -283,7 +314,7 @@ function installModalListeners(){
 				$('.crawler-modal .close').trigger('click');
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
-			'error':function(xhr, status, error){
+			error:function(xhr, status, error){
 				console.log(xhr.responseText);
 			}
 		});
@@ -309,7 +340,7 @@ function installModalListeners(){
 				//after ajax refresh tab
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
-			'error':function(xhr, status, error){
+			error:function(xhr, status, error){
 				console.log(xhr.responseText);
 			}
 		});

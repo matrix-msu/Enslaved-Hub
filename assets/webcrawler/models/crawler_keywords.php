@@ -32,17 +32,17 @@ class crawler_keywords {
 		if($terms)
 			$search = " AND keyword LIKE '%".$terms."%' OR url LIKE '%".$terms."%'";
 		$link = $this->connect();
-		$query = "SELECT DISTINCT keyword, url FROM ppj_crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM ppj_deleted_keywords WHERE ppj_crawler_keywords.keyword = ppj_deleted_keywords.keyword)".$search." ORDER BY keyword ".$sort." LIMIT ".$limit." OFFSET ".$offset;
+		$query = "SELECT DISTINCT keyword, url FROM crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM deleted_keywords WHERE crawler_keywords.keyword = deleted_keywords.keyword)".$search." ORDER BY keyword ".$sort." LIMIT ".$limit." OFFSET ".$offset;
 		$result = mysqli_query($link, $query);
 		mysqli_close($link);
-		return json_encode(mysqli_fetch_all($result, MYSQLI_ASSOC));
+		return mysqli_fetch_all($result, MYSQLI_ASSOC);
 	}
 
 	// get keywords with dates
 	public function get_keywords_date($limit, $offset, $cur_date){
 		$date=date_format(date_create($cur_date),"Y-m-d");
 		$conn=$this->connect();
-		$query = "SELECT DISTINCT keyword, url FROM ppj_crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM ppj_deleted_keywords WHERE ppj_crawler_keywords.keyword = ppj_deleted_keywords.keyword) and keyword_date='$date' LIMIT ".$limit." OFFSET ".$offset;
+		$query = "SELECT DISTINCT keyword, url FROM crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM deleted_keywords WHERE crawler_keywords.keyword = deleted_keywords.keyword) and keyword_date='$date' LIMIT ".$limit." OFFSET ".$offset;
 		$result=$conn->query($query);
 		mysqli_close($conn);
 		if($result->num_rows >0){
@@ -64,7 +64,7 @@ class crawler_keywords {
 	// get unique dates from database
 	public function get_dates(){
 		$conn=$this->connect();
-		$query = "SELECT DISTINCT keyword_date from ppj_crawler_keywords order by keyword_date desc;";
+		$query = "SELECT DISTINCT keyword_date from crawler_keywords order by keyword_date desc;";
 		$result=$conn->query($query);
 		mysqli_close($conn);
 		if($result->num_rows >0){
@@ -79,7 +79,7 @@ class crawler_keywords {
 
 	public function get_count(){
 		$conn=$this->connect();
-		$query = "SELECT DISTINCT keyword, url FROM ppj_crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM ppj_deleted_keywords WHERE ppj_crawler_keywords.keyword = ppj_deleted_keywords.keyword)";
+		$query = "SELECT DISTINCT keyword, url FROM crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM deleted_keywords WHERE crawler_keywords.keyword = deleted_keywords.keyword)";
 		$result=$conn->query($query);
 		mysqli_close($conn);
 		return $result->num_rows;

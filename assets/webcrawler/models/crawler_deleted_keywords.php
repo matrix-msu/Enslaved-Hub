@@ -32,9 +32,9 @@ class crawler_deleted_keywords {
 	public function add_to_deleted ($deleted_keyword)
 	{
 		$conn = $this->connect();
-		// $tmp = $conn->query("SELECT * FROM ppj_deleted_keywords where keyword=".$deleted_keyword);
+		// $tmp = $conn->query("SELECT * FROM deleted_keywords where keyword=".$deleted_keyword);
 		// if($tmp->num_rows == 0)
-			$conn->query("INSERT IGNORE INTO ppj_deleted_keywords (keyword) VALUES ('$deleted_keyword')");
+			$conn->query("INSERT IGNORE INTO deleted_keywords (keyword) VALUES ('$deleted_keyword')");
 		mysqli_close($conn);
 	}
 
