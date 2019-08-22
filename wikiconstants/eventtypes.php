@@ -8,6 +8,7 @@ const eventTypes=[
 'Baptism'	 => 'Q237',
 'Marriage'	 => 'Q238',
 'Enslavement or Capture or Re-capture'	 => 'Q239',
+'Sale'	 => 'Q240',
 'Flight or Disappearance'	 => 'Q241',
 'Legal Proceedings or Civil or Criminal or Arrest'	 => 'Q243',
 'Employment or Apprenticeship or Indenture'	 => 'Q244',
