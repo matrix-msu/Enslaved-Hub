@@ -1,5 +1,9 @@
 <?php
+    require_once(BASE_PATH . "assets/webcrawler/models/crawler_tags.php");
+
     $isCrawlerAdmin = true;
+    $crawler_tags = new crawler_tags();
+    $tags = $crawler_tags->get_tags();
 ?>
 
 <div class="container header">
@@ -39,6 +43,13 @@
                     <li><span>24</span> Per Page</li>
                     <li><span>36</span> Per Page</li>
                     <li><span>48</span> Per Page</li>
+                </ul>
+            </span>
+            <span class="align-center tag-filter">Filter By Tags <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+                <ul id="sortmenu" class="tag-filter">
+                    <?php foreach ($tags as $tag) {
+                        echo '<li data-id="' . $tag['tag_id'] . '"><input type="checkbox">' . $tag['tag_name'] . '</li>';
+                    } ?>
                 </ul>
             </span>
         </div>

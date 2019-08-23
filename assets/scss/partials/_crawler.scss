@@ -206,6 +206,48 @@
                         border-left: 1px solid rgba(206,208,210,0.5);
                         text-align: center;
                         width: 110px;
+                        cursor: pointer;
+                        span{
+                            color: $base-dark;
+                            font-size: 16px;
+                            line-height: 60px;
+                        }
+                        span{
+                            position: relative;
+                        }
+                        span.results-per-page{
+                            margin-left: 20px;
+                        }
+                        ul {
+                            background: $base-dark;
+                            box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+                            color: $base-light;
+                            display: none;
+                            list-style: none;
+                            padding: 20px;
+                            position: absolute;
+                            right: 0;
+                            width: max-content;
+                            z-index: 1;
+                            li {
+                                cursor: pointer;
+                                font-size: 12px;
+                                line-height: 15px;
+                                padding: 5px 3px;
+                            }
+                            li:hover {
+                                color: $sub-base;
+                            }
+                        }
+                        ul.show {
+                            display: block;
+                        }
+                    }
+
+                    .display-tag{
+                        border-left: 1px solid rgba(206,208,210,0.5);
+                        text-align: center;
+                        width: 110px;
                         p{
                             color: $base-dark;
                             font-size: 16px;

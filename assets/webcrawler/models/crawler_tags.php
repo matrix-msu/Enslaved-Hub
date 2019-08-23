@@ -37,7 +37,7 @@ class crawler_tags {
 		$link = $this->connect();
 		$assoc = [];
 		foreach ($ids as $id) {
-			$query = "SELECT tag_name FROM crawler_tags ct INNER JOIN crawler_keyword_tags_assoc ckta ON
+			$query = "SELECT ct.tag_id, ct.tag_name FROM crawler_tags ct INNER JOIN crawler_keyword_tags_assoc ckta ON
 			ct.tag_id = ckta.tag_id WHERE ckta.keyword_id =" . $id;
 			$result = mysqli_query($link, $query);
 			$assoc[$id] = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -47,6 +47,38 @@ class crawler_tags {
 		mysqli_close($link);
 
 		return $assoc;
+	}
+
+	public function update_keyword_tags($keywordId, $tagIds){
+		$link = $this->connect();
+
+		// Assume failure
+		$result = 'failed';
+
+		if ($stmt = mysqli_prepare($link, "DELETE FROM crawler_keyword_tags_assoc WHERE keyword_id=?")) {
+			mysqli_stmt_bind_param($stmt, "s", $keywordId);
+    		mysqli_stmt_execute($stmt);
+    		mysqli_stmt_close($stmt);
+		} else {
+			return $result;
+		}
+
+		// TODO::refactor to prepared statement
+		$stmt = "INSERT INTO crawler_keyword_tags_assoc(keyword_id, tag_id) VALUES ";
+		for ($i=0; $i < count($tagIds); $i++) {
+			$stmt .= "(".$keywordId.", ".$tagIds[$i].")";
+			if($i != count($tagIds) - 1) {
+				$stmt .= ', ';
+			}
+		}
+
+		if(mysqli_query($link, $stmt) === TRUE){
+			$result = 'success';
+		}
+
+		mysqli_close($link);
+
+		return $result;
 	}
 }
 

@@ -4,10 +4,12 @@ var total_length = 12;
 var sort_direction = 'ASC';
 var search_terms = '';
 var tag_filter_ids = [];
+var all_tags = [];
 var google_search_url = 'https://www.google.com/search?hl=en&num=100&q=';
 
 $(document).ready(function(){
 
+	getTags();
 	//Change in current-page input so call searchResults function
     $('#pagination .current-page').change(function(){
 		var val = $('#pagination .current-page').val();
@@ -180,7 +182,7 @@ function showResults(result_type, count_type)
 
 }
 
-function setTags() { //might not use this
+function getTags() {
 	$.ajax({
 		method:'POST',
 		url: BASE_URL + "api/getCrawlerResults",
@@ -188,11 +190,7 @@ function setTags() { //might not use this
 		dataType: "JSON",
 		success:function(data){
 			if(data){
-				html = '';
-				$.each(data, function (_, tag) {
-					html += `<li><input type="checkbox" data-id="${tag['id']}">${tag['tag_name']}</li>`;
-				});
-				$("ul.tag-filter").append(html);
+				all_tags = data;
 			}
 		},
 		error:function(xhr, status, error){
@@ -231,6 +229,16 @@ function populateCrawlerResults(data) {
 	for (var i = 0; i < data['keywords'].length; i++) {
 		result = data['keywords'][i];
 		k_id = result['keyword_id'];
+		tag_names = [];
+		tag_ids = [];
+
+		if ($.inArray(k_id in data['tags']) && data['tags'][k_id].length > 0) {
+    		$.each(data['tags'][k_id], function (_, tag) {
+    			tag_names.push(tag['tag_name']);
+    			tag_ids.push(tag['tag_id']);
+    		});
+    	}
+
 		row += `<div class="result" id="r${i+1}">`;
 		row += `<div class="link-name"><a class="link" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a></div>`;
 		row += `<div class="link-wrap"><a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
@@ -239,15 +247,20 @@ function populateCrawlerResults(data) {
 			row += '<img class="trash-icon" src="./assets/images/Delete.svg"></div>';
 			row += '<div class="add-seed"><p>Add to Seeds</p><form action="submit">';
 			row += `<input type="hidden" name="add_seed" value="${result['url']}"></form></div>`;
-			row += `<div class="add-tag" id="add-tag"><p>Add Tag</p></div></div>`
+			row += '<div class="add-tag" id="add-tag"><span id="show-tag">Add Tag';
+			row += `<ul id="sortmenu" data-id="${k_id}">`;
+			$.each(all_tags, function(_, tag) {
+				checked = '';
+				if (tag_ids.length > 0 && $.inArray(tag['tag_id'], tag_ids) >= 0) {
+					checked = ' checked';
+				}
+				row += `<li data-id="${tag['tag_id']}"><input type="checkbox"${checked}>${tag['tag_name']}</li>`
+			});
+			row += '</ul></span></div></div>';
 	    } else {
-	    	row += '<div class="right"><div class="add-tag"><p>Tags: <span>';
-	    	tags = [];
-	    	if ($.inArray(k_id in data['tags']) && data['tags'][k_id].length > 0) {
-	    		$.each(data['tags'][k_id], function (_, tag) {
-	    			tags.push(tag['tag_name']);
-	    		});
-	    		row += tags.join(', ');
+	    	row += '<div class="right"><div class="display-tag"><p>Tags: <span>';
+	    	if(tag_names.length > 0) {
+	    		row += tag_names.join(', ');
 	    	}
 	    	row += '</span></p></div></div>';
 	    }
@@ -333,6 +346,38 @@ function installModalListeners(){
 		});
 	});
 
+	$(".add-tag").off().click(function (e) {
+		e.stopPropagation();
+        $(this).find("#sortmenu").toggleClass('show');
+    });
+
+    $(".add-tag ul li").off().click(function (e) {
+		keyword_tag_filter_ids = [];
+		k_id = $(this).parent().data('id');
+        $(this).parent().children().each(function () {
+        	if ($(this).find("input[type=checkbox]").prop("checked")) {
+        		keyword_tag_filter_ids.push($(this).data('id'));
+        	}
+        });
+
+        $.ajax({
+			type: "POST",
+			url: BASE_URL + "api/getCrawlerResults",
+			data: {
+				'update_tags': 'ok',
+				'keyword_id': k_id,
+				'tag_ids': keyword_tag_filter_ids
+			},
+			dataType: "JSON",
+			success:function(data){
+				//after ajax refresh tab
+				$('.crawler-tabs li.tabbed').trigger('click');
+			},
+			error:function(xhr, status, error){
+				console.log(xhr.responseText);
+			}
+		});
+    });
 
 	//Listeners for adding result to seeds
 	$('.add-seed').off().click(function(){
