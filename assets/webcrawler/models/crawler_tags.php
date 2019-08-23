@@ -25,12 +25,28 @@ class crawler_tags {
 
 	public function get_tags(){
 		$link = $this->connect();
-		$query = "SELECT id, tag_name FROM crawler_tags";
+		$query = "SELECT tag_id, tag_name FROM crawler_tags";
 		$result = mysqli_query($link, $query);
 
 		mysqli_close($link);
 
 		return mysqli_fetch_all($result, MYSQLI_ASSOC);
+	}
+
+	public function get_tag_name_per_keyword_ids($ids){
+		$link = $this->connect();
+		$assoc = [];
+		foreach ($ids as $id) {
+			$query = "SELECT tag_name FROM crawler_tags ct INNER JOIN crawler_keyword_tags_assoc ckta ON
+			ct.tag_id = ckta.tag_id WHERE ckta.keyword_id =" . $id;
+			$result = mysqli_query($link, $query);
+			$assoc[$id] = mysqli_fetch_all($result, MYSQLI_ASSOC);
+			mysqli_free_result($result);
+		}
+
+		mysqli_close($link);
+
+		return $assoc;
 	}
 }
 

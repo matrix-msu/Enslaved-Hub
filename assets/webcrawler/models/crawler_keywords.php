@@ -27,12 +27,14 @@ class crawler_keywords {
 		return $con;
 	}
 	// fetch LIMIT number of keywords starting from OFFSET
-	public function get_keywords($limit, $offset, $sort, $terms){
-		$search = "";
+	public function get_keywords($limit, $offset, $sort, $terms='', $tagIds=[]){
+		$search = $filter = "";
 		if($terms)
-			$search = " AND keyword LIKE '%".$terms."%' OR url LIKE '%".$terms."%'";
+			$search = " AND ck.keyword LIKE '%".$terms."%' OR ck.url LIKE '%".$terms."%'";
+		if($tagIds)
+			$filter = " AND ct.tag_id IN (" . implode(', ', $tagIds) . ")";
 		$link = $this->connect();
-		$query = "SELECT DISTINCT keyword, url FROM crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM deleted_keywords WHERE crawler_keywords.keyword = deleted_keywords.keyword)".$search." ORDER BY keyword ".$sort." LIMIT ".$limit." OFFSET ".$offset;
+		$query = "SELECT ck.keyword_id, ck.keyword, ck.url FROM crawler_keywords ck LEFT JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id = ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id = ckta.tag_id WHERE NOT EXISTS (SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword = dk.keyword)".$search.$filter." GROUP BY(ck.keyword) ORDER BY ck.keyword ".$sort." LIMIT ".$limit." OFFSET ".$offset;
 		$result = mysqli_query($link, $query);
 		mysqli_close($link);
 		return mysqli_fetch_all($result, MYSQLI_ASSOC);

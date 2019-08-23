@@ -203,12 +203,15 @@
                     }
 
                     .add-tag{
+                        border-left: 1px solid rgba(206,208,210,0.5);
                         text-align: center;
                         width: 110px;
                         p{
                             color: $base-dark;
                             font-size: 16px;
-                            line-height: 60px;
+                            span {
+                                font-size: 11px;
+                            }
                         }
                     }
                 }

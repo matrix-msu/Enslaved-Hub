@@ -48,7 +48,7 @@
             <span class="align-center tag-filter">Filter By Tags <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
                 <ul id="sortmenu" class="tag-filter">
                     <?php foreach ($tags as $tag) {
-                        echo '<li data-id="' . $tag['id'] . '"><input type="checkbox">' . $tag['tag_name'] . '</li>';
+                        echo '<li data-id="' . $tag['tag_id'] . '"><input type="checkbox">' . $tag['tag_name'] . '</li>';
                     } ?>
                 </ul>
             </span>

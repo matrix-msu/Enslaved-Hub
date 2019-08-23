@@ -156,6 +156,7 @@ function showResults(result_type, count_type)
 	get_data['offset'] = card_offset;
 	get_data['sort'] = sort_direction;
 	get_data['terms'] = search_terms;
+	get_data['tag_ids'] = tag_filter_ids;
 
 	//Data to send for count
 	var count_data = {};
@@ -210,6 +211,7 @@ function getResults(get_data)
 		dataType: "JSON",
 		success:function(data){
 			if(data) {
+				console.log(data)
 				html = populateCrawlerResults(data);
 				$(".result-container").append(html);
 				installModalListeners(); //install the modal listeners after content is generated
@@ -226,8 +228,9 @@ function getResults(get_data)
 
 function populateCrawlerResults(data) {
 	row = '';
-	for (var i = 0; i < data.length; i++) {
-		result = data[i];
+	for (var i = 0; i < data['keywords'].length; i++) {
+		result = data['keywords'][i];
+		k_id = result['keyword_id'];
 		row += `<div class="result" id="r${i+1}">`;
 		row += `<div class="link-name"><a class="link" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a></div>`;
 		row += `<div class="link-wrap"><a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
@@ -237,6 +240,16 @@ function populateCrawlerResults(data) {
 			row += '<div class="add-seed"><p>Add to Seeds</p><form action="submit">';
 			row += `<input type="hidden" name="add_seed" value="${result['url']}"></form></div>`;
 			row += `<div class="add-tag" id="add-tag"><p>Add Tag</p></div></div>`
+	    } else {
+	    	row += '<div class="right"><div class="add-tag"><p>Tags: <span>';
+	    	tags = [];
+	    	if ($.inArray(k_id in data['tags']) && data['tags'][k_id].length > 0) {
+	    		$.each(data['tags'][k_id], function (_, tag) {
+	    			tags.push(tag['tag_name']);
+	    		});
+	    		row += tags.join(', ');
+	    	}
+	    	row += '</span></p></div></div>';
 	    }
 	    row += '</div></div>';
 	}

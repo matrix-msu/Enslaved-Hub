@@ -11,6 +11,7 @@ $limit = 40;
 $offset = 0;
 $sort = 'ASC';
 $terms = '';
+$tagIds = [];
 // connect to keywords, broken links and deleted keywords databases
 $crawler_keywords = new crawler_keywords();
 $crawler_tags = new crawler_tags();
@@ -36,12 +37,21 @@ if(isset($_POST["terms"]))
 {
 	$terms = $_POST["terms"];
 }
+if(isset($_POST["tag_ids"]))
+{
+	$tagIds = $_POST["tag_ids"];
+}
 
 
 //Gets results for results tab
 if(isset($_POST["get_results"]))
 {
-	$results = $crawler_keywords->get_keywords($limit,$offset,$sort,$terms);
+	$results = $keyword_ids = [];
+	$results['keywords'] = $crawler_keywords->get_keywords($limit,$offset,$sort,$terms,$tagIds);
+	foreach ($results['keywords'] as $key => $value) {
+		array_push($keyword_ids, $value['keyword_id']);
+	}
+	$results['tags'] = $crawler_tags->get_tag_name_per_keyword_ids($keyword_ids);
 	echo(json_encode($results));
 }
 
