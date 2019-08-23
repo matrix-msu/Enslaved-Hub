@@ -11,7 +11,7 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondaryso
   VALUES ?source { $qidList }
   ?source wdt:$hasOriginalSourceType ?sourcetype.
   ?source wdt:$generatedBy ?project.
-  ?source wdt:$reportsOn ?event.
+  OPTIONAL{?source wdt:$reportsOn ?event}.  # TODO: DO NOT KEEP AS OPTIONAL
   OPTIONAL{?event wdt:$atPlace ?place}.
   OPTIONAL{?source wdt:$hasOriginalSourceDepository ?secondarysource}.
   OPTIONAL {?source schema:description ?desc}.

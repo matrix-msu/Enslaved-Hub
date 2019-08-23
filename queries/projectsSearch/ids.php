@@ -1,0 +1,5 @@
+<?php
+
+$tempQuery = <<<QUERY
+
+QUERY;

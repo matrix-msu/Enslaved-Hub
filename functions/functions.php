@@ -153,71 +153,12 @@ offset $Q_offset
 QUERY;
 
                 array_push($queryArray, $query);
-
-                $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent ?startyear ?endyear
-(group_concat(distinct ?name; separator = "||") as ?name) #name
-
-(group_concat(distinct ?placelab; separator = "||") as ?place) #place
-
-(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
-
-(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
-
-(group_concat(distinct ?match; separator = "||") as ?closeMatch)
-
-WHERE {
-
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-
-    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent;
-
-        wdt:$hasName ?name; #name is mandatory
-            p:$instanceOf  ?object .
-    ?object prov:wasDerivedFrom ?provenance .
-    ?provenance pr:$isDirectlyBasedOn ?reference .
-    ?reference wdt:$generatedBy wd:$Q_ID
-
-    OPTIONAL{?agent  wdt:$hasParticipantRole ?role}. #optional role
-    MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
-
-    OPTIONAL { ?agent wdt:$hasPersonStatus ?status.
-            ?status rdfs:label ?statuslab}
-
-    OPTIONAL { ?agent wdt:$hasSex ?sex.
-            ?sex rdfs:label ?sexlab}
-
-    OPTIONAL { ?agent wdt:$closeMatch ?match}.
-
-    ?agent p:$hasName ?statement.
-    ?statement ps:$hasName ?name.
-    OPTIONAL{ ?statement pq:$recordedAt ?event.
-            ?event  wdt:$startsAt ?startdate.
-            BIND(str(YEAR(?startdate)) AS ?startyear).
-            OPTIONAL {?event wdt:$endsAt ?enddate.
-        BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            OPTIONAL {?event wdt:$atPlace ?place.
-                    ?place rdfs:label ?placelab}
-
-            }.
-
-
-} group by ?agent ?event ?startyear ?endyear
-order by ?agent
-QUERY;
-
-                array_push($queryArray, $query);
                 break;
 
             case 'people':
                 ///*********************************** */
                 /// PEOPLE
                 ///*********************************** */
-                //Query with limit and offset
-                $query = array('query' => "");
-
-                //Filtering for Query
 
                 // filter by gender
                 $genderIdFilter = "";
@@ -233,13 +174,15 @@ QUERY;
                 }
 
                 // filter by name
-                //TODO: FIX NAME FILTER
                 $nameQuery = "";
                 if (isset($filtersArray['person'])){
                     $name = $filtersArray['person'][0];
-                    $nameQuery = "FILTER regex(?name, '^$name', 'i') .";
+                    $nameQuery = "
+                        ?agent p:$hasName ?statement.
+                        ?statement ps:$hasName ?name.
+                        FILTER regex(?name, '^$name', 'i') . 
+                    ";
                 }
-
 
                 //filter by source
                 //TODO: FIX SOURCE FILTER
@@ -320,154 +263,61 @@ QUERY;
                     }
                 }
 
+                // filter by source type
+                $sourceTypeIdFilter = "";
+                if (isset($filtersArray['source_type'])){
+                    $sourceTypes = $filtersArray['source_type'];
 
-                //todo: get the new filter for this
+                    foreach ($sourceTypes as $type){
+                        if (array_key_exists($type, sourceTypes)){
+                            $qType = sourceTypes[$type];
+                            $sourceTypeIdFilter .= "  ?agent ?property  ?object .
+                                ?object prov:wasDerivedFrom ?provenance .
+                                ?provenance pr:$isDirectlyBasedOn ?source .
+                                ?source wdt:$hasOriginalSourceType wd:$qType.  
+                            ";
+                        }
+                    }
+                }
+
                 // people connected to an event
-                $eventQuery = "";
+                $eventIdFilter = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
                     $eventQ = $filtersArray['event'][0];
 
-                    $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent ?name (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
-
- WHERE
-{
- VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
-  ?event wdt:$instanceOf wd:$event.
-  ?event p:$providesParticipantRole ?statement.
-  ?statement ps:$providesParticipantRole ?personname.
-  ?statement pq:$hasParticipantRole ?agent.
-  ?agent rdfs:label ?name.
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}
-QUERY;
-                    array_push($queryArray, $query);
-                    break;
+                    $eventIdFilter = "
+                        VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
+                        ?event wdt:$instanceOf wd:$event.
+                        ?event p:$providesParticipantRole ?statement.
+                        ?statement ps:$providesParticipantRole ?personname.
+                        ?statement pq:$hasParticipantRole ?agent.
+                        ?agent rdfs:label ?name.
+                    ";
                 }
 
-
-                include BASE_PATH."queries/peopleSearch/count.php";
-                $resultCountQuery['query'] = $tempQuery;
-
-                $ch = curl_init(BLAZEGRAPH_URL);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resultCountQuery));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
-
-                $result = json_decode($result, true)['results']['bindings'];
-
-                $record_total = 0;
-                if (isset($result[0]) && isset($result[0]['count'])){
-                    $record_total = $result[0]['count']['value'];
-                }
-
-                // no more searching if we know there are 0 results
-                if ($record_total <= 0){
-                    return createCards([], $templates, $preset, 0);
-                }
-
-                include BASE_PATH."queries/peopleSearch/ids.php";
-                $idQuery['query'] = $tempQuery;
-
-                $ch = curl_init(BLAZEGRAPH_URL);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($idQuery));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
-
-                $result = json_decode($result, true)['results']['bindings'];
-
-                // get the qids from each url
-                $urls = (array_column(array_column($result, 'agent'), 'value'));
-                $qids = [];
-                foreach($urls as $url){
-                    $qids[] = end(explode('/', $url));
-                }
-                
-                // create the line in the query with the ids to search for
-                $qidList = "";
-                foreach($qids as $qid){
-                    $qidList .= "wd:$qid ";
-                }
-                
-                include BASE_PATH."queries/eventsSearch/data.php";
-                $query['query'] = $tempQuery;
-                $dataQuery['query'] = $tempQuery;
-
-                array_push($queryArray, $query);
                 break;
-
             case 'places':
                 ///*********************************** */
                 /// PLACES
                 ///*********************************** */
 
-                $typeQuery = "";
+                $placeTypeIdFilter = "";
                 if (isset($filtersArray['place_type'])){
-                    $type = $filtersArray['place_type'][0];
-                    if (array_key_exists($type, placeTypes)){
-                        $qType = placeTypes[$type];
-                        $typeQuery = "?place wdt:$hasPlaceType wd:$qType .";
+                    $types = $filtersArray['place_type'];
+                    foreach ($types as $type){
+                        if (array_key_exists($type, placeTypes)){
+                            $qType = placeTypes[$type];
+                            $placeTypeIdFilter .= "?place wdt:$hasPlaceType wd:$qType . ";
+                        }
                     }
+                    
                 }
 
-                $query = array('query' => "");
-
-                $query['query'] = <<<QUERY
-SELECT ?place ?placeLabel ?locatedInLabel ?type ?geonames ?code
-(count(distinct ?person) as ?countpeople)
-(count(distinct ?event) as ?countevent)
-(count(distinct ?source) as ?countsource)
-
-WHERE {
-    ?event wdt:$instanceOf wd:$event;
-    ?property  ?object .
-    ?object prov:wasDerivedFrom ?provenance .
-    ?provenance pr:$isDirectlyBasedOn ?source .
-
-    ?event wdt:$atPlace ?place;
-    p:$providesParticipantRole ?statement.
-    ?statement ps:$providesParticipantRole ?role.
-    ?statement pq:$hasParticipantRole ?person.
-
-
-    ?place rdfs:label ?placeLabel.
-
-    ?place wdt:$hasPlaceType ?placetype.
-    ?placetype rdfs:label ?type.
-
-    $typeQuery
-
-    OPTIONAL{ ?place wdt:$geonamesID ?geonames.}
-    OPTIONAL{ ?place wdt:$moderncountrycode ?code.}
-    OPTIONAL {?place wdt:$locatedIn ?locatedIn}.
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?place ?placeLabel ?locatedInLabel ?type ?geonames ?code
-order by ?placeLabel
-$limitQuery
-$offsetQuery
-QUERY;
-
-                array_push($queryArray, $query);
                 break;
             case 'events':
                 ///*********************************** */
                 /// EVENTS
                 ///*********************************** */
-
-                //Filtering for Query
 
                 // filtering for event type
                 $eventTypeIdFilter = "";
@@ -480,7 +330,6 @@ QUERY;
                             $eventTypeIdFilter .= "?event wdt:$hasEventType wd:$qType . ";
                         }
                     }
-
                 }
 
                 // filtering for dateRange
@@ -500,21 +349,19 @@ QUERY;
                     }
 
                     $dateRangeQuery = $dateRange;
-
                     if ($from != ''){
                         $dateRangeIdFilter .= "
                             ?event wdt:$startsAt ?startYear.
                             FILTER (?startYear >= \"".$from."-01-01T00:00:00Z"."\"^^xsd:dateTime) . 
                         ";
                     }
-
                     if ($to != ''){
                         $dateRangeIdFilter .= "
                             ?event wdt:$endsAt ?endYear.
                             FILTER (?endYear <= \"".$to."-01-01T00:00:00Z"."\"^^xsd:dateTime) . 
-                        ";                    }
+                        ";                    
+                    }
                 }
-
 
                 // filter for events connected to a source
                 $sourceIdFilter = "";
@@ -530,75 +377,11 @@ QUERY;
                     }
                 }
 
-                include BASE_PATH."queries/eventsSearch/count.php";
-                $resultCountQuery['query'] = $tempQuery;
-                
-                $ch = curl_init(BLAZEGRAPH_URL);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resultCountQuery));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
-                
-                $result = json_decode($result, true)['results']['bindings'];
-                
-                $record_total = 0;
-                if (isset($result[0]) && isset($result[0]['count'])){
-                    $record_total = $result[0]['count']['value'];
-                }
-
-                // no more searching if we know there are 0 results
-                if ($record_total <= 0){
-                    return createCards([], $templates, $preset, 0);
-                }
-            
-
-                include BASE_PATH."queries/eventsSearch/ids.php";
-                $idQuery['query'] = $tempQuery;
-                
-                $ch = curl_init(BLAZEGRAPH_URL);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($idQuery));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
-                
-                $result = json_decode($result, true)['results']['bindings'];
-                
-                // get the qids from each url
-                $urls = (array_column(array_column($result, 'event'), 'value'));
-                $qids = [];
-                foreach($urls as $url){
-                    $qids[] = end(explode('/', $url));
-                }
-                
-                // create the line in the query with the ids to search for
-                $qidList = "";
-                foreach($qids as $qid){
-                    $qidList .= "wd:$qid ";
-                }
-                
-                include BASE_PATH."queries/eventsSearch/data.php";
-                $query['query'] = $tempQuery;
-                $dataQuery['query'] = $tempQuery;
-                
-                // print_r($query);die;
-                array_push($queryArray, $query);
                 break;
-
             case 'sources':
                 ///*********************************** */
                 /// SOURCES
                 ///*********************************** */
-                $query = array('query' => "");
 
                 //todo: get these working correctly
                 // filter for source types
@@ -627,107 +410,9 @@ QUERY;
                      ";
                 }
 
-                include BASE_PATH."queries/sourcesSearch/count.php";
-                $resultCountQuery['query'] = $tempQuery;
-
-                $ch = curl_init(BLAZEGRAPH_URL);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resultCountQuery));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
-                
-                $result = json_decode($result, true)['results']['bindings'];
-                
-                $record_total = 0;
-                if (isset($result[0]) && isset($result[0]['count'])){
-                    $record_total = $result[0]['count']['value'];
-                }
-
-                // no more searching if we know there are 0 results
-                if ($record_total <= 0){
-                    return createCards([], $templates, $preset, 0);
-                }
-                
-                include BASE_PATH."queries/sourcesSearch/ids.php";
-                $idQuery['query'] = $tempQuery;
-                
-                $ch = curl_init(BLAZEGRAPH_URL);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($idQuery));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                    'Accept: application/sparql-results+json'
-                ));
-                $result = curl_exec($ch);
-                curl_close($ch);
-                
-                $result = json_decode($result, true)['results']['bindings'];
-                
-                // get the qids from each url
-                $urls = (array_column(array_column($result, 'source'), 'value'));
-                $qids = [];
-                foreach($urls as $url){
-                    $qids[] = end(explode('/', $url));
-                }
-                
-                // create the line in the query with the ids to search for
-                $qidList = "";
-                foreach($qids as $qid){
-                    $qidList .= "wd:$qid ";
-                }
-                
-                include BASE_PATH."queries/sourcesSearch/data.php";
-                $query['query'] = $tempQuery;
-                $dataQuery['query'] = $tempQuery;
-                // print_r($dataQuery);die;
-
-                array_push($queryArray, $query);
                 break;
             case 'projects':
-                $query = array('query' => "");
-//                $query['query'] =
-//                    'SELECT ?project ?projectLabel  WHERE {
-//                      ?project wdt:$instanceOf wd:$researchProject 
-//
-//                      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-//                    }
-//                ';
-                $query['query'] = <<<QUERY
-SELECT ?person ?personLabel ?name ?originLabel
-    (group_concat(distinct ?status; separator = "||") as ?status)
-    (group_concat(distinct ?place; separator = "||") as ?place)
-    (group_concat(distinct ?startyear; separator = "||") as ?startyear)
-    (group_concat(distinct ?endyear; separator = "||") as ?endyear)
-    WHERE {
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-        ?person wdt:$instanceOf wd:$person.
-        ?person wdt:$hasSex wd:$female.
-        OPTIONAL {?person wdt:$instanceOf wd:$agent.}
-        OPTIONAL {?person wdt:$hasName ?name.}
-        OPTIONAL {?person wdt:$hasOriginRecord ?origin.}
-        OPTIONAL {?name wdt:$recordedAt ?event.
-                ?event wdt:$startsAt ?startdate.}
-        BIND(str(YEAR(?startdate)) AS ?startyear).
-
-        OPTIONAL {?event wdt:$endsAt ?enddate.}
-        BIND(str(YEAR(?enddate)) AS ?endyear).
-        OPTIONAL {?event wdt:$atPlace ?place.}
-        OPTIONAL { ?person wdt:$hasSex ?sex. }
-        OPTIONAL { ?person wdt:$hasPersonStatus ?status. }
-        OPTIONAL { ?person wdt:$hasOwner ?owner. }
-        OPTIONAL { ?person wdt:$closeMatch ?match. }
-
-    } group by ?person ?personLabel ?name ?originLabel
-    $limitQuery
-QUERY;
-
-                array_push($queryArray, $query);
+                //todo: projects filters
                 break;
             case 'projectAssoc':
                 $qid = $_GET['qid'];
@@ -941,16 +626,25 @@ QUERY;
     }
 
 
+
     $resultsArray = array();
-    $first = true;
-    $oneQuery = count($queryArray) == 1;    // count results differently when there is only one query
 
-    // print_r($queryArray);die;
-
-    foreach ($queryArray as $i => $query) {
+    // map search types to their blazegraph name
+    $searchTypes = [
+        'people' => 'agent',
+        'events' => 'event', 
+        'places' => 'place', 
+        'projects' => 'project', 
+        'sources' => 'source'
+    
+    ];
+    if (array_key_exists($preset, $searchTypes)){
+        include BASE_PATH."queries/".$preset."Search/count.php";
+        $resultCountQuery['query'] = $tempQuery;
+        // print_r($resultCountQuery);die;
         $ch = curl_init(BLAZEGRAPH_URL);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resultCountQuery));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
@@ -958,70 +652,134 @@ QUERY;
         ));
         $result = curl_exec($ch);
         curl_close($ch);
-
+        
         $result = json_decode($result, true)['results']['bindings'];
-
-        if(!$result) continue;
-
-        $presetToCounterFunction = [
-            'place' => 'queryPlaceCounter',
-            'singleProject' => 'queryProjectsCounter'
-        ];
-
-        $count = 0;
-        if(!isset($presetToCounterFunction[$preset])){
-            $count = $record_total;
-        } else {
-            $count = $presetToCounterFunction[$preset]();
+        
+        if (isset($result[0]) && isset($result[0]['count'])){
+            $record_total = $result[0]['count']['value'];
         }
 
-        if ($first){
-            $resultsArray = $result;
-            $first = false;
+        // no more searching if we know there are 0 results
+        if ($record_total <= 0){
+            return createCards([], $templates, $preset, 0);
+        }
+        
+        include BASE_PATH."queries/".$preset."Search/ids.php";
+        $idQuery['query'] = $tempQuery;
+        // print_r($idQuery);die;
+        
+        $ch = curl_init(BLAZEGRAPH_URL);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($idQuery));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+            'Accept: application/sparql-results+json'
+        ));
+        $result = curl_exec($ch);
+        curl_close($ch);
+        
+        $result = json_decode($result, true)['results']['bindings'];
+        
+        // get the qids from each url
+        $urls = (array_column(array_column($result, $searchTypes[$preset]), 'value'));
+        $qids = [];
+        foreach($urls as $url){
+            $qids[] = end(explode('/', $url));
+        }
+        
+        // create the line in the query with the ids to search for
+        $qidList = "";
+        foreach($qids as $qid){
+            $qidList .= "wd:$qid ";
+        }
+        
+        include BASE_PATH."queries/".$preset."Search/data.php";
+        $dataQuery['query'] = $tempQuery;
+        // print_r($dataQuery);die;
 
-            if ($oneQuery){ // this is needed for the search page counter to be working
-                $record_total = $count;
+        $ch = curl_init(BLAZEGRAPH_URL);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($dataQuery));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+            'Accept: application/sparql-results+json'
+        ));
+        $result = curl_exec($ch);
+        curl_close($ch);
+        
+        $resultsArray = json_decode($result, true)['results']['bindings'];
+        // print_r($dataQuery);die;
+    } else {
+        $first = true;
+        $oneQuery = count($queryArray) == 1;    // count results differently when there is only one query
+
+        // print_r($queryArray);die;
+
+        foreach ($queryArray as $i => $query) {
+            $ch = curl_init(BLAZEGRAPH_URL);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                'Accept: application/sparql-results+json'
+            ));
+            $result = curl_exec($ch);
+            curl_close($ch);
+
+            $result = json_decode($result, true)['results']['bindings'];
+
+            if(!$result) continue;
+
+            $presetToCounterFunction = [
+                'place' => 'queryPlaceCounter',
+                'singleProject' => 'queryProjectsCounter'
+            ];
+
+            $count = 0;
+            if(isset($presetToCounterFunction[$preset])){
+                $count = $presetToCounterFunction[$preset]();
             }
-        } else {
-            if($preset == 'people' || $preset == 'places' || $preset == 'events' || $preset == 'sources' || $preset == 'singleProject'){
-                //Get the count of all the results
-                //for people, places, events, sources, and singleProject
-                $record_total += $count;
-            }
-            else if ($preset != "projects2") {
-                $resultsArray = array_merge($resultsArray, $result);
-            }
-            else {
-                foreach ($result as $count) {
-                    foreach ($resultsArray as $j => $project) {
-                        if ($project['projectLabel']['value'] == $count['projectLabel']['value']) {
-                            // how to tell which type it is? (person, place, event)
-                            if ($i == 1) {
-                                $resultsArray[$j]['personCount'] = $count['count']['value'];
+
+            if ($first){
+                $resultsArray = $result;
+                $first = false;
+
+                if ($oneQuery){ // this is needed for the search page counter to be working
+                    $record_total = $count;
+                }
+            } else {
+                if($preset == 'singleProject'){
+                    //Get the count of all the results
+                    $record_total += $count;
+                }
+                else if ($preset != "projects2") {
+                    $resultsArray = array_merge($resultsArray, $result);
+                }
+                else {
+                    foreach ($result as $count) {
+                        foreach ($resultsArray as $j => $project) {
+                            if ($project['projectLabel']['value'] == $count['projectLabel']['value']) {
+                                // how to tell which type it is? (person, place, event)
+                                if ($i == 1) {
+                                    $resultsArray[$j]['personCount'] = $count['count']['value'];
+                                }
+                                else if ($i == 2) {
+                                    $resultsArray[$j]['eventCount'] = $count['count']['value'];
+                                }
+                                else if ($i == 3) {
+                                    $resultsArray[$j]['placeCount'] = $count['count']['value'];
+                                }
+                                break;
                             }
-                            else if ($i == 2) {
-                                $resultsArray[$j]['eventCount'] = $count['count']['value'];
-                            }
-                            else if ($i == 3) {
-                                $resultsArray[$j]['placeCount'] = $count['count']['value'];
-                            }
-                            break;
                         }
                     }
                 }
             }
         }
     }
-
-
-    // print_r($resultsArray);die;
-    // var_dump($resultsArray);
-    // $path = "functions/queries.json";
-    // $contents = file_get_contents($path);
-    // $contents = json_decode($contents, true);
-    // $contents[] = $query['query'];
-    // $contents = json_encode($contents);
-    // file_put_contents($path, $contents);
 
     //Get HTML for the cards
     return createCards($resultsArray, $templates, $preset, $record_total);
@@ -1300,7 +1058,7 @@ HTML;
                 // print_r($record);die;
 
                 //Place name
-                $name = $record['placeLabel']['value'];
+                $name = $record['placelabel']['value'];
 
                 //Place URL
                 $placeUrl = $record['place']['value'];
@@ -1344,8 +1102,8 @@ HTML;
                 } else {
                     $countsource = '';
                 }
-                 if(isset($record['type']) && isset($record['type']['value'])){
-                    $placeType = $record['type']['value'];
+                 if(isset($record['types']) && isset($record['types']['value'])){
+                    $placeType = $record['types']['value'];
                 } else {
                     $placeType = '';
                 }
