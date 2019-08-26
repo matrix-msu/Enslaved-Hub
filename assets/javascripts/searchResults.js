@@ -20,8 +20,6 @@ var currentTitle = "Search";
 var fields = [];    // fields for the table view
 var sort = 'ASC';
 var formattedData = {};
-console.log(search_type)
-
 
 // Get params from url
 if(document.location.toString().indexOf('?') !== -1)

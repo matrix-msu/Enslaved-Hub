@@ -29,20 +29,8 @@ function admin(){
 
 function blazegraph()
 {
-   // if (isset($_GET['delete'])) {
-   //     $path = "functions/queries.json";
-   //     $contents = file_get_contents($path);
-   //     $contents = json_decode($contents, true);
-   //     unset($contents[$_GET['delete']]);
-   //     $contents = array_values($contents);
-   //     $contents = json_encode($contents);
-   //     echo file_put_contents($path, $contents);
-   //     die;
-   // }
-
     if (isset($_GET['filters'])){
         $filtersArray = $_GET['filters'];
-        // print_r($filtersArray);die;
 
         $limitQuery = '';
         if (isset($filtersArray['limit'])){
@@ -82,11 +70,11 @@ function blazegraph()
         }
 
         switch ($preset){
-            case 'singleProject':
+            case 'singleproject':
                 // QID is mandatory
-                if(!isset($_GET["qid"]) || empty($_GET["qid"])) return false;
+                if(!isset($filtersArray["qid"]) || empty($filtersArray["qid"])) return false;
 
-                $Q_ID = $_GET["qid"];
+                $Q_ID = $filtersArray["qid"][0];
                 $Q_limit = 10;
                 $Q_offset = 0;
 
@@ -96,75 +84,17 @@ function blazegraph()
 
 
                 $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent
-(group_concat(distinct ?startyear; separator = "||") as ?startyear) #daterange
-(group_concat(distinct ?endyear; separator = "||") as ?endyear)
-
-(group_concat(distinct ?name; separator = "||") as ?name) #name
-(group_concat(distinct ?placelab; separator = "||") as ?place) #place
-(group_concat(distinct ?statuslab; separator = "||") as ?status) #status
-(group_concat(distinct ?sexlab; separator = "||") as ?sex) #Sex
-
-
-(count(distinct ?relations) as ?countpeople)
-(count(distinct ?event) as ?counterevent)
-(count(distinct ?place) as ?countplace)
-(count(distinct ?reference) as ?countsource)
-WHERE {
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-
-  ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent;
-
-         wdt:$hasName ?name; #name is mandatory
-            p:$instanceOf  ?object .
-  ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:$isDirectlyBasedOn ?reference .
-  ?reference wdt:$generatedBy wd:$Q_ID #include here the Q number of the project
-
-
-  MINUS{ ?agent wdt:$hasParticipantRole wd:$researcher }. #remove all researchers
-
-  OPTIONAL { ?agent wdt:$hasPersonStatus ?status.
-            ?status rdfs:label ?statuslab}
-
-  OPTIONAL { ?agent wdt:$hasSex ?sex.
-            ?sex rdfs:label ?sexlab}
-
-  OPTIONAL { ?agent wdt:$hasInterAgentRelationship ?relations}.
-  OPTIONAL { ?agent wdt:$closeMatch ?relations}.
-
-  OPTIONAL{ ?reference wdt:$reportsOn ?event.
-            ?event  wdt:$startsAt ?startdate.
-           BIND(str(YEAR(?startdate)) AS ?startyear).
-           OPTIONAL {?event wdt:$endsAt ?enddate.
-           BIND(str(YEAR(?enddate)) AS ?endyear)}.
-           OPTIONAL {?event wdt:$atPlace ?place.
-                    ?place rdfs:label ?placelab}
-
-          }.
-
-
-} group by ?agent
-order by ?agent
-limit $Q_limit
-offset $Q_offset
-QUERY;
+                include BASE_PATH."queries/".$preset."/data.php";
+                $query['query'] = $tempQuery;
 
                 array_push($queryArray, $query);
                 break;
 
             case 'people':
-                ///*********************************** */
-                /// PEOPLE
-                ///*********************************** */
-
                 // filter by gender
                 $genderIdFilter = "";
                 if (isset($filtersArray['gender'])) {
                     $genders = $filtersArray['gender'];
-
                     foreach ($genders as $gender){
                         if (array_key_exists($gender, sexTypes)){
                             $qGender = sexTypes[$gender];
@@ -172,7 +102,6 @@ QUERY;
                         }
                     }
                 }
-
                 // filter by name
                 $nameQuery = "";
                 if (isset($filtersArray['person'])){
@@ -183,7 +112,6 @@ QUERY;
                         FILTER regex(?name, '^$name', 'i') . 
                     ";
                 }
-
                 //filter by source
                 //TODO: FIX SOURCE FILTER
                 $sourceQuery = "";
@@ -197,13 +125,11 @@ QUERY;
                                     ?provenance pr:$isDirectlyBasedOn ?source .
                                     ?people rdfs:label ?peoplename";
                 }
-
                 // filter by age category
                 $ageQuery = "";
                 $ageIdFilter = "";
                 if (isset($filtersArray['age_category'])){
                     $ages = $filtersArray['age_category'];
-
                     foreach ($ages as $age){
                         if (array_key_exists($age, ageCategory)){
                             $qAge = ageCategory[$age];
@@ -211,12 +137,10 @@ QUERY;
                         }
                     }
                 }
-
                 // filter by status
                 $statusIdFilter = "";
                 if (isset($filtersArray['status'])){
                     $statuses = $filtersArray['status'];
-
                     foreach ($statuses as $status){
                         if (array_key_exists($status, personstatus)){
                             $qStatus = personstatus[$status];
@@ -224,7 +148,6 @@ QUERY;
                         }
                     }
                 }
-
                 // filter by ethnodescriptor
                 $ethnoIdFilter = "";
                 if (isset($filtersArray['ethnodescriptor'])){
@@ -236,12 +159,10 @@ QUERY;
                         }
                     }
                 }
-
                 // filter by role
                 $roleIdFilter = "";
                 if (isset($filtersArray['role_types'])){
                     $roles = $filtersArray['role_types'];
-
                     foreach ($roles as $role){
                         if (array_key_exists($role, roleTypes)){
                             $qRole = roleTypes[$role];
@@ -249,12 +170,10 @@ QUERY;
                         }
                     }
                 }
-
                 // filter by occupation
                 $occupationIdFilter = "";
                 if (isset($filtersArray['occupation'])){
                     $occupations = $filtersArray['occupation'];
-
                     foreach ($occupations as $occupation){
                         if (array_key_exists($occupation, occupation)){
                             $qOccupation = occupation[$occupation];
@@ -262,12 +181,10 @@ QUERY;
                         }
                     }
                 }
-
                 // filter by source type
                 $sourceTypeIdFilter = "";
                 if (isset($filtersArray['source_type'])){
                     $sourceTypes = $filtersArray['source_type'];
-
                     foreach ($sourceTypes as $type){
                         if (array_key_exists($type, sourceTypes)){
                             $qType = sourceTypes[$type];
@@ -279,12 +196,10 @@ QUERY;
                         }
                     }
                 }
-
                 // people connected to an event
                 $eventIdFilter = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
                     $eventQ = $filtersArray['event'][0];
-
                     $eventIdFilter = "
                         VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
                         ?event wdt:$instanceOf wd:$event.
@@ -294,36 +209,24 @@ QUERY;
                         ?agent rdfs:label ?name.
                     ";
                 }
-
                 break;
             case 'places':
-                ///*********************************** */
-                /// PLACES
-                ///*********************************** */
-
                 $placeTypeIdFilter = "";
                 if (isset($filtersArray['place_type'])){
                     $types = $filtersArray['place_type'];
                     foreach ($types as $type){
                         if (array_key_exists($type, placeTypes)){
                             $qType = placeTypes[$type];
-                            $placeTypeIdFilter .= "?place wdt:$hasPlaceType wd:$qType . ";
+                            $placeTypeIdFilter .= "VALUES ?type { wd:$qType } . ";
                         }
                     }
-                    
                 }
-
                 break;
             case 'events':
-                ///*********************************** */
-                /// EVENTS
-                ///*********************************** */
-
                 // filtering for event type
                 $eventTypeIdFilter = "";
                 if (isset($filtersArray['event_type'])){
                     $types = $filtersArray['event_type'];
-
                    foreach ($types as $type){
                         if (array_key_exists($type, eventTypes)){
                             $qType = eventTypes[$type];
@@ -331,23 +234,19 @@ QUERY;
                         }
                     }
                 }
-
                 // filtering for dateRange
                 $dateRangeIdFilter = "";
                 if (isset($filtersArray['date'])){
                     $dateRange = $filtersArray['date'][0];
                     $dateArr = explode('-', $dateRange);
-
                     $from = '';
                     if (isset($dateArr[0])){
                         $from = $dateArr[0];
                     }
-
                     $to = '';
                     if (isset($dateArr[1])){
                         $to = $dateArr[1];
                     }
-
                     $dateRangeQuery = $dateRange;
                     if ($from != ''){
                         $dateRangeIdFilter .= "
@@ -362,12 +261,10 @@ QUERY;
                         ";                    
                     }
                 }
-
                 // filter for events connected to a source
                 $sourceIdFilter = "";
                 if (isset($filtersArray['source'])){
                     $sourceQids = $filtersArray['source'];
-
                     foreach ($sourceQids as $sourceQid){
                         $sourceIdFilter .= "
                             VALUES ?source {wd:$sourceQid} #Q number needs to be changed for every source.
@@ -376,19 +273,13 @@ QUERY;
                         ";                    
                     }
                 }
-
                 break;
             case 'sources':
-                ///*********************************** */
-                /// SOURCES
-                ///*********************************** */
-
                 //todo: get these working correctly
                 // filter for source types
                 $sourceTypeIdFilter = "";
                 if (isset($filtersArray['source_type'])){
                     $types = $filtersArray['source_type'];
-
                    foreach ($types as $type){
                         if (array_key_exists($type, sourceTypes)){
                             $qType = sourceTypes[$type];
@@ -396,7 +287,6 @@ QUERY;
                         }
                     }
                 }
-
                 // filter for sources connected to an event
                 $eventIdFilter = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
@@ -409,208 +299,67 @@ QUERY;
                         ?source wdt:$reportsOn ?event.
                      ";
                 }
-
                 break;
             case 'projects':
                 //todo: projects filters
                 break;
-            case 'projectAssoc':
-                $qid = $_GET['qid'];
-                $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT DISTINCT ?project ?projectLabel (count(distinct ?agent) as ?agentcount)
-    WHERE {
-        VALUES ?project {wd:$qid}
-        ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent;        #find agents
-                p:$instanceOf  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:$isDirectlyBasedOn ?reference .
-        ?reference wdt:$generatedBy ?project
+            case 'projectassoc':
+                if (isset($filtersArray['qid']) && $filtersArray['qid'][0]){
+                    $qid = $filtersArray['qid'][0];
+                } else {
+                    break;
+                }
 
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    }
-    GROUP BY ?project ?projectLabel
-QUERY;
-                array_push($queryArray, $query);
                 $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT ?project ?projectLabel  (COUNT(*) AS ?eventcount)
-    WHERE {
-        ?project wdt:$instanceOf wd:$researchProject .         #find projects
-        ?item wdt:$instanceOf wd:$event;        #find events
-            p:$instanceOf  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:$isDirectlyBasedOn ?reference .
-        ?reference wdt:$generatedBy ?project;
-                    wdt:$generatedBy wd:$qid
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    }
-    GROUP BY ?project ?projectLabel
-    ORDER BY ?count
-QUERY;
+                include BASE_PATH."queries/".$preset."/personCount.php";
+                $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
-                $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT ?project ?projectLabel  (COUNT(*) AS ?placecount)
-    WHERE {
-        ?project wdt:$instanceOf wd:$researchProject .         #find projects
-        ?item wdt:$instanceOf wd:$place;        #find places
-            p:$instanceOf  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:$isDirectlyBasedOn ?reference .
-        ?reference wdt:$generatedBy ?project;
-                    wdt:$generatedBy wd:$qid
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    }
-    GROUP BY ?project ?projectLabel
-    ORDER BY ?count
-QUERY;
+
+                include BASE_PATH."queries/".$preset."/eventCount.php";
+                $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
+
+                include BASE_PATH."queries/".$preset."/placeCount.php";
+                $query['query'] = $tempQuery;
+                array_push($queryArray, $query);
+
                 break;
             case 'projects2':
+
                 $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT ?project ?projectLabel
-    WHERE {
-    ?project wdt:$instanceOf wd:$researchProject          #find projects
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    }
-QUERY;
+                include BASE_PATH."queries/".$preset."/findProjects.php";
+                $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
-                $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT ?project ?projectLabel  (COUNT(distinct ?agent) AS ?count)
-    WHERE {
-        ?project wdt:$instanceOf wd:$researchProject .         #find projects
-        ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent;        #find agents
-            p:$instanceOf  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:$isDirectlyBasedOn ?reference .
-        ?reference wdt:$generatedBy ?project
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    }
-    GROUP BY ?project ?projectLabel
-    ORDER BY ?count
-QUERY;
+
+                include BASE_PATH."queries/".$preset."/findPeople.php";
+                $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
-                $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
-    WHERE {
-        ?project wdt:$instanceOf wd:$researchProject .         #find projects
-        ?item wdt:$instanceOf wd:$event;        #find events
-            p:$instanceOf  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:$isDirectlyBasedOn ?reference .
-        ?reference wdt:$generatedBy ?project
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    }
-    GROUP BY ?project ?projectLabel
-    ORDER BY ?count
-QUERY;
+
+                include BASE_PATH."queries/".$preset."/findEvents.php";
+                $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
-                $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT ?project ?projectLabel  (COUNT(*) AS ?count)
-    WHERE {
-        ?project wdt:$instanceOf wd:$researchProject .         #find projects
-        ?item wdt:$instanceOf wd:$place;        #find places
-            p:$instanceOf  ?object .
-        ?object prov:wasDerivedFrom ?provenance .
-        ?provenance pr:$isDirectlyBasedOn ?reference .
-        ?reference wdt:$generatedBy ?project
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    }
-    GROUP BY ?project ?projectLabel
-    ORDER BY ?count
-QUERY;
+
+                include BASE_PATH."queries/".$preset."/findPlaces.php";
+                $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
+
                 break;
             case 'stories':
                 $query = array('query' => "");
-                $query['query'] = <<<QUERY
-SELECT ?person ?personLabel ?name ?originLabel
-    (group_concat(distinct ?status; separator = "||") as ?status)
-    (group_concat(distinct ?place; separator = "||") as ?place)
-    (group_concat(distinct ?startyear; separator = "||") as ?startyear)
-    (group_concat(distinct ?endyear; separator = "||") as ?endyear)
-    WHERE {
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-        ?person wdt:$instanceOf wd:$atPlace.
-        ?person wdt:$hasSex wd:$female.
-        OPTIONAL {?person wdt:$instanceOf wd:$agent.}
-        OPTIONAL {?person wdt:$hasName ?name.}
-        OPTIONAL {?person wdt:$hasOriginRecord ?origin.}
-        OPTIONAL {?name wdt:$recordedAt ?event.
-                ?event wdt:$startsAt ?startdate.}
-        BIND(str(YEAR(?startdate)) AS ?startyear).
-
-        OPTIONAL {?event wdt:$endsAt ?enddate.}
-        BIND(str(YEAR(?enddate)) AS ?endyear).
-        OPTIONAL {?event wdt:$atPlace ?place.}
-        OPTIONAL { ?person wdt:$hasSex ?sex. }
-        OPTIONAL { ?person wdt:$hasPersonStatus ?status. }
-        OPTIONAL { ?person wdt:$hasOwner ?owner. }
-        OPTIONAL { ?person wdt:$closeMatch ?match. }
-
-    } group by ?person ?personLabel ?name ?originLabel
-    $limitQuery
-QUERY;
+                include BASE_PATH."queries/".$preset."/data.php";
+                $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
                 break;
             case 'featured':
                 //Feature Cards on the Explore Form page
-                if($templates[0] == 'Person'){
-                    $query = array('query' => "");
-                    $query['query'] = <<<QUERY
-SELECT DISTINCT ?agent ?agentLabel (SHA512(CONCAT(STR(?agent), STR(RAND()))) as ?random) WHERE {
-?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent . #all agents and people
-?agent wikibase:statements ?statementcount . #with at least 4 core fields
-FILTER (?statementcount >3  ).
-?agent wdt:$closeMatch ?match. #and they have a match
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-} ORDER BY ?random
-LIMIT 8
-QUERY;
-                }
-                if($templates[0] == 'Place'){
-                    $query = array('query' => "");
-                    $query['query'] = <<<QUERY
-SELECT DISTINCT ?place ?placeLabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random) WHERE {
-?place wdt:$instanceOf wd:$place .
-?place wikibase:statements ?statementcount .
-        FILTER (?statementcount >3  )
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-} ORDER BY ?random
-LIMIT 8
-QUERY;
-                }
-                if($templates[0] == 'Event'){
-                    $query = array('query' => "");
-                    $query['query'] = <<<QUERY
-SELECT DISTINCT ?type (SAMPLE(?event) AS ?event) (SAMPLE(?elabel) AS ?label)
-(SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random) WHERE {
-
-    ?event wdt:$instanceOf wd:$event;
-            rdfs:label ?elabel;
-                wdt:$hasEventType ?type;
-            wikibase:statements ?statementcount .
-        FILTER (?statementcount >3  ).
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    }
-GROUP BY ?type
-ORDER BY ?random
-LIMIT 8
-QUERY;
-                }
-
+                $query = array('query' => "");
+                include BASE_PATH."queries/".$preset."/".strtolower($templates[0]).".php";
+                $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
                 break;
-
             default:
-                return json_encode(["gridCard"=>array(), "tableCard" => array(), "total" => 0]);
+                break;
         }
-
     }
     elseif (isset($_GET['query'])) {
         //Preset not supplied so query needs to be supplied instead
@@ -624,8 +373,6 @@ QUERY;
     else{
         return json_encode(["gridCard"=>array(), "tableCard" => array(), "total" => 0]);
     }
-
-
 
     $resultsArray = array();
 
@@ -642,18 +389,7 @@ QUERY;
         include BASE_PATH."queries/".$preset."Search/count.php";
         $resultCountQuery['query'] = $tempQuery;
         // print_r($resultCountQuery);die;
-        $ch = curl_init(BLAZEGRAPH_URL);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resultCountQuery));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept: application/sparql-results+json'
-        ));
-        $result = curl_exec($ch);
-        curl_close($ch);
-        
-        $result = json_decode($result, true)['results']['bindings'];
+        $result = blazegraphSearch($resultCountQuery);
         
         if (isset($result[0]) && isset($result[0]['count'])){
             $record_total = $result[0]['count']['value'];
@@ -667,19 +403,7 @@ QUERY;
         include BASE_PATH."queries/".$preset."Search/ids.php";
         $idQuery['query'] = $tempQuery;
         // print_r($idQuery);die;
-        
-        $ch = curl_init(BLAZEGRAPH_URL);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($idQuery));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept: application/sparql-results+json'
-        ));
-        $result = curl_exec($ch);
-        curl_close($ch);
-        
-        $result = json_decode($result, true)['results']['bindings'];
+        $result = blazegraphSearch($idQuery);
         
         // get the qids from each url
         $urls = (array_column(array_column($result, $searchTypes[$preset]), 'value'));
@@ -697,20 +421,7 @@ QUERY;
         include BASE_PATH."queries/".$preset."Search/data.php";
         $dataQuery['query'] = $tempQuery;
         // print_r($dataQuery);die;
-
-        $ch = curl_init(BLAZEGRAPH_URL);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($dataQuery));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept: application/sparql-results+json'
-        ));
-        $result = curl_exec($ch);
-        curl_close($ch);
-        
-        $resultsArray = json_decode($result, true)['results']['bindings'];
-        // print_r($dataQuery);die;
+        $resultsArray = blazegraphSearch($dataQuery);
     } else {
         $first = true;
         $oneQuery = count($queryArray) == 1;    // count results differently when there is only one query
@@ -718,24 +429,12 @@ QUERY;
         // print_r($queryArray);die;
 
         foreach ($queryArray as $i => $query) {
-            $ch = curl_init(BLAZEGRAPH_URL);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                'Accept: application/sparql-results+json'
-            ));
-            $result = curl_exec($ch);
-            curl_close($ch);
-
-            $result = json_decode($result, true)['results']['bindings'];
-
+            $result = blazegraphSearch($query);
             if(!$result) continue;
 
             $presetToCounterFunction = [
                 'place' => 'queryPlaceCounter',
-                'singleProject' => 'queryProjectsCounter'
+                'singleproject' => 'queryProjectsCounter'
             ];
 
             $count = 0;
@@ -751,7 +450,7 @@ QUERY;
                     $record_total = $count;
                 }
             } else {
-                if($preset == 'singleProject'){
+                if($preset == 'singleproject'){
                     //Get the count of all the results
                     $record_total += $count;
                 }
@@ -785,6 +484,25 @@ QUERY;
     return createCards($resultsArray, $templates, $preset, $record_total);
 }
 
+
+function blazegraphSearch($query){
+    $ch = curl_init(BLAZEGRAPH_URL);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept: application/sparql-results+json'
+    ));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    
+    $result = json_decode($result, true)['results']['bindings'];
+
+    return $result;
+}
+
+
 /**
  * Creates the HTML for type of cards specified in $templates
  *
@@ -803,12 +521,13 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
     $cards['total'] =  $count;
 
     // use same people display for people in single project
-    if($preset == "singleProject") $preset = "people";
+    if($preset == "singleproject") $preset = "people";
 
 
     $first = true;  // need to know if first to add table headers
 
     foreach ($results as $index => $record) {  ///foreach result
+        $card = '';
         switch ($preset){
             case 'people':
                 // print_r($record);die;
@@ -1723,7 +1442,7 @@ HTML;
                 }
 
                 break;
-            case 'projectAssoc':
+            case 'projectassoc':
                 if (isset($record['agentcount'])) {
                     $card = '<div class="card-icon">
                         <img src="'.BASE_IMAGE_URL.'Person-light.svg" alt="Card Icon"/>
@@ -1742,7 +1461,7 @@ HTML;
                         <span>'.$record['eventcount']['value'].'</span>
                     </div>';
                 }
-                array_push($cards['projectAssoc'], $card);
+                array_push($cards['projectassoc'], $card);
                 break;
             case 'projects2':
                 $fullName = $record['projectLabel']['value'];
