@@ -33,7 +33,7 @@ class crawler_broken_links {
 	public function get_broken_links($limit, $offset)
 	{
 		$conn=$this->connect();
-		$query = "SELECT DISTINCT link_url, error_code FROM ppj_broken_links LIMIT ".$limit." OFFSET ".$offset;
+		$query = "SELECT DISTINCT link_url, error_code FROM broken_links LIMIT ".$limit." OFFSET ".$offset;
 		$result=$conn->query($query);
 		mysqli_close($conn);
 		if($result->num_rows >0){
@@ -76,27 +76,27 @@ HTML;
 		}
 		else return "no more data";
 	}
-	// update entry from ppj_seeds
+	// update entry from crawler_seeds
 	public function update_seeds($old_link,$new_link)
 	{
 		$conn=$this->connect();
-		$query = "UPDATE ppj_seeds set htmlURL='$new_link' WHERE htmlURL='$old_link' ";
+		$query = "UPDATE crawler_seeds set htmlURL='$new_link' WHERE htmlURL='$old_link' ";
 		$result=$conn->query($query);
 		mysqli_close($conn);
 	}
-	//delete entry from ppj_seeds
+	//delete entry from crawler_seeds
 	public function delete_seeds($link)
 	{
 		$conn=$this->connect();
-		$query = "DELETE FROM ppj_seeds WHERE htmlURL='$link'";
+		$query = "DELETE FROM crawler_seeds WHERE htmlURL='$link'";
 		$result=$conn->query($query);
 		mysqli_close($conn);
 	}
-	//delete entry from ppj_broken_links
+	//delete entry from broken_links
 	public function delete_broken_links($link)
 	{
 		$conn=$this->connect();
-		$query = "DELETE FROM ppj_broken_links WHERE link_url='$link'";
+		$query = "DELETE FROM broken_links WHERE link_url='$link'";
 		$result=$conn->query($query);
 		mysqli_close($conn);
 	}
@@ -104,7 +104,7 @@ HTML;
 	public function get_count()
 	{
 		$conn=$this->connect();
-		$query = "SELECT DISTINCT link_url, error_code FROM ppj_broken_links";
+		$query = "SELECT DISTINCT link_url, error_code FROM broken_links";
 		$result=$conn->query($query);
 		mysqli_close($conn);
 		return $result->num_rows;

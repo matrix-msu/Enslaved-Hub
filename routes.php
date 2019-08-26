@@ -59,7 +59,8 @@ $GLOBALS['routes'] = array(
     'enslavedOntology' => 'ontology.php',
     'projects' => 'projects.php',
     'crawler' => 'crawler.php',
-    'current' => 'current.php'
+    'current' => 'current.php',
+    'links' => 'links.php'
 );
 
 $location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
@@ -135,7 +136,7 @@ if( isset($GLOBALS['api_routes'][$currentFile]) ){
     $currentApiFile = $GLOBALS['api_routes'][$currentFile];
     if($currentApiFile[0] == 'configFunctions.php') include_once(BASE_LIB_PATH.$currentApiFile[0]);
     else include_once(BASE_FUNCTIONS_PATH.$currentApiFile[0]);
-    
+
     if($currentApiFile[1] !== '') echo $currentApiFile[1]();
 
     die;

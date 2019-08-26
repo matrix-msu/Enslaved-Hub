@@ -13,3 +13,7 @@ assets/stylesheets/style.css.map
 /.idea
 /.sass-cache
 /assets/Widoco
+
+# Editor files
+*.sublime-workspace
+*.sublime-project

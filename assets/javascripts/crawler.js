@@ -1,9 +1,15 @@
 var card_limit = 12;
 var card_offset = 0;
 var total_length = 12;
+var sort_direction = 'ASC';
+var search_terms = '';
+var tag_filter_ids = [];
+var all_tags = [];
+var google_search_url = 'https://www.google.com/search?hl=en&num=100&q=';
 
 $(document).ready(function(){
 
+	getTags();
 	//Change in current-page input so call searchResults function
     $('#pagination .current-page').change(function(){
 		var val = $('#pagination .current-page').val();
@@ -11,20 +17,20 @@ $(document).ready(function(){
 		card_offset = (val - 1) * card_limit;
 		$('.crawler-tabs li.tabbed').trigger('click');
 	});
-	
+
     $(document).click(function () { // close things with clicked-off
         $('span.results-per-page').find("img:first").removeClass('show');
         $('span.results-per-page #sortmenu').removeClass('show');
         $('span.sort-by #sortmenu').removeClass('show');
         $('span.sort-by').find("img:first").removeClass('show');
     });
-    
+
     $(".sorting-dropdowns .align-center").click(function (e) { // toggle show/hide per-page submenu
 		e.stopPropagation();
         $(this).find("img:first").toggleClass('show');
         $(this).find("#sortmenu").toggleClass('show');
     });
-    
+
     $('span.results-per-page > span').html(card_limit);
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
@@ -33,6 +39,33 @@ $(document).ready(function(){
         card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
         $('span.results-per-page > span').html(card_limit);
 		$(document).trigger('click');
+		$('.crawler-tabs li.tabbed').trigger('click');
+    });
+
+    $("ul.tag-filter li").click(function (e) {
+        e.stopPropagation();
+        tag_filter_ids = [];
+        $("ul.tag-filter li").each(function () {
+        	if ($(this).find("input[type=checkbox]").prop("checked")) {
+        		tag_filter_ids.push($(this).data('id'));
+        	}
+        });
+		$('.crawler-tabs li.tabbed').trigger('click');
+    });
+
+    $("ul.sort-by li").click(function (e) { // set the sorting
+        e.stopPropagation();
+        sort_direction = $(this).data('sort');
+        localStorage.setItem('sort_direction', sort_direction);
+		$(document).trigger('click');
+		$('.crawler-tabs li.tabbed').trigger('click');
+    });
+
+	$("#crawler-search").submit(function (e) { // set the sorting
+        e.stopPropagation();
+        e.preventDefault();
+        search_terms = $(this).serializeArray()[0]['value'];
+        localStorage.setItem('crawler_search_terms', search_terms);
 		$('.crawler-tabs li.tabbed').trigger('click');
     });
 
@@ -46,14 +79,13 @@ $(document).ready(function(){
 
         $('.result-container').removeClass('show');
 		$('.result-container#'+name).addClass('show');
-		
+
 		$('.result-container').find('.result').not('#keep').off().remove(); //.not('#keep')
 
 
-		console.log(name);
 		var type = {};
 		var count_type = '';
-		
+
 		if(name == "results"){
 			type['get_results'] = 'ok';
 			count_type = 'count_results';
@@ -68,7 +100,7 @@ $(document).ready(function(){
 		}
 
 		showResults(type, count_type);
-		
+
 	});
 
 	//Trigger click on results when page loads
@@ -81,11 +113,11 @@ $(document).ready(function(){
     $('.canvas').click(function (e) {
         e.stopPropagation();
     });
-    
+
     $('.crawler-modal').click(function () {
         $('.crawler-modal .close').trigger('click');
     });
-    
+
     $('.crawler-modal .close').click(function () {
         $('.crawler-modal .canvas').css('opacity', '0');
         $('.crawler-modal').css('background', 'rgba(0, 0, 0, 0.0)');
@@ -98,7 +130,6 @@ $(document).ready(function(){
 		e.preventDefault();
 
 		var form = $(this);
-		console.log(form.serialize());
 
 		$.ajax({
 			type: "POST",
@@ -106,17 +137,16 @@ $(document).ready(function(){
 			data: form.serialize(),
 			dataType: "JSON",
 			success:function(data){
-				console.log(data);
 				//after ajax refresh tab
 				$('.crawler-tabs li.tabbed').trigger('click');
 				$('.seed-wrap form input.search-field').val('');
 			},
-			'error':function(xhr, status, error){
+			error:function(xhr, status, error){
 				console.log(xhr.responseText);
 			}
 		});
 	});
-	
+
 });
 
 //Main function for showing results, gets total count of results first and then calls the ajax to get the results
@@ -126,7 +156,9 @@ function showResults(result_type, count_type)
 	var get_data = result_type;
 	get_data['limit'] = card_limit;
 	get_data['offset'] = card_offset;
-	console.log(get_data);
+	get_data['sort'] = sort_direction;
+	get_data['terms'] = search_terms;
+	get_data['tag_ids'] = tag_filter_ids;
 
 	//Data to send for count
 	var count_data = {};
@@ -140,15 +172,31 @@ function showResults(result_type, count_type)
 		dataType: "JSON",
 		success:function(data){
 			//On success make ajax call to get the results
-			console.log(data);
 			total_length = data;
 			getResults(get_data);
 		},
-		'error':function(xhr, status, error){
+		error:function(xhr, status, error){
 			console.log(xhr.responseText);
 		}
 	});//ajax
-	
+
+}
+
+function getTags() {
+	$.ajax({
+		method:'POST',
+		url: BASE_URL + "api/getCrawlerResults",
+		data: {'get_tags': 'ok'},
+		dataType: "JSON",
+		success:function(data){
+			if(data){
+				all_tags = data;
+			}
+		},
+		error:function(xhr, status, error){
+			console.log(xhr.responseText);
+		}
+	});
 }
 
 //Gets the results for the selected tab
@@ -160,26 +208,69 @@ function getResults(get_data)
 		data: get_data,
 		dataType: "JSON",
 		success:function(data){
-			if(data != "no more data"){
-				$(".result-container").append(data);
+			if(data) {
+				html = populateCrawlerResults(data);
+				$(".result-container").append(html);
 				installModalListeners(); //install the modal listeners after content is generated
 				$(document).ready(function(){
 					setPagination(total_length, card_limit, card_offset);
 				});
 			}
-			else {
-				console.log("No more results");
-			}
 		},
-		'error':function(xhr, status, error){
+		error:function(xhr, status, error){
 			console.log(xhr.responseText);
 		}
 	});//ajax
 }
 
+function populateCrawlerResults(data) {
+	row = '';
+	for (var i = 0; i < data['keywords'].length; i++) {
+		result = data['keywords'][i];
+		k_id = result['keyword_id'];
+		tag_names = [];
+		tag_ids = [];
+
+		if ($.inArray(k_id in data['tags']) && data['tags'][k_id].length > 0) {
+    		$.each(data['tags'][k_id], function (_, tag) {
+    			tag_names.push(tag['tag_name']);
+    			tag_ids.push(tag['tag_id']);
+    		});
+    	}
+
+		row += `<div class="result" id="r${i+1}">`;
+		row += `<div class="link-name"><a class="link" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a></div>`;
+		row += `<div class="link-wrap"><a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
+		if (location.href.match(/crawler/)) {
+	        row += '<div class="right"><div class="trash crawler-modal-open" id="delete-link">';
+			row += '<img class="trash-icon" src="./assets/images/Delete.svg"></div>';
+			row += '<div class="add-seed"><p>Add to Seeds</p><form action="submit">';
+			row += `<input type="hidden" name="add_seed" value="${result['url']}"></form></div>`;
+			row += '<div class="add-tag" id="add-tag"><span id="show-tag">Add Tag';
+			row += `<ul id="sortmenu" data-id="${k_id}">`;
+			$.each(all_tags, function(_, tag) {
+				checked = '';
+				if (tag_ids.length > 0 && $.inArray(tag['tag_id'], tag_ids) >= 0) {
+					checked = ' checked';
+				}
+				row += `<li data-id="${tag['tag_id']}"><input type="checkbox"${checked}>${tag['tag_name']}</li>`
+			});
+			row += '</ul></span></div></div>';
+	    } else {
+	    	row += '<div class="right"><div class="display-tag"><span>';
+	    	if(tag_names.length > 0) {
+	    		row += tag_names.join(', ');
+	    	}
+	    	row += '</span></div></div>';
+	    }
+	    row += '</div></div>';
+	}
+	return row;
+}
+
 function installModalListeners(){
 	var crawlerModalButton = $('.crawler-modal-open');
-	
+
 	// Call off before adding click listener so that the listeners dont stack
 	crawlerModalButton.off().on('click', function(){
 		var modalType = $(this).attr('id');
@@ -237,7 +328,6 @@ function installModalListeners(){
 		e.preventDefault();
 
 		var form = $(this);
-		console.log(form.serialize());
 
 		$.ajax({
 			type: "POST",
@@ -245,17 +335,48 @@ function installModalListeners(){
 			data: form.serialize(),
 			dataType: "JSON",
 			success:function(data){
-				console.log(data);
 				//after ajax close modal and refresh tab
 				$('.crawler-modal .close').trigger('click');
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
-			'error':function(xhr, status, error){
+			error:function(xhr, status, error){
 				console.log(xhr.responseText);
 			}
 		});
 	});
 
+	$(".add-tag").off().click(function (e) {
+		e.stopPropagation();
+        $(this).find("#sortmenu").toggleClass('show');
+    });
+
+    $(".add-tag ul li").off().click(function (e) {
+		keyword_tag_filter_ids = [];
+		k_id = $(this).parent().data('id');
+        $(this).parent().children().each(function () {
+        	if ($(this).find("input[type=checkbox]").prop("checked")) {
+        		keyword_tag_filter_ids.push($(this).data('id'));
+        	}
+        });
+
+        $.ajax({
+			type: "POST",
+			url: BASE_URL + "api/getCrawlerResults",
+			data: {
+				'update_tags': 'ok',
+				'keyword_id': k_id,
+				'tag_ids': keyword_tag_filter_ids
+			},
+			dataType: "JSON",
+			success:function(data){
+				//after ajax refresh tab
+				$('.crawler-tabs li.tabbed').trigger('click');
+			},
+			error:function(xhr, status, error){
+				console.log(xhr.responseText);
+			}
+		});
+    });
 
 	//Listeners for adding result to seeds
 	$('.add-seed').off().click(function(){
@@ -266,7 +387,6 @@ function installModalListeners(){
 		e.preventDefault();
 
 		var form = $(this);
-		console.log(form.serialize());
 
 		$.ajax({
 			type: "POST",
@@ -274,11 +394,10 @@ function installModalListeners(){
 			data: form.serialize(),
 			dataType: "JSON",
 			success:function(data){
-				console.log(data);
 				//after ajax refresh tab
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
-			'error':function(xhr, status, error){
+			error:function(xhr, status, error){
 				console.log(xhr.responseText);
 			}
 		});
