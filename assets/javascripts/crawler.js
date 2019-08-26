@@ -209,7 +209,6 @@ function getResults(get_data)
 		dataType: "JSON",
 		success:function(data){
 			if(data) {
-				console.log(data)
 				html = populateCrawlerResults(data);
 				$(".result-container").append(html);
 				installModalListeners(); //install the modal listeners after content is generated
@@ -258,11 +257,11 @@ function populateCrawlerResults(data) {
 			});
 			row += '</ul></span></div></div>';
 	    } else {
-	    	row += '<div class="right"><div class="display-tag"><p>Tags: <span>';
+	    	row += '<div class="right"><div class="display-tag"><span>';
 	    	if(tag_names.length > 0) {
 	    		row += tag_names.join(', ');
 	    	}
-	    	row += '</span></p></div></div>';
+	    	row += '</span></div></div>';
 	    }
 	    row += '</div></div>';
 	}
