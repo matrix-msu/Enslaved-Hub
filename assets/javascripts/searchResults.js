@@ -20,8 +20,6 @@ var currentTitle = "Search";
 var fields = [];    // fields for the table view
 var sort = 'ASC';
 var formattedData = {};
-console.log(search_type)
-
 
 // Get params from url
 if(document.location.toString().indexOf('?') !== -1)
@@ -84,30 +82,39 @@ function searchResults(preset, limit = 12, offset = 0)
         'success': function (data)
         {
             isSearching = false;
-
             result_array = JSON.parse(data);
             console.log('results', result_array)
+            
+            total_length = result_array['total'];
+
+            var showingResultsText = '';
+            if (total_length < card_limit) {
+                showingResultsText = "Showing " + total_length + " of " + total_length + " Results";
+            } else {
+                showingResultsText = "Showing " + (card_limit+offset) + " of " + total_length + " Results";
+            }
+            $('.showing-results').html(showingResultsText);
+
+            if (total_length <= 0){
+                // clear old results
+                $("ul.row").empty();
+                $("thead").empty();
+                $("tbody").empty();
+                return;
+            }
+
             if (typeof (result_array['formatted_data']) != 'undefined'){
                 formattedData = result_array['formatted_data'];
             }
             if (typeof (result_array['fields']) != 'undefined') {
                 fields = result_array['fields'];
             }
-            var result_length = result_array['gridCard'].length;
-            total_length = result_array['total'];
 
             searchBarFilter = filters != undefined ? filters : '';
             // searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
             searchBarPlaceholder = "Search Across "  + total_length + " Results";
             $('.main-search').attr("placeholder", searchBarPlaceholder);
 
-            var showingResultsText = '';
-            if (result_length < card_limit) {
-                showingResultsText = "Showing " + result_length + " of " + total_length + " Results";
-            } else {
-                showingResultsText = "Showing " + card_limit + " of " + total_length + " Results";
-            }
-            $('.showing-results').html(showingResultsText);
 
             //Wait till doc is ready
             $(document).ready(function(){

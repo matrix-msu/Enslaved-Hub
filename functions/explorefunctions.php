@@ -1266,6 +1266,7 @@ function getPersonRecordHtml(){
     $instanceOf = properties["instance of"];
     $subclassof = properties ["subclass of"];
     $agent = classes["Agent"];
+    $researcher = classes["Researcher"];
     $refprop = properties["isDirectlyBasedOn"];
     $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
     $generatedBy = properties["generatedBy"];
@@ -1338,6 +1339,9 @@ SELECT ?name ?desc ?sextype  ?race
 {
  VALUES ?agent {wd:$qid} #Q number needs to be changed for every event.
   ?agent wdt:$instanceOf/wdt:$subclassof wd:$agent; #agent or subclass of agent
+  MINUS{?agent wdt:$hasParticipantRole wd:$researcher}
+
+
   		 ?property  ?object .
   ?object prov:wasDerivedFrom ?provenance .
   ?provenance pr:$refprop ?source .

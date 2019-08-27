@@ -34,6 +34,7 @@ $(document).ready(function(){
     // });
 
     //Get counts only if on explorefilter page
+    // console.log(JS_EXPLORE_FILTERS, JS_EXPLORE_FORM)
     if( typeof JS_EXPLORE_FILTERS !== 'undefined' ){
         if (JS_EXPLORE_FILTERS == "Date") {
             $.ajax({
