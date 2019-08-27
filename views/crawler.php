@@ -7,10 +7,14 @@
 ?>
 
 <div class="container header">
-    <div class="container middlewrap">
-        <div class="advanced-title">
+    <div class="image-container search-page image-only">
+	    <div class="container middlewrap">
+        <div class="search-title">
             <h1>Web Crawler</h1>
         </div>
+    </div>
+      <div class="image-background-overlay"></div>
+      <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
     </div>
 </div>
 <div class="crawler">
