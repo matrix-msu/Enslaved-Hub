@@ -1,7 +1,7 @@
 .crawler{
     margin: 60px auto 180px;
-    max-width: 1000px;
-    padding: 0 6%;
+   // max-width: 1000px;
+   padding: 0 50px;
 
     .crawler-tabs{
         padding: 0;
@@ -49,6 +49,11 @@
                         font-size: 14px;
                     }
                 }
+                
+                .search-icon-2 {
+                  background: none;
+                }
+                
                 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
                     color: #253449;
                     opacity: 1; /* Firefox */
@@ -76,16 +81,28 @@
             img {
                 transition: 200ms;
             }
+            
             img.show {
                 transform: rotate(-180deg);
             }
 
             span{
-                position: relative;
-            }
-            span.results-per-page{
-                margin-left: 20px;
-            }
+              margin-left: 20px;
+              position: relative;
+              }
+              
+              .sort-by {
+                margin-right: -20px;
+              } 
+              
+              .results-per-page {
+                margin-left: 0px;
+              }
+              
+               .tag-filter {
+                text-align: left;
+                }
+            
             ul {
                 background: $base-dark;
                 box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
@@ -95,13 +112,21 @@
                 padding: 20px;
                 position: absolute;
                 right: 0;
-                width: max-content;
+                text-align: center;
+                width: 130px;
                 z-index: 1;
+                
                 li {
                     cursor: pointer;
                     font-size: 12px;
                     line-height: 15px;
                     padding: 5px 3px;
+                    
+                    input[type='checkbox'] {
+                      margin-right: 10px;
+                      cursor: pointer;
+                    }
+                    
                 }
                 li:hover {
                     color: $sub-base;
@@ -137,7 +162,7 @@
             margin-bottom: 20px;
 
             .link-name{
-                width: 50%;
+                width: 40%;
                 height: 60px;
                 display: flex;
                 justify-content: space-between;
@@ -161,7 +186,7 @@
             }
 
             .link-wrap{
-                width: 50%;
+                width: 60%;
                 height: 60px;
                 display: flex;
                 justify-content: space-between;
@@ -198,7 +223,7 @@
                     .add-seed{
                         text-align: center;
                         background-color: rgba(18,46,70,0.8);
-                        width: 110px;
+                        width: 140px;
                         cursor: pointer;
                         p{
                             color: $base-light;
@@ -231,14 +256,21 @@
                             list-style: none;
                             padding: 20px;
                             position: absolute;
-                            right: 0;
-                            width: max-content;
+                            right: -30px;
+                            top: 30px;
+                            width: 130px;
+                            text-align: left;
                             z-index: 1;
                             li {
                                 cursor: pointer;
                                 font-size: 12px;
                                 line-height: 15px;
                                 padding: 5px 3px;
+                                
+                                input[type='checkbox'] {
+                                  margin-right: 10px;
+                                  cursor: pointer;
+                                }
                             }
                             li:hover {
                                 color: $sub-base;
@@ -251,11 +283,13 @@
 
                     .display-tag{
                         border-left: 1px solid rgba(206,208,210,0.5);
+                        font-size: 14px;
+                        padding: 10px;
                         text-align: center;
                         width: 110px;
                         p{
                             color: $base-dark;
-                            font-size: 16px;
+                            font-size: 14px;
                             span {
                                 font-size: 11px;
                             }
