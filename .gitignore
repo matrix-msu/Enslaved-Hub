@@ -7,7 +7,6 @@ config.json
 
 # compiled css
 assets/stylesheets/style.css
-assets/stylesheets/style.css.map
 
 # Directories
 /.idea

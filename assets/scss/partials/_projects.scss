@@ -1,156 +1,114 @@
 .projectcard{
-    //padding: 100px 0 0 0;
 
-    .cardheader-wrap{
-        margin-bottom: 50px;
+    .card-wrap{
 
-        .header-search{
-
-            .sort-stories{
-                float: left;
-                margin-bottom: 50px;
-
-                .sort-stories-text{
-                    font-size: 20px;
-                    color: $base-dark;
-                    line-height: 60px;
-                }
-
-                ul {
-                    background: $base-light;
-                    box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
-                    color: $base-dark;
-                    display: none;
-                    list-style: none;
-                    margin: -10px auto 0;
-                    padding: 20px;
-                    position: absolute;
-                    left: -820px;
-                    right: 0;
-                    width: fit-content;
-                    z-index: 1;
-                    li {
-                        cursor: pointer;
-                        font-size: 14px;
-                        line-height: 15px;
-                        padding: 5px 3px;
-                    }
-                    li:hover {
-                        color: $sub-base;
-                    }
-
-                    ul#submenu {
-                        margin-bottom: 20px;
-                    }
-
-                }
-
-                #submenu.show{
-                    display: block;
-                }
-
-                span {
-                    cursor: pointer;
-                    img {
-                        transition: 400ms;
-                        margin-bottom: 3px;
-                    }
-                    img.show {
-                        transform: rotate(-180deg);
-                    }
-                }
-            }
-
-            .project-search{
-                float: right;
-                position: relative;
-                width: 380px;
-
-                form{
-                    position: relative;
-
-                    .search-field{
-                        border: 1px solid #CED0D2;
-                        border-radius: 100px;
-                        box-shadow: 0 4px 36px 0 rgba(0,0,0,0.05);
-                        color: $base-dark;
-                        font-size: 16px;
-                        font-family: aleoregular;
-                        margin: 0;
-                        outline: none;
-                        padding-left: 20px;
-                        padding-right: 60px;
-                        transition: border 0.3s ease;
-                        height: 60px;
-                        width: 100%;
-
-                        &:hover {
-                            border: 1px solid $base-dark;
-                        }
-                        &:focus-within {
-                                border: 1px solid $base-dark;
-                        }
-
-                        &::placeholder {
-                            color: rgba($base-dark, .75);
-                        }
-                    }
-                    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-                        color: #253449;
-                        opacity: 1; /* Firefox */
-                        font-style: italic;
-                    }
-
-                    :-ms-input-placeholder { /* Internet Explorer 10-11 */
-                        color: #253449;
-                        font-style: italic;
-                    }
-
-                    ::-ms-input-placeholder { /* Microsoft Edge */
-                        color: #253449;
-                        font-style: italic;
-                    }
-
-                    // .search-icon{
-                    //     cursor: pointer;
-                    //     height: 60px;
-                    //     width: 60px;
-                    //     position: absolute;
-                    //     right: 0;
-                    //     top: 0;
-                    //     background-image: url(../images/Search-dark.svg);
-                    //     background-repeat: no-repeat;
-                    //     background-position: 50% 50%;
-                    // }
-                }
-            }
-        }
-    }
-
-    .cardwrap{
-
-        .row{
+        .card-row{
             width: 100%;
-            li{
+            li.card{
+                position: relative;
 
-                .cards{
-
-                    p{
-                        -webkit-line-clamp: 3;
-                    }
+                .connectionswrap{
+                    position: absolute;
+                    width: 100%;
+                    bottom: 0;
+                    left: 0;
+                    padding-bottom: 5px;
+    
                     .connections{
-                        bottom: 20px;
-                        left: 20px;
-                        position: absolute;
+                        min-height: 40px;
+                        max-width: 100%;
+                        padding: 0 10px;
                         display: flex;
-                        flex-wrap: wrap;
-                        .card-icon{
-                            font-size: 18px;
-                            padding-right: 20px;
+                        justify-content: space-between;
+    
+                        .card-icons{
+                            position: relative;
+                            display: flex;
+                            align-items: center;
+                            font-size: 12px;
+                            padding: 0 10px;
+    
+                            &:hover{
+                                .connection-menu{
+                                    display: block;
+                                }
+                            }
+    
                             img{
+                                margin-right: 10px;
                                 height: 22px;
-                                margin-bottom: -4px;
-                                padding-right: 5px;
+                                opacity: .8;
+                            }
+                            span{
+                                font-size: 14px;
+                                color: $base-dark;
+                                opacity: .8;
+                            }
+                            .connection-menu{
+                                display: none;
+                                background: $base-dark;
+                                box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+                                color: $base-light;
+                                font-size: 12px;
+                                white-space: nowrap;
+                                position: absolute;
+                                padding: 20px;
+                                bottom: 40px;
+                                right: -90px;
+                                width: 220px;
+                                z-index: 10;
+    
+                                &.hovered{
+                                    display: block;
+                                }
+    
+                                h1{
+                                    font-size: 18px;
+                                    margin-bottom: 10px;
+                                }
+                                ul{
+                                    padding: 0;
+                                    li{
+                                        width: unset;
+                                        display: list-item;
+                                        margin: 0;
+                                        padding: 0;
+                                        border: none;
+                                        box-shadow: none;
+                                        list-style-type: none;
+                                        cursor: pointer;
+                                        font-size: 13px;
+                                        transition: .2s;
+                                        line-height: 16px;
+                                        padding: 5px 0;
+                                        word-wrap: break-word;
+                                        white-space: normal;
+    
+                                        #arrow{
+                                            color: $base-light;
+                                            background-image: url(../images/Arrow.svg);
+                                            background-size: contain;
+                                            background-repeat: no-repeat;
+                                            width: 10px;
+                                            height: 6px;
+                                            transform: rotate(-90deg);
+                                            float: right;
+                                            margin: 5px 0 0 10px;
+                                            transition: color .2s;
+                                        }
+    
+                                        &:hover{
+                                            color: $sub-base;
+                                            #arrow{
+                                                background-image: url(../images/Arrow_colored.svg);
+                                            }
+                                        }
+    
+                                        span{
+                                            opacity: .6;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

@@ -38,14 +38,14 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>explore/projects">
+            <!-- <a href="<?php echo BASE_URL;?>explore/projects">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
                     <h3>Projects</h3>
                     <span><?php echo queryProjectsCounter();?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
-            </a>
+            </a> -->
             <a href="<?php echo BASE_URL;?>search/sources">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
