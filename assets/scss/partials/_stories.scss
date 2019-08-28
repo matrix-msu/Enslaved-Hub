@@ -60,6 +60,7 @@
             .card-title{
                 font-size: 28px;
                 color: $white;
+                margin: 0;
                 margin-bottom: 22px;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -166,19 +167,22 @@
                 }
     
                 ul {
-                    background: $base-light;
+                    background: $base-dark;
                     box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
-                    color: $base-dark;
+                    color: $white;
+                    border-radius: 5px;
+                    width: max-content;
+                    text-align: center;
                     display: none;
                     list-style: none;
                     margin: 10px auto 0;
-                    padding: 20px 40px;
+                    padding: 10px 15px;
                     position: absolute;
-                    left: -40px;
+                    left: -15px;
                     z-index: 1;
                     li {
                         cursor: pointer;
-                        font-size: 14px;
+                        font-size: 12px;
                         line-height: 15px;
                         padding: 5px 3px;
                     }
@@ -238,32 +242,34 @@
             }
 
             .sort-arrow {
-                margin-left: 8px;
+                margin-left: 5px;
                 position: relative;
-                top: -2px;
+                top: -1px;
+                width: 11px;
             }
         }
         ul {
-            background: $base-light;
+            background: $base-dark;
             box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
-            color: $base-dark;
+            color: $white;
+            border-radius: 5px;
             display: none;
             list-style: none;
             margin: 35px 0 0;
-            padding: 20px;
+            padding: 10px;
             position: absolute;
             left: 0;
             width: max-content;
             z-index: 1;
             li {
                 cursor: pointer;
-                font-size: 14px;
+                font-size: 12px;
                 line-height: 15px;
                 padding: 5px 3px;
                 transition: color 0.3s ease;
             }
             li:hover {
-                color: $sub-base;
+                color: $accent;
             }
 
             ul#submenu {

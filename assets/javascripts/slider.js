@@ -4,7 +4,7 @@ $.each(result_array,function ( index, value ) {
     $('<img class="mySlides fade" src="'+value+'" alt="story photo">').appendTo("div.slider"); //add images to the slider
     // $('<p class="key-events-text">Cation goes here</p>').appendTo("div.slider"); //add images to the slider
     if (result_array.length > 1){
-        $('<span class="dot" onclick="currentSlide('+(index+1)+')"></span>').appendTo("div.dotwrap");
+        $('<span class="dot" onclick="currentSlide('+(index+1)+')"></span>').appendTo("div.dots");
     } else{
         $('div.image-pagination').css('display','none');
     }

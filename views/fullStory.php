@@ -1,4 +1,3 @@
-
 <?php
 if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
     // $story = storyContent($_GET['kid']);
@@ -79,7 +78,7 @@ else {
             <section class="bibliography">
                 <?php
                 if (isset($story['Source'])) {
-                    echo '<h3>Bibliography</h3>';
+                    echo '<h2>Bibliography</h2>';
                     echo $story['Source'];
                 }
                 ?>
@@ -96,14 +95,22 @@ else {
                 <div class="container sliderwrap">
                     <div class="slider">
                     </div>
-                    <div class="image-pagination">
+                    <!-- <div class="image-pagination">
                         <img id="prev-arrow" onclick="plusSlides(-1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg" alt="arrow">
                         <div class="dotwrap" style="text-align:center">
                         </div>
                         <img id="next-arrow" onclick="plusSlides(1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg" alt="arrow">
+                    </div> -->
+                    <div class="controls">
+                        <div class="arrows">
+                            <div class="prev" onclick="plusSlides(-1)"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
+                            <div class="next" onclick="plusSlides(1)"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
+                        </div>
+                        <div class="dots">
+                        </div>
                     </div>
                     <div class="expand modal">
-                        <img src="<?php echo BASE_URL?>assets/images/expand.svg" alt="expander">
+                        <img src="<?php echo BASE_URL?>assets/images/maximize.svg" alt="maximize">
                     </div>
                     <!-- <div class="cation" style="text-align: center; padding-top: 20px; opacity: 0.7;"> -->
                     <div class="caption">
@@ -144,58 +151,67 @@ else {
             </div>
         </article>
     </div>
-    <!-- Story Connections -->
-    <div class="story-connections">
-        <h2>Story Connections</h2>
-        <div class="categories">
-            <ul>
-                <li class="unselected selected" id="people"><div class="person-image"></div>10 People</li>
-                <li class="unselected" id="event"><div class="event-image"></div>3 Events</li>
-                <li class="unselected" id="place"><div class="place-image"></div>3 Places</li>
-                <li class="unselected" id="project"><div class="project-image"></div>2 Projects</li>
-                <li class="unselected" id="source"><div class="source-image"></div>15 Sources</li>
-            </ul>
-        </div>
-        <div class="connection-cards">
-            <ul class="connect-row">
-                <li>
-                    <div class="cards">
-                        <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
-                        <h3>Firstname Lastname</h3>
-                    </div>
-                </li>
-            </ul>
-            <div class="load-more"><h4>Load More</h4></div>
-        </div>
-    </div>
-    <!-- Related Stories-->
-    <div class="container column related-card">
-        <div class="container cardheader-wrap">
-            <h2 class="column-header">Related Stories</h2>
-        </div>
-        <div class="container cardwrap">
-            <ul class="row">
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory">
-                        <div class="container cards">
-                            <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
-                            <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo BASE_URL?>fullStory">
-                        <div class="container cards">
-                            <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
-                            <h3 class="card-view-story">View Story <div class="view-arrow"></div></h3>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
 </main>
+<!-- Story Connections -->
+<div class="story-connections">
+    <h2>Story Connections</h2>
+    <div class="categories">
+        <ul>
+            <li class="unselected selected" id="people"><div class="person-image"></div>10 People</li>
+            <li class="unselected" id="event"><div class="event-image"></div>3 Events</li>
+            <li class="unselected" id="place"><div class="place-image"></div>3 Places</li>
+            <li class="unselected" id="project"><div class="project-image"></div>2 Projects</li>
+            <li class="unselected" id="source"><div class="source-image"></div>15 Sources</li>
+        </ul>
+    </div>
+    <div class="connection-cards">
+        <ul class="connect-row">
+            <li class="card">
+                <div class="card-title">
+                <img src="<?php echo BASE_URL?>assets/images/Person-dark.svg" alt="person icon">
+                    <h3>Firstname Lastname</h3>
+                </div>
+                <div class="details"><div class="detail"><p class="detail-title">Person Status</p><p>Enslaved</p></div><div class="detail"><p class="detail-title">Sex</p><p>Unidentified</p></div><div class="detail"><p class="detail-title">Location</p><p>Location Name</p></div><div class="detail"><p class="detail-title">Origin</p><p>Location Name</p></div><div class="detail"><p class="detail-title">Date Range</p><p>1840-1864</p></div></div>
+                <div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="http://dev2.matrix.msu.edu/~drew.schineller/enslaved/assets/images/Person-dark.svg"><span>1</span><div class="connection-menu"><h1>1 Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul></div></div><div class="card-icons"><img src="http://dev2.matrix.msu.edu/~drew.schineller/enslaved/assets/images/Place-dark.svg"><span>1</span><div class="connection-menu"><h1>1 Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul></div></div><div class="card-icons"><img src="http://dev2.matrix.msu.edu/~drew.schineller/enslaved/assets/images/Event-dark.svg"><span>1</span><div class="connection-menu"><h1>1 Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul></div></div><div class="card-icons"><img src="http://dev2.matrix.msu.edu/~drew.schineller/enslaved/assets/images/Source-dark.svg"><span>1</span><div class="connection-menu"><h1>1 Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul></div></div></div></div>
+            </li>
+        </ul>
+        <a class="search-all"></a>
+    </div>
+</div>
+<!-- Related Stories-->
+<div class="container card-column related-card">
+    <div class="container cardheader-wrap">
+        <h2 class="column-header">Featured in these Stories</h2>
+    </div>
+    <div class="container card-wrap">
+        <ul class="card-row">
+            <li>
+                <a href="<?php echo BASE_URL?>fullStory">
+                    <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo BASE_URL?>fullStory">
+                    <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- Extra Info -->
+<div class="extra-info">
+    <div class="share-links">
+        <h2>Share this Record</h2>
+        <img src="<?php echo BASE_URL;?>/assets/images/Facebook.svg" alt="facebook"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/Twitter.svg" alt="twitter"/>
+        <!-- <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
+        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/> -->
+    </div>
+    <div class="copyright">
+        <h2>Copyright</h2>
+        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg" alt="copyrights"/>
+    </div>
+</div>
 <!-- Modal View -->
 <div class="modal-view">
     <div class="modal-image">
@@ -205,6 +221,7 @@ else {
 <script>
 var captions = <?php echo json_encode($caption); ?>;
 var result_array = <?php echo json_encode($images); ?>;
+var recordform = "Story";
 </script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/slider.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/modal.js"></script>

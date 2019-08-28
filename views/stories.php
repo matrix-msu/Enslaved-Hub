@@ -119,7 +119,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
         </div>
     </div>
     <div class="container card-wrap" id="allStories">
-        <ul class="card-row" id='AllStoriesContainer'>
+        <ul class="card-row cards" id='AllStoriesContainer'>
             <?php
             displayStories($stories);
             ?>
