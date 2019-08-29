@@ -20,61 +20,23 @@ class crawler_broken_links {
 	// connect to data base
 	public function connect(){
 		// Create connection
-		$con=mysqli_connect($this->host,$this->user,$this->password,$this->dbName);
+		$con = mysqli_connect($this->host,$this->user,$this->password,$this->dbName);
 
 		// Check connection
 		if (mysqli_connect_errno())
-		{
-			echo "Failed to connect to MySQL: " . mysqli_connect_error();
-		}
+			echo("Failed to connect to MySQL: " . mysqli_connect_error());
 		return $con;
 	}
 	// fetch LIMIT number of keywords starting from OFFSET
 	public function get_broken_links($limit, $offset)
 	{
-		$conn=$this->connect();
+		$link = $this->connect();
 		$query = "SELECT DISTINCT link_url, error_code FROM broken_links LIMIT ".$limit." OFFSET ".$offset;
-		$result=$conn->query($query);
-		mysqli_close($conn);
-		if($result->num_rows >0){
-			$texty='';
-			$i=0;
-				while($row = $result->fetch_array())
-				{
-					$status='';
-					$orig = $row['link_url'];
-					if(substr($row['link_url'],-1)=="/")
-					$row['link_url']=substr($row['link_url'],0,-1);
-					if($row['error_code']>=300&&$row['error_code']<400&&$row['error_code']!=0) {$status="Moved"; $note="Please check if there is a new link for this website";}
-					else if($row['error_code']==0) {$status="No response from server"; $note="The server is down or unable to get response from the server";}
-					else {$status="Not Available"; $note="Website might be perminantly removed or there is a typo in the link";}
-					$xd=$offset+$i;
-					$texty.= <<<HTML
+		$result = mysqli_query($link, $query);
 
-<div class="result" id="r$xd">
-	<div style="display:none" id="hid$xd">$orig</div>
-	<div class="link-wrap">
-		<a class="link" href="$orig" target="_blank">$orig</a>
-		<div class="right">
-			<div class="trash crawler-modal-open" id="delete-link">
-				<img class="trash-icon" src="./assets/images/Delete.svg">
-			</div>
-			<div class="update crawler-modal-open" id="update-link">
-				<p>Update Link</p>
-			</div>
-		</div>
-	</div>
-	<div class="message">
-		<p>$status, <a href="$orig" target="_blank">check website.</a></p>
-		<p>$note</p>
-	</div>
-</div>
-HTML;
-					$i++;
-				}
-			return $texty;
-		}
-		else return "no more data";
+		mysqli_close($link);
+
+		return mysqli_fetch_all($result, MYSQLI_ASSOC);
 	}
 	// update entry from crawler_seeds
 	public function update_seeds($old_link,$new_link)

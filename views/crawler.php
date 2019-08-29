@@ -65,65 +65,9 @@
     </div>
 
     <div class="broken-wrap result-container" id="broken">
-        <p class="link-info">The following (12) links are broken. They can be updated or deleted entirely.</p>
-        <div class="result" id="keep">
-            <div class="link-wrap">
-                <a class="link" href="http://www.google.com" target="_blank">www.nameoflinkgoeshere.com</a>
-                <div class="right">
-                    <div class="trash crawler-modal-open" id="delete-link">
-                        <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
-                    </div>
-                    <div class="update crawler-modal-open" id="update-link">
-                        <p>Update Link</p>
-                    </div>
-                </div>
-            </div>
-            <div class="message">
-                <p>No Response from server, <a href="http://www.google.com" target="_blank">check website.</a></p>
-                <p>The server is down or unable to get a response from the server.</p>
-            </div>
-        </div>
     </div>
 
     <div class="seed-wrap result-container" id="seeds">
-        <p class="link-info">There are (12) Seeds. They can be updated or deleted entirely.</p>
-        <form action="submit">
-            <label for="seed-insert" class="sr-only">seed-insert</label>
-            <input id="seed-insert" class="search-field" type="text" name="add_seed" placeholder="Add a seed"/>
-            <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
-        </form>
-
-        <div class="result" id="keep">
-            <div class="link-wrap">
-                <p><span>URL:</span><a class="link" href="http://www.google.com" target="_blank">www.nameoflinkgoeshere.com</a></p>
-                <div class="right">
-                    <div class="trash crawler-modal-open" id="delete-seed">
-                        <img class="trash-icon" src="<?php echo BASE_IMAGE_URL;?>Delete.svg">
-                    </div>
-                    <div class="update crawler-modal-open" id="update-seed">
-                        <p>Update Seed</p>
-                    </div>
-                </div>
-            </div>
-            <div class="details">
-                <div class="detail-row">
-                    <div class="cell">
-                        <p><span class="label">NAME:</span>Pea Soup</p>
-                    </div>
-                    <div class="cell">
-                        <p><span class="label">TITLE:</span>Pea Soup</p>
-                    </div>
-                </div>
-                <div class="detail-row">
-                    <div class="cell">
-                        <p><span class="label">TWITTER:</span><a href="" target="_blank">@peasoup</a></p>
-                    </div>
-                    <div class="cell">
-                        <p><span class="label">RSS:</span><a href="" target="_blank">www.nameoflinkgoeshere.com</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <?php } else { ?>
