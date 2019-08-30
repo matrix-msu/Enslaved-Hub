@@ -304,11 +304,13 @@ function koraWrapperSearch(
 	  $returnedFields = array($returnedFields);
 	  $fieldsToQuery = array($fieldsToQuery);
 	  $query = array($query);
+	//   $sort = array([]);
 	  $sort = array($sort);
 	  $start = array($start);
 	  $limit = array($limit);
 	  $sizeDateAndDataOptions = array($sizeDateAndDataOptions);
-    }
+	}
+	$sort = array($sort);
 	$formIndex = 0;
 	$formsQueryArray = array();
     foreach( $formIds as $formId ){
@@ -383,15 +385,14 @@ function koraWrapperSearch(
     }
 	$formsQueryArray = '['.implode(',',$formsQueryArray).']';
     $data = ['forms' => $formsQueryArray];
-
-
+// var_export($data);
     $ch = curl_init(KORA_SEARCH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $result = curl_exec($ch);
 	curl_close($ch);
-	
+	// print_r($result);die;
     return $result;
 }
 

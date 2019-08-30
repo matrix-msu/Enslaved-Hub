@@ -12,18 +12,18 @@ SELECT ?event ?eventlab ?startyear ?endyear ?type ?eventtypeLabel
 WHERE {
    VALUES ?event { $qidList }.
     ?event ?property  ?object .
-  	?object prov:wasDerivedFrom ?provenance .
-  	?provenance pr:$isDirectlyBasedOn ?source .
-    ?event rdfs:label ?eventlab.
-    ?event wdt:$hasEventType ?type .
-    ?type rdfs:label ?eventtypeLabel
+  	?object $prov:wasDerivedFrom ?provenance .
+  	?provenance $pr:$isDirectlyBasedOn ?source .
+    ?event $rdfs:label ?eventlab.
+    ?event $wdt:$hasEventType ?type .
+    ?type $rdfs:label ?eventtypeLabel
 
   		 
-   OPTIONAL {?event wdt:$atPlace ?place.
-           ?place rdfs:label ?placelabel}.
-  OPTIONAL {?event wdt:$startsAt ?date.
+   OPTIONAL {?event $wdt:$atPlace ?place.
+           ?place $rdfs:label ?placelabel}.
+  OPTIONAL {?event $wdt:$startsAt ?date.
            BIND(str(YEAR(?date)) AS ?startyear)
- 	 		OPTIONAL {?event wdt:$endsAt ?endDate
+ 	 		OPTIONAL {?event $wdt:$endsAt ?endDate
            BIND(str(YEAR(?endDate)) AS ?endyear)}.
             }.
  }GROUP BY ?event ?eventlab ?startyear ?endyear ?type ?eventtypeLabel

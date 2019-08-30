@@ -55,6 +55,11 @@ function blazegraph()
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
 
+
+        foreach($GLOBALS['PREFIX_ARRAY'][LOD_CONFIG] as $prefix => $value){
+            $$prefix = $value;
+        }
+    
         foreach(properties as $property => $pId){
             $property = ucwords($property);
             $property = str_replace(" ", "", $property);
@@ -98,7 +103,7 @@ function blazegraph()
                     foreach ($genders as $gender){
                         if (array_key_exists($gender, sexTypes)){
                             $qGender = sexTypes[$gender];
-                            $genderIdFilter .= "?agent wdt:$hasSex wd:$qGender. ";
+                            $genderIdFilter .= "?agent $wdt:$hasSex $wd:$qGender. ";
                         }
                     }
                 }
@@ -107,8 +112,8 @@ function blazegraph()
                 if (isset($filtersArray['person'])){
                     $name = $filtersArray['person'][0];
                     $nameQuery = "
-                        ?agent p:$hasName ?statement.
-                        ?statement ps:$hasName ?name.
+                        ?agent $p:$hasName ?statement.
+                        ?statement $ps:$hasName ?name.
                         FILTER regex(?name, '^$name', 'i') . 
                     ";
                 }
@@ -117,13 +122,13 @@ function blazegraph()
                 $sourceQuery = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
-                    $sourceQuery = "VALUES ?source {wd:$sourceQ} #Q number needs to be changed for every source.
-                                    ?source wdt:$instanceOf wd:$entityWithProvenance.
-                                    ?people wdt:$instanceOf/wdt:$subclassOf wd:$agent; #agent or subclass of agent
+                    $sourceQuery = "VALUES ?source { $wd:$sourceQ} #Q number needs to be changed for every source.
+                                    ?source $wdt:$instanceOf $wd:$entityWithProvenance.
+                                    ?people $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
                                             ?property  ?object .
-                                    ?object prov:wasDerivedFrom ?provenance .
-                                    ?provenance pr:$isDirectlyBasedOn ?source .
-                                    ?people rdfs:label ?peoplename";
+                                    ?object $prov:wasDerivedFrom ?provenance .
+                                    ?provenance $pr:$isDirectlyBasedOn ?source .
+                                    ?people $rdfs:label ?peoplename";
                 }
                 // filter by age category
                 $ageQuery = "";
@@ -133,7 +138,7 @@ function blazegraph()
                     foreach ($ages as $age){
                         if (array_key_exists($age, ageCategory)){
                             $qAge = ageCategory[$age];
-                            $ageIdFilter .= "?agent wdt:$hasAgeCategory wd:$qAge . ";
+                            $ageIdFilter .= "?agent $wdt:$hasAgeCategory $wd:$qAge . ";
                         }
                     }
                 }
@@ -144,7 +149,7 @@ function blazegraph()
                     foreach ($statuses as $status){
                         if (array_key_exists($status, personstatus)){
                             $qStatus = personstatus[$status];
-                            $statusIdFilter .= "?agent wdt:$hasPersonStatus wd:$qStatus . ";
+                            $statusIdFilter .= "?agent $wdt:$hasPersonStatus $wd:$qStatus . ";
                         }
                     }
                 }
@@ -155,7 +160,7 @@ function blazegraph()
                     foreach ($ethnos as $ethno){
                         if (array_key_exists($ethno, ethnodescriptor)){
                             $qEthno = ethnodescriptor[$ethno];
-                            $ethnoIdFilter .= "?agent wdt:$hasECVO wd:$qEthno . ";
+                            $ethnoIdFilter .= "?agent $wdt:$hasECVO $wd:$qEthno . ";
                         }
                     }
                 }
@@ -166,7 +171,7 @@ function blazegraph()
                     foreach ($roles as $role){
                         if (array_key_exists($role, roleTypes)){
                             $qRole = roleTypes[$role];
-                            $roleIdFilter .= "?agent wdt:$hasParticipantRole wd:$qRole . ";
+                            $roleIdFilter .= "?agent $wdt:$hasParticipantRole $wd:$qRole . ";
                         }
                     }
                 }
@@ -177,7 +182,7 @@ function blazegraph()
                     foreach ($occupations as $occupation){
                         if (array_key_exists($occupation, occupation)){
                             $qOccupation = occupation[$occupation];
-                            $occupationIdFilter .= "?agent wdt:$hasOccupation wd:$qOccupation . ";
+                            $occupationIdFilter .= "?agent $wdt:$hasOccupation $wd:$qOccupation . ";
                         }
                     }
                 }
@@ -189,9 +194,9 @@ function blazegraph()
                         if (array_key_exists($type, sourceTypes)){
                             $qType = sourceTypes[$type];
                             $sourceTypeIdFilter .= "  ?agent ?property  ?object .
-                                ?object prov:wasDerivedFrom ?provenance .
-                                ?provenance pr:$isDirectlyBasedOn ?source .
-                                ?source wdt:$hasOriginalSourceType wd:$qType.  
+                                ?object $prov:wasDerivedFrom ?provenance .
+                                ?provenance $pr:$isDirectlyBasedOn ?source .
+                                ?source $wdt:$hasOriginalSourceType $wd:$qType.  
                             ";
                         }
                     }
@@ -201,12 +206,12 @@ function blazegraph()
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
                     $eventQ = $filtersArray['event'][0];
                     $eventIdFilter = "
-                        VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
-                        ?event wdt:$instanceOf wd:$event.
-                        ?event p:$providesParticipantRole ?statement.
-                        ?statement ps:$providesParticipantRole ?personname.
-                        ?statement pq:$hasParticipantRole ?agent.
-                        ?agent rdfs:label ?name.
+                        VALUES ?event { $wd:$eventQ} #Q number needs to be changed for every event.
+                        ?event $wdt:$instanceOf $wd:$event.
+                        ?event $p:$providesParticipantRole ?statement.
+                        ?statement $ps:$providesParticipantRole ?personname.
+                        ?statement $pq:$hasParticipantRole ?agent.
+                        ?agent $rdfs:label ?name.
                     ";
                 }
                 break;
@@ -217,7 +222,7 @@ function blazegraph()
                     foreach ($types as $type){
                         if (array_key_exists($type, placeTypes)){
                             $qType = placeTypes[$type];
-                            $placeTypeIdFilter .= "VALUES ?type { wd:$qType } . ";
+                            $placeTypeIdFilter .= "VALUES ?type { $wd:$qType } . ";
                         }
                     }
                 }
@@ -230,7 +235,7 @@ function blazegraph()
                    foreach ($types as $type){
                         if (array_key_exists($type, eventTypes)){
                             $qType = eventTypes[$type];
-                            $eventTypeIdFilter .= "?event wdt:$hasEventType wd:$qType . ";
+                            $eventTypeIdFilter .= "?event $wdt:$hasEventType $wd:$qType . ";
                         }
                     }
                 }
@@ -250,13 +255,13 @@ function blazegraph()
                     $dateRangeQuery = $dateRange;
                     if ($from != ''){
                         $dateRangeIdFilter .= "
-                            ?event wdt:$startsAt ?startYear.
+                            ?event $wdt:$startsAt ?startYear.
                             FILTER (?startYear >= \"".$from."-01-01T00:00:00Z"."\"^^xsd:dateTime) . 
                         ";
                     }
                     if ($to != ''){
                         $dateRangeIdFilter .= "
-                            ?event wdt:$endsAt ?endYear.
+                            ?event $wdt:$endsAt ?endYear.
                             FILTER (?endYear <= \"".$to."-01-01T00:00:00Z"."\"^^xsd:dateTime) . 
                         ";                    
                     }
@@ -267,9 +272,9 @@ function blazegraph()
                     $sourceQids = $filtersArray['source'];
                     foreach ($sourceQids as $sourceQid){
                         $sourceIdFilter .= "
-                            VALUES ?source {wd:$sourceQid} #Q number needs to be changed for every source.
-                                ?source wdt:$instanceOf wd:$entityWithProvenance.
-                                ?source wdt:$reportsOn ?event. 
+                            VALUES ?source { $wd:$sourceQid} #Q number needs to be changed for every source.
+                                ?source $wdt:$instanceOf $wd:$entityWithProvenance.
+                                ?source $wdt:$reportsOn ?event. 
                         ";                    
                     }
                 }
@@ -283,7 +288,7 @@ function blazegraph()
                    foreach ($types as $type){
                         if (array_key_exists($type, sourceTypes)){
                             $qType = sourceTypes[$type];
-                            $sourceTypeIdFilter .= "?source wdt:$hasOriginalSourceType wd:$qType . ";
+                            $sourceTypeIdFilter .= "?source $wdt:$hasOriginalSourceType $wd:$qType . ";
                         }
                     }
                 }
@@ -292,11 +297,11 @@ function blazegraph()
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
                     $eventQ = $filtersArray['event'][0];
                     $eventIdFilter = "
-                        VALUES ?event {wd:$eventQ} #Q number needs to be changed for every event.
-                        ?source wdt:$instanceOf wd:$entityWithProvenance. #entity with provenance
-                        ?source wdt:$hasOriginalSourceType ?sourcetype.
-                        ?source wdt:$generatedBy ?project.
-                        ?source wdt:$reportsOn ?event.
+                        VALUES ?event { $wd:$eventQ} #Q number needs to be changed for every event.
+                        ?source $wdt:$instanceOf $wd:$entityWithProvenance. #entity with provenance
+                        ?source $wdt:$hasOriginalSourceType ?sourcetype.
+                        ?source $wdt:$generatedBy ?project.
+                        ?source $wdt:$reportsOn ?event.
                      ";
                 }
                 break;
@@ -390,6 +395,7 @@ function blazegraph()
         $resultCountQuery['query'] = $tempQuery;
         // print_r($resultCountQuery);die;
         $result = blazegraphSearch($resultCountQuery);
+        //var_dump($resu)
         
         if (isset($result[0]) && isset($result[0]['count'])){
             $record_total = $result[0]['count']['value'];
@@ -415,7 +421,7 @@ function blazegraph()
         // create the line in the query with the ids to search for
         $qidList = "";
         foreach($qids as $qid){
-            $qidList .= "wd:$qid ";
+            $qidList .= "$wd:$qid ";
         }
         
         include BASE_PATH."queries/".$preset."Search/data.php";
@@ -486,6 +492,9 @@ function blazegraph()
 
 
 function blazegraphSearch($query){
+    //echo BLAZEGRAPH_URL;
+    // echo http_build_query($query);
+    // die;
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
@@ -498,7 +507,6 @@ function blazegraphSearch($query){
     curl_close($ch);
     
     $result = json_decode($result, true)['results']['bindings'];
-
     return $result;
 }
 
