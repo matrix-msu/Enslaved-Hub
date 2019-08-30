@@ -1,11 +1,11 @@
 <?php
 //******************************************************************************   Keywords Queries
 // initialize connection
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_keywords.php");
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_tags.php");
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_deleted_keywords.php");
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_broken_links.php");
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_seeds.php");
+require_once(BASE_PATH . "models/crawler_keywords.php");
+require_once(BASE_PATH . "models/crawler_tags.php");
+require_once(BASE_PATH . "models/crawler_deleted_keywords.php");
+require_once(BASE_PATH . "models/crawler_broken_links.php");
+require_once(BASE_PATH . "models/crawler_seeds.php");
 
 $limit = 40;
 $offset = 0;

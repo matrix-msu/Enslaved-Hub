@@ -1,5 +1,5 @@
 <?php
-    require_once(BASE_PATH . "assets/webcrawler/models/crawler_tags.php");
+    require_once(BASE_PATH . "models/crawler_tags.php");
 
     $isCrawlerAdmin = true;
     $crawler_tags = new crawler_tags();

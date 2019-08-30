@@ -238,7 +238,6 @@ function populateCrawlerBrokenLinks(data) {
 		url = result['link_url'];
 		error_code = result['error_code'];
 		error = 'Unknown Issue';
-		console.log(error_code)
 		if (error_code.toString()[0] === '3')
 			error = 'Redirection';
 		if (error_code.toString()[0] === '4')
