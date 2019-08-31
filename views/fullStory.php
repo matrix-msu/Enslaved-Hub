@@ -61,7 +61,7 @@ else {
                 <?php
                 if (isset($story['Creator'])) {
                     echo '<h2>Creator</h2>';
-                    echo $story['Creator'];
+                    echo '<p>'.$story['Creator'].'</p>';
                 }
                 ?>
             </section>
@@ -69,7 +69,7 @@ else {
                 <?php
                 if (isset($story['Contributor'])) {
                     echo '<h2>Editor</h2>';
-                    echo $story['Contributor'];
+                    echo '<p>'.$story['Contributor'].'</p>';
                 }
                 ?>
                 <!-- <p>Ibrahima Abd al-Rahman was one of only a few Africans enslaved and brought to America during the slave trade who was able to secure a return to Africa.  He was born c. 1762 in the Islamic kingdom of Futa Jallon, today located in Guinea. He was a son of the almaami of Futa Jallon, a Muslim theocratic ruler. Abd al-Rahman was raised in Timbo, the capital of Futa Jallon, where he studied the Koran as a young boy. He went on to study further in Jenne and Timbuktu, two major centers of learning, located in present day Mali.</p>
