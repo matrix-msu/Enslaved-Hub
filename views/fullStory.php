@@ -56,12 +56,16 @@ else {
                     echo $story['Text'];
                 }
                 ?>
+            </section>
+            <section class="online-resources">
                 <?php
                 if (isset($story['Creator'])) {
                     echo '<h2>Creator</h2>';
                     echo $story['Creator'];
                 }
                 ?>
+            </section>
+            <section class="online-resources">
                 <?php
                 if (isset($story['Contributor'])) {
                     echo '<h2>Editor</h2>';
