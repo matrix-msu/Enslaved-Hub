@@ -58,6 +58,7 @@ else {
                 ?>
                 <?php
                 if (isset($story['Creator'])) {
+                    echo '<p>Creator</p>';
                     echo $story['Creator'];
                 }
                 ?>
