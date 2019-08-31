@@ -3,7 +3,7 @@ if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
     // $story = storyContent($_GET['kid']);
 
     // Getting Story using korawrappper
-    $fields = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Creator', 'Timeline', 'Story_Associator'];
+    $fields = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Creator', 'Contributor', 'Timeline', 'Story_Associator'];
     $koraResult = koraWrapperSearch(STORY_SID, $fields, "kid", $_GET['kid']);
     $koraResult = json_decode($koraResult, true);
     if(!array_key_exists("error", $koraResult)) $story = $koraResult['records'][0][ $_GET['kid'] ];
@@ -58,8 +58,14 @@ else {
                 ?>
                 <?php
                 if (isset($story['Creator'])) {
-                    echo '<p>Creator</p>';
+                    echo '<h2>Creator</h2>';
                     echo $story['Creator'];
+                }
+                ?>
+                <?php
+                if (isset($story['Contributor'])) {
+                    echo '<h2>Editor</h2>';
+                    echo $story['Contributor'];
                 }
                 ?>
                 <!-- <p>Ibrahima Abd al-Rahman was one of only a few Africans enslaved and brought to America during the slave trade who was able to secure a return to Africa.  He was born c. 1762 in the Islamic kingdom of Futa Jallon, today located in Guinea. He was a son of the almaami of Futa Jallon, a Muslim theocratic ruler. Abd al-Rahman was raised in Timbo, the capital of Futa Jallon, where he studied the Koran as a young boy. He went on to study further in Jenne and Timbuktu, two major centers of learning, located in present day Mali.</p>
