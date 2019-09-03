@@ -214,6 +214,52 @@ function blazegraph()
                         ?agent $rdfs:label ?name.
                     ";
                 }
+
+                // filter people by place
+                $placeIdFilter = "";
+                if (isset($filtersArray['place']) && isset($filtersArray['place'][0]) ){
+                    $placeQ = $filtersArray['place'][0];
+                    $placeIdFilter .= "
+                            ?agent $p:$hasParticipantRole ?statementrole.
+                            ?statementrole $ps:$hasParticipantRole ?role.
+                            ?statementrole $pq:$roleProvidedBy ?event.
+                            ?event $wdt:$atPlace $wd:$placeQ .   #this number will change for every place       
+                        ";
+                }
+
+                // filtering for event type
+                $eventTypeIdFilter = "";
+                if (isset($filtersArray['event_type'])){
+                    $types = $filtersArray['event_type'];
+                   foreach ($types as $type){
+                        if (array_key_exists($type, eventTypes)){
+                            $qType = eventTypes[$type];
+                            $eventTypeIdFilter .= "
+                                ?agent $p:$hasParticipantRole ?statementrole.
+                                ?statementrole $ps:$hasParticipantRole ?role.
+                                ?statementrole $pq:$roleProvidedBy ?event.
+                                ?event $wdt:$hasEventType $wd:$qType.     #this number will change for every event type
+
+                            ";
+                        }
+                    }
+                }
+
+                // filter people by project
+                $projectIdFilter = "";
+                if (isset($filtersArray['projects']) && isset($filtersArray['projects'][0]) ){
+                    $projectName = $filtersArray['projects'][0];
+                    if (array_key_exists($projectName, projects)){
+                        $projectQ = projects[$projectName];
+                        $projectIdFilter .= "
+                                ?agent ?property  ?object .
+                                ?object $prov:wasDerivedFrom ?provenance .
+                                ?provenance $pr:$isDirectlyBasedOn ?source .
+                                ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
+                            ";
+                    }
+                }
+
                 break;
             case 'places':
                 $placeTypeIdFilter = "";
@@ -805,6 +851,10 @@ HTML;
                 if (isset($record['locatedInLabel']) && isset($record['locatedInLabel']['value'])){
                     if($record['locatedInLabel']['value'] != ''){
                         $located = $record['locatedInLabel']['value'];
+                    }
+                } else if (isset($record['locationlab']) && isset($record['locationlab']['value'])){
+                    if($record['locationlab']['value'] != ''){
+                        $located = $record['locationlab']['value'];
                     }
                 }
 

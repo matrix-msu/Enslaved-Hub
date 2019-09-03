@@ -307,8 +307,8 @@ function counterOfPlaceType(){
 
     $query= "
       SELECT DISTINCT ?placetype ?placetypeLabel (COUNT(?place) AS ?count) WHERE {
-          ?place $wdt:$instanceOf $wd:$placeclass; #it's a place
-              $wdt:$placetype ?placetype.
+          ?place $wdt:$instanceOf $wd:$place; #it's a place
+              $wdt:$hasPlaceType ?placetype.
       SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" .}
       }GROUP BY ?placetype ?placetypeLabel
       order by ?placetypeLabel

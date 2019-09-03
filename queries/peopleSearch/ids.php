@@ -14,6 +14,9 @@ WHERE {
     $occupationIdFilter
     $sourceTypeIdFilter
     $eventIdFilter
+    $eventTypeIdFilter
+    $placeIdFilter
+    $projectIdFilter
 } 
 $limitQuery
 $offsetQuery
