@@ -1,7 +1,7 @@
-<html><head><title>Matrix WebCrawler</title></head></html>
 <?php
+// TO RUN: php -r "require 'webcrawler.php'; run();"
+
 require_once(realpath(dirname(__FILE__) . "/../config.php"));
-include_once("get_links_functions.php");
 error_reporting(0);
 
 class WebCrawler {
@@ -12,61 +12,132 @@ class WebCrawler {
     var $password;
 
     public function __construct() {
-        $this->host=Host;
-        $this->user=Username;
-        $this->dbName=DBName;
-        $this->password=Password;
+        $this->host = Host;
+        $this->user = Username;
+        $this->dbName = DBName;
+        $this->password = Password;
     }
 
-    public function connect() {
-        $con = mysqli_connect($this->host,$this->user,$this->password,$this->dbName);
+    public function instantiateMySQLi() {
+        $mysqli = new mysqli($this->host, $this->user, $this->password, $this->dbName);
 
         if (mysqli_connect_errno())
-            return;
+            printf("Connect failed: %s\n", mysqli_connect_error());
 
-        return $con;
+        return $mysqli;
     }
 
     public function save_broken_link($url, $status_code) {
-        $link = $this->connect();
+        $mysqli = $this->instantiateMySQLi();
 
-        if ($stmt = mysqli_prepare($link, "INSERT INTO broken_links (link_url, error_code ) VALUES (?, ?)")) {
-            mysqli_stmt_bind_param($stmt, "ss", $url, $status_code);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
+        if ($stmt = $mysqli->prepare("INSERT INTO broken_links (link_url, error_code) VALUES (?, ?)")) {
+            $stmt->bind_param("ss", $url, $status_code);
+            $stmt->execute();
+            $stmt->close();
         }
+
+        $mysqli->close();
     }
 
     public function save_keyword($url) {
-        return;
+        $mysqli = $this->instantiateMySQLi();
+
+        $doc = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $doc->loadHTMLFile($url);
+        libxml_clear_errors();
+
+        $elements = $doc->getElementsByTagName('a');
+
+        $params = $keywords = [];
+        $types = $values = '';
+
+        // Finding keywords
+        foreach($elements as $element) {
+            $tag = $element->parentNode->tagName;
+            if(
+                ($tag == 'h1' || $tag == 'h2' || $tag == 'h3') &&
+                !is_numeric($element->nodeValue)
+            ) {
+                if ($keyword != '') {
+                    $keyword = preg_replace('/\s+/', ' ', $element->nodeValue);
+                    $keyword = preg_replace('/[^A-Za-z0-9 ]/', '', $keyword);
+
+                    array_push($keywords, $keyword);
+                }
+            }
+        }
+
+        // Building statement
+        for ($i=0; $i < count($keywords); $i++) {
+            $types .= 'ss';
+            $values .= '(?, ?)';
+            array_push($params, $keywords[$i]);
+            array_push($params, $url);
+            if ($i < count($keywords) - 1)
+                $values .= ', ';
+        }
+
+        $stmt = $mysqli->stmt_init();
+
+        if ($stmt = $mysqli->prepare("INSERT INTO crawler_keywords (keyword, url) VALUES " . $values)) {
+            $stmt->bind_param($types, ...$params);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        $mysqli->close();
     }
 
     public function crawl() {
-        $link = $this->connect();
-        $query = "SELECT htmlURL from crawler_seeds";
-        $result = mysqli_query($link, $query);
-        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $mysqli = $this->instantiateMySQLi();
+        $results = $mysqli->query("SELECT htmlURL from crawler_seeds");
+        $rows = $results->fetch_all(MYSQLI_ASSOC);
+
+        $valid_urls = $broken_urls = [];
+
+        echo 'Crawl Initialized.' . PHP_EOL;
+        echo 'Attempting to curl ' . count($rows) . ' urls.' . PHP_EOL;
 
         foreach($rows as $row) {
             $url = $row['htmlURL'];
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            $data = curl_exec($ch);
-            $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
+            $url = filter_var($url, FILTER_SANITIZE_URL);
 
-            if ($status_code = 200) {
-                save_keyword($url);
+            if (filter_var($url, FILTER_VALIDATE_URL)) {
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HEADER, true);
+                curl_setopt($ch, CURLOPT_NOBODY, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+                curl_exec($ch);
+                $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                if ($status_code = 200) {
+                    echo $url . ' is valid.' . PHP_EOL;
+                    array_push($valid_urls, $url);
+                } else {
+                    echo $url . ' is not valid.' . PHP_EOL;
+                    array_push($broken_urls, array($url, $status_code));
+                }
             } else {
-                save_broken_link($url, $status_code);
+                echo $url . ' is not valid.' . PHP_EOL;
+                array_push($broken_urls, array($url, 0));
             }
         }
 
-        mysqli_free_result($result);
-        mysqli_close($link);
+        $results->free_result($result);
+        $mysqli->close($link);
+
+        echo 'Crawl Complete' . PHP_EOL;
     }
 }
+
+function run() {
+    $crawler = new WebCrawler();
+    $crawler->crawl();
+    // $crawler->save_keyword('https://www.kwasikonadu.info/blog');
+}
+
 ?>
