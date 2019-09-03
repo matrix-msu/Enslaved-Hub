@@ -1545,17 +1545,16 @@ HTML;
                 $project = array_reverse(explode('/', $record['project']['value']))[0];
                 foreach ($templates as $template) {
                     if ($template == 'homeCard') {
-                        $card = "<li>
+                        $card = "<li class='card'>
                         <a href='".BASE_URL."project/$project'>
-                        <div class='container cards'>
                             <h2 class='card-title'>$fullName</h2>
-                            <div class='connections'>
-                                $connections
+                            <div class='connectionswrap'>
+                                <div class='connections'>
+                                    $connections
+                                </div>
                             </div>
-                            <h4 class='card-view-story'>View Project <div class='view-arrow'></h4>
-                        </div>
-                    </a>
-                </li>";
+                        </a>
+                    </li>";
                     }
                     array_push($cards[$template], $card);
                 }
@@ -1679,7 +1678,7 @@ HTML;
                         '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                     );
 
-                    $connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
+                    $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
                         '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
                         '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
                         '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].

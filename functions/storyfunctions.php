@@ -61,10 +61,9 @@ function getStories($page = 1, $count = 8, $sort = []){
 
 function displayStories($stories){
     foreach ($stories['records'][0] as $kid => $story) {
-        echo '<li><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
-        echo '<div class="container cards">';
+        echo '<li class="card"><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
         echo '<h2 class="card-title">'.$story['Title'].'</h2>';
-        echo '</div></a></li>';
+        echo '</a></li>';
     }
 }
 

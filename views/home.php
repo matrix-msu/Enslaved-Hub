@@ -54,12 +54,12 @@
                         <p class="count"><?php echo queryPlaceCounter();?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
-                    <a class="content-link" href="<?php echo BASE_URL;?>search/projects">
+                    <!-- <a class="content-link" href="<?php echo BASE_URL;?>search/projects">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
                         <p class="type">Projects</p>
                         <p class="count"><?php echo queryProjectsCounter();?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
-                    </a>
+                    </a> -->
                     <a class="content-link" href="<?php echo BASE_URL;?>search/sources">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                         <p class="type">Sources</p>

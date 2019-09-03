@@ -1541,7 +1541,7 @@ function getPersonRecordHtml(){
 
     $html .= <<<HTML
 <h4 class='last-page-header'>
-    <a id='last-page' href="$url"><span id=previous-title>$recordform // </span></a>
+    <a id='last-page' href="$url"><span id=previous-title>$recordform / </span></a>
     <span id='current-title'>$name</span>
 </h4>
 <h1>$name</h1>
@@ -2101,10 +2101,6 @@ function getFullRecordConnections(){
   } else {
     return '';
   }
-
-
-
-
 }
 
 

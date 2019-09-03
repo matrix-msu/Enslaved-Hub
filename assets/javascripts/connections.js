@@ -183,14 +183,9 @@ function loadConnections(){
 
         // get story kid
         QID = getUrlVars()["kid"];
-        recordForm = 'Story';
-
-
-
-
-
+        recordform = 'Story';
     }
-    console.log(QID, recordform)
+    console.log(recordform)
 
 
     $.ajax({
