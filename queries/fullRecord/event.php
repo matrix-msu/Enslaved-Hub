@@ -10,7 +10,7 @@ SELECT ?name ?desc ?located  ?type ?date ?endDate
 
 WHERE
 {
-VALUES ?event {$wd:$qid} #Q number needs to be changed for every event.
+VALUES ?event { $wd:$qid } #Q number needs to be changed for every event.
 ?event $wdt:$instanceOf $wd:$event;
 		 ?property  ?object .
 ?object $prov:wasDerivedFrom ?provenance .

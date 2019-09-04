@@ -5,7 +5,7 @@ SELECT ?name ?desc ?project ?pname ?type ?secondarysource
 
  WHERE
 {
- VALUES ?source {$wd:$qid} #Q number needs to be changed for every source.
+ VALUES ?source { $wd:$qid } #Q number needs to be changed for every source.
   ?source $wdt:$instanceOf $wd:$entityWithProvenance;
          $wdt:$generatedBy ?project.
   ?project $rdfs:label ?pname.
