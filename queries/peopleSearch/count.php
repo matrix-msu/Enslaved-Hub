@@ -3,8 +3,8 @@
 $tempQuery = <<<QUERY
 SELECT DISTINCT (COUNT(?agent) as ?count)
 WHERE {
-    ?agent wdt:$instanceOf/wdt:$subclassOf wd:$agent. #agent or subclass of agent
-    MINUS{?agent wdt:$hasParticipantRole wd:$researcher}
+    ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent. #agent or subclass of agent
+    MINUS{?agent $wdt:$hasParticipantRole $wd:$researcher}
     $genderIdFilter
     $nameQuery
     $ageIdFilter
@@ -14,5 +14,8 @@ WHERE {
     $occupationIdFilter
     $sourceTypeIdFilter
     $eventIdFilter
+    $eventTypeIdFilter
+    $placeIdFilter
+    $projectIdFilter
 }
 QUERY;

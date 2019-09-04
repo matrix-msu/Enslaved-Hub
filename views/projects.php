@@ -2,7 +2,7 @@
 <?php 
 
 // Dynamically pull data from cache file (webPages.json)
-$cached_data = file_get_contents(BASE_PATH . "/wikiconstants/webPages.json");
+$cached_data = file_get_contents(BASE_PATH . "/cache/webPages.json");
 $cached_data = json_decode($cached_data, true); // Convert the json string to a php array
 
 $title = "Projects";

@@ -100,12 +100,12 @@ if ($fileArray[0] == 'project'){
     define('QID', $projectQ);
     $currentFile = $fileArray[0];
 }
-// if($fileArray[0] == 'explore' && count($fileArray) > 1 && $fileArray[1] == 'sources'){
-//     $fileArray[2] = 'source_type';
-// }
-// if($fileArray[0] == 'explore' && count($fileArray) > 1 && $fileArray[1] == 'places'){
-//     $fileArray[2] = 'place_type';
-// }
+if($fileArray[0] == 'explore' && count($fileArray) > 1 && $fileArray[1] == 'sources'){
+    $fileArray[2] = 'source_type';
+}
+if($fileArray[0] == 'explore' && count($fileArray) > 1 && $fileArray[1] == 'places'){
+    $fileArray[2] = 'place_type';
+}
 
 $EXPLORE_JS_VARS = '';
 if ($fileArray[0] == 'explore' && count($fileArray) > 2){ //filter
