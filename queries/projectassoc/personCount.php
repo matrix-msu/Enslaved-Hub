@@ -3,7 +3,7 @@
 $tempQuery = <<<QUERY
 SELECT DISTINCT ?project ?projectLabel (count(distinct ?agent) as ?agentcount)
     WHERE {
-        VALUES ?project {$wd:$qid}
+        VALUES ?project { $wd:$qid }
         ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent;        #find agents
                 $p:$instanceOf  ?object .
         ?object $prov:wasDerivedFrom ?provenance .

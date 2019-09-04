@@ -14,7 +14,6 @@ SELECT DISTINCT ?agent
 (group_concat(distinct ?endyear; separator = "||") as ?endyear1)
 (group_concat(distinct ?placelab; separator = "||") as ?place1) #place
 
-
 WHERE {
   VALUES ?agent { $qidList }.
         ?agent ?property  ?object .
@@ -24,25 +23,23 @@ WHERE {
         ?agent $wdt:$hasName ?name.
 OPTIONAL{?agent $wdt:$hasPersonStatus ?status.
          ?status $rdfs:label ?statuslabel}.
-   
+
 OPTIONAL{
         ?agent $p:$hasParticipantRole ?statementrole.
         ?statementrole $ps:$hasParticipantRole ?role.
-        ?statementrole $pq:$roleProvidedBy ?roleevent}.
+        ?statementrole $pq:$roleProvidedBy ?roleevent.
+        OPTIONAL{?roleevent $wdt:$startsAt ?startdate.
+        BIND(str(YEAR(?startdate)) AS ?startyear)}.
+        OPTIONAL{?roleevent $wdt:$endsAt ?enddate.
+        BIND(str(YEAR(?enddate)) AS ?endyear)}.
+        OPTIONAL{?roleevent $wdt:$atPlace ?place.
+        ?place $rdfs:label ?placelab}}.
             
 OPTIONAL { ?agent $wdt:$hasSex ?sex.
                 ?sex $rdfs:label ?sexlab}
-OPTIONAL{?roleevent $wdt:$startsAt ?startdate.
-        BIND(str(YEAR(?startdate)) AS ?startyear).
-OPTIONAL {?roleevent $wdt:$endsAt ?enddate.
-         BIND(str(YEAR(?enddate)) AS ?endyear)}.
-            }.
-OPTIONAL {?roleevent $wdt:$atPlace ?place.
-              ?place $rdfs:label ?placelab}.
 
 OPTIONAL {?agent $wdt:$hasInterAgentRelationship ?people}.
 
 } group by ?agent
-
 
 QUERY;

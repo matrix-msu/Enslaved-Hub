@@ -8,11 +8,11 @@ $cached_data = json_decode($cached_data, true); // Convert the json string to a 
 $title = "Projects";
 $description = "";
 foreach ($cached_data as $content) {
-    if(array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"]["value"] == "FALSE") continue;
-    if(array_key_exists("Title", $content) && $content["Title"]["value"] == "Projects")
+    if(array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"] == "FALSE") continue;
+    if(array_key_exists("Title", $content) && $content["Title"] == "Projects")
     {
-        $title = $content["Title"]["value"];
-        $description = $content["Description"]["value"];
+        $title = $content["Title"];
+        $description = $content["Description"];
         break;
     }
 }

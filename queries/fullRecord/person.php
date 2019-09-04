@@ -33,7 +33,7 @@ SELECT ?name ?desc ?sextype  ?race
 
  WHERE
 {
- VALUES ?agent {$wd:$qid} #Q number needs to be changed for every event.
+ VALUES ?agent { $wd:$qid } #Q number needs to be changed for every event.
   ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
 
   		 ?property  ?object .

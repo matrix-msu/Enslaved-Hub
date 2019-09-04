@@ -9,7 +9,7 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
 
   WHERE
 {
-  VALUES ?place {$wd:$qid} #Q number needs to be changed for every place.
+  VALUES ?place { $wd:$qid } #Q number needs to be changed for every place.
   ?place $wdt:$instanceOf $wd:$place;
         ?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
