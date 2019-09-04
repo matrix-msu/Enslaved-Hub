@@ -18,7 +18,7 @@ class WebCrawler {
         $this->password = Password;
     }
 
-    public function instantiateMySQLi() {
+    private function instantiateMySQLi() {
         $mysqli = new mysqli($this->host, $this->user, $this->password, $this->dbName);
 
         if (mysqli_connect_errno())
@@ -27,11 +27,36 @@ class WebCrawler {
         return $mysqli;
     }
 
-    public function save_broken_link($url, $status_code) {
+    private function buildDynamicBindParams($elements) {
+        // Params arg must be an array with each element being array(1st, 2nd)
+        $types = $values = '';
+        $params = [];
+
+        for ($i=0; $i < count($elements); $i++) {
+            foreach ($elements[$i] as $first => $second) {
+                array_push($params, $first);
+                array_push($params, $second);
+                break;
+            }
+
+            $types .= 'ss';
+            $values .= '(?, ?)';
+            if ($i < count($elements) - 1)
+                $values .= ', ';
+        }
+
+        return array($types, $values, $params);
+    }
+
+    public function save_broken_link($links) {
         $mysqli = $this->instantiateMySQLi();
 
-        if ($stmt = $mysqli->prepare("INSERT INTO broken_links (link_url, error_code) VALUES (?, ?)")) {
-            $stmt->bind_param("ss", $url, $status_code);
+        echo 'Saving ' . count($links) . ' broken links into the database...' . PHP_EOL;
+
+        list($types, $values, $params) = $this->buildDynamicBindParams($links);
+
+        if ($stmt = $mysqli->prepare("INSERT INTO broken_links (link_url, error_code) VALUES " . $values)) {
+            $stmt->bind_param($types, ...$params);
             $stmt->execute();
             $stmt->close();
         }
@@ -39,54 +64,59 @@ class WebCrawler {
         $mysqli->close();
     }
 
-    public function save_keyword($url) {
-        $mysqli = $this->instantiateMySQLi();
-
-        $doc = new DOMDocument();
-        libxml_use_internal_errors(true);
-        $doc->loadHTMLFile($url);
-        libxml_clear_errors();
-
-        $elements = $doc->getElementsByTagName('a');
+    public function save_keywords($urls) {
 
         $params = $keywords = [];
         $types = $values = '';
 
-        // Finding keywords
-        foreach($elements as $element) {
-            $tag = $element->parentNode->tagName;
-            if(
-                ($tag == 'h1' || $tag == 'h2' || $tag == 'h3') &&
-                !is_numeric($element->nodeValue)
-            ) {
-                if ($keyword != '') {
-                    $keyword = preg_replace('/\s+/', ' ', $element->nodeValue);
-                    $keyword = preg_replace('/[^A-Za-z0-9 ]/', '', $keyword);
+        foreach ($urls as $url) {
+            echo 'Attempting to scrape ' . $url . PHP_EOL;
+            $count = 0;
 
-                    array_push($keywords, $keyword);
+            $doc = new DOMDocument();
+            libxml_use_internal_errors(true);
+            $doc->loadHTMLFile($url);
+            libxml_clear_errors();
+
+            $elements = $doc->getElementsByTagName('a');
+
+            // Finding keywords
+            foreach($elements as $element) {
+                $tag = $element->parentNode->tagName;
+                foreach (['h1', 'h2', 'h3'] as $header) {
+                    if($tag == $header && !is_numeric($element->nodeValue)) {
+                        $keyword = preg_replace('/\s+/', ' ', $element->nodeValue);
+                        $keyword = preg_replace('/[^A-Za-z0-9 ]/', '', $keyword);
+
+                        if ($keyword != '') {
+                            array_push($keywords, array($keyword => $url));
+
+                            $count++;
+                        }
+                    }
                 }
             }
+            echo 'Found ' . $count . ' keywords for ' . $url . PHP_EOL . PHP_EOL;
         }
 
-        // Building statement
-        for ($i=0; $i < count($keywords); $i++) {
-            $types .= 'ss';
-            $values .= '(?, ?)';
-            array_push($params, $keywords[$i]);
-            array_push($params, $url);
-            if ($i < count($keywords) - 1)
-                $values .= ', ';
+        if (count($keywords) > 0) {
+            echo 'Saving ' . count($keywords) . ' keywords into the database...' . PHP_EOL;
+
+            list($types, $values, $params) = $this->buildDynamicBindParams($keywords);
+
+            $mysqli = $this->instantiateMySQLi();
+
+            $stmt = $mysqli->stmt_init();
+
+            if ($stmt = $mysqli->prepare("INSERT INTO crawler_keywords (keyword, url) VALUES " . $values)) {
+                $stmt->bind_param($types, ...$params);
+                $stmt->execute();
+                $stmt->close();
+                echo 'Save successful!' . PHP_EOL;
+            }
+
+            $mysqli->close();
         }
-
-        $stmt = $mysqli->stmt_init();
-
-        if ($stmt = $mysqli->prepare("INSERT INTO crawler_keywords (keyword, url) VALUES " . $values)) {
-            $stmt->bind_param($types, ...$params);
-            $stmt->execute();
-            $stmt->close();
-        }
-
-        $mysqli->close();
     }
 
     public function crawl() {
@@ -97,7 +127,7 @@ class WebCrawler {
         $valid_urls = $broken_urls = [];
 
         echo 'Crawl Initialized.' . PHP_EOL;
-        echo 'Attempting to curl ' . count($rows) . ' urls.' . PHP_EOL;
+        echo 'Attempting to curl ' . count($rows) . ' urls...' . PHP_EOL;
 
         foreach($rows as $row) {
             $url = $row['htmlURL'];
@@ -125,19 +155,30 @@ class WebCrawler {
                 echo $url . ' is not valid.' . PHP_EOL;
                 array_push($broken_urls, array($url, 0));
             }
+
+            echo PHP_EOL;
         }
 
         $results->free_result($result);
         $mysqli->close($link);
 
-        echo 'Crawl Complete' . PHP_EOL;
+        if (count($valid_urls) > 0) {
+            echo 'Attempting to retrieve keywords...' . PHP_EOL;
+            $this->save_keywords($valid_urls);
+        }
+
+        if (count($broken_urls) > 0) {
+            echo 'Attempting to save broken urls...' . PHP_EOL;
+            $this->save_broken_link($broken_urls);
+        }
+
+        echo 'Crawl Complete!' . PHP_EOL;
     }
 }
 
 function run() {
     $crawler = new WebCrawler();
     $crawler->crawl();
-    // $crawler->save_keyword('https://www.kwasikonadu.info/blog');
 }
 
 ?>
