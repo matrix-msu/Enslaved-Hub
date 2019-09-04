@@ -8,19 +8,29 @@
 function Kora_GetNavigationData()
 {
 	// Get Kora data with Display set to True
-	$koraResults = koraWrapperSearch(WEBPAGES_FORM, "ALL", array("Display"), "TRUE", array('NavigationOrder','ASC','SubNavigationOrder','ASC'));
+	$koraResults = koraWrapperSearch(
+		WEBPAGES_FORM, 
+		"ALL", 
+		array("Display"), 
+		"TRUE",
+		array(
+			'Navigation Order' => 'ASC',
+			'Sub Navigation Order' => 'ASC'
+		)
+	);
 	
 	// Error checking
 	if(!$koraResults) return json_encode("failed");
 	$decode_results = json_decode($koraResults, true);
+	// echo($koraResults);die;
 	if(array_key_exists("error", $decode_results)) return json_encode("failed");
 
 	// Read from the webPages file and compare to the kora results
-	$cached_data = file_get_contents(BASE_PATH . "/wikiconstants/webPages.json");
+	$cached_data = file_get_contents(BASE_PATH . "/cache/webPages.json");
 	if($cached_data == json_encode(json_decode($koraResults)->records[0])) return json_encode("similar");
 
 	// put content to webPages.json file
-	file_put_contents( BASE_PATH . "/wikiconstants/webPages.json", json_encode(json_decode($koraResults)->records[0]));
+	file_put_contents( BASE_PATH . "/cache/webPages.json", json_encode(json_decode($koraResults)->records[0]));
 
 	$navs = [];
 	$prev = "";
@@ -45,7 +55,7 @@ function Kora_GetNavigationData()
 		array_push($navs[$index][1], $result["SubNavigation"]);
 	}
 	// put navigations to navContents.json file
-	file_put_contents( BASE_PATH . "/wikiconstants/navContents.json", json_encode($navs));
+	file_put_contents( BASE_PATH . "/cache/navContents.json", json_encode($navs));
 
 	return json_encode("updated");
 }
@@ -54,7 +64,7 @@ function Kora_GetNavigationData()
 function Json_GetNavigationData()
 {
 	// Read data from Json cache File
-	$navContents = file_get_contents(BASE_PATH . "/wikiconstants/navContents.json");
+	$navContents = file_get_contents(BASE_PATH . "/cache/navContents.json");
 	// echo '<script>console.log('.$navContents.')</script>';
 	$navContents = json_decode($navContents, true);
 	return $navContents;
@@ -63,7 +73,7 @@ function Json_GetNavigationData()
 function Json_GetData_ByTitle($title, $all_matches = false)
 {
 	// Dynamically pull data from cache file (webPages.json)
-	$cached_data = file_get_contents(BASE_PATH . "/wikiconstants/webPages.json");
+	$cached_data = file_get_contents(BASE_PATH . "/cache/webPages.json");
 	$cached_data = json_decode($cached_data, true); // Convert the json string to a php array
 
 	$output = ['title' => $title, 'descr' => ""];
@@ -84,8 +94,8 @@ function Json_GetData_ByTitle($title, $all_matches = false)
 		// echo '<br>'.$title;
 		// var_dump($content);die;
 	    // return all data with provided title and all those navigation equals the provided title
-	    if(array_key_exists("Navigation", $content) && isset($content["Navigation"]['value']) && $content["Navigation"]['value'][0] == $title)
-	    	$output[ $content["Title"]['value'] ] = $content["Description"]['value'];
+	    if(array_key_exists("Navigation", $content) && isset($content["Navigation"]) && $content["Navigation"][0] == $title)
+	    	$output[ $content["Title"]] = $content["Description"];
 	}
 	return $output;
 }

@@ -1,10 +1,14 @@
 <!-- Heading image and title container-->
+
 <div class="container header search-page">
 	<div class="container middlewrap search-page">
         <?php
         $typeTitle = "";
         $typeLower = "";
         $currentTitle = 'Search';
+
+        include BASE_LIB_PATH."variableIncluder.php";
+
 
         if (count($_GET) > 0){
             $typeLower = array_keys($_GET)[0];
@@ -243,16 +247,13 @@
                         }
                         
                         $query = array('query' => "");
-                        $instanceOf = properties["instance of"];
-                        $hasPlaceType = properties["hasPlaceType"];
-                        $researchProject = classes["Research Project"];
                         $place = classes["Place"];
 
                         // get the categories from a blazegraph search
                         $query['query'] = <<<QUERY
 SELECT ?country ?countryLabel WHERE {
-?country wdt:$instanceOf wd:$place .
-?country wdt:$hasPlaceType wd:$queryQ .
+?country $wdt:$instanceOf $wd:$place .
+?country $wdt:$hasPlaceType $wd:$queryQ .
 
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }                        
@@ -341,7 +342,7 @@ QUERY;
                     // get the categories from a blazegraph search
                     $query['query'] = <<<QUERY
 SELECT ?project ?projectLabel WHERE {
-  	?project wdt:$instanceOf wd:$researchProject.
+  	?project $wdt:$instanceOf $wd:$researchProject.
   
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
 }                     

@@ -193,7 +193,7 @@ $(document).ready(function(){
             data = JSON.parse(data);
             $(".project-headers > h1").html(data.title.value);
             $("#current-title").html(data.title.value);
-            $(".container.infowrap").html(data.desc.value);
+            $(".container.infowrap p").html(data.desc.value);
             if ('link' in data) {
                 $('#details').click(function () {
                     document.location.href = data.link.value;

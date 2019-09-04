@@ -1,32 +1,34 @@
 .pagination-container {
-  text-align: right;
+  display: flex;
+  align-items: center;
 
   .page-select {
-    display: inline-block;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+	display: inline-block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 
-    li {
-      color: transparentize($base-dark, .8);
-      cursor: pointer;
-      display: inline-block;
-      margin: 0 4px;
-      transition: .3s color ease;
-      vertical-align: middle;
+	li {
+	  color: rgba($base-dark, .3);
+	  font-size: 14px;
+	  cursor: pointer;
+	  display: inline-block;
+	  margin: 0 4px;
+	  transition: all .3s;
+	  vertical-align: middle;
 
-      &.active,
-      &:hover {
-        color: $base-dark;
-      }
-    }
+	  &.active,
+	  &:hover {
+		color: $base-dark;
+	  }
+	}
   }
 
   .pagination-next {
-    margin-left: 20px;
+	margin-left: 20px;
   }
 
   .pagination-prev {
-    margin-right: 20px;
+	margin-right: 20px;
   }
 }

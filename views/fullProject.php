@@ -1,6 +1,6 @@
 <!-- Page author: Drew Schineller-->
 <!-- Heading image and title container-->
-<div class="container header full-project">
+<div class="container header full-project stories">
     <div class="container middlewrap">
         <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>projects"><span id="previous-title">Projects // </span></a><span id="current-title">Project Name</span></h4>
         <div class="project-headers">
@@ -11,7 +11,7 @@
 </div>
 <div class="jump-buttons project-button">
     <div class="jumpwrap">
-        <button class="jump-button" id="details">Go to Project Site</button>
+        <button class="jump-button" id="details">Go to Project's Site</button>
     </div>
 </div>
 <!-- info container-->
