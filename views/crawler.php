@@ -37,8 +37,8 @@
         <div class="sorting-dropdowns">
             <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
                 <ul id="sortmenu" class="sort-by">
-                    <li data-sort="ASC">A - Z</li>
-                    <li data-sort="DESC">Z - A</li>
+                    <li data-sort="DESC">Newest</li>
+                    <li data-sort="ASC">Oldest</li>
                 </ul>
             </span>
             <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">

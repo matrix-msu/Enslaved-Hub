@@ -85,11 +85,19 @@ class WebCrawler {
                 $tag = $element->parentNode->tagName;
                 foreach (['h1', 'h2', 'h3'] as $header) {
                     if($tag == $header && !is_numeric($element->nodeValue)) {
+                        $keyword_url =  $element->getAttribute('href');
                         $keyword = preg_replace('/\s+/', ' ', $element->nodeValue);
                         $keyword = preg_replace('/[^A-Za-z0-9 ]/', '', $keyword);
 
-                        if ($keyword != '') {
-                            array_push($keywords, array($keyword => $url));
+                        if (
+                            $keyword != '' &&
+                            filter_var(
+                                $keyword_url,
+                                FILTER_VALIDATE_URL,
+                                FILTER_FLAG_SCHEME_REQUIRED
+                            )
+                        ) {
+                            array_push($keywords, array($keyword => $keyword_url));
 
                             $count++;
                         }

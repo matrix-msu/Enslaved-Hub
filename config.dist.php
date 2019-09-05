@@ -3,11 +3,8 @@
 define("BASE_URL",  "http://dev2.matrix.msu.edu/enslaved/");
 define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
 define("KORA_BASE_URL", "https://kora.enslaved.org/");
-define('BASE_WIKI_URL','https://sandro-16.matrix.msu.edu/');
-define('BASE_BLAZEGRAPH_URL', 'https://sandro-33.matrix.msu.edu/');
-// define('BASE_WIKI_URL','https://lod.enslaved.org/');
-// define('BASE_BLAZEGRAPH_URL', 'https://bg1.enslaved.org/bigdata/');
-
+define("BASE_WIKI_URL", "https://sandro-16.matrix.msu.edu/");
+define("BASE_BLAZEGRAPH_URL", "https://sandro-33.matrix.msu.edu/");
 
 //project specific urls - you should never use relative paths
 define("BASE_JS_URL", BASE_URL . "assets/javascripts/");
@@ -41,7 +38,6 @@ define('PID', 16);
 define('WEBPAGES_FORM', 49);
 
 define('LOD_CONFIG', 'wikidata');
-// define('LOD_CONFIG', 'enslaved');
 
 $GLOBALS['FILTER_ARRAY'] = Array(
     "events" => array(
