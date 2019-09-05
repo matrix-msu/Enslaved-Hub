@@ -310,7 +310,7 @@ function koraWrapperSearch(
 	  $limit = array($limit);
 	  $sizeDateAndDataOptions = array($sizeDateAndDataOptions);
 	}
-	$sort = array($sort);
+
 	$formIndex = 0;
 	$formsQueryArray = array();
     foreach( $formIds as $formId ){
