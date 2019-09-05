@@ -2,17 +2,17 @@
 <?php 
 
 // Dynamically pull data from cache file (webPages.json)
-$cached_data = file_get_contents(BASE_PATH . "/wikiconstants/webPages.json");
+$cached_data = file_get_contents(BASE_PATH . "/cache/webPages.json");
 $cached_data = json_decode($cached_data, true); // Convert the json string to a php array
 
 $title = "Projects";
 $description = "";
 foreach ($cached_data as $content) {
-    if(array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"]["value"] == "FALSE") continue;
-    if(array_key_exists("Title", $content) && $content["Title"]["value"] == "Projects")
+    if(array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"] == "FALSE") continue;
+    if(array_key_exists("Title", $content) && $content["Title"] == "Projects")
     {
-        $title = $content["Title"]["value"];
-        $description = $content["Description"]["value"];
+        $title = $content["Title"];
+        $description = $content["Description"];
         break;
     }
 }
