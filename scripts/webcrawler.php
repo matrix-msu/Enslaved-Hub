@@ -1,5 +1,5 @@
 <?php
-// TO RUN: php -r "require 'webcrawler.php'; run();"
+// TO RUN: php -r "require 'path/to/webcrawler.php'; run();"
 
 require_once(realpath(dirname(__FILE__) . "/../config.php"));
 error_reporting(0);
@@ -149,19 +149,19 @@ class WebCrawler {
                 curl_setopt($ch, CURLOPT_NOBODY, true);
                 curl_setopt($ch, CURLOPT_TIMEOUT, 5);
                 curl_exec($ch);
-                $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                $status_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
                 curl_close($ch);
 
-                if ($status_code = 200) {
-                    echo $url . ' is valid.' . PHP_EOL;
+                if ($status_code >= 200 && $status_code <= 400) {
+                    echo $url . ' returned a successful http response code.' . PHP_EOL;
                     array_push($valid_urls, $url);
                 } else {
-                    echo $url . ' is not valid.' . PHP_EOL;
+                    echo $url . ' returned an http response error code or cannot reach host.' . PHP_EOL;
                     array_push($broken_urls, array($url, $status_code));
                 }
             } else {
-                echo $url . ' is not valid.' . PHP_EOL;
-                array_push($broken_urls, array($url, 0));
+                echo $url . ' is not a valid url.' . PHP_EOL;
+                array_push($broken_urls, array($url, 1));
             }
 
             echo PHP_EOL;
