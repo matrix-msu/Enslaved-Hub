@@ -1,11 +1,11 @@
 <?php
 //******************************************************************************   Keywords Queries
 // initialize connection
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_keywords.php");
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_tags.php");
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_deleted_keywords.php");
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_broken_links.php");
-require_once(BASE_PATH . "assets/webcrawler/models/crawler_seeds.php");
+require_once(BASE_PATH . "models/crawler_keywords.php");
+require_once(BASE_PATH . "models/crawler_tags.php");
+require_once(BASE_PATH . "models/crawler_deleted_keywords.php");
+require_once(BASE_PATH . "models/crawler_broken_links.php");
+require_once(BASE_PATH . "models/crawler_seeds.php");
 
 $limit = 40;
 $offset = 0;
@@ -63,7 +63,7 @@ if(isset($_POST["get_results"]))
 if(isset($_POST["update_tags"]))
 {
 	$results = $crawler_tags->update_keyword_tags($keywordId, $tagIds);
-	echo(json_encode($results));
+	echo(json_encode('success'));
 }
 
 // this functuion will just write a keyword to deleted file
@@ -152,6 +152,13 @@ if(isset($_POST['get_seeds']))
 
 	echo(json_encode($results));
 }
+
+if(isset($_POST['get_seed_urls']))
+{
+	$results = $seeds->get_all_urls();
+
+	echo(json_encode($results));
+}
 if (isset($_POST["more_seeds"]))
 {
 	$results = $seeds->get_seeds($limit,$_POST["more_seeds"]);
@@ -184,8 +191,8 @@ if(isset($_POST["count_seeds"]))
 //add a seed
 if(isset($_POST["add_seed"]))
 {
-	$seeds->add_seed($_POST["add_seed"]);
+	$seeds->add_seed($_POST["add_seed"], $_POST["name"]);
 
-	echo(json_encode("true"));
+	echo(json_encode('success'));
 }
 ?>

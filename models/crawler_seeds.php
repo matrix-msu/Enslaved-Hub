@@ -19,72 +19,39 @@ class crawler_seeds {
 	// connect to data base
 	public function connect(){
 		// Create connection
-		$con=mysqli_connect($this->host,$this->user,$this->password,$this->dbName);
+		$con = mysqli_connect($this->host,$this->user,$this->password,$this->dbName);
 
 		// Check connection
 		if (mysqli_connect_errno())
-		{
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
-		}
+
 		return $con;
 	}
 
 	// fetch LIMIT number of keywords starting from OFFSET
-	public function get_seeds($limit,$offset)
+	public function get_seeds($limit, $offset)
 	{
-		$conn=$this->connect();
-		$query = "SELECT * FROM crawler_seeds LIMIT ".$limit." OFFSET ".$offset;
-		$result=$conn->query($query);
-		mysqli_close($conn);
-		if($result->num_rows >0){
-			$texty='';
-			$i=0;
-			while($row = $result->fetch_array())
-			{
-				$xd=$offset+$i;
-				if(substr($row['htmlURL'],-1)=="/")
-					$row['htmlURL']=substr($row['htmlURL'],0,-1);
-				if(substr($row['xmlURL'],-1)=="/")
-					$row['xmlURL']=substr($row['xmlURL'],0,-1);
-
-				$texty.= <<<HTML
-<div class="result" id="r$xd">
-	<div class="link-wrap">
-		<p><span>URL:</span><a class="link" id="$row[id]" href="$row[htmlURL]" target="_blank">$row[htmlURL]</a></p>
-		<div class="right">
-			<div class="trash crawler-modal-open" id="delete-seed">
-				<img class="trash-icon" src="./assets/images/Delete.svg">
-			</div>
-			<div class="update crawler-modal-open" id="update-seed">
-				<p>Update Seed</p>
-			</div>
-		</div>
-	</div>
-	<div class="details">
-		<div class="detail-row">
-			<div class="cell">
-				<p><span class="label">NAME:</span>$row[text_name]</p>
-			</div>
-			<div class="cell">
-				<p><span class="label">TITLE:</span>$row[title]</p>
-			</div>
-		</div>
-		<div class="detail-row">
-			<div class="cell">
-				<p><span class="label">TWITTER:</span><a href="" target="_blank">$row[twitter_handle]</a></p>
-			</div>
-			<div class="cell">
-				<p><span class="label">RSS:</span><a href="" target="_blank">$row[xmlURL]</a></p>
-			</div>
-		</div>
-	</div>
-</div>
-HTML;
-				$i++;
-			}
-			return $texty;
+		$link = $this->connect();
+		$query = "SELECT * FROM crawler_seeds";
+		if ($limit && $offset) {
+			$query += "LIMIT ".$limit." OFFSET ".$offset;
 		}
-		else return "no more data";
+		$result = mysqli_query($link, $query);
+		$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+		mysqli_close($link);
+		mysqli_free_result($result);
+		return $rows;
+	}
+
+	public function get_all_urls()
+	{
+		$link = $this->connect();
+		$query = "SELECT htmlURL FROM crawler_seeds";
+		$result = mysqli_query($link, $query);
+		mysqli_close($link);
+		for ($set = array(); $row = $result->fetch_assoc(); $set[] = $row['htmlURL']);
+		mysqli_free_result($result);
+		return $set;
 	}
 
 	public function update_seed_info($seed_id, $name , $title, $rss, $url, $twitter)
@@ -138,12 +105,15 @@ HTML;
 		return $result->num_rows;
 	}
 
-	public function add_seed($link)
+	public function add_seed($url, $name)
 	{
-		$conn = $this->connect();
-		$query = "INSERT INTO crawler_seeds (htmlURL) VALUES ('$link')";
-		$result = $conn->query($query);
-		mysqli_close($conn);
+		$link = $this->connect();
+		if ($stmt = mysqli_prepare($link, "INSERT INTO crawler_seeds (text_name, title, htmlURL) VALUES (?, ?, ?)")) {
+			mysqli_stmt_bind_param($stmt, "sss", $name, $name, $url);
+    		mysqli_stmt_execute($stmt);
+    		mysqli_stmt_close($stmt);
+		}
+		mysqli_close($link);
 	}
 
 }
