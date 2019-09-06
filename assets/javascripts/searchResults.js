@@ -399,9 +399,9 @@ $(document).ready(function() {
             $('div#searchResults.show').css('width','');
             $("#searchResults").removeClass("show");
         } else {
-            tableWidth = window.innerWidth - 330;
-            $('div#searchResults').css('max-width', '3000px');// remove max-width property
-            $('div#searchResults.show').css('width', tableWidth); // apply width
+            // tableWidth = window.innerWidth - 330;
+            // $('div#searchResults').css('max-width', '3000px');// remove max-width property
+            // $('div#searchResults.show').css('width', tableWidth); // apply width
         }
     }
 
@@ -429,19 +429,19 @@ $(document).ready(function() {
         }
     });
 
-    //Main categories
-    $("li.cat-cat").each(function(){
-      $(this).find("span:first").toggleClass("show");
-        $(this).next().toggleClass("show");
-    });
-    $("li.cat-cat").click(function () { // toggle show/hide filter-by submenus
-        $(this).find("span:first").toggleClass("show");
-        $(this).next().toggleClass("show");
-    });
+    //Main categories (always showing now)
+    // $("li.cat-cat").each(function(){
+    //   $(this).find("span:first").toggleClass("show");
+    //     $(this).next().toggleClass("show");
+    // });
+    // $("li.cat-cat").click(function () { // toggle show/hide filter-by submenus
+    //     $(this).find("span:first").toggleClass("show");
+    //     $(this).next().toggleClass("show");
+    // });
     //Sub categories
     $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
         $(this).find("span:first").toggleClass("show");
-        $(this).next().toggleClass("show");
+        $(this).find("ul#submenu").toggleClass("show");
     });
      //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
