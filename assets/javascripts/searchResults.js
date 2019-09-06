@@ -42,7 +42,13 @@ if(document.location.toString().indexOf('?') !== -1)
             filters[aux[0]] = aux[1].split('+');
             continue;
         }
-        filters[aux[0]] = aux[1].split(',');
+
+        if (aux[1] == 'City, Town, or Village') {
+            filters[aux[0]] = 'City, Town, or Village';
+        } else {
+            filters[aux[0]] = aux[1].split(',');
+        }
+        
     }
 }
 
@@ -187,6 +193,11 @@ $(document).ready(function() {
             $("label."+key).each(function()
             {
                 var that = this;
+                if (!Array.isArray(values)){
+                    var temp = [values];
+                    values = temp;
+                }
+                
                 $.each(values, function(indx, value){
                     //Looks for input where value = value
                     if($(that).find('input').val() == value) {
@@ -713,11 +724,16 @@ function generateFilterCards(){
     {
         if(key && values && key != "limit" && key != "offset")
         {
+            
+            if (!Array.isArray(values)){
+                temp = [values];
+                values = temp;
+            } 
+            
             //Add filter cards
             $.each(values, function(indx, value)
             {
                 addFilterCard(key, value);
-                console.log(value); 
             });
         }
     });

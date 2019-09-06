@@ -16,7 +16,11 @@ WHERE {
     $eventIdFilter
     $eventTypeIdFilter
     $placeIdFilter
+    $placeTypeIdFilter
+    $cityIdFilter
+    $provinceIdFilter
     $projectIdFilter
+    
 } 
 $limitQuery
 $offsetQuery

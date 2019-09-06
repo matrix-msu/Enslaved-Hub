@@ -16,6 +16,9 @@ WHERE {
     $eventIdFilter
     $eventTypeIdFilter
     $placeIdFilter
+    $placeTypeIdFilter
+    $cityIdFilter
+    $provinceIdFilter
     $projectIdFilter
 }
 QUERY;

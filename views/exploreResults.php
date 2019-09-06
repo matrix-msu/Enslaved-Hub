@@ -249,6 +249,7 @@
                         $query = array('query' => "");
                         $place = classes["Place"];
 
+                        //TODO: GET THESE INTO CONSTANTS
                         // get the categories from a blazegraph search
                         $query['query'] = <<<QUERY
 SELECT ?country ?countryLabel WHERE {
@@ -272,7 +273,7 @@ QUERY;
                         curl_close($ch);
                         //Get result
                         $result = json_decode($result, true)['results']['bindings'];
-
+// print_r($result);
                         if (!empty($result)){
                             foreach($result as $row){
                                 $typeCats[$row['countryLabel']['value']] = 'Q32';
