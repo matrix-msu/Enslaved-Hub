@@ -6,12 +6,14 @@ var search_terms = '';
 var tag_filter_ids = [];
 var all_tags = [];
 var tab_type = '';
+var seed_urls = [];
 var google_search_url = 'https://www.google.com/search?hl=en&num=100&q=';
 var mozilla_http_status_url = 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/';
 
 $(document).ready(function(){
 
 	getTags();
+	getAllSeeds();
 	//Change in current-page input so call searchResults function
     $('#pagination .current-page').change(function(){
 		var val = $('#pagination .current-page').val();
@@ -201,6 +203,21 @@ function getTags() {
 	});
 }
 
+function getAllSeeds() {
+	$.ajax({
+		method:'POST',
+		url: BASE_URL + "api/getCrawlerResults",
+		data: {'get_seed_urls': 'ok'},
+		dataType: "JSON",
+		success:function(data){
+			seed_urls = data;
+		},
+		error:function(xhr, status, error){
+			console.log(xhr.responseText);
+		}
+	});
+}
+
 //Gets the results for the selected tab
 function getResults(get_data)
 {
@@ -210,7 +227,6 @@ function getResults(get_data)
 		data: get_data,
 		dataType: "JSON",
 		success:function(data){
-			console.log(data)
 			if(data) {
 				if (tab_type === 'results')
 					html = populateCrawlerResults(data);
@@ -334,11 +350,18 @@ function populateCrawlerResults(data) {
 	        	<div class="right">
 	        		<div class="trash crawler-modal-open" id="delete-link">
 	        			<img class="trash-icon" src="./assets/images/Delete.svg"></div>
-						<div class="add-seed">
-							<p>Add to Seeds</p>
-							<form action="submit">
-								<input type="hidden" name="add_seed" value="${result['url']}">
-							</form>
+						<div class="add-seed">`;
+			if ($.inArray(result['url'], seed_urls) >= 0) {
+				html += `<p>In Seeds</p>`;
+			} else {
+				html += `
+					<p>Add to Seeds</p>
+					<form action="submit">
+						<input type="hidden" name="add_seed" value="${result['url']}">
+						<input type="hidden" name="name" value="${result['keyword']}">
+					</form>`;
+			}
+			html += `
 						</div>
 						<div class="add-tag" id="add-tag">
 							<span id="show-tag">Add Tag
@@ -481,15 +504,14 @@ function installModalListeners(){
 	$('.add-seed form').off().submit(function(e){
 		e.preventDefault();
 
-		var form = $(this);
-
 		$.ajax({
 			type: "POST",
 			url: BASE_URL + "api/getCrawlerResults",
-			data: form.serialize(),
+			data: $(this).serialize(),
 			dataType: "JSON",
 			success:function(data){
 				//after ajax refresh tab
+				getAllSeeds();
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
 			error:function(xhr, status, error){

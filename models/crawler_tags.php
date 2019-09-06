@@ -52,33 +52,32 @@ class crawler_tags {
 	public function update_keyword_tags($keywordId, $tagIds){
 		$link = $this->connect();
 
-		// Assume failure
-		$result = 'failed';
-
 		if ($stmt = mysqli_prepare($link, "DELETE FROM crawler_keyword_tags_assoc WHERE keyword_id=?")) {
 			mysqli_stmt_bind_param($stmt, "s", $keywordId);
     		mysqli_stmt_execute($stmt);
     		mysqli_stmt_close($stmt);
-		} else {
-			return $result;
 		}
 
-		// TODO::refactor to prepared statement
-		$stmt = "INSERT INTO crawler_keyword_tags_assoc(keyword_id, tag_id) VALUES ";
-		for ($i=0; $i < count($tagIds); $i++) {
-			$stmt .= "(".$keywordId.", ".$tagIds[$i].")";
-			if($i != count($tagIds) - 1) {
-				$stmt .= ', ';
-			}
-		}
+		$types = $values = '';
+        $params = [];
 
-		if(mysqli_query($link, $stmt) === TRUE){
-			$result = 'success';
-		}
+        for ($i=0; $i < count($tagIds); $i++) {
+            array_push($params, $keywordId);
+            array_push($params, $tagIds[$i]);
+
+            $types .= 'ss';
+            $values .= '(?, ?)';
+            if ($i < count($tagIds) - 1)
+                $values .= ', ';
+        }
+
+        if ($stmt = mysqli_prepare($link, "INSERT INTO crawler_keyword_tags_assoc(keyword_id, tag_id) VALUES " . $values)) {
+            mysqli_stmt_bind_param($stmt, $types, ...$params);
+            mysqli_stmt_execute($stmt);
+    		mysqli_stmt_close($stmt);
+        }
 
 		mysqli_close($link);
-
-		return $result;
 	}
 }
 
