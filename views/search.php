@@ -19,6 +19,10 @@
       <div class="image-background-overlay  search-page"></div>
       <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg3.jpg" alt="Enslaved Background Image"></div>
 </div>
+<div class="search-message">
+    <p>Search results will appear here after a keyword has been entered above.<br>
+Go to the <a href="<?php echo BASE_URL;?>advancedSearch">Advanced Search</a> page to start filtering results more specifically.</p>
+</div>
 <!-- <main class="direct-search">
     <div class="searchwrap">
         <form action="<?php echo BASE_URL;?>search/people" method="get" onsubmit="handleSubmit()" autocomplete="off">

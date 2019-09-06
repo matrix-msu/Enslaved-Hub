@@ -157,7 +157,7 @@ if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
     var recordform = "<?php echo RECORD_FORM ?>";
 </script>
 
+<script src="<?php echo BASE_URL;?>assets/javascripts/timeline.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/exploreRecord.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
-<script src="<?php echo BASE_URL;?>assets/javascripts/timeline.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>

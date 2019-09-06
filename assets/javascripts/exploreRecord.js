@@ -10,6 +10,7 @@ $(document).ready(function () {
         },
         'success': function (json) {
             var html = JSON.parse(json);
+            console.log(json);
             $('.middlewrap').html(html.header);
             $('.infowrap').html(html.description);
             $('.detail-section').html(html.details);

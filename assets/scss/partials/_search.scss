@@ -71,6 +71,24 @@
     
 }
 
+.search-message{
+    width: 90%;
+    max-width: 1000px;
+    margin: 200px auto;
+
+    p{
+        font-size: 18px;
+        font-family: aleobold;
+        color: $base-dark;
+        font-style: italic;
+        text-align: center;
+
+        a{
+            color: $accent;
+        }
+    }
+}
+
 .direct-search{
     width: 90%;
     max-width: 1000px;
