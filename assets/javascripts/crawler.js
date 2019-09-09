@@ -1,15 +1,19 @@
 var card_limit = 12;
 var card_offset = 0;
 var total_length = 12;
-var sort_direction = 'ASC';
+var sort_direction = 'DESC';
 var search_terms = '';
 var tag_filter_ids = [];
 var all_tags = [];
+var tab_type = '';
+var seed_urls = [];
 var google_search_url = 'https://www.google.com/search?hl=en&num=100&q=';
+var mozilla_http_status_url = 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/';
 
 $(document).ready(function(){
 
 	getTags();
+	getAllSeeds();
 	//Change in current-page input so call searchResults function
     $('#pagination .current-page').change(function(){
 		var val = $('#pagination .current-page').val();
@@ -75,10 +79,10 @@ $(document).ready(function(){
 		}
         $('.crawler-tabs li').removeClass('tabbed');
         $(this).addClass('tabbed');
-        var name = $(this).attr('id');
+        tab_type = $(this).attr('id');
 
         $('.result-container').removeClass('show');
-		$('.result-container#'+name).addClass('show');
+		$('.result-container#'+tab_type).addClass('show');
 
 		$('.result-container').find('.result').not('#keep').off().remove(); //.not('#keep')
 
@@ -86,15 +90,15 @@ $(document).ready(function(){
 		var type = {};
 		var count_type = '';
 
-		if(name == "results"){
+		if(tab_type == "results"){
 			type['get_results'] = 'ok';
 			count_type = 'count_results';
 		}
-		else if(name == "broken"){
+		else if(tab_type == "broken"){
 			type['get_links'] = 'ok';
 			count_type = 'count_links';
 		}
-		else if(name == "seeds"){
+		else if(tab_type == "seeds"){
 			type['get_seeds'] = 'ok';
 			count_type = 'count_seeds';
 		}
@@ -199,6 +203,21 @@ function getTags() {
 	});
 }
 
+function getAllSeeds() {
+	$.ajax({
+		method:'POST',
+		url: BASE_URL + "api/getCrawlerResults",
+		data: {'get_seed_urls': 'ok'},
+		dataType: "JSON",
+		success:function(data){
+			seed_urls = data;
+		},
+		error:function(xhr, status, error){
+			console.log(xhr.responseText);
+		}
+	});
+}
+
 //Gets the results for the selected tab
 function getResults(get_data)
 {
@@ -209,7 +228,12 @@ function getResults(get_data)
 		dataType: "JSON",
 		success:function(data){
 			if(data) {
-				html = populateCrawlerResults(data);
+				if (tab_type === 'results')
+					html = populateCrawlerResults(data);
+				if (tab_type === 'seeds')
+					html = populateCrawlerSeeds(data);
+				if (tab_type === 'broken')
+					html = populateCrawlerBrokenLinks(data);
 				$(".result-container").append(html);
 				installModalListeners(); //install the modal listeners after content is generated
 				$(document).ready(function(){
@@ -223,8 +247,84 @@ function getResults(get_data)
 	});//ajax
 }
 
+function populateCrawlerBrokenLinks(data) {
+	html = '';
+	for (var i = 0; i < data.length; i++) {
+		result = data[i];
+		url = result['link_url'];
+		error_code = result['error_code'];
+		error = 'Unknown Issue';
+		if (error_code.toString()[0] === '3')
+			error = 'Redirection';
+		if (error_code.toString()[0] === '4')
+			error = 'Client error';
+		if (error_code.toString()[0] === '5')
+			error = 'Server error';
+		html += `
+		<div class="result" id="r${i+1}">
+			<div style="display:none" id="hid${i+1}">${url}</div>
+			<div class="link-wrap">
+				<a class="link" href="${url}" target="_blank">${url}</a>
+				<div class="right">
+					<div class="trash crawler-modal-open" id="delete-link">
+						<img class="trash-icon" src="./assets/images/Delete.svg">
+					</div>
+					<div class="update crawler-modal-open" id="update-link">
+						<p>Update Link</p>
+					</div>
+				</div>
+			</div>
+			<div class="message">
+				<p>${error}, <a href="${url}" target="_blank">check website.</a></p>
+				<p><a href="${mozilla_http_status_url + error_code}" target="_blank">${error_code}</a></p>
+			</div>
+		</div>`;
+	}
+	return html;
+}
+
+function populateCrawlerSeeds(data) {
+	html = '';
+	for (var i = 0; i < data.length; i++) {
+		result = data[i];
+		html += `
+		<div class="result" id="r${i+1}">
+			<div class="link-wrap">
+				<p><span>URL:</span><a class="link" id="${result['id']}" href="${result['htmlURL']}" target="_blank">${result['htmlURL']}</a></p>
+				<div class="right">
+					<div class="trash crawler-modal-open" id="delete-seed">
+						<img class="trash-icon" src="./assets/images/Delete.svg">
+					</div>
+					<div class="update crawler-modal-open" id="update-seed">
+						<p>Update Seed</p>
+					</div>
+				</div>
+			</div>
+			<div class="details">
+				<div class="detail-row">
+					<div class="cell">
+						<p><span class="label">NAME:</span>${result['text_name']}</p>
+					</div>
+					<div class="cell">
+						<p><span class="label">TITLE:</span>${result['title']}</p>
+					</div>
+				</div>
+				<div class="detail-row">
+					<div class="cell">
+						<p><span class="label">TWITTER:</span><a href="" target="_blank">${result['twitter_handle']}</a></p>
+					</div>
+					<div class="cell">
+						<p><span class="label">RSS:</span><a href="" target="_blank">${result['xmlURL']}</a></p>
+					</div>
+				</div>
+			</div>
+		</div>`;
+	}
+	return html;
+}
+
 function populateCrawlerResults(data) {
-	row = '';
+	html = '';
 	for (var i = 0; i < data['keywords'].length; i++) {
 		result = data['keywords'][i];
 		k_id = result['keyword_id'];
@@ -238,34 +338,52 @@ function populateCrawlerResults(data) {
     		});
     	}
 
-		row += `<div class="result" id="r${i+1}">`;
-		row += `<div class="link-name"><a class="link" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a></div>`;
-		row += `<div class="link-wrap"><a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
+		html += `
+			<div class="result" id="r${i+1}">
+				<div class="link-name">
+					<a class="link" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a>
+				</div>
+				<div class="link-wrap">
+					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
 		if (location.href.match(/crawler/)) {
-	        row += '<div class="right"><div class="trash crawler-modal-open" id="delete-link">';
-			row += '<img class="trash-icon" src="./assets/images/Delete.svg"></div>';
-			row += '<div class="add-seed"><p>Add to Seeds</p><form action="submit">';
-			row += `<input type="hidden" name="add_seed" value="${result['url']}"></form></div>`;
-			row += '<div class="add-tag" id="add-tag"><span id="show-tag">Add Tag';
-			row += `<ul id="sortmenu" data-id="${k_id}">`;
+	        html += `
+	        	<div class="right">
+	        		<div class="trash crawler-modal-open" id="delete-link">
+	        			<img class="trash-icon" src="./assets/images/Delete.svg"></div>
+						<div class="add-seed">`;
+			if ($.inArray(result['url'], seed_urls) >= 0) {
+				html += `<p>In Seeds</p>`;
+			} else {
+				html += `
+					<p>Add to Seeds</p>
+					<form action="submit">
+						<input type="hidden" name="add_seed" value="${result['url']}">
+						<input type="hidden" name="name" value="${result['keyword']}">
+					</form>`;
+			}
+			html += `
+						</div>
+						<div class="add-tag" id="add-tag">
+							<span id="show-tag">Add Tag
+								<ul id="sortmenu" data-id="${k_id}">`;
 			$.each(all_tags, function(_, tag) {
 				checked = '';
 				if (tag_ids.length > 0 && $.inArray(tag['tag_id'], tag_ids) >= 0) {
 					checked = ' checked';
 				}
-				row += `<li data-id="${tag['tag_id']}"><input type="checkbox"${checked}>${tag['tag_name']}</li>`
+				html += `<li data-id="${tag['tag_id']}"><input type="checkbox"${checked}>${tag['tag_name']}</li>`
 			});
-			row += '</ul></span></div></div>';
+			html += '</ul></span></div></div>';
 	    } else {
-	    	row += '<div class="right"><div class="display-tag"><span>';
+	    	html += '<div class="right"><div class="display-tag"><span>';
 	    	if(tag_names.length > 0) {
-	    		row += tag_names.join(', ');
+	    		html += tag_names.join(', ');
 	    	}
-	    	row += '</span></div></div>';
+	    	html += '</span></div></div>';
 	    }
-	    row += '</div></div>';
+	    html += '</div></div>';
 	}
-	return row;
+	return html;
 }
 
 function installModalListeners(){
@@ -386,15 +504,14 @@ function installModalListeners(){
 	$('.add-seed form').off().submit(function(e){
 		e.preventDefault();
 
-		var form = $(this);
-
 		$.ajax({
 			type: "POST",
 			url: BASE_URL + "api/getCrawlerResults",
-			data: form.serialize(),
+			data: $(this).serialize(),
 			dataType: "JSON",
 			success:function(data){
 				//after ajax refresh tab
+				getAllSeeds();
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
 			error:function(xhr, status, error){

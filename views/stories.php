@@ -69,8 +69,8 @@ $cache_Data = Json_GetData_ByTitle("Stories");
     </div>
     <div class="controls">
         <div class="arrows">
-            <div class="prev"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
-            <div class="next"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
+            <div class="prev"><img src="<?php echo BASE_IMAGE_URL?>chevron.svg" alt="arrow"></div>
+            <div class="next"><img src="<?php echo BASE_IMAGE_URL?>chevron.svg" alt="arrow"></div>
         </div>
         <div class="dots">
         </div>
@@ -101,7 +101,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                     }
                 }
                 ?>
-                <span class="sort-stories-text"><?= $sort_text; ?> <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"></span>
+                <span class="sort-stories-text"><?= $sort_text; ?> <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/chevron.svg" alt="sort stories button"></span>
                 <ul id="submenu" class="sorting-menu">
                     <li class="sort-option" data-field="title" data-direction="asc">Alphabetically (A-Z)</li>
                     <li class="sort-option" data-field="title" data-direction="desc">Alphabetically (Z-A)</li>
@@ -127,7 +127,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
     </div>
     <div class="container pagiwrap">
         <div class="sort-pages">
-            <p><span class="per-page-text"><?= (isset($_GET['count']) ? $_GET['count'] : '8') ?></span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort stories button"/></p>
+            <p><span class="per-page-text"><?= (isset($_GET['count']) ? $_GET['count'] : '8') ?></span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/chevron.svg" alt="sort stories button"/></p>
             <ul id="submenu" class="pagenum-menu">
                 <li class="count-option" data-count="8"><span>8</span> Per Page</li>
                 <li class="count-option" data-count="12"><span>12</span> Per Page</li>
@@ -138,7 +138,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
 
         <div class="pagination-container">
             <div class="pagination-prev btn-prev no-select" data-page="<?php echo ($page > 0 ? $page - 1 : ''); ?>">
-                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/Arrow3.svg" alt="Previous Featured Biography">
+                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="Previous Featured Biography">
             </div>
 
             <ul class="page-select">
@@ -199,7 +199,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
             </ul>
 
             <div class="pagination-next btn-next no-select" data-page="<?php echo ($page < $page_count ? $page + 1 : ''); ?>">
-                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/Arrow3.svg" alt="Next Featured Biography">
+                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron-light.svg" alt="Next Featured Biography">
             </div>
         </div>
     </div>

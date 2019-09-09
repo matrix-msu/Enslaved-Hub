@@ -1,4 +1,4 @@
-// USED for Advance Search (Not sure what advance search, so I'm going to leave it as it is)
+// Advanced Search select2 functions
 $(document).ready(function() {
     $('#status').select2({
         placeholder: "Select Status"
@@ -15,14 +15,8 @@ $(document).ready(function() {
     $('#event-type').select2({
         placeholder: "Select Event Type"
     });
-    $('#city').select2({
-        placeholder: "Select City"
-    });
-    $('#state').select2({
-        placeholder: "Select Province,State,Colony"
-    });
-    $('#region').select2({
-        placeholder: "Select Region"
+    $('#place-type').select2({
+        placeholder: "Select Place Type"
     });
     $('#country').select2({
         placeholder: "Select Country"

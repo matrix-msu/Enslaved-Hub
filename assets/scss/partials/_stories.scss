@@ -38,27 +38,29 @@
             margin-right: 20px;
             padding: 20px;
             background-position: center;
-            background-size: cover;
-            border: 2px solid transparent;
+            background-size: 106%;
+            background-repeat: no-repeat;
+            border: 4px solid transparent;
             border-radius: 5px;
             box-shadow: 0 10px 20px 0 rgba(0,0,0,0.15);
             transition: all 0.3s;
+            background-image: url(../images/market-stand.jpg);
 
             a{
                 color: inherit;
                 text-decoration: none;
             }
 
-            &:nth-child(2n-1){
-                background-image: url(../images/Rectangle7Copy.jpg);
-            }
+            // &:nth-child(2n-1){
+            //     background-image: url(../images/Rectangle7Copy.jpg);
+            // }
 
-            &:nth-child(2n){
-                background-image: url(../images/Rectangle7.jpg);
-            }
+            // &:nth-child(2n){
+            //     background-image: url(../images/Rectangle7.jpg);
+            // }
 
             .card-title{
-                font-size: 28px;
+                font-size: 1.5em;
                 color: $white;
                 margin: 0;
                 margin-bottom: 22px;
@@ -69,7 +71,7 @@
             }
 
             &:hover{
-                border: 2px solid $accent;
+                border: 4px solid $accent;
                 box-shadow: 0 12px 20px 0 rgba(0,0,0,0.15);
             }
         }
@@ -204,11 +206,12 @@
                     cursor: pointer;
                     img {
                         transition: 400ms;
-                        margin-bottom: 3px;
-                        margin-left: 7px;
+                        transform: rotate(90deg);
+                        margin-bottom: -1px;
+                        margin-left: 5px;
                     }
                     img.show {
-                        transform: rotate(-180deg);
+                        transform: rotate(-90deg);
                     }
                 }
             }
@@ -236,16 +239,15 @@
             cursor: pointer;
             img {
                 transition: 400ms;
+                transform: rotate(90deg);
             }
             img.show {
-                transform: rotate(-180deg);
+                transform: rotate(-90deg);
             }
 
             .sort-arrow {
                 margin-left: 5px;
                 position: relative;
-                top: -1px;
-                width: 11px;
             }
         }
         ul {
@@ -255,7 +257,7 @@
             border-radius: 5px;
             display: none;
             list-style: none;
-            margin: 35px 0 0;
+            margin: 40px 0 0;
             padding: 10px;
             position: absolute;
             left: 0;

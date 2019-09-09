@@ -63,10 +63,6 @@
             <h2>Event</h2>
             <div class="search-section">
                 <div class="inputwrap">
-                    <label for="event">Event Name</label>
-                    <input class="input-field" id="event" name="event" type="text" placeholder="Enter Event Name"/>
-                </div>
-                <div class="inputwrap">
                     <label for="event-type">Type</label>
                     <select class="s2-multiple" name="event-type" id="event-type" multiple="multiple">
                         <?php foreach (eventTypes as $type => $qid) { ?>
@@ -100,31 +96,15 @@
                     <input class="input-field" id="place" name="place" type="text" placeholder="Enter Place Name"/>
                 </div>
                 <div class="inputwrap">
-                    <label for="city">City</label>
-                    <select class="s2-multiple" id="city" name="city" multiple="multiple">
-                        <?php foreach (cities as $type => $qid) { ?>
+                    <label for="place-type">Place Type</label>
+                    <select class="s2-multiple" id="place-type" name="place-type" multiple="multiple">
+                        <?php foreach (placeTypes as $type => $qid) { ?>
                             <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <div class="inputwrap">
-                    <label for="state">Province, State, Colony</label>
-                    <select class="s2-multiple" id="state" name="state" multiple="multiple">
-                        <?php foreach (provinces as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <div class="inputwrap">
-                    <label for="region">Enslaved Region</label>
-                    <select class="s2-multiple" id="region" name="region" multiple="multiple">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="unidentified">Unidentified</option>
-                    </select>
-                </div>
-                <div class="inputwrap">
-                    <label for="country">Country</label>
+                    <label for="country">Modern Country</label>
                     <select class="s2-multiple" id="country" name="country" multiple="multiple">
                         <?php foreach (countrycode as $code => $country) { ?>
                             <option value="<?php echo $code; ?>"><?php echo $country; ?></option>
