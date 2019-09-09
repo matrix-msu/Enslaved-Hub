@@ -43,12 +43,7 @@ if(document.location.toString().indexOf('?') !== -1)
             continue;
         }
 
-        if (aux[1] == 'City, Town, or Village') {
-            filters[aux[0]] = 'City, Town, or Village';
-        } else {
-            filters[aux[0]] = aux[1].split(',');
-        }
-        
+        filters[aux[0]] = aux[1].split(',');
     }
 }
 

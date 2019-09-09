@@ -2143,7 +2143,7 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
 
 
-    // places connected to a person
+    // places connected to a person //TODO: FIX THIS QUERY
     $placeQuery['query'] = <<<QUERY
 SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
 
@@ -2172,7 +2172,6 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);

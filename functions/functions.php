@@ -348,7 +348,6 @@ function blazegraph()
 
                 break;
             case 'places':
-            //TODO: FIX THIS FOR CITY TOWN OR VILLGE OR MAYBE ALL
                 $placeTypeIdFilter = "";
                 if (isset($filtersArray['place_type'])){
                     $types = $filtersArray['place_type'];
