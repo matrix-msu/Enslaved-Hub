@@ -118,18 +118,17 @@ function blazegraph()
                     ";
                 }
                 //filter by source
-                //TODO: FIX SOURCE FILTER
-                $sourceQuery = "";
+                $sourceIdFilter = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
-                    $sourceQuery = "VALUES ?source { $wd:$sourceQ} #Q number needs to be changed for every source.
+                    $sourceIdFilter = "VALUES ?source { $wd:$sourceQ} #Q number needs to be changed for every source.
                                     ?source $wdt:$instanceOf $wd:$entityWithProvenance.
-                                    ?people $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
+                                    ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
                                             ?property  ?object .
                                     ?object $prov:wasDerivedFrom ?provenance .
-                                    ?provenance $pr:$isDirectlyBasedOn ?source .
-                                    ?people $rdfs:label ?peoplename";
+                                    ?provenance $pr:$isDirectlyBasedOn ?source .";
                 }
+
                 // filter by age category
                 $ageQuery = "";
                 $ageIdFilter = "";
@@ -357,6 +356,16 @@ function blazegraph()
                             $placeTypeIdFilter .= "VALUES ?type { $wd:$qType } . ";
                         }
                     }
+                }
+
+                //filter by source
+                $sourceIdFilter = "";
+                if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
+                    $sourceQ = $filtersArray['source'][0];
+                    $sourceIdFilter = "VALUES ?source { $wd:$sourceQ} #Q number needs to be changed for every source.
+                                        ?source $wdt:$reportsOn ?event.
+                                        ?event $wdt:$atPlace ?place.
+                                        ?place $rdfs:label ?placelabel . ";
                 }
                 break;
             case 'events':
@@ -1331,7 +1340,20 @@ HTML;
                 $type = "Unidentified";
                 if (isset($record['sourcetypeLabel']) && isset($record['sourcetypeLabel']['value'])){
                     if($record['sourcetypeLabel']['value'] != ''){
-                        $type = $record['sourcetypeLabel']['value'];
+                        $types = explode('||', $record['sourcetypeLabel']['value']);
+                        $type = "";
+
+                        $typeCount = 0;
+                        foreach ($types as $t) {
+                            if (!empty($t)){
+                                if ($typeCount > 0){
+                                    $type .= ", $t";
+                                } else {
+                                    $type .= "$t";
+                                }
+                                $typeCount++;
+                            }
+                        }
                     }
                 }
 
@@ -1400,7 +1422,14 @@ HTML;
                 foreach ($templates as $template) {
                     if ($template == 'gridCard'){
 
-                        $typeHtml = "<p><span>Type: </span>$type</p>";
+                        $typeHtml = '';
+                        // if a source has multiple types, display them in a tooltip
+                        if ($typeCount == 1){
+                            $typeHtml = "<p><span>Type: </span>$type</p>";
+                        }
+                        if ($typeCount > 1){
+                            $typeHtml = "<p><span>Type: </span><span class='multiple'>Multiple<span class='tooltip'>$type</span></span></p>";
+                        }
 
                         $projectHtml = '';
                         if ($project != ""){
@@ -1415,7 +1444,7 @@ HTML;
                         
                         $secondarysourceHtml = '';
                         if ($secondarysource != ""){
-                            $secondarysourceHtml = "<p><span>Description: </span>$secondarysource</p>";
+                            $secondarysourceHtml = "<p><span>Secondary Source: </span>$secondarysource</p>";
                         }
 
 

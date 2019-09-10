@@ -2143,31 +2143,22 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
 
 
-    // places connected to a person //TODO: FIX THIS QUERY
+    // places connected to a person
     $placeQuery['query'] = <<<QUERY
 SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
 
  WHERE
 {
  VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
-  ?agent $p:$hasName ?statement.
-  ?statement $ps:$hasName ?name.
-  OPTIONAL{ ?statement $pq:$recordedAt ?recordeAt.
-            bind(?recordedAt as ?allevents)}
-  OPTIONAL {?agent $p:$hasParticipantRole ?statementrole.
-           ?statementrole $ps:$hasParticipantRole ?roles.
-           ?statementrole $pq:$roleProvidedBy ?roleevent.
-           bind(?roleevent as ?allevents)
 
-         }.
-
- OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
-           ?statstatus $ps:$hasPersonStatus ?status.
-           ?statstatus $pq:$hasStatusGeneratingEvent ?statusevent.
-          bind(?statusevent as ?allevents)}.
-  ?allevents $wdt:$atPlace ?place.
-  ?place $rdfs:label ?placelabel.
-
+    OPTIONAL {
+      ?agent $p:$hasParticipantRole ?statementrole.
+      ?statementrole $ps:$hasParticipantRole ?roles.
+      ?statementrole $pq:$roleProvidedBy ?roleevent.
+          
+ 		  ?roleevent $wdt:$atPlace ?place.
+		  ?place $rdfs:label ?placelabel.
+    }.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2289,7 +2280,7 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 {
  VALUES ?source { $wd:$QID} #Q number needs to be changed for every source.
   ?source $wdt:$instanceOf $wd:$entityWithProvenance.
-  ?people $wdt:$instanceOf/$wdt:$subclassof $wd:$agent; #agent or subclass of agent
+  ?people $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
   		?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .

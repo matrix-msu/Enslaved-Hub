@@ -1,30 +1,32 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondarysource ?desc
+SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
  
+ (group_concat(distinct ?sourcetypeLabel; separator = "||") as ?sourcetypeLabel) #source type labels
  (count(distinct ?agent) as ?countpeople)
  (count(distinct ?event) as ?countervent)
  (count(distinct ?place) as ?countplace)
  (count(distinct ?source) as ?countsource)
+ (group_concat(distinct ?sourcetype; separator = "||") as ?sourcetype) #source type
 {
   VALUES ?source { $qidList }
   ?source $wdt:$hasOriginalSourceType ?sourcetype.
   ?source $wdt:$generatedBy ?project.
-  OPTIONAL{?source $wdt:$reportsOn ?event}.  # TODO: DO NOT KEEP AS OPTIONAL
+  ?source $wdt:$reportsOn ?event
+
   OPTIONAL{?event $wdt:$atPlace ?place}.
   OPTIONAL{?source $wdt:$hasOriginalSourceDepository ?secondarysource}.
   OPTIONAL {?source schema:description ?desc}.
 
-  ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
-  		?property  ?object .
+  ?agen	?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
-  
- 
-   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+  ?source rdfs:label ?sourceLabel.
+  ?project rdfs:label ?projectLabel.
+  ?sourcetype rdfs:label ?sourcetypeLabel
            
-}group by ?source ?sourceLabel ?projectLabel ?sourcetypeLabel ?secondarysource ?desc
+}group by ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
 order by ?sourceLabel
 
 QUERY;

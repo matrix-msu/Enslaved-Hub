@@ -5,6 +5,7 @@ const sourceTypes=[
 'Civil Document'	 => 'Q222',
 'Criminal Document'	 => 'Q221',
 'Freedom or Emancipation Document'	 => 'Q232',
+'Life History' => 'Q225',
 'Narrative'	 => 'Q225',
 'Registry'	 => 'Q36',
 'Runaway Ad'	 => 'Q226',

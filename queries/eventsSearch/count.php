@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT DISTINCT (COUNT(?event) as ?count)
+SELECT (COUNT(DISTINCT ?event) as ?count)
 WHERE {
     ?event $wdt:$instanceOf $wd:$event. 
     $eventTypeIdFilter
