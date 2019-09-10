@@ -97,7 +97,7 @@ function searchResults(preset, limit = 12, offset = 0)
 
             if (total_length <= 0){
                 // clear old results
-                $("ul.row").empty();
+                $("ul.cards").empty();
                 $("thead").empty();
                 $("tbody").empty();
                 return;
@@ -134,9 +134,9 @@ function searchResults(preset, limit = 12, offset = 0)
 function appendCards()
 {
     // return;
-    $("ul.row").empty(); //empty row before appending more
+    $("ul.cards").empty(); //empty row before appending more
     result_array['gridCard'].forEach(function (card) {
-        $(card).appendTo("ul.row");
+        $(card).appendTo("ul.cards");
     });
 
     $("thead").empty(); //empty headers before adding them

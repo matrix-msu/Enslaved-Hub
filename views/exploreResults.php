@@ -396,7 +396,7 @@ QUERY;
             </div>
             <div class="result-column">
                 <div class="cardwrap">
-                    <ul class="row">
+                    <ul class="cards">
                     </ul>
                 </div>
             </div>
