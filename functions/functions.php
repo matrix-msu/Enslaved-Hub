@@ -694,7 +694,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
+                $connections = '<div class="connectionswrap"><p>Person\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
                     '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
                     '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
                     '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
@@ -707,53 +707,48 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                         $sexHtml = '';
                         if ($sex != ''){
-                            $sexHtml = "<p><span>Sex: </span>$sex</p>";
+                            $sexHtml = "<div class='detail'><p class='detail-title'>Sex</p><p>$sex</p></div>";
                         }
 
                         $statusHtml = '';
                         // if a person has multiple statuses, display them in a tooltip
                         if ($statusCount == 1){
-                            $statusHtml = "<p><span>Person Status: </span>$status</p>";
+                            $statusHtml = "<div class='detail'><p class='detail-title'>Person Status</p><p>$status</p></div>";
                         }
                         if ($statusCount > 1){
-                            $statusHtml = "<p><span>Person Status: </span><span class='multiple'>Multiple<span class='tooltip'>$status</span></span></p>";
+                            $statusHtml = "<div class='detail'><p class='detail-title'>Person Status</p><p class='multiple'>Multiple<span class='tooltip'>$status</span></p></div>";
                         }
 
                         $placesHtml = '';
                         if ($placesCount == 1){
-                            $placesHtml = "<p><span>Place: </span>$places</p>";
+                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p>$places</p></div>";
                         }
                         if ($placesCount > 1){
-                            $placesHtml = "<p><span>Place: </span><span class='multiple'>Multiple<span class='tooltip'>$places</span></span></p>";
+                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'>$places</span></p></div>";
                         }
 
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
                             $dateName = ($startYear != '' && $endYear != '') ? "Date Range" : "Date";
-                            $dateRangeHtml = "<p><span>$dateName: </span>$dateRange</p>";
+                            $dateRangeHtml = "<div class='detail'><p class='detail-title'>$dateName</p><p>$dateRange</p></div>";
                         }
 
-                        $card_icon_url = BASE_IMAGE_URL . 'Person-light.svg';
+                        $card_icon_url = BASE_IMAGE_URL . 'Person.svg';
 
                         $card = <<<HTML
-<li>
+<li class="card">
     <a href='$person_url'>
-        <div class='container card-image'>
-            <p>$name</p>
-            <img src='$card_icon_url'>
+        <div class='card-title'>
+            <img src='$card_icon_url' alt="Card Icon">
+            <h3>$name</h3>
         </div>
-
-        <div class="content-wrap">
-            <div class='container cards'>
-                <div class='card-info'>
-                    $sexHtml
-                    $statusHtml
-                    $placesHtml
-                    $dateRangeHtml
-                </div>
-            </div>
-            $connections
+        <div class="details">
+            $sexHtml
+            $statusHtml
+            $placesHtml
+            $dateRangeHtml
         </div>
+        $connections
     </a>
 </li>
 HTML;
