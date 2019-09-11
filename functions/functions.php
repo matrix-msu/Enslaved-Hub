@@ -118,18 +118,17 @@ function blazegraph()
                     ";
                 }
                 //filter by source
-                //TODO: FIX SOURCE FILTER
-                $sourceQuery = "";
+                $sourceIdFilter = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
                     $sourceQ = $filtersArray['source'][0];
-                    $sourceQuery = "VALUES ?source { $wd:$sourceQ} #Q number needs to be changed for every source.
+                    $sourceIdFilter = "VALUES ?source { $wd:$sourceQ} #Q number needs to be changed for every source.
                                     ?source $wdt:$instanceOf $wd:$entityWithProvenance.
-                                    ?people $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
+                                    ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
                                             ?property  ?object .
                                     ?object $prov:wasDerivedFrom ?provenance .
-                                    ?provenance $pr:$isDirectlyBasedOn ?source .
-                                    ?people $rdfs:label ?peoplename";
+                                    ?provenance $pr:$isDirectlyBasedOn ?source .";
                 }
+
                 // filter by age category
                 $ageQuery = "";
                 $ageIdFilter = "";
@@ -226,6 +225,29 @@ function blazegraph()
                             ?event $wdt:$atPlace $wd:$placeQ .   #this number will change for every place       
                         ";
                 }
+                //TODO: MAKE SURE ALL CAN HAVE MULTIPLE FILTERS AND ISSETS
+
+                //filter people by place type
+                $placeTypeIdFilter = "";
+                if (isset($filtersArray['place_type'])){
+                    $types = $filtersArray['place_type'];
+                    if (!is_array($types)){
+                        $types = array($types);
+                    }
+                    foreach ($types as $type){
+                        if (array_key_exists($type, placeTypes)){
+                            $qType = placeTypes[$type];
+                            $placeTypeIdFilter .= "
+                                ?agent $p:$hasParticipantRole ?statementrole.
+                                ?statementrole $ps:$hasParticipantRole ?role.
+                                ?statementrole $pq:$roleProvidedBy ?event.
+                                ?event $wdt:$atPlace ?place.
+                                ?place $wdt:$instanceOf $wd:$place;
+                                $wdt:$hasPlaceType $wd:$qType. 
+                            ";
+                        }
+                    }
+                }
 
                 // filtering for event type
                 $eventTypeIdFilter = "";
@@ -260,6 +282,69 @@ function blazegraph()
                     }
                 }
 
+                // filter people by city
+                $cityIdFilter = "";
+                if (isset($filtersArray['city']) && isset($filtersArray['city'][0]) ){
+                    $cityName = $filtersArray['city'][0];
+                    if (array_key_exists($cityName, cities)){
+                        $cityQ = cities[$cityName];
+                        $cityIdFilter .= "
+                                ?agent $p:$hasParticipantRole ?statementrole.
+                                ?statementrole $ps:$hasParticipantRole ?role.
+                                ?statementrole $pq:$roleProvidedBy ?event.
+                                ?event $wdt:$atPlace $wd:$cityQ.
+                        ";
+                    }
+                }
+                
+
+                // filter people by province
+                $provinceIdFilter = "";
+                if (isset($filtersArray['province']) && isset($filtersArray['province'][0]) ){
+                    $provinceName = $filtersArray['province'][0];
+                    if (array_key_exists($provinceName, provinces)){
+                        $provinceQ = provinces[$provinceName];
+                        $provinceIdFilter .= "
+                                ?agent $p:$hasParticipantRole ?statementrole.
+                                ?statementrole $ps:$hasParticipantRole ?role.
+                                ?statementrole $pq:$roleProvidedBy ?event.
+                                ?event $wdt:$atPlace $wd:$provinceQ.";
+                    }
+                }
+
+
+                // filter people by region
+                $regionIdFilter = "";
+                if (isset($filtersArray['regions']) && isset($filtersArray['regions'][0]) ){
+                    $regionName = $filtersArray['regions'][0];
+                    if (array_key_exists($regionName, places)){
+                        $regionQ = places[$regionName];
+                        // $regionIdFilter .= "
+                        //         ?agent ?property  ?object .
+                        //         ?object $prov:wasDerivedFrom ?provenance .
+                        //         ?provenance $pr:$isDirectlyBasedOn ?source .
+                        //         ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
+                        //     ";
+                    }
+                }
+
+                // filter people by country
+                // $projectIdFilter = "";
+                // if (isset($filtersArray['countries']) && isset($filtersArray['countries'][0]) ){
+                //     $projectName = $filtersArray['countries'][0];
+                //     if (array_key_exists($projectName, projects)){
+                //         $projectQ = projects[$projectName];
+                //         $projectIdFilter .= "
+                //                 ?agent ?property  ?object .
+                //                 ?object $prov:wasDerivedFrom ?provenance .
+                //                 ?provenance $pr:$isDirectlyBasedOn ?source .
+                //                 ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
+                //             ";
+                //     }
+                // }
+
+
+
                 break;
             case 'places':
                 $placeTypeIdFilter = "";
@@ -271,6 +356,16 @@ function blazegraph()
                             $placeTypeIdFilter .= "VALUES ?type { $wd:$qType } . ";
                         }
                     }
+                }
+
+                //filter by source
+                $sourceIdFilter = "";
+                if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
+                    $sourceQ = $filtersArray['source'][0];
+                    $sourceIdFilter = "VALUES ?source { $wd:$sourceQ} #Q number needs to be changed for every source.
+                                        ?source $wdt:$reportsOn ?event.
+                                        ?event $wdt:$atPlace ?place.
+                                        ?place $rdfs:label ?placelabel . ";
                 }
                 break;
             case 'events':
@@ -1240,7 +1335,20 @@ HTML;
                 $type = "Unidentified";
                 if (isset($record['sourcetypeLabel']) && isset($record['sourcetypeLabel']['value'])){
                     if($record['sourcetypeLabel']['value'] != ''){
-                        $type = $record['sourcetypeLabel']['value'];
+                        $types = explode('||', $record['sourcetypeLabel']['value']);
+                        $type = "";
+
+                        $typeCount = 0;
+                        foreach ($types as $t) {
+                            if (!empty($t)){
+                                if ($typeCount > 0){
+                                    $type .= ", $t";
+                                } else {
+                                    $type .= "$t";
+                                }
+                                $typeCount++;
+                            }
+                        }
                     }
                 }
 
@@ -1309,7 +1417,14 @@ HTML;
                 foreach ($templates as $template) {
                     if ($template == 'gridCard'){
 
-                        $typeHtml = "<p><span>Type: </span>$type</p>";
+                        $typeHtml = '';
+                        // if a source has multiple types, display them in a tooltip
+                        if ($typeCount == 1){
+                            $typeHtml = "<p><span>Type: </span>$type</p>";
+                        }
+                        if ($typeCount > 1){
+                            $typeHtml = "<p><span>Type: </span><span class='multiple'>Multiple<span class='tooltip'>$type</span></span></p>";
+                        }
 
                         $projectHtml = '';
                         if ($project != ""){
@@ -1324,7 +1439,7 @@ HTML;
                         
                         $secondarysourceHtml = '';
                         if ($secondarysource != ""){
-                            $secondarysourceHtml = "<p><span>Description: </span>$secondarysource</p>";
+                            $secondarysourceHtml = "<p><span>Secondary Source: </span>$secondarysource</p>";
                         }
 
 

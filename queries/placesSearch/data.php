@@ -5,6 +5,7 @@ SELECT ?place ?placelabel ?locationlab ?geonames ?code
  (count(distinct ?person) as ?countpeople)
  (count(distinct ?event) as ?countevent)
  (count(distinct ?source) as ?countsource)
+ (count(distinct ?location) as ?countplace)
  (group_concat(distinct ?locationlab; separator = "||") as ?location)
  (group_concat(distinct ?typelab; separator = "||") as ?types)
  
