@@ -57,7 +57,7 @@ else {
                 }
                 ?>
             </section>
-            <section class="online-resources">
+            <section class="creator">
                 <?php
                 if (isset($story['Creator'])) {
                     echo '<h2>Creator</h2>';
@@ -65,7 +65,7 @@ else {
                 }
                 ?>
             </section>
-            <section class="online-resources">
+            <section class="editor">
                 <?php
                 if (isset($story['Contributor'])) {
                     echo '<h2>Editor</h2>';

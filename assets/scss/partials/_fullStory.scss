@@ -61,7 +61,7 @@
 		width:60%;
 
 		section {
-			margin-bottom: 55px;
+			margin-bottom: 25px;
             overflow: auto;
             font-size: 14px;
             font-family: aleobold;
@@ -81,13 +81,30 @@
 
             h2 {
                 font-size: 30px;
-                color: $base-dark;
-                margin-bottom: 15px;
+                color: $base-dark; 
+            }
+        }
+        
+        section.creator {
+            border-bottom: none;
+
+            p{
+                font-size: 14px;
+                line-height: 20px;
+            }
+        }
+        
+        section.editor {
+            border-bottom: none;
+
+            p{
+                font-size: 14px;
+                line-height: 20px;
             }
         }
 
         section.online-resources{
-            padding-bottom: 32px;
+            
 
             p{
                 font-size: 14px;
@@ -102,7 +119,7 @@
             p{
                 font-size: 14px;
                 line-height: 20px;
-                margin-bottom: 25px;
+                margin-bottom: 0px;
             }
         }
 	}
@@ -458,7 +475,7 @@
 // }
 .story-connections{
     border-bottom: none;
-    padding: 40px 0 70px;
+    padding: 80px 0 70px;
     width: 90%;
     max-width: 1000px;
     margin: 0 auto;
