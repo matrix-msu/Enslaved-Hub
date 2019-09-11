@@ -417,9 +417,6 @@ function counterOfType() {
         if ($type == "Ethnodescriptor"){
             return counterOfEthnodescriptor();
         }
-        if ($type == "Place"){
-            return counterOfPeoplePlace();  // not real
-        }
     }
 
     if($category == "Places") {
@@ -441,6 +438,66 @@ function counterOfType() {
   }
 
 }
+
+
+
+
+
+
+
+
+function getSearchFilterCounters(){
+    
+    $peopleFilters = array(
+        'Gender' => counterOfAllGenders(),
+        'Age Category' => counterOfAge(),
+        'Ethnodescriptor' => counterOfEthnodescriptor(),
+        'Role Types' => counterOfRole(),
+        // 'Status' => counterOfStatus(),
+        // 'Occupation' => counterOfOccupation(),
+
+    );
+
+    $eventFilters = array(
+        'Event Type' => counterOfEventType(),
+        // 'Date' => getEventDateRange()
+
+    );
+
+    $placeFilters = array(
+        'Place Type' => counterOfPlaceType()
+    );
+
+    $sourceFilters = array(
+        'Source Type' => counterOfSourceType()
+    );
+
+    $projectFilters = array(
+        // TODO: GET PROJECT COUNTERS WORKING
+    );
+
+    $allCounters = array(
+        'People' => $peopleFilters,
+        'Event' => $eventFilters,
+        'Place' => $placeFilters,
+        'Source' => $sourceFilters,
+        'Project' => $projectFilters
+    );
+
+    return json_encode($allCounters);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getEventDateRange() {
     include BASE_LIB_PATH."variableIncluder.php";

@@ -179,7 +179,7 @@
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <p><?php echo $category; ?> <em>(0)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -208,7 +208,7 @@
                         <li>
                             <label class="<?php echo $catLower; ?>">
                                 <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                <p><?php echo $category; ?> <em>(234)</em></p>
+                                <p><?php echo $category; ?> <em>(0)</em></p>
                                 <span></span>
                             </label>
                         </li>
@@ -284,7 +284,7 @@ QUERY;
                         <li>
                             <label class="<?php echo $catLower; ?>">
                                 <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                <p><?php echo $category; ?> <em>(234)</em></p>
+                                <p><?php echo $category; ?> <em>(0)</em></p>
                                 <span></span>
                             </label>
                         </li>
@@ -313,7 +313,7 @@ QUERY;
                         <li>
                             <label class="<?php echo $catLower; ?>">
                                 <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                <p><?php echo $category; ?> <em>(234)</em></p>
+                                <p><?php echo $category; ?> <em>(0)</em></p>
                                 <span></span>
                             </label>
                         </li>
@@ -373,7 +373,7 @@ QUERY;
                         <li>
                             <label class="<?php echo $catLower; ?>">
                                 <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                <p><?php echo $category; ?> <em>(234)</em></p>
+                                <p><?php echo $category; ?> <em>(0)</em></p>
                                 <span></span>
                             </label>
                         </li>

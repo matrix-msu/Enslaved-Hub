@@ -8,6 +8,7 @@ $GLOBALS['api_routes'] = array(
     'api/blazegraph' => array('functions.php', 'blazegraph'),
 	'api/counterOfGender' => array('explorefunctions.php', 'counterOfGender'),
 	'api/counterOfType' => array('explorefunctions.php', 'counterOfType'),
+	'api/getSearchFilterCounters' => array('explorefunctions.php', 'getSearchFilterCounters'),
 	'api/getPersonRecordHtml' => array('explorefunctions.php', 'getPersonRecordHtml'),
     'api/getDateRange' => array('explorefunctions.php', 'getEventDateRange'),
     'api/getProjectFullInfo' => array('explorefunctions.php', 'getProjectFullInfo'),

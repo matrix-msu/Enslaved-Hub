@@ -158,6 +158,68 @@ searchResults(search_type);
 
 //Document load
 $(document).ready(function() {
+
+    // get all filter counters
+
+
+    $.ajax({
+        url: BASE_URL + "api/getSearchFilterCounters",
+        type: "GET",
+        'success': function (data) {
+            var allCounters = JSON.parse(data);
+            
+            for (var filterType in allCounters){
+                var counterType = allCounters[filterType];
+
+                for (var filter in counterType){
+                    JSON.parse(counterType[filter]).forEach(function (record) {
+                        var label = "";
+                        var count = "";
+                        for (var key in record) {
+                            if (key.match("Label$")) {
+                                label = record[key]['value'];
+                            }
+                            if (key.match("count$")) {
+                                count = record[key]['value'];
+                            }
+                            else if (key.match("Count$")) {
+                                if (count !== "") {
+                                    var count2 = record[key]['value'];
+                                    count = +count + +count2;
+                                }
+                                else {
+                                    count = record[key]['value'];
+                                }
+
+                            }
+                        }
+
+                        // console.log(label, count)
+                        // fill in the counters for the filters
+                        if (label != "") {
+                            var $input = $("input[value='"+label+"']")
+                            var $counter = $input.next().find('em');
+                            $counter.html('('+count+')');
+
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
     ///******************************************************************* */
     /// Set Filter Checkboxes
     ///******************************************************************* */
