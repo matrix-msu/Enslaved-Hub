@@ -98,7 +98,7 @@ function searchResults(preset, limit = 12, offset = 0)
 
             if (total_length <= 0){
                 // clear old results
-                $("ul.row").empty();
+                $("ul.cards").empty();
                 $("thead").empty();
                 $("tbody").empty();
                 return;
@@ -135,9 +135,9 @@ function searchResults(preset, limit = 12, offset = 0)
 function appendCards()
 {
     // return;
-    $("ul.row").empty(); //empty row before appending more
+    $("ul.cards").empty(); //empty row before appending more
     result_array['gridCard'].forEach(function (card) {
-        $(card).appendTo("ul.row");
+        $(card).appendTo("ul.cards");
     });
 
     $("thead").empty(); //empty headers before adding them
@@ -405,9 +405,9 @@ $(document).ready(function() {
             $('div#searchResults.show').css('width','');
             $("#searchResults").removeClass("show");
         } else {
-            tableWidth = window.innerWidth - 330;
-            $('div#searchResults').css('max-width', '3000px');// remove max-width property
-            $('div#searchResults.show').css('width', tableWidth); // apply width
+            // tableWidth = window.innerWidth - 330;
+            // $('div#searchResults').css('max-width', '3000px');// remove max-width property
+            // $('div#searchResults.show').css('width', tableWidth); // apply width
         }
     }
 
@@ -435,19 +435,19 @@ $(document).ready(function() {
         }
     });
 
-    //Main categories
-    $("li.cat-cat").each(function(){
-      $(this).find("span:first").toggleClass("show");
-        $(this).next().toggleClass("show");
-    });
-    $("li.cat-cat").click(function () { // toggle show/hide filter-by submenus
-        $(this).find("span:first").toggleClass("show");
-        $(this).next().toggleClass("show");
-    });
+    //Main categories (always showing now)
+    // $("li.cat-cat").each(function(){
+    //   $(this).find("span:first").toggleClass("show");
+    //     $(this).next().toggleClass("show");
+    // });
+    // $("li.cat-cat").click(function () { // toggle show/hide filter-by submenus
+    //     $(this).find("span:first").toggleClass("show");
+    //     $(this).next().toggleClass("show");
+    // });
     //Sub categories
     $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
         $(this).find("span:first").toggleClass("show");
-        $(this).next().toggleClass("show");
+        $(this).find("ul#submenu").toggleClass("show");
     });
      //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
