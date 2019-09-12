@@ -3,7 +3,7 @@
 
 <?php $cache_data = Json_GetData_ByTitle("Explore") ?>
 <!-- Heading image and title container-->
-<div class="container header">
+<div class="container header explore-header people-page">
     <div class="container middlewrap">
         <h1><?php echo $cache_data['title'] ?></h1>
     </div>

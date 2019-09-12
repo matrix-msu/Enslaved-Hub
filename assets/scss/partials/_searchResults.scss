@@ -640,6 +640,7 @@ span.align-right.show {
     
                         .card-icons{
                             display: flex;
+                            position: relative;
                             align-items: center;
                             font-size: 12px;
                             margin-right: 25px;
@@ -670,6 +671,8 @@ span.align-right.show {
                                 position: absolute;
                                 padding: 20px;
                                 width: 220px;
+                                bottom: 40px;
+                                margin-left: -90px;
                                 z-index: 10;
     
                                 &.hovered{
