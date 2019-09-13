@@ -633,7 +633,7 @@ function blazegraph()
 
 
 function blazegraphSearch($query){
-    //echo BLAZEGRAPH_URL;
+    // echo BLAZEGRAPH_URL;
     // echo http_build_query($query);
     // die;
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2124,4 +2124,25 @@ function checkKID($kid)
         return true;
     else
         return false;
+}
+
+
+
+
+
+function updateConstants(){
+    $query["query"] = "
+        select ?ethnodescriptor
+        where {
+            ?ethnodescriptor edt:P1 ed:Q298.
+            # ?ethnodescriptor rdfs:Label ?ethonLabel
+            
+        }
+    ";
+    print_r($query);die;
+
+    $results = blazegraphSearch($query);
+    
+
+    print_r($results);die;
 }
