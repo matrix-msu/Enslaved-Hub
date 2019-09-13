@@ -403,7 +403,7 @@ QUERY;
         </div>
         <div id="pagination">
             <input class="current-page" type="hidden" value="1">
-            <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
+            <div class="pagi-left"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="Previous Page"></div>
             <div class="page-numbers">
                 <span class="num pagi-first">1</span>
                 <span class="dotsLeft">...</span>
@@ -415,7 +415,7 @@ QUERY;
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
-            <span id="pagiRight" class="align-right"><div id="pagiRightArrow"></div></span>
+            <div class="pagi-right"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron-light.svg" alt="Next Page"></div>
         </div>
     </div>
 </main>

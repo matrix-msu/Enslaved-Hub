@@ -281,6 +281,7 @@
     position: relative;
     transition: 400ms;
     box-shadow: 0 5px 25px 0 rgba(0,0,0,0.3);
+    z-index: 5;
     
     &.home-page {
 		background: $base-dark;
