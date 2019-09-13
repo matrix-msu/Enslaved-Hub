@@ -14,7 +14,7 @@
             <p><?php echo $cache_data['descr'] ?></p>
         </div>
         <div class="section-content">
-            <a href="<?php echo BASE_URL;?>search/people">
+            <a href="<?php echo BASE_URL;?>explore/people">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                     <h3>People</h3>
@@ -22,7 +22,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>search/events">
+            <a href="<?php echo BASE_URL;?>explore/events">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                     <h3>Events</h3>
@@ -30,7 +30,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <a href="<?php echo BASE_URL;?>search/places">
+            <a href="<?php echo BASE_URL;?>explore/places">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                     <h3>Places</h3>
@@ -46,7 +46,7 @@
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a> -->
-            <a href="<?php echo BASE_URL;?>search/sources">
+            <a href="<?php echo BASE_URL;?>explore/sources">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                     <h3>Sources</h3>

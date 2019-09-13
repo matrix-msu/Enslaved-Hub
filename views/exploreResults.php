@@ -1,97 +1,48 @@
 <!-- Heading image and title container-->
 
 <div class="container header search-page">
-	<div class="container middlewrap search-page">
-        <?php
-        $typeTitle = "";
-        $typeLower = "";
-        $currentTitle = 'Search';
+    <div class="image-container search-page">
+        <div class="container middlewrap search-page">
+            <?php
+            $typeTitle = "";
+            $typeLower = "";
+            $currentTitle = 'Search';
 
-        include BASE_LIB_PATH."variableIncluder.php";
+            include BASE_LIB_PATH."variableIncluder.php";
 
+            if (count($_GET) > 0){
+                $typeLower = array_keys($_GET)[0];
+                $typeTitle = ucwords(str_replace('_', ' ', $typeLower));
 
-        if (count($_GET) > 0){
-            $typeLower = array_keys($_GET)[0];
-            $typeTitle = ucwords(str_replace('_', ' ', $typeLower));
+                $currentQ = $_GET[$typeLower];
+                $currentTitle = str_replace('_', ' ', $currentQ);
+            }
+    
+            $upperForm = ucfirst(EXPLORE_FORM);
+            $showPath = false;
+            $fromBrowse = false;
 
-            $currentQ = $_GET[$typeLower];
-            $currentTitle = str_replace('_', ' ', $currentQ);
-            
-//             if (array_key_exists($typeTitle, $GLOBALS['FILTER_TO_FILE_MAP'])){
-//                 $typeCategories = $GLOBALS['FILTER_TO_FILE_MAP'][$typeTitle];
-//                 $currentTitle = array_search($currentQ, $typeCategories);
-
-//                 if(!$currentTitle){
-//                     //QID not found, shouldn't get here
-//                     $currentTitle = "QID ERROR";
-//                 }
-//             }
-//             else{
-//                 //Must have been a search for a name, daterange
-//                 $currentTitle = $currentQ;
-
-//                 $query = array('query' => "");
-
-//                 // get the label for the q value from a quick blazegraph search
-//                 $query['query'] = <<<QUERY
-// SELECT ?item ?label
-
-//  WHERE
-// {
-// BIND(wd:$currentQ AS ?item).
-//     ?item rdfs:label ?label.
-
-//   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-// }GROUP BY ?item ?label
-// QUERY;
-
-//                 //Execute query
-//                 $ch = curl_init(BLAZEGRAPH_URL);
-//                 curl_setopt($ch, CURLOPT_POST, 1);
-//                 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-//                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//                 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-//                     'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-//                     'Accept: application/sparql-results+json'
-//                 ));
-//                 $result = curl_exec($ch);
-//                 curl_close($ch);
-//                 //Get result
-//                 $result = json_decode($result, true)['results']['bindings'];
-
-//                 if (!empty($result)){
-//                     if (isset($result[0]['label']) && isset($result[0]['label']['value'])){
-//                         $currentTitle = $result[0]['label']['value'];
-//                     }
-//                 }
-//             }
-        }
- 
-        $upperForm = ucfirst(EXPLORE_FORM);
-        $showPath = false;
-        $fromBrowse = false;
-
-        //Conditions to put the previous page header in (Not being used right now)
-        if(EXPLORE_FORM != null && EXPLORE_FORM != 'all' && EXPLORE_FORM != 'results' && EXPLORE_FORM != 'category'){
-             $showPath = true;
-             $fromBrowse = true;
-        }
-       ?>
-        <h4 class="last-page-header" style="<?php  echo (!$showPath) ? 'display:none' : '' ?> ">
-            <a id="last-page" class="prev1" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM ?>">
-                <span id="previous-title"><?php echo $upperForm ?></span>
-            </a>
-            <a id="last-page" class="prev2" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM. '/' .$typeLower ?>">
-                <span id="previous-title"><?php echo ($typeTitle != "") ? "/ " . $typeTitle : "" ?></span>
-            </a>
-            <span id="current-title"><?php echo ($currentTitle != "") ? "/ " . $currentTitle : "" ?></span>
-        </h4>
-        <div class="search-title">
-            <h1><?php echo $currentTitle;?></h1>
-        </div>
-        <?php if(!$fromBrowse) { ?>
+            //Conditions to put the previous page header in (Not being used right now)
+            if(EXPLORE_FORM != null && EXPLORE_FORM != 'all' && EXPLORE_FORM != 'results' && EXPLORE_FORM != 'category'){
+                $showPath = true;
+                $fromBrowse = true;
+            }
+            ?>
+            <!-- <h4 class="last-page-header" style="<?php  echo (!$showPath) ? 'display:none' : '' ?> ">
+                <a id="last-page" class="prev1" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM ?>">
+                    <span id="previous-title"><?php echo $upperForm ?></span>
+                </a>
+                <a id="last-page" class="prev2" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM. '/' .$typeLower ?>">
+                    <span id="previous-title"><?php echo ($typeTitle != "") ? "/ " . $typeTitle : "" ?></span>
+                </a>
+                <span id="current-title"><?php echo ($currentTitle != "") ? "/ " . $currentTitle : "" ?></span>
+            </h4> -->
+            <div class="search-title">
+                <h1>Search Results<?php //echo $currentTitle;?></h1>
+            </div>
+            <?php //if(!$fromBrowse) { ?>
             <div class="heading-search">
-               <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+            <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
@@ -100,12 +51,15 @@
                 <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
             </div>
-        <?php } ?>
-  </div>
+            <?php //} ?>
+        </div>
+        <div class="image-background-overlay  search-page"></div>
+        <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg3.jpg" alt="Enslaved Background Image"></div>
+    </div>
 </div>
 
 <main class="search-results">
-    <div class="filter-menu">
+    <div class="filter-menu show">
         <ul>
             <?php if(!$fromBrowse) { ?>
             <h2>Show Results For</h2>
@@ -155,8 +109,7 @@
             <?php } ?>
             <!-- People Filtering -->
             
-            <li class="cat-cat">People<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-            </li>
+            <li class="cat-cat">People</li>
             <ul id="mainmenu">
             
                 <?php 
@@ -167,8 +120,7 @@
                 }
                 foreach ($fullArray as $type) { 
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
-                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
-                    </li>
+                <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron.svg" alt="drop arrow"></span>
                     <ul id="submenu">
                         <?php
                         $typeCats = array();
@@ -179,85 +131,165 @@
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(0)</em></p>
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
                                     <span></span>
                                 </label>
                             </li>
                         <?php } ?>
                     </ul>
+                </li>
                 <?php } ?>
 
             </ul>
             <!-- Event Filtering -->
-            <hr>
-            <li class="cat-cat">Event<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-            </li>
+            <li class="cat-cat">Event</li>
             <ul id="mainmenu">
 
                 <?php foreach ($GLOBALS["FILTER_ARRAY"]['events'] as $type) { 
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
-                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
+                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron.svg" alt="drop arrow"></span>
+                        <ul id="submenu">
+                        <?php
+                        $typeCats = array();
+                        if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                            $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
+                        }
+                        foreach ($typeCats as $category => $qid) { ?>
+                            <li>
+                                <label class="<?php echo $catLower; ?>">
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <span></span>
+                                </label>
+                            </li>
+                        <?php } ?>
+                        </ul>
                     </li>
-                    <ul id="submenu">
-                    <?php
-                    $typeCats = array();
-                    if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
-                        $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
-                    }
-                    foreach ($typeCats as $category => $qid) { ?>
-                        <li>
-                            <label class="<?php echo $catLower; ?>">
-                                <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                <p><?php echo $category; ?> <em>(0)</em></p>
-                                <span></span>
-                            </label>
-                        </li>
-                    <?php } ?>
-                </ul>
                 <?php } ?>
 
             </ul>
             <!-- Place Filtering -->
-            <hr>
-            <li class="cat-cat">Place<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-            </li>
+            <li class="cat-cat">Place</li>
             <ul id="mainmenu">
 
                 <?php foreach ($GLOBALS["FILTER_ARRAY"]['places'] as $type) { 
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
-                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
-                    </li>
-                    <ul id="submenu">
-                    <?php
-                    $typeCats = array();
-                    if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
-                        $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
-                    }
-                    else{
-                        //Condition for the key not being in the FILE_MAP ex. Countries and Regions which have queries
-                        $queryQ = '';
-                        if($type == "Countries"){
-                            $queryQ = 'Q32';
-                        }
-                        else if($type == "Regions"){
-                            $queryQ = 'Q333';
+                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron.svg" alt="drop arrow"></span>
+                        <ul id="submenu">
+                        <?php
+                        $typeCats = array();
+                        if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                            $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
                         else{
-                            $queryQ = 'Q1';
-                        }
-                        
-                        $query = array('query' => "");
-                        $place = classes["Place"];
+                            //Condition for the key not being in the FILE_MAP ex. Countries and Regions which have queries
+                            $queryQ = '';
+                            if($type == "Countries"){
+                                $queryQ = 'Q32';
+                            }
+                            else if($type == "Regions"){
+                                $queryQ = 'Q333';
+                            }
+                            else{
+                                $queryQ = 'Q1';
+                            }
+                            
+                            $query = array('query' => "");
+                            $place = classes["Place"];
 
-                        //TODO: GET THESE INTO CONSTANTS
-                        // get the categories from a blazegraph search
-                        $query['query'] = <<<QUERY
+                            // get the categories from a blazegraph search
+                            $query['query'] = <<<QUERY
 SELECT ?country ?countryLabel WHERE {
 ?country $wdt:$instanceOf $wd:$place .
 ?country $wdt:$hasPlaceType $wd:$queryQ .
 
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }                        
+QUERY;
+
+                            //Execute query
+                            $ch = curl_init(BLAZEGRAPH_URL);
+                            curl_setopt($ch, CURLOPT_POST, 1);
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+                                'Accept: application/sparql-results+json'
+                            ));
+                            $result = curl_exec($ch);
+                            curl_close($ch);
+                            //Get result
+                            $result = json_decode($result, true)['results']['bindings'];
+
+                            if (!empty($result)){
+                                foreach($result as $row){
+                                    $typeCats[$row['countryLabel']['value']] = 'Q32';
+                                }
+                            }
+                        }
+                        foreach ($typeCats as $category => $qid) { ?>
+                            <li>
+                                <label class="<?php echo $catLower; ?>">
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <span></span>
+                                </label>
+                            </li>
+                        <?php } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+
+            </ul>
+            <!-- Source Filtering -->
+            <li class="cat-cat">Source</li>
+            <ul id="mainmenu">
+
+                <?php foreach ($GLOBALS["FILTER_ARRAY"]['sources'] as $type) { 
+                    $catLower = strtolower(str_replace(" ", "_", $type)); ?>
+                    <li class="filter-cat hidden" name="<?php echo $catLower; ?>">
+                        <ul id="submenu"  class="show">
+                        <?php
+                        $typeCats = array();
+                        if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                            $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
+                        }
+                        foreach ($typeCats as $category => $qid) { ?>
+                            <li>
+                                <label class="<?php echo $catLower; ?>">
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <span></span>
+                                </label>
+                            </li>
+                        <?php } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+
+            </ul>
+            <!-- Project Filtering -->
+            <li class="cat-cat">Project</li>
+            <ul id="mainmenu">
+
+                <?php foreach (['Projects'] as $type) { 
+                    $catLower = strtolower(str_replace(" ", "_", $type)); ?>
+                    <li class="filter-cat hidden" name="<?php echo $catLower; ?>">
+                        <ul id="submenu" class="show">
+                        <?php
+                        $typeCats = array();
+
+                        $query = array('query' => "");
+                        $instanceOf = properties["instance of"];
+                        $researchProject = classes["Research Project"];
+
+                        // get the categories from a blazegraph search
+                        $query['query'] = <<<QUERY
+SELECT ?project ?projectLabel WHERE {
+  	?project $wdt:$instanceOf $wd:$researchProject.
+  
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+}                     
 QUERY;
 
                         //Execute query
@@ -273,112 +305,24 @@ QUERY;
                         curl_close($ch);
                         //Get result
                         $result = json_decode($result, true)['results']['bindings'];
-// print_r($result);
+
                         if (!empty($result)){
                             foreach($result as $row){
-                                $typeCats[$row['countryLabel']['value']] = 'Q32';
+                                $typeCats[$row['projectLabel']['value']] = 'Q264';
                             }
                         }
-                    }
-                    foreach ($typeCats as $category => $qid) { ?>
-                        <li>
-                            <label class="<?php echo $catLower; ?>">
-                                <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                <p><?php echo $category; ?> <em>(0)</em></p>
-                                <span></span>
-                            </label>
-                        </li>
-                    <?php } ?>
-                </ul>
-                <?php } ?>
 
-            </ul>
-            <!-- Source Filtering -->
-            <hr>
-            <li class="cat-cat">Source<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-            </li>
-            <ul id="mainmenu">
-
-                <?php foreach ($GLOBALS["FILTER_ARRAY"]['sources'] as $type) { 
-                    $catLower = strtolower(str_replace(" ", "_", $type)); ?>
-                    <li class="filter-cat hidden" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
+                        foreach ($typeCats as $category => $qid) { ?>
+                            <li>
+                                <label class="<?php echo $catLower; ?>">
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <span></span>
+                                </label>
+                            </li>
+                        <?php } ?>
+                        </ul>
                     </li>
-                    <ul id="submenu"  class="show">
-                    <?php
-                    $typeCats = array();
-                    if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
-                        $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
-                    }
-                    foreach ($typeCats as $category => $qid) { ?>
-                        <li>
-                            <label class="<?php echo $catLower; ?>">
-                                <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                <p><?php echo $category; ?> <em>(0)</em></p>
-                                <span></span>
-                            </label>
-                        </li>
-                    <?php } ?>
-                </ul>
-                <?php } ?>
-
-            </ul>
-            <!-- Project Filtering -->
-            <hr>
-            <li class="cat-cat">Project<span class="align-right"><img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="drop arrow"></span>
-            </li>
-            <ul id="mainmenu">
-
-                <?php foreach (['Projects'] as $type) { 
-                    $catLower = strtolower(str_replace(" ", "_", $type)); ?>
-                    <li class="filter-cat hidden" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>Arrow-dark.svg" alt="drop arrow"></span>
-                    </li>
-                    <ul id="submenu" class="show">
-                    <?php
-                    $typeCats = array();
-
-                    $query = array('query' => "");
-                    $instanceOf = properties["instance of"];
-                    $researchProject = classes["Research Project"];
-
-                    // get the categories from a blazegraph search
-                    $query['query'] = <<<QUERY
-SELECT ?project ?projectLabel WHERE {
-  	?project $wdt:$instanceOf $wd:$researchProject.
-  
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-}                     
-QUERY;
-
-                    //Execute query
-                    $ch = curl_init(BLAZEGRAPH_URL);
-                    curl_setopt($ch, CURLOPT_POST, 1);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                        'Accept: application/sparql-results+json'
-                    ));
-                    $result = curl_exec($ch);
-                    curl_close($ch);
-                    //Get result
-                    $result = json_decode($result, true)['results']['bindings'];
-
-                    if (!empty($result)){
-                        foreach($result as $row){
-                            $typeCats[$row['projectLabel']['value']] = 'Q264';
-                        }
-                    }
-
-                    foreach ($typeCats as $category => $qid) { ?>
-                        <li>
-                            <label class="<?php echo $catLower; ?>">
-                                <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                <p><?php echo $category; ?> <em>(0)</em></p>
-                                <span></span>
-                            </label>
-                        </li>
-                    <?php } ?>
-                </ul>
                 <?php } ?>
 
             </ul>
@@ -390,14 +334,14 @@ QUERY;
     <div id="searchResults">
         <h2 class="showing-results"></h2>
         <div id="search-result-controls">
-            <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span>
+            <!-- <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span> -->
             <span class="view-modes">
                 <span class="grid-view view-toggle">
                     <img class="grid-icon show" src="../assets/images/List.svg" alt="grid view button">
                     <p class="tooltip">View Grid</p>
                 </span>
                 <span class="table-view view-toggle">
-                    <img class="table-icon" src="../assets/images/table-Active.svg" alt="table view button">
+                    <img class="table-icon" src="../assets/images/Table.svg" alt="table view button">
                     <p class="tooltip">View Table</p>
                 </span>
                 <span class="time-view view-toggle visualize-hide">
@@ -410,13 +354,13 @@ QUERY;
                 </span>
             </span>
             <span class="sorting-dropdowns">
-                <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+                <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                     <ul id="sortmenu" class="sort-by">
                         <li>A - Z</li>
                         <li>Z - A</li>
                     </ul>
                 </span>
-                <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+                <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                     <ul id="sortmenu" class="results-per-page">
                         <li><span>12</span> Per Page</li>
                         <li><span>24</span> Per Page</li>
@@ -452,14 +396,14 @@ QUERY;
             </div>
             <div class="result-column">
                 <div class="cardwrap">
-                    <ul class="row">
+                    <ul class="cards">
                     </ul>
                 </div>
             </div>
         </div>
         <div id="pagination">
             <input class="current-page" type="hidden" value="1">
-            <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
+            <div class="pagi-left"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="Previous Page"></div>
             <div class="page-numbers">
                 <span class="num pagi-first">1</span>
                 <span class="dotsLeft">...</span>
@@ -471,7 +415,7 @@ QUERY;
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
-            <span id="pagiRight" class="align-right"><div id="pagiRightArrow"></div></span>
+            <div class="pagi-right"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron-light.svg" alt="Next Page"></div>
         </div>
     </div>
 </main>

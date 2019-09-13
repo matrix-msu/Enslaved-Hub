@@ -17,6 +17,7 @@
     width: 90%;
     margin: 0 auto 20px;
     position: relative;
+    z-index: 3;
 
     .jumpwrap{
         position: absolute;
@@ -261,9 +262,11 @@
                         p{
                             color: $base-dark;
                             font-size: 14px;
+                            font-family: aleoregular;
                         }
                         .detail-title{
                             font-style: italic;
+                            font-family: aleobold;
                         }
                     }
                 }
