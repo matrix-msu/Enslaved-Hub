@@ -789,7 +789,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><p>Person\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
+                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
                     '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
                     '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
                     '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
@@ -993,7 +993,7 @@ HTML;
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
+                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
                     '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
                     '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
                     '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
@@ -1006,45 +1006,41 @@ HTML;
 
                         $typeHtml = '';
                         if ($placeType != ''){
-                            $typeHtml = "<p><span>Type: </span>$placeType</p>";
+                            $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p>$placeType</p></div>";
                         }
 
                         $locatedHtml = '';
                         if ($located != ''){
-                            $locatedHtml = "<p><span>Located In: </span>$located</p>";
+                            $locatedHtml = "<div class='detail'><p class='detail-title'>Located In</p><p>$located</p></div>";
                         }
 
                         $geonamesHtml = '';
                         if ($geonames != ''){
-                            $geonames = "<p><span>Geoname Identifier: </span>$geonames</p>";
+                            $geonames = "<div class='detail'><p class='detail-title'>Geoname Identifier</p><p>$geonames</p></div>";
                         }
 
                         $codeHtml = '';
                         if ($code != ''){
-                            $codeHtml = "<p><span>Modern Country Code: </span>$code</p>";
+                            $codeHtml = "<div class='detail'><p class='detail-title'>Modern Country Code</p><p>$code</p></div>";
                         }
 
-                        $card_icon_url = BASE_IMAGE_URL . 'Place-light.svg';
+                        $card_icon_url = BASE_IMAGE_URL . 'Place.svg';
                         $place_url = BASE_URL . "record/place/" . $placeQ;
 
                         $card = <<<HTML
-<li>
+<li class="card">
     <a href='$place_url'>
-        <div class='container card-image'>
-            <p>$name</p>
-            <img src='$card_icon_url'>
+        <div class='card-title'>
+            <img src='$card_icon_url' alt="Card Icon">
+            <h3>$name</h3>
         </div>
-        <div class="content-wrap">
-            <div class='container cards'>
-                <div class='card-info'>
-                    $typeHtml
-                    $locatedHtml
-                    $geonamesHtml
-                    $codeHtml
-                </div>
-            </div>
-            $connections
+        <div class="details">
+            $typeHtml
+            $locatedHtml
+            $geonamesHtml
+            $codeHtml
         </div>
+        $connections
     </a>
 </li>
 HTML;
@@ -1211,7 +1207,7 @@ HTML;
                 );
                 //'<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
 
-                $connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
+                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
                     '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
                     '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[2].
                     '</div></div></div></div>';
@@ -1221,55 +1217,50 @@ HTML;
                 foreach ($templates as $template) {
                     if ($template == 'gridCard'){
 
-                        $typeHtml = "<p><span>Type: </span>$type</p>";
+                        $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p>$type</p></div>";
 
                         $rolesHtml = '';
                         // Check for multiple roles
                         if ($rolesCount == 1){
-                            $rolesHtml = "<p><span>Role: </span>$roles</p>";
+                            $rolesHtml = "<div class='detail'><p class='detail-title'>Role</p><p>$roles</p></div>";
                         }
                         if ($rolesCount > 1){
-                            $rolesHtml = "<p><span>Role: </span><span class='multiple'>Multiple<span class='tooltip'>$roles</span></span></p>";
+                            $rolesHtml = "<div class='detail'><p class='detail-title'>Role</p><p class='multiple'>Multiple<span class='tooltip'>$roles</span></p></div>";
                         }
                         // Check for multiple places
                         $placesHtml = '';
                         if ($placesCount == 1){
-                            $placesHtml = "<p><span>Place: </span>$places</p>";
+                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p>$places</p></div>";
                         }
                         if ($placesCount > 1){
-                            $placesHtml = "<p><span>Place: </span><span class='multiple'>Multiple<span class='tooltip'>$places</span></span></p>";
+                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'>$places</span></p></div>";
                         }
 
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
                             $dateName = ($startYear != '' && $endYear != '') ? "Date Range" : "Date";
-                            $dateRangeHtml = "<p><span>$dateName: </span>$dateRange</p>";
+                            $dateRangeHtml = "<div class='detail'><p class='detail-title'>dateName</p><p>$dateRange</p></div>";
                         }
 
-                        $card_icon_url = BASE_IMAGE_URL . 'Event-light.svg';
+                        $card_icon_url = BASE_IMAGE_URL . 'Event.svg';
                         $event_url = BASE_URL . "record/event/" . $eventQ;
 
 
 
                         $card = <<<HTML
-<li>
+<li class="card">
     <a href='$event_url'>
-        <div class='container card-image'>
-            <p>$name</p>
-            <img src='$card_icon_url'>
+        <div class='card-title'>
+            <img src='$card_icon_url' alt="Card Icon">
+            <h3>$name</h3>
         </div>
-        <div class="content-wrap">
-            <div class='container cards'>
-                <div class='card-info'>
-                    $typeHtml
-                    $rolesHtml
-                    $placesHtml
-                    $dateRangeHtml
-                </div>
-
-            </div>
-            $connections
+        <div class="details">
+            $typeHtml
+            $rolesHtml
+            $placesHtml
+            $dateRangeHtml
         </div>
+        $connections
     </a>
 </li>
 HTML;
@@ -1406,7 +1397,7 @@ HTML;
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
+                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
                     '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
                     '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
                     // '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
@@ -1420,51 +1411,46 @@ HTML;
                         $typeHtml = '';
                         // if a source has multiple types, display them in a tooltip
                         if ($typeCount == 1){
-                            $typeHtml = "<p><span>Type: </span>$type</p>";
+                            $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p>$type</p></div>";
                         }
                         if ($typeCount > 1){
-                            $typeHtml = "<p><span>Type: </span><span class='multiple'>Multiple<span class='tooltip'>$type</span></span></p>";
+                            $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p class='multiple'>Multiple<span class='tooltip'>$type</span></p></div>";
                         }
 
                         $projectHtml = '';
                         if ($project != ""){
-                            $projectHtml = "<p><span>Project: </span>$project</p>";
+                            $projectHtml = "<div class='detail'><p class='detail-title'>Project</p><p>$project</p></div>";
                         }
 
                         $descHtml = '';
                         if ($desc != ""){
-                            $descHtml = "<p><span>Description: </span>$desc</p>";
+                            $descHtml = "<div class='detail'><p class='detail-title'>Description</p><p>$desc</p></div>";
                         }
 
                         
                         $secondarysourceHtml = '';
                         if ($secondarysource != ""){
-                            $secondarysourceHtml = "<p><span>Secondary Source: </span>$secondarysource</p>";
+                            $secondarysourceHtml = "<div class='detail'><p class='detail-title'>Secondary Source</p><p>$secondarysource</p></div>";
                         }
 
 
-                        $card_icon_url = BASE_IMAGE_URL . 'Source-light.svg';
+                        $card_icon_url = BASE_IMAGE_URL . 'Source.svg';
                         $source_url = BASE_URL . "record/source/" . $sourceQ;
 
                         $card = <<<HTML
-<li>
+<li class="card">
     <a href='$source_url'>
-        <div class='container card-image'>
-            <p>$name</p>
-            <img src='$card_icon_url'>
+        <div class='card-title'>
+            <img src='$card_icon_url' alt="Card Icon">
+            <h3>$name</h3>
         </div>
-        <div class="content-wrap">
-            <div class='container cards'>
-                <div class='card-info'>
-                    $typeHtml
-                    $projectHtml
-                    $descHtml
-                    $secondarysourceHtml
-                </div>
-
-            </div>
-            $connections
+        <div class="details">
+            $typeHtml
+            $projectHtml
+            $descHtml
+            $secondarysourceHtml
         </div>
+        $connections
     </a>
 </li>
 HTML;
