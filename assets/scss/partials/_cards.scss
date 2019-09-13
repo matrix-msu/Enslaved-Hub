@@ -144,3 +144,45 @@
         }
     }
 }
+
+// Contributor Cards
+.card.contributor{
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background-color: $white;
+    transition: all .3s;
+    position: relative;
+    padding: 20px;
+    
+    h2 {
+      line-height: 1;
+    }
+    
+    .row {
+      bottom: 0;
+      margin: 15px 0 0 0;
+      
+      .detail{
+        margin-right: 30px;
+        
+        .title{
+          font-style: italic;
+        }
+        .content {
+          font-family: aleoregular;
+        }
+      }
+      
+      .detail.two {
+        .content{
+        color: $accent;
+        cursor: pointer;
+        font-family: aleobold;
+        text-decoration: underline;
+        }
+      }
+    }
+    
+    }
