@@ -195,6 +195,7 @@ $(document).ready(function() {
                         }
 
                         // console.log(label, count)
+
                         // fill in the counters for the filters
                         if (label != "") {
                             var $input = $("input[value='"+label+"']")

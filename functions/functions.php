@@ -29,9 +29,12 @@ function admin(){
 
 function blazegraph()
 {
+    include BASE_LIB_PATH."variableIncluder.php";
+
+    
     if (isset($_GET['filters'])){
         $filtersArray = $_GET['filters'];
-
+        
         $limitQuery = '';
         if (isset($filtersArray['limit'])){
             $limit = $filtersArray['limit'];
@@ -54,26 +57,7 @@ function blazegraph()
     $queryArray = array();
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
-
-
-        foreach($GLOBALS['PREFIX_ARRAY'][LOD_CONFIG] as $prefix => $value){
-            $$prefix = $value;
-        }
-    
-        foreach(properties as $property => $pId){
-            $property = ucwords($property);
-            $property = str_replace(" ", "", $property);
-            $property = lcfirst($property);
-            $$property = $pId;
-        }
-
-        foreach(classes as $class => $qId){
-            $class = ucwords($class);
-            $class = str_replace(" ", "", $class);
-            $class = lcfirst($class);
-            $$class = $qId;
-        }
-
+        // echo $preset;die;
         switch ($preset){
             case 'singleproject':
                 // QID is mandatory
