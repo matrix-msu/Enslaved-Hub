@@ -40,18 +40,18 @@ $cache_Data = Json_GetData_ByTitle($upper);
     <h2>Featured <?=$upper?></h2>
     <div class="cardwrap">
         <div class="cardwrap2">
-            <ul class="cards">
+            <ul class="cards-featured">
             </ul>
         </div>
     </div>
-    <div class="controls">
+    <!-- <div class="controls">
         <div class="arrows">
             <div class="prev"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
             <div class="next"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
         </div>
         <div class="dots">
         </div>
-    </div>
+    </div>-->
 </div>
 <!-- Search Bar -->
 <!-- <div class="explore-search">

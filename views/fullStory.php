@@ -184,12 +184,28 @@ else {
         <ul class="connect-row">
             <li class="card">
                 <div class="card-title">
-                <img src="<?php echo BASE_URL?>assets/images/Person-dark.svg" alt="person icon">
+                <img src="<?php echo BASE_URL?>assets/images/Person-dark.svg" alt="Person Record Icon">
                     <h3>Firstname Lastname</h3>
                 </div>
-                <div class="details"><div class="detail"><p class="detail-title">Person Status</p><p>Enslaved</p></div><div class="detail"><p class="detail-title">Sex</p><p>Unidentified</p></div><div class="detail"><p class="detail-title">Location</p><p>Location Name</p></div><div class="detail"><p class="detail-title">Origin</p><p>Location Name</p></div><div class="detail"><p class="detail-title">Date Range</p><p>1840-1864</p></div></div>
-                <div class="connectionswrap"><div class="connections"><div class="card-icons"><img src="http://dev2.matrix.msu.edu/~drew.schineller/enslaved/assets/images/Person-dark.svg" alt="Person Connections Icon"><span>1</span><div class="connection-menu"><h1>1 Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul></div></div><div class="card-icons"><img src="http://dev2.matrix.msu.edu/~drew.schineller/enslaved/assets/images/Place-dark.svg"  alt="Place Connections Icon"><span>1</span><div class="connection-menu"><h1>1 Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul></div></div><div class="card-icons"><img src="http://dev2.matrix.msu.edu/~drew.schineller/enslaved/assets/images/Event-dark.svg"  alt="Event Connections Icon"><span>1</span><div class="connection-menu"><h1>1 Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul></div></div><div class="card-icons"><img src="http://dev2.matrix.msu.edu/~drew.schineller/enslaved/assets/images/Source-dark.svg"  alt="Source Connections Icon"><span>1</span><div class="connection-menu"><h1>1 Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul></div></div></div></div>
-            </li>
+              </li>
+              <li class="card">
+                <div class="card-title">
+                <img src="<?php echo BASE_URL?>assets/images/Place-dark.svg" alt="Place Record Icon">
+                    <h3>Place Title</h3>
+                </div>
+              </li>
+              <li class="card">
+                <div class="card-title">
+                <img src="<?php echo BASE_URL?>assets/images/Event-dark.svg" alt="Event Record Icon">
+                    <h3>Event Title</h3>
+                </div>
+              </li>
+              <li class="card">
+                <div class="card-title">
+                <img src="<?php echo BASE_URL?>assets/images/Source-dark.svg" alt="Source Record Icon">
+                    <h3>Source Title</h3>
+                </div>
+              </li>
         </ul>
         <a class="search-all"></a>
     </div>
