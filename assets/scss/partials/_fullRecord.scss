@@ -216,9 +216,6 @@
                 position: relative;
                 padding: 20px;
                 
-                &:nth-child(2n){
-                    margin-right: 0;
-                }
                 a{
                     text-decoration: none;
                 }
@@ -1198,3 +1195,17 @@
         padding-bottom: 40px;
     }
 }
+
+@media screen and (max-width: 650px){
+    .record-connections {
+    .connection-cards{
+      ul {      
+          li.card{
+             margin-right: 0;
+              width: 100%;
+          }
+      }
+  }
+  }
+  }
+
