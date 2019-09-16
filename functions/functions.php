@@ -58,6 +58,7 @@ function blazegraph()
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
         // echo $preset;die;
+        
         switch ($preset){
             case 'singleproject':
                 // QID is mandatory
@@ -98,7 +99,7 @@ function blazegraph()
                     $nameQuery = "
                         ?agent $p:$hasName ?statement.
                         ?statement $ps:$hasName ?name.
-                        FILTER regex(?name, '^$name', 'i') . 
+                        FILTER regex(?name, '^$name', 'i') .
                     ";
                 }
                 //filter by source
@@ -179,7 +180,7 @@ function blazegraph()
                             $sourceTypeIdFilter .= "  ?agent ?property  ?object .
                                 ?object $prov:wasDerivedFrom ?provenance .
                                 ?provenance $pr:$isDirectlyBasedOn ?source .
-                                ?source $wdt:$hasOriginalSourceType $wd:$qType.  
+                                ?source $wdt:$hasOriginalSourceType $wd:$qType.
                             ";
                         }
                     }
@@ -206,7 +207,7 @@ function blazegraph()
                             ?agent $p:$hasParticipantRole ?statementrole.
                             ?statementrole $ps:$hasParticipantRole ?role.
                             ?statementrole $pq:$roleProvidedBy ?event.
-                            ?event $wdt:$atPlace $wd:$placeQ .   #this number will change for every place       
+                            ?event $wdt:$atPlace $wd:$placeQ .   #this number will change for every place
                         ";
                 }
                 //TODO: MAKE SURE ALL CAN HAVE MULTIPLE FILTERS AND ISSETS
@@ -227,7 +228,7 @@ function blazegraph()
                                 ?statementrole $pq:$roleProvidedBy ?event.
                                 ?event $wdt:$atPlace ?place.
                                 ?place $wdt:$instanceOf $wd:$place;
-                                $wdt:$hasPlaceType $wd:$qType. 
+                                $wdt:$hasPlaceType $wd:$qType.
                             ";
                         }
                     }
@@ -280,7 +281,7 @@ function blazegraph()
                         ";
                     }
                 }
-                
+
 
                 // filter people by province
                 $provinceIdFilter = "";
@@ -381,14 +382,14 @@ function blazegraph()
                     if ($from != ''){
                         $dateRangeIdFilter .= "
                             ?event $wdt:$startsAt ?startYear.
-                            FILTER (?startYear >= \"".$from."-01-01T00:00:00Z"."\"^^xsd:dateTime) . 
+                            FILTER (?startYear >= \"".$from."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
                         ";
                     }
                     if ($to != ''){
                         $dateRangeIdFilter .= "
                             ?event $wdt:$endsAt ?endYear.
-                            FILTER (?endYear <= \"".$to."-01-01T00:00:00Z"."\"^^xsd:dateTime) . 
-                        ";                    
+                            FILTER (?endYear <= \"".$to."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
+                        ";
                     }
                 }
                 // filter for events connected to a source
@@ -399,8 +400,8 @@ function blazegraph()
                         $sourceIdFilter .= "
                             VALUES ?source { $wd:$sourceQid} #Q number needs to be changed for every source.
                                 ?source $wdt:$instanceOf $wd:$entityWithProvenance.
-                                ?source $wdt:$reportsOn ?event. 
-                        ";                    
+                                ?source $wdt:$reportsOn ?event.
+                        ";
                     }
                 }
                 break;
@@ -509,11 +510,11 @@ function blazegraph()
     // map search types to their blazegraph name
     $searchTypes = [
         'people' => 'agent',
-        'events' => 'event', 
-        'places' => 'place', 
-        'projects' => 'project', 
+        'events' => 'event',
+        'places' => 'place',
+        'projects' => 'project',
         'sources' => 'source'
-    
+
     ];
     if (array_key_exists($preset, $searchTypes)){
         include BASE_PATH."queries/".$preset."Search/count.php";
@@ -521,7 +522,7 @@ function blazegraph()
         // print_r($resultCountQuery);die;
         $result = blazegraphSearch($resultCountQuery);
         //var_dump($resu)
-        
+
         if (isset($result[0]) && isset($result[0]['count'])){
             $record_total = $result[0]['count']['value'];
         }
@@ -530,25 +531,25 @@ function blazegraph()
         if ($record_total <= 0){
             return createCards([], $templates, $preset, 0);
         }
-        
+
         include BASE_PATH."queries/".$preset."Search/ids.php";
         $idQuery['query'] = $tempQuery;
         // print_r($idQuery);die;
         $result = blazegraphSearch($idQuery);
-        
+
         // get the qids from each url
         $urls = (array_column(array_column($result, $searchTypes[$preset]), 'value'));
         $qids = [];
         foreach($urls as $url){
             $qids[] = end(explode('/', $url));
         }
-        
+
         // create the line in the query with the ids to search for
         $qidList = "";
         foreach($qids as $qid){
             $qidList .= "$wd:$qid ";
         }
-        
+
         include BASE_PATH."queries/".$preset."Search/data.php";
         $dataQuery['query'] = $tempQuery;
         // print_r($dataQuery);die;
@@ -630,7 +631,7 @@ function blazegraphSearch($query){
     ));
     $result = curl_exec($ch);
     curl_close($ch);
-    
+
     $result = json_decode($result, true)['results']['bindings'];
     return $result;
 }
@@ -773,11 +774,20 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
-                    '</div></div></div></div>';
+                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                	if (intval($countpeople) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                    }
+                    if (intval($countplace) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                    }
+                    if (intval($countevent) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                    }
+                    if (intval($countsource) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
+                    }
+                $connections .= '</div></div>';
 
 
                 // create the html for each template
@@ -977,11 +987,20 @@ HTML;
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
-                    '</div></div></div></div>';
+                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                	if (intval($countpeople) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                    }
+                    if (intval($countplace) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                    }
+                    if (intval($countevent) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                    }
+                    if (intval($countsource) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
+                    }
+                $connections .= '</div></div>';
 
 
                 // create the html for each template
@@ -1191,11 +1210,20 @@ HTML;
                 );
                 //'<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
 
-                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[2].
-                    '</div></div></div></div>';
-                //'</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
+                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                	if (intval($countpeople) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                    }
+                    if (intval($countplace) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                    }
+                    // if (intval($countevent) > 0){
+                    //     $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                    // }
+                    if (intval($countsource) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                    }
+                $connections .= '</div></div>';
 
                 // create the html for each template
                 foreach ($templates as $template) {
@@ -1381,11 +1409,20 @@ HTML;
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
-                    '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
-                    // '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
-                    '</div></div></div></div>';
+                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                	if (intval($countpeople) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                    }
+                    if (intval($countplace) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                    }
+                    if (intval($countevent) > 0){
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                    }
+                    // if (intval($countsource) > 0){
+                    //     $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
+                    // }
+                $connections .= '</div></div>';
 
 
                 // create the html for each template
@@ -1411,7 +1448,7 @@ HTML;
                             $descHtml = "<div class='detail'><p class='detail-title'>Description</p><p>$desc</p></div>";
                         }
 
-                        
+
                         $secondarysourceHtml = '';
                         if ($secondarysource != ""){
                             $secondarysourceHtml = "<div class='detail'><p class='detail-title'>Secondary Source</p><p>$secondarysource</p></div>";
@@ -1758,11 +1795,20 @@ HTML;
                         '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                     );
 
-                    $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections"><div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].
-                        '</div></div><div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].
-                        '</div></div><div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].
-                        '</div></div><div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].
-                        '</div></div></div></div></div>';
+                    $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                    	// if (intval($countpeople) > 0){
+                        //     $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                        // }
+                        if (intval($countplace) > 0){
+                            $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                        }
+                        if (intval($countevent) > 0){
+                            $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                        }
+                        if (intval($countsource) > 0){
+                            $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
+                        }
+                    $connections .= '</div></div>';
 
 
                     $cardType = $template;
