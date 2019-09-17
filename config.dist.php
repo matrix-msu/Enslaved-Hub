@@ -145,7 +145,9 @@ $GLOBALS['FILTER_TO_FILE_MAP'] = Array(
     "Province" => provinces,
     "Source Type" => sourceTypes,
     "Status" => personstatus,
-    "Occupation" => occupation
+    "Occupation" => occupation,
+    "Projects" => projects,
+    "Modern Countries" => countrycode
 );
 
 //include the lib files

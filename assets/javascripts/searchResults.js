@@ -165,6 +165,10 @@ $(document).ready(function() {
     $.ajax({
         url: BASE_URL + "api/getSearchFilterCounters",
         type: "GET",
+        data: {
+            search_type: search_type,
+            filters: filters,
+        },
         'success': function (data) {
             var allCounters = JSON.parse(data);
             
@@ -175,7 +179,13 @@ $(document).ready(function() {
                     JSON.parse(counterType[filter]).forEach(function (record) {
                         var label = "";
                         var count = "";
+                        var qid = "";
+
                         for (var key in record) {
+                            if (record[key]['type'] == "uri"){
+                                qid = record[key]['value'].split('/').pop()
+                            }
+
                             if (key.match("Label$")) {
                                 label = record[key]['value'];
                             }
@@ -194,14 +204,12 @@ $(document).ready(function() {
                             }
                         }
 
-                        // console.log(label, count)
-
                         // fill in the counters for the filters
-                        if (label != "") {
-                            var $input = $("input[value='"+label+"']")
+                        if (label != "" && qid != "") {
+                            // console.log(label, qid, count)
+                            var $input = $("input[data-qid='"+qid+"']");
                             var $counter = $input.next().find('em');
                             $counter.html('('+count+')');
-
                         }
                     });
                 }
