@@ -1469,7 +1469,6 @@ HTML;
             $typeHtml
             $projectHtml
             $descHtml
-            $secondarysourceHtml
         </div>
         $connections
     </a>
@@ -1486,11 +1485,10 @@ HTML;
     <th class="type">TYPE</th>
     <th class="project">PROJECT</th>
     <th class="desc">DESCRIPTION</th>
-    <th class="secondarySource">SECONDARY SOURCE</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION', 'SECONDARY SOURCE'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION'];
                         }
 
                         $card = <<<HTML
@@ -1507,9 +1505,6 @@ HTML;
     <td class='desc'>
         <p><span class='first'>Description: </span>$desc</p>
     </td>
-    <td class='secondarySource'>
-        <p><span class='first'>Secondary Source: </span>$secondarysource</p>
-    </td>
     <td class='meta'>
 
     </td>
@@ -1521,8 +1516,7 @@ HTML;
                             'NAME' => $name,
                             'TYPE' => $type,
                             'PROJECT' => $project,
-                            'DESCRIPTION' => $desc,
-                            'SECONDARY SOURCE' => $secondarysource
+                            'DESCRIPTION' => $desc
                         );
 
                     }
