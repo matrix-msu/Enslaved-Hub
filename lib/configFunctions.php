@@ -27,11 +27,11 @@ function Kora_GetNavigationData()
 	if(array_key_exists("error", $decode_results)) return json_encode("failed");
 
 	// Read from the webPages file and compare to the kora results
-	$cached_data = file_get_contents(BASE_PATH . "/cache/webPages.json");
+	$cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
 	if($cached_data == json_encode(json_decode($koraResults)->records[0])) return json_encode("similar");
 
 	// put content to webPages.json file
-	file_put_contents( BASE_PATH . "/cache/webPages.json", json_encode(json_decode($koraResults)->records[0]));
+	file_put_contents( BASE_PATH . "cache/webPages.json", json_encode(json_decode($koraResults)->records[0]));
 
 	$navs = [];
 	$prev = "";
@@ -56,7 +56,7 @@ function Kora_GetNavigationData()
 		array_push($navs[$index][1], $result["SubNavigation"]);
 	}
 	// put navigations to navContents.json file
-	file_put_contents( BASE_PATH . "/cache/navContents.json", json_encode($navs));
+	file_put_contents( BASE_PATH . "cache/navContents.json", json_encode($navs));
 
 	return json_encode("updated");
 }
@@ -65,7 +65,7 @@ function Kora_GetNavigationData()
 function Json_GetNavigationData()
 {
 	// Read data from Json cache File
-	$navContents = file_get_contents(BASE_PATH . "/cache/navContents.json");
+	$navContents = file_get_contents(BASE_PATH . "cache/navContents.json");
 	// echo '<script>console.log('.$navContents.')</script>';
 	$navContents = json_decode($navContents, true);
 	return $navContents;
@@ -74,7 +74,7 @@ function Json_GetNavigationData()
 function Json_GetData_ByTitle($title, $all_matches = false)
 {
 	// Dynamically pull data from cache file (webPages.json)
-	$cached_data = file_get_contents(BASE_PATH . "/cache/webPages.json");
+	$cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
 	$cached_data = json_decode($cached_data, true); // Convert the json string to a php array
 
 	$output = ['title' => $title, 'descr' => ""];
