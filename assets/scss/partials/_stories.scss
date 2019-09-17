@@ -31,6 +31,26 @@
 }
 .card-slider{
     .cards{
+         display: flex;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        width: fit-content;
+        margin-bottom: 35px;
+        
+        li.card {
+           cursor: pointer;
+            width: 390px;
+            height: 270px;
+            margin-right: 20px;
+            box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+            border-radius: 5px;
+            border: 2px solid transparent;
+            background-color: $white;
+            transition: all .3s;
+            padding: 20px;
+        }
+        
         li.card-story{
             cursor: pointer;
             width: 390px; //card sizing

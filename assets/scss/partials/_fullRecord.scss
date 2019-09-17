@@ -205,8 +205,7 @@
 
             li.card{
                 cursor: pointer;
-                width: 49%;
-                height: 270px;
+                width: 48%;
                 margin-right: 2%;
                 margin-bottom: 15px;
                 box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
@@ -217,9 +216,6 @@
                 position: relative;
                 padding: 20px;
                 
-                &:nth-child(2n){
-                    margin-right: 0;
-                }
                 a{
                     text-decoration: none;
                 }
@@ -233,7 +229,6 @@
                 .card-title{
                     display: flex;
                     align-items: center;
-                    margin-bottom: 25px;
     
                     img{
                         margin-right: 15px;
@@ -1200,3 +1195,17 @@
         padding-bottom: 40px;
     }
 }
+
+@media screen and (max-width: 650px){
+    .record-connections {
+    .connection-cards{
+      ul {      
+          li.card{
+             margin-right: 0;
+              width: 100%;
+          }
+      }
+  }
+  }
+  }
+

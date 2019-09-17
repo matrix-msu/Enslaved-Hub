@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    $('.cards li').click(function(){
+    $('.cards-featured li').click(function(){
         console.log("clicked");
         window.location = $(this).find("a").attr("href");
     });
@@ -109,7 +109,7 @@ $(document).ready(function(){
                             }
                         }
                     });
-                    $(".cards li").each(function(){
+                    $(".cards-featured li").each(function(){
                         if($(this).find("span").html() != 0){
                             $(this).removeClass("hide-category");
                         }
@@ -135,7 +135,7 @@ $(document).ready(function(){
             success: function (data) {
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
-                    $('.explore-featured .cards').append(e);
+                    $('.explore-featured .cards-featured').append(e);
                 });
                 installFeaturedListeners('.explore-featured');
             }

@@ -1810,35 +1810,12 @@ HTML;
                     $link = BASE_URL . "record/" . strtolower($cardType) . "/" . $qid;
                     // $background = "background-image: url(" . BASE_IMAGE_URL . $cardType . "Card.jpg)";
                     $card = <<<HTML
-<li class="card card-featured">
+<li class="card-featured">
     <a href="$link">
         <div class="card-title">
             <img src="$iconURL" alt="Card Icon">
             <h3>$cardTitle</h3>
         </div>
-        <div class="details">
-            <div class="detail">
-                <p class="detail-title">Person Status</p>
-                <p>Enslaved</p>
-            </div>
-            <div class="detail">
-                <p class="detail-title">Sex</p>
-                <p>Unidentified</p>
-            </div>
-            <div class="detail">
-                <p class="detail-title">Location</p>
-                <p>Location Name</p>
-            </div>
-            <div class="detail">
-                <p class="detail-title">Origin</p>
-                <p>Location Name</p>
-            </div>
-            <div class="detail">
-                <p class="detail-title">Date Range</p>
-                <p>1840-1864</p>
-            </div>
-        </div>
-        $connections
     </a>
 </li>
 HTML;
