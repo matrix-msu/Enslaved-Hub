@@ -206,6 +206,58 @@ function counterOfRole(){
     }
 }
 
+// TODO: 
+function counterOfStatus(){
+    include BASE_LIB_PATH."variableIncluder.php";
+
+    $query= "SELECT  ?statusLabel (COUNT(?human) AS ?count) WHERE
+    {  ?human $wdt:$instanceOf $wd:$person.
+        ?human $wdt:$hasPersonStatus ?status.
+            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+    } GROUP BY ?statusLabel
+    ORDER BY DESC(?count)";
+
+    // print_r($query);die;
+
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
+}
+
+
+function counterOfOccupation(){
+    include BASE_LIB_PATH."variableIncluder.php";
+
+    $query= "SELECT ?occupationLabel (COUNT(?human) AS ?count) WHERE
+    {  ?human $wdt:$instanceOf $wd:$person.
+        ?human $wdt:$hasOccupation ?occupation.
+            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+    } GROUP BY ?occupationLabel
+    ORDER BY DESC(?count)";
+
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
+}
+
+
+
 // Count the number of people in each age category
 function counterOfAge(){
     include BASE_LIB_PATH."variableIncluder.php";
@@ -417,9 +469,6 @@ function counterOfType() {
         if ($type == "Ethnodescriptor"){
             return counterOfEthnodescriptor();
         }
-        if ($type == "Place"){
-            return counterOfPeoplePlace();  // not real
-        }
     }
 
     if($category == "Places") {
@@ -441,6 +490,66 @@ function counterOfType() {
   }
 
 }
+
+
+
+
+
+
+
+
+function getSearchFilterCounters(){
+    
+    $peopleFilters = array(
+        'Gender' => counterOfAllGenders(),
+        'Age Category' => counterOfAge(),
+        'Ethnodescriptor' => counterOfEthnodescriptor(),
+        'Role Types' => counterOfRole(),
+        'Status' => counterOfStatus(),
+        'Occupation' => counterOfOccupation(),
+
+    );
+
+    $eventFilters = array(
+        'Event Type' => counterOfEventType(),
+        // 'Date' => getEventDateRange()
+
+    );
+
+    $placeFilters = array(
+        'Place Type' => counterOfPlaceType()
+    );
+
+    $sourceFilters = array(
+        'Source Type' => counterOfSourceType()
+    );
+
+    $projectFilters = array(
+        // TODO: GET PROJECT COUNTERS WORKING
+    );
+
+    $allCounters = array(
+        'People' => $peopleFilters,
+        'Event' => $eventFilters,
+        'Place' => $placeFilters,
+        'Source' => $sourceFilters,
+        'Project' => $projectFilters
+    );
+
+    return json_encode($allCounters);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getEventDateRange() {
     include BASE_LIB_PATH."variableIncluder.php";

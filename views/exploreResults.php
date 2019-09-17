@@ -131,7 +131,7 @@
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <p><?php echo $category; ?> <em>(0)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -158,7 +158,7 @@
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <p><?php echo $category; ?> <em>(0)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -182,6 +182,7 @@
                             $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
                         else{
+                            // TODO: GET THESE INTO CONSTANTS
                             //Condition for the key not being in the FILE_MAP ex. Countries and Regions which have queries
                             $queryQ = '';
                             if($type == "Countries"){
@@ -231,7 +232,7 @@ QUERY;
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <p><?php echo $category; ?> <em>(0)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -258,7 +259,7 @@ QUERY;
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <p><?php echo $category; ?> <em>(0)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -316,7 +317,7 @@ QUERY;
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <p><?php echo $category; ?> <em>(0)</em></p>
                                     <span></span>
                                 </label>
                             </li>

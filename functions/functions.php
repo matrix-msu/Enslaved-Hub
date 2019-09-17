@@ -29,9 +29,12 @@ function admin(){
 
 function blazegraph()
 {
+    include BASE_LIB_PATH."variableIncluder.php";
+
+    
     if (isset($_GET['filters'])){
         $filtersArray = $_GET['filters'];
-
+        
         $limitQuery = '';
         if (isset($filtersArray['limit'])){
             $limit = $filtersArray['limit'];
@@ -54,26 +57,8 @@ function blazegraph()
     $queryArray = array();
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
-
-
-        foreach($GLOBALS['PREFIX_ARRAY'][LOD_CONFIG] as $prefix => $value){
-            $$prefix = $value;
-        }
-
-        foreach(properties as $property => $pId){
-            $property = ucwords($property);
-            $property = str_replace(" ", "", $property);
-            $property = lcfirst($property);
-            $$property = $pId;
-        }
-
-        foreach(classes as $class => $qId){
-            $class = ucwords($class);
-            $class = str_replace(" ", "", $class);
-            $class = lcfirst($class);
-            $$class = $qId;
-        }
-
+        // echo $preset;die;
+        
         switch ($preset){
             case 'singleproject':
                 // QID is mandatory
@@ -633,7 +618,7 @@ function blazegraph()
 
 
 function blazegraphSearch($query){
-    //echo BLAZEGRAPH_URL;
+    // echo BLAZEGRAPH_URL;
     // echo http_build_query($query);
     // die;
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -1484,7 +1469,6 @@ HTML;
             $typeHtml
             $projectHtml
             $descHtml
-            $secondarysourceHtml
         </div>
         $connections
     </a>
@@ -1501,11 +1485,10 @@ HTML;
     <th class="type">TYPE</th>
     <th class="project">PROJECT</th>
     <th class="desc">DESCRIPTION</th>
-    <th class="secondarySource">SECONDARY SOURCE</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION', 'SECONDARY SOURCE'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION'];
                         }
 
                         $card = <<<HTML
@@ -1522,9 +1505,6 @@ HTML;
     <td class='desc'>
         <p><span class='first'>Description: </span>$desc</p>
     </td>
-    <td class='secondarySource'>
-        <p><span class='first'>Secondary Source: </span>$secondarysource</p>
-    </td>
     <td class='meta'>
 
     </td>
@@ -1536,8 +1516,7 @@ HTML;
                             'NAME' => $name,
                             'TYPE' => $type,
                             'PROJECT' => $project,
-                            'DESCRIPTION' => $desc,
-                            'SECONDARY SOURCE' => $secondarysource
+                            'DESCRIPTION' => $desc
                         );
 
                     }
@@ -2132,4 +2111,25 @@ function checkKID($kid)
         return true;
     else
         return false;
+}
+
+
+
+
+
+function updateConstants(){
+    $query["query"] = "
+        select ?ethnodescriptor
+        where {
+            ?ethnodescriptor edt:P1 ed:Q298.
+            # ?ethnodescriptor rdfs:Label ?ethonLabel
+            
+        }
+    ";
+    print_r($query);die;
+
+    $results = blazegraphSearch($query);
+    
+
+    print_r($results);die;
 }
