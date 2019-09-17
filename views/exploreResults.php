@@ -182,6 +182,7 @@
                             $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
                         else{
+                            // TODO: GET THESE INTO CONSTANTS
                             //Condition for the key not being in the FILE_MAP ex. Countries and Regions which have queries
                             $queryQ = '';
                             if($type == "Countries"){

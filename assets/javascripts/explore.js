@@ -5,6 +5,11 @@ $(document).ready(function(){
         window.location = $(this).find("a").attr("href");
     });
 
+    $('.cards li').click(function () {
+        console.log("clicked");
+        window.location = $(this).find("a").attr("href");
+    });
+
     $(".sort-cards p").click(function (e) { // toggle show/hide per-page submenu
         e.stopPropagation();
         $(this).find("img:first").toggleClass('show');
@@ -102,14 +107,13 @@ $(document).ready(function(){
                             }
                         }
                         if (label != ""){
-                            
                             var span = $("a:contains("+label+")").find('span');
                             if ($(span).length > 0){
                                 $(span).html(count);
                             }
                         }
                     });
-                    $(".cards-featured li").each(function(){
+                    $(".cards li").each(function(){
                         if($(this).find("span").html() != 0){
                             $(this).removeClass("hide-category");
                         }
