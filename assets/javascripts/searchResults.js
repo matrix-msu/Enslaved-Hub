@@ -20,8 +20,6 @@ var currentTitle = "Search";
 var fields = [];    // fields for the table view
 var sort = 'ASC';
 var formattedData = {};
-console.log(search_type)
-
 
 // Get params from url
 if(document.location.toString().indexOf('?') !== -1)
@@ -44,6 +42,7 @@ if(document.location.toString().indexOf('?') !== -1)
             filters[aux[0]] = aux[1].split('+');
             continue;
         }
+
         filters[aux[0]] = aux[1].split(',');
     }
 }
@@ -84,30 +83,39 @@ function searchResults(preset, limit = 12, offset = 0)
         'success': function (data)
         {
             isSearching = false;
-
             result_array = JSON.parse(data);
             console.log('results', result_array)
+            
+            total_length = result_array['total'];
+
+            var showingResultsText = '';
+            if (total_length < card_limit) {
+                showingResultsText = "Showing " + total_length + " of " + total_length + " Results";
+            } else {
+                showingResultsText = "Showing " + (card_limit+offset) + " of " + total_length + " Results";
+            }
+            $('.showing-results').html(showingResultsText);
+
+            if (total_length <= 0){
+                // clear old results
+                $("ul.cards").empty();
+                $("thead").empty();
+                $("tbody").empty();
+                return;
+            }
+
             if (typeof (result_array['formatted_data']) != 'undefined'){
                 formattedData = result_array['formatted_data'];
             }
             if (typeof (result_array['fields']) != 'undefined') {
                 fields = result_array['fields'];
             }
-            var result_length = result_array['gridCard'].length;
-            total_length = result_array['total'];
 
             searchBarFilter = filters != undefined ? filters : '';
             // searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
             searchBarPlaceholder = "Search Across "  + total_length + " Results";
             $('.main-search').attr("placeholder", searchBarPlaceholder);
 
-            var showingResultsText = '';
-            if (result_length < card_limit) {
-                showingResultsText = "Showing " + result_length + " of " + total_length + " Results";
-            } else {
-                showingResultsText = "Showing " + card_limit + " of " + total_length + " Results";
-            }
-            $('.showing-results').html(showingResultsText);
 
             //Wait till doc is ready
             $(document).ready(function(){
@@ -127,9 +135,9 @@ function searchResults(preset, limit = 12, offset = 0)
 function appendCards()
 {
     // return;
-    $("ul.row").empty(); //empty row before appending more
+    $("ul.cards").empty(); //empty row before appending more
     result_array['gridCard'].forEach(function (card) {
-        $(card).appendTo("ul.row");
+        $(card).appendTo("ul.cards");
     });
 
     $("thead").empty(); //empty headers before adding them
@@ -150,6 +158,69 @@ searchResults(search_type);
 
 //Document load
 $(document).ready(function() {
+
+    // get all filter counters
+
+
+    $.ajax({
+        url: BASE_URL + "api/getSearchFilterCounters",
+        type: "GET",
+        'success': function (data) {
+            var allCounters = JSON.parse(data);
+            
+            for (var filterType in allCounters){
+                var counterType = allCounters[filterType];
+
+                for (var filter in counterType){
+                    JSON.parse(counterType[filter]).forEach(function (record) {
+                        var label = "";
+                        var count = "";
+                        for (var key in record) {
+                            if (key.match("Label$")) {
+                                label = record[key]['value'];
+                            }
+                            if (key.match("count$")) {
+                                count = record[key]['value'];
+                            }
+                            else if (key.match("Count$")) {
+                                if (count !== "") {
+                                    var count2 = record[key]['value'];
+                                    count = +count + +count2;
+                                }
+                                else {
+                                    count = record[key]['value'];
+                                }
+
+                            }
+                        }
+
+                        // console.log(label, count)
+
+                        // fill in the counters for the filters
+                        if (label != "") {
+                            var $input = $("input[value='"+label+"']")
+                            var $counter = $input.next().find('em');
+                            $counter.html('('+count+')');
+
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
     ///******************************************************************* */
     /// Set Filter Checkboxes
     ///******************************************************************* */
@@ -180,6 +251,11 @@ $(document).ready(function() {
             $("label."+key).each(function()
             {
                 var that = this;
+                if (!Array.isArray(values)){
+                    var temp = [values];
+                    values = temp;
+                }
+                
                 $.each(values, function(indx, value){
                     //Looks for input where value = value
                     if($(that).find('input').val() == value) {
@@ -392,9 +468,9 @@ $(document).ready(function() {
             $('div#searchResults.show').css('width','');
             $("#searchResults").removeClass("show");
         } else {
-            tableWidth = window.innerWidth - 330;
-            $('div#searchResults').css('max-width', '3000px');// remove max-width property
-            $('div#searchResults.show').css('width', tableWidth); // apply width
+            // tableWidth = window.innerWidth - 330;
+            // $('div#searchResults').css('max-width', '3000px');// remove max-width property
+            // $('div#searchResults.show').css('width', tableWidth); // apply width
         }
     }
 
@@ -422,19 +498,19 @@ $(document).ready(function() {
         }
     });
 
-    //Main categories
-    $("li.cat-cat").each(function(){
-      $(this).find("span:first").toggleClass("show");
-        $(this).next().toggleClass("show");
-    });
-    $("li.cat-cat").click(function () { // toggle show/hide filter-by submenus
-        $(this).find("span:first").toggleClass("show");
-        $(this).next().toggleClass("show");
-    });
+    //Main categories (always showing now)
+    // $("li.cat-cat").each(function(){
+    //   $(this).find("span:first").toggleClass("show");
+    //     $(this).next().toggleClass("show");
+    // });
+    // $("li.cat-cat").click(function () { // toggle show/hide filter-by submenus
+    //     $(this).find("span:first").toggleClass("show");
+    //     $(this).next().toggleClass("show");
+    // });
     //Sub categories
     $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
         $(this).find("span:first").toggleClass("show");
-        $(this).next().toggleClass("show");
+        $(this).find("ul#submenu").toggleClass("show");
     });
      //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
@@ -706,11 +782,16 @@ function generateFilterCards(){
     {
         if(key && values && key != "limit" && key != "offset")
         {
+            
+            if (!Array.isArray(values)){
+                temp = [values];
+                values = temp;
+            } 
+            
             //Add filter cards
             $.each(values, function(indx, value)
             {
                 addFilterCard(key, value);
-                console.log(value); 
             });
         }
     });

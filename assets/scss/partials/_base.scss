@@ -15,41 +15,34 @@ body{
 
 .btn-next,
 .btn-prev {
-    background-color: #FBF9F5;
-    border: 1px solid rgba(158, 154, 149, 0.4);
-    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.03);
-    cursor: pointer;
-    display: inline-flex;
     height: 40px;
-    opacity: 1;
-    position: relative;
-    transition: all .5s;
     width: 40px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    background-color: $white;
+    box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all .3s;
 
     .chevron {
-        height: 9px;
-        position: relative;
-        margin: auto;
+        margin: 0 auto;
     }
 
     &:hover {
-        box-shadow: 0 2px 3px 0 rgba(0,0,0,0.03);
-        background-color: rgba(14, 49, 100, 0.1);
-        border: 1px solid rgba(158, 154, 149, 1);
+        border: 2px solid $accent;
+        box-shadow: 0 5px 20px 0 rgba(44,44,44,0.2);
+        background-color: rgba(194,79,60,0.01);
     }
 }
 
 .btn-prev {
-    left: 0;
     .chevron {
-        left: 1px;
-        transform: rotate(180deg);
+        transform: scaleX(-1);
     }
 }
 
-.btn-next {
-    right: 0;
-}
 
 input:not([type="image"]), textarea {
     box-sizing: border-box;

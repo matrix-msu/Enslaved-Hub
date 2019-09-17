@@ -13,7 +13,7 @@
             <p><?php echo $cache_data["descr"] ?> </p>
         </div>
         <div class="heading-search">
-            <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="">Go to Advanced Search</a></p>
+            <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
@@ -54,12 +54,12 @@
                         <p class="count"><?php echo queryPlaceCounter();?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
-                    <a class="content-link" href="<?php echo BASE_URL;?>search/projects">
+                    <!-- <a class="content-link" href="<?php echo BASE_URL;?>search/projects">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
                         <p class="type">Projects</p>
                         <p class="count"><?php echo queryProjectsCounter();?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
-                    </a>
+                    </a> -->
                     <a class="content-link" href="<?php echo BASE_URL;?>search/sources">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                         <p class="type">Sources</p>
@@ -174,19 +174,6 @@
                 result_array['homeCard'].forEach(function (card) {
                     $(card).appendTo("#projects-list");
                 });
-            }
-        });
-
-        // Update json cache files for Navigations and webpages
-        $.ajax({
-            url: BASE_URL + "api/getWebPages",
-            type: "GET",
-            data: {update: true},
-            'success': function (data) {
-                data = JSON.parse(data);
-                if(data === "updated") console.log("webpages and navcontent cache files updated successfully");
-                else if(data === "similar") console.log("webpages and navcontent cache files are up to date");
-                else console.log("Failed to update webpages and navcontent cache files");
             }
         });
     });

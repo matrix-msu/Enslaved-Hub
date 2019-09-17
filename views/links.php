@@ -1,5 +1,5 @@
 <?php
-    require_once(BASE_PATH . "assets/webcrawler/models/crawler_tags.php");
+    require_once(BASE_PATH . "models/crawler_tags.php");
 
     $isCrawlerAdmin = true;
     $crawler_tags = new crawler_tags();
@@ -7,10 +7,14 @@
 ?>
 
 <div class="container header">
-    <div class="container middlewrap">
-        <div class="advanced-title">
+    <div class="image-container search-page image-only">
+	    <div class="container middlewrap">
+        <div class="search-title">
             <h1>Web Crawler</h1>
         </div>
+    </div>
+      <div class="image-background-overlay"></div>
+      <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
     </div>
 </div>
 <div class="crawler">
@@ -31,8 +35,8 @@
         <div class="sorting-dropdowns">
             <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
                 <ul id="sortmenu" class="sort-by">
-                    <li data-sort="ASC">A - Z</li>
-                    <li data-sort="DESC">Z - A</li>
+                    <li data-sort="DESC">Newest</li>
+                    <li data-sort="ASC">Oldest</li>
                 </ul>
             </span>
             <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">

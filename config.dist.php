@@ -2,10 +2,9 @@
 //user defined
 define("BASE_URL",  "http://dev2.matrix.msu.edu/enslaved/");
 define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
-define('BASE_WIKI_URL','https://sandro-16.matrix.msu.edu/');
-define('BASE_BLAZEGRAPH_URL', 'https://sandro-33.matrix.msu.edu/');
 define("KORA_BASE_URL", "https://kora.enslaved.org/");
-define("SANDRO_BASE_URL", "https://sandro-16.matrix.msu.edu/");
+define("BASE_WIKI_URL", "https://sandro-16.matrix.msu.edu/");
+define("BASE_BLAZEGRAPH_URL", "https://sandro-33.matrix.msu.edu/");
 
 //project specific urls - you should never use relative paths
 define("BASE_JS_URL", BASE_URL . "assets/javascripts/");
@@ -38,6 +37,8 @@ define('STORY_SID', 23);
 define('PID', 16);
 define('WEBPAGES_FORM', 49);
 
+define('LOD_CONFIG', 'wikidata');
+
 $GLOBALS['FILTER_ARRAY'] = Array(
     "events" => array(
         "Event Type",
@@ -60,16 +61,59 @@ $GLOBALS['FILTER_ARRAY'] = Array(
         "Source Type"
     )
 );
-/*
-"sources" => array(
-    "Source Type",
-    "Repository",
-    "Contributing Scholar",
-    "Natory",
-    "Time",
-    "Place"
-)
-*/
+
+$GLOBALS['CONSTANTS_FILE_ARRAY'] = Array(
+    "wikidata" => "wikiconstants",
+    "enslaved" => "cvconstants",
+);
+
+
+$GLOBALS['PREFIX_ARRAY'] = Array(
+    "wikidata" => array(
+        "wdata" => "wdata",
+        "wdt" => "wdt",
+        "wd" => "wd",
+        "s" => "s",
+        "ref" => "ref",
+        "v" => "v",
+        "t" => "t",
+        "p" => "p",
+        "ps"  => "ps",
+        "psv" => "psv",
+        "psn" => "psn",
+        "pq" => "pq",
+        "pqv" => "pqv",
+        "pqn" => "pqn",
+        "pr" => "pr",
+        "prv" => "prv",
+        "prn" => "prn",
+        "no" => "no",
+        "prov" => "prov",
+        "rdfs" => "rdfs"
+    ),
+    "enslaved" => array(
+        "wdata" => "edata",
+        "wd" => "ed",
+        "wdt" => "edt",
+        "s" => "es",
+        "ref" => "eref",
+        "v" => "ev",
+        "t" => "et",
+        "p" => "ep",
+        "ps"  => "eps",
+        "psv" => "epsv",
+        "psn" => "epsn",
+        "pq" => "epq",
+        "pqv" => "epqv",
+        "pqn" => "epqn",
+        "pr" => "epr",
+        "prv" => "eprv",
+        "prn" => "eprn",
+        "no" => "eno",
+        "prov" => "prov",
+        "rdfs" => "rdfs"
+    ),
+);
 
 //useful javascript globals constants and functions
 define("JS_GLOBALS",
@@ -84,9 +128,9 @@ define("JS_GLOBALS",
     "</script>\n"
 );
 
-//includes all the php files from wikiconstants directory
-foreach(glob('wikiconstants' . "/*.php") as $file){
-        require_once $file;
+//includes all the php files from constants directory
+foreach(glob($GLOBALS['CONSTANTS_FILE_ARRAY'][LOD_CONFIG] . "/*.php") as $file){
+    require_once $file;
 }
 
 $GLOBALS['FILTER_TO_FILE_MAP'] = Array(
@@ -117,6 +161,3 @@ define("Host", "rush.matrix.msu.edu");
 define("Username", "schleusener_dev");
 define("DBName", "schleusener_dev");
 define("Password","u8xzh4isos");
-
-//require the routes file
-require_once( "routes.php" );

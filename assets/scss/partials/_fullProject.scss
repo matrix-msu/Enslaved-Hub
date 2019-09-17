@@ -24,19 +24,8 @@
 }
 
 .project-button{
-    padding: 0 6% 10px;
-    max-width: 1000px;
-    margin: 0 auto;
-    position: relative;
-
     .jumpwrap{
-        position: absolute;
-        top: -22px;
-
         .jump-button{
-            background-image: none;
-            font-style: italic;
-
             &:first-child{
                 margin: 0;
             }
@@ -47,7 +36,7 @@
 .affiliations{
     max-width: 1000px;
     margin: 0 auto;
-    padding: 60px 6% 50px;
+    width: 90%;
     overflow: auto;
 
     h2{
@@ -83,7 +72,7 @@
 .project-leads{
     max-width: 1000px;
     margin: 0 auto;
-    padding: 0 6% 0;
+    width: 90%;
     overflow: auto;
 
     .leadwrap{
@@ -178,7 +167,7 @@
 .project-contributors{
     max-width: 1000px;
     margin: 0 auto;
-    padding: 0 6% 0;
+    width: 90%;
     overflow: auto;
 
     .contributorwrap{
@@ -227,7 +216,7 @@
     position: relative;
     max-width: 1000px;
     margin: 0 auto;
-    padding: 80px 6% 40px;
+    width: 90%;
 
     .searchwrap{
         width: 100%;

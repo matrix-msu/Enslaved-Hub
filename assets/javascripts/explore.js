@@ -1,6 +1,11 @@
 $(document).ready(function(){
 
-    $('.cards li').click(function(){
+    $('.cards-featured li').click(function(){
+        console.log("clicked");
+        window.location = $(this).find("a").attr("href");
+    });
+
+    $('.cards li').click(function () {
         console.log("clicked");
         window.location = $(this).find("a").attr("href");
     });
@@ -34,6 +39,7 @@ $(document).ready(function(){
     // });
 
     //Get counts only if on explorefilter page
+    // console.log(JS_EXPLORE_FILTERS, JS_EXPLORE_FORM)
     if( typeof JS_EXPLORE_FILTERS !== 'undefined' ){
         if (JS_EXPLORE_FILTERS == "Date") {
             $.ajax({
@@ -101,7 +107,6 @@ $(document).ready(function(){
                             }
                         }
                         if (label != ""){
-                            
                             var span = $("a:contains("+label+")").find('span');
                             if ($(span).length > 0){
                                 $(span).html(count);
@@ -134,7 +139,7 @@ $(document).ready(function(){
             success: function (data) {
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
-                    $('.explore-featured .cards').append(e);
+                    $('.explore-featured .cards-featured').append(e);
                 });
                 installFeaturedListeners('.explore-featured');
             }

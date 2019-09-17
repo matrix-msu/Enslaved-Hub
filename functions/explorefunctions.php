@@ -1,23 +1,37 @@
 <?php
 
-
 function callAPI($url,$limit,$offset){
-    $url.='&format=json';
-    $json = file_get_contents($url);
-  return $json;
+  $url.='&format=json';
+    // Create a stream
+    $opts = array(
+      'http'=>array(
+        'method'=>"GET",
+        'header'=>"User-Agent: Enslaved.org/Frontend"
+      )
+    );
+
+    $context = stream_context_create($opts);
+
+    // Open the file using the HTTP headers set above
+    $json = file_get_contents($url,false,$context);
+    return $json;
+
 }
 
 //get all agents numbers
 function queryAllAgentsCounter(){
-  $query='SELECT  (COUNT(distinct ?agent) AS ?count)
-    WHERE {
-        ?agent wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].';        #find agents{
-        MINUS{ ?agent wdt:'.properties["hasParticipantRole"].' wd:'.roleTypes["Researcher"].' }. #remove all researchers
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-    }
+    include BASE_LIB_PATH."variableIncluder.php";
 
-    ORDER BY ?count
-    ';
+    $query="SELECT  (COUNT(distinct ?agent) AS ?count)
+        WHERE {
+                ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent. #agent or subclass of agent
+            MINUS{?agent $wdt:$hasParticipantRole $wd:$researcher}
+            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\" . }
+        }
+
+        ORDER BY ?count
+    ";
+
   $encode=urlencode($query);
   $call=API_URL.$encode;
   $res=callAPI($call,'','');
@@ -32,118 +46,153 @@ function queryAllAgentsCounter(){
 
 //get all events counter
 function queryEventCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:'.classes["Event"].' .}';
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    include BASE_LIB_PATH."variableIncluder.php";
 
-  $res= json_decode($res);
+    $query="SELECT (COUNT(?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$event .}";
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+    $res= json_decode($res);
 
-  if (!empty($res)){
-    return $res->results->bindings[0]->count->value;
-  }else{
-    return $res;
-  }
+    if (!empty($res)){
+        return $res->results->bindings[0]->count->value;
+    }else{
+        return $res;
+    }
 }
 
 //get all places counter
 function queryPlaceCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:'.classes['Place'].' .}';
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    include BASE_LIB_PATH."variableIncluder.php";
 
-  $res= json_decode($res);
+    $query="SELECT (COUNT(?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$place .}";
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+    $res= json_decode($res);
 
-  if (!empty($res)){
-    return $res->results->bindings[0]->count->value;
-  }else{
-    return $res;
-  }
+    if (!empty($res)){
+        return $res->results->bindings[0]->count->value;
+    }else{
+        return $res;
+    }
 }
 
 //get all contributing projects counter
 function queryProjectsCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:'.classes["Research Project"].' .}';
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    include BASE_LIB_PATH."variableIncluder.php";
 
-  $res= json_decode($res);
+    $query="SELECT (COUNT(?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$researchProject .}";
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
 
-  if (!empty($res)){
-    return $res->results->bindings[0]->count->value;
-  }else{
-    return $res;
-  }
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return $res->results->bindings[0]->count->value;
+    }else{
+        return $res;
+    }
 }
 
 //get entity with provenance  counter
 function querySourceCounter(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {?item wdt:'.properties["instance of"].' wd:'.classes["Entity with Provenance"].' .}';
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    include BASE_LIB_PATH."variableIncluder.php";
 
-  $res= json_decode($res);
+    $query="SELECT (COUNT(?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$entityWithProvenance .}";
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
 
-  if (!empty($res)){
-    return $res->results->bindings[0]->count->value;
-  }else{
-    return $res;
-  }
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return $res->results->bindings[0]->count->value;
+    }else{
+        return $res;
+    }
 }
 
 //get counter for people, event, sources, projects...
 function counterofAllitems(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE
-  {
-   {?item wdt:'.properties["instance of"].' wd:'.classes["Research Project"].' .}
-   UNION{ ?item wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].' .}
-   UNION{ ?item wdt:'.properties["instance of"].' wd:'.classes["Entity with Provenance"].' .}
-   UNION{?item wdt:'.properties["instance of"].' wd:'.classes["Place"].' .}
-   UNION{?item wdt:'.properties["instance of"].' wd:'.classes["Event"].' .}
+    include BASE_LIB_PATH."variableIncluder.php";
 
-  }';
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    $query="SELECT (COUNT(?item) AS ?count) WHERE
+    {
+    {?item $wdt:$instanceOf $wd:$researchProject .}
+    UNION{ ?item $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent .}
+    UNION{ ?item $wdt:$instanceOf $wd:$entityWithProvenance .}
+    UNION{ ?item $wdt:$instanceOf $wd:$place .}
+    UNION{ ?item $wdt:$instanceOf $wd:$event .}
+    }";
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
 
-  $res= json_decode($res);
+    $res= json_decode($res);
 
-  if (!empty($res)){
-    return $res->results->bindings[0]->count->value;
-  }else{
-    return $res;
-  }
+    if (!empty($res)){
+        return $res->results->bindings[0]->count->value;
+    }else{
+        return $res;
+    }
 }
+
 //counter of a specific gender
-function counterOfGender(){
-  $query='SELECT (COUNT(?item) AS ?count) WHERE {
-    ?item wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].'.
-  	?item wdt:'.properties["hasSex"].' wd:'.$_GET["gender"].'}';
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+// function counterOfGender(){
+//   $query='SELECT (COUNT(?item) AS ?count) WHERE {
+//     ?item wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].'.
+//   	?item wdt:'.properties["hasSex"].' wd:'.$_GET["gender"].'}';
+//   $encode=urlencode($query);
+//   $call=API_URL.$encode;
+//   $res=callAPI($call,'','');
 
-  $res= json_decode($res);
+//   $res= json_decode($res);
 
-  if (!empty($res)){
-    return $res->results->bindings[0]->count->value;
-  }else{
-    return $res;
-  }
-}
+//   if (!empty($res)){
+//     return $res->results->bindings[0]->count->value;
+//   }else{
+//     return $res;
+//   }
+// }
 
 //counter of all genders
 function counterOfAllGenders(){
-    $query='SELECT ?sex ?sexLabel (COUNT(?human) AS ?count) WHERE{
-  ?human wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].' .
-  ?human wdt:'.properties["hasSex"].' ?sex.
+    include BASE_LIB_PATH."variableIncluder.php";
 
- SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-} GROUP BY ?sex ?sexLabel
-ORDER BY DESC(?count)';
+    $query="SELECT ?sex ?sexLabel (COUNT(?human) AS ?count) WHERE{
+        ?human $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent .
+        ?human $wdt:$hasSex ?sex.
+        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+        } GROUP BY ?sex ?sexLabel
+        ORDER BY DESC(?count)";
+
+        $encode=urlencode($query);
+        $call=API_URL.$encode;
+        $res=callAPI($call,'','');
+
+        $res= json_decode($res);
+
+        if (!empty($res)){
+            return json_encode($res->results->bindings);
+        }else{
+            return $res;
+    }
+}
+
+//get the roles and their counts
+function counterOfRole(){
+    include BASE_LIB_PATH."variableIncluder.php";
+
+    $query= "SELECT  ?roleLabel (COUNT(?human) AS ?count) WHERE
+    {  ?human $wdt:$instanceOf $wd:$person.
+        ?human $wdt:$hasParticipantRole ?role.
+            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+    }GROUP BY ?roleLabel
+    ORDER BY DESC(?count)";
+
+
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -157,107 +206,140 @@ ORDER BY DESC(?count)';
     }
 }
 
-//get the roles and their counts
-function counterOfRole(){
-  $query= 'SELECT  ?roleLabel (COUNT(?human) AS ?count)WHERE
- {  ?human wdt:'.properties["instance of"].' wd:'.classes["Person"].'.
-    ?human wdt:'.properties["hasParticipantRole"].' ?role.
+// TODO: 
+function counterOfStatus(){
+    include BASE_LIB_PATH."variableIncluder.php";
 
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-  }GROUP BY ?roleLabel
- ORDER BY DESC(?count)';
+    $query= "SELECT  ?statusLabel (COUNT(?human) AS ?count) WHERE
+    {  ?human $wdt:$instanceOf $wd:$person.
+        ?human $wdt:$hasPersonStatus ?status.
+            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+    } GROUP BY ?statusLabel
+    ORDER BY DESC(?count)";
 
+    // print_r($query);die;
 
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
 
-  $res= json_decode($res);
+    $res= json_decode($res);
 
-  if (!empty($res)){
-    return json_encode($res->results->bindings);
-  }else{
-    return $res;
-  }
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
 }
+
+
+function counterOfOccupation(){
+    include BASE_LIB_PATH."variableIncluder.php";
+
+    $query= "SELECT ?occupationLabel (COUNT(?human) AS ?count) WHERE
+    {  ?human $wdt:$instanceOf $wd:$person.
+        ?human $wdt:$hasOccupation ?occupation.
+            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+    } GROUP BY ?occupationLabel
+    ORDER BY DESC(?count)";
+
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
+
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
+}
+
+
 
 // Count the number of people in each age category
 function counterOfAge(){
+    include BASE_LIB_PATH."variableIncluder.php";
 
-  $ageCategoryQuery ='SELECT ?agecategoryLabel (count(?agent) as ?count) where{
-                        ?agecategory wdt:'.properties["instance of"].' wd:'.classes["Age Category"].'.
-                        ?agent wdt:'.properties["instance of"].' wd:'.classes["Person"].'.
-                        ?agent wdt:'.properties["hasAgeCategory"].' ?agecategory.
-                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
+    $ageCategoryQuery ="SELECT ?agecategoryLabel (count(?agent) as ?count) where{
+                            ?agecategory $wdt:$instanceOf $wd:$ageCategory.
+                            ?agent $wdt:$instanceOf $wd:$person.
+                            ?agent $wdt:$hasAgeCategory ?agecategory.
+                            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\" . }
 
-                      }group by  ?agecategoryLabel
-                      ';
+                        }group by  ?agecategoryLabel
+                        ";
 
-  $encode=urlencode($ageCategoryQuery);
-  $call=API_URL.$encode;
-  $ageCategoryResult=callAPI($call,'','');
-  $ageCategoryResult = json_decode($ageCategoryResult);
+    $encode=urlencode($ageCategoryQuery);
+    $call=API_URL.$encode;
+    $ageCategoryResult=callAPI($call,'','');
+    $ageCategoryResult = json_decode($ageCategoryResult);
 
-  return json_encode($ageCategoryResult->results->bindings);
+    return json_encode($ageCategoryResult->results->bindings);
 }
 
 function counterOfEthnodescriptor(){
-  $query='SELECT ?ethno ?ethnoLabel (COUNT(?human) as ?count)
-{?human wdt:'.properties["instance of"].' wd:'.classes["Person"].'.
- ?human wdt:'.properties["hasECVO"].' ?ethno.
- SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}GROUP BY ?ethno ?ethnoLabel
-ORDER BY ?ethnoLabel';
+    include BASE_LIB_PATH."variableIncluder.php";
+
+    $query="SELECT ?ethno ?ethnoLabel (COUNT(?human) as ?count)
+        {?human $wdt:$instanceOf $wd:$person.
+        ?human $wdt:$hasECVO ?ethno.
+        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+        }GROUP BY ?ethno ?ethnoLabel
+        ORDER BY ?ethnoLabel";
 
 
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
 
-  $res= json_decode($res);
+    $res= json_decode($res);
 
-  if (!empty($res)){
-    return json_encode($res->results->bindings);
-  }else{
-    return $res;
-  }
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
 }
 
 
 
 function counterOfEventType() {
-  $query='SELECT ?eventTypeLabel (COUNT(?event) AS ?count)  WHERE{
-     ?event wdt:'.properties["instance of"].' wd:'.classes["Event"].'.
-     ?event wdt:'.properties["hasEventType"].' ?eventType.
+    include BASE_LIB_PATH."variableIncluder.php";
 
+    $query="SELECT ?eventTypeLabel (COUNT(?event) AS ?count)  WHERE{
+        ?event $wdt:$instanceOf $wd:$event.
+        ?event $wdt:$hasEventType ?eventType.
+        SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+        } GROUP BY ?eventTypeLabel
+        ORDER BY DESC(?count)
+    ";
 
-     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-} GROUP BY ?eventTypeLabel
-ORDER BY DESC(?count)
- ';
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
 
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    $res= json_decode($res);
 
-  $res= json_decode($res);
-
-  if (!empty($res)){
-      return json_encode($res->results->bindings);
-  }else{
-      return $res;
-  }
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
 }
 
 function counterOfEventPlace(){
-    $query='SELECT ?place ?placeLabel ?(COUNT(?event) AS ?count) WHERE {
-                  ?event wdt:'.properties["instance of"].'wd:'.classes["Event"].'.
-                  ?event wdt:'.properties["atPlace"].'?place.
+    include BASE_LIB_PATH."variableIncluder.php";
+
+    $query="SELECT ?place ?placeLabel ?(COUNT(?event) AS ?count) WHERE {
+                  ?event $wdt:$instanceOf $wd:$event.
+                  ?event $wdt:$atPlace ?place.
 
               SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
             }GROUP BY ?place ?placeLabel
             ORDER BY ASC(?placeLabel)
-            ';
+        ";
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
@@ -273,71 +355,65 @@ function counterOfEventPlace(){
 }
 
 function counterOfPlaceType(){
-  $instanceOf=properties["instance of"];
-  $placeclass = classes["Place"];
-  $placetype= properties["hasPlaceType"];
-  $query= <<<QUERY
-  SELECT DISTINCT ?placetype ?placetypeLabel (COUNT(?place) AS ?count) WHERE {
-    ?place wdt:$instanceOf wd:$placeclass; #it's a place
-        wdt:$placetype ?placetype.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
-  }GROUP BY ?placetype ?placetypeLabel
-  order by ?placetypeLabel
-QUERY;
+    include BASE_LIB_PATH."variableIncluder.php";
 
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    $query= "
+      SELECT DISTINCT ?placetype ?placetypeLabel (COUNT(?place) AS ?count) WHERE {
+          ?place $wdt:$instanceOf $wd:$place; #it's a place
+              $wdt:$hasPlaceType ?placetype.
+      SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" .}
+      }GROUP BY ?placetype ?placetypeLabel
+      order by ?placetypeLabel
+      ";
 
-  $res= json_decode($res);
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
 
-  if (!empty($res)){
-      return json_encode($res->results->bindings);
-  }else{
-      return $res;
-  }
+    $res= json_decode($res);
+
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
 }
 //not using this function for now
 function counterOfCity(){
+    include BASE_LIB_PATH."variableIncluder.php";
 
-  $instanceOf=properties["instance of"];
-  $placeclass = classes["Place"];
-  $placetype= properties["hasPlaceType"];
-  $locatedIn = properties["locatedIn"];
-  $cityTownVillage = classes["City, Town, or Village"];
-  $query= <<<QUERY
-SELECT DISTINCT ?city ?cityLabel (COUNT(?place) AS ?count) WHERE {
-  ?city wdt:$instanceOf wd:$placeclass; #it's a place
-      wdt:$placetype wd:$cityTownVillage.#?city is a city
-OPTIONAL {?place wdt:$locatedIn ?city.} #place is locatedIn a city
+    $query= "
+        SELECT DISTINCT ?city ?cityLabel (COUNT(?place) AS ?count) WHERE {
+        ?city $wdt:$instanceOf $wd:$placeclass; #it's a place
+        $wdt:$placetype $wd:$cityTownOrVillage.#?city is a city
+        OPTIONAL {?place $wdt:$locatedIn ?city.} #place is locatedIn a city
 
-SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
-}GROUP BY ?city ?cityLabel
-order by ?cityLabel
+        SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" .}
+        }GROUP BY ?city ?cityLabel
+        order by ?cityLabel";
 
-QUERY;
+    $encode=urlencode($query);
+    $call=API_URL.$encode;
+    $res=callAPI($call,'','');
 
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
+    $res= json_decode($res);
 
-  $res= json_decode($res);
-
-  if (!empty($res)){
-      return json_encode($res->results->bindings);
-  }else{
-      return $res;
-  }
+    if (!empty($res)){
+        return json_encode($res->results->bindings);
+    }else{
+        return $res;
+    }
 }
 
 function counterOfSourceType(){
+    include BASE_LIB_PATH."variableIncluder.php";
 
- $query='SELECT ?sourcetypeLabel (COUNT(?source) AS ?count)  WHERE{
-     ?source wdt:'.properties["instance of"].' wd:'.classes["Entity with Provenance"].'.
-     ?source wdt:'.properties["hasOriginalSourceType"].' ?sourcetype.
-     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+ $query="SELECT ?sourcetypeLabel (COUNT(?source) AS ?count)  WHERE{
+     ?source $wdt:$instanceOf $wd:$entityWithProvenance.
+     ?source $wdt:$hasOriginalSourceType ?sourcetype.
+     SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
 } GROUP BY ?sourcetypeLabel
-ORDER BY DESC(?count)';
+ORDER BY DESC(?count)";
 
   $encode=urlencode($query);
   $call=API_URL.$encode;
@@ -393,9 +469,6 @@ function counterOfType() {
         if ($type == "Ethnodescriptor"){
             return counterOfEthnodescriptor();
         }
-        if ($type == "Place"){
-            return counterOfPeoplePlace();  // not real
-        }
     }
 
     if($category == "Places") {
@@ -418,26 +491,88 @@ function counterOfType() {
 
 }
 
+
+
+
+
+
+
+
+function getSearchFilterCounters(){
+    
+    $peopleFilters = array(
+        'Gender' => counterOfAllGenders(),
+        'Age Category' => counterOfAge(),
+        'Ethnodescriptor' => counterOfEthnodescriptor(),
+        'Role Types' => counterOfRole(),
+        'Status' => counterOfStatus(),
+        'Occupation' => counterOfOccupation(),
+
+    );
+
+    $eventFilters = array(
+        'Event Type' => counterOfEventType(),
+        // 'Date' => getEventDateRange()
+
+    );
+
+    $placeFilters = array(
+        'Place Type' => counterOfPlaceType()
+    );
+
+    $sourceFilters = array(
+        'Source Type' => counterOfSourceType()
+    );
+
+    $projectFilters = array(
+        // TODO: GET PROJECT COUNTERS WORKING
+    );
+
+    $allCounters = array(
+        'People' => $peopleFilters,
+        'Event' => $eventFilters,
+        'Place' => $placeFilters,
+        'Source' => $sourceFilters,
+        'Project' => $projectFilters
+    );
+
+    return json_encode($allCounters);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getEventDateRange() {
+    include BASE_LIB_PATH."variableIncluder.php";
+
     $fullResults = [];
-    $query='
+    $query="
     SELECT ?year ?yearend WHERE {
       {SELECT ?year WHERE {
-        ?event wdt:'.properties["instance of"].' wd:'.classes["Event"].'; #event
-               wdt:'.properties["startsAt"].' ?date.
+        ?event $wdt:$instanceOf $wd:$event; #event
+               $wdt:$startsAt ?date.
           BIND(str(YEAR(?date)) AS ?year).
         }ORDER BY desc(?year)
       LIMIT 1}
       UNION
       {
       select ?yearend where {
-        ?event wdt:'.properties["instance of"].' wd:'.classes["Event"].'; #event
-               wdt:'.properties["endsAt"].' ?enddate.
+        ?event $wdt:$instanceOf $wd:$event; #event
+               $wdt:$endsAt ?enddate.
           BIND(str(YEAR(?enddate)) AS ?yearend).
         }ORDER BY desc(?yearend)
       LIMIT 1
       }
-      }';
+      }";
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
@@ -451,12 +586,13 @@ function getEventDateRange() {
         $fullResults['max'] = $res;
     }
 
-    $query='SELECT ?year WHERE {
-            ?event wdt:'.properties["instance of"].' wd:'.classes["Event"].'; #event
-                   wdt:'.properties["startsAt"].' ?date.
+    $query="SELECT ?year WHERE {
+            ?event $wdt:$instanceOf $wd:$event; #event
+                   $wdt:$startsAt ?date.
               BIND(str(YEAR(?date)) AS ?year).
             }ORDER BY ASC(?year)
-          LIMIT 1';
+          LIMIT 1";
+
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -474,67 +610,61 @@ function getEventDateRange() {
 
 
 function getJsonInfo($url){
-  $json = file_get_contents($url);
-  $jsondecode = json_decode($json,true);
-  return $jsondecode;
+    $json = file_get_contents($url);
+    $jsondecode = json_decode($json,true);
+    return $jsondecode;
 }
 function getLabel($baseuri,$qid){
-  $url=$baseuri.$qid.".json";
-  $info=getJsonInfo($url);
-  return $info['entities'][$qid]['labels']['en']['value'];
+    $url=$baseuri.$qid.".json";
+    $info=getJsonInfo($url);
+    return $info['entities'][$qid]['labels']['en']['value'];
 }
 
 function getCVLabel($baseuri,$qid,$property,$wikiconstants){
-  $url=$baseuri.$qid.".json";
-  $info=getJsonInfo($url);
+    $url=$baseuri.$qid.".json";
+    $info=getJsonInfo($url);
 
-  $tail=$info['entities'][$qid]['claims'];
-  $cv_array=[];
-  if(isset($tail[$property])){
-    foreach($tail[$property] as $statement){
-
-
-      $cv=$statement['mainsnak']['datavalue']['value']['id'];
-      $cv_array[$wikiconstants[$cv]]=$cv;
+    $tail=$info['entities'][$qid]['claims'];
+    $cv_array=[];
+    if(isset($tail[$property])){
+        foreach($tail[$property] as $statement){
 
 
+        $cv=$statement['mainsnak']['datavalue']['value']['id'];
+        $cv_array[$wikiconstants[$cv]]=$cv;
+
+
+        }
     }
-  }
-  return $cv_array;
+    return $cv_array;
 }
 function getURL($baseuri,$property){
-  $url=$baseuri.$qid.".json";
-  $info=getJsonInfo($url);
-  $tail=$info['entities'][$qid]['claims'];
- $links=[];
-  if(isset($tail[$property])){
-    foreach($tail[$property] as $statement){
-
-      $link=$statement['mainsnak']['datavalue']['value'];
-
-      $links[$property]=$link;
-
+    $url=$baseuri.$qid.".json";
+    $info=getJsonInfo($url);
+    $tail=$info['entities'][$qid]['claims'];
+    $links=[];
+    if(isset($tail[$property])){
+            foreach($tail[$property] as $statement){
+            $link=$statement['mainsnak']['datavalue']['value'];
+            $links[$property]=$link;
+        }
     }
-  }
 
-  return $links;
+    return $links;
 }
 
 function getTimeValue($baseuri,$qid,$property){
-  $url=$baseuri.$qid.".json";
-  $info=getJsonInfo($url);
-  $tail=$info['entities'][$qid]['claims'];
-  $time='';
-  if(isset($tail[$property])){
-    foreach($tail[$property] as $statement){
-
-      $time=$statement['mainsnak']['datavalue']['value']['time'];
-      //here we could include an array to add precision, before, after ...
-
-
+    $url=$baseuri.$qid.".json";
+    $info=getJsonInfo($url);
+    $tail=$info['entities'][$qid]['claims'];
+    $time='';
+    if(isset($tail[$property])){
+        foreach($tail[$property] as $statement){
+            $time=$statement['mainsnak']['datavalue']['value']['time'];
+            //here we could include an array to add precision, before, after ...
+        }
+        return $time;
     }
-    return $time;
-  }
 }
 function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
   $onestatement=[];
@@ -545,7 +675,7 @@ function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
   $person_array[$tag]='';
 
   foreach($array as $value){
-
+//TODO: WILL THIS STILL WORK WITH DYNAMIC PROPERTIES?
      $type=$value[properties[$property]];
 
      $event=$value[properties['recordedAt']];
@@ -596,21 +726,24 @@ function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
 
 //finish to display ranks here. Error now it only displays PI with higher rank.
 function getProjectFullInfo() {
-    $query = 'SELECT  ?title ?desc ?link
-             (group_concat(distinct ?pinames; separator = "||") as ?piNames)
-             (group_concat(distinct ?contributor; separator = ", ") as ?contributor)
+    include BASE_LIB_PATH."variableIncluder.php";
+    
+    $qid = $_GET['qid'];
+    $query = "SELECT  ?title ?desc ?link
+             (group_concat(distinct ?pinames; separator = \"||\") as ?piNames)
+             (group_concat(distinct ?contributor; separator = \", \") as ?contributor)
             WHERE
             {
-             VALUES ?project {wd:'.$_GET['qid'].'} #Q number needs to be changed for every project.
-              ?project wdt:'.properties["instance of"].' wd:'.classes["Research Project"].'. #all projects
-              OPTIONAL{?project wdt:'.properties["hasLink"].' ?link. }
+             VALUES ?project { $wd:$qid } #Q number needs to be changed for every project.
+              ?project $wdt:$instanceOf $wd:$researchProject. #all projects
+              OPTIONAL{?project $wdt:$hasLink ?link. }
               ?project schema:description ?desc.
-              ?project rdfs:label ?title.
-              OPTIONAL{ ?project wdt:'.properties["hasContributor"].' ?contributor.}
-              ?project wdt:'.properties["hasPI"].' ?pi.
-              ?pi rdfs:label ?pinames.
-              SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-            }GROUP BY ?title ?desc ?link';
+              ?project $rdfs:label ?title.
+              OPTIONAL{ ?project $wdt:$hasContributor ?contributor.}
+              ?project $wdt:$hasPI ?pi.
+              ?pi $rdfs:label ?pinames.
+              SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE]\". }
+            }GROUP BY ?title ?desc ?link";
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
@@ -626,6 +759,7 @@ function getProjectFullInfo() {
 }
 function getpersonfullInfo($qitem){
    $baseuri = WIKI_ENTITY_URL;
+   //TODO: FIGURE OUT THIS SECTION FOR THE NEW CVCONSTANTS
 
   $url=$baseuri.$qitem.".json";
   $person=getJsonInfo($url);
@@ -1261,254 +1395,15 @@ HTML;
 
 
 function getPersonRecordHtml(){
+    include BASE_LIB_PATH."variableIncluder.php";
     $qid = $_REQUEST['QID'];
     $type = $_REQUEST['type'];
-    $instanceOf = properties["instance of"];
-    $subclassof = properties ["subclass of"];
-    $agent = classes["Agent"];
-    $refprop = properties["isDirectlyBasedOn"];
-    $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
-    $generatedBy = properties["generatedBy"];
-    $hasName = properties ["hasName"];
-    $recordedAt = properties["recordedAt"];
-    $hasSex = properties["hasSex"];
-    $hasRace= properties["hasRace"];
-    $hasPersonStatus = properties["hasPersonStatus"];
-    $placetype= properties["hasPlaceType"];
-    $hasECVO = properties["hasECVO"];
-    $referstoPlaceofOrigin = properties["referstoPlaceofOrigin"];
-    $hasOccupation = properties ["hasOccupation"];
-    $closeMatch = properties ["closeMatch"];
-    $hasParticipantRole = properties ["hasParticipantRole"];
-    $roleProvidedBy = properties ["roleProvidedBy"];
-    $hasStatusGeneratingEvent = properties ["hasStatusGeneratingEvent"];
-    $hasInterAgentRelationship = properties ["hasInterAgentRelationship"];
-    $isRelationshipTo = properties ["isRelationshipTo"];
-    $atPlace = properties ["atPlace"];
-    $startsAt = properties ["startsAt"];
-    $endsAt = properties ["endsAt"];
-    $hasEventType = properties ["hasEventType"];
-    $locatedIn = properties ["locatedIn"];
-    $geonamesID = properties["Geonames ID"];
-    $moderncountrycode = properties["modern country code"];
-    $hasOriginalSourceType = properties["hasOriginalSourceType"];
-    $hasOriginalSourceDepository = properties["hasOriginalSourceDepository"];
-    $providesParticipantRole = properties["providesParticipantRole"];
-
-    $entityWithProvenance = classes["Entity with Provenance"];
-    $event = classes["Event"];
-    $place = classes["Place"];
-
 
     //QUERY FOR RECORD INFO
     $query = [];
-    if($type === "person"){
-      $query['query'] = <<<QUERY
-SELECT ?name ?desc ?sextype  ?race
-(group_concat(distinct ?refName; separator = "||") as ?sources)
-(group_concat(distinct ?pname; separator = "||") as ?researchprojects)
-(group_concat(distinct ?roleslabel; separator = "||") as ?roleslabel)
-(group_concat(distinct ?roleevent; separator = "||") as ?roleevent)
-(group_concat(distinct ?roleeventlabel; separator = "||") as ?roleeventlabel)
-(group_concat(distinct ?statuslabel; separator = "||") as ?status)
-(group_concat(distinct ?statusevent; separator = "||") as ?statusevent)
-(group_concat(distinct ?eventstatuslabel; separator = "||") as ?eventstatuslabel)
-
-(group_concat(distinct ?ecvo; separator = "||") as ?ecvo)
-(group_concat(distinct ?placeofOrigin; separator = "||") as ?placeofOrigin)
-(group_concat(distinct ?placeOriginlabel; separator = "||") as ?placeOriginlabel)
-
-(group_concat(distinct ?occupationlabel; separator = "||") as ?occupation)
-(group_concat(distinct ?relationslabel; separator = "||") as ?relationships)
-(group_concat(distinct ?relationname; separator = "||") as ?qrelationname)
-(group_concat(distinct ?relationagentlabel; separator = "||") as ?relationagentlabel)
-(group_concat(distinct ?match; separator = "||") as ?match)
-(group_concat(distinct ?matchlabel; separator = "||") as ?matchlabel)
-(group_concat(distinct ?allevents; separator = "||") as ?allevents)
-(group_concat(distinct ?alleventslabel; separator = "||") as ?alleventslabel)
-(group_concat(distinct ?startyear; separator = "||") as ?startyear)
-(group_concat(distinct ?endyear; separator = "||") as ?endyear)
-(group_concat(distinct ?allplaces; separator = "||") as ?allplaces)
-(group_concat(distinct ?allplaceslabel; separator = "||") as ?allplaceslabel)
-(group_concat(distinct ?placetype; separator = "||") as ?placetype)
-(group_concat(distinct ?eventplace; separator = "||") as ?eventplace)
-
-
- WHERE
-{
- VALUES ?agent {wd:$qid} #Q number needs to be changed for every event.
-  ?agent wdt:$instanceOf/wdt:$subclassof wd:$agent; #agent or subclass of agent
-  		 ?property  ?object .
-  ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:$refprop ?source .
-  ?source rdfs:label ?refName;
-          wdt:$generatedBy ?project.
-  ?project rdfs:label ?pname.
-  ?agent p:$hasName ?statement.
-  ?statement ps:$hasName ?name.
-  OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
-            bind(?recordedAt as ?allevents)}
-
-
-  OPTIONAL{?agent schema:description ?desc}.
-  OPTIONAL{?agent wdt:$hasSex ?sex.
-          ?sex rdfs:label ?sextype}.
-  OPTIONAL{?agent wdt:$hasRace ?race}.
-
-  OPTIONAL {?agent wdt:$hasPersonStatus ?status.
-           ?status rdfs:label ?statuslabel}.
-
-  OPTIONAL {?agent p:$hasECVO ?statement.
-           ?statement ps:$hasECVO ?ethnodescriptor.
-           ?ethnodescriptor rdfs:label ?ecvo.
-           OPTIONAL{?statement pq:$referstoPlaceofOrigin ?placeofOrigin.
-           ?placeofOrigin rdfs:label ?placeOriginlabel.}
-           }.
-  OPTIONAL {?agent wdt:$hasOccupation ?occupation.
-           ?occupation rdfs:label ?occupationlabel}.
-  OPTIONAL {?agent wdt:$closeMatch ?match}.
-OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
-           ?statementrole ps:$hasParticipantRole ?roles.
-           ?roles rdfs:label ?roleslabel.
-           ?statementrole pq:$roleProvidedBy ?roleevent.
-           ?roleevent rdfs:label ?roleeventlabel.
-           bind(?roleevent as ?allevents)
-
-         }.
-
- OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
-           ?statstatus ps:$hasPersonStatus ?status.
-           ?status rdfs:label ?statuslabel.
-           ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
-           ?statusevent rdfs:label ?eventstatuslabel.
-          bind(?statusevent as ?allevents)}.
-
-  OPTIONAL{
-    ?agent p:$hasInterAgentRelationship ?staterel .
-	?staterel ps:$hasInterAgentRelationship ?relations .
-  	?relations rdfs:label ?relationslabel.
-	?staterel pq:$isRelationshipTo ?relationname.
-  	?relationname rdfs:label ?relationagentlabel}.
-  OPTIONAL {?agent wdt:$closeMatch ?match.
-            ?match rdfs:label ?matchlabel}.
-  ?allevents rdfs:label ?alleventslabel.
-  OPTIONAL {?allevents wdt:$atPlace ?allplaces.
-            ?allevents rdfs:label ?evlabel.
-            ?allplaces rdfs:label ?allplaceslabel.
-?allplaces wdt:$placetype ?allplacetypes.
-?allplacetypes rdfs:label ?allplacetypeslabel.
-           BIND(CONCAT(str(?allplaces)," - ",str(?allplacetypeslabel)) as ?placetype). 
-           BIND(CONCAT(str(?allevents)," - ",str(?allplaceslabel)) as ?eventplace). 
-           }.
-
-  OPTIONAL {?allevents	wdt:$startsAt ?startdate.
-            ?allevents rdfs:label ?elabel.
-            ?allevents wdt:$hasEventType ?etype.
-            ?etype rdfs:label ?etypelabel.
-           BIND(CONCAT(str(?elabel)," - ",str(?etypelabel)," - ",str(YEAR(?startdate))) AS ?startyear).
-           OPTIONAL {?allevents wdt:$endsAt ?enddate.
-		   BIND(str(YEAR(?enddate)) AS ?endyear)}}.
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?sextype  ?race
-QUERY;
-    }
-    else if($type === "place"){
-        $query['query'] = <<<QUERY
-SELECT ?name ?desc ?located  ?type ?geonames ?code
-(group_concat(distinct ?refName; separator = "||") as ?sourceLabel)
-(group_concat(distinct ?pname; separator = "||") as ?projectlabel)
-(group_concat(distinct ?source; separator = "||") as ?source)
-(group_concat(distinct ?project; separator = "||") as ?project)
-
-  WHERE
-{
-  VALUES ?place {wd:$qid} #Q number needs to be changed for every place.
-  ?place wdt:$instanceOf wd:$place;
-        ?property  ?object .
-  ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:$refprop ?source .
-  ?source rdfs:label ?refName;
-          wdt:$generatedBy ?project.
-  ?project rdfs:label ?pname.
-  ?place schema:description ?desc.
-  ?place rdfs:label ?name.
-  ?place wdt:$placetype ?placetype.
-  ?placetype rdfs:label ?type.
-  OPTIONAL{?place wdt:$locatedIn ?locatedIn.
-          ?locatedIn rdfs:label ?located}.
-  OPTIONAL{ ?place wdt:$geonamesID ?geonames.}
-    OPTIONAL{ ?place wdt:$moderncountrycode ?code.}
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?located  ?type ?geonames ?code
-QUERY;
-    }
-    else if($type === "event"){
-      $query['query'] = <<<QUERY
-SELECT ?name ?desc ?located  ?type ?date ?endDate
-(group_concat(distinct ?refName; separator = "||") as ?sources)
-(group_concat(distinct ?pname; separator = "||") as ?researchprojects)
-(group_concat(distinct ?rolename; separator = "||") as ?roles)
-(group_concat(distinct ?participantname; separator = "||") as ?participant)
-(group_concat(distinct ?participant; separator = "||") as ?pq)
-
-WHERE
-{
-VALUES ?event {wd:$qid} #Q number needs to be changed for every event.
-?event wdt:$instanceOf wd:$event;
-		 ?property  ?object .
-?object prov:wasDerivedFrom ?provenance .
-?provenance pr:$isDirectlyBasedOn ?source .
-?source rdfs:label ?refName;
-        wdt:$generatedBy ?project.
-?project rdfs:label ?pname.
-?event rdfs:label ?name.
-?event wdt:$hasEventType ?eventtype.
-?eventtype rdfs:label ?type.
-OPTIONAL{ ?event schema:description ?desc}.
-OPTIONAL{?event wdt:$atPlace ?place.
-        ?place rdfs:label ?located}.
-OPTIONAL{ ?event wdt:$startsAt ?datetime.
-        BIND(xsd:date(?datetime) AS ?date)}
- OPTIONAL{ ?event wdt:$endsAt ?endDatetime.
-         BIND(xsd:date(?endDatetime) AS ?endDate)}
-
- OPTIONAL{
-  ?event p:$providesParticipantRole ?statement .
-	?statement ps:$providesParticipantRole ?roles .
-	?roles rdfs:label ?rolename.
-	?statement pq:$hasParticipantRole ?participant.
-	?participant rdfs:label ?participantname}.
-
-
-
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?located  ?type ?date ?endDate
-QUERY;
-    }
-    else if ($type == 'source'){
-        $query['query'] = <<<QUERY
-SELECT ?name ?desc ?project ?pname ?type ?secondarysource
-
- WHERE
-{
- VALUES ?source {wd:$qid} #Q number needs to be changed for every source.
-  ?source wdt:$instanceOf wd:$entityWithProvenance;
-         wdt:$generatedBy ?project.
-  ?project rdfs:label ?pname.
-
-  ?source rdfs:label ?name.
-  ?source wdt:$hasOriginalSourceType ?sourcetype.
-  ?sourcetype rdfs:label ?type.
-  OPTIONAL{?source wdt:$hasOriginalSourceDepository ?secondarysource}.
-  OPTIONAL {?source schema:description ?desc}.
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?project ?pname ?type ?secondarysource
-QUERY;
-    }
-// print_r($query);die;
+    include BASE_PATH."queries/fullRecord/".$type.".php";
+    $query['query'] = $tempQuery;
+    // print_r($query);die;
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -1755,7 +1650,7 @@ QUERY;
 
     $html .= <<<HTML
 <h4 class='last-page-header'>
-    <a id='last-page' href="$url"><span id=previous-title>$recordform // </span></a>
+    <a id='last-page' href="$url"><span id=previous-title>$recordform / </span></a>
     <span id='current-title'>$name</span>
 </h4>
 <h1>$name</h1>
@@ -2315,45 +2210,29 @@ function getFullRecordConnections(){
   } else {
     return '';
   }
-
-
-
-
 }
 
 
 
 // connections for the person full record page
 function getPersonPageConnections($QID) {
+    include BASE_LIB_PATH."variableIncluder.php";
     $connections = array();
 
-    $isRelationshipTo = properties["isRelationshipTo"];
-    $atPlace = properties["atPlace"];
-    $hasPersonStatus = properties["hasPersonStatus"];
-    $hasInterAgentRelationship = properties["hasInterAgentRelationship"];
-    $hasStatusGeneratingEvent = properties["hasStatusGeneratingEvent"];
-    $roleProvidedBy = properties["roleProvidedBy"];
-    $hasName = properties["hasName"];
-    $closeMatch = properties["closeMatch"];
-    $recordedAt = properties["recordedAt"];
-    $hasParticipantRole = properties["hasParticipantRole"];
-
-    $personQuery['query'] = <<<QUERY
+    $personQuery['query'] = "
 SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
 
  WHERE
 {
- VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
- 	?agent p:$hasInterAgentRelationship ?staterel .
-	?staterel ps:$hasInterAgentRelationship ?relations .
-  	?relations rdfs:label ?relationslabel.
-	?staterel pq:$isRelationshipTo ?people.
-  	?people rdfs:label ?peoplename.
+ VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
+ 	?agent $p:$hasInterAgentRelationship ?staterel .
+	?staterel $ps:$hasInterAgentRelationship ?relations .
+  	?relations $rdfs:label ?relationslabel.
+	?staterel $pq:$isRelationshipTo ?people.
+  	?people $rdfs:label ?peoplename.
 
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}ORDER BY ?random
-
-QUERY;
+  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE]\". }
+}ORDER BY ?random";
 
 
     //Execute query
@@ -2379,30 +2258,20 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
-  ?agent p:$hasName ?statement.
-  ?statement ps:$hasName ?name.
-  OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
-            bind(?recordedAt as ?allevents)}
-  OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
-           ?statementrole ps:$hasParticipantRole ?roles.
-           ?statementrole pq:$roleProvidedBy ?roleevent.
-           bind(?roleevent as ?allevents)
+ VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
 
-         }.
-
- OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
-           ?statstatus ps:$hasPersonStatus ?status.
-           ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
-          bind(?statusevent as ?allevents)}.
-  ?allevents wdt:$atPlace ?place.
-  ?place rdfs:label ?placelabel.
-
+    OPTIONAL {
+      ?agent $p:$hasParticipantRole ?statementrole.
+      ?statementrole $ps:$hasParticipantRole ?roles.
+      ?statementrole $pq:$roleProvidedBy ?roleevent.
+          
+ 		  ?roleevent $wdt:$atPlace ?place.
+		  ?place $rdfs:label ?placelabel.
+    }.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2427,9 +2296,9 @@ SELECT DISTINCT ?match ?matchlabel (SHA512(CONCAT(STR(?match), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?agent {wd:$QID} #Q number needs to be changed for every person.
- 	?agent wdt:$closeMatch ?match.
-    ?match rdfs:label ?matchlabel
+ VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
+ 	?agent $wdt:$closeMatch ?match.
+    ?match $rdfs:label ?matchlabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2461,23 +2330,23 @@ SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?agent {wd:$QID} #Q number needs to be changed for every source.
-  ?agent p:$hasName ?statement.
-  ?statement ps:$hasName ?name.
-  OPTIONAL{ ?statement pq:$recordedAt ?recordeAt.
+ VALUES ?agent { $wd:$QID} #Q number needs to be changed for every source.
+  ?agent $p:$hasName ?statement.
+  ?statement $ps:$hasName ?name.
+  OPTIONAL{ ?statement $pq:$recordedAt ?recordeAt.
             bind(?recordedAt as ?event)}
-  OPTIONAL {?agent p:$hasParticipantRole ?statementrole.
-           ?statementrole ps:$hasParticipantRole ?roles.
-           ?statementrole pq:$roleProvidedBy ?roleevent.
+  OPTIONAL {?agent $p:$hasParticipantRole ?statementrole.
+           ?statementrole $ps:$hasParticipantRole ?roles.
+           ?statementrole $pq:$roleProvidedBy ?roleevent.
            bind(?roleevent as ?event)
 
          }.
 
- OPTIONAL {?agent p:$hasPersonStatus ?statstatus.
-           ?statstatus ps:$hasPersonStatus ?status.
-           ?statstatus pq:$hasStatusGeneratingEvent ?statusevent.
+ OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
+           ?statstatus $ps:$hasPersonStatus ?status.
+           ?statstatus $pq:$hasStatusGeneratingEvent ?statusevent.
           bind(?statusevent as ?event)}.
-  ?event rdfs:label ?eventlabel.
+  ?event $rdfs:label ?eventlabel.
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2509,15 +2378,8 @@ QUERY;
 
 // connections for the source full record page
 function getSourcePageConnections($QID) {
-  $connections = array();
-
-  $entityWithProvenance = classes["Entity with Provenance"];
-  $agent = classes["Agent"];
-  $atPlace = properties["atPlace"];
-  $subclassof = properties["subclass of"];
-  $reportsOn = properties["reportsOn"];
-  $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
-  $instanceOf = properties["instance of"];
+    include BASE_LIB_PATH."variableIncluder.php";
+    $connections = array();
 
   // people connections
   $peopleQuery['query'] = <<<QUERY
@@ -2525,13 +2387,13 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 
  WHERE
 {
- VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
-  ?source wdt:$instanceOf wd:$entityWithProvenance.
-  ?people wdt:$instanceOf/wdt:$subclassof wd:$agent; #agent or subclass of agent
+ VALUES ?source { $wd:$QID} #Q number needs to be changed for every source.
+  ?source $wdt:$instanceOf $wd:$entityWithProvenance.
+  ?people $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
   		?property  ?object .
-  ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:$isDirectlyBasedOn ?source .
-  ?people rdfs:label ?peoplename
+  ?object $prov:wasDerivedFrom ?provenance .
+  ?provenance $pr:$isDirectlyBasedOn ?source .
+  ?people $rdfs:label ?peoplename
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2561,9 +2423,9 @@ SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND(
 
  WHERE
 {
- VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
-  ?source wdt:$reportsOn ?event.
-  ?event rdfs:label ?eventlabel
+ VALUES ?source { $wd:$QID} #Q number needs to be changed for every source.
+  ?source $wdt:$reportsOn ?event.
+  ?event $rdfs:label ?eventlabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2593,10 +2455,10 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?source {wd:$QID} #Q number needs to be changed for every source.
-  ?source wdt:$reportsOn ?event.
-  ?event wdt:$atPlace ?place.
-  ?place rdfs:label ?placelabel
+ VALUES ?source { $wd:$QID} #Q number needs to be changed for every source.
+  ?source $wdt:$reportsOn ?event.
+  ?event $wdt:$atPlace ?place.
+  ?place $rdfs:label ?placelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2626,16 +2488,8 @@ QUERY;
 
 // connections for the event full record page
 function getEventPageConnections($QID) {
-  $connections = array();
-
-  $event = classes["Event"];
-  $atPlace = properties["atPlace"];
-  $generatedBy = properties["generatedBy"];
-  $hasParticipantRole = properties["hasParticipantRole"];
-  $providesParticipantRole = properties["providesParticipantRole"];
-  $isDirectlyBasedOn = properties["isDirectlyBasedOn"];
-  $instanceOf = properties["instance of"];
-
+    include BASE_LIB_PATH."variableIncluder.php";
+    $connections = array();
 
   // people connections
   $peopleQuery['query'] = <<<QUERY
@@ -2643,12 +2497,12 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 
  WHERE
 {
- VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:$instanceOf wd:$event.
-  ?event p:$providesParticipantRole ?statement.
-  ?statement ps:$providesParticipantRole ?name.
-  ?statement pq:$hasParticipantRole ?people.
-  ?people rdfs:label ?peoplename.
+ VALUES ?event { $wd:$QID} #Q number needs to be changed for every event.
+  ?event $wdt:$instanceOf $wd:$event.
+  ?event $p:$providesParticipantRole ?statement.
+  ?statement $ps:$providesParticipantRole ?name.
+  ?statement $pq:$hasParticipantRole ?people.
+  ?people $rdfs:label ?peoplename.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
@@ -2678,14 +2532,14 @@ SELECT DISTINCT ?source ?refName ?project ?projectName (SHA512(CONCAT(STR(?sourc
 
  WHERE
 {
-VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:$instanceOf wd:$event;
+VALUES ?event { $wd:$QID} #Q number needs to be changed for every event.
+  ?event $wdt:$instanceOf $wd:$event;
   		?property  ?object .
-  ?object prov:wasDerivedFrom ?provenance .
-  ?provenance pr:$isDirectlyBasedOn ?source .
-  ?source rdfs:label ?refName;
-          wdt:$generatedBy ?project.
-  ?project rdfs:label ?projectName.
+  ?object $prov:wasDerivedFrom ?provenance .
+  ?provenance $pr:$isDirectlyBasedOn ?source .
+  ?source $rdfs:label ?refName;
+          $wdt:$generatedBy ?project.
+  ?project $rdfs:label ?projectName.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
@@ -2726,9 +2580,9 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
 
  WHERE
 {
- VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:$atPlace ?place.
-  ?place rdfs:label ?placelabel
+ VALUES ?event { $wd:$QID} #Q number needs to be changed for every event.
+  ?event $wdt:$atPlace ?place.
+  ?place $rdfs:label ?placelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -2759,12 +2613,12 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
 
  WHERE
 {
- VALUES ?event {wd:$QID} #Q number needs to be changed for every event.
-  ?event wdt:$instanceOf wd:$event;
+ VALUES ?event { $wd:$QID} #Q number needs to be changed for every event.
+  ?event $wdt:$instanceOf wd:$event;
           ?property  ?object .
-  	?object prov:wasDerivedFrom ?provenance .
-  	?provenance pr:$isDirectlyBasedOn ?source .
-	?source rdfs:label ?sourcelabel
+  	?object $prov:wasDerivedFrom ?provenance .
+  	?provenance $pr:$isDirectlyBasedOn ?source .
+	?source $rdfs:label ?sourcelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random

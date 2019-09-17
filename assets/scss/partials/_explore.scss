@@ -77,7 +77,6 @@
                     transition: opacity .3s ease;
                 }
                 .arrow{
-                    transform: scaleX(-1);
                     position: absolute;
                     right: 40px; //prev 0
                 }
@@ -141,9 +140,11 @@
             box-shadow: 0 5px 15px 0 rgba(115,47,35,0.2);
             padding: 15px;
             color: $white;
+            font-size: 20px;
             border-radius: 5px;
             display: block;
             width: fit-content;
+            transition: all .3s;
 
             &:hover{
                 background: #CF5440;
@@ -192,9 +193,10 @@
             border: 2px solid transparent;
             border-radius: 5px;
             box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
-            padding: 20px;
+            padding: 17px 20px;
             color: $base-dark;
-            font-size: 14px;
+            font-size: 18px;
+            max-height: 60px;
             cursor: pointer;
             margin-bottom: 30px;
             margin-right: 2%;
@@ -206,7 +208,6 @@
                 overflow: hidden;
                 display: inline-block;
                 vertical-align: middle;
-                max-width: 80%;
             }
 
             //&:nth-child(3n){
@@ -224,9 +225,9 @@
                 background-size: contain;
                 background-repeat: no-repeat;
                 width: 9px;
-                height: 13px;
+                height: 15px;
                 float: right;
-                margin-top: 2px;
+                margin-top: 4px;
                 transition: .2s;
             }
 
@@ -302,7 +303,7 @@
         font-size: 40px;
         color: $base-dark;
         width: 90%;
-        margin: 0 auto 25px;
+        margin: 0 auto;
         max-width: 1000px;
     }
 
@@ -320,26 +321,25 @@
         margin: 0 auto;
         max-width: 1000px;
     }
-    .cards{
+    .cards-featured{
         display: flex;
+        flex-wrap: wrap;
         list-style-type: none;
+        margin: 32px 0 30px;
         padding: 0;
-        margin: 0;
-        width: fit-content;
-        margin-bottom: 35px;
 
         li.card-featured{
-            cursor: pointer;
-            width: 390px;
-            height: 270px;
-            margin-right: 20px;
-            box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
-            border-radius: 5px;
-            border: 2px solid transparent;
-            background-color: $white;
-            transition: all .3s;
-            position: relative;
-            padding: 20px;
+          cursor: pointer;
+          width: 48%;
+          margin-right: 2%;
+          margin-bottom: 15px;
+          box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+          border-radius: 5px;
+          border: 2px solid transparent;
+          background-color: $white;
+          transition: all .3s;
+          position: relative;
+          padding: 20px;
             
             a{
                 text-decoration: none;
@@ -354,7 +354,6 @@
             .card-title{
                 display: flex;
                 align-items: center;
-                margin-bottom: 25px;
 
                 img{
                     margin-right: 15px;
@@ -374,6 +373,7 @@
             .details{
                 display: flex;
                 flex-wrap: wrap;
+                margin-bottom: 10px;
                 // justify-content: space-between;
 
                 .detail{
@@ -383,32 +383,36 @@
                     p{
                         color: $base-dark;
                         font-size: 14px;
+                        font-family: aleoregular;
                     }
                     .detail-title{
                         font-style: italic;
+                        font-family: aleobold;
                     }
                 }
             }
             .connectionswrap{
-                position: absolute;
                 width: 100%;
-                bottom: 0;
-                left: 0;
-                padding-bottom: 5px;
+
+                p{
+                    color: $base-dark;
+                    font-size: 14px;
+                    font-style: italic;
+                    margin-bottom: 5px;
+                }
 
                 .connections{
                     min-height: 40px;
                     max-width: 100%;
-                    padding: 0 10px;
                     display: flex;
-                    justify-content: space-between;
+                    justify-content: start;
 
                     .card-icons{
-                        position: relative;
                         display: flex;
                         align-items: center;
                         font-size: 12px;
-                        padding: 0 10px;
+                        margin-right: 25px;
+                        position: relative;
 
                         &:hover{
                             .connection-menu{
@@ -435,9 +439,9 @@
                             white-space: nowrap;
                             position: absolute;
                             padding: 20px;
-                            bottom: 40px;
-                            right: -90px;
                             width: 220px;
+                            bottom: 40px;
+                            margin-left: -90px;
                             z-index: 10;
 
                             &.hovered{
@@ -530,7 +534,6 @@
                     border: 2px solid $accent;
                     box-shadow: 0 5px 20px 0 rgba(44,44,44,0.2);
                     background-color: rgba(194,79,60,0.01);
-                    color: $accent;
                 }
             }
             .prev{
@@ -814,4 +817,15 @@
             }
         }
     }
+}
+
+@media screen and (max-width: 650px){
+    .card-slider{
+      .cards-featured{
+          li.card-featured{
+            margin-right: 0;
+              width: 100%;
+          }
+      }
+  }
 }

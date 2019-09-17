@@ -1,5 +1,6 @@
 <?php
     require_once ( __DIR__ . '/config.php' ) ;
+    require_once ( __DIR__ . '/routes.php' ) ;
 ?>
 
 <!DOCTYPE html>
@@ -45,5 +46,6 @@
     include 'footer.php';
 ?>
 
+<script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>navContents.js"></script>
 </body>
 </html>

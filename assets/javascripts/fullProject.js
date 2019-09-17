@@ -193,7 +193,7 @@ $(document).ready(function(){
             data = JSON.parse(data);
             $(".project-headers > h1").html(data.title.value);
             $("#current-title").html(data.title.value);
-            $(".container.infowrap").html(data.desc.value);
+            $(".container.infowrap p").html(data.desc.value);
             if ('link' in data) {
                 $('#details').click(function () {
                     document.location.href = data.link.value;
@@ -222,12 +222,12 @@ $(document).ready(function(){
     $.ajax({
         url: BASE_URL+"api/blazegraph",
         type: "GET",
-        data: {preset: 'projectAssoc', templates: ['projectAssoc'], qid: QID},
+        data: {preset: 'projectassoc', templates: ['projectassoc'], qid: QID},
         success: function (data) {
             data = JSON.parse(data);
             // console.log(data);
             var str = "";
-            data['projectAssoc'].forEach(function (e) {
+            data['projectassoc'].forEach(function (e) {
                 str += e;
             });
             $(".project-headers > h2").html(str);
@@ -253,7 +253,7 @@ function getProjectData(scheme, filters, offset, limit)
         url: BASE_URL + "api/blazegraph",
         type: "GET",
         data: {
-            preset: 'singleProject',
+            preset: 'singleproject',
             filters: filters,
             templates: templates,
             limit: limit,

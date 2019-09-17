@@ -107,9 +107,9 @@ function displayConnections(cardType){
             // display a person relationships if they are given
             if (typeof(conn['relationslabel']) != 'undefined'){
                 relationshipLabel = conn['relationslabel']['value'];
-                $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + ' - ' + relationshipLabel+'</h3></div>'+details+connection_html+'</a></li>');
+                $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + ' - ' + relationshipLabel+'</h3></div>'+'</a></li>');
             } else {
-                $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
+                $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
             }
         }
     } else if (cardType == "Event") {
@@ -119,7 +119,7 @@ function displayConnections(cardType){
             var eventQ = conn['event']['value'];
             eventQ = eventQ.substring(eventQ.lastIndexOf('/') + 1);
             var eventUrl = BASE_URL + 'record/event/' + eventQ;
-            $('.connect-row').append('<li class="card"><a href=' + eventUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div>'+details+connection_html+'</a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + eventUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div>'+'</a></li>');
         }
     } else if (cardType == "Project") {
         for (var i in connections) {
@@ -128,7 +128,7 @@ function displayConnections(cardType){
             var projectQ = conn['project']['value'];
             projectQ = projectQ.substring(projectQ.lastIndexOf('/') + 1);
             var projectUrl = BASE_URL + 'project/' + projectQ;
-            $('.connect-row').append('<li class="card"><a href=' + projectUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + projectUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
         }
     } else if (cardType == "Source") {
         for (var i in connections) {
@@ -137,7 +137,7 @@ function displayConnections(cardType){
             var sourceQ = conn['source']['value'];
             sourceQ = sourceQ.substring(sourceQ.lastIndexOf('/') + 1);
             var sourceUrl = BASE_URL + 'record/source/' + sourceQ;
-            $('.connect-row').append('<li class="card"><a href=' + sourceUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + sourceUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
         }
     } else if (cardType == "Place") {
         for (var i in connections) {
@@ -146,7 +146,7 @@ function displayConnections(cardType){
             var placeQ = conn['place']['value'];
             placeQ = placeQ.substring(placeQ.lastIndexOf('/') + 1);
             var placeUrl = BASE_URL + 'record/place/' + placeQ;
-            $('.connect-row').append('<li class="card"><a href=' + placeUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + placeUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
         }
     } else if (cardType == "CloseMatch") {
         cardType = 'Person';
@@ -157,7 +157,7 @@ function displayConnections(cardType){
             matchQ = matchQ.substring(matchQ.lastIndexOf('/') + 1);
             var matchUrl = BASE_URL + 'record/person/' + matchQ;
             
-            $('.connect-row').append('<li class="card"><a href=' + matchUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+details+connection_html+'</a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + matchUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
         }
     } else {
 
@@ -183,14 +183,9 @@ function loadConnections(){
 
         // get story kid
         QID = getUrlVars()["kid"];
-        recordForm = 'Story';
-
-
-
-
-
+        recordform = 'Story';
     }
-    console.log(QID, recordform)
+    console.log(recordform)
 
 
     $.ajax({

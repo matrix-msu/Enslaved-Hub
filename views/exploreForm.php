@@ -18,7 +18,7 @@ $cache_Data = Json_GetData_ByTitle($upper);
 <div class="container info">
     <div class="container infowrap">
         <p> <?php echo $cache_Data['descr'] ?></p>
-        <a href="" class="view-more">View All People</a>
+        <a href="" class="view-more">View All <?php echo $upper;?></a>
     </div>
 </div>
 <!-- explore by -->
@@ -40,21 +40,21 @@ $cache_Data = Json_GetData_ByTitle($upper);
     <h2>Featured <?=$upper?></h2>
     <div class="cardwrap">
         <div class="cardwrap2">
-            <ul class="cards">
+            <ul class="cards-featured">
             </ul>
         </div>
     </div>
-    <div class="controls">
+    <!-- <div class="controls">
         <div class="arrows">
             <div class="prev"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
             <div class="next"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
         </div>
         <div class="dots">
         </div>
-    </div>
+    </div>-->
 </div>
 <!-- Search Bar -->
-<div class="explore-search">
+<!-- <div class="explore-search">
     <h2>Find <?=$upper?></h2>
     <p>Search across 2,213 people records</p>
     <form class="search-form" action="<?php echo BASE_URL;?>search/all" method="get">
@@ -62,9 +62,9 @@ $cache_Data = Json_GetData_ByTitle($upper);
         <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Start Searching for <?=$upper?> By Name, Origin, Role, Etc."/>
         <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
     </form>
-</div>
+</div> -->
 <!-- Visualize People -->
-<div class="explore-visualize visualize-hide">
+<!-- <div class="explore-visualize visualize-hide">
     <h2 class="column-header">Visualize <?=$upper?></h2>
     <div class="cardwrap">
         <ul class="row">
@@ -100,7 +100,7 @@ $cache_Data = Json_GetData_ByTitle($upper);
             </li>
         </ul>
     </div>
-</div>
+</div> -->
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/cardSlider.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>

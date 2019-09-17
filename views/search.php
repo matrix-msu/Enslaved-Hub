@@ -3,26 +3,30 @@
 <div class="container header search-page">
     <div class="image-container search-page">
 	    <div class="container middlewrap search-page">
-        <div class="search-title">
-            <h1 class="no-shadow">Search</h1>
+            <div class="search-title">
+                <h1 class="no-shadow">Search</h1>
+            </div>
+            <div class="heading-search">
+                <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+                <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+                <form class="search-form" action="<?= BASE_URL ?>search/all">
+                    <label for="searchbar" class="sr-only">searchbar</label>
+                    <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
+                    <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
+                </form>
+            </div>
         </div>
-        <div class="heading-search">
-            <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="">Go to Advanced Search</a></p>
-            <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
-            <form class="search-form" action="<?= BASE_URL ?>search/all">
-                <label for="searchbar" class="sr-only">searchbar</label>
-                <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
-                <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
-                <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
-            </form>
-        </div>
+        <div class="image-background-overlay  search-page"></div>
+        <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg3.jpg" alt="Enslaved Background Image"></div>
     </div>
-      <div class="image-background-overlay  search-page"></div>
-      <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg3.jpg" alt="Enslaved Background Image"></div>
 </div>
-<main class="direct-search">
+<div class="search-message">
+    <p>Search results will appear here after a keyword has been entered above.<br>
+Go to the <a href="<?php echo BASE_URL;?>advancedSearch">Advanced Search</a> page to start filtering results more specifically.</p>
+</div>
+<!-- <main class="direct-search">
     <div class="searchwrap">
-        <form  action="<?php echo BASE_URL;?>search/people" method="get" onsubmit="handleSubmit()">
+        <form action="<?php echo BASE_URL;?>search/people" method="get" onsubmit="handleSubmit()" autocomplete="off">
             <h2>Direct Search</h2>
             <div class="search-section">
                 <div class="inputwrap">
@@ -52,5 +56,8 @@
             </div>
         </form>
     </div>
-</main>
+</main> -->
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
+<!-- <script>
+    autocomplete(document.getElementById("place"), [<?php echo '"'.implode('","', qPlaces).'"' ?>]);
+</script> -->

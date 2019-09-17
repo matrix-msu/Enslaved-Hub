@@ -20,8 +20,8 @@ function setPagination(total, limit, offset) {
     $('span.pagi-last').html(pages); //last pagination number to number of pages
 
     if (pages < 2) { // sets pagination on page load
-        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
-        $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+        $('div.pagi-left').css('opacity', '0.25', 'cursor', 'not-allowed');
+        $('div.pagi-right').css('opacity', '0.25', 'cursor', 'not-allowed');
         $('span.dotsLeft').hide();
         $('span.dotsRight').hide();
         $('span.pagi-first').hide();
@@ -67,8 +67,8 @@ function setPagination(total, limit, offset) {
         }
 
 
-        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
-        $('span#pagiRight').css('opacity', '', 'cursor', '');
+        $('div.pagi-left').css('opacity', '0.25', 'cursor', 'not-allowed');
+        $('div.pagi-right').css('opacity', '', 'cursor', '');
         $('span.num').removeClass('active');
         $('span.pagi-first').addClass('active');
     }
@@ -121,11 +121,11 @@ function paginate() {
         }
 
         if(page == pages){
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+            $('div.pagi-right').css('opacity', '0.25', 'cursor', 'not-allowed');
         }else{
-            $('span#pagiRight').css('opacity', '', 'cursor', '');
+            $('div.pagi-right').css('opacity', '', 'cursor', '');
         }
-        $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
+        $('div.pagi-left').css('opacity', '0.25', 'cursor', 'not-allowed');
         $('span.num').removeClass('active');
         $('span.pagi-first').addClass('active');
 
@@ -164,16 +164,16 @@ function paginate() {
         }
 
         if(page == pages){
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+            $('div.pagi-right').css('opacity', '0.25', 'cursor', 'not-allowed');
         }else{
-            $('span#pagiRight').css('opacity', '', 'cursor', '');
+            $('div.pagi-right').css('opacity', '', 'cursor', '');
         }
-        $('span#pagiLeft').css('opacity', '', 'cursor', '');
+        $('div.pagi-left').css('opacity', '', 'cursor', '');
         $('span.num').removeClass('active');
         $('#pagination').find('.num').eq(page - 1).addClass('active');
     } else if (pages - page >= 5) {
-        $('span#pagiLeft').css('opacity', '', 'cursor', '');
-        $('span#pagiRight').css('opacity', '', 'cursor', '');
+        $('div.pagi-left').css('opacity', '', 'cursor', '');
+        $('div.pagi-right').css('opacity', '', 'cursor', '');
         $('span.pagi-first').show();
         $('span.dotsLeft').show();
         $('span.dotsRight').show();
@@ -185,8 +185,8 @@ function paginate() {
         $('span.num').removeClass('active');
         $('span.three').addClass('active');
     } else if (pages - page < 6 && page != pages) {
-        $('span#pagiLeft').css('opacity', '', 'cursor', '');
-        $('span#pagiRight').css('opacity', '', 'cursor', '');
+        $('div.pagi-left').css('opacity', '', 'cursor', '');
+        $('div.pagi-right').css('opacity', '', 'cursor', '');
         $('span.one').html(pages - 5);
         $('span.two').html(pages - 4);
         $('span.three').html(pages - 3);
@@ -228,15 +228,15 @@ function paginate() {
                 $('span.five').show();
                 $('span.five').html(6);
             }
-            $('span#pagiLeft').css('opacity', '', 'cursor', '');
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+            $('div.pagi-left').css('opacity', '', 'cursor', '');
+            $('div.pagi-right').css('opacity', '0.25', 'cursor', 'not-allowed');
             $('span.num').removeClass('active');
             $('#pagination').find('.num.five').addClass('active');
         }
         else{
             //Last page and greater than 6
-            $('span#pagiLeft').css('opacity', '', 'cursor', '');
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+            $('div.pagi-left').css('opacity', '', 'cursor', '');
+            $('div.pagi-right').css('opacity', '0.25', 'cursor', 'not-allowed');
             $('span.dotsRight').hide();
             $('span.dotsLeft').show();
             $('span.one').html(page - 5);
@@ -263,10 +263,10 @@ $(document).ready(function(){
     /// PAGINATION HANDLERS
     ///******************************************************************* */
 
-    $('span#pagiRight').click(function(e) {
+    $('div.pagi-right').click(function(e) {
         // e.stopPropagation();
         if (page === pages) {
-            $('span#pagiRight').css('opacity', '0.25', 'cursor', 'not-allowed');
+            $('div.pagi-right').css('opacity', '0.25', 'cursor', 'not-allowed');
         } else {
             $('.num.active').nextAll('.num').first().click();
         }
@@ -281,10 +281,10 @@ $(document).ready(function(){
             $('.num.active').click();
         }
     });
-    $('span#pagiLeft').click(function(e) {
+    $('div.pagi-left').click(function(e) {
         // e.stopPropagation();
         if (page === 1) {
-            $('span#pagiLeft').css('opacity', '0.25', 'cursor', 'not-allowed');
+            $('div.pagi-left').css('opacity', '0.25', 'cursor', 'not-allowed');
         } else {
             $('.num.active').prevAll('.num').first().click();
         }
