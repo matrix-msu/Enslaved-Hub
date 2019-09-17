@@ -18,8 +18,8 @@ function Kora_GetNavigationData()
 			'Sub Navigation Order' => 'ASC'
 		)
 	);
-	echo json_encode($koraResults);
-	die;
+	//echo json_encode($koraResults);
+	//die;
 	// Error checking
 	if(!$koraResults) return json_encode("failed");
 	$decode_results = json_decode($koraResults, true);
