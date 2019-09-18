@@ -111,6 +111,17 @@
             </div>
         </div>
     </div>
+    
+    <section class="section section-epp">
+        <div class="section-content">
+            <div class="row">
+                    <h2 class="section-title">The Enslaved Publishing Platform</h2>
+                    <!--<p class="paragraph"><?php echo array_key_exists("Explore", $cache_data) ? $cache_data["Explore"] : "" ?></p>-->
+                    <p class="paragraph">Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                    <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL;?>">Go to the Enslaved Publishing Platform</a></p>
+            </div>
+        </div>
+    </section>
 
     <div class="section-wrap visualize-hide">
         <div class="section-info">
