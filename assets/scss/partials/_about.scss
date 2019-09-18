@@ -1,9 +1,38 @@
-.about-cards{
-    margin: 0 auto;
-    padding: 40px 6% 0;
+.about-header{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(../images/PersonLanding.jpg);
+    .middlewrap{
+        max-width: 1000px;
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 160px;
+        padding-bottom: 50px;
+        #previous-title{
+          opacity: 0.7;
+          color: #FFFFFF;
+          font-family: aleobold;
+          font-size: 16px;
+          font-weight: none;
+          line-height: 18px;
+          text-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
+        }
+        #current-title{
+          color: #FFFFFF;
+          font-family: aleobold;	
+          font-size: 16px;
+          font-weight: none;
+          line-height: 18px;
+        }
+    }
+}
+.about-buttons{
     max-width: 1000px;
-
-    .cardwrap{
+    margin: 0 auto;
+    padding: 40px 0 0;
+    width: 90%;
+    .buttonwrap{
         margin: 0 auto;
         max-width: 1000px;
 
@@ -19,89 +48,243 @@
             padding: 0;
 
             li{
-                width: 30%; //card sizing
+                width: 47%; //button sizing
                 margin-bottom: 20px; //card placement for this and 2 child stylings
                 margin-right: 5%;
                 padding: 0;
                 cursor: pointer;
-                background-repeat: no-repeat;
-                background-size: cover;
-
+                transition: all .3s;
                 a{
                     color: inherit;
                     text-decoration: none;
                 }
 
-                &:nth-child(3n){
+                &:nth-child(2n){
                     margin-right: 0;
                 }
 
-                .cards{
-                    color: $base-light;
+                .buttons{
                     position: relative;
-                    height: 175px;
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                    background-position: center;
-                    box-shadow: 0 15px 25px 0 rgba(18,46,70,0.1);
-                    border-bottom: 5px solid transparent;
+                    height: 60px;
+                    background-color: #FFFFFF;
+                    box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+                    border: 2px solid transparent;
                     transition: border 0.3s ease,  box-shadow 0.3s ease;
-
+                    border-radius: 5px;
                     // .test{
                     //     margin: 0 auto;
                     //     width: fit-content;
                     //     padding-top: 20px;
                     // }
 
-                    h2{
-                      font-size: 26px;
-                      color: #FBF9F5;
+                    h3{
+                      font-size: 18px;
+                      color: $base-dark;
+                      font-family: aleobold;
+                      font-weight: none;
+                      padding: 20px;
+                      padding-top: 18px;
+                      display: inline-block;
+                      transition: color 0.3s ease
+                    }
+                    img.about-button-chevron{
                       position: absolute;
-                      bottom: 20px;
-                      left: 20px;
-                      padding-right: 20px;
+                      right: 0;
+                      margin: 21px 17px;
+                    }
+                    #red-chevron{
+                      display: none;
+                      position: absolute;
+                      top: 0;
+                      right: 0;
+                      z-index: 99;
                     }
 
                     &:hover{
-                        border-bottom: 5px solid $sub-base;
-                        box-shadow: 0 35px 45px 0 rgba(18,46,70,0.2);
+                        border: 2px solid $sub-base;
+                        box-shadow: 0 5px 20px 0 rgba(44,44,44,0.2);
+                        h3{
+                          color: $sub-base;
+                        }
+                        #green-chevron{
+                          display: none;
+                        }
+                        #red-chevron{
+                          display: block;
+                        }
                     }
                 }
-            }
-            #getinvolved{
-                background-image: url(../images/SourceCard.jpg);
-            }
-            #viewpartners{
-                background-image: url(../images/StoryImg.jpg);
-            }
-            #contactus{
-                background-image: url(../images/Rectangle7.jpg);
             }
         }
     }
 }
 
 .about-text{
-    padding: 40px 0 0;
-    width: 100%;
+    max-width: 1000px;
+    width: 90%;
+    margin: 0 auto;
+    p{
+        font-family: aleobold;
+        font-size: 16px;
+        color: $base-dark;
+        line-height: 24px;
+        margin-bottom: 10px;
+    }
+    #mid-paragraph{
+        margin-bottom: 50px;
+    }
     .textwrap{
-        margin: 0 auto;
-        max-width: 1000px;
-        padding: 0 6% 60px;
+        padding: 14px;
+        background-color: #FFFFFF;
+        border-radius: 5px;
+        box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+        margin-bottom: 50px;
+        ul, ol{
+            padding-inline-start: 30px;
+            li{
+                padding-bottom: 15px;
+                line-height: 24px;
 
-        h2{
-            font-size: 36px;
-            color: $base-dark;
-            line-height: 55px;
-            margin-bottom: 40px;
+                &:nth-child(5n){
+                    padding-bottom: 0px;
+                }
+            }
         }
-
-        p{
-            font-size: 18px;
-            color: $base-dark;
-            line-height: 32px;
+        ol li{
+            padding-left: 10px;
         }
     }
+}
+
+
+.getinvolved-view{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 0 0;
+    width: 90%;
+    a {
+      color: inherit;
+      text-decoration: none;
+    .buttons{
+        width: 47%;
+        position: relative;
+        height: 60px;
+        background-color: #FFFFFF;
+        box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+        border: 2px solid transparent;
+        transition: border 0.3s ease,  box-shadow 0.3s ease;
+        border-radius: 5px;
+        margin-right: 0;
+        padding-right: 0;
+        h3{
+            font-size: 18px;
+            color: $base-dark;
+            font-family: aleobold;
+            font-weight: none;
+            padding: 20px;
+            padding-top: 18px;
+            display: inline-block;
+            transition: color 0.3s ease
+        }
+        img.about-button-chevron{
+            position: absolute;
+            right: 0;
+            margin: 21px 17px;
+        }
+        #red-chevron{
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 99;
+        }
+        &:hover{
+            border: 2px solid $sub-base;
+            box-shadow: 0 5px 20px 0 rgba(44,44,44,0.2);
+            h3{
+              color: $sub-base;
+            }
+            #green-chevron{
+              display: none;
+            }
+            #red-chevron{
+              display: block;
+            }
+        }
+    }
+  }
+}
+
+.getinvolved-submit{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 0 80px;
+    width: 90%;
+    h2{
+      font-size: 30px;
+      font-weight: none;
+      margin-bottom: 15px;
+    }
+    p{
+      line-height: 24px;
+      font-size: 16px;
+      font-family: aleobold;
+      font-weight: none;
+      margin-bottom: 30px;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    .buttons{
+        width: 47%;
+        position: relative;
+        height: 60px;
+        background-color: #FFFFFF;
+        box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+        border: 2px solid transparent;
+        transition: border 0.3s ease,  box-shadow 0.3s ease;
+        border-radius: 5px;
+        display: inline-block;
+        h3{
+            font-size: 18px;
+            color: $base-dark;
+            font-family: aleobold;
+            font-weight: none;
+            padding: 20px;
+            padding-top: 18px;
+            display: inline-block;
+            transition: color 0.3s ease
+        }
+        img.about-button-chevron{
+            position: absolute;
+            right: 0;
+            margin: 21px 17px;
+        }
+        #red-chevron{
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 99;
+        }
+        &:hover{
+            border: 2px solid $sub-base;
+            box-shadow: 0 5px 20px 0 rgba(44,44,44,0.2);
+            h3{
+              color: $sub-base;
+            }
+            #green-chevron{
+              display: none;
+            }
+            #red-chevron{
+              display: block;
+            }
+        }
+    }
+  }
+  #first-button{
+    margin-right: 5%;
+  }
 }
 
 .partner-text{
@@ -231,8 +414,8 @@
 }
 
 @media screen and (max-width: 750px){
-    .about-cards{
-        .cardwrap{
+    .about-buttons{
+        .buttonwrap{
             .row{
                 li{
                     width: 100%;
