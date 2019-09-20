@@ -17,7 +17,7 @@
                 $currentQ = $_GET[$typeLower];
                 $currentTitle = str_replace('_', ' ', $currentQ);
             }
-    
+
             $upperForm = ucfirst(EXPLORE_FORM);
             $showPath = false;
             $fromBrowse = false;
@@ -108,17 +108,17 @@
             <hr>
             <?php } ?>
             <!-- People Filtering -->
-            
+
             <li class="cat-cat">People</li>
             <ul id="mainmenu">
-            
-                <?php 
+
+                <?php
                 $fullArray = $GLOBALS["FILTER_ARRAY"]['people'];
                 $extraCats = ['Status', 'Occupation'];
                 foreach($extraCats as $extra){
                     $fullArray[] = $extra;
                 }
-                foreach ($fullArray as $type) { 
+                foreach ($fullArray as $type) {
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
                 <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron.svg" alt="drop arrow"></span>
                     <ul id="submenu">
@@ -131,7 +131,7 @@
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(0)</em></p>
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -145,7 +145,7 @@
             <li class="cat-cat">Event</li>
             <ul id="mainmenu">
 
-                <?php foreach ($GLOBALS["FILTER_ARRAY"]['events'] as $type) { 
+                <?php foreach ($GLOBALS["FILTER_ARRAY"]['events'] as $type) {
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
                     <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron.svg" alt="drop arrow"></span>
                         <ul id="submenu">
@@ -158,7 +158,7 @@
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(0)</em></p>
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -172,7 +172,7 @@
             <li class="cat-cat">Place</li>
             <ul id="mainmenu">
 
-                <?php foreach ($GLOBALS["FILTER_ARRAY"]['places'] as $type) { 
+                <?php foreach ($GLOBALS["FILTER_ARRAY"]['places'] as $type) {
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
                     <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron.svg" alt="drop arrow"></span>
                         <ul id="submenu">
@@ -182,7 +182,6 @@
                             $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
                         else{
-                            // TODO: GET THESE INTO CONSTANTS
                             //Condition for the key not being in the FILE_MAP ex. Countries and Regions which have queries
                             $queryQ = '';
                             if($type == "Countries"){
@@ -194,7 +193,7 @@
                             else{
                                 $queryQ = 'Q1';
                             }
-                            
+
                             $query = array('query' => "");
                             $place = classes["Place"];
 
@@ -205,7 +204,7 @@ SELECT ?country ?countryLabel WHERE {
 ?country $wdt:$hasPlaceType $wd:$queryQ .
 
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}                        
+}
 QUERY;
 
                             //Execute query
@@ -232,7 +231,7 @@ QUERY;
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(0)</em></p>
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -246,10 +245,10 @@ QUERY;
             <li class="cat-cat">Source</li>
             <ul id="mainmenu">
 
-                <?php foreach ($GLOBALS["FILTER_ARRAY"]['sources'] as $type) { 
+                <?php foreach ($GLOBALS["FILTER_ARRAY"]['sources'] as $type) {
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
-                    <li class="filter-cat hidden" name="<?php echo $catLower; ?>">
-                        <ul id="submenu"  class="show">
+                        <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron.svg" alt="drop arrow"></span>
+                        <ul id="submenu">
                         <?php
                         $typeCats = array();
                         if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
@@ -259,7 +258,7 @@ QUERY;
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(0)</em></p>
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -273,10 +272,10 @@ QUERY;
             <li class="cat-cat">Project</li>
             <ul id="mainmenu">
 
-                <?php foreach (['Projects'] as $type) { 
+                <?php foreach (['Projects'] as $type) {
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
-                    <li class="filter-cat hidden" name="<?php echo $catLower; ?>">
-                        <ul id="submenu" class="show">
+                    <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron.svg" alt="drop arrow"></span>
+                        <ul id="submenu">
                         <?php
                         $typeCats = array();
 
@@ -288,9 +287,9 @@ QUERY;
                         $query['query'] = <<<QUERY
 SELECT ?project ?projectLabel WHERE {
   	?project $wdt:$instanceOf $wd:$researchProject.
-  
+
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-}                     
+}
 QUERY;
 
                         //Execute query
@@ -317,7 +316,7 @@ QUERY;
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(0)</em></p>
+                                    <p><?php echo $category; ?> <em>(234)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -404,7 +403,7 @@ QUERY;
         </div>
         <div id="pagination">
             <input class="current-page" type="hidden" value="1">
-            <div class="pagi-left"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="Previous Page"></div>
+            <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
             <div class="page-numbers">
                 <span class="num pagi-first">1</span>
                 <span class="dotsLeft">...</span>
@@ -416,7 +415,7 @@ QUERY;
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
-            <div class="pagi-right"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron-light.svg" alt="Next Page"></div>
+            <span id="pagiRight" class="align-right"><div id="pagiRightArrow"></div></span>
         </div>
     </div>
 </main>
