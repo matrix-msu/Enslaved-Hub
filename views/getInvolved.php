@@ -13,7 +13,7 @@
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p><?php echo $cache_data['descr'] ?></p>
+        <?php echo $cache_data['descr'] ?>
     </div>
 </div>
 
@@ -30,12 +30,12 @@
 <!-- text sections -->
 <div class="container getinvolved-submit">
     <h2>Submit Project or Scholar</h2>
-    <p>Enslaved is always looking for new partners to participate in our project. If you have data about the historic slave trade, please email us at <span id="getinvolved-email">hello@enslaved.org</span>. We are willing to work with all projects, data types, and contributors. </p>
+    <p>Enslaved is always looking for new partners to participate in our project. If you have data about the historic slave trade, please email us at <a href="" id="getinvolved-email">hello@enslaved.org</a>. We are willing to work with all projects, data types, and contributors. </p>
     <!-- <div class="buttonwrap">
         <ul class="row">
             <li> -->
-                <a id="first-button" href="<?php echo BASE_URL?>">
-                    <div class="buttons">
+                <a href="<?php echo BASE_URL?>">
+                    <div class="buttons" id="first-button">
                         <h3>Project Submission</h3>
                         <img class="about-button-chevron" id="green-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-green.svg" alt="Chevron">
                         <img class="about-button-chevron" id="red-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-red.svg" alt="Chevron">
