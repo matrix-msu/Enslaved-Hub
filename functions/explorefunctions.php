@@ -139,24 +139,6 @@ function counterofAllitems(){
     }
 }
 
-//counter of a specific gender
-// function counterOfGender(){
-//   $query='SELECT (count( distinct ?item) AS ?count) WHERE {
-//     ?item wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].'.
-//   	?item wdt:'.properties["hasSex"].' wd:'.$_GET["gender"].'}';
-//   $encode=urlencode($query);
-//   $call=API_URL.$encode;
-//   $res=callAPI($call,'','');
-
-//   $res= json_decode($res);
-
-//   if (!empty($res)){
-//     return $res->results->bindings[0]->count->value;
-//   }else{
-//     return $res;
-//   }
-// }
-
 //counter of all genders
 function counterOfAllGenders(){
     include BASE_LIB_PATH."variableIncluder.php";
@@ -206,7 +188,6 @@ function counterOfRole(){
     }
 }
 
-// TODO: 
 function counterOfStatus(){
     include BASE_LIB_PATH."variableIncluder.php";
 
@@ -216,8 +197,6 @@ function counterOfStatus(){
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
     } GROUP BY ?status ?statusLabel
     ORDER BY DESC(?count)";
-
-    // print_r($query);die;
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
@@ -503,11 +482,8 @@ function getSearchFilterCounters(){
     if (isset($_GET['search_type'])){
         $searchType = $_GET['search_type'];
     }
-
     $counters = array();
 
-
-    
     $peopleFilters = array(
         'Gender' => counterOfAllGenders(),
         'Age Category' => counterOfAge(),
@@ -516,49 +492,41 @@ function getSearchFilterCounters(){
         'Status' => counterOfStatus(),
         'Occupation' => counterOfOccupation(),
     );
-    
     $eventFilters = array(
-        'Event Type' => counterOfEventType(),
-        // 'Date' => getEventDateRange()
-        
+        'Event Type' => counterOfEventType()
     );
-    
     $placeFilters = array(
         'Place Type' => counterOfPlaceType()
     );
-    
     $sourceFilters = array(
         'Source Type' => counterOfSourceType()
     );
     
-    $projectFilters = array(
-        // TODO: GET PROJECT COUNTERS WORKING
-    );
-    
-    $counters = array(
-        'People' => $peopleFilters,
-        'Event' => $eventFilters,
-        'Place' => $placeFilters,
-        'Source' => $sourceFilters,
-        'Project' => $projectFilters
-    );
-    
 
-    if ($searchType == "people"){
+    if ($searchType == "all"){
         $counters = array(
             'People' => $peopleFilters,
             'Event' => $eventFilters,
             'Place' => $placeFilters,
-            'Source' => $sourceFilters,
-            'Project' => $projectFilters
+            'Source' => $sourceFilters
         );
-
-        return json_encode($counters);
+    } else if ($searchType == "people"){
+        $counters = array(
+            'People' => $peopleFilters
+        );
+    } else if ($searchType == "events"){
+        $counters = array(
+            'Event' => $eventFilters
+        );
+    } else if ($searchType == "places"){
+        $counters = array(
+            'Place' => $placeFilters
+        );
+    } else if ($searchType == "sources"){
+        $counters = array(
+            'Source' => $sourceFilters
+        );
     }
-
-
-
-
 
     return json_encode($counters);
 }

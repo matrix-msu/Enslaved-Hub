@@ -158,10 +158,18 @@ searchResults(search_type);
 
 //Document load
 $(document).ready(function() {
+console.log('hrerere', filters)
+    var firstFilter = "";
 
-    // get all filter counters
+    for (filter in filters){
+        if (filter != "limit" && filter != "offset"){
+            firstFilter = filter;
+            break;
+        }
+    }
 
 
+    // get the search type filters first
     $.ajax({
         url: BASE_URL + "api/getSearchFilterCounters",
         type: "GET",
@@ -171,53 +179,79 @@ $(document).ready(function() {
         },
         'success': function (data) {
             var allCounters = JSON.parse(data);
-            
-            for (var filterType in allCounters){
-                var counterType = allCounters[filterType];
+            fillFilterCounters(allCounters);
 
-                for (var filter in counterType){
-                    JSON.parse(counterType[filter]).forEach(function (record) {
-                        var label = "";
-                        var count = "";
-                        var qid = "";
+            // open the drawer for the first filter once the counters are made
+            if (firstFilter != ""){
+                if ( !$("li[name='" + firstFilter + "']").find("span").hasClass("show") )
+                $("li[name='" + firstFilter + "']").trigger('click');
+            }
 
-                        for (var key in record) {
-                            if (record[key]['type'] == "uri"){
-                                qid = record[key]['value'].split('/').pop()
-                            }
 
-                            if (key.match("Label$")) {
-                                label = record[key]['value'];
-                            }
-                            if (key.match("count$")) {
-                                count = record[key]['value'];
-                            }
-                            else if (key.match("Count$")) {
-                                if (count !== "") {
-                                    var count2 = record[key]['value'];
-                                    count = +count + +count2;
-                                }
-                                else {
-                                    count = record[key]['value'];
-                                }
 
-                            }
-                        }
-
-                        // fill in the counters for the filters
-                        if (label != "" && qid != "") {
-                            // console.log(label, qid, count)
-                            var $input = $("input[data-qid='"+qid+"']");
-                            var $counter = $input.next().find('em');
-                            $counter.html('('+count+')');
-                        }
-                    });
-                }
+            // get the rest of the filters
+            if (search_type != "all"){
+                $.ajax({
+                    url: BASE_URL + "api/getSearchFilterCounters",
+                    type: "GET",
+                    data: {
+                        search_type: "all",
+                        filters: filters,
+                    },
+                    'success': function (data) {
+                        var allCounters = JSON.parse(data);
+                        fillFilterCounters(allCounters)
+                    }
+                });
             }
         }
     });
 
+// fill in the counters next to the filters
+function fillFilterCounters(allCounters){
+    for (var filterType in allCounters) {
+        var counterType = allCounters[filterType];
 
+        for (var filter in counterType) {
+            JSON.parse(counterType[filter]).forEach(function (record) {
+                var label = "";
+                var count = "";
+                var qid = "";
+
+                for (var key in record) {
+                    if (record[key]['type'] == "uri") {
+                        qid = record[key]['value'].split('/').pop()
+                    }
+
+                    if (key.match("Label$")) {
+                        label = record[key]['value'];
+                    }
+                    if (key.match("count$")) {
+                        count = record[key]['value'];
+                    }
+                    else if (key.match("Count$")) {
+                        if (count !== "") {
+                            var count2 = record[key]['value'];
+                            count = +count + +count2;
+                        }
+                        else {
+                            count = record[key]['value'];
+                        }
+
+                    }
+                }
+
+                // fill in the counters for the filters
+                if (label != "" && qid != "") {
+                    // console.log(label, qid, count)
+                    var $input = $("input[data-qid='" + qid + "']");
+                    var $counter = $input.next().find('em');
+                    $counter.html('(' + count + ')');
+                }
+            });
+        }
+    }
+}
 
 
 
