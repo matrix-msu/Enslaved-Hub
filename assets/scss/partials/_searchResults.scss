@@ -87,7 +87,7 @@ div.searched-term {
                     img{
                         transform: rotate(90deg);
                     }
-                    
+
                     // &.show{
                     //     img{
                     //         transform: rotate(-90deg);
@@ -123,7 +123,7 @@ div.searched-term {
                                 font-size: 14px;
                                 padding-top: 1px;
                                 color: $base-dark;
-                
+
                                 em {
                                     font-style: normal;
                                 }
@@ -521,7 +521,7 @@ span.align-right.show {
             justify-content: space-between;
             list-style-type: none;
             padding: 0;
-    
+
             li.card{
                 cursor: pointer;
                 width: 48.8%;
@@ -532,12 +532,12 @@ span.align-right.show {
                 transition: all .3s;
                 padding: 20px;
                 margin-bottom: 20px; //card placement for this and 2 child stylings
-                
+
                 a{
                     text-decoration: none;
                 }
-    
-    
+
+
                 &:hover{
                     border: 2px solid $accent;
                     box-shadow: 0 12px 13px 0 rgba(44,44,44,0.1);
@@ -547,11 +547,11 @@ span.align-right.show {
                     display: flex;
                     align-items: center;
                     margin-bottom: 25px;
-    
+
                     img{
                         margin-right: 15px;
                     }
-    
+
                     h3{
                         color: $base-dark;
                         font-size: 24px;
@@ -569,11 +569,11 @@ span.align-right.show {
                     flex-wrap: wrap;
                     margin-bottom: 10px;
                     // justify-content: space-between;
-    
+
                     .detail{
                         margin-right: 25px;
                         margin-bottom: 20px;
-    
+
                         p{
                             color: $base-dark;
                             font-size: 14px;
@@ -624,33 +624,33 @@ span.align-right.show {
                 }
                 .connectionswrap{
                     width: 100%;
-    
+
                     p{
                         color: $base-dark;
                         font-size: 14px;
                         font-style: italic;
                         margin-bottom: 5px;
                     }
-    
+
                     .connections{
                         min-height: 40px;
                         max-width: 100%;
                         display: flex;
                         justify-content: start;
-    
+
                         .card-icons{
                             display: flex;
-                            position: relative;
                             align-items: center;
                             font-size: 12px;
                             margin-right: 25px;
-    
+
                             &:hover{
                                 .connection-menu{
-                                    display: block;
+                                    // display: block;
+                                    display: none;
                                 }
                             }
-    
+
                             img{
                                 margin-right: 10px;
                                 height: 22px;
@@ -671,14 +671,12 @@ span.align-right.show {
                                 position: absolute;
                                 padding: 20px;
                                 width: 220px;
-                                bottom: 40px;
-                                margin-left: -90px;
                                 z-index: 10;
-    
+
                                 &.hovered{
                                     display: block;
                                 }
-    
+
                                 h1{
                                     font-size: 18px;
                                     margin-bottom: 10px;
@@ -700,7 +698,7 @@ span.align-right.show {
                                         padding: 5px 0;
                                         word-wrap: break-word;
                                         white-space: normal;
-    
+
                                         #arrow{
                                             color: $base-light;
                                             background-image: url(../images/Arrow.svg);
@@ -713,14 +711,14 @@ span.align-right.show {
                                             margin: 5px 0 0 10px;
                                             transition: color .2s;
                                         }
-    
+
                                         &:hover{
                                             color: $sub-base;
                                             #arrow{
                                                 background-image: url(../images/Arrow_colored.svg);
                                             }
                                         }
-    
+
                                         span{
                                             opacity: .6;
                                         }
