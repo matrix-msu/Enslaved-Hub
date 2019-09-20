@@ -154,7 +154,7 @@
     background-color: $white;
     transition: all .3s;
     position: relative;
-    padding: 20px;
+    padding: 20px 20px 0 20px;
     
     h2 {
       line-height: 1;
@@ -186,3 +186,41 @@
     }
     
     }
+    
+    // Contributor Cards
+.card.partner{
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background-color: $white;
+    transition: all .3s;
+    position: relative;
+    padding: 20px 20px 0 20px;
+    
+    h2 {
+      line-height: 1;
+    }
+      
+  .detail{
+    margin: 20px 0;
+    
+    .title{
+      font-style: italic;
+    }
+    .content {
+        font-family: aleoregular;
+    }
+    a.content {
+      display: block;
+      font-family: aleobold;
+      line-height: 1;
+    }
+    }
+    .detail.two {
+        .content{
+		    margin-bottom: 10px;
+	    }
+    }
+    
+}

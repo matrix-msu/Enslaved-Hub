@@ -21,6 +21,14 @@ var fields = [];    // fields for the table view
 var sort = 'ASC';
 var formattedData = {};
 
+var address = document.location.toString().split('/')
+var category = address[address.length - 1].split('?')[0]
+if(category == 'people' || category == 'events' || category == 'places' || category == 'sources'){
+    $(".search-title").html('<h1>'+category.charAt(0).toUpperCase()+category.substr(1).toLowerCase()+'</h1>')
+    $("h1").css('line-height', 'normal')
+    $(".heading-search").empty()
+}
+
 // Get params from url
 if(document.location.toString().indexOf('?') !== -1)
 {
@@ -85,7 +93,7 @@ function searchResults(preset, limit = 12, offset = 0)
             isSearching = false;
             result_array = JSON.parse(data);
             console.log('results', result_array)
-            
+
             total_length = result_array['total'];
 
             var showingResultsText = '';
@@ -297,7 +305,7 @@ function fillFilterCounters(allCounters){
                     var temp = [values];
                     values = temp;
                 }
-                
+
                 $.each(values, function(indx, value){
                     //Looks for input where value = value
                     if($(that).find('input').val() == value) {
@@ -824,12 +832,12 @@ function generateFilterCards(){
     {
         if(key && values && key != "limit" && key != "offset")
         {
-            
+
             if (!Array.isArray(values)){
                 temp = [values];
                 values = temp;
-            } 
-            
+            }
+
             //Add filter cards
             $.each(values, function(indx, value)
             {
