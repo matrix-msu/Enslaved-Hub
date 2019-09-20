@@ -167,17 +167,37 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+    
+     .section-epp {
+        background: url('../images/enslaved-epp-bg.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 90px 0 70px 0; 
+        z-index: 1;
+    }
 
     .section-project {
-        .col-image {
-            max-height: 500px;
+      	box-shadow: 0 20px 40px 0 rgba(0,0,0,0.1);
+      	position: relative;
+      	
+        .col img {
+            border-radius: 5px;
+            box-shadow: 0 10px 20px 0 rgba(0,0,0,0.15);
+            color: #fff;
+            display: block;
+            min-height: 175px;
+            overflow: hidden;
+            position: relative;
+            text-decoration: none;
+            width: 100%;
         }
 
-        .col-text {
+       /* .col-text {
             margin-left: auto;
             max-width: calc(500px + 5%);
             padding-left: 5%;
-        }
+        }*/
     }
 
     .section-stories {

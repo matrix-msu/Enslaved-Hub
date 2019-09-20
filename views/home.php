@@ -97,20 +97,32 @@
         </div>
     </section>
 
-    <div class="section no-padding section-project">
-        <div class="section-content full-width">
+    <div class="section section-project">
+        <div class="section-content">
             <div class="row">
-                <div class="col col-text py-xl">
+                <div class="col">
+                  <h2 class="section-title">About</h2>
                     <p class="paragraph">Enslaved links together data from participating projects, allowing students, researchers, and the general public to search over numerous datasets at once in order to better reconstruct the lives of the people involved in the historical slave trade. You can search or browse interconnected data, generate visualizations, and explore short biographies of enslaved people. </p>
                     <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL;?>">Learn More</a></p>
                 </div>
 
-                <div class="col col-image">
+                <div class="col">
                     <img class="background-image" src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Project Image of Market Stand">
                 </div>
             </div>
         </div>
     </div>
+    
+    <section class="section section-epp">
+        <div class="section-content">
+            <div class="row">
+                    <h2 class="section-title">The Enslaved Publishing Platform</h2>
+                    <!--<p class="paragraph"><?php echo array_key_exists("Explore", $cache_data) ? $cache_data["Explore"] : "" ?></p>-->
+                    <p class="paragraph">Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                    <p class="mt-lg"><a class="text-link" href="http://dev2.matrix.msu.edu/enslaved-publishing-platform/" target="_blank">Go to the Enslaved Publishing Platform</a></p>
+            </div>
+        </div>
+    </section>
 
     <div class="section-wrap visualize-hide">
         <div class="section-info">
