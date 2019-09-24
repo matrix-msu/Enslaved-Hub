@@ -41,12 +41,12 @@
 
 <div class="advanced-section">
     <div class="advanced-details">
-        <h2>LOD Formats:</h2>
+        <h2>Representations:</h2>
         <!-- <p>To see a more granular provenance of this record, you can download the following files:</p> -->
         <div class="advancedwrap">
-            <a href="<?php echo BASE_WIKI_URL . "entity/" . QID . ".rdf";?>" target="_blank">Download RDF</a>
-            <a href="<?php echo BASE_WIKI_URL . "entity/" . QID . ".ttl";?>" target="_blank">Download Turtle</a>
-            <a href="<?php echo BASE_WIKI_URL . "entity/" . QID . ".json";?>" target="_blank">Download JSON</a>
+            <a href="<?php echo BASE_WIKI_URL . "entity/" . QID . ".rdf";?>">Download RDF</a>
+            <a href="<?php echo BASE_WIKI_URL . "entity/" . QID . ".ttl";?>">Download Turtle</a>
+            <a href="<?php echo BASE_WIKI_URL . "entity/" . QID . ".json";?>">Download JSON</a>
         </div>
     </div>
 </div>

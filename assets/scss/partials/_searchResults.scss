@@ -535,6 +535,7 @@ span.align-right.show {
                 transition: all .3s;
                 padding: 20px;
                 margin-bottom: 20px; //card placement for this and 2 child stylings
+                position: relative;
 
                 a{
                     text-decoration: none;
@@ -570,7 +571,7 @@ span.align-right.show {
                 .details{
                     display: flex;
                     flex-wrap: wrap;
-                    margin-bottom: 10px;
+                    margin-bottom: 70px;
                     // justify-content: space-between;
 
                     .detail{
@@ -627,6 +628,8 @@ span.align-right.show {
                 }
                 .connectionswrap{
                     width: 100%;
+                    position: absolute;
+                    bottom: 10px;
 
                     p{
                         color: $base-dark;

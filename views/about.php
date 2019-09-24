@@ -66,4 +66,3 @@
 <!-- info container-->
         <p><?php echo $cache_data['descr'] ?></p>
 </div>
-
