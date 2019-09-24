@@ -128,7 +128,7 @@
                             $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
                         foreach ($typeCats as $category => $qid) { ?>
-                            <li>
+                            <li class="hide-category">
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
                                     <p><?php echo $category; ?> <em>(0)</em></p>
@@ -155,7 +155,7 @@
                             $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
                         foreach ($typeCats as $category => $qid) { ?>
-                            <li>
+                            <li class="hide-category">
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?> " data-qid="<?php echo $qid; ?>">
                                     <p><?php echo $category; ?> <em>(0)</em></p>
@@ -185,7 +185,7 @@
                         if ($type == "Modern Countries"){
                             // use the contry codes instead of qids for countries
                             foreach ($typeCats as $countryCode => $countryName) { ?>
-                                <li>
+                                <li class="hide-category">
                                     <label class="<?php echo $catLower; ?>">
                                         <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-countryCode="<?php echo $countryCode; ?>">
                                         <p><?php echo $countryName; ?> <em>(0)</em></p>
@@ -195,7 +195,7 @@
                             <?php }
                         } else {
                             foreach ($typeCats as $category => $qid) { ?>
-                                <li>
+                                <li class="hide-category">
                                     <label class="<?php echo $catLower; ?>">
                                         <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
                                         <p><?php echo $category; ?> <em>(0)</em></p>
@@ -224,7 +224,7 @@
                             $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
                         foreach ($typeCats as $category => $qid) { ?>
-                            <li>
+                            <li class="hide-category">
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
                                     <p><?php echo $category; ?> <em>(0)</em></p>

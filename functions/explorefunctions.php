@@ -427,12 +427,12 @@ function counterOfType() {
         if ($type == "Event Type"){
             return counterOfEventType();
         }
-        if ($type == "Date"){
-            return getEventDateRange();
-        }
-        if ($type == "Place"){
-            return counterOfEventPlace();
-        }
+        // if ($type == "Date"){
+        //     return getEventDateRange();
+        // }
+        // if ($type == "Place"){
+        //     return counterOfEventPlace();
+        // }
     }
 
     if ($category == "People") {
@@ -454,12 +454,12 @@ function counterOfType() {
         if ($type == "Place Type"){
           return counterOfPlaceType();
         }
-        if ($type == "City"){
-          return counterOfCity();
-        }
-        if ($type == "Province"){
-          return counterOfProvince();
-        }
+        // if ($type == "City"){
+        //   return counterOfCity();
+        // }
+        // if ($type == "Province"){
+        //   return counterOfProvince();
+        // }
     }
 
     if($category == "Sources") {

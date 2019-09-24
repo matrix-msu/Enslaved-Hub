@@ -164,6 +164,9 @@ div.searched-term {
                             color: $accent;
                         }
                     }
+                    li.hide-category{
+                        display: none;
+                    }
                 }
                 ul#submenu.show{
                     display: block;
