@@ -29,12 +29,9 @@ function admin(){
 
 function blazegraph()
 {
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    
     if (isset($_GET['filters'])){
         $filtersArray = $_GET['filters'];
-        
+
         $limitQuery = '';
         if (isset($filtersArray['limit'])){
             $limit = $filtersArray['limit'];
@@ -57,8 +54,26 @@ function blazegraph()
     $queryArray = array();
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
-        // echo $preset;die;
-        
+
+
+        foreach($GLOBALS['PREFIX_ARRAY'][LOD_CONFIG] as $prefix => $value){
+            $$prefix = $value;
+        }
+
+        foreach(properties as $property => $pId){
+            $property = ucwords($property);
+            $property = str_replace(" ", "", $property);
+            $property = lcfirst($property);
+            $$property = $pId;
+        }
+
+        foreach(classes as $class => $qId){
+            $class = ucwords($class);
+            $class = str_replace(" ", "", $class);
+            $class = lcfirst($class);
+            $$class = $qId;
+        }
+
         switch ($preset){
             case 'singleproject':
                 // QID is mandatory
@@ -267,18 +282,66 @@ function blazegraph()
                     }
                 }
 
-                // filter people by country
-                $countryIdFilter = "";
-                if (isset($filtersArray['modern_countries']) && isset($filtersArray['modern_countries'][0]) ){
-                    $countryName = $filtersArray['modern_countries'][0];
-                    if (array_key_exists($countryName, countrycode)){
-                        $countryCode = countrycode[$countryName];
-                        //TODO: CREATE FILTER BASED ON COUNTRY CODES
-                        $countryIdFilter .= "
-                                
-                            ";
+                // filter people by city
+                $cityIdFilter = "";
+                if (isset($filtersArray['city']) && isset($filtersArray['city'][0]) ){
+                    $cityName = $filtersArray['city'][0];
+                    if (array_key_exists($cityName, cities)){
+                        $cityQ = cities[$cityName];
+                        $cityIdFilter .= "
+                                ?agent $p:$hasParticipantRole ?statementrole.
+                                ?statementrole $ps:$hasParticipantRole ?role.
+                                ?statementrole $pq:$roleProvidedBy ?event.
+                                ?event $wdt:$atPlace $wd:$cityQ.
+                        ";
                     }
                 }
+
+
+                // filter people by province
+                $provinceIdFilter = "";
+                if (isset($filtersArray['province']) && isset($filtersArray['province'][0]) ){
+                    $provinceName = $filtersArray['province'][0];
+                    if (array_key_exists($provinceName, provinces)){
+                        $provinceQ = provinces[$provinceName];
+                        $provinceIdFilter .= "
+                                ?agent $p:$hasParticipantRole ?statementrole.
+                                ?statementrole $ps:$hasParticipantRole ?role.
+                                ?statementrole $pq:$roleProvidedBy ?event.
+                                ?event $wdt:$atPlace $wd:$provinceQ.";
+                    }
+                }
+
+
+                // filter people by region
+                $regionIdFilter = "";
+                if (isset($filtersArray['regions']) && isset($filtersArray['regions'][0]) ){
+                    $regionName = $filtersArray['regions'][0];
+                    if (array_key_exists($regionName, places)){
+                        $regionQ = places[$regionName];
+                        // $regionIdFilter .= "
+                        //         ?agent ?property  ?object .
+                        //         ?object $prov:wasDerivedFrom ?provenance .
+                        //         ?provenance $pr:$isDirectlyBasedOn ?source .
+                        //         ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
+                        //     ";
+                    }
+                }
+
+                // filter people by country
+                // $projectIdFilter = "";
+                // if (isset($filtersArray['countries']) && isset($filtersArray['countries'][0]) ){
+                //     $projectName = $filtersArray['countries'][0];
+                //     if (array_key_exists($projectName, projects)){
+                //         $projectQ = projects[$projectName];
+                //         $projectIdFilter .= "
+                //                 ?agent ?property  ?object .
+                //                 ?object $prov:wasDerivedFrom ?provenance .
+                //                 ?provenance $pr:$isDirectlyBasedOn ?source .
+                //                 ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
+                //             ";
+                //     }
+                // }
 
 
 
@@ -570,7 +633,7 @@ function blazegraph()
 
 
 function blazegraphSearch($query){
-    // echo BLAZEGRAPH_URL;
+    //echo BLAZEGRAPH_URL;
     // echo http_build_query($query);
     // die;
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -726,7 +789,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                $connections = '<div class="connectionswrap"><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
@@ -939,7 +1002,7 @@ HTML;
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                $connections = '<div class="connectionswrap"><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
@@ -1162,7 +1225,7 @@ HTML;
                 );
                 //'<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
 
-                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                $connections = '<div class="connectionswrap"><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
@@ -1361,7 +1424,7 @@ HTML;
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                $connections = '<div class="connectionswrap"><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
@@ -1421,6 +1484,7 @@ HTML;
             $typeHtml
             $projectHtml
             $descHtml
+            $secondarysourceHtml
         </div>
         $connections
     </a>
@@ -1437,10 +1501,11 @@ HTML;
     <th class="type">TYPE</th>
     <th class="project">PROJECT</th>
     <th class="desc">DESCRIPTION</th>
+    <th class="secondarySource">SECONDARY SOURCE</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION', 'SECONDARY SOURCE'];
                         }
 
                         $card = <<<HTML
@@ -1457,6 +1522,9 @@ HTML;
     <td class='desc'>
         <p><span class='first'>Description: </span>$desc</p>
     </td>
+    <td class='secondarySource'>
+        <p><span class='first'>Secondary Source: </span>$secondarysource</p>
+    </td>
     <td class='meta'>
 
     </td>
@@ -1468,7 +1536,8 @@ HTML;
                             'NAME' => $name,
                             'TYPE' => $type,
                             'PROJECT' => $project,
-                            'DESCRIPTION' => $desc
+                            'DESCRIPTION' => $desc,
+                            'SECONDARY SOURCE' => $secondarysource
                         );
 
                     }
@@ -1741,7 +1810,7 @@ HTML;
                         '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                     );
 
-                    $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
+                    $connections = '<div class="connectionswrap"><div class="connections">';
                     	// if (intval($countpeople) > 0){
                         //     $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                         // }
@@ -1762,12 +1831,35 @@ HTML;
                     $link = BASE_URL . "record/" . strtolower($cardType) . "/" . $qid;
                     // $background = "background-image: url(" . BASE_IMAGE_URL . $cardType . "Card.jpg)";
                     $card = <<<HTML
-<li class="card-featured">
+<li class="card card-featured">
     <a href="$link">
         <div class="card-title">
             <img src="$iconURL" alt="Card Icon">
             <h3>$cardTitle</h3>
         </div>
+        <div class="details">
+            <div class="detail">
+                <p class="detail-title">Person Status</p>
+                <p>Enslaved</p>
+            </div>
+            <div class="detail">
+                <p class="detail-title">Sex</p>
+                <p>Unidentified</p>
+            </div>
+            <div class="detail">
+                <p class="detail-title">Location</p>
+                <p>Location Name</p>
+            </div>
+            <div class="detail">
+                <p class="detail-title">Origin</p>
+                <p>Location Name</p>
+            </div>
+            <div class="detail">
+                <p class="detail-title">Date Range</p>
+                <p>1840-1864</p>
+            </div>
+        </div>
+        $connections
     </a>
 </li>
 HTML;
@@ -2063,25 +2155,4 @@ function checkKID($kid)
         return true;
     else
         return false;
-}
-
-
-
-
-
-function updateConstants(){
-    $query["query"] = "
-        select ?ethnodescriptor
-        where {
-            ?ethnodescriptor edt:P1 ed:Q298.
-            # ?ethnodescriptor rdfs:Label ?ethonLabel
-            
-        }
-    ";
-    print_r($query);die;
-
-    $results = blazegraphSearch($query);
-    
-
-    print_r($results);die;
 }
