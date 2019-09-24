@@ -77,7 +77,7 @@ function searchResults(preset, limit = 12, offset = 0)
     filters['offset'] = offset;
     card_offset = offset;
     var templates = ['gridCard', 'tableCard'];
-    console.log(preset, filters, templates);
+    // console.log(preset, filters, templates);
     generateFilterCards();
 
     $.ajax({
@@ -92,7 +92,7 @@ function searchResults(preset, limit = 12, offset = 0)
         {
             isSearching = false;
             result_array = JSON.parse(data);
-            console.log('results', result_array)
+            // console.log('results', result_array)
 
             total_length = result_array['total'];
 
@@ -166,7 +166,6 @@ searchResults(search_type);
 
 //Document load
 $(document).ready(function() {
-console.log('hrerere', filters)
     var firstFilter = "";
 
     for (filter in filters){
@@ -188,6 +187,7 @@ console.log('hrerere', filters)
         'success': function (data) {
             var allCounters = JSON.parse(data);
             fillFilterCounters(allCounters);
+            // console.log('success', allCounters)
 
             // open the drawer for the first filter once the counters are made
             if (firstFilter != ""){
@@ -251,10 +251,15 @@ function fillFilterCounters(allCounters){
 
                 // fill in the counters for the filters
                 if (label != "" && qid != "") {
-                    // console.log(label, qid, count)
                     var $input = $("input[data-qid='" + qid + "']");
                     var $counter = $input.next().find('em');
                     $counter.html('(' + count + ')');
+
+                    // hide filter if count is 0
+                    if (count > 0){
+                        var $li = $input.parent().parent();
+                        $li.removeClass('hide-category')
+                    }
                 }
             });
         }
@@ -388,7 +393,6 @@ function fillFilterCounters(allCounters){
     $('span.results-per-page > span').html(card_limit);
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
-        console.log('setting to ', $(this).find('span:first').html())
         card_limit = parseInt($(this).find('span:first').html());
         localStorage.setItem('display_amount', card_limit);
         card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
@@ -811,7 +815,7 @@ function get_download_content(fields, data, isAllData) {
     Convert to csv and download
 */
 function download_csv(data, fields) {
-    console.log(data, fields)
+    // console.log(data, fields)
     var qids = Object.keys(data);
     var csvString = [];
     csvString.push("QID," + fields.join(',')); // Headers
@@ -886,7 +890,6 @@ function generateFilterCards(){
         if(filters[fcat].length == 0) delete filters[fcat];
 
         $(this).parent().remove();
-        console.log(filters);
 
         updateURL();
 
