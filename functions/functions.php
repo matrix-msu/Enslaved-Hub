@@ -551,6 +551,7 @@ function blazegraph()
         $idQuery['query'] = $tempQuery;
         // print_r($idQuery);die;
         $result = blazegraphSearch($idQuery);
+        
 
         // get the qids from each url
         $urls = (array_column(array_column($result, $searchTypes[$preset]), 'value'));
@@ -1385,13 +1386,6 @@ HTML;
                     $desc = '';
                 }
 
-                // secondary source
-                if(isset($record['secondarysource']) && isset($record['secondarysource']['value'])){
-                    $secondarysource = $record['secondarysource']['value'];
-                } else {
-                    $secondarysource = '';
-                }
-
                 //Counts for connections
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
                     $countpeople = $record['countpeople']['value'];
@@ -1463,13 +1457,6 @@ HTML;
                             $descHtml = "<div class='detail'><p class='detail-title'>Description</p><p>$desc</p></div>";
                         }
 
-
-                        $secondarysourceHtml = '';
-                        if ($secondarysource != ""){
-                            $secondarysourceHtml = "<div class='detail'><p class='detail-title'>Secondary Source</p><p>$secondarysource</p></div>";
-                        }
-
-
                         $card_icon_url = BASE_IMAGE_URL . 'Source.svg';
                         $source_url = BASE_URL . "record/source/" . $sourceQ;
 
@@ -1484,7 +1471,6 @@ HTML;
             $typeHtml
             $projectHtml
             $descHtml
-            $secondarysourceHtml
         </div>
         $connections
     </a>
@@ -1501,11 +1487,10 @@ HTML;
     <th class="type">TYPE</th>
     <th class="project">PROJECT</th>
     <th class="desc">DESCRIPTION</th>
-    <th class="secondarySource">SECONDARY SOURCE</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION', 'SECONDARY SOURCE'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION'];
                         }
 
                         $card = <<<HTML
@@ -1522,9 +1507,6 @@ HTML;
     <td class='desc'>
         <p><span class='first'>Description: </span>$desc</p>
     </td>
-    <td class='secondarySource'>
-        <p><span class='first'>Secondary Source: </span>$secondarysource</p>
-    </td>
     <td class='meta'>
 
     </td>
@@ -1536,8 +1518,7 @@ HTML;
                             'NAME' => $name,
                             'TYPE' => $type,
                             'PROJECT' => $project,
-                            'DESCRIPTION' => $desc,
-                            'SECONDARY SOURCE' => $secondarysource
+                            'DESCRIPTION' => $desc
                         );
 
                     }

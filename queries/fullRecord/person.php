@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?name ?desc ?sextype  ?race
+SELECT ?name ?sextype  ?race
 (group_concat(distinct ?refName; separator = "||") as ?sources)
 (group_concat(distinct ?pname; separator = "||") as ?researchprojects)
 (group_concat(distinct ?roleslabel; separator = "||") as ?roleslabel)
@@ -22,6 +22,7 @@ SELECT ?name ?desc ?sextype  ?race
 (group_concat(distinct ?match; separator = "||") as ?match)
 (group_concat(distinct ?matchlabel; separator = "||") as ?matchlabel)
 (group_concat(distinct ?allevents; separator = "||") as ?allevents)
+
 (group_concat(distinct ?alleventslabel; separator = "||") as ?alleventslabel)
 (group_concat(distinct ?startyear; separator = "||") as ?startyear)
 (group_concat(distinct ?endyear; separator = "||") as ?endyear)
@@ -33,22 +34,21 @@ SELECT ?name ?desc ?sextype  ?race
 
  WHERE
 {
- VALUES ?agent { $wd:$qid } #Q number needs to be changed for every event.
-  ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
-
-  		 ?property  ?object .
+ VALUES ?agent { $wd:$qid }. #Q number needs to be changed for every event.
+  ?agent ?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
   ?source $rdfs:label ?refName;
           $wdt:$generatedBy ?project.
   ?project $rdfs:label ?pname.
-  ?agent $p:$hasName ?statement.
-  ?statement $ps:$hasName ?name.
-  OPTIONAL{ ?statement $pq:$recordedAt ?recordeAt.
-            bind(?recordedAt as ?allevents)}
-
-
-  OPTIONAL{?agent schema:description ?desc}.
+  
+ ?agent $p:$instanceOf ?statement.
+ ?statement $ps:$instanceOf ?roles;
+            $pq:$recordedAt ?recAt.
+  bind(?recAt as ?allevents).
+           
+ 
+ ?agent $wdt:$hasName ?name.
   OPTIONAL{?agent $wdt:$hasSex ?sex.
           ?sex $rdfs:label ?sextype}.
   OPTIONAL{?agent $wdt:$hasRace ?race}.
@@ -60,26 +60,25 @@ SELECT ?name ?desc ?sextype  ?race
            ?statement $ps:$hasECVO ?ethnodescriptor.
            ?ethnodescriptor $rdfs:label ?ecvo.
            OPTIONAL{?statement $pq:$referstoPlaceofOrigin ?placeofOrigin.
-           ?placeofOrigin $rdfs:label ?placeOriginlabel.}
+           ?placeofOrigin $rdfs:label ?placeOriginlabel}.
            }.
   OPTIONAL {?agent $wdt:$hasOccupation ?occupation.
-           ?occupation $rdfs:label ?occupationlabel}.
-  OPTIONAL {?agent $wdt:$closeMatch ?match}.
-OPTIONAL {?agent $p:$hasParticipantRole ?statementrole.
+          ?occupation $rdfs:label ?occupationlabel}.
+  
+    OPTIONAL {?agent $p:$hasParticipantRole ?statementrole.
            ?statementrole $ps:$hasParticipantRole ?roles.
-           ?roles $rdfs:label ?roleslabel.
+          ?roles $rdfs:label ?roleslabel.
            ?statementrole $pq:$roleProvidedBy ?roleevent.
            ?roleevent $rdfs:label ?roleeventlabel.
-           bind(?roleevent as ?allevents)
-
+            bind(?roleevent as ?allevents).
          }.
 
  OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
-           ?statstatus $ps:$hasPersonStatus ?status.
+             ?statstatus $ps:$hasPersonStatus ?status.
            ?status $rdfs:label ?statuslabel.
            ?statstatus $pq:$hasStatusGeneratingEvent ?statusevent.
-           ?statusevent $rdfs:label ?eventstatuslabel.
-          bind(?statusevent as ?allevents)}.
+     ?statusevent $rdfs:label ?eventstatuslabel.
+      bind(?statusevent as ?allevents)}.
 
   OPTIONAL{
     ?agent $p:$hasInterAgentRelationship ?staterel .
@@ -105,8 +104,7 @@ OPTIONAL {?agent $p:$hasParticipantRole ?statementrole.
             ?etype $rdfs:label ?etypelabel.
            BIND(CONCAT(str(?elabel)," - ",str(?etypelabel)," - ",str(YEAR(?startdate))) AS ?startyear).
            OPTIONAL {?allevents $wdt:$endsAt ?enddate.
-		   BIND(str(YEAR(?enddate)) AS ?endyear)}}.
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?sextype  ?race
+                   BIND(str(YEAR(?enddate)) AS ?endyear)}}.
+                   
+}GROUP BY ?name ?sextype  ?race
 QUERY;
