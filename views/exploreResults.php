@@ -62,9 +62,9 @@
     <div class="filter-menu show">
         <ul>
             <?php if(!$fromBrowse) { ?>
-            <h2>Show Results For</h2>
+            <!-- <h2>Show Results For</h2> -->
             <ul class="catmenu" id="submenu">
-                <li>
+                <!-- <li>
                     <label class="category">
                         <input id="checkBox" type="checkbox" value="people">
                         <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg" alt="person icon">
@@ -95,17 +95,17 @@
                         <p>Sources</p>
                         <span></span>
                     </label>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                     <label class="category">
                         <input id="checkBox" type="checkbox" value="projects">
                         <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
                         <p>Projects</p>
                         <span></span>
                     </label>
-                </li>
+                </li> -->
             </ul>
-            <hr>
+            <!-- <hr> -->
             <?php } ?>
             <!-- People Filtering -->
 
@@ -333,6 +333,11 @@ QUERY;
 
     <div id="searchResults">
         <h2 class="showing-results"></h2>
+
+
+
+
+
         <div id="search-result-controls">
             <!-- <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span> -->
             <span class="view-modes">
@@ -383,6 +388,25 @@ QUERY;
                 <img class="remove" src="<?php echo BASE_IMAGE_URL;?>x-dark.svg" />
             </div>
         </div>
+
+        <div class="record-connections">
+            <div class="connectionwrap">
+                <div class="categories"></div>
+                <div class="connection-cards">
+                    <ul class="connect-row">
+                        <!-- <li>
+                            <div class="cards">
+                                <img src="<?php echo BASE_URL?>assets/images/Person-light.svg" alt="person icon">
+                                <h3>Firstname Lastname</h3>
+                            </div>
+                        </li> -->
+                    </ul>
+                    <a class="search-all"></a>
+                    <!-- <div class="load-more"><h4>Load More</h4></div> -->
+                </div>
+            </div>
+        </div>
+
         <div id="search-result-wrap">
             <div id="search-result-table">
                 <table id="search-results">

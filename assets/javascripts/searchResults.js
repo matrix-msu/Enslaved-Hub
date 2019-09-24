@@ -230,11 +230,42 @@ $(document).ready(function() {
 
 
     ///******************************************************************* */
-    /// Set Filter Checkboxes
+    /// Set Filter Checkboxes / Category Headers
     ///******************************************************************* */
 
     //For form type
     upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
+
+    if(upperForm.toString() == 'All'){
+        // console.log('in all')
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='people'><div class='person-image'></div>People</li>"+
+                                    "<li class='unselected' id='event'><div class='event-image'></div>Events</li>"+
+                                    "<li class='unselected' id='place'><div class='place-image'></div>Places</li>"+
+                                    "<li class='unselected' id='source'><div class='source-image'></div>Sources</li>"+
+                                    "<hr></ul>" );
+    }else if(upperForm == 'People'){
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='people'><div class='person-image'></div>People</li>"+
+                                    "<hr></ul>" );
+        $( ".categories ul" ).css("overflow-x", "hidden")
+    }else if(upperForm == 'Events'){
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='event'><div class='event-image'></div>Events</li>"+
+                                    "<hr></ul>" );
+        $( ".categories ul" ).css("overflow-x", "hidden")
+    }else if(upperForm == 'Places'){
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='place'><div class='place-image'></div>Places</li>"+
+                                    "<hr></ul>" );
+        $( ".categories ul" ).css("overflow-x", "hidden")
+    }else if(upperForm == 'Sources'){
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='source'><div class='source-image'></div>Sources</li>"+
+                                    "<hr></ul>" );
+        $( ".categories ul" ).css("overflow-x", "hidden")
+    }
+
     $(".filter-menu ul.catmenu li").each(function(){
         if("categories" in filters && filters["categories"].length > 0)
         {
