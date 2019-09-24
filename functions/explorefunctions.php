@@ -48,7 +48,7 @@ function queryAllAgentsCounter(){
 function queryEventCounter(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query="SELECT (COUNT(?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$event .}";
+    $query="SELECT (COUNT(distinct ?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$event .}";
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -65,7 +65,7 @@ function queryEventCounter(){
 function queryPlaceCounter(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query="SELECT (COUNT(?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$place .}";
+    $query="SELECT (count( distinct ?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$place .}";
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -82,7 +82,7 @@ function queryPlaceCounter(){
 function queryProjectsCounter(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query="SELECT (COUNT(?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$researchProject .}";
+    $query="SELECT (count( distinct ?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$researchProject .}";
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -100,7 +100,7 @@ function queryProjectsCounter(){
 function querySourceCounter(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query="SELECT (COUNT(?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$entityWithProvenance .}";
+    $query="SELECT (count( distinct ?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$entityWithProvenance .}";
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
@@ -118,7 +118,7 @@ function querySourceCounter(){
 function counterofAllitems(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query="SELECT (COUNT(?item) AS ?count) WHERE
+    $query="SELECT (count( distinct ?item) AS ?count) WHERE
     {
     {?item $wdt:$instanceOf $wd:$researchProject .}
     UNION{ ?item $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent .}
@@ -139,29 +139,11 @@ function counterofAllitems(){
     }
 }
 
-//counter of a specific gender
-// function counterOfGender(){
-//   $query='SELECT (COUNT(?item) AS ?count) WHERE {
-//     ?item wdt:'.properties["instance of"].'/wdt:'.properties["subclass of"].' wd:'.classes["Agent"].'.
-//   	?item wdt:'.properties["hasSex"].' wd:'.$_GET["gender"].'}';
-//   $encode=urlencode($query);
-//   $call=API_URL.$encode;
-//   $res=callAPI($call,'','');
-
-//   $res= json_decode($res);
-
-//   if (!empty($res)){
-//     return $res->results->bindings[0]->count->value;
-//   }else{
-//     return $res;
-//   }
-// }
-
 //counter of all genders
 function counterOfAllGenders(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query="SELECT ?sex ?sexLabel (COUNT(?human) AS ?count) WHERE{
+    $query="SELECT ?sex ?sexLabel (count( distinct ?human) AS ?count) WHERE{
         ?human $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent .
         ?human $wdt:$hasSex ?sex.
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
@@ -185,11 +167,11 @@ function counterOfAllGenders(){
 function counterOfRole(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query= "SELECT  ?roleLabel (COUNT(?human) AS ?count) WHERE
+    $query= "SELECT ?role ?roleLabel (count( distinct ?human) AS ?count) WHERE
     {  ?human $wdt:$instanceOf $wd:$person.
         ?human $wdt:$hasParticipantRole ?role.
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-    }GROUP BY ?roleLabel
+    }GROUP BY ?role ?roleLabel
     ORDER BY DESC(?count)";
 
 
@@ -206,18 +188,15 @@ function counterOfRole(){
     }
 }
 
-// TODO: 
 function counterOfStatus(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query= "SELECT  ?statusLabel (COUNT(?human) AS ?count) WHERE
+    $query= "SELECT ?status ?statusLabel (count( distinct ?human) AS ?count) WHERE
     {  ?human $wdt:$instanceOf $wd:$person.
         ?human $wdt:$hasPersonStatus ?status.
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-    } GROUP BY ?statusLabel
+    } GROUP BY ?status ?statusLabel
     ORDER BY DESC(?count)";
-
-    // print_r($query);die;
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
@@ -236,11 +215,11 @@ function counterOfStatus(){
 function counterOfOccupation(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query= "SELECT ?occupationLabel (COUNT(?human) AS ?count) WHERE
+    $query= "SELECT ?occupation ?occupationLabel (count( distinct ?human) AS ?count) WHERE
     {  ?human $wdt:$instanceOf $wd:$person.
         ?human $wdt:$hasOccupation ?occupation.
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-    } GROUP BY ?occupationLabel
+    } GROUP BY ?occupation ?occupationLabel
     ORDER BY DESC(?count)";
 
     $encode=urlencode($query);
@@ -262,13 +241,13 @@ function counterOfOccupation(){
 function counterOfAge(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $ageCategoryQuery ="SELECT ?agecategoryLabel (count(?agent) as ?count) where{
+    $ageCategoryQuery ="SELECT ?agecategory ?agecategoryLabel (count( distinct ?agent) as ?count) where{
                             ?agecategory $wdt:$instanceOf $wd:$ageCategory.
                             ?agent $wdt:$instanceOf $wd:$person.
                             ?agent $wdt:$hasAgeCategory ?agecategory.
                             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\" . }
 
-                        }group by  ?agecategoryLabel
+                        }group by ?agecategory ?agecategoryLabel
                         ";
 
     $encode=urlencode($ageCategoryQuery);
@@ -282,7 +261,7 @@ function counterOfAge(){
 function counterOfEthnodescriptor(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query="SELECT ?ethno ?ethnoLabel (COUNT(?human) as ?count)
+    $query="SELECT ?ethno ?ethnoLabel (count( distinct ?human) as ?count)
         {?human $wdt:$instanceOf $wd:$person.
         ?human $wdt:$hasECVO ?ethno.
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
@@ -308,11 +287,11 @@ function counterOfEthnodescriptor(){
 function counterOfEventType() {
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query="SELECT ?eventTypeLabel (COUNT(?event) AS ?count)  WHERE{
+    $query="SELECT ?eventType ?eventTypeLabel (count( distinct ?event) AS ?count)  WHERE{
         ?event $wdt:$instanceOf $wd:$event.
         ?event $wdt:$hasEventType ?eventType.
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-        } GROUP BY ?eventTypeLabel
+        } GROUP BY ?eventType ?eventTypeLabel
         ORDER BY DESC(?count)
     ";
 
@@ -332,7 +311,7 @@ function counterOfEventType() {
 function counterOfEventPlace(){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $query="SELECT ?place ?placeLabel ?(COUNT(?event) AS ?count) WHERE {
+    $query="SELECT ?place ?placeLabel ?(count( distinct ?event) AS ?count) WHERE {
                   ?event $wdt:$instanceOf $wd:$event.
                   ?event $wdt:$atPlace ?place.
 
@@ -358,7 +337,7 @@ function counterOfPlaceType(){
     include BASE_LIB_PATH."variableIncluder.php";
 
     $query= "
-      SELECT DISTINCT ?placetype ?placetypeLabel (COUNT(?place) AS ?count) WHERE {
+      SELECT DISTINCT ?placetype ?placetypeLabel (count( distinct ?place) AS ?count) WHERE {
           ?place $wdt:$instanceOf $wd:$place; #it's a place
               $wdt:$hasPlaceType ?placetype.
       SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" .}
@@ -383,7 +362,7 @@ function counterOfCity(){
     include BASE_LIB_PATH."variableIncluder.php";
 
     $query= "
-        SELECT DISTINCT ?city ?cityLabel (COUNT(?place) AS ?count) WHERE {
+        SELECT DISTINCT ?city ?cityLabel (count( distinct ?place) AS ?count) WHERE {
         ?city $wdt:$instanceOf $wd:$placeclass; #it's a place
         $wdt:$placetype $wd:$cityTownOrVillage.#?city is a city
         OPTIONAL {?place $wdt:$locatedIn ?city.} #place is locatedIn a city
@@ -408,11 +387,11 @@ function counterOfCity(){
 function counterOfSourceType(){
     include BASE_LIB_PATH."variableIncluder.php";
 
- $query="SELECT ?sourcetypeLabel (COUNT(?source) AS ?count)  WHERE{
+ $query="SELECT ?sourcetype ?sourcetypeLabel (count( distinct ?source) AS ?count)  WHERE{
      ?source $wdt:$instanceOf $wd:$entityWithProvenance.
      ?source $wdt:$hasOriginalSourceType ?sourcetype.
      SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-} GROUP BY ?sourcetypeLabel
+} GROUP BY ?sourcetype ?sourcetypeLabel
 ORDER BY DESC(?count)";
 
   $encode=urlencode($query);
@@ -499,7 +478,12 @@ function counterOfType() {
 
 
 function getSearchFilterCounters(){
-    
+    $searchType = '';
+    if (isset($_GET['search_type'])){
+        $searchType = $_GET['search_type'];
+    }
+    $counters = array();
+
     $peopleFilters = array(
         'Gender' => counterOfAllGenders(),
         'Age Category' => counterOfAge(),
@@ -507,36 +491,44 @@ function getSearchFilterCounters(){
         'Role Types' => counterOfRole(),
         'Status' => counterOfStatus(),
         'Occupation' => counterOfOccupation(),
-
     );
-
     $eventFilters = array(
-        'Event Type' => counterOfEventType(),
-        // 'Date' => getEventDateRange()
-
+        'Event Type' => counterOfEventType()
     );
-
     $placeFilters = array(
         'Place Type' => counterOfPlaceType()
     );
-
     $sourceFilters = array(
         'Source Type' => counterOfSourceType()
     );
+    
 
-    $projectFilters = array(
-        // TODO: GET PROJECT COUNTERS WORKING
-    );
+    if ($searchType == "all"){
+        $counters = array(
+            'People' => $peopleFilters,
+            'Event' => $eventFilters,
+            'Place' => $placeFilters,
+            'Source' => $sourceFilters
+        );
+    } else if ($searchType == "people"){
+        $counters = array(
+            'People' => $peopleFilters
+        );
+    } else if ($searchType == "events"){
+        $counters = array(
+            'Event' => $eventFilters
+        );
+    } else if ($searchType == "places"){
+        $counters = array(
+            'Place' => $placeFilters
+        );
+    } else if ($searchType == "sources"){
+        $counters = array(
+            'Source' => $sourceFilters
+        );
+    }
 
-    $allCounters = array(
-        'People' => $peopleFilters,
-        'Event' => $eventFilters,
-        'Place' => $placeFilters,
-        'Source' => $sourceFilters,
-        'Project' => $projectFilters
-    );
-
-    return json_encode($allCounters);
+    return json_encode($counters);
 }
 
 

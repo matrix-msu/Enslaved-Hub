@@ -130,8 +130,8 @@
                         foreach ($typeCats as $category => $qid) { ?>
                             <li>
                                 <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
+                                    <p><?php echo $category; ?> <em>(0)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -157,8 +157,8 @@
                         foreach ($typeCats as $category => $qid) { ?>
                             <li>
                                 <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?> " data-qid="<?php echo $qid; ?>">
+                                    <p><?php echo $category; ?> <em>(0)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -181,61 +181,30 @@
                         if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
                             $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
-                        else{
-                            //Condition for the key not being in the FILE_MAP ex. Countries and Regions which have queries
-                            $queryQ = '';
-                            if($type == "Countries"){
-                                $queryQ = 'Q32';
-                            }
-                            else if($type == "Regions"){
-                                $queryQ = 'Q333';
-                            }
-                            else{
-                                $queryQ = 'Q1';
-                            }
 
-                            $query = array('query' => "");
-                            $place = classes["Place"];
+                        if ($type == "Modern Countries"){
+                            // use the contry codes instead of qids for countries
+                            foreach ($typeCats as $countryCode => $countryName) { ?>
+                                <li>
+                                    <label class="<?php echo $catLower; ?>">
+                                        <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-countryCode="<?php echo $countryCode; ?>">
+                                        <p><?php echo $countryName; ?> <em>(0)</em></p>
+                                        <span></span>
+                                    </label>
+                                </li>
+                            <?php }
+                        } else {
+                            foreach ($typeCats as $category => $qid) { ?>
+                                <li>
+                                    <label class="<?php echo $catLower; ?>">
+                                        <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
+                                        <p><?php echo $category; ?> <em>(0)</em></p>
+                                        <span></span>
+                                    </label>
+                                </li>
+                            <?php }
+                        } ?>
 
-                            // get the categories from a blazegraph search
-                            $query['query'] = <<<QUERY
-SELECT ?country ?countryLabel WHERE {
-?country $wdt:$instanceOf $wd:$place .
-?country $wdt:$hasPlaceType $wd:$queryQ .
-
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}
-QUERY;
-
-                            //Execute query
-                            $ch = curl_init(BLAZEGRAPH_URL);
-                            curl_setopt($ch, CURLOPT_POST, 1);
-                            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                                'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                                'Accept: application/sparql-results+json'
-                            ));
-                            $result = curl_exec($ch);
-                            curl_close($ch);
-                            //Get result
-                            $result = json_decode($result, true)['results']['bindings'];
-
-                            if (!empty($result)){
-                                foreach($result as $row){
-                                    $typeCats[$row['countryLabel']['value']] = 'Q32';
-                                }
-                            }
-                        }
-                        foreach ($typeCats as $category => $qid) { ?>
-                            <li>
-                                <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
-                                    <span></span>
-                                </label>
-                            </li>
-                        <?php } ?>
                         </ul>
                     </li>
                 <?php } ?>
@@ -257,8 +226,8 @@ QUERY;
                         foreach ($typeCats as $category => $qid) { ?>
                             <li>
                                 <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
+                                    <p><?php echo $category; ?> <em>(0)</em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -279,44 +248,15 @@ QUERY;
                         <?php
                         $typeCats = array();
 
-                        $query = array('query' => "");
-                        $instanceOf = properties["instance of"];
-                        $researchProject = classes["Research Project"];
-
-                        // get the categories from a blazegraph search
-                        $query['query'] = <<<QUERY
-SELECT ?project ?projectLabel WHERE {
-  	?project $wdt:$instanceOf $wd:$researchProject.
-
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" . }
-}
-QUERY;
-
-                        //Execute query
-                        $ch = curl_init(BLAZEGRAPH_URL);
-                        curl_setopt($ch, CURLOPT_POST, 1);
-                        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
-                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-                            'Accept: application/sparql-results+json'
-                        ));
-                        $result = curl_exec($ch);
-                        curl_close($ch);
-                        //Get result
-                        $result = json_decode($result, true)['results']['bindings'];
-
-                        if (!empty($result)){
-                            foreach($result as $row){
-                                $typeCats[$row['projectLabel']['value']] = 'Q264';
-                            }
+                        if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+                            $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
 
                         foreach ($typeCats as $category => $qid) { ?>
                             <li>
                                 <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>">
-                                    <p><?php echo $category; ?> <em>(234)</em></p>
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
+                                    <p><?php echo $category; ?></p>
                                     <span></span>
                                 </label>
                             </li>
