@@ -18,8 +18,6 @@ WHERE {
     $eventTypeIdFilter
     $placeIdFilter
     $placeTypeIdFilter
-    $cityIdFilter
-    $provinceIdFilter
     $projectIdFilter
 }
 QUERY;

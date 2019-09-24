@@ -267,66 +267,18 @@ function blazegraph()
                     }
                 }
 
-                // filter people by city
-                $cityIdFilter = "";
-                if (isset($filtersArray['city']) && isset($filtersArray['city'][0]) ){
-                    $cityName = $filtersArray['city'][0];
-                    if (array_key_exists($cityName, cities)){
-                        $cityQ = cities[$cityName];
-                        $cityIdFilter .= "
-                                ?agent $p:$hasParticipantRole ?statementrole.
-                                ?statementrole $ps:$hasParticipantRole ?role.
-                                ?statementrole $pq:$roleProvidedBy ?event.
-                                ?event $wdt:$atPlace $wd:$cityQ.
-                        ";
-                    }
-                }
-
-
-                // filter people by province
-                $provinceIdFilter = "";
-                if (isset($filtersArray['province']) && isset($filtersArray['province'][0]) ){
-                    $provinceName = $filtersArray['province'][0];
-                    if (array_key_exists($provinceName, provinces)){
-                        $provinceQ = provinces[$provinceName];
-                        $provinceIdFilter .= "
-                                ?agent $p:$hasParticipantRole ?statementrole.
-                                ?statementrole $ps:$hasParticipantRole ?role.
-                                ?statementrole $pq:$roleProvidedBy ?event.
-                                ?event $wdt:$atPlace $wd:$provinceQ.";
-                    }
-                }
-
-
-                // filter people by region
-                $regionIdFilter = "";
-                if (isset($filtersArray['regions']) && isset($filtersArray['regions'][0]) ){
-                    $regionName = $filtersArray['regions'][0];
-                    if (array_key_exists($regionName, places)){
-                        $regionQ = places[$regionName];
-                        // $regionIdFilter .= "
-                        //         ?agent ?property  ?object .
-                        //         ?object $prov:wasDerivedFrom ?provenance .
-                        //         ?provenance $pr:$isDirectlyBasedOn ?source .
-                        //         ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
-                        //     ";
-                    }
-                }
-
                 // filter people by country
-                // $projectIdFilter = "";
-                // if (isset($filtersArray['countries']) && isset($filtersArray['countries'][0]) ){
-                //     $projectName = $filtersArray['countries'][0];
-                //     if (array_key_exists($projectName, projects)){
-                //         $projectQ = projects[$projectName];
-                //         $projectIdFilter .= "
-                //                 ?agent ?property  ?object .
-                //                 ?object $prov:wasDerivedFrom ?provenance .
-                //                 ?provenance $pr:$isDirectlyBasedOn ?source .
-                //                 ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
-                //             ";
-                //     }
-                // }
+                $countryIdFilter = "";
+                if (isset($filtersArray['modern_countries']) && isset($filtersArray['modern_countries'][0]) ){
+                    $countryName = $filtersArray['modern_countries'][0];
+                    if (array_key_exists($countryName, countrycode)){
+                        $countryCode = countrycode[$countryName];
+                        //TODO: CREATE FILTER BASED ON COUNTRY CODES
+                        $countryIdFilter .= "
+                                
+                            ";
+                    }
+                }
 
 
 
