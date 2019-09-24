@@ -21,6 +21,14 @@ var fields = [];    // fields for the table view
 var sort = 'ASC';
 var formattedData = {};
 
+var address = document.location.toString().split('/')
+var category = address[address.length - 1].split('?')[0]
+if(category == 'people' || category == 'events' || category == 'places' || category == 'sources'){
+    $(".search-title").html('<h1>'+category.charAt(0).toUpperCase()+category.substr(1).toLowerCase()+'</h1>')
+    $("h1").css('line-height', 'normal')
+    $(".heading-search").empty()
+}
+
 // Get params from url
 if(document.location.toString().indexOf('?') !== -1)
 {
@@ -85,7 +93,7 @@ function searchResults(preset, limit = 12, offset = 0)
             isSearching = false;
             result_array = JSON.parse(data);
             console.log('results', result_array)
-            
+
             total_length = result_array['total'];
 
             var showingResultsText = '';
@@ -158,58 +166,100 @@ searchResults(search_type);
 
 //Document load
 $(document).ready(function() {
+console.log('hrerere', filters)
+    var firstFilter = "";
 
-    // get all filter counters
+    for (filter in filters){
+        if (filter != "limit" && filter != "offset"){
+            firstFilter = filter;
+            break;
+        }
+    }
 
 
+    // get the search type filters first
     $.ajax({
         url: BASE_URL + "api/getSearchFilterCounters",
         type: "GET",
+        data: {
+            search_type: search_type,
+            filters: filters,
+        },
         'success': function (data) {
             var allCounters = JSON.parse(data);
-            
-            for (var filterType in allCounters){
-                var counterType = allCounters[filterType];
+            fillFilterCounters(allCounters);
 
-                for (var filter in counterType){
-                    JSON.parse(counterType[filter]).forEach(function (record) {
-                        var label = "";
-                        var count = "";
-                        for (var key in record) {
-                            if (key.match("Label$")) {
-                                label = record[key]['value'];
-                            }
-                            if (key.match("count$")) {
-                                count = record[key]['value'];
-                            }
-                            else if (key.match("Count$")) {
-                                if (count !== "") {
-                                    var count2 = record[key]['value'];
-                                    count = +count + +count2;
-                                }
-                                else {
-                                    count = record[key]['value'];
-                                }
+            // open the drawer for the first filter once the counters are made
+            if (firstFilter != ""){
+                if ( !$("li[name='" + firstFilter + "']").find("span").hasClass("show") )
+                $("li[name='" + firstFilter + "']").trigger('click');
+            }
 
-                            }
-                        }
 
-                        // console.log(label, count)
 
-                        // fill in the counters for the filters
-                        if (label != "") {
-                            var $input = $("input[value='"+label+"']")
-                            var $counter = $input.next().find('em');
-                            $counter.html('('+count+')');
-
-                        }
-                    });
-                }
+            // get the rest of the filters
+            if (search_type != "all"){
+                $.ajax({
+                    url: BASE_URL + "api/getSearchFilterCounters",
+                    type: "GET",
+                    data: {
+                        search_type: "all",
+                        filters: filters,
+                    },
+                    'success': function (data) {
+                        var allCounters = JSON.parse(data);
+                        fillFilterCounters(allCounters)
+                    }
+                });
             }
         }
     });
 
+// fill in the counters next to the filters
+function fillFilterCounters(allCounters){
+    for (var filterType in allCounters) {
+        var counterType = allCounters[filterType];
 
+        for (var filter in counterType) {
+            JSON.parse(counterType[filter]).forEach(function (record) {
+                var label = "";
+                var count = "";
+                var qid = "";
+
+                for (var key in record) {
+                    if (record[key]['type'] == "uri") {
+                        qid = record[key]['value'].split('/').pop()
+                    }
+
+                    if (key.match("Label$")) {
+                        label = record[key]['value'];
+                    }
+                    if (key.match("count$")) {
+                        count = record[key]['value'];
+                    }
+                    else if (key.match("Count$")) {
+                        if (count !== "") {
+                            var count2 = record[key]['value'];
+                            count = +count + +count2;
+                        }
+                        else {
+                            count = record[key]['value'];
+                        }
+
+                    }
+                }
+
+                // fill in the counters for the filters
+                if (label != "" && qid != "") {
+                    // console.log(label, qid, count)
+                    var $input = $("input[data-qid='" + qid + "']");
+                    var $counter = $input.next().find('em');
+                    $counter.html('(' + count + ')');
+                }
+            });
+        }
+    }
+}
 
 
 
@@ -222,11 +272,42 @@ $(document).ready(function() {
 
 
     ///******************************************************************* */
-    /// Set Filter Checkboxes
+    /// Set Filter Checkboxes / Category Headers
     ///******************************************************************* */
 
     //For form type
     upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
+
+    if(upperForm.toString() == 'All'){
+        // console.log('in all')
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='people'><div class='person-image'></div>People</li>"+
+                                    "<li class='unselected' id='event'><div class='event-image'></div>Events</li>"+
+                                    "<li class='unselected' id='place'><div class='place-image'></div>Places</li>"+
+                                    "<li class='unselected' id='source'><div class='source-image'></div>Sources</li>"+
+                                    "<hr></ul>" );
+    }else if(upperForm == 'People'){
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='people'><div class='person-image'></div>People</li>"+
+                                    "<hr></ul>" );
+        $( ".categories ul" ).css("overflow-x", "hidden")
+    }else if(upperForm == 'Events'){
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='event'><div class='event-image'></div>Events</li>"+
+                                    "<hr></ul>" );
+        $( ".categories ul" ).css("overflow-x", "hidden")
+    }else if(upperForm == 'Places'){
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='place'><div class='place-image'></div>Places</li>"+
+                                    "<hr></ul>" );
+        $( ".categories ul" ).css("overflow-x", "hidden")
+    }else if(upperForm == 'Sources'){
+        $( ".categories" ).html( "<ul>"+
+                                    "<li class='unselected selected' id='source'><div class='source-image'></div>Sources</li>"+
+                                    "<hr></ul>" );
+        $( ".categories ul" ).css("overflow-x", "hidden")
+    }
+
     $(".filter-menu ul.catmenu li").each(function(){
         if("categories" in filters && filters["categories"].length > 0)
         {
@@ -255,7 +336,7 @@ $(document).ready(function() {
                     var temp = [values];
                     values = temp;
                 }
-                
+
                 $.each(values, function(indx, value){
                     //Looks for input where value = value
                     if($(that).find('input').val() == value) {
@@ -782,12 +863,12 @@ function generateFilterCards(){
     {
         if(key && values && key != "limit" && key != "offset")
         {
-            
+
             if (!Array.isArray(values)){
                 temp = [values];
                 values = temp;
-            } 
-            
+            }
+
             //Add filter cards
             $.each(values, function(indx, value)
             {

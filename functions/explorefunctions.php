@@ -206,58 +206,6 @@ function counterOfRole(){
     }
 }
 
-// TODO: 
-function counterOfStatus(){
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $query= "SELECT  ?statusLabel (COUNT(?human) AS ?count) WHERE
-    {  ?human $wdt:$instanceOf $wd:$person.
-        ?human $wdt:$hasPersonStatus ?status.
-            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-    } GROUP BY ?statusLabel
-    ORDER BY DESC(?count)";
-
-    // print_r($query);die;
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        return json_encode($res->results->bindings);
-    }else{
-        return $res;
-    }
-}
-
-
-function counterOfOccupation(){
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $query= "SELECT ?occupationLabel (COUNT(?human) AS ?count) WHERE
-    {  ?human $wdt:$instanceOf $wd:$person.
-        ?human $wdt:$hasOccupation ?occupation.
-            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-    } GROUP BY ?occupationLabel
-    ORDER BY DESC(?count)";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        return json_encode($res->results->bindings);
-    }else{
-        return $res;
-    }
-}
-
-
-
 // Count the number of people in each age category
 function counterOfAge(){
     include BASE_LIB_PATH."variableIncluder.php";
@@ -469,6 +417,9 @@ function counterOfType() {
         if ($type == "Ethnodescriptor"){
             return counterOfEthnodescriptor();
         }
+        if ($type == "Place"){
+            return counterOfPeoplePlace();  // not real
+        }
     }
 
     if($category == "Places") {
@@ -490,66 +441,6 @@ function counterOfType() {
   }
 
 }
-
-
-
-
-
-
-
-
-function getSearchFilterCounters(){
-    
-    $peopleFilters = array(
-        'Gender' => counterOfAllGenders(),
-        'Age Category' => counterOfAge(),
-        'Ethnodescriptor' => counterOfEthnodescriptor(),
-        'Role Types' => counterOfRole(),
-        'Status' => counterOfStatus(),
-        'Occupation' => counterOfOccupation(),
-
-    );
-
-    $eventFilters = array(
-        'Event Type' => counterOfEventType(),
-        // 'Date' => getEventDateRange()
-
-    );
-
-    $placeFilters = array(
-        'Place Type' => counterOfPlaceType()
-    );
-
-    $sourceFilters = array(
-        'Source Type' => counterOfSourceType()
-    );
-
-    $projectFilters = array(
-        // TODO: GET PROJECT COUNTERS WORKING
-    );
-
-    $allCounters = array(
-        'People' => $peopleFilters,
-        'Event' => $eventFilters,
-        'Place' => $placeFilters,
-        'Source' => $sourceFilters,
-        'Project' => $projectFilters
-    );
-
-    return json_encode($allCounters);
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 function getEventDateRange() {
     include BASE_LIB_PATH."variableIncluder.php";
@@ -727,7 +618,7 @@ function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
 //finish to display ranks here. Error now it only displays PI with higher rank.
 function getProjectFullInfo() {
     include BASE_LIB_PATH."variableIncluder.php";
-    
+
     $qid = $_GET['qid'];
     $query = "SELECT  ?title ?desc ?link
              (group_concat(distinct ?pinames; separator = \"||\") as ?piNames)
@@ -1338,7 +1229,7 @@ HTML;
           continue;
         }
         else if($label === "Geoname Identifier"){
-          $html .= '<a href="http://www.geonames.org/' . $statementArr[0] . '/">';
+          $html .= '<a href="http://www.geonames.org/' . $statementArr[0] . '/" target="_blank">';
         }
         else if($label === "Sources"){
           $html .= '<a href="' . $baseurl . 'record/source/' . $qidArr[$x] . '">';
@@ -1418,7 +1309,7 @@ function getPersonRecordHtml(){
     curl_close($ch);
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
-    
+
     // print_r($result);die;
     if (empty($result)){
       echo json_encode(Array());
@@ -1715,7 +1606,7 @@ HTML;
                     $placeUrl = $parts[0];
                     $placeQ = end(explode('/', $placeUrl));
                     $placeType = $parts[1];
-                    
+
                     // group the place Qids with their types
                     $allPlacesToTypesMap[$placeQ] = array('placeQ' => $placeQ, 'placeType' => $placeType);
                 }
@@ -1734,7 +1625,7 @@ HTML;
                         $eventUrl = $parts[0];
                         $eventQ = end(explode('/', $eventUrl));
                         $placeName = $parts[1];
-                        
+
                         $placeUrlIndex = array_search($placeName, $allPlaceLabels);
                         $placeUrl = $allPlaceUrls[$placeUrlIndex];
                         $placeQ = end(explode('/', $placeUrl));
@@ -2004,7 +1895,7 @@ HTML;
             $unknownPlaces[$eventPlace['name']] = $eventPlace['placeQ'];
         }
     }
-    
+
     // set the place info select buttons for this year
     // foreach ($unknownPlaces as $placeName => $placeQ) {
     //     $html .= '
@@ -2160,7 +2051,7 @@ HTML;
 
     foreach ($unknownEvents as $event) {
         $kid = $event['kid'];
-        
+
         $html .= '
             <div
                 class="event-point no-select '.($timelineIndex == 0 ? 'active' : '').'"
@@ -2264,7 +2155,7 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
       ?agent $p:$hasParticipantRole ?statementrole.
       ?statementrole $ps:$hasParticipantRole ?roles.
       ?statementrole $pq:$roleProvidedBy ?roleevent.
-          
+
  		  ?roleevent $wdt:$atPlace ?place.
 		  ?place $rdfs:label ?placelabel.
     }.

@@ -389,12 +389,10 @@
 }
 
 .partner-text{
-    padding: 80px 0 80px;
-    width: 100%;
-    .textwrap{
-        margin: 0 auto;
-        max-width: 1000px;
-        padding: 0 6% 40px;
+    margin: 60px auto;
+	max-width: 1000px;
+	width: 90%;
+	font-family: aleobold;
 
         h2{
             font-size: 22px;
@@ -403,9 +401,8 @@
         }
 
         p{
-            font-size: 14px;
+            font-size: 16px;
             color: $base-dark;
-            line-height: 32px;
         }
 
         a{
@@ -413,7 +410,11 @@
             text-decoration: underline;
             color: $sub-base;
         }
-    }
+        
+        .intro {
+	        margin-bottom: 50px;
+	        line-height: 24px; 
+        }
 }
 
 .contact-form{
