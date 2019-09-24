@@ -10,12 +10,6 @@
         <h1><?php echo $cache_data['title'] ?></h1>
     </div>
 </div>
-<!-- info container-->
-<div class="container info">
-    <div class="container infowrap">
-        <?php echo $cache_data['descr'] ?>
-    </div>
-</div>
 
 <div class="container getinvolved-view">
   <a href="<?php echo BASE_URL?>">
@@ -30,29 +24,21 @@
 <!-- text sections -->
 <div class="container getinvolved-submit">
     <h2>Submit Project or Scholar</h2>
-    <p>Enslaved is always looking for new partners to participate in our project. If you have data about the historic slave trade, please email us at <a href="" id="getinvolved-email">hello@enslaved.org</a>. We are willing to work with all projects, data types, and contributors. </p>
-    <!-- <div class="buttonwrap">
-        <ul class="row">
-            <li> -->
-                <a href="<?php echo BASE_URL?>">
-                    <div class="buttons" id="first-button">
-                        <h3>Project Submission</h3>
-                        <img class="about-button-chevron" id="green-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-green.svg" alt="Chevron">
-                        <img class="about-button-chevron" id="red-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-red.svg" alt="Chevron">
-                    </div>
-                </a>
-            <!-- </li>
-            <li> -->
-                <a href="<?php echo BASE_URL?>">
-                    <div class="buttons">
-                        <h3>Scholar Submission</h3>
-                        <img class="about-button-chevron" id="green-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-green.svg" alt="Chevron">
-                        <img class="about-button-chevron" id="red-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-red.svg" alt="Chevron">
-                    </div>
-                </a>
-            <!-- </li>
-        </ul>
-      </div> -->
+    <?php echo $cache_data['descr'] ?>
+    <a href="<?php echo BASE_URL?>">
+        <div class="buttons" id="first-button">
+            <h3>Project Submission</h3>
+            <img class="about-button-chevron" id="green-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-green.svg" alt="Chevron">
+            <img class="about-button-chevron" id="red-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-red.svg" alt="Chevron">
+        </div>
+    </a>
+    <a href="<?php echo BASE_URL?>">
+        <div class="buttons">
+            <h3>Scholar Submission</h3>
+            <img class="about-button-chevron" id="green-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-green.svg" alt="Chevron">
+            <img class="about-button-chevron" id="red-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-red.svg" alt="Chevron">
+        </div>
+    </a>
 </div>
 
 <!--
