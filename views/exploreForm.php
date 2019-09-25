@@ -18,7 +18,7 @@ $cache_Data = Json_GetData_ByTitle($upper);
 <div class="container info">
     <div class="container infowrap">
         <p> <?php echo $cache_Data['descr'] ?></p>
-        <a href="" class="view-more">View All <?php echo $upper;?></a>
+        <a href="<?php echo BASE_URL;?>search/<?php echo EXPLORE_FORM ?>" class="view-more">View All <?php echo $upper;?></a>
     </div>
 </div>
 <!-- explore by -->

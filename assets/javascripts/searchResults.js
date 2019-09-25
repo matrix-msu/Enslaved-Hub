@@ -175,7 +175,6 @@ $(document).ready(function() {
         }
     }
 
-
     // get the search type filters first
     $.ajax({
         url: BASE_URL + "api/getSearchFilterCounters",
@@ -194,8 +193,6 @@ $(document).ready(function() {
                 if ( !$("li[name='" + firstFilter + "']").find("span").hasClass("show") )
                 $("li[name='" + firstFilter + "']").trigger('click');
             }
-
-
 
             // get the rest of the filters
             if (search_type != "all"){
