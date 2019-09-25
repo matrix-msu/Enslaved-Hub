@@ -18,7 +18,7 @@ if (isset($_GET['prev'])){
 <div class="container info timeinfo">
     <div class="container infowrap">
         <p>
-            Date Range
+            Use the dropdowns to create a date range.
         </p>
     </div>
 </div>
@@ -29,11 +29,27 @@ if (isset($_GET['prev'])){
             <div class="search-section">
                 <div class="inputwrap">
                     <label for="startYear">Start Year</label>
-                    <input type="text" name="startyear" maxlength="4" id="startyear" pattern="\d{4}" required/>
+                    <select class="s2-single date-from" id="event-from" name="">
+                        <option value""></option>
+                        <!-- <option value="1840">1840</option>
+                        <option value="1841">1841</option>
+                        <option value="1842">1842</option>
+                        <option value="1840">1843</option>
+                        <option value="1841">1844</option>
+                        <option value="1842">1845</option> -->
+                    </select>
                 </div>
                 <div class="inputwrap">
                     <label for="endYear">End Year</label>
-                    <input type="text" name="endyear" maxlength="4" id="endyear" pattern="\d{4}" required/>
+                    <select class="s2-single date-to" id="event-to" name="">
+                        <option value""></option>
+                        <!-- <option value="1840">1840</option>
+                        <option value="1841">1841</option>
+                        <option value="1842">1842</option>
+                        <option value="1840">1843</option>
+                        <option value="1841">1844</option>
+                        <option value="1842">1845</option> -->
+                    </select>
                 </div>
                 <input class="event-date-range" type="hidden" name="date" value=""/>
             </div>
