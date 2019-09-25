@@ -12,7 +12,7 @@ SELECT DISTINCT ?agent
 
 
 (count(distinct ?relations) as ?countpeople)
-(count(distinct ?event) as ?counterevent)
+(count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
 (count(distinct ?reference) as ?countsource)
 WHERE {

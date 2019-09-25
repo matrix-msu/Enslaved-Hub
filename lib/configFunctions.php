@@ -27,33 +27,46 @@ function Kora_GetNavigationData()
 	if(array_key_exists("error", $decode_results)) return json_encode("failed");
 
 	// Read from the webPages file and compare to the kora results
-	$cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
-	if($cached_data == json_encode(json_decode($koraResults)->records[0])) return json_encode("similar");
+	// $cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
+	// if($cached_data == json_encode(json_decode($koraResults)->records[0])) return json_encode("similar");
 
 	// put content to webPages.json file
 	file_put_contents( BASE_PATH . "cache/webPages.json", json_encode(json_decode($koraResults)->records[0]));
 
 	$navs = [];
-	$prev = "";
-	$index = -1;
+	$found = [];
 
+	// print_r($decode_results["records"][0]);die;
 	// Extract All main navigations and sub navigations
 	foreach ($decode_results["records"][0] as $result)
 	{
 		if(!array_key_exists("Navigation", $result) || (array_key_exists("Navigation Order", $result) && $result["Navigation Order"] == 0)) continue;
 		$nav = $result["Navigation"][0];
 
-		if($nav != $prev)
+		print_r($nav);
+	
+
+		if(!in_array($nav, $found))
 		{
 			array_push($navs, [$nav, []]);
-			$prev = $nav;
-			$index ++;
+			$found[] = $nav;
 		}
 
+
 		if(!array_key_exists("SubNavigation", $result) || array_key_exists("SubNavigation Display", $result) && 
-			$result["SubNavigation Display"] == "FALSE") continue;
-		
-		array_push($navs[$index][1], $result["SubNavigation"]);
+			$result["SubNavigation Display"] == "FALSE" ||  $result["SubNavigation"] == "") continue;
+		echo " - ";
+		print_r($result["SubNavigation"]);
+		echo " - ";
+		print_r($result["Sub Navigation Order"]);
+		echo "<br>";
+		foreach ($navs as $index => $subArray){
+			if ($subArray[0] == $nav){
+				array_push($navs[$index][1], $result["SubNavigation"]);
+				break;
+			}
+		}
+
 	}
 	// put navigations to navContents.json file
 	file_put_contents( BASE_PATH . "cache/navContents.json", json_encode($navs));

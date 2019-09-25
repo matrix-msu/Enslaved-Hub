@@ -1267,7 +1267,7 @@ HTML;
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
                             $dateName = ($startYear != '' && $endYear != '') ? "Date Range" : "Date";
-                            $dateRangeHtml = "<div class='detail'><p class='detail-title'>dateName</p><p>$dateRange</p></div>";
+                            $dateRangeHtml = "<div class='detail'><p class='detail-title'>$dateName</p><p>$dateRange</p></div>";
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Event.svg';
@@ -1407,8 +1407,6 @@ HTML;
                 } else {
                     $countsource = '';
                 }
-
-
 
                 //Connection html
                 $connection_lists = Array(

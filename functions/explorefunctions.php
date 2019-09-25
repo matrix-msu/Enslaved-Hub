@@ -2391,7 +2391,7 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 }ORDER BY ?random
 QUERY;
 
-
+print_r($query);die;
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
