@@ -39,31 +39,31 @@
                     <a class="content-link" href="<?php echo BASE_URL;?>search/people">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                         <p class="type">People</p>
-                        <p class="count"><?php echo queryAllAgentsCounter();?></p>
+                        <p class="count"><?php //echo queryAllAgentsCounter();?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a  class="content-link"href="<?php echo BASE_URL;?>search/events">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                         <p class="type">Events</p>
-                        <p class="count"><?php echo queryEventCounter();?></p>
+                        <p class="count"><?php //echo queryEventCounter();?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a class="content-link" href="<?php echo BASE_URL;?>search/places">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                         <p class="type">Places</p>
-                        <p class="count"><?php echo queryPlaceCounter();?></p>
+                        <p class="count"><?php //echo queryPlaceCounter();?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <!-- <a class="content-link" href="<?php echo BASE_URL;?>search/projects">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
                         <p class="type">Projects</p>
-                        <p class="count"><?php echo queryProjectsCounter();?></p>
+                        <p class="count"><?php //echo queryProjectsCounter();?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a> -->
                     <a class="content-link" href="<?php echo BASE_URL;?>search/sources">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                         <p class="type">Sources</p>
-                        <p class="count"><?php echo querySourceCounter();?></p>
+                        <p class="count"><?php //echo querySourceCounter();?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                 </div>
