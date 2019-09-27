@@ -43,30 +43,21 @@ function Kora_GetNavigationData()
 		if(!array_key_exists("Navigation", $result) || (array_key_exists("Navigation Order", $result) && $result["Navigation Order"] == 0)) continue;
 		$nav = $result["Navigation"][0];
 
-		print_r($nav);
-	
-
 		if(!in_array($nav, $found))
 		{
 			array_push($navs, [$nav, []]);
 			$found[] = $nav;
 		}
 
-
 		if(!array_key_exists("SubNavigation", $result) || array_key_exists("SubNavigation Display", $result) && 
 			$result["SubNavigation Display"] == "FALSE" ||  $result["SubNavigation"] == "") continue;
-		echo " - ";
-		print_r($result["SubNavigation"]);
-		echo " - ";
-		print_r($result["Sub Navigation Order"]);
-		echo "<br>";
+
 		foreach ($navs as $index => $subArray){
 			if ($subArray[0] == $nav){
 				array_push($navs[$index][1], $result["SubNavigation"]);
 				break;
 			}
 		}
-
 	}
 	// put navigations to navContents.json file
 	file_put_contents( BASE_PATH . "cache/navContents.json", json_encode($navs));
