@@ -557,7 +557,8 @@ function blazegraph()
         $urls = (array_column(array_column($result, $searchTypes[$preset]), 'value'));
         $qids = [];
         foreach($urls as $url){
-            $qids[] = end(explode('/', $url));
+		$tempppp = explode('/', $url);
+            $qids[] = end($tempppp);
         }
 
         // create the line in the query with the ids to search for

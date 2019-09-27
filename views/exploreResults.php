@@ -4,6 +4,7 @@
     <div class="image-container search-page">
         <div class="container middlewrap search-page">
             <?php
+//die;
             $typeTitle = "";
             $typeLower = "";
             $currentTitle = 'Search';
@@ -27,6 +28,7 @@
                 $showPath = true;
                 $fromBrowse = true;
             }
+//die;
             ?>
             <!-- <h4 class="last-page-header" style="<?php  echo (!$showPath) ? 'display:none' : '' ?> ">
                 <a id="last-page" class="prev1" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM ?>">
@@ -42,7 +44,7 @@
             </div>
             <?php //if(!$fromBrowse) { ?>
             <div class="heading-search">
-            <p>Start a search across <?php echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+            <p>Start a search across <?php //echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
