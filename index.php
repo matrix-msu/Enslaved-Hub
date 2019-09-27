@@ -17,7 +17,7 @@
     <!-- stylesheet -->
     <link rel="stylesheet" href="<?php echo BASE_CSS_URL;?>" type="text/css">
     <!-- jquery / local scripts -->
-    <script language="JavaScript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>header.js"></script>
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>modal.js"></script>
     <!-- select2 cdn links -->
