@@ -470,12 +470,18 @@ function counterOfType() {
 
 }
 
+function getHomePageCounters(){
+    $counters = array(
+            'all' => counterofAllitems(),
+            'agents' => queryAllAgentsCounter(),
+            'events' => queryEventCounter(),
+            'places' => queryPlaceCounter(),
+            'projects' => queryProjectsCounter(),
+            'sources' => querySourceCounter(),
+    );
 
-
-
-
-
-
+    return json_encode($counters);
+}
 
 function getSearchFilterCounters(){
     $searchType = '';
@@ -501,7 +507,7 @@ function getSearchFilterCounters(){
     $sourceFilters = array(
         'Source Type' => counterOfSourceType()
     );
-    
+
 
     if ($searchType == "all"){
         $counters = array(
@@ -719,7 +725,7 @@ function getInfoperStatement($baseuri,$array,$tag,$property,$qcv){
 //finish to display ranks here. Error now it only displays PI with higher rank.
 function getProjectFullInfo() {
     include BASE_LIB_PATH."variableIncluder.php";
-    
+
     $qid = $_GET['qid'];
     $query = "SELECT  ?title ?desc ?link
              (group_concat(distinct ?pinames; separator = \"||\") as ?piNames)
@@ -1410,7 +1416,7 @@ function getPersonRecordHtml(){
     curl_close($ch);
     //Get result
     $result = json_decode($result, true)['results']['bindings'];
-    
+
     // print_r($result);die;
     if (empty($result)){
       echo json_encode(Array());
@@ -1707,7 +1713,7 @@ HTML;
                     $placeUrl = $parts[0];
                     $placeQ = end(explode('/', $placeUrl));
                     $placeType = $parts[1];
-                    
+
                     // group the place Qids with their types
                     $allPlacesToTypesMap[$placeQ] = array('placeQ' => $placeQ, 'placeType' => $placeType);
                 }
@@ -1726,7 +1732,7 @@ HTML;
                         $eventUrl = $parts[0];
                         $eventQ = end(explode('/', $eventUrl));
                         $placeName = $parts[1];
-                        
+
                         $placeUrlIndex = array_search($placeName, $allPlaceLabels);
                         $placeUrl = $allPlaceUrls[$placeUrlIndex];
                         $placeQ = end(explode('/', $placeUrl));
@@ -1996,7 +2002,7 @@ HTML;
             $unknownPlaces[$eventPlace['name']] = $eventPlace['placeQ'];
         }
     }
-    
+
     // set the place info select buttons for this year
     // foreach ($unknownPlaces as $placeName => $placeQ) {
     //     $html .= '
@@ -2152,7 +2158,7 @@ HTML;
 
     foreach ($unknownEvents as $event) {
         $kid = $event['kid'];
-        
+
         $html .= '
             <div
                 class="event-point no-select '.($timelineIndex == 0 ? 'active' : '').'"
@@ -2256,7 +2262,7 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
       ?agent $p:$hasParticipantRole ?statementrole.
       ?statementrole $ps:$hasParticipantRole ?roles.
       ?statementrole $pq:$roleProvidedBy ?roleevent.
-          
+
  		  ?roleevent $wdt:$atPlace ?place.
 		  ?place $rdfs:label ?placelabel.
     }.

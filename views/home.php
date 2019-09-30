@@ -13,13 +13,12 @@
             <p><?php echo $cache_data["descr"] ?> </p>
         </div>
         <div class="heading-search">
-            <p>Start a search across <?php //echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+            <p>Start a search across <span id="count-all"></span> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
                 <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
                 <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
-                <!-- <img class="search-close" src="<?php echo BASE_URL;?>/assets/images/Close.svg"/> -->
             </form>
         </div>
     </div>
@@ -39,31 +38,25 @@
                     <a class="content-link" href="<?php echo BASE_URL;?>search/people">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                         <p class="type">People</p>
-                        <p class="count"><?php //echo queryAllAgentsCounter();?></p>
+                        <p class="count" id="count-agents"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a  class="content-link"href="<?php echo BASE_URL;?>search/events">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                         <p class="type">Events</p>
-                        <p class="count"><?php //echo queryEventCounter();?></p>
+                        <p class="count" id="count-events"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a class="content-link" href="<?php echo BASE_URL;?>search/places">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                         <p class="type">Places</p>
-                        <p class="count"><?php //echo queryPlaceCounter();?></p>
+                        <p class="count" id="count-places"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
-                    <!-- <a class="content-link" href="<?php echo BASE_URL;?>search/projects">
-                        <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
-                        <p class="type">Projects</p>
-                        <p class="count"><?php //echo queryProjectsCounter();?></p>
-                        <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
-                    </a> -->
                     <a class="content-link" href="<?php echo BASE_URL;?>search/sources">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                         <p class="type">Sources</p>
-                        <p class="count"><?php //echo querySourceCounter();?></p>
+                        <p class="count" id="count-sources"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                 </div>
@@ -112,7 +105,7 @@
             </div>
         </div>
     </div>
-    
+
     <section class="section section-epp">
         <div class="section-content">
             <div class="row">
@@ -149,45 +142,4 @@
     </div>
 </main>
 
-<script>
-
-    $(document).ready(function () {
-        // Create the 2 stories cards
-        $.ajax({
-            url: BASE_URL + "api/blazegraph",
-            type: "GET",
-            data: {
-                preset: 'stories',
-                filters:  {limit: 2},
-                templates: ['homeCard']
-
-            },
-            'success': function (data) {
-                result_array = JSON.parse(data);
-                console.log(result_array);
-                result_array['homeCard'].forEach(function (card) {
-                    $(card).appendTo("#stories-list");
-                });
-            }
-        });
-
-        // Create the 2 projects cards
-        $.ajax({
-            url: BASE_URL + "api/blazegraph",
-            type: "GET",
-            data: {
-                preset: 'projects',
-                filters:  {limit: 2},
-                templates: ['homeCard']
-
-            },
-            'success': function (data) {
-                result_array = JSON.parse(data);
-                result_array['homeCard'].forEach(function (card) {
-                    $(card).appendTo("#projects-list");
-                });
-            }
-        });
-    });
-
-</script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/home.js"></script>
