@@ -148,8 +148,8 @@
                 }
                 div{
                     padding-right: 10px;
-                    left: 0;
-                    top: -5px;
+                    left: 5px;
+                    top: -3px;
                     background-repeat: no-repeat;
                     position: absolute;
                 }
@@ -205,7 +205,8 @@
 
             li.card{
                 cursor: pointer;
-                width: 48%;
+                width: 49%;
+                height: 270px;
                 margin-right: 2%;
                 margin-bottom: 15px;
                 box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
@@ -215,25 +216,29 @@
                 transition: all .3s;
                 position: relative;
                 padding: 20px;
-                
+
+                &:nth-child(2n){
+                    margin-right: 0;
+                }
                 a{
                     text-decoration: none;
                 }
-    
-    
+
+
                 &:hover{
                     border: 2px solid $accent;
                     box-shadow: 0 12px 13px 0 rgba(44,44,44,0.1);
                 }
-                
+
                 .card-title{
                     display: flex;
                     align-items: center;
-    
+                    margin-bottom: 25px;
+
                     img{
                         margin-right: 15px;
                     }
-    
+
                     h3{
                         color: $base-dark;
                         font-size: 24px;
@@ -249,11 +254,11 @@
                     display: flex;
                     flex-wrap: wrap;
                     // justify-content: space-between;
-    
+
                     .detail{
                         margin-right: 25px;
                         margin-bottom: 20px;
-    
+
                         p{
                             color: $base-dark;
                             font-size: 14px;
@@ -271,27 +276,27 @@
                     bottom: 0;
                     left: 0;
                     padding-bottom: 5px;
-    
+
                     .connections{
                         min-height: 40px;
                         max-width: 100%;
                         padding: 0 20px;
                         display: flex;
                         justify-content: start;
-    
+
                         .card-icons{
                             position: relative;
                             display: flex;
                             align-items: center;
                             font-size: 12px;
                             margin-right: 25px;
-    
+
                             &:hover{
                                 .connection-menu{
                                     display: block;
                                 }
                             }
-    
+
                             img{
                                 margin-right: 10px;
                                 height: 22px;
@@ -315,11 +320,11 @@
                                 right: -90px;
                                 width: 220px;
                                 z-index: 10;
-    
+
                                 &.hovered{
                                     display: block;
                                 }
-    
+
                                 h1{
                                     font-size: 18px;
                                     margin-bottom: 10px;
@@ -341,7 +346,7 @@
                                         padding: 5px 0;
                                         word-wrap: break-word;
                                         white-space: normal;
-    
+
                                         #arrow{
                                             color: $base-light;
                                             background-image: url(../images/Arrow.svg);
@@ -354,14 +359,14 @@
                                             margin: 5px 0 0 10px;
                                             transition: color .2s;
                                         }
-    
+
                                         &:hover{
                                             color: $sub-base;
                                             #arrow{
                                                 background-image: url(../images/Arrow_colored.svg);
                                             }
                                         }
-    
+
                                         span{
                                             opacity: .6;
                                         }
@@ -688,6 +693,16 @@
             }
         }
     }
+    .record-connections{
+        .connection-cards{
+            ul{
+                li.card{
+                    width: 100%;
+                    margin-right: 0px;
+                }
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 400px) {
@@ -783,6 +798,7 @@
         }
         img{
             cursor: pointer;
+            margin: -10px 12px 0px -12px;
         }
     }
 }
@@ -829,7 +845,7 @@
             vertical-align: top;
             width: 50%;
 
-            .large-text {   
+            .large-text {
                 font-size: 20px;
                 font-family: aleobold;
                 padding-top: 10px;
@@ -972,7 +988,7 @@
                 height: 2px;
                 width: 100%;
             }
-            
+
             p{
                 color: rgba($base-dark, 0.5);
                 font-size: 10px;
@@ -1072,19 +1088,24 @@
                 margin-bottom: 60px;
                 width: 100%;
             }
+
+            .dates-unknown{
+                display: none;
+            }
         }
 
         .timeline-controls {
-            display: block;
+            // display: block;
             padding-top: 10px;
             padding-left: 0;
             text-align: left;
             width: 100%;
+            justify-content: flex-end;
 
             .timeline-next,
             .timeline-prev {
-                margin-left: 0;
-                margin-right: 10px;
+                margin-left: 5%;
+                // margin-right: 10px;
             }
         }
     }
@@ -1195,17 +1216,3 @@
         padding-bottom: 40px;
     }
 }
-
-@media screen and (max-width: 650px){
-    .record-connections {
-    .connection-cards{
-      ul {      
-          li.card{
-             margin-right: 0;
-              width: 100%;
-          }
-      }
-  }
-  }
-  }
-

@@ -1,5 +1,4 @@
 <!-- Heading image and title container-->
-
 <div class="container header search-page">
     <div class="image-container search-page">
         <div class="container middlewrap search-page">
@@ -340,7 +339,7 @@ QUERY;
             </div>
         </div>
 
-        <div class="record-connections">
+        <div class="search-record-connections">
             <div class="connectionwrap">
                 <div class="categories"></div>
                 <div class="connection-cards">
