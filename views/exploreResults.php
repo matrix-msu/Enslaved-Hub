@@ -133,7 +133,7 @@
                             <li class="hide-category">
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
-                                    <p><?php echo $category; ?> <em>(0)</em></p>
+                                    <p><?php echo $category; ?> <em></em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -160,7 +160,7 @@
                             <li class="hide-category">
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?> " data-qid="<?php echo $qid; ?>">
-                                    <p><?php echo $category; ?> <em>(0)</em></p>
+                                    <p><?php echo $category; ?> <em></em></p>
                                     <span></span>
                                 </label>
                             </li>
@@ -190,7 +190,7 @@
                                 <li class="hide-category">
                                     <label class="<?php echo $catLower; ?>">
                                         <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-countryCode="<?php echo $countryCode; ?>">
-                                        <p><?php echo $countryName; ?> <em>(0)</em></p>
+                                        <p><?php echo $countryName; ?> <em></em></p>
                                         <span></span>
                                     </label>
                                 </li>
@@ -200,7 +200,7 @@
                                 <li class="hide-category">
                                     <label class="<?php echo $catLower; ?>">
                                         <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
-                                        <p><?php echo $category; ?> <em>(0)</em></p>
+                                        <p><?php echo $category; ?> <em></em></p>
                                         <span></span>
                                     </label>
                                 </li>
@@ -229,7 +229,7 @@
                             <li class="hide-category">
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
-                                    <p><?php echo $category; ?> <em>(0)</em></p>
+                                    <p><?php echo $category; ?> <em></em></p>
                                     <span></span>
                                 </label>
                             </li>

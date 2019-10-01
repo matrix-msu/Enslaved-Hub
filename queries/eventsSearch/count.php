@@ -3,9 +3,8 @@
 $tempQuery = <<<QUERY
 SELECT (COUNT(DISTINCT ?event) as ?count)
 WHERE {
-    ?event $wdt:$instanceOf $wd:$event. 
-    $eventTypeIdFilter
+    ?event $wdt:$instanceOf $wd:$event.
+    $queryFilters
     $sourceIdFilter
-    $dateRangeIdFilter
 }
 QUERY;
