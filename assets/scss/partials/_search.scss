@@ -94,7 +94,7 @@
     max-width: 1000px;
     margin: 0 auto;
     .searchwrap{
-        margin: 55px 0;
+        margin: 55px 0 80px 0;
         h2{
             font-size: 40px;
             color: $base-dark;
@@ -116,10 +116,8 @@
 
                     input, label{
                         display: block;
-                        line-height: 58px;
                         color: #0E3232;
                         font-size: 14px;
-                        padding-left: 20px;
                         padding-right: 35px;
                     }
                     label{
@@ -319,7 +317,8 @@
                 button{
                     cursor: pointer;
                     height: 60px;
-                    width: 160px;
+                    min-width: 160px;
+                    padding: 0 20px;
                     border: none;
                     border-radius: 5px;
                     color: #FFF;
