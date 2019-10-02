@@ -187,7 +187,7 @@
                         if ($type == "Modern Countries"){
                             // use the contry codes instead of qids for countries
                             foreach ($typeCats as $countryCode => $countryName) { ?>
-                                <li class="hide-category">
+                                <li >
                                     <label class="<?php echo $catLower; ?>">
                                         <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-countryCode="<?php echo $countryCode; ?>">
                                         <p><?php echo $countryName; ?> <em></em></p>

@@ -33,6 +33,8 @@ function admin(){
 
 
 // create filters for queries - doing this in a function so it can also be used for search filter counters
+// withing filter group - OR logic
+// different filter group filters - AND logic
 function createQueryFilters($searchType, $filters)
 {
     include BASE_LIB_PATH."variableIncluder.php";
@@ -222,12 +224,26 @@ function createQueryFilters($searchType, $filters)
                         }
                     }
 
-                    // if ($filterType == "modern_countries"){
-                    //     if (array_key_exists($ethno, ethnodescriptor)){
-                    //         $qEthno = ethnodescriptor[$ethno];
-                    //         $ethnoIdFilter .= "?agent $wdt:$hasECVO $wd:$qEthno . ";
-                    //     }
-                    // }
+                    if ($filterType == "modern_countries"){
+                        $code = array_search(strtolower($value), array_map('strtolower', countrycode));
+                        if ($code){
+                            if ($index == 0){
+                                $queryFilters .= "?agent $p:$hasParticipantRole ?statementrole.
+                                ?statementrole $ps:$hasParticipantRole ?role.
+                                ?statementrole $pq:$roleProvidedBy ?event.
+                                ?event $wdt:$atPlace ?place.
+                                ?place $wdt:$instanceOf $wd:$place;
+                                $wdt:$modernCountryCode ?countryCode
+                                VALUES ?countryCode { \"$code\" ";
+                            } else {
+                                $queryFilters .= "\"$code\" ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
 
                     if ($filterType == "source_type"){
                         if (array_key_exists($value, sourceTypes)){
@@ -272,7 +288,6 @@ function createQueryFilters($searchType, $filters)
                     break;
                 case 'events':  // events filters
                 {
-                    // withing filter group - OR logic
                     if ($filterType == "event_type"){
                         if (array_key_exists($value, eventTypes)){
                             $qType = eventTypes[$value];
@@ -290,6 +305,7 @@ function createQueryFilters($searchType, $filters)
                         }
                     }
 
+                    // TODO: MAKE THIS WORK FOR MULTIPLE DATES
                     if ($filterType == "date"){
                         $dateRange = $value;
                         $dateArr = explode('-', $dateRange);
@@ -315,29 +331,43 @@ function createQueryFilters($searchType, $filters)
                         }
                     }
 
-                    // different filter group filters - AND logic
+                    if ($filterType == "place_type"){
+                        if (array_key_exists($value, placeTypes)){
+                            $qType = placeTypes[$value];
 
-                    //
-                    // if ($filterType == "place_type"){
-                    //     if (array_key_exists($value, placeTypes)){
-                    //         $qType = placeTypes[$value];
-                    //         $queryFilters .= "
-                    //             ?agent $p:$hasParticipantRole ?statementrole.
-                    //             ?statementrole $ps:$hasParticipantRole ?role.
-                    //             ?statementrole $pq:$roleProvidedBy ?event.
-                    //             ?event $wdt:$atPlace ?place.
-                    //             ?place $wdt:$instanceOf $wd:$place;
-                    //             $wdt:$hasPlaceType $wd:$qType.
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "modern_countries"){
-                    //     if (array_key_exists($ethno, ethnodescriptor)){
-                    //         $qEthno = ethnodescriptor[$ethno];
-                    //         $ethnoIdFilter .= "?agent $wdt:$hasECVO $wd:$qEthno . ";
-                    //     }
-                    // }
+                            if ($index == 0){
+                                $queryFilters .= "?event $wdt:$atPlace ?place.
+                                    ?place $wdt:$instanceOf $wd:$place;
+                                    $wdt:$hasPlaceType ?placeType
+                                    VALUES ?placetype { $wd:$qType ";
+                            } else {
+                                $queryFilters .= "$wd:$qType ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
+
+                    if ($filterType == "modern_countries"){
+                        $code = array_search(strtolower($value), array_map('strtolower', countrycode));
+                        if ($code){
+                            if ($index == 0){
+                                $queryFilters .= "?event $wdt:$atPlace ?place.
+                                    ?place $wdt:$instanceOf $wd:$place;
+                                    $wdt:$modernCountryCode ?countryCode
+                                    VALUES ?countryCode { \"$code\" ";
+                            } else {
+                                $queryFilters .= "\"$code\" ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
+
                     //
                     // if ($filterType == "source_type"){
                     //     if (array_key_exists($value, sourceTypes)){
@@ -365,31 +395,37 @@ function createQueryFilters($searchType, $filters)
                     break;
                 case 'places':  // places filters
                 {
-                    // withing filter group - OR logic
                     if ($filterType == "place_type"){
                         if (array_key_exists($value, placeTypes)){
                             $qType = placeTypes[$value];
 
                             if ($index == 0){
-                                $queryFilters .= "VALUES ?type { $wd:$qType";
-                            } elseif ($index < $filterCount){
-                                $queryFilters .= " $wd:$qType ";
+                                $queryFilters .= "VALUES ?type { $wd:$qType ";
+                            } else {
+                                $queryFilters .= "$wd:$qType ";
                             }
-
-                            if ($index >= $filterCount -1) {
-                                $queryFilters .= " } .
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
                                 ";
                             }
                         }
                     }
 
                     if ($filterType == "modern_countries"){
-                        if (array_key_exists($value, countrycode)){
-                            $queryFilters .= "?place $wdt:$modernCountryCode \"$value\" . ";
+                        $code = array_search(strtolower($value), array_map('strtolower', countrycode));
+                        if ($code){
+                            if ($index == 0){
+                                $queryFilters .= "?place $wdt:$modernCountryCode ?countryCode
+                                VALUES ?countryCode { \"$code\" ";
+                            } else {
+                                $queryFilters .= "\"$code\" ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
                         }
                     }
-
-                    // different filter group filters - AND logic
 
                     // if ($filterType == "source_type"){
                     //     if (array_key_exists($value, sourceTypes)){
@@ -417,198 +453,39 @@ function createQueryFilters($searchType, $filters)
                     break;
                 case 'sources': // sources filters
                 {
-                    // withing filter group - OR logic
-                    // if ($filterType == "source_type"){
-                    //     if (array_key_exists($value, sourceTypes)){
-                    //         $qType = sourceTypes[$value];
-                    //         $queryFilters .= "  ?agent ?property  ?object .
-                    //             ?object $prov:wasDerivedFrom ?provenance .
-                    //             ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //             ?source $wdt:$hasOriginalSourceType $wd:$qType.
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "projects"){
-                    //     if (array_key_exists($value, projects)){
-                    //         $projectQ = projects[$value];
-                    //         $queryFilters .= "
-                    //                 ?agent ?property  ?object .
-                    //                 ?object $prov:wasDerivedFrom ?provenance .
-                    //                 ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //                 ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
-                    //             ";
-                    //     }
-                    // }
-                }
-                    break;
-                case 'project': //projects filters
-                {
-                    // withing filter group - OR logic
-                    // if ($filterType == "gender"){
-                    //     if (array_key_exists($value, sexTypes)){
-                    //         $qGender = sexTypes[$value];
-                    //
-                    //         if ($index == 0){
-                    //             // start or
-                    //         } elseif ($index < $filterCount - 1){
-                    //             // add ids
-                    //         } else {
-                    //             // close or
-                    //         }
-                    //
-                    //         $queryFilters .= "?agent $wdt:$hasSex $wd:$qGender .
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "age_category"){
-                    //     if (array_key_exists($value, ageCategory)){
-                    //         $qAge = ageCategory[$value];
-                    //
-                    //         if ($index == 0){
-                    //             // start or
-                    //         } elseif ($index < $filterCount - 1){
-                    //             // add ids
-                    //         } else {
-                    //             // close or
-                    //         }
-                    //
-                    //         $queryFilters .= "?agent $wdt:$hasAgeCategory $wd:$qAge .
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "ethnodescriptor"){
-                    //     if (array_key_exists($value, ethnodescriptor)){
-                    //         $qEthno = ethnodescriptor[$value];
-                    //
-                    //         if ($index == 0){
-                    //             // start or
-                    //         } elseif ($index < $filterCount - 1){
-                    //             // add ids
-                    //         } else {
-                    //             // close or
-                    //         }
-                    //
-                    //         $queryFilters .= "?agent $wdt:$hasECVO $wd:$qEthno .
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "role_types"){
-                    //     if (array_key_exists($value, roleTypes)){
-                    //         $qRole = roleTypes[$value];
-                    //
-                    //         if ($index == 0){
-                    //             // start or
-                    //         } elseif ($index < $filterCount - 1){
-                    //             // add ids
-                    //         } else {
-                    //             // close or
-                    //         }
-                    //
-                    //         $queryFilters .= "?agent $wdt:$hasParticipantRole $wd:$qRole .
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "status"){
-                    //     if (array_key_exists($value, personstatus)){
-                    //         $qStatus = personstatus[$value];
-                    //
-                    //         if ($index == 0){
-                    //             // start or
-                    //         } elseif ($index < $filterCount - 1){
-                    //             // add ids
-                    //         } else {
-                    //             // close or
-                    //         }
-                    //
-                    //         $queryFilters .= "?agent $wdt:$hasPersonStatus $wd:$qStatus . ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "occupation"){
-                    //     if (array_key_exists($occupation, occupation)){
-                    //         $qOccupation = occupation[$occupation];
-                    //
-                    //         if ($index == 0){
-                    //             // start or
-                    //         } elseif ($index < $filterCount - 1){
-                    //             // add ids
-                    //         } else {
-                    //             // close or
-                    //         }
-                    //
-                    //         $queryFilters .= "?agent $wdt:$hasOccupation $wd:$qOccupation .
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // // different filter group filters - AND logic
-                    // if ($filterType == "event_type"){
-                    //     if (array_key_exists($value, eventTypes)){
-                    //         $qType = eventTypes[$value];
-                    //         $queryFilters .= "
-                    //             ?agent $p:$hasParticipantRole ?statementrole.
-                    //             ?statementrole $ps:$hasParticipantRole ?role.
-                    //             ?statementrole $pq:$roleProvidedBy ?event.
-                    //             ?event $wdt:$hasEventType $wd:$qType.     #this number will change for every event type
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "date"){
-                    //     if (array_key_exists($ethno, ethnodescriptor)){
-                    //         $qEthno = ethnodescriptor[$ethno];
-                    //         $ethnoIdFilter .= "?agent $wdt:$hasECVO $wd:$qEthno . ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "place_type"){
-                    //     if (array_key_exists($value, placeTypes)){
-                    //         $qType = placeTypes[$value];
-                    //         $queryFilters .= "
-                    //             ?agent $p:$hasParticipantRole ?statementrole.
-                    //             ?statementrole $ps:$hasParticipantRole ?role.
-                    //             ?statementrole $pq:$roleProvidedBy ?event.
-                    //             ?event $wdt:$atPlace ?place.
-                    //             ?place $wdt:$instanceOf $wd:$place;
-                    //             $wdt:$hasPlaceType $wd:$qType.
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "modern_countries"){
-                    //     if (array_key_exists($ethno, ethnodescriptor)){
-                    //         $qEthno = ethnodescriptor[$ethno];
-                    //         $ethnoIdFilter .= "?agent $wdt:$hasECVO $wd:$qEthno . ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "source_type"){
-                    //     if (array_key_exists($value, sourceTypes)){
-                    //         $qType = sourceTypes[$value];
-                    //         $queryFilters .= "  ?agent ?property  ?object .
-                    //             ?object $prov:wasDerivedFrom ?provenance .
-                    //             ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //             ?source $wdt:$hasOriginalSourceType $wd:$qType.
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "projects"){
-                    //     if (array_key_exists($value, projects)){
-                    //         $projectQ = projects[$value];
-                    //         $queryFilters .= "
-                    //                 ?agent ?property  ?object .
-                    //                 ?object $prov:wasDerivedFrom ?provenance .
-                    //                 ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //                 ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
-                    //             ";
-                    //     }
-                    // }
+                    if ($filterType == "source_type"){
+                        if (array_key_exists($value, sourceTypes)){
+                            $qType = sourceTypes[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "?source $wdt:$hasOriginalSourceType ?sourceType
+                                    VALUES ?sourceType { $wd:$qType ";
+                            } else {
+                                $queryFilters .= "$wd:$qType ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
+
+                    if ($filterType == "projects"){
+                        if (array_key_exists($value, projects)){
+                            $projectQ = projects[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "?source $wdt:$generatedBy ?project
+                                    VALUES ?project { $wd:$projectQ ";
+                            } else {
+                                $queryFilters .= "$wd:$projectQ ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
                 }
                     break;
                 default:
@@ -756,17 +633,6 @@ function blazegraph()
                 }
                 break;
             case 'sources':
-                // filter for source types
-                $sourceTypeIdFilter = "";
-                if (isset($filtersArray['source_type'])){
-                    $types = $filtersArray['source_type'];
-                   foreach ($types as $type){
-                        if (array_key_exists($type, sourceTypes)){
-                            $qType = sourceTypes[$type];
-                            $sourceTypeIdFilter .= "?source $wdt:$hasOriginalSourceType $wd:$qType . ";
-                        }
-                    }
-                }
                 // filter for sources connected to an event
                 $eventIdFilter = "";
                 if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
@@ -891,8 +757,8 @@ function blazegraph()
         $urls = (array_column(array_column($result, $searchTypes[$preset]), 'value'));
         $qids = [];
         foreach($urls as $url){
-		$tempppp = explode('/', $url);
-            $qids[] = end($tempppp);
+		$tempQids = explode('/', $url);
+            $qids[] = end($tempQids);
         }
 
         // create the line in the query with the ids to search for
