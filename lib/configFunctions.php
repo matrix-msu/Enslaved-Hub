@@ -9,9 +9,9 @@ function Kora_GetNavigationData()
 {
 	// Get Kora data with Display set to True
 	$koraResults = koraWrapperSearch(
-		WEBPAGES_FORM, 
-		"ALL", 
-		array("Display"), 
+		WEBPAGES_FORM,
+		"ALL",
+		array("Display"),
 		"TRUE",
 		array(
 			'Navigation Order' => 'ASC',
@@ -27,8 +27,8 @@ function Kora_GetNavigationData()
 	if(array_key_exists("error", $decode_results)) return json_encode("failed");
 
 	// Read from the webPages file and compare to the kora results
-	// $cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
-	// if($cached_data == json_encode(json_decode($koraResults)->records[0])) return json_encode("similar");
+	$cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
+	if($cached_data == json_encode(json_decode($koraResults)->records[0])) return json_encode("similar");
 
 	// put content to webPages.json file
 	file_put_contents( BASE_PATH . "cache/webPages.json", json_encode(json_decode($koraResults)->records[0]));
@@ -49,7 +49,7 @@ function Kora_GetNavigationData()
 			$found[] = $nav;
 		}
 
-		if(!array_key_exists("SubNavigation", $result) || array_key_exists("SubNavigation Display", $result) && 
+		if(!array_key_exists("SubNavigation", $result) || array_key_exists("SubNavigation Display", $result) &&
 			$result["SubNavigation Display"] == "FALSE" ||  $result["SubNavigation"] == "") continue;
 
 		foreach ($navs as $index => $subArray){
