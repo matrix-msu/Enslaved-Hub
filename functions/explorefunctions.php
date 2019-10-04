@@ -483,11 +483,23 @@ function getHomePageCounters(){
     return json_encode($counters);
 }
 
+
 function getSearchFilterCounters(){
     $searchType = '';
+    $filters = array();
     if (isset($_GET['search_type'])){
         $searchType = $_GET['search_type'];
     }
+
+    if (isset($_GET['filters'])){
+        $filters = $_GET['filters'];
+        // print_r($filters);die;
+    }
+
+    // createQueryFilters($searchType, $filters);
+
+
+
     $counters = array();
 
     $peopleFilters = array(
@@ -1711,7 +1723,8 @@ HTML;
                 foreach($placeTypes as $matchString){
                     $parts = explode(' - ', $matchString);
                     $placeUrl = $parts[0];
-                    $placeQ = end(explode('/', $placeUrl));
+                    $placeQ = explode('/', $placeUrl);
+                    $placeQ = end($placeQ);
                     $placeType = $parts[1];
 
                     // group the place Qids with their types
@@ -1730,12 +1743,14 @@ HTML;
                     foreach($allEventPlaces as $matchString){
                         $parts = explode(' - ', $matchString);
                         $eventUrl = $parts[0];
-                        $eventQ = end(explode('/', $eventUrl));
+                        $eventQ = explode('/', $eventUrl);
+                        $eventQ = end($eventQ);
                         $placeName = $parts[1];
 
                         $placeUrlIndex = array_search($placeName, $allPlaceLabels);
                         $placeUrl = $allPlaceUrls[$placeUrlIndex];
-                        $placeQ = end(explode('/', $placeUrl));
+                        $placeQ = explode('/', $placeUrl);
+                        $placeQ = end($placeQ);
 
                         $placeType = "";
                         if (isset($allPlacesToTypesMap[$placeQ]) && isset($allPlacesToTypesMap[$placeQ]['placeType'])){

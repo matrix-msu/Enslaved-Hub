@@ -250,7 +250,7 @@ function fillFilterCounters(allCounters){
                 if (label != "" && qid != "") {
                     var $input = $("input[data-qid='" + qid + "']");
                     var $counter = $input.next().find('em');
-                    $counter.html('(' + count + ')');
+                    // $counter.html('(' + count + ')');    // show the count
 
                     // hide filter if count is 0
                     if (count > 0){

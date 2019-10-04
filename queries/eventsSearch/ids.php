@@ -2,10 +2,9 @@
 
 $tempQuery = <<<QUERY
 SELECT ?event WHERE {
-    ?event $wdt:$instanceOf $wd:$event. 
-    $eventTypeIdFilter
+    ?event $wdt:$instanceOf $wd:$event.
+    $queryFilters
     $sourceIdFilter
-    $dateRangeIdFilter
 }
 $limitQuery
 $offsetQuery
