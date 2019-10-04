@@ -1,5 +1,4 @@
 <!-- Heading image and title container-->
-
 <div class="container header search-page">
     <div class="image-container search-page">
         <div class="container middlewrap search-page">
@@ -323,6 +322,17 @@
             <div class="option-wrap">
                 <p>Option Title</p>
                 <img class="remove" src="<?php echo BASE_IMAGE_URL;?>x-dark.svg" />
+            </div>
+        </div>
+        <div class="search-record-connections">
+            <div class="connectionwrap">
+                <div class="categories"></div>
+                <div class="connection-cards">
+                    <ul class="connect-row">
+                    </ul>
+                    <a class="search-all"></a>
+                    <!-- <div class="load-more"><h4>Load More</h4></div> -->
+                </div>
             </div>
         </div>
         <div id="search-result-wrap">
