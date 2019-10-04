@@ -123,7 +123,22 @@
                                     <span></span>
                                 </label>
                             </li>
-                        <?php } ?>
+                        <?php }
+                        if ($catLower == 'date'){
+                            echo '<div class="search-section">
+                                <div class="inputwrap">
+                                <label for="startYear">Start Year</label>
+                                <input type="text" name="startyear" maxlength="4" id="startyear" pattern="\d{4}" required/>
+                                </div>
+                                <div class="inputwrap">
+                                <label for="endYear">End Year</label>
+                                <input type="text" name="endyear" maxlength="4" id="endyear" pattern="\d{4}" required/>
+                                </div>
+                                <input class="event-date-range" type="hidden" name="date" value=""/>
+                                </div>';
+                        }
+                        ?>
+
                         </ul>
                     </li>
                 <?php } ?>

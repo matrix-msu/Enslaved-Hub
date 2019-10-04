@@ -133,7 +133,6 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                 <li class="count-option" data-count="12"><span>12</span> Per Page</li>
                 <li class="count-option" data-count="16"><span>16</span> Per Page</li>
                 <li class="count-option" data-count="20"><span>20</span> Per Page</li>
-                <li class="count-option" data-count="20"><span>99999999999</span> Per Page</li>
             </ul>
         </div>
 
