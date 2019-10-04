@@ -148,7 +148,7 @@
                 }
                 div{
                     padding-right: 10px;
-                    left: 5px;
+                    left: 5;
                     top: -3px;
                     background-repeat: no-repeat;
                     position: absolute;
@@ -217,9 +217,6 @@
                 position: relative;
                 padding: 20px;
 
-                &:nth-child(2n){
-                    margin-right: 0;
-                }
                 a{
                     text-decoration: none;
                 }
@@ -233,7 +230,6 @@
                 .card-title{
                     display: flex;
                     align-items: center;
-                    margin-bottom: 25px;
 
                     img{
                         margin-right: 15px;
@@ -693,16 +689,6 @@
             }
         }
     }
-    .record-connections{
-        .connection-cards{
-            ul{
-                li.card{
-                    width: 100%;
-                    margin-right: 0px;
-                }
-            }
-        }
-    }
 }
 
 @media screen and (max-width: 400px) {
@@ -798,7 +784,6 @@
         }
         img{
             cursor: pointer;
-            margin: -10px 12px 0px -12px;
         }
     }
 }
@@ -1088,24 +1073,19 @@
                 margin-bottom: 60px;
                 width: 100%;
             }
-
-            .dates-unknown{
-                display: none;
-            }
         }
 
         .timeline-controls {
-            // display: block;
+            display: block;
             padding-top: 10px;
             padding-left: 0;
             text-align: left;
             width: 100%;
-            justify-content: flex-end;
 
             .timeline-next,
             .timeline-prev {
-                margin-left: 5%;
-                // margin-right: 10px;
+                margin-left: 0;
+                margin-right: 10px;
             }
         }
     }
@@ -1216,3 +1196,16 @@
         padding-bottom: 40px;
     }
 }
+
+@media screen and (max-width: 650px){
+    .record-connections {
+    .connection-cards{
+      ul {
+          li.card{
+             margin-right: 0;
+              width: 100%;
+          }
+      }
+  }
+  }
+  }

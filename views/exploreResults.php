@@ -63,50 +63,10 @@
     <div class="filter-menu show">
         <ul>
             <?php if(!$fromBrowse) { ?>
-            <h2>Show Results For</h2>
+            <!-- <h2>Show Results For</h2> -->
             <ul class="catmenu" id="submenu">
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="people">
-                        <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg" alt="person icon">
-                        <p>People</p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="places">
-                        <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg" alt="location icon">
-                        <p>Places</p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="events">
-                        <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg" alt="event icon">
-                        <p>Events</p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="sources">
-                        <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg" alt="source icon">
-                        <p>Sources</p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="projects">
-                        <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
-                        <p>Projects</p>
-                        <span></span>
-                    </label>
-                </li>
             </ul>
-            <hr>
+            <!-- <hr> -->
             <?php } ?>
             <!-- People Filtering -->
 
