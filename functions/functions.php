@@ -305,7 +305,6 @@ function createQueryFilters($searchType, $filters)
                         }
                     }
 
-                    // TODO: MAKE THIS WORK FOR MULTIPLE DATES
                     if ($filterType == "date"){
                         $dateRange = $value;
                         $dateArr = explode('-', $dateRange);
@@ -368,29 +367,49 @@ function createQueryFilters($searchType, $filters)
                         }
                     }
 
-                    //
-                    // if ($filterType == "source_type"){
-                    //     if (array_key_exists($value, sourceTypes)){
-                    //         $qType = sourceTypes[$value];
-                    //         $queryFilters .= "  ?agent ?property  ?object .
-                    //             ?object $prov:wasDerivedFrom ?provenance .
-                    //             ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //             ?source $wdt:$hasOriginalSourceType $wd:$qType.
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "projects"){
-                    //     if (array_key_exists($value, projects)){
-                    //         $projectQ = projects[$value];
-                    //         $queryFilters .= "
-                    //                 ?agent ?property  ?object .
-                    //                 ?object $prov:wasDerivedFrom ?provenance .
-                    //                 ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //                 ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
-                    //             ";
-                    //     }
-                    // }
+                    if ($filterType == "source_type"){
+                        if (array_key_exists($value, sourceTypes)){
+                            $qType = sourceTypes[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "
+                                    ?event $wdt:$instanceOf $wd:$event;
+                                    ?property  ?object .
+                                    ?object prov:wasDerivedFrom ?provenance .
+                                    ?provenance $pr:$isDirectlyBasedOn ?source.
+                                    ?source $wdt:$hasOriginalSourceType ?sourceType
+                                    VALUES ?sourceType { $wd:$qType ";
+                            } else {
+                                $queryFilters .= "$wd:$qType ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
+
+                    if ($filterType == "projects"){
+                        if (array_key_exists($value, projects)){
+                            $projectQ = projects[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "
+                                    ?event $wdt:$instanceOf $wd:$event;
+                                    ?property  ?object .
+                                    ?object prov:wasDerivedFrom ?provenance .
+                                    ?provenance $pr:$isDirectlyBasedOn ?source.
+                                    ?source $wdt:$generatedBy ?project.
+                                    VALUES ?project { $wd:$projectQ ";
+                            } else {
+                                $queryFilters .= "$wd:$projectQ ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
                 }
                     break;
                 case 'places':  // places filters
@@ -427,28 +446,49 @@ function createQueryFilters($searchType, $filters)
                         }
                     }
 
-                    // if ($filterType == "source_type"){
-                    //     if (array_key_exists($value, sourceTypes)){
-                    //         $qType = sourceTypes[$value];
-                    //         $queryFilters .= "  ?agent ?property  ?object .
-                    //             ?object $prov:wasDerivedFrom ?provenance .
-                    //             ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //             ?source $wdt:$hasOriginalSourceType $wd:$qType.
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "projects"){
-                    //     if (array_key_exists($value, projects)){
-                    //         $projectQ = projects[$value];
-                    //         $queryFilters .= "
-                    //                 ?agent ?property  ?object .
-                    //                 ?object $prov:wasDerivedFrom ?provenance .
-                    //                 ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //                 ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
-                    //             ";
-                    //     }
-                    // }
+                    if ($filterType == "source_type"){
+                        if (array_key_exists($value, sourceTypes)){
+                            $qType = sourceTypes[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "
+                                    ?place $wdt:$instanceOf $wd:$place;
+                                    ?property  ?object .
+                                    ?object prov:wasDerivedFrom ?provenance .
+                                    ?provenance $pr:$isDirectlyBasedOn ?source.
+                                    ?source $wdt:$hasOriginalSourceType ?sourceType
+                                    VALUES ?sourceType { $wd:$qType ";
+                            } else {
+                                $queryFilters .= "$wd:$qType ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
+
+                    if ($filterType == "projects"){
+                        if (array_key_exists($value, projects)){
+                            $projectQ = projects[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "
+                                    ?place $wdt:$instanceOf $wd:$place;
+                                    ?property  ?object .
+                                    ?object prov:wasDerivedFrom ?provenance .
+                                    ?provenance $pr:$isDirectlyBasedOn ?source.
+                                    ?source $wdt:$generatedBy ?project.
+                                    VALUES ?project { $wd:$projectQ ";
+                            } else {
+                                $queryFilters .= "$wd:$projectQ ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
                 }
                     break;
                 case 'sources': // sources filters
@@ -736,7 +776,6 @@ function blazegraph()
         $resultCountQuery['query'] = $tempQuery;
         // print_r($resultCountQuery);die;
         $result = blazegraphSearch($resultCountQuery);
-        //var_dump($resu)
 
         if (isset($result[0]) && isset($result[0]['count'])){
             $record_total = $result[0]['count']['value'];

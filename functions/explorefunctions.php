@@ -467,7 +467,6 @@ function counterOfType() {
         return counterOfSourceType();
       }
   }
-
 }
 
 function getHomePageCounters(){

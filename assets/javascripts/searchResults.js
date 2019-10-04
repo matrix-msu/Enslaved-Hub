@@ -11,6 +11,15 @@ var card_offset = 0;
 var card_limit = 12;
 var filters = {};
 
+
+var filtersToSearchType = {
+    'people' : ['people', 'event', 'place', 'source', 'project'],
+    'events' : ['event', 'place', 'source', 'project'],
+    'places' : ['place', 'source', 'project'],
+    'sources' : ['source', 'project']
+};
+
+
 var showPath = false;
 var upperForm = "";
 var titleType = "";
@@ -166,6 +175,8 @@ searchResults(search_type);
 
 //Document load
 $(document).ready(function() {
+    hideFilterCategories();
+
     var firstFilter = "";
 
     for (filter in filters){
@@ -205,71 +216,81 @@ $(document).ready(function() {
                     },
                     'success': function (data) {
                         var allCounters = JSON.parse(data);
-                        fillFilterCounters(allCounters)
+                        fillFilterCounters(allCounters);
                     }
                 });
             }
         }
     });
 
-// fill in the counters next to the filters
-function fillFilterCounters(allCounters){
-    for (var filterType in allCounters) {
-        var counterType = allCounters[filterType];
+    // fill in the counters next to the filters
+    function fillFilterCounters(allCounters){
+        for (var filterType in allCounters) {
+            var counterType = allCounters[filterType];
 
-        for (var filter in counterType) {
-            JSON.parse(counterType[filter]).forEach(function (record) {
-                var label = "";
-                var count = "";
-                var qid = "";
+            for (var filter in counterType) {
+                JSON.parse(counterType[filter]).forEach(function (record) {
+                    var label = "";
+                    var count = "";
+                    var qid = "";
 
-                for (var key in record) {
-                    if (record[key]['type'] == "uri") {
-                        qid = record[key]['value'].split('/').pop()
-                    }
-
-                    if (key.match("Label$")) {
-                        label = record[key]['value'];
-                    }
-                    if (key.match("count$")) {
-                        count = record[key]['value'];
-                    }
-                    else if (key.match("Count$")) {
-                        if (count !== "") {
-                            var count2 = record[key]['value'];
-                            count = +count + +count2;
+                    for (var key in record) {
+                        if (record[key]['type'] == "uri") {
+                            qid = record[key]['value'].split('/').pop()
                         }
-                        else {
+
+                        if (key.match("Label$")) {
+                            label = record[key]['value'];
+                        }
+                        if (key.match("count$")) {
                             count = record[key]['value'];
                         }
+                        else if (key.match("Count$")) {
+                            if (count !== "") {
+                                var count2 = record[key]['value'];
+                                count = +count + +count2;
+                            }
+                            else {
+                                count = record[key]['value'];
+                            }
 
+                        }
                     }
-                }
 
-                // fill in the counters for the filters
-                if (label != "" && qid != "") {
-                    var $input = $("input[data-qid='" + qid + "']");
-                    var $counter = $input.next().find('em');
-                    // $counter.html('(' + count + ')');    // show the count
+                    // fill in the counters for the filters
+                    if (label != "" && qid != "") {
+                        var $input = $("input[data-qid='" + qid + "']");
+                        var $counter = $input.next().find('em');
+                        // $counter.html('(' + count + ')');    // show the count
 
-                    // hide filter if count is 0
-                    if (count > 0){
-                        var $li = $input.parent().parent();
-                        $li.removeClass('hide-category')
+                        // hide filter if count is 0
+                        if (count > 0){
+                            var $li = $input.parent().parent();
+                            $li.removeClass('hide-category')
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
-}
 
+    // hide filter categories based on hierarchy in filtersToSearchType
+    function hideFilterCategories(){
+        $filterCats = $(".cat-cat");
 
+        $filterCats.each(function () {
+            $category = $(this);
+            $catFilters = $category.next();
+            $category.hide();
+            $catFilters.hide();
+            var catType = $category.html().toLowerCase();
 
-
-
-
-
-
+            if (filtersToSearchType[search_type].includes(catType)){
+                $category.show();
+                $catFilters.show();
+            }
+        });
+    }
 
 
 
