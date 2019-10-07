@@ -28,22 +28,17 @@ function admin(){
 
 
 
-
-
-
-
 // create filters for queries - doing this in a function so it can also be used for search filter counters
-// withing filter group - OR logic
+// within filter group - OR logic
 // different filter group filters - AND logic
 function createQueryFilters($searchType, $filters)
 {
     include BASE_LIB_PATH."variableIncluder.php";
     $queryFilters = "";
 
-    // print_r($filters);die;
     foreach ($filters as $filterType => $filterValues) {
         if ($filterType == "limit" || $filterType == "offset" || !is_array($filterValues)) continue;
-
+        
         $filterCount = count($filterValues) - 1;
 
         foreach ($filterValues as $index => $value) {

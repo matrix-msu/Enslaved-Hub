@@ -89,6 +89,7 @@ function searchResults(preset, limit = 12, offset = 0)
     // console.log(preset, filters, templates);
     generateFilterCards();
 
+
     $.ajax({
         url: BASE_URL + "api/blazegraph",
         type: "GET",
@@ -138,12 +139,81 @@ function searchResults(preset, limit = 12, offset = 0)
             $(document).ready(function(){
                 appendCards();
                 setPagination(total_length, card_limit, card_offset);
+                $.ajax({
+                    url: BASE_URL + "api/getSearchFilterCounters",
+                    type: "GET",
+                    data: {
+                        search_type: search_type,
+                        filters: filters,
+                        filter_types: filtersToSearchType[search_type]
+                    },
+                    'success': function (data) {
+                        var allCounters = JSON.parse(data);
+                        fillFilterCounters(allCounters);
+                    }
+                });
             });
 
         }
     });
-
 }
+
+
+// fill in the counters next to the filters
+function fillFilterCounters(allCounters){
+    $(".filter-cat li").each(function(){
+        $(this).addClass("hide-category");
+    });
+    for (var filterType in allCounters) {
+        var counterType = allCounters[filterType];
+
+        for (var filter in counterType) {
+            JSON.parse(counterType[filter]).forEach(function (record) {
+                var label = "";
+                var count = "";
+                var qid = "";
+
+                for (var key in record) {
+                    if (record[key]['type'] == "uri") {
+                        qid = record[key]['value'].split('/').pop()
+                    }
+
+                    if (key.match("Label$")) {
+                        label = record[key]['value'];
+                    }
+                    if (key.match("count$")) {
+                        count = record[key]['value'];
+                    }
+                    else if (key.match("Count$")) {
+                        if (count !== "") {
+                            var count2 = record[key]['value'];
+                            count = +count + +count2;
+                        }
+                        else {
+                            count = record[key]['value'];
+                        }
+
+                    }
+                }
+
+                // fill in the counters for the filters
+                if (label != "" && qid != "") {
+                    var $input = $("input[data-qid='" + qid + "']");
+                    var $counter = $input.next().find('em');
+                    $counter.html('(' + count + ')');    // show the count
+
+                    // hide filter if count is 0
+                    if (count > 0){
+                        var $li = $input.parent().parent();
+                        $li.removeClass('hide-category')
+                    }
+                }
+            });
+        }
+    }
+}
+
+
 
 ///******************************************************************* */
 /// Append Cards
@@ -173,6 +243,7 @@ function appendCards()
 //Generate cards
 searchResults(search_type);
 
+
 //Document load
 $(document).ready(function() {
     hideFilterCategories();
@@ -193,6 +264,7 @@ $(document).ready(function() {
         data: {
             search_type: search_type,
             filters: filters,
+            filter_types: [search_type]
         },
         'success': function (data) {
             var allCounters = JSON.parse(data);
@@ -211,8 +283,9 @@ $(document).ready(function() {
                     url: BASE_URL + "api/getSearchFilterCounters",
                     type: "GET",
                     data: {
-                        search_type: "all",
+                        search_type: search_type,
                         filters: filters,
+                        filter_types: filtersToSearchType[search_type]
                     },
                     'success': function (data) {
                         var allCounters = JSON.parse(data);
@@ -223,56 +296,6 @@ $(document).ready(function() {
         }
     });
 
-    // fill in the counters next to the filters
-    function fillFilterCounters(allCounters){
-        for (var filterType in allCounters) {
-            var counterType = allCounters[filterType];
-
-            for (var filter in counterType) {
-                JSON.parse(counterType[filter]).forEach(function (record) {
-                    var label = "";
-                    var count = "";
-                    var qid = "";
-
-                    for (var key in record) {
-                        if (record[key]['type'] == "uri") {
-                            qid = record[key]['value'].split('/').pop()
-                        }
-
-                        if (key.match("Label$")) {
-                            label = record[key]['value'];
-                        }
-                        if (key.match("count$")) {
-                            count = record[key]['value'];
-                        }
-                        else if (key.match("Count$")) {
-                            if (count !== "") {
-                                var count2 = record[key]['value'];
-                                count = +count + +count2;
-                            }
-                            else {
-                                count = record[key]['value'];
-                            }
-
-                        }
-                    }
-
-                    // fill in the counters for the filters
-                    if (label != "" && qid != "") {
-                        var $input = $("input[data-qid='" + qid + "']");
-                        var $counter = $input.next().find('em');
-                        // $counter.html('(' + count + ')');    // show the count
-
-                        // hide filter if count is 0
-                        if (count > 0){
-                            var $li = $input.parent().parent();
-                            $li.removeClass('hide-category')
-                        }
-                    }
-                });
-            }
-        }
-    }
 
     // hide filter categories based on hierarchy in filtersToSearchType
     function hideFilterCategories(){
