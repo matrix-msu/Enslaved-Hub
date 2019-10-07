@@ -102,5 +102,5 @@ $cache_Data = Json_GetData_ByTitle($upper);
     </div>
 </div> -->
 
-<script src="<?php echo BASE_URL;?>assets/javascripts/cardSlider.js"></script>
+<!--<script src="<?php echo BASE_URL;?>assets/javascripts/cardSlider.js"></script>-->
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
