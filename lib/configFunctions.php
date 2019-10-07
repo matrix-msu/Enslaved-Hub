@@ -14,8 +14,8 @@ function Kora_GetNavigationData()
 		array("Display"),
 		"TRUE",
 		array(
-			'Navigation Order' => 'ASC',
-			'Sub Navigation Order' => 'ASC'
+			['Navigation Order' => 'ASC'],
+			['Sub Navigation Order' => 'ASC']
 		)
 	);
 	//echo json_encode($koraResults);
