@@ -13,7 +13,7 @@ $fields =  ['Title', 'Featured'];
 $sort = [ [$sortField => $sortDirection] ];
 $startIndex = ($page - 1) * $storiesPerPage;
 $koraResults = koraWrapperSearch(STORY_SID, $fields,
- array("Display"), "TRUE", $sort, $startIndex, 
+ array("Display"), "TRUE", $sort, $startIndex,
  $storiesPerPage, array("size" => true)
 );
 

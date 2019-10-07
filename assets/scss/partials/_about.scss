@@ -75,7 +75,7 @@
                       font-size: 18px;
                       color: $base-dark;
                       font-family: aleobold;
-                      font-weight: none;
+                      font-weight: 100;
                       padding: 20px;
                       padding-top: 18px;
                       display: inline-block;
@@ -176,7 +176,7 @@
             font-size: 18px;
             color: $base-dark;
             font-family: aleobold;
-            font-weight: none;
+            font-weight: 100 !important;
             padding: 20px;
             padding-top: 18px;
             display: inline-block;
@@ -218,14 +218,14 @@
     width: 90%;
     h2{
       font-size: 30px;
-      font-weight: none;
+      font-weight: 100;
       margin-bottom: 15px;
     }
     p{
       line-height: 24px;
       font-size: 16px;
       font-family: aleobold;
-      font-weight: none;
+      font-weight: 100;
       margin-bottom: 30px;
       #getinvolved-email{
         color: $sub-base;
@@ -250,7 +250,7 @@
             font-size: 18px;
             color: $base-dark;
             font-family: aleobold;
-            font-weight: none;
+            font-weight: 100;
             padding: 20px;
             padding-top: 18px;
             display: inline-block;
@@ -304,6 +304,7 @@
         }
     }
     #first-sentence{
+        margin-top: 60px;
         margin-bottom: 50px;
     }
     .address{
@@ -388,6 +389,11 @@
   }
 }
 
+.submission-form {
+  margin-top: 50px;
+  margin-bottom: 20px !important;
+}
+
 .partner-text{
     margin: 60px auto;
 	max-width: 1000px;
@@ -410,109 +416,11 @@
             text-decoration: underline;
             color: $sub-base;
         }
-        
+
         .intro {
 	        margin-bottom: 50px;
-	        line-height: 24px; 
+	        line-height: 24px;
         }
-}
-
-.contact-form{
-    padding: 0 6%;
-    max-width: 1000px;
-    margin: 0 auto;
-    .formwrap{
-        margin: 75px 0;
-        form{
-
-            .input-section{
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                margin-bottom: 50px;
-
-                #message{
-                    width: 100%;
-                    max-width: 100%;
-                    min-width: 100%;
-
-                    .input-field{
-                        height: 200px;
-                        padding-top: 20px;
-                    }
-                }
-
-                .inputwrap{
-                    width: 47.5%;
-                    margin-bottom: 22px;
-
-                    input, label{
-                        display: block;
-                    }
-                    label{
-                        margin-bottom: 10px;
-                        color: $base-dark;
-                        font-size: 15px;
-                    }
-                    .input-field{
-                        height: 60px;
-                        width: 100%;
-                        border: 1px solid #CED0D2;
-                        outline: none;
-                        background-color: #FFFDFB;
-                        box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
-                        padding-left: 30px;
-                        padding-right: 30px;
-                        font-size: 14px;
-                        font-family: aleoregular;
-                        color: $base-dark;
-                        transition: border 0.2s;
-
-                        &:hover{
-                            border: 1px solid $sub-base;
-                        }
-                        &:focus-within{
-                            border: 1px solid $sub-base;
-                        }
-                    }
-                    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-                        color: #72818C;
-                        opacity: 1; /* Firefox */
-                    }
-
-                    :-ms-input-placeholder { /* Internet Explorer 10-11 */
-                        color: #72818C;
-                    }
-
-                    ::-ms-input-placeholder { /* Microsoft Edge */
-                        color: #72818C;
-                    }
-                }
-            }
-            .buttonwrap{
-                width: 100%;
-                text-align: right;
-                button{
-                    cursor: pointer;
-                    height: 60px;
-                    width: 380px;
-                    border: none;
-                    color: $base-light;
-                    font-size: 20px;
-                    outline: none;
-                    font-family: aleoregular;
-                    border-radius: 100px;
-                    background: $base-dark;
-                    transition: border 0.2s;
-                    transition: .2s;
-
-                    &:hover{
-                        border: 2px solid $sub-base;
-                    }
-                }
-            }
-        }
-    }
 }
 
 @media screen and (max-width: 850px){
@@ -546,6 +454,13 @@
         #first-button{
           margin-right: 0;
           margin-bottom: 20px;
+        }
+    }
+    .contactUs-getinvolved{
+        a {
+            .buttons{
+                width: 100%;
+            }
         }
     }
 }
