@@ -1,5 +1,4 @@
 <!-- Heading image and title container-->
-
 <div class="container header search-page">
     <div class="image-container search-page">
         <div class="container middlewrap search-page">
@@ -64,50 +63,10 @@
     <div class="filter-menu show">
         <ul>
             <?php if(!$fromBrowse) { ?>
-            <h2>Show Results For</h2>
+            <!-- <h2>Show Results For</h2> -->
             <ul class="catmenu" id="submenu">
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="people">
-                        <img src="<?php echo BASE_URL;?>assets/images/Person-dark.svg" alt="person icon">
-                        <p>People</p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="places">
-                        <img src="<?php echo BASE_URL;?>assets/images/Place-dark.svg" alt="location icon">
-                        <p>Places</p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="events">
-                        <img src="<?php echo BASE_URL;?>assets/images/Event-dark.svg" alt="event icon">
-                        <p>Events</p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="sources">
-                        <img src="<?php echo BASE_URL;?>assets/images/Source-dark.svg" alt="source icon">
-                        <p>Sources</p>
-                        <span></span>
-                    </label>
-                </li>
-                <li>
-                    <label class="category">
-                        <input id="checkBox" type="checkbox" value="projects">
-                        <img src="<?php echo BASE_URL;?>assets/images/Project-dark.svg" alt="project icon">
-                        <p>Projects</p>
-                        <span></span>
-                    </label>
-                </li>
             </ul>
-            <hr>
+            <!-- <hr> -->
             <?php } ?>
             <!-- People Filtering -->
 
@@ -164,7 +123,22 @@
                                     <span></span>
                                 </label>
                             </li>
-                        <?php } ?>
+                        <?php }
+                        if ($catLower == 'date'){
+                            echo '<div class="search-section">
+                                <div class="inputwrap">
+                                <label for="startYear">Start Year</label>
+                                <input type="text" name="startyear" maxlength="4" id="startyear" pattern="\d{4}" required/>
+                                </div>
+                                <div class="inputwrap">
+                                <label for="endYear">End Year</label>
+                                <input type="text" name="endyear" maxlength="4" id="endyear" pattern="\d{4}" required/>
+                                </div>
+                                <input class="event-date-range" type="hidden" name="date" value=""/>
+                                </div>';
+                        }
+                        ?>
+
                         </ul>
                     </li>
                 <?php } ?>
@@ -323,6 +297,17 @@
             <div class="option-wrap">
                 <p>Option Title</p>
                 <img class="remove" src="<?php echo BASE_IMAGE_URL;?>x-dark.svg" />
+            </div>
+        </div>
+        <div class="search-record-connections">
+            <div class="connectionwrap">
+                <div class="categories"></div>
+                <div class="connection-cards">
+                    <ul class="connect-row">
+                    </ul>
+                    <a class="search-all"></a>
+                    <!-- <div class="load-more"><h4>Load More</h4></div> -->
+                </div>
             </div>
         </div>
         <div id="search-result-wrap">
