@@ -149,6 +149,7 @@ function counterOfAllGenders($filters=""){
         } GROUP BY ?sex ?sexLabel
         ORDER BY DESC(?count)";
 
+
         $encode=urlencode($query);
         $call=API_URL.$encode;
         $res=callAPI($call,'','');
@@ -504,6 +505,8 @@ function getSearchFilterCounters(){
 
     foreach ($filterTypes as $filterType) {
         if ($filterType == "people"){
+            // TODO: create the query filters in each counter function and remove what you are counting for.
+            // ex: in counter of gender remove $filters['gender'] before running createQueryFilters()
             $queryFilters = createQueryFilters("people", $filters);
             $peopleFilters = array(
                 'Gender' => counterOfAllGenders($queryFilters),

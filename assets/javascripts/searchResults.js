@@ -187,7 +187,7 @@ function fillFilterCounters(allCounters){
                     else if (key.match("Count$")) {
                         if (count !== "") {
                             var count2 = record[key]['value'];
-                            count = +count + +count2;
+                            count = count + count2;
                         }
                         else {
                             count = record[key]['value'];
