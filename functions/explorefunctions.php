@@ -139,16 +139,20 @@ function counterofAllitems(){
 }
 
 //counter of all genders
-function counterOfAllGenders($filters=""){
+function counterOfAllGenders($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['gender'])){
+        unset($filters['gender']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
+
     $query="SELECT ?sex ?sexLabel (count( distinct ?agent) AS ?count) WHERE{
         ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent .
         ?agent $wdt:$hasSex ?sex.
-        $filters
+        $queryFilters
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
         } GROUP BY ?sex ?sexLabel
         ORDER BY DESC(?count)";
-
 
         $encode=urlencode($query);
         $call=API_URL.$encode;
@@ -164,12 +168,17 @@ function counterOfAllGenders($filters=""){
 }
 
 //get the roles and their counts
-function counterOfRole($filters=""){
+function counterOfRole($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['role_types'])){
+        unset($filters['role_types']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
+
     $query= "SELECT ?role ?roleLabel (count( distinct ?agent) AS ?count) WHERE
     {  ?agent $wdt:$instanceOf $wd:$person.
         ?agent $wdt:$hasParticipantRole ?role.
-        $filters
+        $queryFilters
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
     }GROUP BY ?role ?roleLabel
     ORDER BY DESC(?count)";
@@ -187,12 +196,17 @@ function counterOfRole($filters=""){
     }
 }
 
-function counterOfStatus($filters=""){
+function counterOfStatus($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['status'])){
+        unset($filters['status']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
+
     $query= "SELECT ?status ?statusLabel (count( distinct ?agent) AS ?count) WHERE
     {  ?agent $wdt:$instanceOf $wd:$person.
         ?agent $wdt:$hasPersonStatus ?status.
-        $filters
+        $queryFilters
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
     } GROUP BY ?status ?statusLabel
     ORDER BY DESC(?count)";
@@ -211,12 +225,17 @@ function counterOfStatus($filters=""){
 }
 
 
-function counterOfOccupation($filters=""){
+function counterOfOccupation($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['occupation'])){
+        unset($filters['occupation']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
+
     $query= "SELECT ?occupation ?occupationLabel (count( distinct ?agent) AS ?count) WHERE
     {  ?agent $wdt:$instanceOf $wd:$person.
         ?agent $wdt:$hasOccupation ?occupation.
-        $filters
+        $queryFilters
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
     } GROUP BY ?occupation ?occupationLabel
     ORDER BY DESC(?count)";
@@ -237,13 +256,18 @@ function counterOfOccupation($filters=""){
 
 
 // Count the number of people in each age category
-function counterOfAge($filters=""){
+function counterOfAge($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['age_category'])){
+        unset($filters['age_category']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
+
     $ageCategoryQuery ="SELECT ?agecategory ?agecategoryLabel (count( distinct ?agent) as ?count) where{
                             ?agecategory $wdt:$instanceOf $wd:$ageCategory.
                             ?agent $wdt:$instanceOf $wd:$person.
                             ?agent $wdt:$hasAgeCategory ?agecategory.
-                            $filters
+                            $queryFilters
                             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\" . }
 
                         }group by ?agecategory ?agecategoryLabel
@@ -257,12 +281,17 @@ function counterOfAge($filters=""){
     return json_encode($ageCategoryResult->results->bindings);
 }
 
-function counterOfEthnodescriptor($filters=""){
+function counterOfEthnodescriptor($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['ethnodescriptor'])){
+        unset($filters['ethnodescriptor']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
+
     $query="SELECT ?ethno ?ethnoLabel (count( distinct ?agent) as ?count)
         {?agent $wdt:$instanceOf $wd:$person.
         ?agent $wdt:$hasECVO ?ethno.
-        $filters
+        $queryFilters
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
         }GROUP BY ?ethno ?ethnoLabel
         ORDER BY ?ethnoLabel";
@@ -282,12 +311,17 @@ function counterOfEthnodescriptor($filters=""){
 
 
 
-function counterOfEventType($filters=""){
+function counterOfEventType($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['event_type'])){
+        unset($filters['event_type']);
+    }
+    $queryFilters = createQueryFilters("events", $filters);
+
     $query="SELECT ?eventType ?eventTypeLabel (count( distinct ?event) AS ?count)  WHERE{
         ?event $wdt:$instanceOf $wd:$event.
         ?event $wdt:$hasEventType ?eventType.
-        $filters
+        $queryFilters
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
         } GROUP BY ?eventType ?eventTypeLabel
         ORDER BY DESC(?count)
@@ -330,13 +364,18 @@ function counterOfEventPlace(){
     }
 }
 
-function counterOfPlaceType($filters=""){
+function counterOfPlaceType($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['place_type'])){
+        unset($filters['place_type']);
+    }
+    $queryFilters = createQueryFilters("places", $filters);
+
     $query= "
       SELECT DISTINCT ?type ?typeLabel (count( distinct ?place) AS ?count) WHERE {
           ?place $wdt:$instanceOf $wd:$place; #it's a place
               $wdt:$hasPlaceType ?type.
-              $filters
+              $queryFilters
       SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" .}
   }GROUP BY ?type ?typeLabel
       order by ?typeLabel
@@ -380,12 +419,17 @@ function counterOfCity(){
     }
 }
 
-function counterOfSourceType($filters=""){
+function counterOfSourceType($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['source_type'])){
+        unset($filters['source_type']);
+    }
+    $queryFilters = createQueryFilters("places", $filters);
+
      $query="SELECT ?sourcetype ?sourcetypeLabel (count( distinct ?source) AS ?count)  WHERE{
          ?source $wdt:$instanceOf $wd:$entityWithProvenance.
          ?source $wdt:$hasOriginalSourceType ?sourcetype.
-         $filters
+         $queryFilters
          SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
     } GROUP BY ?sourcetype ?sourcetypeLabel
     ORDER BY DESC(?count)";
@@ -506,33 +550,30 @@ function getSearchFilterCounters(){
     foreach ($filterTypes as $filterType) {
         if ($filterType == "people"){
             // TODO: create the query filters in each counter function and remove what you are counting for.
-            // ex: in counter of gender remove $filters['gender'] before running createQueryFilters()
+            // ex: in counter of gender remove $filters['gender']
             $queryFilters = createQueryFilters("people", $filters);
             $peopleFilters = array(
-                'Gender' => counterOfAllGenders($queryFilters),
-                'Age Category' => counterOfAge($queryFilters),
-                'Ethnodescriptor' => counterOfEthnodescriptor($queryFilters),
-                'Role Types' => counterOfRole($queryFilters),
-                'Status' => counterOfStatus($queryFilters),
-                'Occupation' => counterOfOccupation($queryFilters),
+                'Gender' => counterOfAllGenders($filters),
+                'Age Category' => counterOfAge($filters),
+                'Ethnodescriptor' => counterOfEthnodescriptor($filters),
+                'Role Types' => counterOfRole($filters),
+                'Status' => counterOfStatus($filters),
+                'Occupation' => counterOfOccupation($filters),
             );
             $counters['People'] = $peopleFilters;
         } else if ($filterType == "events" || $filterType == "event"){
-            $queryFilters = createQueryFilters("events", $filters);
             $eventFilters = array(
-                'Event Type' => counterOfEventType($queryFilters)
+                'Event Type' => counterOfEventType($filters)
             );
             $counters['Event'] = $eventFilters;
         } else if ($filterType == "places" || $filterType == "place"){
-            $queryFilters = createQueryFilters("places", $filters);
             $placeFilters = array(
-                'Place Type' => counterOfPlaceType($queryFilters)
+                'Place Type' => counterOfPlaceType($filters)
             );
             $counters['Place'] = $placeFilters;
         } else if ($filterType == "sources" || $filterType == "source"){
-            $queryFilters = createQueryFilters("sources", $filters);
             $sourceFilters = array(
-                'Source Type' => counterOfSourceType($queryFilters)
+                'Source Type' => counterOfSourceType($filters)
             );
             $counters['Source'] =$sourceFilters;
         }

@@ -27,6 +27,39 @@ function admin(){
 }
 
 
+function searchTermParser($term){
+    $filters = array();
+    $found = false;
+    foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
+        $keys = array_keys($constantsArray);
+
+        foreach ($keys as $key) {
+            $position = stripos($key, $term);
+            if ($position !== false){
+                echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
+                $found = true;
+                break;
+            }
+        }
+
+        if ($found){
+            // map the file type to a known filter and add it to the $filters array
+            $filterType = strtolower(str_replace(' ', '_', $type));
+            $filters[$filterType] = $key;
+            break;
+        }
+    }
+
+    if (!$found){
+        echo "there were no matches, $term must be a name";
+        $filters['name'] = $key;
+    }
+
+
+    // print_r($filters);
+    // die;
+}
+
 
 // create filters for queries - doing this in a function so it can also be used for search filter counters
 // within filter group - OR logic
@@ -38,7 +71,7 @@ function createQueryFilters($searchType, $filters)
 
     foreach ($filters as $filterType => $filterValues) {
         if ($filterType == "limit" || $filterType == "offset" || !is_array($filterValues)) continue;
-        
+
         $filterCount = count($filterValues) - 1;
 
         foreach ($filterValues as $index => $value) {
@@ -523,17 +556,20 @@ function createQueryFilters($searchType, $filters)
                     }
                 }
                     break;
+                case 'all': // keyword search filters
+                {
+                    if ($filterType == "searchbar"){
+                        $termFilter = searchTermParser($value);
+                    }
+                }
+                    break;
                 default:
                     // code...
                     break;
             }
-
-
         }
     }
-
 return $queryFilters;
-
 }
 
 
@@ -557,8 +593,6 @@ function blazegraph()
     } else {
         $filtersArray = Array();
     }
-
-    // print_r($filtersArray);die;
 
     $templates = $_GET['templates'];
 
@@ -706,7 +740,6 @@ function blazegraph()
 
                 break;
             case 'projects2':
-
                 $query = array('query' => "");
                 include BASE_PATH."queries/".$preset."/findProjects.php";
                 $query['query'] = $tempQuery;
@@ -737,6 +770,10 @@ function blazegraph()
                 include BASE_PATH."queries/".$preset."/".strtolower($templates[0]).".php";
                 $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
+                break;
+            case 'all':
+                // if (isset($filtersArray['searchbar'])){
+                // }
                 break;
             default:
                 break;
