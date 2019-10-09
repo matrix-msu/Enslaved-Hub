@@ -37,7 +37,7 @@
         margin: 0;
         width: fit-content;
         margin-bottom: 35px;
-        
+
         li.card {
            cursor: pointer;
             width: 390px;
@@ -50,7 +50,7 @@
             transition: all .3s;
             padding: 20px;
         }
-        
+
         li.card-story{
             cursor: pointer;
             width: 390px; //card sizing
@@ -95,7 +95,7 @@
                 box-shadow: 0 12px 20px 0 rgba(0,0,0,0.15);
             }
         }
-        
+
     }
 }
 
@@ -142,7 +142,7 @@
                         transition: border 0.3s ease;
                         height: 45px;
                         width: 300px;
-            
+
                         &:hover{
                             border: 2px solid rgba(194,79,60,0.6);
                         }
@@ -158,14 +158,14 @@
                         color: #253449;
                         opacity: 1; /* Firefox */
                         font-style: italic;
-                        
+
                     }
-            
+
                     :-ms-input-placeholder { /* Internet Explorer 10-11 */
                         color: #253449;
                         font-style: italic;
                     }
-            
+
                     ::-ms-input-placeholder { /* Microsoft Edge */
                         color: #253449;
                         font-style: italic;
@@ -178,16 +178,16 @@
                     }
                 }
             }
-    
+
             .sort-stories{
                 position: relative;
                 margin-right: 40px;
-    
+
                 .sort-stories-text{
                     font-size: 14px;
                     color: $base-dark;
                 }
-    
+
                 ul {
                     background: $base-dark;
                     box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
@@ -211,17 +211,17 @@
                     li:hover {
                         color: $sub-base;
                     }
-    
+
                     ul#submenu {
                         margin-bottom: 20px;
                     }
-    
+
                 }
-    
+
                 #submenu.show{
                     display: block;
                 }
-    
+
                 span {
                     cursor: pointer;
                     img {
@@ -245,7 +245,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    
+
     .sort-pages{
         position: relative;
         padding-right: 20px;
@@ -283,12 +283,14 @@
             left: 0;
             width: max-content;
             z-index: 1;
+            min-width: 100px;
             li {
                 cursor: pointer;
                 font-size: 12px;
                 line-height: 15px;
                 padding: 5px 3px;
                 transition: color 0.3s ease;
+                margin: 0px 5px;
             }
             li:hover {
                 color: $accent;
