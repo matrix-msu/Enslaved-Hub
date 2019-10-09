@@ -10,15 +10,19 @@ var total_length = 0;
 var card_offset = 0;
 var card_limit = 12;
 var filters = {};
+var display = search_type;
 
+if (search_type == "all"){
+    display = 'people';
+}
 
 var filtersToSearchType = {
     'people' : ['people', 'event', 'place', 'source', 'project'],
     'events' : ['event', 'place', 'source', 'project'],
     'places' : ['place', 'source', 'project'],
-    'sources' : ['source', 'project']
+    'sources' : ['source', 'project'],
+    'all' : ['people', 'event', 'place', 'source', 'project'],
 };
-
 
 var showPath = false;
 var upperForm = "";
@@ -89,6 +93,7 @@ function searchResults(preset, limit = 12, offset = 0)
     // console.log(preset, filters, templates);
     generateFilterCards();
 
+    console.log(preset, filters, templates, display)
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -96,7 +101,8 @@ function searchResults(preset, limit = 12, offset = 0)
         data: {
             preset: preset,
             filters: filters,
-            templates: templates
+            templates: templates,
+            display:display
         },
         'success': function (data)
         {
@@ -308,7 +314,7 @@ $(document).ready(function() {
             $catFilters.hide();
             var catType = $category.html().toLowerCase();
 
-            if (filtersToSearchType[search_type].includes(catType)){
+            if (typeof(filtersToSearchType[search_type]) != 'undefined' && filtersToSearchType[search_type].includes(catType)){
                 $category.show();
                 $catFilters.show();
             }
@@ -835,7 +841,8 @@ function get_download_content(fields, data, isAllData) {
             data: {
                 preset: search_type,
                 filters: filters,
-                templates: templates
+                templates: templates,
+                display: display
             },
             'success': function (data)
             {

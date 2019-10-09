@@ -27,37 +27,42 @@ function admin(){
 }
 
 
-function searchTermParser($term){
-    $filters = array();
-    $found = false;
-    foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
-        $keys = array_keys($constantsArray);
+function searchTermParser($filters){
+    $terms = $filters['searchbar'];
+    unset($filters['searchbar']);
 
-        foreach ($keys as $key) {
-            $position = stripos($key, $term);
-            if ($position !== false){
-                echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
-                $found = true;
+    foreach ($terms as $term) {
+        $found = false;
+        foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
+            $keys = array_keys($constantsArray);
+            foreach ($keys as $key) {
+                $position = stripos($key, $term);
+                if ($position !== false){
+                    // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
+                    $found = true;
+                    break;
+                }
+            }
+
+            if ($found){
+                // map the file type to a known filter and add it to the $filters array
+                $filterType = strtolower(str_replace(' ', '_', $type));
+                if (!isset($filters[$filterType]) || !in_array($key, $filters[$filterType])){
+                    $filters[$filterType][] = $key;
+                }
                 break;
             }
         }
 
-        if ($found){
-            // map the file type to a known filter and add it to the $filters array
-            $filterType = strtolower(str_replace(' ', '_', $type));
-            $filters[$filterType] = $key;
-            break;
+        if (!$found){
+            // echo "there were no matches, $term must be a name";
+            if (!isset($filters['name']) || !in_array($term, $filters['name'])){
+                $filters['name'][] = $term;
+            }
         }
     }
 
-    if (!$found){
-        echo "there were no matches, $term must be a name";
-        $filters['name'] = $key;
-    }
-
-
-    // print_r($filters);
-    // die;
+    return $filters;
 }
 
 
@@ -69,6 +74,15 @@ function createQueryFilters($searchType, $filters)
     include BASE_LIB_PATH."variableIncluder.php";
     $queryFilters = "";
 
+    // print_r($filters);die;
+
+    if (isset($filters["searchbar"])){
+        $filters = searchTermParser($filters);
+    }
+
+    // print_r($filters);die;
+
+
     foreach ($filters as $filterType => $filterValues) {
         if ($filterType == "limit" || $filterType == "offset" || !is_array($filterValues)) continue;
 
@@ -78,6 +92,12 @@ function createQueryFilters($searchType, $filters)
             switch ($searchType) {
                 case 'people':  // people filters
                 {
+                    if ($filterType == "name"){
+                        $queryFilters .= "?agent $wdt:$hasName ?name.
+                            FILTER regex(?name, '$value', 'i') .
+                            ";
+                    }
+
                     if ($filterType == "gender"){
                         if (array_key_exists($value, sexTypes)){
                             $qGender = sexTypes[$value];
@@ -556,13 +576,6 @@ function createQueryFilters($searchType, $filters)
                     }
                 }
                     break;
-                case 'all': // keyword search filters
-                {
-                    if ($filterType == "searchbar"){
-                        $termFilter = searchTermParser($value);
-                    }
-                }
-                    break;
                 default:
                     // code...
                     break;
@@ -570,6 +583,33 @@ function createQueryFilters($searchType, $filters)
         }
     }
 return $queryFilters;
+}
+
+function keywordSearch($filters){
+    // $searchTypeToQueryFilters = array(
+    //     "people" => createQueryFilters("people", $filters),
+    //     "events" => createQueryFilters("events", $filters),
+    //     "places" => createQueryFilters("places", $filters),
+    //     "sources" => createQueryFilters("sources", $filters),
+    // );
+
+    $peopleFilters = createQueryFilters("people", $filters);
+    $eventFilters = createQueryFilters("events", $filters);
+    $placeFilters = createQueryFilters("places", $filters);
+    $sourceFilters = createQueryFilters("sources", $filters);
+
+    include BASE_PATH."queries/keywordSearch/ids.php";
+    $idQuery['query'] = $tempQuery;
+    print_r($idQuery);die;
+    $result = blazegraphSearch($idQuery);
+    print_r($result);die;
+
+
+
+
+
+    //Get HTML for the cards
+    // return createCards($resultsArray, $templates, $preset, $record_total);
 }
 
 
@@ -602,6 +642,16 @@ function blazegraph()
         $preset = $_GET['preset'];
         include BASE_LIB_PATH."variableIncluder.php";
 
+        if ($preset == 'all'){
+            if (isset($_GET['display'])){
+                $preset = $_GET['display'];
+            }
+            // return keywordSearch($filtersArray);
+        }
+
+
+
+
         $queryFilters = createQueryFilters($preset, $filtersArray);
         // echo $queryFilters;die;
 
@@ -627,16 +677,6 @@ function blazegraph()
                 break;
 
             case 'people':
-                // filter by name
-                $nameQuery = "";
-                if (isset($filtersArray['person'])){
-                    $name = $filtersArray['person'][0];
-                    $nameQuery = "
-                        ?agent $p:$hasName ?statement.
-                        ?statement $ps:$hasName ?name.
-                        FILTER regex(?name, '^$name', 'i') .
-                    ";
-                }
                 //filter by source id
                 $sourceIdFilter = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
