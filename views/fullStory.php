@@ -173,7 +173,7 @@ else {
     <div class="connectionwrap">
     <h2>Story Connections</h2>
     <div class="categories">
-        <ul>
+        <ul> 
             <li class="unselected selected" id="people"><div class="person-image"></div>10 People</li>
             <li class="unselected" id="event"><div class="event-image"></div>3 Events</li>
             <li class="unselected" id="place"><div class="place-image"></div>3 Places</li>
