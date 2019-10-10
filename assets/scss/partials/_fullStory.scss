@@ -597,6 +597,7 @@
                 .card-title{
                     display: flex;
                     align-items: center;
+                    line-height: 1;
     
                     img{
                         margin-right: 15px;
@@ -769,16 +770,6 @@
     }
 }
 
-.related-card{
-    padding: 0;
-    margin-bottom: 30px;
-    .cardheader-wrap{
-        h2{
-            font-size: 30px;
-            color: $base-dark;
-        }
-    }
-}
 
 @media screen and (max-width: 950px){
 	.story-content {

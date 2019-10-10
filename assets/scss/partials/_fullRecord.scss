@@ -109,7 +109,7 @@
 
 .record-connections{
     border-bottom: none;
-    padding: 40px 0 70px;
+    padding: 60px 0 30px;
     width: 90%;
     max-width: 1000px;
     margin: 0 auto;
@@ -119,7 +119,7 @@
         color: $base-dark;
     }
     .categories{
-        margin-top: 47px;
+        margin-top: 25px;
 
         ul{
             list-style-type: none;
@@ -139,7 +139,7 @@
                 opacity: .25;
                 padding-bottom: 20px;
                 padding-left: 40px;
-                margin-right: 45px;
+                margin-right: 35px;
                 position: relative;
                 transition: opacity .3s;
 
@@ -149,7 +149,7 @@
                 div{
                     padding-right: 10px;
                     left: 5px;
-                    top: -3px;
+                    top: -2px;
                     background-repeat: no-repeat;
                     position: absolute;
                 }
@@ -200,7 +200,7 @@
             display: flex;
             flex-wrap: wrap;
             list-style-type: none;
-            margin: 32px 0 30px;
+            margin: 20px 0 30px;
             padding: 0;
 
             li.card{
@@ -798,12 +798,23 @@
         }
         img{
             cursor: pointer;
-            margin: -10px 12px 0px -12px;
+            margin: -10px 5px 0px -12px;
         }
     }
 }
 
 .featured-card{
+    padding: 0;
+    margin-bottom: 30px;
+    .cardheader-wrap{
+        h2{
+            font-size: 30px;
+            color: $base-dark;
+        }
+    }
+}
+
+.related-card{
     padding: 0;
     margin-bottom: 30px;
     .cardheader-wrap{
