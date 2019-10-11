@@ -169,15 +169,17 @@ else {
     </div>
 </main>
 <!-- Story Connections -->
-<div class="story-connections">
+<div class="record-connections">
+    <div class="connectionwrap">
     <h2>Story Connections</h2>
     <div class="categories">
-        <ul>
+        <ul> 
             <li class="unselected selected" id="people"><div class="person-image"></div>10 People</li>
             <li class="unselected" id="event"><div class="event-image"></div>3 Events</li>
             <li class="unselected" id="place"><div class="place-image"></div>3 Places</li>
             <li class="unselected" id="project"><div class="project-image"></div>2 Projects</li>
             <li class="unselected" id="source"><div class="source-image"></div>15 Sources</li>
+            <hr>
         </ul>
     </div>
     <div class="connection-cards">
@@ -209,6 +211,7 @@ else {
         </ul>
         <a class="search-all"></a>
     </div>
+</div>
 </div>
 <!-- Related Stories-->
 <div class="container card-column related-card">
