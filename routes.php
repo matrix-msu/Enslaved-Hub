@@ -15,7 +15,8 @@ $GLOBALS['api_routes'] = array(
     'api/getDateRange' => array('explorefunctions.php', 'getEventDateRange'),
     'api/getProjectFullInfo' => array('explorefunctions.php', 'getProjectFullInfo'),
     'api/getFullRecordConnections' => array('explorefunctions.php', 'getFullRecordConnections'),
-    'api/getCrawlerResults' => array('crawler_jquery.php', '')
+    'api/getCrawlerResults' => array('crawler_jquery.php', ''),
+    'api/getQidValue' => array('functions.php','getQidValue')
 );
 
 $GLOBALS['routes'] = array(

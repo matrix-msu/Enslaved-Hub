@@ -862,8 +862,31 @@ function download_csv(data, fields) {
     Adds a filter card to the filter-cards section
 */
 function addFilterCard(filterCategory, filterName){
-    var filterHtml = '<div class="option-wrap" id="'+ filterCategory +'"><p>'+ filterName +'</p><img class="remove" src="'+ BASE_IMAGE_URL + 'x-dark.svg' +'" /></div>';
-    $('div.filter-cards').append(filterHtml);
+    //Check for QIDs ex: Q58
+    if(filterName.charAt(0) == 'Q' && $.isNumeric(filterName.charAt(1)) == true){
+        $.ajax({
+            url: BASE_URL + 'api/getQidValue',
+            method: "GET",
+            data: {category: filterCategory, qid: filterName},
+            'success': function (data) {
+                filterName = data;
+                var filterHtml = '<div class="option-wrap" id="'+ filterCategory +'"><p>'+ filterName +'</p><img class="remove" src="'+ BASE_IMAGE_URL + 'x-dark.svg' +'" /></div>';
+                $('div.filter-cards').append(filterHtml);
+                $('.status').each(function(){
+                    var filterNav = $.trim($(this).find('input').val());
+                    var filterBubble = $.trim(filterName);
+                    if(filterNav === filterBubble) {
+                        $(this).find("input").prop("checked", true);
+                    }
+                });
+            }
+        });
+    }
+    //Else use regular inputs
+    else{
+        var filterHtml = '<div class="option-wrap" id="'+ filterCategory +'"><p>'+ filterName +'</p><img class="remove" src="'+ BASE_IMAGE_URL + 'x-dark.svg' +'" /></div>';
+        $('div.filter-cards').append(filterHtml);
+    }
 }
 /*
     Generates the cards for each Filter selected
@@ -875,6 +898,7 @@ function generateFilterCards(){
     //Generate filters
     $.each(filters, function(key, values)
     {
+        console.log(filters)
         if(key && values && key != "limit" && key != "offset")
         {
 
@@ -882,7 +906,6 @@ function generateFilterCards(){
                 temp = [values];
                 values = temp;
             }
-
             //Add filter cards
             $.each(values, function(indx, value)
             {
