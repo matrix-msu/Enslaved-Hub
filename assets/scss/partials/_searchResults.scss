@@ -43,7 +43,7 @@ div.searched-term {
         margin-left: -270px;
         padding: 50px 30px;
         transition: 200ms;
-        width: 270px;
+        width: 310px;
         min-width: 220px;
         z-index: 3;
         margin-right: 30px;
@@ -167,9 +167,82 @@ div.searched-term {
                     li.hide-category{
                         display: none;
                     }
+                    .to-field{
+                        font-size: 12px;
+                        font-family: aleobolditalic;
+                        padding-top: 32px;
+                        margin: 0 5px 0 5px;
+                    }
+                    input[type=button]{
+                        background-color: #0E3232;
+                        color: white;
+                        margin-left: 5px;
+                        margin-top: 22px;
+                        border: none;
+                        border-radius: 4px;
+                        width: 40px;
+                        height: 30px;
+                        cursor: pointer;
+                    }
+                    .inputwrap{
+                        margin-bottom: 4%;
+                        position: relative;
+                        a {
+                          outline: none;
+                        }
+                        input{
+                            display: block;
+                            color: #0E3232;
+                            font-size: 13px;
+                            width: 70px;
+                            height: 30px;
+                            border: 2px rgba(14,50,50,0.6) solid;
+                            border-radius: 5px;
+                            margin-top: 5px;
+                            padding-left: 5px;
+                            &:hover{
+                                border: 2px solid $sub-base;
+                            }
+                            &:focus{
+                                outline:none;
+                            }
+                        }
+                        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                            color: #0E3232;
+                            opacity: .8; /* Firefox */
+                            font-family: aleobolditalic;
+                            padding-left: 5px;
+                        }
+
+                        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                            color: #0E3232;
+                            opacity: .8;
+                            font-family: aleobolditalic;
+                            padding-left: 5px;
+                        }
+
+                        ::-ms-input-placeholder { /* Microsoft Edge */
+                            color: #0E3232;
+                            opacity: .8;
+                            font-family: aleobolditalic;
+                            padding-left: 5px;
+                        }
+                        label{
+                            color: $base-dark;
+                            font-size: 13px;
+                            font-family: aleobolditalic;
+                            width: 78px;
+                            height: 30px;
+                            padding-bottom: 5px;
+                        }
+                    }
                 }
                 ul#submenu.show{
                     display: block;
+                }
+                ul#submenu.showdate{
+                    display: flex;
+                    justify-content: space-around;
                 }
                 ul#submenu.hidden{
                     display: none;
