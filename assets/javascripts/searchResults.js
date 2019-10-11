@@ -641,8 +641,21 @@ $(document).ready(function() {
     // });
     //Sub categories
     $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
-        $(this).find("span:first").toggleClass("show");
-        $(this).find("ul#submenu").toggleClass("show");
+        //For drawers that shouldn't fold on click
+        $("input").click(function() {
+           if ($(this).attr("class") == 'nofold'){
+               return false;
+           }
+        });
+        //Date requires exception
+        if($(this).attr('name') == 'date'){
+            $(this).find("span:first").toggleClass("show");
+            $(this).find("ul#submenu").toggleClass("showdate");
+        }
+        else{
+            $(this).find("span:first").toggleClass("show");
+            $(this).find("ul#submenu").toggleClass("show");
+        }
     });
      //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
