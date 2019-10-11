@@ -898,7 +898,7 @@ function generateFilterCards(){
     //Generate filters
     $.each(filters, function(key, values)
     {
-        console.log(filters)
+        // console.log(filters)
         if(key && values && key != "limit" && key != "offset")
         {
 
