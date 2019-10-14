@@ -2442,3 +2442,9 @@ function checkKID($kid)
     else
         return false;
 }
+
+function getQidValue(){
+    $category = $_GET['category'];
+    $qid = $_GET['qid'];
+    return array_search($qid,$GLOBALS["FILTER_TO_FILE_MAP"][ucfirst($category)]);
+}

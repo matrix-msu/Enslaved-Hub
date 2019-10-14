@@ -125,16 +125,17 @@
                             </li>
                         <?php }
                         if ($catLower == 'date'){
-                            echo '<div class="inputwrap">
-                                <label for="startYear">Start Year</label>
-                                <input class="nofold" type="number" onKeyPress="if(this.value.length==4) return false;" id="startyear" placeholder="Year"/>
-                                </div>
-                                <div class="to-field">To</div>
+                            echo '<div class="search-section">
                                 <div class="inputwrap">
-                                <label for="endYear">End Year </label>
-                                <input class="nofold" type="number" onKeyPress="if(this.value.length==4) return false;" id="endyear" placeholder="Year"/>
+                                <label for="startYear">Start Year</label>
+                                <input type="text" name="startyear" maxlength="4" id="startyear" pattern="\d{4}" required/>
                                 </div>
-                                <input type="button" value="Go">';
+                                <div class="inputwrap">
+                                <label for="endYear">End Year</label>
+                                <input type="text" name="endyear" maxlength="4" id="endyear" pattern="\d{4}" required/>
+                                </div>
+                                <input class="event-date-range" type="hidden" name="date" value=""/>
+                                </div>';
                         }
                         ?>
 
@@ -329,7 +330,11 @@
         </div>
         <div id="pagination">
             <input class="current-page" type="hidden" value="1">
+<<<<<<< HEAD
             <div class="pagi-left"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="Previous Page"></div>
+=======
+            <div class="pagi-left"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Left"/></div>
+>>>>>>> c98dfc24120151ba646ed9f3b2cf98543236ee8c
             <div class="page-numbers">
                 <span class="num pagi-first">1</span>
                 <span class="dotsLeft">...</span>
@@ -341,7 +346,11 @@
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
+<<<<<<< HEAD
             <div class="pagi-right"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron-light.svg" alt="Next Page"></div>
+=======
+            <div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron-light.svg" alt="Arrow Right"/></div>
+>>>>>>> c98dfc24120151ba646ed9f3b2cf98543236ee8c
         </div>
     </div>
 </main>
