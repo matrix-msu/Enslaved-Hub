@@ -604,14 +604,24 @@ function keywordSearch($filters){
     $result = blazegraphSearch($idQuery);
     print_r($result);die;
 
-
-
-
-
     //Get HTML for the cards
     // return createCards($resultsArray, $templates, $preset, $record_total);
 }
 
+
+
+function getKeywordSearchCounters($filters){
+    $peopleFilters = createQueryFilters("people", $filters);
+    $eventFilters = createQueryFilters("events", $filters);
+    $placeFilters = createQueryFilters("places", $filters);
+    $sourceFilters = createQueryFilters("sources", $filters);
+
+    include BASE_PATH."queries/keywordSearch/counters.php";
+    $query['query'] = $tempQuery;
+    print_r($query);die;
+    $result = blazegraphSearch($query);
+    print_r($result);die;
+}
 
 
 
@@ -638,11 +648,14 @@ function blazegraph()
 
     $record_total = 0;
     $queryArray = array();
+    $isKeywordSearch = false;
+
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
         include BASE_LIB_PATH."variableIncluder.php";
 
         if ($preset == 'all'){
+            $isKeywordSearch = true;
             if (isset($_GET['display'])){
                 $preset = $_GET['display'];
             }
@@ -841,22 +854,27 @@ function blazegraph()
         'places' => 'place',
         'projects' => 'project',
         'sources' => 'source'
-
     ];
     if (array_key_exists($preset, $searchTypes)){
-        include BASE_PATH."queries/".$preset."Search/count.php";
-        $resultCountQuery['query'] = $tempQuery;
-        // print_r($resultCountQuery);die;
-        $result = blazegraphSearch($resultCountQuery);
+        if (!$isKeywordSearch){
+            include BASE_PATH."queries/".$preset."Search/count.php";
+            $resultCountQuery['query'] = $tempQuery;
+            // print_r($resultCountQuery);die;
+            $result = blazegraphSearch($resultCountQuery);
 
-        if (isset($result[0]) && isset($result[0]['count'])){
-            $record_total = $result[0]['count']['value'];
+            if (isset($result[0]) && isset($result[0]['count'])){
+                $record_total = $result[0]['count']['value'];
+            }
+
+            // no more searching if we know there are 0 results
+            if ($record_total <= 0){
+                return createCards([], $templates, $preset, 0);
+            }
+        } else {
+            // get the count for all search types for keyword search
+            $record_total = getKeywordSearchCounters($filtersArray);
         }
 
-        // no more searching if we know there are 0 results
-        if ($record_total <= 0){
-            return createCards([], $templates, $preset, 0);
-        }
 
         include BASE_PATH."queries/".$preset."Search/ids.php";
         $idQuery['query'] = $tempQuery;

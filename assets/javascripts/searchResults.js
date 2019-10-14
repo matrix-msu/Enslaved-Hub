@@ -55,7 +55,12 @@ if(document.location.toString().indexOf('?') !== -1)
     for(var i=0; i < query.length; i++)
     {
         var aux = decodeURIComponent(query[i]).split('=');
+        console.log('hererere', aux)
         if(!aux || aux[0] == "" || aux[1] == "") continue;
+
+        if (aux[0] == "display"){
+            display = aux[1];
+        }
 
         // Get searchbar keywords
         if(aux[0] == "searchbar")
@@ -67,6 +72,20 @@ if(document.location.toString().indexOf('?') !== -1)
         filters[aux[0]] = aux[1].split(',');
     }
 }
+
+function showDisplayType(){
+    $categoryTabs = $('.categories').find('li');
+    $categoryTabs.each(function(){
+        $(this).removeClass('selected');
+        if ($(this).attr('id') == display){
+            $(this).addClass('selected');
+        }
+        console.log($(this), 'kkkkkk')
+    });
+    console.log('shshshss', display, $categoryTabs)
+}
+
+
 
 /**
  * Takes parameters for an ajax call that sets result_array to an array with
@@ -302,7 +321,6 @@ $(document).ready(function() {
         }
     });
 
-
     // hide filter categories based on hierarchy in filtersToSearchType
     function hideFilterCategories(){
         $filterCats = $(".cat-cat");
@@ -321,8 +339,6 @@ $(document).ready(function() {
         });
     }
 
-
-
     ///******************************************************************* */
     /// Set Filter Checkboxes / Category Headers
     ///******************************************************************* */
@@ -334,9 +350,9 @@ $(document).ready(function() {
         // console.log('in all')
         $( ".categories" ).html( "<ul>"+
                                     "<li class='unselected selected' id='people'><div class='person-image'></div>People</li>"+
-                                    "<li class='unselected' id='event'><div class='event-image'></div>Events</li>"+
-                                    "<li class='unselected' id='place'><div class='place-image'></div>Places</li>"+
-                                    "<li class='unselected' id='source'><div class='source-image'></div>Sources</li>"+
+                                    "<li class='unselected' id='events'><div class='event-image'></div>Events</li>"+
+                                    "<li class='unselected' id='places'><div class='place-image'></div>Places</li>"+
+                                    "<li class='unselected' id='sources'><div class='source-image'></div>Sources</li>"+
                                     "<hr></ul>" );
     }else if(upperForm == 'People'){
         $( ".categories" ).html( "<ul>"+
@@ -345,17 +361,17 @@ $(document).ready(function() {
         $( ".categories ul" ).css("overflow-x", "hidden")
     }else if(upperForm == 'Events'){
         $( ".categories" ).html( "<ul>"+
-                                    "<li class='unselected selected' id='event'><div class='event-image'></div>Events</li>"+
+                                    "<li class='unselected selected' id='events'><div class='event-image'></div>Events</li>"+
                                     "<hr></ul>" );
         $( ".categories ul" ).css("overflow-x", "hidden")
     }else if(upperForm == 'Places'){
         $( ".categories" ).html( "<ul>"+
-                                    "<li class='unselected selected' id='place'><div class='place-image'></div>Places</li>"+
+                                    "<li class='unselected selected' id='places'><div class='place-image'></div>Places</li>"+
                                     "<hr></ul>" );
         $( ".categories ul" ).css("overflow-x", "hidden")
     }else if(upperForm == 'Sources'){
         $( ".categories" ).html( "<ul>"+
-                                    "<li class='unselected selected' id='source'><div class='source-image'></div>Sources</li>"+
+                                    "<li class='unselected selected' id='sources'><div class='source-image'></div>Sources</li>"+
                                     "<hr></ul>" );
         $( ".categories ul" ).css("overflow-x", "hidden")
     }
@@ -375,6 +391,9 @@ $(document).ready(function() {
         else if(upperForm === 'All')
             $(this).find("input").prop('checked', true);
     });
+
+    showDisplayType();
+
 
     // Show selected filters
     $.each(filters, function(key, values)
@@ -399,6 +418,18 @@ $(document).ready(function() {
         }
     });
 
+
+    $('.categories li').on('click', function(){
+        var clickedType = $(this).attr('id');
+        display = clickedType;
+        card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
+        $("ul.cards").empty();
+        $("thead").empty();
+        $("tbody").empty();
+        searchResults(search_type, card_limit, card_offset);
+
+        showDisplayType();
+    });
     ///******************************************************************* */
     /// Event Handlers for the page
     ///******************************************************************* */
@@ -641,21 +672,8 @@ $(document).ready(function() {
     // });
     //Sub categories
     $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
-        //For drawers that shouldn't fold on click
-        $("input").click(function() {
-           if ($(this).attr("class") == 'nofold'){
-               return false;
-           }
-        });
-        //Date requires exception
-        if($(this).attr('name') == 'date'){
-            $(this).find("span:first").toggleClass("show");
-            $(this).find("ul#submenu").toggleClass("showdate");
-        }
-        else{
-            $(this).find("span:first").toggleClass("show");
-            $(this).find("ul#submenu").toggleClass("show");
-        }
+        $(this).find("span:first").toggleClass("show");
+        $(this).find("ul#submenu").toggleClass("show");
     });
      //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
@@ -667,7 +685,7 @@ $(document).ready(function() {
     $(".search-form").submit(function(e) {
         e.preventDefault();
         // Get search key and value
-        var pparam = $(this).serialize();
+        var pparam = decodeURIComponent($(this).serialize());
         var splitParam = pparam.split('=');
         splitParam[1] = splitParam[1].replace(/\+/g, ' ');
         filters[splitParam[0]] = splitParam[1].split(' ');

@@ -1744,7 +1744,6 @@ HTML;
             $allEventStartYears = array();
             $allEventTypes = array();
 
-
             if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
                 $eventsAndStartYears = explode('||', $record['startyear']['value']);
             }
@@ -1916,9 +1915,10 @@ HTML;
     // print_r($events);die;
 
     // dont do timeline stuff if there are less than 3 events
-    if (count($events) < 3){
-        return json_encode($htmlArray);
-    }
+    // TODO: undo this
+    // if (count($events) < 3){
+    //     return json_encode($htmlArray);
+    // }
     // print_r($events);die;
     $timeline_event_dates = [];
     $unknownEvents = [];    // events without dates
