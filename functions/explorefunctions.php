@@ -529,8 +529,6 @@ function getSearchFilterCounters(){
     $filters = array(); // array of filters
     $filterTypes = array(); // types of filter counters to return
 
-    // print_r($_GET);die;
-
     if (isset($_GET['search_type'])){
         $searchType = $_GET['search_type'];
     }
@@ -543,14 +541,9 @@ function getSearchFilterCounters(){
         $filterTypes = $_GET['filter_types'];
     }
 
-    // createQueryFilters($searchType, $filters);
-
     $counters = array();
-
     foreach ($filterTypes as $filterType) {
         if ($filterType == "people"){
-            // TODO: create the query filters in each counter function and remove what you are counting for.
-            // ex: in counter of gender remove $filters['gender']
             $queryFilters = createQueryFilters("people", $filters);
             $peopleFilters = array(
                 'Gender' => counterOfAllGenders($filters),
@@ -1744,6 +1737,7 @@ HTML;
             $allEventStartYears = array();
             $allEventTypes = array();
 
+            $eventsAndStartYears = array();
             if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
                 $eventsAndStartYears = explode('||', $record['startyear']['value']);
             }
@@ -1912,16 +1906,17 @@ HTML;
         }
     }
 
-    // print_r($events);die;
 
     // dont do timeline stuff if there are less than 3 events
-    // TODO: undo this
-    // if (count($events) < 3){
-    //     return json_encode($htmlArray);
-    // }
+    if (count($events) < 1){
+        return json_encode($htmlArray);
+    }
+
     // print_r($events);die;
+
     $timeline_event_dates = [];
     $unknownEvents = [];    // events without dates
+
     foreach ($events as $event) {
         // If there are months and days, put the year into decimal format
         // Ex: March 6, 1805 = 1805.18
@@ -1933,36 +1928,43 @@ HTML;
         }
     }
 
-    $first_date = min($timeline_event_dates);
-    $final_date = max($timeline_event_dates);
-    $diff = $final_date - $first_date;
+    // echo 'here  ';
+    // print_r($unknownEvents);
+    // echo 'aae  ';
+    // print_r($timeline_event_dates);die;
 
-    if ($diff < 10) {
-        $increment = 1;
-    } elseif ($diff < 20) {
-        $increment = 2;
-    } elseif ($diff < 40) {
-        $increment = 5;
-    } elseif ($diff < 90) {
-        $increment = 10;
-    } else {
-        $increment = 20;
+    if (!empty($timeline_event_dates)){
+        $first_date = min($timeline_event_dates);
+        $final_date = max($timeline_event_dates);
+        $diff = $final_date - $first_date;
+
+        if ($diff < 10) {
+            $increment = 1;
+        } elseif ($diff < 20) {
+            $increment = 2;
+        } elseif ($diff < 40) {
+            $increment = 5;
+        } elseif ($diff < 90) {
+            $increment = 10;
+        } else {
+            $increment = 20;
+        }
+
+        // Hash starts at year that is divisible by incrememnt and before the first event
+        $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
+        $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
+
+        $hashes = range($first_date_hash, $final_date_hash, $increment);
+        $hash_count = count($hashes);
+        $hash_range = end($hashes) - $hashes[0];
     }
-
-    // Hash starts at year that is divisible by incrememnt and before the first event
-    $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
-    $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
-
-    $hashes = range($first_date_hash, $final_date_hash, $increment);
-    $hash_count = count($hashes);
-    $hash_range = end($hashes) - $hashes[0];
 
     $html = '
     <div class="timelinewrap">
     <section class="fr-section timeline-section">
     <h2 class="section-title">Person Timeline</h2>
 
-    <div class="timeline-info-container" kid="{$events[0][\'kid\']}">
+    <div class="timeline-info-container">
     <div class="arrow-pointer-bottom"></div>
     <div class="arrow-pointer-top"></div>';
 
@@ -2157,46 +2159,48 @@ HTML;
 
     $html .= '</div>';
 
-    $html .= '<div class="timeline-container">
-    <div class="timeline">
-      <div class="line"></div>
-      <div class="hash-container" data-start="'.$first_date_hash.'" data-end="'.$final_date_hash.'">';
+    $html .= '<div class="timeline-container">';
+
+    $timelineIndex = 0;
+
+    if (!empty($timeline_event_dates)){
+        $html .= '<div class="timeline">
+          <div class="line"></div>
+          <div class="hash-container" data-start="'.$first_date_hash.'" data-end="'.$final_date_hash.'">';
 
 
-    foreach ($hashes as $index => $year) {
-        $html .= '<div class="hash" style="left:calc('.($index / ($hash_count - 1)) * 100 .'% - 14px)"><p>'.$year.'</p></div>';
+        foreach ($hashes as $index => $year) {
+            $html .= '<div class="hash" style="left:calc('.($index / ($hash_count - 1)) * 100 .'% - 14px)"><p>'.$year.'</p></div>';
+        }
+
+        $html .= '
+            </div>
+            <div class="points-container">';
+
+            $yearsFound = array();  // make sure no duplicate years
+            foreach ($events as $index => $event) {
+                if (in_array($event['startYear'], $yearsFound) || $event['startYear'] == ''){
+                    continue;
+                }
+                $yearsFound[] = $event['startYear'];
+                // Convert year, month, day into decimal form
+                $left = ($event['startYear'] - $first_date_hash) * 100 / $hash_range;
+
+                $html .= '
+                <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
+                style="left:calc('.$left.'% - 5px)"
+                data-kid="'.$event['kid'].'"
+                data-year="'.$event['startYear'].'"
+                data-index="'.$index.'">
+                <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
+                </div>';
+
+                $timelineIndex++;
+          }
+
+        $html .= '</div>
+                </div>';
     }
-
-    $html .= '
-        </div>
-        <div class="points-container">';
-
-        $timelineIndex = 0;
-
-        $yearsFound = array();  // make sure no duplicate years
-        foreach ($events as $index => $event) {
-            if (in_array($event['startYear'], $yearsFound) || $event['startYear'] == ''){
-                continue;
-            }
-            $yearsFound[] = $event['startYear'];
-            // Convert year, month, day into decimal form
-            $left = ($event['startYear'] - $first_date_hash) * 100 / $hash_range;
-
-            $html .= '
-            <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
-            style="left:calc('.$left.'% - 5px)"
-            data-kid="'.$event['kid'].'"
-            data-year="'.$event['startYear'].'"
-            data-index="'.$index.'">
-            <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
-            </div>';
-
-            $timelineIndex++;
-      }
-
-    $html .= '</div>
-            </div>';
-
 
     // events with unknown dates todo
     $html .= '
@@ -2279,7 +2283,6 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE]\". }
 }ORDER BY ?random";
-
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2399,6 +2402,7 @@ SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as 
 
 QUERY;
 
+    // print_r($eventQuery);die;
 
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
@@ -2445,7 +2449,7 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 }ORDER BY ?random
 QUERY;
 
-// print_r($query);die;
+// print_r($peopleQuery);die;
     //Execute query
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);

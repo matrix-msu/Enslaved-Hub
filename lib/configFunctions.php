@@ -50,7 +50,7 @@ function Kora_GetNavigationData()
 		}
 
 		if(!array_key_exists("SubNavigation", $result) || array_key_exists("SubNavigation Display", $result) &&
-			$result["SubNavigation Display"] == "FALSE" ||  $result["SubNavigation"] == "") continue;
+			$result["SubNavigation Display"] == "FALSE" ||  $result["SubNavigation"] == "" ||  $result["SubNavigation"] == "Projects") continue;
 
 		foreach ($navs as $index => $subArray){
 			if ($subArray[0] == $nav){

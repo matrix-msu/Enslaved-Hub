@@ -2,7 +2,7 @@
 
 $tempQuery = <<<QUERY
 SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
- 
+
  (group_concat(distinct ?sourcetypeLabel; separator = "||") as ?sourcetypeLabel) #source type labels
  (count(distinct ?agent) as ?countpeople)
  (count(distinct ?event) as ?countevent)
@@ -19,13 +19,16 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
   OPTIONAL{?source $wdt:$hasOriginalSourceDepository ?secondarysource}.
   OPTIONAL {?source schema:description ?desc}.
 
-  ?agent	?property  ?object .
+  ?source $wdt:$instanceOf wd:$entityWithProvenance.
+  ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
+
+  ?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
   ?source rdfs:label ?sourceLabel.
   ?project rdfs:label ?projectLabel.
   ?sourcetype rdfs:label ?sourcetypeLabel
-           
+
 }group by ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
 order by ?sourceLabel
 

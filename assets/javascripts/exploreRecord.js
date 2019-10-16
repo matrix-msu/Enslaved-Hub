@@ -1,4 +1,4 @@
-// use ajax to get full record html. 
+// use ajax to get full record html.
 $(document).ready(function () {
     // name, details, timeline, connections, featured stories
     $.ajax({
@@ -10,12 +10,13 @@ $(document).ready(function () {
         },
         'success': function (json) {
             var html = JSON.parse(json);
-            console.log(json);
+            console.log(html);
             $('.middlewrap').html(html.header);
             $('.infowrap').html(html.description);
             $('.detail-section').html(html.details);
             if (recordform == 'person') {
-                $('.timeline-container').html(html.timeline);
+                var timelineStr = html.timeline;
+                $('.timeline-holder').html(timelineStr);
                 initializeTimeline(); //function in timeline.js
             }
         },

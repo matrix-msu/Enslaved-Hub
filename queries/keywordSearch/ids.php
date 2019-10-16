@@ -35,8 +35,8 @@ SELECT (count(?agent) as ?agentcount)(count(?event) as ?eventcount)(count(?place
 
    UNION {
         SELECT ?source WHERE
-        { ?souce wdt:P3 wd:Q16.
-          ?souce rdfs:label ?sourcename.
+        { ?source wdt:P3 wd:Q16.
+          ?source rdfs:label ?sourcename.
          FILTER regex(?sourcename, "Charles").
          $sourceFilters
 

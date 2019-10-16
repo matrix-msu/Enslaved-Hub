@@ -75,13 +75,10 @@ function createQueryFilters($searchType, $filters)
     $queryFilters = "";
 
     // print_r($filters);die;
-
     if (isset($filters["searchbar"])){
         $filters = searchTermParser($filters);
     }
-
     // print_r($filters);die;
-
 
     foreach ($filters as $filterType => $filterValues) {
         if ($filterType == "limit" || $filterType == "offset" || !is_array($filterValues)) continue;
@@ -336,6 +333,12 @@ function createQueryFilters($searchType, $filters)
                     break;
                 case 'events':  // events filters
                 {
+                    if ($filterType == "name"){
+                        $queryFilters .= "?event $wdt:$hasName ?eventName.
+                            FILTER regex(?eventName, '$value', 'i') .
+                            ";
+                    }
+
                     if ($filterType == "event_type"){
                         if (array_key_exists($value, eventTypes)){
                             $qType = eventTypes[$value];
@@ -462,6 +465,12 @@ function createQueryFilters($searchType, $filters)
                     break;
                 case 'places':  // places filters
                 {
+                    if ($filterType == "name"){
+                        $queryFilters .= "?place $wdt:$hasName ?placeName.
+                            FILTER regex(?placeName, '$value', 'i') .
+                            ";
+                    }
+
                     if ($filterType == "place_type"){
                         if (array_key_exists($value, placeTypes)){
                             $qType = placeTypes[$value];
@@ -541,6 +550,12 @@ function createQueryFilters($searchType, $filters)
                     break;
                 case 'sources': // sources filters
                 {
+                    if ($filterType == "name"){
+                        $queryFilters .= "?source $wdt:$hasName ?sourceName.
+                            FILTER regex(?sourceName, '$value', 'i') .
+                            ";
+                    }
+
                     if ($filterType == "source_type"){
                         if (array_key_exists($value, sourceTypes)){
                             $qType = sourceTypes[$value];
@@ -585,32 +600,9 @@ function createQueryFilters($searchType, $filters)
 return $queryFilters;
 }
 
-function keywordSearch($filters){
-    // $searchTypeToQueryFilters = array(
-    //     "people" => createQueryFilters("people", $filters),
-    //     "events" => createQueryFilters("events", $filters),
-    //     "places" => createQueryFilters("places", $filters),
-    //     "sources" => createQueryFilters("sources", $filters),
-    // );
-
-    $peopleFilters = createQueryFilters("people", $filters);
-    $eventFilters = createQueryFilters("events", $filters);
-    $placeFilters = createQueryFilters("places", $filters);
-    $sourceFilters = createQueryFilters("sources", $filters);
-
-    include BASE_PATH."queries/keywordSearch/ids.php";
-    $idQuery['query'] = $tempQuery;
-    print_r($idQuery);die;
-    $result = blazegraphSearch($idQuery);
-    print_r($result);die;
-
-    //Get HTML for the cards
-    // return createCards($resultsArray, $templates, $preset, $record_total);
-}
-
-
-
 function getKeywordSearchCounters($filters){
+    include BASE_LIB_PATH."variableIncluder.php";
+
     $peopleFilters = createQueryFilters("people", $filters);
     $eventFilters = createQueryFilters("events", $filters);
     $placeFilters = createQueryFilters("places", $filters);
@@ -618,12 +610,10 @@ function getKeywordSearchCounters($filters){
 
     include BASE_PATH."queries/keywordSearch/counters.php";
     $query['query'] = $tempQuery;
-    print_r($query);die;
+    // print_r($query);die;
     $result = blazegraphSearch($query);
-    print_r($result);die;
+    return json_encode($result[0]);
 }
-
-
 
 function blazegraph()
 {
@@ -2441,10 +2431,4 @@ function checkKID($kid)
         return true;
     else
         return false;
-}
-
-function getQidValue(){
-    $category = $_GET['category'];
-    $qid = $_GET['qid'];
-    return array_search($qid,$GLOBALS["FILTER_TO_FILE_MAP"][ucfirst($category)]);
 }

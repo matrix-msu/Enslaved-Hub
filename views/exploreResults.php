@@ -330,11 +330,7 @@
         </div>
         <div id="pagination">
             <input class="current-page" type="hidden" value="1">
-<<<<<<< HEAD
-            <div class="pagi-left"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="Previous Page"></div>
-=======
             <div class="pagi-left"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Left"/></div>
->>>>>>> c98dfc24120151ba646ed9f3b2cf98543236ee8c
             <div class="page-numbers">
                 <span class="num pagi-first">1</span>
                 <span class="dotsLeft">...</span>
@@ -346,11 +342,7 @@
                 <span class="dotsRight">...</span>
                 <span class="num pagi-last">310</span>
             </div>
-<<<<<<< HEAD
-            <div class="pagi-right"><img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron-light.svg" alt="Next Page"></div>
-=======
             <div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron-light.svg" alt="Arrow Right"/></div>
->>>>>>> c98dfc24120151ba646ed9f3b2cf98543236ee8c
         </div>
     </div>
 </main>
