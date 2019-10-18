@@ -18,16 +18,12 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
   OPTIONAL{?event $wdt:$atPlace ?place}.
   OPTIONAL{?source $wdt:$hasOriginalSourceDepository ?secondarysource}.
   OPTIONAL {?source schema:description ?desc}.
-
-  ?source $wdt:$instanceOf wd:$entityWithProvenance.
-  ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
-
-  ?property  ?object .
+  ?agent ?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
-  ?source rdfs:label ?sourceLabel.
-  ?project rdfs:label ?projectLabel.
-  ?sourcetype rdfs:label ?sourcetypeLabel
+  ?source $rdfs:label ?sourceLabel.
+  ?project $rdfs:label ?projectLabel.
+  ?sourcetype $rdfs:label ?sourcetypeLabel
 
 }group by ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
 order by ?sourceLabel

@@ -38,19 +38,14 @@ function searchTermParser($filters){
             foreach ($keys as $key) {
                 $position = stripos($key, $term);
                 if ($position !== false){
-                    // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
                     $found = true;
-                    break;
+                    // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
+                    // map the file type to a known filter and add it to the $filters array
+                    $filterType = strtolower(str_replace(' ', '_', $type));
+                    if (!isset($filters[$filterType]) || !in_array($key, $filters[$filterType])){
+                        $filters[$filterType][] = $key;
+                    }
                 }
-            }
-
-            if ($found){
-                // map the file type to a known filter and add it to the $filters array
-                $filterType = strtolower(str_replace(' ', '_', $type));
-                if (!isset($filters[$filterType]) || !in_array($key, $filters[$filterType])){
-                    $filters[$filterType][] = $key;
-                }
-                break;
             }
         }
 
@@ -981,7 +976,10 @@ function blazegraphSearch($query){
  * \param $preset :
  */
 function createCards($results, $templates, $preset = 'default', $count = 0){
-//    print_r($results);die;
+    if (!is_array($results)){
+        $results = array();
+    }
+
     $cards = Array();
     $formattedData = array();   // data formatted to be turned into csv
 

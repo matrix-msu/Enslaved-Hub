@@ -126,7 +126,6 @@ function searchResults(preset, limit = 12, offset = 0)
             result_array = JSON.parse(data);
             // console.log('results', result_array)
 
-            console.log('disss', display)
             if (preset == "all"){
                 var allCounters = JSON.parse(result_array['total']);
                 for (var type in filtersToSearchType){
@@ -447,7 +446,7 @@ $(document).ready(function() {
         $("ul.cards").empty();
         $("thead").empty();
         $("tbody").empty();
-        searchResults(search_type, card_limit, card_offset);
+        searchResults(search_type);
 
         showDisplayType();
     });

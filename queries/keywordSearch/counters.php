@@ -18,14 +18,14 @@ SELECT (count(?agent) as ?peoplecount)(count(?event) as ?eventscount)(count(?pla
 
   UNION {
         SELECT ?place WHERE
-        { ?place wdt:P3 wd:Q50.
+        { ?place $wdt:$instanceOf $wd:$place.
          $placeFilters
        }
     }
 
    UNION {
         SELECT ?source WHERE
-        { ?source wdt:P3 wd:Q16.
+        { ?source $wdt:$instanceOf $wd:$entityWithProvenance.
          $sourceFilters
        }
     }
