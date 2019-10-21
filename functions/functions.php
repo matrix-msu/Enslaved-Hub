@@ -32,18 +32,55 @@ function searchTermParser($filters){
     unset($filters['searchbar']);
 
     foreach ($terms as $term) {
+        // skip words that are not important
+        if (in_array($term, stopwords)){
+            continue;
+        }
+
+
         $found = false;
+        $termLength = strlen($term);
+
+        if (ctype_digit($term)){    // check if it's an int
+            $filters['date'][] = $term."-";
+            continue;
+        }
+
         foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
-            $keys = array_keys($constantsArray);
-            foreach ($keys as $key) {
-                $position = stripos($key, $term);
-                if ($position !== false){
-                    $found = true;
-                    // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
-                    // map the file type to a known filter and add it to the $filters array
-                    $filterType = strtolower(str_replace(' ', '_', $type));
-                    if (!isset($filters[$filterType]) || !in_array($key, $filters[$filterType])){
-                        $filters[$filterType][] = $key;
+            if ($type == 'Modern Countries'){   // for countries we want to check the value not the keys
+                $countries = array_values($constantsArray);
+                foreach ($countries as $countryName) {
+                    if ($termLength <= 3){
+                        $position =  (strtolower($countryName) == strtolower($term));
+                    } else {
+                        $position = stripos($countryName, $term);
+                    }
+                    if ($position !== false){
+                        $found = true;
+                        // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
+                        // map the file type to a known filter and add it to the $filters array
+                        $filterType = strtolower(str_replace(' ', '_', $type));
+                        if (!isset($filters[$filterType]) || !in_array($countryName, $filters[$filterType])){
+                            $filters[$filterType][] = $countryName;
+                        }
+                    }
+                }
+            } else {
+                $keys = array_keys($constantsArray);
+                foreach ($keys as $key) {
+                    if ($termLength <= 3 || $type = "Gender"){
+                        $position = (strtolower($key) == strtolower($term));
+                    } else {
+                        $position = stripos($key, $term);
+                    }
+                    if ($position !== false){
+                        $found = true;
+                        // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
+                        // map the file type to a known filter and add it to the $filters array
+                        $filterType = strtolower(str_replace(' ', '_', $type));
+                        if (!isset($filters[$filterType]) || !in_array($key, $filters[$filterType])){
+                            $filters[$filterType][] = $key;
+                        }
                     }
                 }
             }
