@@ -13,19 +13,18 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
   VALUES ?source { $qidList }
   ?source $wdt:$hasOriginalSourceType ?sourcetype.
   ?source $wdt:$generatedBy ?project.
-  ?source $wdt:$reportsOn ?event
-
-  OPTIONAL{?event $wdt:$atPlace ?place}.
-  OPTIONAL{?source $wdt:$hasOriginalSourceDepository ?secondarysource}.
-  OPTIONAL {?source schema:description ?desc}.
-  ?agent ?property  ?object .
-  ?object $prov:wasDerivedFrom ?provenance .
-  ?provenance $pr:$isDirectlyBasedOn ?source .
   ?source $rdfs:label ?sourceLabel.
   ?project $rdfs:label ?projectLabel.
   ?sourcetype $rdfs:label ?sourcetypeLabel
 
+  OPTIONAL{?source $wdt:$reportsOn ?event.
+           ?event $wdt:$atPlace ?place.
+              ?event $p:$providesParticipantRole ?statement.
+              ?statement $ps:$providesParticipantRole ?role.
+              ?statement $pq:$hasParticipantRole ?agent}.
+  OPTIONAL{?source $wdt:$hasOriginalSourceDepository ?secondarysource}.
+  OPTIONAL {?source schema:description ?desc}.
+
 }group by ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
 order by ?sourceLabel
-
 QUERY;
