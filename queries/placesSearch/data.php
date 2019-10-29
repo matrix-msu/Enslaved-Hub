@@ -8,9 +8,9 @@ SELECT ?place ?placelabel ?locationlab ?geonames ?code
  (count(distinct ?locatedIn) as ?countplace)
  (group_concat(distinct ?locationlab; separator = "||") as ?location)
  (group_concat(distinct ?typelab; separator = "||") as ?types)
- 
+
 WHERE {
-  
+
   VALUES ?place { $qidList }.
     ?place ?property  ?object .
   	?object $prov:wasDerivedFrom ?provenance .
@@ -21,7 +21,7 @@ WHERE {
   	?statement $ps:$providesParticipantRole ?role.
   	?statement $pq:$hasParticipantRole ?person}.
 
-  	
+
     ?place $rdfs:label ?placeLabel.
     ?place $wdt:$hasPlaceType ?type.
      ?type $rdfs:label ?typelab.

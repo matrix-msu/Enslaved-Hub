@@ -1,12 +1,12 @@
 <?php
 const sexTypes =
-['Female' => 'Q47',
-'Male' => 'Q48',
+['Male' => 'Q48',
+'Female' => 'Q47',
 'Unknown' => 'Q177'];
 
 const qsexTypes =
-['Q47' => 'Female',
-'Q48' => 'Male',
+['Q48' => 'Male',
+'Q47' => 'Female',
 'Q177'=>'Unknown'];
 
  ?>
