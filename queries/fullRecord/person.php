@@ -1,12 +1,17 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?name ?sextype  ?race
+SELECT
+(group_concat(distinct ?name; separator = "||") as ?name)
+(group_concat(distinct ?sextype; separator = "||") as ?sextype)
+(group_concat(distinct ?race; separator = "||") as ?race)
+
 (group_concat(distinct ?refName; separator = "||") as ?sources)
 (group_concat(distinct ?pname; separator = "||") as ?researchprojects)
 (group_concat(distinct ?roleslabel; separator = "||") as ?roleslabel)
-(group_concat(distinct ?roleevent; separator = "||") as ?roleevent)
-(group_concat(distinct ?roleeventlabel; separator = "||") as ?roleeventlabel)
+
+(group_concat(distinct ?roleevent; separator = "||") as ?roleevent1)
+(group_concat(distinct ?roleeventlabel; separator = "||") as ?roleeventlabel1)
 (group_concat(distinct ?statuslabel; separator = "||") as ?status)
 (group_concat(distinct ?statusevent; separator = "||") as ?statusevent)
 (group_concat(distinct ?eventstatuslabel; separator = "||") as ?eventstatuslabel)
@@ -22,6 +27,7 @@ SELECT ?name ?sextype  ?race
 (group_concat(distinct ?match; separator = "||") as ?match)
 (group_concat(distinct ?matchlabel; separator = "||") as ?matchlabel)
 (group_concat(distinct ?allevents; separator = "||") as ?allevents)
+(group_concat(distinct ?allevents1; separator = "||") as ?allevents1)
 
 (group_concat(distinct ?alleventslabel; separator = "||") as ?alleventslabel)
 (group_concat(distinct ?startyear; separator = "||") as ?startyear)
@@ -41,14 +47,9 @@ SELECT ?name ?sextype  ?race
   ?source $rdfs:label ?refName;
           $wdt:$generatedBy ?project.
   ?project $rdfs:label ?pname.
-  
- ?agent $p:$instanceOf ?statement.
- ?statement $ps:$instanceOf ?roles;
-            $pq:$recordedAt ?recAt.
-  bind(?recAt as ?allevents).
-           
- 
+
  ?agent $wdt:$hasName ?name.
+
   OPTIONAL{?agent $wdt:$hasSex ?sex.
           ?sex $rdfs:label ?sextype}.
   OPTIONAL{?agent $wdt:$hasRace ?race}.
@@ -64,13 +65,14 @@ SELECT ?name ?sextype  ?race
            }.
   OPTIONAL {?agent $wdt:$hasOccupation ?occupation.
           ?occupation $rdfs:label ?occupationlabel}.
-  
-    OPTIONAL {?agent $p:$hasParticipantRole ?statementrole.
-           ?statementrole $ps:$hasParticipantRole ?roles.
-          ?roles $rdfs:label ?roleslabel.
-           ?statementrole $pq:$roleProvidedBy ?roleevent.
-           ?roleevent $rdfs:label ?roleeventlabel.
-            bind(?roleevent as ?allevents).
+
+    OPTIONAL {?agent $p:$hasParticipantRole ?staterole.
+            ?staterole $ps:$hasParticipantRole ?roles;
+                      $pq:$roleProvidedBy ?roleevent.
+
+                  ?roles $rdfs:label ?roleslabel.
+                  ?roleevent $rdfs:label ?roleeventlabel.
+                  bind(?roleevent as ?allevents).
          }.
 
  OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
@@ -79,6 +81,11 @@ SELECT ?name ?sextype  ?race
            ?statstatus $pq:$hasStatusGeneratingEvent ?statusevent.
      ?statusevent $rdfs:label ?eventstatuslabel.
       bind(?statusevent as ?allevents)}.
+
+      OPTIONAL {?agent $p:$instanceOf ?statementname.
+                  ?statementname $ps:$instanceOf ?person.
+                  ?statementname $pq:$recordedAt ?rec.
+                  bind(?rec as ?allevents)}.
 
   OPTIONAL{
     ?agent $p:$hasInterAgentRelationship ?staterel .
@@ -94,8 +101,8 @@ SELECT ?name ?sextype  ?race
             ?allplaces $rdfs:label ?allplaceslabel.
 ?allplaces $wdt:$hasPlaceType ?allplacetypes.
 ?allplacetypes $rdfs:label ?allplacetypeslabel.
-           BIND(CONCAT(str(?allplaces)," - ",str(?allplacetypeslabel)) as ?placetype). 
-           BIND(CONCAT(str(?allevents)," - ",str(?allplaceslabel)) as ?eventplace). 
+           BIND(CONCAT(str(?allplaces)," - ",str(?allplacetypeslabel)) as ?placetype).
+           BIND(CONCAT(str(?allevents)," - ",str(?allplaceslabel)) as ?eventplace).
            }.
 
   OPTIONAL {?allevents	wdt:$startsAt ?startdate.
@@ -105,6 +112,5 @@ SELECT ?name ?sextype  ?race
            BIND(CONCAT(str(?elabel)," - ",str(?etypelabel)," - ",str(YEAR(?startdate))) AS ?startyear).
            OPTIONAL {?allevents $wdt:$endsAt ?enddate.
                    BIND(str(YEAR(?enddate)) AS ?endyear)}}.
-                   
-}GROUP BY ?name ?sextype  ?race
+}
 QUERY;

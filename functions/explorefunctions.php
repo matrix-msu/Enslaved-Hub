@@ -125,7 +125,6 @@ function querySourceCounter(){
 //get counter for people, event, sources, projects...
 function counterofAllitems(){
     include BASE_LIB_PATH."variableIncluder.php";
-
     $query="SELECT (count( distinct ?item) AS ?count) WHERE
     {
     {?item $wdt:$instanceOf $wd:$researchProject .}
@@ -148,12 +147,17 @@ function counterofAllitems(){
 }
 
 //counter of all genders
-function counterOfAllGenders(){
+function counterOfAllGenders($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['gender'])){
+        unset($filters['gender']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
 
-    $query="SELECT ?sex ?sexLabel (count( distinct ?human) AS ?count) WHERE{
-        ?human $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent .
-        ?human $wdt:$hasSex ?sex.
+    $query="SELECT ?sex ?sexLabel (count( distinct ?agent) AS ?count) WHERE{
+        ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent .
+        ?agent $wdt:$hasSex ?sex.
+        $queryFilters
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
         } GROUP BY ?sex ?sexLabel
         ORDER BY DESC(?count)";
@@ -172,16 +176,20 @@ function counterOfAllGenders(){
 }
 
 //get the roles and their counts
-function counterOfRole(){
+function counterOfRole($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['role_types'])){
+        unset($filters['role_types']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
 
-    $query= "SELECT ?role ?roleLabel (count( distinct ?human) AS ?count) WHERE
-    {  ?human $wdt:$instanceOf $wd:$person.
-        ?human $wdt:$hasParticipantRole ?role.
+    $query= "SELECT ?role ?roleLabel (count( distinct ?agent) AS ?count) WHERE
+    {  ?agent $wdt:$instanceOf $wd:$person.
+        ?agent $wdt:$hasParticipantRole ?role.
+        $queryFilters
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
     }GROUP BY ?role ?roleLabel
     ORDER BY DESC(?count)";
-
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
@@ -196,12 +204,17 @@ function counterOfRole(){
     }
 }
 
-function counterOfStatus(){
+function counterOfStatus($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['status'])){
+        unset($filters['status']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
 
-    $query= "SELECT ?status ?statusLabel (count( distinct ?human) AS ?count) WHERE
-    {  ?human $wdt:$instanceOf $wd:$person.
-        ?human $wdt:$hasPersonStatus ?status.
+    $query= "SELECT ?status ?statusLabel (count( distinct ?agent) AS ?count) WHERE
+    {  ?agent $wdt:$instanceOf $wd:$person.
+        ?agent $wdt:$hasPersonStatus ?status.
+        $queryFilters
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
     } GROUP BY ?status ?statusLabel
     ORDER BY DESC(?count)";
@@ -220,12 +233,17 @@ function counterOfStatus(){
 }
 
 
-function counterOfOccupation(){
+function counterOfOccupation($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['occupation'])){
+        unset($filters['occupation']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
 
-    $query= "SELECT ?occupation ?occupationLabel (count( distinct ?human) AS ?count) WHERE
-    {  ?human $wdt:$instanceOf $wd:$person.
-        ?human $wdt:$hasOccupation ?occupation.
+    $query= "SELECT ?occupation ?occupationLabel (count( distinct ?agent) AS ?count) WHERE
+    {  ?agent $wdt:$instanceOf $wd:$person.
+        ?agent $wdt:$hasOccupation ?occupation.
+        $queryFilters
             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
     } GROUP BY ?occupation ?occupationLabel
     ORDER BY DESC(?count)";
@@ -246,13 +264,18 @@ function counterOfOccupation(){
 
 
 // Count the number of people in each age category
-function counterOfAge(){
+function counterOfAge($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['age_category'])){
+        unset($filters['age_category']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
 
     $ageCategoryQuery ="SELECT ?agecategory ?agecategoryLabel (count( distinct ?agent) as ?count) where{
                             ?agecategory $wdt:$instanceOf $wd:$ageCategory.
                             ?agent $wdt:$instanceOf $wd:$person.
                             ?agent $wdt:$hasAgeCategory ?agecategory.
+                            $queryFilters
                             SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\" . }
 
                         }group by ?agecategory ?agecategoryLabel
@@ -266,16 +289,20 @@ function counterOfAge(){
     return json_encode($ageCategoryResult->results->bindings);
 }
 
-function counterOfEthnodescriptor(){
+function counterOfEthnodescriptor($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['ethnodescriptor'])){
+        unset($filters['ethnodescriptor']);
+    }
+    $queryFilters = createQueryFilters("people", $filters);
 
-    $query="SELECT ?ethno ?ethnoLabel (count( distinct ?human) as ?count)
-        {?human $wdt:$instanceOf $wd:$person.
-        ?human $wdt:$hasECVO ?ethno.
+    $query="SELECT ?ethno ?ethnoLabel (count( distinct ?agent) as ?count)
+        {?agent $wdt:$instanceOf $wd:$person.
+        ?agent $wdt:$hasECVO ?ethno.
+        $queryFilters
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
         }GROUP BY ?ethno ?ethnoLabel
         ORDER BY ?ethnoLabel";
-
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
@@ -292,12 +319,17 @@ function counterOfEthnodescriptor(){
 
 
 
-function counterOfEventType() {
+function counterOfEventType($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['event_type'])){
+        unset($filters['event_type']);
+    }
+    $queryFilters = createQueryFilters("events", $filters);
 
     $query="SELECT ?eventType ?eventTypeLabel (count( distinct ?event) AS ?count)  WHERE{
         ?event $wdt:$instanceOf $wd:$event.
         ?event $wdt:$hasEventType ?eventType.
+        $queryFilters
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
         } GROUP BY ?eventType ?eventTypeLabel
         ORDER BY DESC(?count)
@@ -318,7 +350,6 @@ function counterOfEventType() {
 
 function counterOfEventPlace(){
     include BASE_LIB_PATH."variableIncluder.php";
-
     $query="SELECT ?place ?placeLabel ?(count( distinct ?event) AS ?count) WHERE {
                   ?event $wdt:$instanceOf $wd:$event.
                   ?event $wdt:$atPlace ?place.
@@ -341,16 +372,21 @@ function counterOfEventPlace(){
     }
 }
 
-function counterOfPlaceType(){
+function counterOfPlaceType($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['place_type'])){
+        unset($filters['place_type']);
+    }
+    $queryFilters = createQueryFilters("places", $filters);
 
     $query= "
-      SELECT DISTINCT ?placetype ?placetypeLabel (count( distinct ?place) AS ?count) WHERE {
+      SELECT DISTINCT ?type ?typeLabel (count( distinct ?place) AS ?count) WHERE {
           ?place $wdt:$instanceOf $wd:$place; #it's a place
-              $wdt:$hasPlaceType ?placetype.
+              $wdt:$hasPlaceType ?type.
+              $queryFilters
       SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\" .}
-      }GROUP BY ?placetype ?placetypeLabel
-      order by ?placetypeLabel
+  }GROUP BY ?type ?typeLabel
+      order by ?typeLabel
       ";
 
     $encode=urlencode($query);
@@ -366,15 +402,20 @@ function counterOfPlaceType(){
     }
 }
 
-function counterOfSourceType(){
+function counterOfSourceType($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
+    if (isset($filters['source_type'])){
+        unset($filters['source_type']);
+    }
+    $queryFilters = createQueryFilters("places", $filters);
 
- $query="SELECT ?sourcetype ?sourcetypeLabel (count( distinct ?source) AS ?count)  WHERE{
-     ?source $wdt:$instanceOf $wd:$entityWithProvenance.
-     ?source $wdt:$hasOriginalSourceType ?sourcetype.
-     SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
-} GROUP BY ?sourcetype ?sourcetypeLabel
-ORDER BY DESC(?count)";
+     $query="SELECT ?sourcetype ?sourcetypeLabel (count( distinct ?source) AS ?count)  WHERE{
+         ?source $wdt:$instanceOf $wd:$entityWithProvenance.
+         ?source $wdt:$hasOriginalSourceType ?sourcetype.
+         $queryFilters
+         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
+    } GROUP BY ?sourcetype ?sourcetypeLabel
+    ORDER BY DESC(?count)";
 
   $encode=urlencode($query);
   $call=API_URL.$encode;
@@ -390,6 +431,7 @@ ORDER BY DESC(?count)";
 }
 
 // count the number of people with a certain type filter
+// used for counters on explore pages
 function counterOfType() {
     $type = '';
     if (isset($_GET['type'])){
@@ -443,7 +485,6 @@ function counterOfType() {
         return counterOfSourceType();
       }
   }
-
 }
 
 function getHomePageCounters(){
@@ -461,65 +502,51 @@ function getHomePageCounters(){
 
 
 function getSearchFilterCounters(){
-    $searchType = '';
-    $filters = array();
+    $searchType = '';   // what we are searching for
+    $filters = array(); // array of filters
+    $filterTypes = array(); // types of filter counters to return
+
     if (isset($_GET['search_type'])){
         $searchType = $_GET['search_type'];
     }
 
     if (isset($_GET['filters'])){
         $filters = $_GET['filters'];
-        // print_r($filters);die;
     }
 
-    // createQueryFilters($searchType, $filters);
-
-
+    if (isset($_GET['filter_types'])){
+        $filterTypes = $_GET['filter_types'];
+    }
 
     $counters = array();
-
-    $peopleFilters = array(
-        'Gender' => counterOfAllGenders(),
-        'Age Category' => counterOfAge(),
-        'Ethnodescriptor' => counterOfEthnodescriptor(),
-        'Role Types' => counterOfRole(),
-        'Status' => counterOfStatus(),
-        'Occupation' => counterOfOccupation(),
-    );
-    $eventFilters = array(
-        'Event Type' => counterOfEventType()
-    );
-    $placeFilters = array(
-        'Place Type' => counterOfPlaceType()
-    );
-    $sourceFilters = array(
-        'Source Type' => counterOfSourceType()
-    );
-
-
-    if ($searchType == "all"){
-        $counters = array(
-            'People' => $peopleFilters,
-            'Event' => $eventFilters,
-            'Place' => $placeFilters,
-            'Source' => $sourceFilters
-        );
-    } else if ($searchType == "people"){
-        $counters = array(
-            'People' => $peopleFilters
-        );
-    } else if ($searchType == "events"){
-        $counters = array(
-            'Event' => $eventFilters
-        );
-    } else if ($searchType == "places"){
-        $counters = array(
-            'Place' => $placeFilters
-        );
-    } else if ($searchType == "sources"){
-        $counters = array(
-            'Source' => $sourceFilters
-        );
+    foreach ($filterTypes as $filterType) {
+        if ($filterType == "people"){
+            $queryFilters = createQueryFilters("people", $filters);
+            $peopleFilters = array(
+                'Gender' => counterOfAllGenders($filters),
+                'Age Category' => counterOfAge($filters),
+                'Ethnodescriptor' => counterOfEthnodescriptor($filters),
+                'Role Types' => counterOfRole($filters),
+                'Status' => counterOfStatus($filters),
+                'Occupation' => counterOfOccupation($filters),
+            );
+            $counters['People'] = $peopleFilters;
+        } else if ($filterType == "events" || $filterType == "event"){
+            $eventFilters = array(
+                'Event Type' => counterOfEventType($filters)
+            );
+            $counters['Event'] = $eventFilters;
+        } else if ($filterType == "places" || $filterType == "place"){
+            $placeFilters = array(
+                'Place Type' => counterOfPlaceType($filters)
+            );
+            $counters['Place'] = $placeFilters;
+        } else if ($filterType == "sources" || $filterType == "source"){
+            $sourceFilters = array(
+                'Source Type' => counterOfSourceType($filters)
+            );
+            $counters['Source'] =$sourceFilters;
+        }
     }
 
     return json_encode($counters);
@@ -1483,10 +1510,8 @@ HTML;
 
     $htmlArray['header'] = $html;
 
-    //Description
+    //Description section
     $html = '';
-
-    $html .= '<p class="description">' . $description . '</p>';
 
     $htmlArray['description'] = $html;
 
@@ -1525,7 +1550,7 @@ HTML;
             $allEventStartYears = array();
             $allEventTypes = array();
 
-
+            $eventsAndStartYears = array();
             if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
                 $eventsAndStartYears = explode('||', $record['startyear']['value']);
             }
@@ -1694,15 +1719,17 @@ HTML;
         }
     }
 
-    // print_r($events);die;
 
     // dont do timeline stuff if there are less than 3 events
-    if (count($events) < 3){
+    if (count($events) < 1){
         return json_encode($htmlArray);
     }
+
     // print_r($events);die;
+
     $timeline_event_dates = [];
     $unknownEvents = [];    // events without dates
+
     foreach ($events as $event) {
         // If there are months and days, put the year into decimal format
         // Ex: March 6, 1805 = 1805.18
@@ -1714,36 +1741,43 @@ HTML;
         }
     }
 
-    $first_date = min($timeline_event_dates);
-    $final_date = max($timeline_event_dates);
-    $diff = $final_date - $first_date;
+    // echo 'here  ';
+    // print_r($unknownEvents);
+    // echo 'aae  ';
+    // print_r($timeline_event_dates);die;
 
-    if ($diff < 10) {
-        $increment = 1;
-    } elseif ($diff < 20) {
-        $increment = 2;
-    } elseif ($diff < 40) {
-        $increment = 5;
-    } elseif ($diff < 90) {
-        $increment = 10;
-    } else {
-        $increment = 20;
+    if (!empty($timeline_event_dates)){
+        $first_date = min($timeline_event_dates);
+        $final_date = max($timeline_event_dates);
+        $diff = $final_date - $first_date;
+
+        if ($diff < 10) {
+            $increment = 1;
+        } elseif ($diff < 20) {
+            $increment = 2;
+        } elseif ($diff < 40) {
+            $increment = 5;
+        } elseif ($diff < 90) {
+            $increment = 10;
+        } else {
+            $increment = 20;
+        }
+
+        // Hash starts at year that is divisible by incrememnt and before the first event
+        $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
+        $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
+
+        $hashes = range($first_date_hash, $final_date_hash, $increment);
+        $hash_count = count($hashes);
+        $hash_range = end($hashes) - $hashes[0];
     }
-
-    // Hash starts at year that is divisible by incrememnt and before the first event
-    $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
-    $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
-
-    $hashes = range($first_date_hash, $final_date_hash, $increment);
-    $hash_count = count($hashes);
-    $hash_range = end($hashes) - $hashes[0];
 
     $html = '
     <div class="timelinewrap">
     <section class="fr-section timeline-section">
     <h2 class="section-title">Person Timeline</h2>
 
-    <div class="timeline-info-container" kid="{$events[0][\'kid\']}">
+    <div class="timeline-info-container">
     <div class="arrow-pointer-bottom"></div>
     <div class="arrow-pointer-top"></div>';
 
@@ -1938,46 +1972,48 @@ HTML;
 
     $html .= '</div>';
 
-    $html .= '<div class="timeline-container">
-    <div class="timeline">
-      <div class="line"></div>
-      <div class="hash-container" data-start="'.$first_date_hash.'" data-end="'.$final_date_hash.'">';
+    $html .= '<div class="timeline-container">';
+
+    $timelineIndex = 0;
+
+    if (!empty($timeline_event_dates)){
+        $html .= '<div class="timeline">
+          <div class="line"></div>
+          <div class="hash-container" data-start="'.$first_date_hash.'" data-end="'.$final_date_hash.'">';
 
 
-    foreach ($hashes as $index => $year) {
-        $html .= '<div class="hash" style="left:calc('.($index / ($hash_count - 1)) * 100 .'% - 14px)"><p>'.$year.'</p></div>';
+        foreach ($hashes as $index => $year) {
+            $html .= '<div class="hash" style="left:calc('.($index / ($hash_count - 1)) * 100 .'% - 14px)"><p>'.$year.'</p></div>';
+        }
+
+        $html .= '
+            </div>
+            <div class="points-container">';
+
+            $yearsFound = array();  // make sure no duplicate years
+            foreach ($events as $index => $event) {
+                if (in_array($event['startYear'], $yearsFound) || $event['startYear'] == ''){
+                    continue;
+                }
+                $yearsFound[] = $event['startYear'];
+                // Convert year, month, day into decimal form
+                $left = ($event['startYear'] - $first_date_hash) * 100 / $hash_range;
+
+                $html .= '
+                <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
+                style="left:calc('.$left.'% - 5px)"
+                data-kid="'.$event['kid'].'"
+                data-year="'.$event['startYear'].'"
+                data-index="'.$index.'">
+                <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
+                </div>';
+
+                $timelineIndex++;
+          }
+
+        $html .= '</div>
+                </div>';
     }
-
-    $html .= '
-        </div>
-        <div class="points-container">';
-
-        $timelineIndex = 0;
-
-        $yearsFound = array();  // make sure no duplicate years
-        foreach ($events as $index => $event) {
-            if (in_array($event['startYear'], $yearsFound) || $event['startYear'] == ''){
-                continue;
-            }
-            $yearsFound[] = $event['startYear'];
-            // Convert year, month, day into decimal form
-            $left = ($event['startYear'] - $first_date_hash) * 100 / $hash_range;
-
-            $html .= '
-            <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
-            style="left:calc('.$left.'% - 5px)"
-            data-kid="'.$event['kid'].'"
-            data-year="'.$event['startYear'].'"
-            data-index="'.$index.'">
-            <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
-            </div>';
-
-            $timelineIndex++;
-      }
-
-    $html .= '</div>
-            </div>';
-
 
     // events with unknown dates todo
     $html .= '
@@ -2064,7 +2100,6 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
     $result = blazegraphSearch($personQuery);
     $connections['Person-count'] = count($result);
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
-
 
     // places connected to a person
     $placeQuery['query'] = <<<QUERY

@@ -14,5 +14,5 @@
         <span class="dotsRight">...</span>
         <span class="num pagi-last">777</span>
     </div>
-    <span id="pagiRight" class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="next"></span>
+    <span id="pagi" class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="next"></span>
 </div>

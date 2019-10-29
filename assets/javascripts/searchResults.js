@@ -10,6 +10,18 @@ var total_length = 0;
 var card_offset = 0;
 var card_limit = 12;
 var filters = {};
+var display = search_type;
+
+if (search_type == "all"){
+    display = 'people';
+}
+
+var filtersToSearchType = {
+    'people' : ['people', 'event', 'place', 'source', 'project'],
+    'events' : ['event', 'place', 'source', 'project'],
+    'places' : ['place', 'source', 'project'],
+    'sources' : ['source', 'project']
+};
 
 var showPath = false;
 var upperForm = "";
@@ -44,6 +56,11 @@ if(document.location.toString().indexOf('?') !== -1)
         var aux = decodeURIComponent(query[i]).split('=');
         if(!aux || aux[0] == "" || aux[1] == "") continue;
 
+        if (aux[0] == "display"){
+            display = aux[1];
+            continue;
+        }
+
         // Get searchbar keywords
         if(aux[0] == "searchbar")
         {
@@ -54,6 +71,18 @@ if(document.location.toString().indexOf('?') !== -1)
         filters[aux[0]] = aux[1].split(',');
     }
 }
+
+function showDisplayType(){
+    $categoryTabs = $('.categories').find('li');
+    $categoryTabs.each(function(){
+        $(this).removeClass('selected');
+        if ($(this).attr('id') == display){
+            $(this).addClass('selected');
+        }
+    });
+}
+
+
 
 /**
  * Takes parameters for an ajax call that sets result_array to an array with
@@ -80,21 +109,46 @@ function searchResults(preset, limit = 12, offset = 0)
     // console.log(preset, filters, templates);
     generateFilterCards();
 
+    console.log(preset, filters, templates, display)
+
     $.ajax({
         url: BASE_URL + "api/blazegraph",
         type: "GET",
         data: {
             preset: preset,
             filters: filters,
-            templates: templates
+            templates: templates,
+            display:display
         },
         'success': function (data)
         {
             isSearching = false;
             result_array = JSON.parse(data);
-            // console.log('results', result_array)
+            console.log('results', result_array)
 
-            total_length = result_array['total'];
+            if (preset == "all"){
+                var allCounters = JSON.parse(result_array['total']);
+                for (var type in filtersToSearchType){
+                    var counter = allCounters[type+"count"]["value"];
+                    var $tab = $('.categories #'+type);
+                    $tab.find('span').html(counter+" ");
+                    if (counter <= 0){
+                        $tab.hide();
+                    } else {
+                        $tab.show();
+                    }
+                }
+
+
+                total_length = allCounters[display+"count"]["value"];
+                // todo:
+                // filter counters need to update too
+                // also filters are not working for all
+            } else {
+                total_length = result_array['total'];
+            }
+
+
 
             var showingResultsText = '';
             if (total_length < card_limit) {
@@ -129,12 +183,81 @@ function searchResults(preset, limit = 12, offset = 0)
             $(document).ready(function(){
                 appendCards();
                 setPagination(total_length, card_limit, card_offset);
+                console.log('refilling')
+                $.ajax({
+                    url: BASE_URL + "api/getSearchFilterCounters",
+                    type: "GET",
+                    data: {
+                        search_type: display,
+                        filters: filters,
+                        filter_types: filtersToSearchType[display]
+                    },
+                    'success': function (data) {
+                        var allCounters = JSON.parse(data);
+                        fillFilterCounters(allCounters);
+                    }
+                });
             });
-
         }
     });
-
 }
+
+
+// fill in the counters next to the filters
+function fillFilterCounters(allCounters){
+    $(".filter-cat li").each(function(){
+        $(this).addClass("hide-category");
+    });
+    for (var filterType in allCounters) {
+        var counterType = allCounters[filterType];
+
+        for (var filter in counterType) {
+            JSON.parse(counterType[filter]).forEach(function (record) {
+                var label = "";
+                var count = "";
+                var qid = "";
+
+                for (var key in record) {
+                    if (record[key]['type'] == "uri") {
+                        qid = record[key]['value'].split('/').pop()
+                    }
+
+                    if (key.match("Label$")) {
+                        label = record[key]['value'];
+                    }
+                    if (key.match("count$")) {
+                        count = record[key]['value'];
+                    }
+                    else if (key.match("Count$")) {
+                        if (count !== "") {
+                            var count2 = record[key]['value'];
+                            count = count + count2;
+                        }
+                        else {
+                            count = record[key]['value'];
+                        }
+
+                    }
+                }
+
+                // fill in the counters for the filters
+                if (label != "" && qid != "") {
+                    var $input = $("input[data-qid='" + qid + "']");
+                    var $counter = $input.next().find('em');
+                    $counter.html('(' + count + ')');    // show the count
+
+                    // hide filter if count is 0
+                    if (count > 0){
+                        var $li = $input.parent().parent();
+                        $li.removeClass('hide-category')
+                    }
+                }
+            });
+        }
+    }
+}
+
+
 
 ///******************************************************************* */
 /// Append Cards
@@ -164,8 +287,11 @@ function appendCards()
 //Generate cards
 searchResults(search_type);
 
+
 //Document load
 $(document).ready(function() {
+    hideFilterCategories();
+
     var firstFilter = "";
 
     for (filter in filters){
@@ -182,6 +308,7 @@ $(document).ready(function() {
         data: {
             search_type: search_type,
             filters: filters,
+            filter_types: [search_type]
         },
         'success': function (data) {
             var allCounters = JSON.parse(data);
@@ -200,78 +327,36 @@ $(document).ready(function() {
                     url: BASE_URL + "api/getSearchFilterCounters",
                     type: "GET",
                     data: {
-                        search_type: "all",
+                        search_type: search_type,
                         filters: filters,
+                        filter_types: filtersToSearchType[search_type]
                     },
                     'success': function (data) {
                         var allCounters = JSON.parse(data);
-                        fillFilterCounters(allCounters)
+                        fillFilterCounters(allCounters);
                     }
                 });
             }
         }
     });
 
-// fill in the counters next to the filters
-function fillFilterCounters(allCounters){
-    for (var filterType in allCounters) {
-        var counterType = allCounters[filterType];
+    // hide filter categories based on hierarchy in filtersToSearchType
+    function hideFilterCategories(){
+        $filterCats = $(".cat-cat");
 
-        for (var filter in counterType) {
-            JSON.parse(counterType[filter]).forEach(function (record) {
-                var label = "";
-                var count = "";
-                var qid = "";
+        $filterCats.each(function () {
+            $category = $(this);
+            $catFilters = $category.next();
+            $category.hide();
+            $catFilters.hide();
+            var catType = $category.html().toLowerCase();
 
-                for (var key in record) {
-                    if (record[key]['type'] == "uri") {
-                        qid = record[key]['value'].split('/').pop()
-                    }
-
-                    if (key.match("Label$")) {
-                        label = record[key]['value'];
-                    }
-                    if (key.match("count$")) {
-                        count = record[key]['value'];
-                    }
-                    else if (key.match("Count$")) {
-                        if (count !== "") {
-                            var count2 = record[key]['value'];
-                            count = +count + +count2;
-                        }
-                        else {
-                            count = record[key]['value'];
-                        }
-
-                    }
-                }
-
-                // fill in the counters for the filters
-                if (label != "" && qid != "") {
-                    var $input = $("input[data-qid='" + qid + "']");
-                    var $counter = $input.next().find('em');
-                    // $counter.html('(' + count + ')');    // show the count
-
-                    // hide filter if count is 0
-                    if (count > 0){
-                        var $li = $input.parent().parent();
-                        $li.removeClass('hide-category')
-                    }
-                }
-            });
-        }
+            if (typeof(filtersToSearchType[display]) != 'undefined' && filtersToSearchType[display].includes(catType)){
+                $category.show();
+                $catFilters.show();
+            }
+        });
     }
-}
-
-
-
-
-
-
-
-
-
-
 
     ///******************************************************************* */
     /// Set Filter Checkboxes / Category Headers
@@ -283,10 +368,10 @@ function fillFilterCounters(allCounters){
     if(upperForm.toString() == 'All'){
         // console.log('in all')
         $( ".categories" ).html( "<ul>"+
-                                    "<li class='unselected selected' id='people'><div class='person-image'></div>People</li>"+
-                                    "<li class='unselected' id='event'><div class='event-image'></div>Events</li>"+
-                                    "<li class='unselected' id='place'><div class='place-image'></div>Places</li>"+
-                                    "<li class='unselected' id='source'><div class='source-image'></div>Sources</li>"+
+                                    "<li class='unselected selected' id='people'><div class='person-image'></div><span class='count'></span>People</li>"+
+                                    "<li class='unselected' id='events'><div class='event-image'></div><span class='count'></span>Events</li>"+
+                                    "<li class='unselected' id='places'><div class='place-image'></div><span class='count'></span>Places</li>"+
+                                    "<li class='unselected' id='sources'><div class='source-image'></div><span class='count'></span>Sources</li>"+
                                     "<hr></ul>" );
     }else if(upperForm == 'People'){
         $( ".categories" ).html( "<ul>"+
@@ -295,17 +380,17 @@ function fillFilterCounters(allCounters){
         $( ".categories ul" ).css("overflow-x", "hidden")
     }else if(upperForm == 'Events'){
         $( ".categories" ).html( "<ul>"+
-                                    "<li class='unselected selected' id='event'><div class='event-image'></div>Events</li>"+
+                                    "<li class='unselected selected' id='events'><div class='event-image'></div>Events</li>"+
                                     "<hr></ul>" );
         $( ".categories ul" ).css("overflow-x", "hidden")
     }else if(upperForm == 'Places'){
         $( ".categories" ).html( "<ul>"+
-                                    "<li class='unselected selected' id='place'><div class='place-image'></div>Places</li>"+
+                                    "<li class='unselected selected' id='places'><div class='place-image'></div>Places</li>"+
                                     "<hr></ul>" );
         $( ".categories ul" ).css("overflow-x", "hidden")
     }else if(upperForm == 'Sources'){
         $( ".categories" ).html( "<ul>"+
-                                    "<li class='unselected selected' id='source'><div class='source-image'></div>Sources</li>"+
+                                    "<li class='unselected selected' id='sources'><div class='source-image'></div>Sources</li>"+
                                     "<hr></ul>" );
         $( ".categories ul" ).css("overflow-x", "hidden")
     }
@@ -325,6 +410,9 @@ function fillFilterCounters(allCounters){
         else if(upperForm === 'All')
             $(this).find("input").prop('checked', true);
     });
+
+    showDisplayType();
+
 
     // Show selected filters
     $.each(filters, function(key, values)
@@ -349,6 +437,19 @@ function fillFilterCounters(allCounters){
         }
     });
 
+
+    $('.categories li').on('click', function(){
+        var clickedType = $(this).attr('id');
+        display = clickedType;
+        hideFilterCategories();
+        card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
+        $("ul.cards").empty();
+        $("thead").empty();
+        $("tbody").empty();
+        searchResults(search_type);
+
+        showDisplayType();
+    });
     ///******************************************************************* */
     /// Event Handlers for the page
     ///******************************************************************* */
@@ -591,21 +692,8 @@ function fillFilterCounters(allCounters){
     // });
     //Sub categories
     $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
-        //For drawers that shouldn't fold on click
-        $("input").click(function() {
-           if ($(this).attr("class") == 'nofold'){
-               return false;
-           }
-        });
-        //Date requires exception
-        if($(this).attr('name') == 'date'){
-            $(this).find("span:first").toggleClass("show");
-            $(this).find("ul#submenu").toggleClass("showdate");
-        }
-        else{
-            $(this).find("span:first").toggleClass("show");
-            $(this).find("ul#submenu").toggleClass("show");
-        }
+        $(this).find("span:first").toggleClass("show");
+        $(this).find("ul#submenu").toggleClass("show");
     });
      //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
@@ -617,7 +705,7 @@ function fillFilterCounters(allCounters){
     $(".search-form").submit(function(e) {
         e.preventDefault();
         // Get search key and value
-        var pparam = $(this).serialize();
+        var pparam = decodeURIComponent($(this).serialize());
         var splitParam = pparam.split('=');
         splitParam[1] = splitParam[1].replace(/\+/g, ' ');
         filters[splitParam[0]] = splitParam[1].split(' ');
@@ -804,7 +892,8 @@ function get_download_content(fields, data, isAllData) {
             data: {
                 preset: search_type,
                 filters: filters,
-                templates: templates
+                templates: templates,
+                display: display
             },
             'success': function (data)
             {
@@ -862,31 +951,8 @@ function download_csv(data, fields) {
     Adds a filter card to the filter-cards section
 */
 function addFilterCard(filterCategory, filterName){
-    //Check for QIDs ex: Q58
-    if(filterName.charAt(0) == 'Q' && $.isNumeric(filterName.charAt(1)) == true){
-        $.ajax({
-            url: BASE_URL + 'api/getQidValue',
-            method: "GET",
-            data: {category: filterCategory, qid: filterName},
-            'success': function (data) {
-                filterName = data;
-                var filterHtml = '<div class="option-wrap" id="'+ filterCategory +'"><p>'+ filterName +'</p><img class="remove" src="'+ BASE_IMAGE_URL + 'x-dark.svg' +'" /></div>';
-                $('div.filter-cards').append(filterHtml);
-                $('.status').each(function(){
-                    var filterNav = $.trim($(this).find('input').val());
-                    var filterBubble = $.trim(filterName);
-                    if(filterNav === filterBubble) {
-                        $(this).find("input").prop("checked", true);
-                    }
-                });
-            }
-        });
-    }
-    //Else use regular inputs
-    else{
-        var filterHtml = '<div class="option-wrap" id="'+ filterCategory +'"><p>'+ filterName +'</p><img class="remove" src="'+ BASE_IMAGE_URL + 'x-dark.svg' +'" /></div>';
-        $('div.filter-cards').append(filterHtml);
-    }
+    var filterHtml = '<div class="option-wrap" id="'+ filterCategory +'"><p>'+ filterName +'</p><img class="remove" src="'+ BASE_IMAGE_URL + 'x-dark.svg' +'" /></div>';
+    $('div.filter-cards').append(filterHtml);
 }
 /*
     Generates the cards for each Filter selected
@@ -898,14 +964,14 @@ function generateFilterCards(){
     //Generate filters
     $.each(filters, function(key, values)
     {
-        // console.log(filters)
-        if(key && values && key != "limit" && key != "offset")
+        if(key && values && key != "limit" && key != "offset" && key != "display")
         {
 
             if (!Array.isArray(values)){
                 temp = [values];
                 values = temp;
             }
+
             //Add filter cards
             $.each(values, function(indx, value)
             {
