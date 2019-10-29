@@ -45,8 +45,8 @@ SELECT
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
   ?source $rdfs:label ?refName;
-          $wdt:$generatedBy ?project.
-  ?project $rdfs:label ?pname.
+  OPTIONAL {?source $wdt:$generatedBy ?project.
+  			?project $rdfs:label ?pname}.
 
  ?agent $wdt:$hasName ?name.
 
