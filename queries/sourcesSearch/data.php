@@ -22,7 +22,7 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
               ?event $p:$providesParticipantRole ?statement.
               ?statement $ps:$providesParticipantRole ?role.
               ?statement $pq:$hasParticipantRole ?agent}.
-  OPTIONAL{?source $wdt:$hasOriginalSourceDepository ?secondarysource}.
+  OPTIONAL{?source $wdt:$hasOriginalSourceRepository ?secondarysource}.
   OPTIONAL {?source schema:description ?desc}.
 
 }group by ?source ?sourceLabel ?projectLabel ?desc ?secondarysource

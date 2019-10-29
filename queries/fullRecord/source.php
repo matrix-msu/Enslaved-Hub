@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT 
+SELECT
 (count(distinct ?people) as ?countpeople)
 (count(distinct ?event) as ?countevent)
 (count(distinct ?place) as ?countplace)
@@ -16,10 +16,10 @@ SELECT
   ?sourcetype $rdfs:label ?type.
   ?source $wdt:$reportsOn ?event.
 
-  OPTIONAL{?source $wdt:$hasOriginalSourceDepository ?secondarysource}.
+  OPTIONAL{?source $wdt:$hasOriginalSourceRepository ?secondarysource}.
   OPTIONAL {?source schema:description ?desc}.
   OPTIONAL {?event $wdt:$atPlace ?place.}
- 
+
   ?people ?property  ?object .
         ?object $prov:wasDerivedFrom ?provenance .
         ?provenance $pr:$isDirectlyBasedOn ?source .
