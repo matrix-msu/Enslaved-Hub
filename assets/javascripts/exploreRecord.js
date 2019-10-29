@@ -1,8 +1,8 @@
-// use ajax to get full record html. 
+// use ajax to get full record html.
 $(document).ready(function () {
     // name, details, timeline, connections, featured stories
     $.ajax({
-        url: BASE_URL + "api/getPersonRecordHtml",  // in exploreFunctions.php
+        url: BASE_URL + "api/getFullRecordHtml",  // in exploreFunctions.php
         type: "GET",
         data: {
             QID: QID,
@@ -23,5 +23,4 @@ $(document).ready(function () {
             console.log('fail');
         }
     });
-
 });

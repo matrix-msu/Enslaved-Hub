@@ -3,6 +3,7 @@ const classes=[
   "Agent" => "Q110",
   "metaclass" => "Q300",
   "Person" => "Q410",
+  'Age Category' => 'Q412',
   "Entity with Provenance" => "Q67",
   "Controlled Vocabulary for Sex" => "Q86",
   "Occupation" => "Q108",
