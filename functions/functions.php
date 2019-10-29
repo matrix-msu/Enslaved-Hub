@@ -878,15 +878,15 @@ function blazegraph()
         'sources' => 'source'
     ];
     if (array_key_exists($preset, $searchTypes)){
-        include BASE_PATH."queries/".$preset."Search/count.php";
-        $resultCountQuery['query'] = $tempQuery;
-        // print_r($resultCountQuery);die;
-        $result = blazegraphSearch($resultCountQuery);
-        // var_dump($result);die;
+        if (!$isKeywordSearch){
+            include BASE_PATH."queries/".$preset."Search/count.php";
+            $resultCountQuery['query'] = $tempQuery;
+            // print_r($resultCountQuery);die;
+            $result = blazegraphSearch($resultCountQuery);
 
-        if (isset($result[0]) && isset($result[0]['count'])){
-            $record_total = $result[0]['count']['value'];
-        }
+            if (isset($result[0]) && isset($result[0]['count'])){
+                $record_total = $result[0]['count']['value'];
+            }
             // no more searching if we know there are 0 results
             if ($record_total <= 0){
                 return createCards([], $templates, $preset, 0);
@@ -895,7 +895,6 @@ function blazegraph()
             // get the count for all search types for keyword search
             $record_total = getKeywordSearchCounters($filtersArray);
         }
-
 
         include BASE_PATH."queries/".$preset."Search/ids.php";
         $idQuery['query'] = $tempQuery;
