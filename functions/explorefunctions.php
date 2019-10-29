@@ -1695,10 +1695,8 @@ HTML;
 
     $htmlArray['header'] = $html;
 
-    //Description
+    //Description section
     $html = '';
-
-    $html .= '<p class="description">' . $description . '</p>';
 
     $htmlArray['description'] = $html;
 
