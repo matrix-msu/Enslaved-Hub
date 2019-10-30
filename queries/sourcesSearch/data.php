@@ -11,11 +11,11 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
  (group_concat(distinct ?sourcetype; separator = "||") as ?sourcetype) #source type
 {
   VALUES ?source { $qidList }
-  ?source $wdt:$hasOriginalSourceType ?sourcetype.
   ?source $wdt:$generatedBy ?project.
   ?source $rdfs:label ?sourceLabel.
   ?project $rdfs:label ?projectLabel.
-  ?sourcetype $rdfs:label ?sourcetypeLabel
+  OPTIONAL {?source $wdt:$hasOriginalSourceType ?sourcetype.
+         ?sourcetype rdfs:label ?sourcetypeLabel}.
 
   OPTIONAL{?source $wdt:$reportsOn ?event.
            ?event $wdt:$atPlace ?place.

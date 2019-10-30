@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?name ?desc ?located  ?type ?geonames ?code
+SELECT ?name ?type ?geonames ?code
 (group_concat(distinct ?refName; separator = "||") as ?sourceLabel)
 (group_concat(distinct ?pname; separator = "||") as ?projectlabel)
 (group_concat(distinct ?source; separator = "||") as ?source)
@@ -15,9 +15,9 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
   ?source $rdfs:label ?refName;
-          $wdt:$generatedBy ?project.
-  ?project $rdfs:label ?pname.
-  ?place schema:description ?desc.
+  OPTIONAL {?source $wdt:$generatedBy ?project.
+      ?project $rdfs:label ?pname}.
+
   ?place $rdfs:label ?name.
   ?place $wdt:$hasPlaceType ?placetype.
   ?placetype $rdfs:label ?type.
@@ -27,5 +27,5 @@ SELECT ?name ?desc ?located  ?type ?geonames ?code
     OPTIONAL{ ?place $wdt:$modernCountryCode ?code.}
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?desc ?located  ?type ?geonames ?code
+}GROUP BY ?name ?type ?geonames ?code
 QUERY;

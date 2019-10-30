@@ -1254,8 +1254,6 @@ HTML;
 
     $html .= '</div></div>';
   }
-
-
   return $html;
 }
 
@@ -2224,7 +2222,7 @@ SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND(
 }ORDER BY ?random
 QUERY;
 
-    $result = blazegraphSearch($query);
+    $result = blazegraphSearch($eventsQuery);
     $connections['Event-count'] = count($result);
     $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
 
@@ -2243,7 +2241,7 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
 }ORDER BY ?random
 QUERY;
 
-    $result = blazegraphSearch($query);
+    $result = blazegraphSearch($placeQuery);
     $connections['Place-count'] = count($result);
     $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
 

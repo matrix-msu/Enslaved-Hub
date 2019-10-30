@@ -37,7 +37,6 @@ function searchTermParser($filters){
             continue;
         }
 
-
         $found = false;
         $termLength = strlen($term);
 
@@ -46,12 +45,14 @@ function searchTermParser($filters){
             continue;
         }
 
+        // print_r($GLOBALS['FILTER_TO_FILE_MAP']);die;
+
         foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
             if ($type == 'Modern Countries'){   // for countries we want to check the value not the keys
                 $countries = array_values($constantsArray);
                 foreach ($countries as $countryName) {
                     if ($termLength <= 3){
-                        $position =  (strtolower($countryName) == strtolower($term));
+                        $position = (strtolower($countryName) == strtolower($term));
                     } else {
                         $position = stripos($countryName, $term);
                     }
@@ -68,14 +69,14 @@ function searchTermParser($filters){
             } else {
                 $keys = array_keys($constantsArray);
                 foreach ($keys as $key) {
-                    if ($termLength <= 3 || $type = "Gender"){
+                    if ($termLength <= 3 || $type == "Gender"){
                         $position = (strtolower($key) == strtolower($term));
                     } else {
                         $position = stripos($key, $term);
                     }
                     if ($position !== false){
                         $found = true;
-                        // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
+                        // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;die;
                         // map the file type to a known filter and add it to the $filters array
                         $filterType = strtolower(str_replace(' ', '_', $type));
                         if (!isset($filters[$filterType]) || !in_array($key, $filters[$filterType])){
@@ -1687,12 +1688,12 @@ HTML;
 
                 //Source Type
                 $type = "Unidentified";
+                $typeCount = 0;
                 if (isset($record['sourcetypeLabel']) && isset($record['sourcetypeLabel']['value'])){
                     if($record['sourcetypeLabel']['value'] != ''){
                         $types = explode('||', $record['sourcetypeLabel']['value']);
                         $type = "";
 
-                        $typeCount = 0;
                         foreach ($types as $t) {
                             if (!empty($t)){
                                 if ($typeCount > 0){
