@@ -112,9 +112,9 @@
         </div>
     </div>
 </div>
-
+<!-- Issue #304 commented out -->
 <!-- Featured Stories-->
-<?php
+<!-- <?php
 if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
 <div class="container card-column related-card">
     <div class="container cardheader-wrap">
@@ -135,7 +135,7 @@ if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
         </ul>
     </div>
 </div>
-<?php } ?>
+<?php } ?> -->
 
 <!-- Extra Info -->
 <div class="extra-info">
