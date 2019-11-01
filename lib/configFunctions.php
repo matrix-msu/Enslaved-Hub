@@ -14,12 +14,12 @@ function Kora_GetNavigationData()
 		array("Display"),
 		"TRUE",
 		array(
-			'Navigation Order' => 'ASC',
-			'Sub Navigation Order' => 'ASC'
+			['Navigation Order' => 'ASC'],
+			['Sub Navigation Order' => 'ASC']
 		)
 	);
-	//echo json_encode($koraResults);
-	//die;
+	// echo json_encode($koraResults);
+	// die;
 	// Error checking
 	if(!$koraResults) return json_encode("failed");
 	$decode_results = json_decode($koraResults, true);
@@ -50,7 +50,7 @@ function Kora_GetNavigationData()
 		}
 
 		if(!array_key_exists("SubNavigation", $result) || array_key_exists("SubNavigation Display", $result) &&
-			$result["SubNavigation Display"] == "FALSE" ||  $result["SubNavigation"] == "") continue;
+			$result["SubNavigation Display"] == "FALSE" ||  $result["SubNavigation"] == "" ||  $result["SubNavigation"] == "Projects") continue;
 
 		foreach ($navs as $index => $subArray){
 			if ($subArray[0] == $nav){

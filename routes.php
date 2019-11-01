@@ -11,11 +11,12 @@ $GLOBALS['api_routes'] = array(
 	'api/counterOfType' => array('explorefunctions.php', 'counterOfType'),
 	'api/getSearchFilterCounters' => array('explorefunctions.php', 'getSearchFilterCounters'),
 	'api/getHomePageCounters' => array('explorefunctions.php', 'getHomePageCounters'),
-	'api/getPersonRecordHtml' => array('explorefunctions.php', 'getPersonRecordHtml'),
+	'api/getFullRecordHtml' => array('explorefunctions.php', 'getFullRecordHtml'),
     'api/getDateRange' => array('explorefunctions.php', 'getEventDateRange'),
     'api/getProjectFullInfo' => array('explorefunctions.php', 'getProjectFullInfo'),
     'api/getFullRecordConnections' => array('explorefunctions.php', 'getFullRecordConnections'),
-    'api/getCrawlerResults' => array('crawler_jquery.php', '')
+    'api/getCrawlerResults' => array('crawler_jquery.php', ''),
+    'api/getQidValue' => array('functions.php','getQidValue')
 );
 
 $GLOBALS['routes'] = array(

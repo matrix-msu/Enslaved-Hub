@@ -27,13 +27,80 @@ function admin(){
 }
 
 
+function searchTermParser($filters){
+    $terms = $filters['searchbar'];
+    unset($filters['searchbar']);
 
+    foreach ($terms as $term) {
+        // skip words that are not important
+        if (in_array($term, stopwords)){
+            continue;
+        }
 
+        $found = false;
+        $termLength = strlen($term);
 
+        if (ctype_digit($term)){    // check if it's an int
+            $filters['date'][] = $term."-";
+            continue;
+        }
+
+        // print_r($GLOBALS['FILTER_TO_FILE_MAP']);die;
+
+        foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
+            if ($type == 'Modern Countries'){   // for countries we want to check the value not the keys
+                $countries = array_values($constantsArray);
+                foreach ($countries as $countryName) {
+                    if ($termLength <= 3){
+                        $position = (strtolower($countryName) == strtolower($term));
+                    } else {
+                        $position = stripos($countryName, $term);
+                    }
+                    if ($position !== false){
+                        $found = true;
+                        // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
+                        // map the file type to a known filter and add it to the $filters array
+                        $filterType = strtolower(str_replace(' ', '_', $type));
+                        if (!isset($filters[$filterType]) || !in_array($countryName, $filters[$filterType])){
+                            $filters[$filterType][] = $countryName;
+                        }
+                    }
+                }
+            } else {
+                $keys = array_keys($constantsArray);
+                foreach ($keys as $key) {
+                    if ($termLength <= 3 || $type == "Gender"){
+                        $position = (strtolower($key) == strtolower($term));
+                    } else {
+                        $position = stripos($key, $term);
+                    }
+                    if ($position !== false){
+                        $found = true;
+                        // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;die;
+                        // map the file type to a known filter and add it to the $filters array
+                        $filterType = strtolower(str_replace(' ', '_', $type));
+                        if (!isset($filters[$filterType]) || !in_array($key, $filters[$filterType])){
+                            $filters[$filterType][] = $key;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!$found){
+            // echo "there were no matches, $term must be a name";
+            if (!isset($filters['name']) || !in_array($term, $filters['name'])){
+                $filters['name'][] = $term;
+            }
+        }
+    }
+
+    return $filters;
+}
 
 
 // create filters for queries - doing this in a function so it can also be used for search filter counters
-// withing filter group - OR logic
+// within filter group - OR logic
 // different filter group filters - AND logic
 function createQueryFilters($searchType, $filters)
 {
@@ -41,6 +108,11 @@ function createQueryFilters($searchType, $filters)
     $queryFilters = "";
 
     // print_r($filters);die;
+    if (isset($filters["searchbar"])){
+        $filters = searchTermParser($filters);
+    }
+    // print_r($filters);die;
+
     foreach ($filters as $filterType => $filterValues) {
         if ($filterType == "limit" || $filterType == "offset" || !is_array($filterValues)) continue;
 
@@ -50,6 +122,12 @@ function createQueryFilters($searchType, $filters)
             switch ($searchType) {
                 case 'people':  // people filters
                 {
+                    if ($filterType == "name"){
+                        $queryFilters .= "?agent $wdt:$hasName ?name.
+                            FILTER regex(?name, '$value', 'i') .
+                            ";
+                    }
+
                     if ($filterType == "gender"){
                         if (array_key_exists($value, sexTypes)){
                             $qGender = sexTypes[$value];
@@ -288,6 +366,12 @@ function createQueryFilters($searchType, $filters)
                     break;
                 case 'events':  // events filters
                 {
+                    if ($filterType == "name"){
+                        $queryFilters .= "?event $wdt:$hasName ?eventName.
+                            FILTER regex(?eventName, '$value', 'i') .
+                            ";
+                    }
+
                     if ($filterType == "event_type"){
                         if (array_key_exists($value, eventTypes)){
                             $qType = eventTypes[$value];
@@ -305,7 +389,6 @@ function createQueryFilters($searchType, $filters)
                         }
                     }
 
-                    // TODO: MAKE THIS WORK FOR MULTIPLE DATES
                     if ($filterType == "date"){
                         $dateRange = $value;
                         $dateArr = explode('-', $dateRange);
@@ -368,33 +451,59 @@ function createQueryFilters($searchType, $filters)
                         }
                     }
 
-                    //
-                    // if ($filterType == "source_type"){
-                    //     if (array_key_exists($value, sourceTypes)){
-                    //         $qType = sourceTypes[$value];
-                    //         $queryFilters .= "  ?agent ?property  ?object .
-                    //             ?object $prov:wasDerivedFrom ?provenance .
-                    //             ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //             ?source $wdt:$hasOriginalSourceType $wd:$qType.
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "projects"){
-                    //     if (array_key_exists($value, projects)){
-                    //         $projectQ = projects[$value];
-                    //         $queryFilters .= "
-                    //                 ?agent ?property  ?object .
-                    //                 ?object $prov:wasDerivedFrom ?provenance .
-                    //                 ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //                 ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
-                    //             ";
-                    //     }
-                    // }
+                    if ($filterType == "source_type"){
+                        if (array_key_exists($value, sourceTypes)){
+                            $qType = sourceTypes[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "
+                                    ?event $wdt:$instanceOf $wd:$event;
+                                    ?property  ?object .
+                                    ?object prov:wasDerivedFrom ?provenance .
+                                    ?provenance $pr:$isDirectlyBasedOn ?source.
+                                    ?source $wdt:$hasOriginalSourceType ?sourceType
+                                    VALUES ?sourceType { $wd:$qType ";
+                            } else {
+                                $queryFilters .= "$wd:$qType ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
+
+                    if ($filterType == "projects"){
+                        if (array_key_exists($value, projects)){
+                            $projectQ = projects[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "
+                                    ?event $wdt:$instanceOf $wd:$event;
+                                    ?property  ?object .
+                                    ?object prov:wasDerivedFrom ?provenance .
+                                    ?provenance $pr:$isDirectlyBasedOn ?source.
+                                    ?source $wdt:$generatedBy ?project.
+                                    VALUES ?project { $wd:$projectQ ";
+                            } else {
+                                $queryFilters .= "$wd:$projectQ ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
                 }
                     break;
                 case 'places':  // places filters
                 {
+                    if ($filterType == "name"){
+                        $queryFilters .= "?place $wdt:$hasName ?placeName.
+                            FILTER regex(?placeName, '$value', 'i') .
+                            ";
+                    }
+
                     if ($filterType == "place_type"){
                         if (array_key_exists($value, placeTypes)){
                             $qType = placeTypes[$value];
@@ -427,32 +536,59 @@ function createQueryFilters($searchType, $filters)
                         }
                     }
 
-                    // if ($filterType == "source_type"){
-                    //     if (array_key_exists($value, sourceTypes)){
-                    //         $qType = sourceTypes[$value];
-                    //         $queryFilters .= "  ?agent ?property  ?object .
-                    //             ?object $prov:wasDerivedFrom ?provenance .
-                    //             ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //             ?source $wdt:$hasOriginalSourceType $wd:$qType.
-                    //         ";
-                    //     }
-                    // }
-                    //
-                    // if ($filterType == "projects"){
-                    //     if (array_key_exists($value, projects)){
-                    //         $projectQ = projects[$value];
-                    //         $queryFilters .= "
-                    //                 ?agent ?property  ?object .
-                    //                 ?object $prov:wasDerivedFrom ?provenance .
-                    //                 ?provenance $pr:$isDirectlyBasedOn ?source .
-                    //                 ?source $wdt:$generatedBy $wd:$projectQ. #this number will change for every project
-                    //             ";
-                    //     }
-                    // }
+                    if ($filterType == "source_type"){
+                        if (array_key_exists($value, sourceTypes)){
+                            $qType = sourceTypes[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "
+                                    ?place $wdt:$instanceOf $wd:$place;
+                                    ?property  ?object .
+                                    ?object prov:wasDerivedFrom ?provenance .
+                                    ?provenance $pr:$isDirectlyBasedOn ?source.
+                                    ?source $wdt:$hasOriginalSourceType ?sourceType
+                                    VALUES ?sourceType { $wd:$qType ";
+                            } else {
+                                $queryFilters .= "$wd:$qType ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
+
+                    if ($filterType == "projects"){
+                        if (array_key_exists($value, projects)){
+                            $projectQ = projects[$value];
+
+                            if ($index == 0){
+                                $queryFilters .= "
+                                    ?place $wdt:$instanceOf $wd:$place;
+                                    ?property  ?object .
+                                    ?object prov:wasDerivedFrom ?provenance .
+                                    ?provenance $pr:$isDirectlyBasedOn ?source.
+                                    ?source $wdt:$generatedBy ?project.
+                                    VALUES ?project { $wd:$projectQ ";
+                            } else {
+                                $queryFilters .= "$wd:$projectQ ";
+                            }
+                            if ($index >= $filterCount) {
+                                $queryFilters .= "} .
+                                ";
+                            }
+                        }
+                    }
                 }
                     break;
                 case 'sources': // sources filters
                 {
+                    if ($filterType == "name"){
+                        $queryFilters .= "?source $wdt:$hasName ?sourceName.
+                            FILTER regex(?sourceName, '$value', 'i') .
+                            ";
+                    }
+
                     if ($filterType == "source_type"){
                         if (array_key_exists($value, sourceTypes)){
                             $qType = sourceTypes[$value];
@@ -492,17 +628,25 @@ function createQueryFilters($searchType, $filters)
                     // code...
                     break;
             }
-
-
         }
     }
-
 return $queryFilters;
-
 }
 
+function getKeywordSearchCounters($filters){
+    include BASE_LIB_PATH."variableIncluder.php";
 
+    $peopleFilters = createQueryFilters("people", $filters);
+    $eventFilters = createQueryFilters("events", $filters);
+    $placeFilters = createQueryFilters("places", $filters);
+    $sourceFilters = createQueryFilters("sources", $filters);
 
+    include BASE_PATH."queries/keywordSearch/counters.php";
+    $query['query'] = $tempQuery;
+    // print_r($query);die;
+    $result = blazegraphSearch($query);
+    return json_encode($result[0]);
+}
 
 function blazegraph()
 {
@@ -523,15 +667,26 @@ function blazegraph()
         $filtersArray = Array();
     }
 
-    // print_r($filtersArray);die;
-
     $templates = $_GET['templates'];
 
     $record_total = 0;
     $queryArray = array();
+    $isKeywordSearch = false;
+
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
         include BASE_LIB_PATH."variableIncluder.php";
+
+        if ($preset == 'all'){
+            $isKeywordSearch = true;
+            if (isset($_GET['display'])){
+                $preset = $_GET['display'];
+            }
+            // return keywordSearch($filtersArray);
+        }
+
+
+
 
         $queryFilters = createQueryFilters($preset, $filtersArray);
         // echo $queryFilters;die;
@@ -558,16 +713,6 @@ function blazegraph()
                 break;
 
             case 'people':
-                // filter by name
-                $nameQuery = "";
-                if (isset($filtersArray['person'])){
-                    $name = $filtersArray['person'][0];
-                    $nameQuery = "
-                        ?agent $p:$hasName ?statement.
-                        ?statement $ps:$hasName ?name.
-                        FILTER regex(?name, '^$name', 'i') .
-                    ";
-                }
                 //filter by source id
                 $sourceIdFilter = "";
                 if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
@@ -671,7 +816,6 @@ function blazegraph()
 
                 break;
             case 'projects2':
-
                 $query = array('query' => "");
                 include BASE_PATH."queries/".$preset."/findProjects.php";
                 $query['query'] = $tempQuery;
@@ -703,6 +847,10 @@ function blazegraph()
                 $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
                 break;
+            case 'all':
+                // if (isset($filtersArray['searchbar'])){
+                // }
+                break;
             default:
                 break;
         }
@@ -729,22 +877,24 @@ function blazegraph()
         'places' => 'place',
         'projects' => 'project',
         'sources' => 'source'
-
     ];
     if (array_key_exists($preset, $searchTypes)){
-        include BASE_PATH."queries/".$preset."Search/count.php";
-        $resultCountQuery['query'] = $tempQuery;
-        // print_r($resultCountQuery);die;
-        $result = blazegraphSearch($resultCountQuery);
-        //var_dump($resu)
+        if (!$isKeywordSearch){
+            include BASE_PATH."queries/".$preset."Search/count.php";
+            $resultCountQuery['query'] = $tempQuery;
+            // print_r($resultCountQuery);die;
+            $result = blazegraphSearch($resultCountQuery);
 
-        if (isset($result[0]) && isset($result[0]['count'])){
-            $record_total = $result[0]['count']['value'];
-        }
-
-        // no more searching if we know there are 0 results
-        if ($record_total <= 0){
-            return createCards([], $templates, $preset, 0);
+            if (isset($result[0]) && isset($result[0]['count'])){
+                $record_total = $result[0]['count']['value'];
+            }
+            // no more searching if we know there are 0 results
+            if ($record_total <= 0){
+                return createCards([], $templates, $preset, 0);
+            }
+        } else {
+            // get the count for all search types for keyword search
+            $record_total = getKeywordSearchCounters($filtersArray);
         }
 
         include BASE_PATH."queries/".$preset."Search/ids.php";
@@ -835,15 +985,14 @@ function blazegraph()
 
 
 function blazegraphSearch($query){
-    //echo BLAZEGRAPH_URL;
-    // echo http_build_query($query);
-    // die;
+    // print_r($query);die;
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'User-Agent: Enslaved.org/Frontend',
         'Accept: application/sparql-results+json'
     ));
     $result = curl_exec($ch);
@@ -862,7 +1011,10 @@ function blazegraphSearch($query){
  * \param $preset :
  */
 function createCards($results, $templates, $preset = 'default', $count = 0){
-//    print_r($results);die;
+    if (!is_array($results)){
+        $results = array();
+    }
+
     $cards = Array();
     $formattedData = array();   // data formatted to be turned into csv
 
@@ -877,24 +1029,18 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
     $first = true;  // need to know if first to add table headers
 
-    foreach ($results as $index => $record) {  ///foreach result
+    foreach ($results as $index => $record) {
         $card = '';
         switch ($preset){
             case 'people':
                 // print_r($record);die;
                 //Person Name
                 $name = $record['name1']['value'];
-                // $nameArray = explode(' ', $name);
-                // $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $name);
-                // $lastName = $nameArray[count($nameArray)-1];
-
                 //Person QID
                 $personUrl = $record['agent']['value'];
                 $xplode = explode('/', $personUrl);
                 $personQ = end($xplode);
                 $person_url = BASE_URL . "record/person/" . $personQ;
-
-
                 //Person Sex
                 $sex = "";
                 if (isset($record['sex1']) && isset($record['sex1']['value'])){
@@ -902,13 +1048,11 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         $sex = $record['sex1']['value'];
                     }
                 }
-
                 //Person Status
                 $status = '';
                 $statusCount = 0;
                 if (isset($record['status1']) && isset($record['status1']['value'])){
                     $statusArray = explode('||', $record['status1']['value']);
-
                     foreach ($statusArray as $stat) {
                         if (!empty($stat)){
                             if ($statusCount > 0){
@@ -920,13 +1064,11 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         }
                     }
                 }
-
                 //Person location
                 $places = '';
                 $placesCount = 0;
                 if (isset($record['place1']) && isset($record['place1']['value'])){
                     $placesArray = explode('||', $record['place1']['value']);
-
                     foreach ($placesArray as $place) {
                         if (!empty($place)){
                             if ($placesCount > 0){
@@ -938,20 +1080,17 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         }
                     }
                 }
-
                 //Date Range
                 $startYear = '';
                 if (isset($record['startyear1']) && isset($record['startyear1']['value'])){
                     $startYears = explode('||', $record['startyear1']['value']);
                     $startYear = min($startYears);
                 }
-
                 $endYear = '';
                 if (isset($record['endyear1']) && isset($record['endyear1']['value'])){
                     $endYears = explode('||', $record['endyear1']['value']);
                     $endYear = max($endYears);
                 }
-
                 $dateRange = '';
                 if ($startYear != '' && $endYear != ''){
                     $dateRange = "$startYear - $endYear";
@@ -960,7 +1099,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 } elseif ($startYear == '') {
                     $dateRange = $endYear;
                 }
-
                 //Connection counts
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
                     $countpeople = $record['countpeople']['value'];
@@ -982,7 +1120,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 } else {
                     $countsource = '';
                 }
-
                 //Connection HTML
                 $connection_lists = Array(
                     '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
@@ -990,7 +1127,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     '<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
-
                 $connections = '<div class="connectionswrap"><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
@@ -1005,7 +1141,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
                     }
                 $connections .= '</div></div>';
-
 
                 // create the html for each template
                 foreach ($templates as $template) {
@@ -1553,12 +1688,12 @@ HTML;
 
                 //Source Type
                 $type = "Unidentified";
+                $typeCount = 0;
                 if (isset($record['sourcetypeLabel']) && isset($record['sourcetypeLabel']['value'])){
                     if($record['sourcetypeLabel']['value'] != ''){
                         $types = explode('||', $record['sourcetypeLabel']['value']);
                         $type = "";
 
-                        $typeCount = 0;
                         foreach ($types as $t) {
                             if (!empty($t)){
                                 if ($typeCount > 0){

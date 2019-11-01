@@ -7,7 +7,6 @@ WHERE {
     MINUS{?agent $wdt:$hasParticipantRole $wd:$researcher}
     $queryFilters
     $sourceIdFilter
-    $nameQuery
     $eventIdFilter
     $placeIdFilter
 }

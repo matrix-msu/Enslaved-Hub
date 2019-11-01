@@ -2,6 +2,14 @@
         // Timeline points and arrows
         var $tlContainer = $('.timeline-container');
         var $tlInfoContainer = $('.timeline-info-container');
+
+        // quit if there is no timeline
+        if ($tlInfoContainer.length <= 0){
+            $('.jump-button').hide(); // hide the jump to timeline button
+            $tlContainer.hide(); // hide the timeline
+            return;
+        }
+
         var $tlInfoContainerArrowBottom = $tlInfoContainer.find('.arrow-pointer-bottom');
         var $tlInfoContainerArrowtop = $tlInfoContainer.find('.arrow-pointer-top');
         var $eventPoints = $('.event-point');
@@ -9,7 +17,7 @@
         var $sourceSelect = $('.source-select');
         var $nextButton = $tlContainer.find('.timeline-next');
         var $prevButton = $tlContainer.find('.timeline-prev');
-        
+
         var currentIndex = 0;
         var currentKid = $($eventPoints[0]).data('kid');
         var eventsCount = $eventPoints.length;
@@ -24,35 +32,29 @@
         if ($unknownEventPoints.length > 0){
             eventsCount += 1;
         }
-        // dont show timeline for 3 or less events
-        if (eventsCount <= 3){
-            $('.jump-button').hide(); // hide the jump to timeline button
-            $tlContainer.hide(); // hide the timeline
-            return;
-        }
 
         //Set info arrow to point at current point
         var pointLeft = Math.round($($eventPoints[0]).offset().left - $tlInfoContainer.offset().left) + 5;
         $tlInfoContainerArrowBottom.css('left', pointLeft);
         $tlInfoContainerArrowtop.css('left', pointLeft);
-        
+
         setTimelineTitle(currentKid);
-        
+
 
         //Move container to correct position
         //$tlContainer.appendTo(".timeline-section");
-        
+
         // Set event title positioning on point hover
         $eventPoints.find('.event-title').each(function() {
             var $title = $(this);
             var left = (-1 * $title.outerWidth() / 2) + 5;
             $title.css('left', left);
         });
-        
+
         $sourceSelect.click(function() {
             setSourceByKid(currentKid);
         });
-        
+
         // Clicking an event point
         $eventPoints.click(function() {
             var $point = $(this);
@@ -62,7 +64,7 @@
 
             setEventByKid(currentKid, $point);
         });
-        
+
         // Clicking next button to go to next event
         $nextButton.click(function() {
             currentIndex += 1;
@@ -75,22 +77,22 @@
 
             setEventByKid(currentKid, $point);
         });
-        
+
         // Clicking previous button to go previous event
         $prevButton.click(function() {
             currentIndex -= 1;
             if (currentIndex < 0) {
                 currentIndex = eventsCount - 1;
             }
-        
+
             var $point = $($eventPoints[currentIndex]);
             currentKid = $point.data('kid');
             currentYear = $point.data('year');
 
             setEventByKid(currentKid, $point);
         });
-    
-        
+
+
         // Switch between Event and Place Info for an Event on the timeline
         $infoSelect.click(function() {
             var $selected = $(this);
@@ -101,8 +103,8 @@
             // Active clicked selector
             $infoSelect.removeClass('active');
             $selected.addClass('active');
-            
-        
+
+
             // Activate associated info
             $info.removeClass('active');
             $('.'+type+'-info-'+currentKid).addClass('active');
@@ -128,23 +130,23 @@
             if ($point.parent().parent().hasClass('dates-unknown')) {
                 $unknownEventPoints.addClass('active')
             }
-        
+
             // Show corresponding info
             $info.removeClass('active');
             $('.event-info-'+kid).addClass('active');
-        
+
             // Activate event tab
             $infoSelect.removeClass('active');
             $('.info-select-event').addClass('active');
-        
+
             // Set info arrow to point at current point
             var pointLeft = Math.round($point.offset().left - $tlInfoContainer.offset().left) + 5;
             $tlInfoContainerArrowBottom.css('left', pointLeft);
             $tlInfoContainerArrowtop.css('left', pointLeft);
-        
+
             setTimelineTitle(kid);
         }
-    
+
         function setTimelineTitle(kid) {
             currentKid = kid;
             let firstActive = true;
@@ -170,7 +172,7 @@
                     $(this).hide();
                 }
             });
-            
+
             // var place = $('.place-info-'+currentKid).data('place');
 
             // if (place) {
@@ -190,12 +192,12 @@
 
 
             // $('.info-select-place').show();
-        
+
             // var event = $('.event-info-'+currentKid).data('event');
             // $('.info-select-event').children('.large-text').text(event);
-        
+
             // var place = $('.place-info-'+currentKid).data('place');
-        
+
             // if (place) {
             //   $('.info-select-place').children('.large-text').text(place);
             // } else {
@@ -209,7 +211,7 @@
             //       }
             //   });
         }
-    
+
       function setSourceByKid(kid) {
         $sourceSelect.removeClass('active');
         $('source-info-' + kid).addClass('active');
