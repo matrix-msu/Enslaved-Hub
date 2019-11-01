@@ -145,7 +145,7 @@ function searchResults(preset, limit = 12, offset = 0)
                 // filter counters need to update too
                 // also filters are not working for all
             } else {
-                total_length = result_array['total'];
+                total_length = JSON.parse(result_array['total']);
             }
 
 

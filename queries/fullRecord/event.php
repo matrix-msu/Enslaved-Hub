@@ -15,9 +15,11 @@ VALUES ?event { $wd:$qid } #Q number needs to be changed for every event.
 		 ?property  ?object .
 ?object $prov:wasDerivedFrom ?provenance .
 ?provenance $pr:$isDirectlyBasedOn ?source .
-?source $rdfs:label ?refName;
-        $wdt:$generatedBy ?project.
-?project $rdfs:label ?pname.
+OPTIONAL{
+	?source $rdfs:label ?refName;
+	        $wdt:$generatedBy ?project.
+	?project $rdfs:label ?pname.
+}
 ?event $rdfs:label ?name.
 ?event $wdt:$hasEventType ?eventtype.
 ?eventtype $rdfs:label ?type.

@@ -37,7 +37,6 @@ function searchTermParser($filters){
             continue;
         }
 
-
         $found = false;
         $termLength = strlen($term);
 
@@ -46,12 +45,14 @@ function searchTermParser($filters){
             continue;
         }
 
+        // print_r($GLOBALS['FILTER_TO_FILE_MAP']);die;
+
         foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
             if ($type == 'Modern Countries'){   // for countries we want to check the value not the keys
                 $countries = array_values($constantsArray);
                 foreach ($countries as $countryName) {
                     if ($termLength <= 3){
-                        $position =  (strtolower($countryName) == strtolower($term));
+                        $position = (strtolower($countryName) == strtolower($term));
                     } else {
                         $position = stripos($countryName, $term);
                     }
@@ -68,14 +69,14 @@ function searchTermParser($filters){
             } else {
                 $keys = array_keys($constantsArray);
                 foreach ($keys as $key) {
-                    if ($termLength <= 3 || $type = "Gender"){
+                    if ($termLength <= 3 || $type == "Gender"){
                         $position = (strtolower($key) == strtolower($term));
                     } else {
                         $position = stripos($key, $term);
                     }
                     if ($position !== false){
                         $found = true;
-                        // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;
+                        // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;die;
                         // map the file type to a known filter and add it to the $filters array
                         $filterType = strtolower(str_replace(' ', '_', $type));
                         if (!isset($filters[$filterType]) || !in_array($key, $filters[$filterType])){
@@ -887,7 +888,6 @@ function blazegraph()
             if (isset($result[0]) && isset($result[0]['count'])){
                 $record_total = $result[0]['count']['value'];
             }
-
             // no more searching if we know there are 0 results
             if ($record_total <= 0){
                 return createCards([], $templates, $preset, 0);
@@ -896,7 +896,6 @@ function blazegraph()
             // get the count for all search types for keyword search
             $record_total = getKeywordSearchCounters($filtersArray);
         }
-
 
         include BASE_PATH."queries/".$preset."Search/ids.php";
         $idQuery['query'] = $tempQuery;
@@ -986,15 +985,14 @@ function blazegraph()
 
 
 function blazegraphSearch($query){
-    //echo BLAZEGRAPH_URL;
-    // echo http_build_query($query);
-    // die;
+    // print_r($query);die;
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+        'User-Agent: Enslaved.org/Frontend',
         'Accept: application/sparql-results+json'
     ));
     $result = curl_exec($ch);
@@ -1031,24 +1029,18 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
     $first = true;  // need to know if first to add table headers
 
-    foreach ($results as $index => $record) {  ///foreach result
+    foreach ($results as $index => $record) {
         $card = '';
         switch ($preset){
             case 'people':
                 // print_r($record);die;
                 //Person Name
                 $name = $record['name1']['value'];
-                // $nameArray = explode(' ', $name);
-                // $firstName = preg_replace('/\W\w+\s*(\W*)$/', '$1', $name);
-                // $lastName = $nameArray[count($nameArray)-1];
-
                 //Person QID
                 $personUrl = $record['agent']['value'];
                 $xplode = explode('/', $personUrl);
                 $personQ = end($xplode);
                 $person_url = BASE_URL . "record/person/" . $personQ;
-
-
                 //Person Sex
                 $sex = "";
                 if (isset($record['sex1']) && isset($record['sex1']['value'])){
@@ -1056,13 +1048,11 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         $sex = $record['sex1']['value'];
                     }
                 }
-
                 //Person Status
                 $status = '';
                 $statusCount = 0;
                 if (isset($record['status1']) && isset($record['status1']['value'])){
                     $statusArray = explode('||', $record['status1']['value']);
-
                     foreach ($statusArray as $stat) {
                         if (!empty($stat)){
                             if ($statusCount > 0){
@@ -1074,13 +1064,11 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         }
                     }
                 }
-
                 //Person location
                 $places = '';
                 $placesCount = 0;
                 if (isset($record['place1']) && isset($record['place1']['value'])){
                     $placesArray = explode('||', $record['place1']['value']);
-
                     foreach ($placesArray as $place) {
                         if (!empty($place)){
                             if ($placesCount > 0){
@@ -1092,20 +1080,17 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         }
                     }
                 }
-
                 //Date Range
                 $startYear = '';
                 if (isset($record['startyear1']) && isset($record['startyear1']['value'])){
                     $startYears = explode('||', $record['startyear1']['value']);
                     $startYear = min($startYears);
                 }
-
                 $endYear = '';
                 if (isset($record['endyear1']) && isset($record['endyear1']['value'])){
                     $endYears = explode('||', $record['endyear1']['value']);
                     $endYear = max($endYears);
                 }
-
                 $dateRange = '';
                 if ($startYear != '' && $endYear != ''){
                     $dateRange = "$startYear - $endYear";
@@ -1114,7 +1099,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 } elseif ($startYear == '') {
                     $dateRange = $endYear;
                 }
-
                 //Connection counts
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
                     $countpeople = $record['countpeople']['value'];
@@ -1136,7 +1120,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 } else {
                     $countsource = '';
                 }
-
                 //Connection HTML
                 $connection_lists = Array(
                     '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
@@ -1144,7 +1127,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     '<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
-
                 $connections = '<div class="connectionswrap"><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
@@ -1159,7 +1141,6 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
                     }
                 $connections .= '</div></div>';
-
 
                 // create the html for each template
                 foreach ($templates as $template) {
@@ -1707,12 +1688,12 @@ HTML;
 
                 //Source Type
                 $type = "Unidentified";
+                $typeCount = 0;
                 if (isset($record['sourcetypeLabel']) && isset($record['sourcetypeLabel']['value'])){
                     if($record['sourcetypeLabel']['value'] != ''){
                         $types = explode('||', $record['sourcetypeLabel']['value']);
                         $type = "";
 
-                        $typeCount = 0;
                         foreach ($types as $t) {
                             if (!empty($t)){
                                 if ($typeCount > 0){

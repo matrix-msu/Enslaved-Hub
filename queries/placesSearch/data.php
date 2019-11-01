@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?place ?placelabel ?locationlab ?geonames ?code
+SELECT ?place ?placelabel ?geonames ?code
  (count(distinct ?person) as ?countpeople)
  (count(distinct ?event) as ?countevent)
  (count(distinct ?source) as ?countsource)
@@ -30,6 +30,6 @@ WHERE {
   OPTIONAL{ ?place $wdt:$geonamesID ?geonames.}
   OPTIONAL{ ?place $wdt:$modernCountryCode ?code.}
 
- }GROUP BY ?place ?placelabel ?locationlab ?geonames ?code
+ }GROUP BY ?place ?placelabel ?geonames ?code
 order by ?placeLabel
 QUERY;
