@@ -9,7 +9,7 @@
         margin: 0 auto;
         padding-top: 160px;
         padding-bottom: 50px;
-        #previous-title{
+        .previous-title{
           opacity: 0.7;
           color: $white;
           font-family: aleobold;
@@ -389,6 +389,253 @@
   }
 }
 
+.directory-textwrap{
+    max-width: 1000px;
+    width: 90%;
+    margin: 0 auto;
+    p{
+        font-family: aleobold;
+        font-size: 16px;
+        color: $base-dark;
+        line-height: 24px;
+        margin-top: 60px;
+        margin-bottom: 16px;
+    }
+}
+
+.projectcard{
+    #all-header{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        .display-projects {
+            position: relative;
+            .column-header{
+                margin-right: 60px;
+                font-size: 40px;
+                cursor: pointer;
+                img {
+                    width: 20px;
+                    transition: 400ms;
+                    margin-bottom: 5px;
+                    margin-left: 10px;
+                }
+                img.show {
+                    transform: rotate(-180deg);
+                }
+            }
+            ul.display-menu {
+                background: $base-dark;
+                box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+                color: $white;
+                border-radius: 5px;
+                width: 210px;
+                text-align: center;
+                display: none;
+                list-style: none;
+                margin: 10px auto 0;
+                padding: 10px 15px;
+                position: absolute;
+                left: 60px;
+                top: 40px;
+                z-index: 1;
+                li {
+                    cursor: pointer;
+                    font-size: 18px;
+                    line-height: 15px;
+                    padding: 10px 5px;
+                }
+                li:hover {
+                    color: $sub-base;
+                }
+
+                ul#submenu {
+                    margin-bottom: 20px;
+                }
+            }
+            #submenu.show{
+                display: block;
+            }
+        }
+        .sort-search{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .search{
+                position: relative;
+                form{
+                    position: relative;
+
+                    .search-field{
+                        border: 2px solid transparent;
+                        border-radius: 5px;
+                        box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+                        background-color: $white;
+                        color: $base-dark;
+                        font-size: 14px;
+                        margin: 0;
+                        outline: none;
+                        padding-left: 20px;
+                        padding-right: 45px;
+                        transition: border 0.3s ease;
+                        height: 45px;
+                        width: 300px;
+
+                        &:hover{
+                            border: 2px solid rgba(194,79,60,0.6);
+                        }
+                        &:focus-within{
+                            border: 2px solid rgba(194,79,60,0.6);
+                        }
+                        &::placeholder {
+                            //color: rgba($base-dark, .75);
+                            font-family: aleobold;
+                            color: $base-dark;
+                            font-size: 14px;
+                            font-style: italic;
+                        }
+                    }
+
+                    .search-icon-2{
+                        background: none;
+                        height: 45px;
+                        width: 45px;
+                    }
+                }
+            }
+
+            .sort-projects{
+                position: relative;
+                margin-right: 40px;
+
+                .sort-projects-text{
+                    font-size: 14px;
+                    color: $base-dark;
+                    opacity: 0.8;
+                }
+
+                ul {
+                    background: $base-dark;
+                    box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+                    color: $white;
+                    border-radius: 5px;
+                    width: 205px;
+                    text-align: center;
+                    display: none;
+                    list-style: none;
+                    margin: 20px auto 0;
+                    padding: 10px 15px;
+                    position: absolute;
+                    left: -70px;
+                    z-index: 1;
+                    li {
+                        cursor: pointer;
+                        font-size: 12px;
+                        line-height: 15px;
+                        padding: 5px 3px;
+                    }
+                    li:hover {
+                        color: $sub-base;
+                    }
+
+                    ul#submenu {
+                        margin-bottom: 20px;
+                    }
+
+                }
+
+                #submenu.show{
+                    display: block;
+                }
+
+                span {
+                    cursor: pointer;
+                    img {
+                        transition: 400ms;
+                        transform: rotate(90deg);
+                        margin-bottom: -1px;
+                        margin-left: 5px;
+                    }
+                    img.show {
+                        transform: rotate(-90deg);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.pagiwrap{
+    margin: 35px 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .sort-pages{
+        position: relative;
+        padding-right: 20px;
+        p{
+            margin: 0;
+            margin-right: 20px;
+            float: left;
+            line-height: 50px;
+            color: #253449;
+            font-size: 14px;
+            cursor: pointer;
+            img {
+                transition: 400ms;
+                transform: rotate(90deg);
+            }
+            img.show {
+                transform: rotate(-90deg);
+            }
+
+            .sort-arrow {
+                margin-left: 5px;
+                position: relative;
+            }
+        }
+        ul {
+            background: $base-dark;
+            box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+            color: $white;
+            border-radius: 5px;
+            display: none;
+            list-style: none;
+            margin: 40px 0 0;
+            padding: 10px;
+            position: absolute;
+            left: 0;
+            width: 90px;
+            z-index: 1;
+            li {
+                cursor: pointer;
+                font-size: 12px;
+                line-height: 15px;
+                padding: 5px 3px;
+                transition: color 0.3s ease;
+            }
+            li:hover {
+                color: $accent;
+            }
+
+            ul#submenu {
+                margin-bottom: 20px;
+            }
+
+        }
+
+        #submenu.show{
+            display: block;
+        }
+    }
+}
+
+
 .submission-form {
   margin-top: 50px;
   margin-bottom: 20px !important;
@@ -478,6 +725,18 @@
                     button{
                         width: 100%;
                     }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 917px){
+    .projectcard{
+        #all-header{
+            .display-projects {
+                .column-header{
+                    margin-bottom: 20px;
                 }
             }
         }

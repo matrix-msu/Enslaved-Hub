@@ -66,7 +66,8 @@ $GLOBALS['routes'] = array(
     'projects' => 'projects.php',
     'crawler' => 'crawler.php',
     'current' => 'current.php',
-    'links' => 'links.php'
+    'links' => 'links.php',
+    'directory' => 'scholarProjectDirectory.php'
 );
 
 //$location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
