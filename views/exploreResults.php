@@ -3,7 +3,6 @@
     <div class="image-container search-page">
         <div class="container middlewrap search-page">
             <?php
-//die;
             $typeTitle = "";
             $typeLower = "";
             $currentTitle = 'Search';
@@ -27,7 +26,6 @@
                 $showPath = true;
                 $fromBrowse = true;
             }
-//die;
             ?>
             <!-- <h4 class="last-page-header" style="<?php  echo (!$showPath) ? 'display:none' : '' ?> ">
                 <a id="last-page" class="prev1" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM ?>">
@@ -286,12 +284,7 @@
                 </span>
             </span>
         </div>
-        <div id="search-result-configure-download-row">
-            <span class="align-left">
-                <a class="modal">Configure Table Columns</a>
-            </span>
-            <span class="align-right"><b>Download:</b> <span id="Download_selected">Current View</span> | <span id="Download_all">All Results</span></span>
-        </div>
+
 
         <div class="filter-cards">
             <div class="option-wrap">
@@ -302,6 +295,12 @@
         <div class="search-record-connections">
             <div class="connectionwrap">
                 <div class="categories"></div>
+                <div id="search-result-configure-download-row">
+                    <span class="align-left">
+                        <a class="modal">Configure Table Columns</a>
+                    </span>
+                    <span class="align-right"><b>Download:</b><span id="Download_selected">Current View</span><span id="Download_all">All Results</span></span>
+                </div>
                 <div class="connection-cards">
                     <ul class="connect-row">
                     </ul>
@@ -309,6 +308,9 @@
                     <!-- <div class="load-more"><h4>Load More</h4></div> -->
                 </div>
             </div>
+        </div>
+        <div class="show-menu">
+            <img src="<?php echo BASE_IMAGE_URL;?>filter.svg" alt="drop arrow"><p id="showfilter">Show Filter Menu</p>
         </div>
         <div id="search-result-wrap">
             <div id="search-result-table">
