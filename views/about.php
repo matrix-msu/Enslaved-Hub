@@ -59,6 +59,15 @@
                     </div>
                 </a>
             </li>
+            <li id="webCrawler">
+                <a href="<?php echo BASE_URL?>links">
+                    <div class="buttons">
+                        <h3>View Web Crawler</h3>
+                        <img class="about-button-chevron" id="green-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-green.svg" alt="Chevron">
+                        <img class="about-button-chevron" id="red-chevron" src="<?php echo BASE_URL;?>assets/images/about-chevron-red.svg" alt="Chevron">
+                    </div>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
