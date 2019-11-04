@@ -11,7 +11,7 @@
     </div>
       <div class="image-background-overlay"></div>
       <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
-    
+
     </div>
 </div>
 <main class="direct-search">
@@ -22,23 +22,23 @@
             <div class="search-section">
                 <div class="inputwrap">
                     <label for="person">Name</label>
-                    <input class="input-field" id="person" name="person" type="text" placeholder="Enter Name"/>
+                    <input class="input-field" id="person" name="name" type="text" placeholder="Enter Name"/>
                 </div>
                 <div class="inputwrap">
                     <label for="status">Person Status</label>
                     <select class="s2-single" id="status" name="status">
                         <option value=""></option>
                         <?php foreach (personstatus as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <div class="inputwrap">
-                    <label for="sex">Sex</label>
-                    <select class="s2-single" name="sex" id="sex">
+                    <label for="gender">Sex</label>
+                    <select class="s2-single" name="gender" id="sex">
                         <option value=""></option>
                         <?php foreach (sexTypes as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -54,7 +54,7 @@
                     <label for="occupation">Occupation</label>
                     <select class="s2-multiple" id="occupation" name="occupation" multiple="multiple">
                         <?php foreach (occupation as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -66,7 +66,7 @@
                     <label for="event-type">Type</label>
                     <select class="s2-multiple" name="event-type" id="event-type" multiple="multiple">
                         <?php foreach (eventTypes as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -99,7 +99,7 @@
                     <label for="place-type">Place Type</label>
                     <select class="s2-multiple" id="place-type" name="place-type" multiple="multiple">
                         <?php foreach (placeTypes as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -123,7 +123,7 @@
                     <label for="source-type">Source Type</label>
                     <select class="s2-multiple" id="source-type" name="source-type" multiple="multiple">
                         <?php foreach (sourceTypes as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -131,7 +131,7 @@
                     <label for="project">Projects</label>
                     <select class="s2-multiple" id="project" name="project" multiple="multiple">
                         <?php foreach (projects as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>

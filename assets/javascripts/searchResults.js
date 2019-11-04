@@ -51,9 +51,14 @@ if(document.location.toString().indexOf('?') !== -1)
         .replace(/#.*$/, '')
         .split('&');
 
+    if (query[0] == "" && query.length == 1){
+        query = [];
+    }
+
     for(var i=0; i < query.length; i++)
     {
         var aux = decodeURIComponent(query[i]).split('=');
+        aux[1] = aux[1].replace(new RegExp("\\+","g"),' ');
         if(!aux || aux[0] == "" || aux[1] == "") continue;
 
         if (aux[0] == "display"){
@@ -64,11 +69,13 @@ if(document.location.toString().indexOf('?') !== -1)
         // Get searchbar keywords
         if(aux[0] == "searchbar")
         {
-            filters[aux[0]] = aux[1].split('+');
-            continue;
+            aux[1] = aux[1].replace(new RegExp("\\+","g"),',');
         }
-
-        filters[aux[0]] = aux[1].split(',');
+        var spliltArray = aux[1].split(',');
+        var filtered = spliltArray.filter(function (el) {
+                return el != "";
+            });
+        filters[aux[0]] = filtered;
     }
 }
 
@@ -106,10 +113,8 @@ function searchResults(preset, limit = 12, offset = 0)
     filters['offset'] = offset;
     card_offset = offset;
     var templates = ['gridCard', 'tableCard'];
-    // console.log(preset, filters, templates);
     generateFilterCards();
 
-    console.log(preset, filters, templates, display)
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -141,9 +146,6 @@ function searchResults(preset, limit = 12, offset = 0)
 
 
                 total_length = allCounters[display+"count"]["value"];
-                // todo:
-                // filter counters need to update too
-                // also filters are not working for all
             } else {
                 total_length = JSON.parse(result_array['total']);
             }
@@ -183,7 +185,6 @@ function searchResults(preset, limit = 12, offset = 0)
             $(document).ready(function(){
                 appendCards();
                 setPagination(total_length, card_limit, card_offset);
-                console.log('refilling')
                 $.ajax({
                     url: BASE_URL + "api/getSearchFilterCounters",
                     type: "GET",
@@ -244,7 +245,7 @@ function fillFilterCounters(allCounters){
                 if (label != "" && qid != "") {
                     var $input = $("input[data-qid='" + qid + "']");
                     var $counter = $input.next().find('em');
-                    $counter.html('(' + count + ')');    // show the count
+                    // $counter.html('(' + count + ')');    // show the count
 
                     // hide filter if count is 0
                     if (count > 0){
@@ -313,7 +314,6 @@ $(document).ready(function() {
         'success': function (data) {
             var allCounters = JSON.parse(data);
             fillFilterCounters(allCounters);
-            // console.log('success', allCounters)
 
             // open the drawer for the first filter once the counters are made
             if (firstFilter != ""){
@@ -366,7 +366,6 @@ $(document).ready(function() {
     upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
 
     if(upperForm.toString() == 'All'){
-        // console.log('in all')
         $( ".categories" ).html( "<ul>"+
                                     "<li class='unselected selected' id='people'><div class='person-image'></div><span class='count'></span>People</li>"+
                                     "<li class='unselected' id='events'><div class='event-image'></div><span class='count'></span>Events</li>"+
@@ -914,7 +913,6 @@ function get_download_content(fields, data, isAllData) {
     Convert to csv and download
 */
 function download_csv(data, fields) {
-    // console.log(data, fields)
     var qids = Object.keys(data);
     var csvString = [];
     csvString.push("QID," + fields.join(',')); // Headers

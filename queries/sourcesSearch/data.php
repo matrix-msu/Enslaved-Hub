@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
+SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?secondarysource
 
  (group_concat(distinct ?sourcetypeLabel; separator = "||") as ?sourcetypeLabel) #source type labels
  (count(distinct ?agent) as ?countpeople)
@@ -23,8 +23,7 @@ SELECT DISTINCT ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
               ?statement $ps:$providesParticipantRole ?role.
               ?statement $pq:$hasParticipantRole ?agent}.
   OPTIONAL{?source $wdt:$hasOriginalSourceRepository ?secondarysource}.
-  OPTIONAL {?source schema:description ?desc}.
 
-}group by ?source ?sourceLabel ?projectLabel ?desc ?secondarysource
+}group by ?source ?sourceLabel ?projectLabel ?secondarysource
 order by ?sourceLabel
 QUERY;

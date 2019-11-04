@@ -950,7 +950,7 @@ HTML;
     $html .= '</div>';
 } else if ($label == "Secondary Source"){
     $lowerlabel = "source";
-    $upperlabel = "SOURCE";
+    $upperlabel = "Source";
 
     $source = $statement;
 
@@ -1281,39 +1281,6 @@ function getFullRecordHtml(){
 
     //Name
     $recordVars['Name'] = $record['name']['value'];
-
-    //Description
-    if (isset($record['desc']) && isset($record['desc']['value']) ){
-      $description = $record['desc']['value'];
-    } else {
-      $description = '';
-    }
-
-    //Checks for start and end years and creates date range
-    /*
-    if (isset($record['startyear']) && isset($record['startyear']['value'])){
-        $startYears = explode('||', $record['startyear']['value']);
-        $startYear = min($startYears);
-    } else {
-        $startYear = '';
-    }
-
-    if (isset($record['endyear']) && isset($record['endyear']['value'])){
-        $endYears = explode('||', $record['endyear']['value']);
-        $endYear = max($endYears);
-    } else {
-        $endYear = '';
-    }
-
-    $dateRange = '';
-    if ($startYear != '' && $endYear != ''){
-        $dateRange = "$startYear - $endYear";
-    } elseif ($endYear == ''){
-        $dateRange = $startYear;
-    } elseif ($startYear == '') {
-        $dateRange = $endYear;
-    }
-    */
 
     //Sex
     if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
@@ -2204,6 +2171,8 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 }ORDER BY ?random
 QUERY;
 
+    // print_r($peopleQuery);die;
+
     $result = blazegraphSearch($peopleQuery);
     $connections['Person-count'] = count($result);
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
@@ -2222,6 +2191,7 @@ SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND(
 }ORDER BY ?random
 QUERY;
 
+    // print_r($eventsQuery);die;
     $result = blazegraphSearch($eventsQuery);
     $connections['Event-count'] = count($result);
     $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
@@ -2240,6 +2210,7 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
+// print_r($placeQuery);die;
 
     $result = blazegraphSearch($placeQuery);
     $connections['Place-count'] = count($result);
