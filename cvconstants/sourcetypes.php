@@ -14,7 +14,9 @@ const sourceTypes=[
   "Petition" => "Q142",
   "Ship Registry or Manifest" => "Q143",
   "Freedom or Emancipation Document" => "Q144",
-  "Bill of Sale or Receipt" => "Q145"
+  "Bill of Sale or Receipt" => "Q145",
+  "Newspaper" => "Q10089",
+  "Secondary Source" => "Q10090"
 ];
 
 const qsourceTypes=[
@@ -32,6 +34,8 @@ const qsourceTypes=[
   "Q142" => "Petition",
   "Q143" => "Ship Registry or Manifest",
   "Q144" => "Freedom or Emancipation Document",
-  "Q145" => "Bill of Sale or Receipt"
+  "Q145" => "Bill of Sale or Receipt",
+  "Q10089" => "Newspaper",
+  "Q10090" => "Secondary Source"
 ];
 ?>

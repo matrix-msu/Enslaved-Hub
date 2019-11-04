@@ -145,7 +145,7 @@
 </main>
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
 <script>
-    autocomplete(document.getElementById("place"), [<?php echo '"'.implode('","', qPlaces).'"' ?>]);
+    autocomplete(document.getElementById("place"), [<?php echo '"'.implode('","', array_keys(places)).'"' ?>]);
     autocomplete(document.getElementById("ethno"), [<?php echo '"'.implode('","', qethnodescriptor).'"' ?>]);
     autocomplete(document.getElementById("age"), [<?php echo '"'.implode('","', qages).'"' ?>]);
 </script>
