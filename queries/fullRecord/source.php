@@ -21,7 +21,7 @@ SELECT
   }.
   OPTIONAL{?source $wdt:$reportsOn ?event}.
 
-  OPTIONAL{?source $wdt:$hasOriginalSourceRepository ?secondarysource}.
+  OPTIONAL{?source $wdt:$availableFrom ?secondarysource}.
   OPTIONAL {?event $wdt:$atPlace ?place.}
 
   ?people ?property  ?object .

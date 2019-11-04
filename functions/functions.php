@@ -220,8 +220,8 @@ function createQueryFilters($searchType, $filters)
                             }
 
                             if ($filterType == "occupation"){
-                                if (array_key_exists($occupation, occupation)){
-                                    $qOccupation = occupation[$occupation];
+                                if (array_key_exists($value, occupation)){
+                                    $qOccupation = occupation[$value];
 
                                     if ($index == 0){
                                         $queryFilters .= "?agent $wdt:$hasOccupation ?occupation
@@ -700,9 +700,6 @@ function blazegraph()
                 $preset = $_GET['display'];
             }
         }
-
-
-
 
         $queryFilters = createQueryFilters($preset, $filtersArray);
         // echo $queryFilters;die;
