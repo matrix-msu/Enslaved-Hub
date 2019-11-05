@@ -281,6 +281,8 @@ function counterOfAge($filters=array()){
                         }group by ?agecategory ?agecategoryLabel
                         ";
 
+    // print_r($ageCategoryQuery);die;
+
     $encode=urlencode($ageCategoryQuery);
     $call=API_URL.$encode;
     $ageCategoryResult=callAPI($call,'','');

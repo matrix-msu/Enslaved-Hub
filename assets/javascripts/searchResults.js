@@ -71,6 +71,7 @@ if(document.location.toString().indexOf('?') !== -1)
         {
             aux[1] = aux[1].replace(new RegExp("\\+","g"),',');
         }
+        aux[1] = decodeURIComponent(aux[1]);
         var spliltArray = aux[1].split(',');
         var filtered = spliltArray.filter(function (el) {
                 return el != "";
@@ -973,7 +974,7 @@ function generateFilterCards(){
             //Add filter cards
             $.each(values, function(indx, value)
             {
-                addFilterCard(key, value);
+                addFilterCard(key, decodeURIComponent(value));
             });
         }
     });

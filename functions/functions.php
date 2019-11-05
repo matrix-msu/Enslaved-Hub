@@ -512,7 +512,7 @@ function createQueryFilters($searchType, $filters)
                         break;
                     case 'places':  // places filters
                     {
-                        if ($filterType == "name"){
+                        if ($filterType == "name" || $filterType == "place_name"){
                             $queryFilters .= "?place $wdt:$hasName ?placeName.
                                 FILTER regex(?placeName, '$value', 'i') .
                                 ";
@@ -534,8 +534,13 @@ function createQueryFilters($searchType, $filters)
                             }
                         }
 
-                        if ($filterType == "modern_countries"){
-                            $code = array_search(strtolower($value), array_map('strtolower', countrycode));
+                        if ($filterType == "modern_countries" || $filterType == "country_code"){
+                            if ($filterType == "modern_countries"){
+                                $code = array_search(strtolower($value), array_map('strtolower', countrycode));
+                            } else {
+                                $code = $value;
+                            }
+
                             if ($code){
                                 if ($index == 0){
                                     $queryFilters .= "?place $wdt:$modernCountryCode ?countryCode
@@ -625,7 +630,6 @@ function createQueryFilters($searchType, $filters)
                         if ($filterType == "projects"){
                             if (array_key_exists($value, projects)){
                                 $projectQ = projects[$value];
-
                                 if ($index == 0){
                                     $queryFilters .= "?source $wdt:$generatedBy ?project
                                         VALUES ?project { $wd:$projectQ ";
