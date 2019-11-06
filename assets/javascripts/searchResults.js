@@ -11,6 +11,7 @@ var card_offset = 0;
 var card_limit = 12;
 var filters = {};
 var display = search_type;
+var firstLoad = true;
 
 if (search_type == "all"){
     display = 'people';
@@ -134,8 +135,12 @@ function searchResults(preset, limit = 12, offset = 0)
 
             if (preset == "all"){
                 var allCounters = JSON.parse(result_array['total']);
+                var firstTypeWithResults = '';
                 for (var type in filtersToSearchType){
                     var counter = allCounters[type+"count"]["value"];
+                    if (firstTypeWithResults == '' && counter > 0){
+                        firstTypeWithResults = type;
+                    }
                     var $tab = $('.categories #'+type);
                     $tab.find('span').html(counter+" ");
                     if (counter <= 0){
@@ -144,7 +149,10 @@ function searchResults(preset, limit = 12, offset = 0)
                         $tab.show();
                     }
                 }
-
+                if (firstTypeWithResults != '' && firstLoad){
+                    firstLoad = false;
+                    $('.categories #'+firstTypeWithResults).click();
+                }
 
                 total_length = allCounters[display+"count"]["value"];
             } else {

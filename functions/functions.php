@@ -513,7 +513,7 @@ function createQueryFilters($searchType, $filters)
                     case 'places':  // places filters
                     {
                         if ($filterType == "name" || $filterType == "place_name"){
-                            $queryFilters .= "?place $wdt:$hasName ?placeName.
+                            $queryFilters .= "?place $rdfs:label ?placeName.
                                 FILTER regex(?placeName, '$value', 'i') .
                                 ";
                         }
@@ -918,7 +918,6 @@ function blazegraph()
         $idQuery['query'] = $tempQuery;
         // print_r($idQuery);die;
         $result = blazegraphSearch($idQuery);
-
 
         // get the qids from each url
         $urls = (array_column(array_column($result, $searchTypes[$preset]), 'value'));
