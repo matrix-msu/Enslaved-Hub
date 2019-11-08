@@ -11,7 +11,6 @@ var card_offset = 0;
 var card_limit = 12;
 var filters = {};
 var display = search_type;
-var firstLoad = true;
 
 if (search_type == "all"){
     display = 'people';
@@ -52,14 +51,9 @@ if(document.location.toString().indexOf('?') !== -1)
         .replace(/#.*$/, '')
         .split('&');
 
-    if (query[0] == "" && query.length == 1){
-        query = [];
-    }
-
     for(var i=0; i < query.length; i++)
     {
         var aux = decodeURIComponent(query[i]).split('=');
-        aux[1] = aux[1].replace(new RegExp("\\+","g"),' ');
         if(!aux || aux[0] == "" || aux[1] == "") continue;
 
         if (aux[0] == "display"){
@@ -70,14 +64,11 @@ if(document.location.toString().indexOf('?') !== -1)
         // Get searchbar keywords
         if(aux[0] == "searchbar")
         {
-            aux[1] = aux[1].replace(new RegExp("\\+","g"),',');
+            filters[aux[0]] = aux[1].split('+');
+            continue;
         }
-        aux[1] = decodeURIComponent(aux[1]);
-        var spliltArray = aux[1].split(',');
-        var filtered = spliltArray.filter(function (el) {
-                return el != "";
-            });
-        filters[aux[0]] = filtered;
+
+        filters[aux[0]] = aux[1].split(',');
     }
 }
 
@@ -115,8 +106,10 @@ function searchResults(preset, limit = 12, offset = 0)
     filters['offset'] = offset;
     card_offset = offset;
     var templates = ['gridCard', 'tableCard'];
+    // console.log(preset, filters, templates);
     generateFilterCards();
 
+    console.log(preset, filters, templates, display)
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -135,12 +128,8 @@ function searchResults(preset, limit = 12, offset = 0)
 
             if (preset == "all"){
                 var allCounters = JSON.parse(result_array['total']);
-                var firstTypeWithResults = '';
                 for (var type in filtersToSearchType){
                     var counter = allCounters[type+"count"]["value"];
-                    if (firstTypeWithResults == '' && counter > 0){
-                        firstTypeWithResults = type;
-                    }
                     var $tab = $('.categories #'+type);
                     $tab.find('span').html(counter+" ");
                     if (counter <= 0){
@@ -149,12 +138,12 @@ function searchResults(preset, limit = 12, offset = 0)
                         $tab.show();
                     }
                 }
-                if (firstTypeWithResults != '' && firstLoad){
-                    firstLoad = false;
-                    $('.categories #'+firstTypeWithResults).click();
-                }
+
 
                 total_length = allCounters[display+"count"]["value"];
+                // todo:
+                // filter counters need to update too
+                // also filters are not working for all
             } else {
                 total_length = JSON.parse(result_array['total']);
             }
@@ -194,6 +183,7 @@ function searchResults(preset, limit = 12, offset = 0)
             $(document).ready(function(){
                 appendCards();
                 setPagination(total_length, card_limit, card_offset);
+                console.log('refilling')
                 $.ajax({
                     url: BASE_URL + "api/getSearchFilterCounters",
                     type: "GET",
@@ -254,7 +244,7 @@ function fillFilterCounters(allCounters){
                 if (label != "" && qid != "") {
                     var $input = $("input[data-qid='" + qid + "']");
                     var $counter = $input.next().find('em');
-                    // $counter.html('(' + count + ')');    // show the count
+                    $counter.html('(' + count + ')');    // show the count
 
                     // hide filter if count is 0
                     if (count > 0){
@@ -323,6 +313,7 @@ $(document).ready(function() {
         'success': function (data) {
             var allCounters = JSON.parse(data);
             fillFilterCounters(allCounters);
+            // console.log('success', allCounters)
 
             // open the drawer for the first filter once the counters are made
             if (firstFilter != ""){
@@ -375,6 +366,7 @@ $(document).ready(function() {
     upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
 
     if(upperForm.toString() == 'All'){
+        // console.log('in all')
         $( ".categories" ).html( "<ul>"+
                                     "<li class='unselected selected' id='people'><div class='person-image'></div><span class='count'></span>People</li>"+
                                     "<li class='unselected' id='events'><div class='event-image'></div><span class='count'></span>Events</li>"+
@@ -700,8 +692,21 @@ $(document).ready(function() {
     // });
     //Sub categories
     $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
-        $(this).find("span:first").toggleClass("show");
-        $(this).find("ul#submenu").toggleClass("show");
+        //For drawers that shouldn't fold on click
+        $("input").click(function() {
+           if ($(this).attr("class") == 'nofold'){
+               return false;
+           }
+        });
+        //Date requires exception
+        if($(this).attr('name') == 'date'){
+            $(this).find("span:first").toggleClass("show");
+            $(this).find("ul#submenu").toggleClass("showdate");
+        }
+        else{
+            $(this).find("span:first").toggleClass("show");
+            $(this).find("ul#submenu").toggleClass("show");
+        }
     });
      //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
@@ -743,17 +748,6 @@ $(document).ready(function() {
         // make ajax request
         searchResults(search_type);
     });
-
-
-    // $('#date-go-btn').on('click', function(){
-    //
-    //     var $goButton = $(this);
-    //     var startYear = $('#startyear').eq(0).value;
-    //     var endYear = $('#endyear');
-    //
-    //     console.log($goButton, startYear, $endYearInput)
-    // });
-
 
 
     // click filters
@@ -803,9 +797,6 @@ $(document).ready(function() {
 
         updateURL();
     });
-
-
-
 
 
     // Onclick, download visible selected data as csv file
@@ -936,6 +927,7 @@ function get_download_content(fields, data, isAllData) {
     Convert to csv and download
 */
 function download_csv(data, fields) {
+    // console.log(data, fields)
     var qids = Object.keys(data);
     var csvString = [];
     csvString.push("QID," + fields.join(',')); // Headers
@@ -996,7 +988,7 @@ function generateFilterCards(){
             //Add filter cards
             $.each(values, function(indx, value)
             {
-                addFilterCard(key, decodeURIComponent(value));
+                addFilterCard(key, value);
             });
         }
     });
@@ -1017,3 +1009,29 @@ function generateFilterCards(){
         $('label.'+fcat+' input[value="'+fname+'"]').trigger('click');
     });
 }
+//check window size and display/hide filter-menu
+function mediaMode() {
+    if($(window).innerWidth() > 600) {
+        $('.filter-menu').addClass('show');
+    } else {
+        $('.filter-menu.show').removeClass('show');
+    }
+}
+//fire function
+mediaMode();
+//check window size
+$(window).bind('resize',function(){
+    mediaMode();
+});
+
+//change text for Filter Menu
+$(".show-menu").click(function(){
+    $(".filter-menu").toggleClass('show');
+    // if ()
+    if ($('#showfilter').text() == 'Show Filter Menu'){
+        $('#showfilter').text('Hide Filter Menu')
+    }
+    else {
+        $('#showfilter').text('Show Filter Menu')
+    }
+});
