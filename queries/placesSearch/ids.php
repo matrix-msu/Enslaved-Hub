@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?place WHERE {
+SELECT DISTINCT ?place WHERE {
 	?place $wdt:$instanceOf $wd:$place.
 	?place $wdt:$hasPlaceType ?type.
 	$queryFilters

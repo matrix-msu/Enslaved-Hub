@@ -2317,6 +2317,7 @@ QUERY;
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
 
+
     return json_encode($connections);
 }
 

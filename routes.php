@@ -72,7 +72,7 @@ $GLOBALS['routes'] = array(
 );
 
 //$location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-$location = BASE_URL; 
+$location = "https://$_SERVER[HTTP_HOST]";
 $path = parse_url($_SERVER['REQUEST_URI'])['path'];
 $actualLink = $location . $path;
 $currentFile = str_replace(BASE_URL, '', $actualLink);

@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?place ?placelabel ?geonames ?code
+SELECT DISTINCT ?place ?placelabel ?geonames ?code
  (count(distinct ?person) as ?countpeople)
  (count(distinct ?event) as ?countevent)
  (count(distinct ?source) as ?countsource)

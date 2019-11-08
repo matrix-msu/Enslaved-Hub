@@ -523,7 +523,9 @@ function createQueryFilters($searchType, $filters)
                                 $qType = placeTypes[$value];
 
                                 if ($index == 0){
-                                    $queryFilters .= "VALUES ?type { $wd:$qType ";
+                                    $queryFilters .= "
+                                    ?place $wdt:$hasPlaceType ?type.
+                                    VALUES ?type { $wd:$qType ";
                                 } else {
                                     $queryFilters .= "$wd:$qType ";
                                 }
