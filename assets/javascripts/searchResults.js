@@ -700,8 +700,21 @@ $(document).ready(function() {
     // });
     //Sub categories
     $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
-        $(this).find("span:first").toggleClass("show");
-        $(this).find("ul#submenu").toggleClass("show");
+        //For drawers that shouldn't fold on click
+        $("input").click(function() {
+           if ($(this).attr("class") == 'nofold'){
+               return false;
+           }
+        });
+        //Date requires exception
+        if($(this).attr('name') == 'date'){
+            $(this).find("span:first").toggleClass("show");
+            $(this).find("ul#submenu").toggleClass("showdate");
+        }
+        else{
+            $(this).find("span:first").toggleClass("show");
+            $(this).find("ul#submenu").toggleClass("show");
+        }
     });
      //Trigger filter to show on page load
     var pageURL = $(location).attr("href");
@@ -1003,3 +1016,29 @@ function generateFilterCards(){
         $('label.'+fcat+' input[value="'+fname+'"]').trigger('click');
     });
 }
+//check window size and display/hide filter-menu
+function mediaMode() {
+    if($(window).innerWidth() > 600) {
+        $('.filter-menu').addClass('show');
+    } else {
+        $('.filter-menu.show').removeClass('show');
+    }
+}
+//fire function
+mediaMode();
+//check window size
+$(window).bind('resize',function(){
+    mediaMode();
+});
+
+//change text for Filter Menu
+$(".show-menu").click(function(){
+    $(".filter-menu").toggleClass('show');
+    // if ()
+    if ($('#showfilter').text() == 'Show Filter Menu'){
+        $('#showfilter').text('Hide Filter Menu')
+    }
+    else {
+        $('#showfilter').text('Show Filter Menu')
+    }
+});

@@ -50,7 +50,7 @@ function Kora_GetNavigationData()
 		}
 
 		if(!array_key_exists("SubNavigation", $result) || array_key_exists("SubNavigation Display", $result) &&
-			$result["SubNavigation Display"] == "FALSE" ||  $result["SubNavigation"] == "" ||  $result["SubNavigation"] == "Projects") continue;
+			$result["SubNavigation Display"] == "FALSE" ||  $result["SubNavigation"] == "") continue;
 
 		foreach ($navs as $index => $subArray){
 			if ($subArray[0] == $nav){
@@ -84,6 +84,12 @@ function Json_GetData_ByTitle($title, $all_matches = false)
 	$output = ['title' => $title, 'descr' => ""];
 	$description = "";
 	foreach ($cached_data as $content) {
+		// Data for main description field
+		if($content["Title"] == "Contributors"){
+			if(isset($content["Description"])){
+				$output["mainTitle"] = explode(".", strip_tags($content["Description"]))[0];
+			}
+		}
 	    if($content["Title"] == $title && array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"] != "FALSE")
 	    {
 	    	// Only results for date with provided title
