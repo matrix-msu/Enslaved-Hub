@@ -31,6 +31,10 @@ define('WIKI_ENTITY_URL', BASE_WIKI_URL.'entity/');
 define('BLAZEGRAPH_URL', BASE_BLAZEGRAPH_URL.'namespace/wdq/sparql');
 define('API_URL', BASE_BLAZEGRAPH_URL.'sparql?query=');
 
+//elasticsearch
+define('ELASTICSEARCH_URL', '');
+define('ELASTICSEARCH_INDEX_NAME', '');
+
 //kora project information - change these for your project
 define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');
 define('STORY_SID', 23);
