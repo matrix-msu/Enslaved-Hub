@@ -106,10 +106,25 @@ function searchResults(preset, limit = 12, offset = 0)
     filters['offset'] = offset;
     card_offset = offset;
     var templates = ['gridCard', 'tableCard'];
-    // console.log(preset, filters, templates);
     generateFilterCards();
 
-    console.log(preset, filters, templates, display)
+    console.log(preset)
+    console.log(filters)
+    console.log(templates)
+    console.log(display)
+
+    $.ajax({
+        url: BASE_URL + "api/keywordSearch",
+        type: "GET",
+        data: {
+            filters: filters,
+            templates: templates,
+            display: display
+        },
+        'success': function(data) {
+            console.log(data)
+        }
+    });
 
     $.ajax({
         url: BASE_URL + "api/blazegraph",
@@ -118,7 +133,7 @@ function searchResults(preset, limit = 12, offset = 0)
             preset: preset,
             filters: filters,
             templates: templates,
-            display:display
+            display: display
         },
         'success': function (data)
         {

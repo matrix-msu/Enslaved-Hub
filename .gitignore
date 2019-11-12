@@ -16,3 +16,6 @@ assets/stylesheets/style.css
 # Editor files
 *.sublime-workspace
 *.sublime-project
+
+# composer
+vendor

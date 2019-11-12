@@ -158,6 +158,7 @@ require_once( BASE_LIB_PATH . "mySqlWrapper.php" );
 require_once( BASE_FUNCTIONS_PATH . "explorefunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "storyfunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "functions.php");
+require_once( BASE_FUNCTIONS_PATH . "search.php");
 
 //database info for crawler
 define("Host", "rush.matrix.msu.edu");

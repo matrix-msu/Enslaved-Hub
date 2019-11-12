@@ -1,7 +1,6 @@
 <?php
     require_once ( __DIR__ . '/config.php' ) ;
     require_once ( __DIR__ . '/routes.php' ) ;
-    require_once ( __DIR__ . '/vendor/autoload.php' ) ;
 ?>
 
 <!DOCTYPE html>
@@ -45,20 +44,6 @@
     include 'header.php';
     include BASE_VIEW_PATH . CURRENT_VIEW;
     include 'footer.php';
-    include 'lib/search.php';
-
-    use Elasticsearch\ClientBuilder;
-
-    $hosts = [
-        ELASTICSEARCH_URL
-    ];
-
-    $es = ClientBuilder::create()
-                        ->setHosts($hosts)
-                        ->build();
-
-    $result = keyword_search($es, "charles male", []);
-    print_r($result);
 ?>
 
 <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>navContents.js"></script>
