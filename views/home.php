@@ -28,7 +28,12 @@ $randIndex = array_rand($bg);?>
         </div>
     </div>
     <div class="image-background-overlay home-page"></div>
-      <img class="header-background home-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image"></div>
+    <div class="cache-header-images">
+        <?php foreach ($bg as $background){
+            echo "<img src=".BASE_URL."assets/images/".$background.">";
+        }?>
+    </div>
+    <img class="header-background home-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image"></div>
 </div>
 <main class="home">
     <section class="section section-explore">
