@@ -1,5 +1,6 @@
 <?php
 require_once(BASE_PATH . 'vendor/autoload.php');
+require_once(BASE_PATH . 'functions/functions.php');
 use Elasticsearch\ClientBuilder;
 
 // $params = [
@@ -20,10 +21,18 @@ function keyword_search() {
                         ->setHosts($hosts)
                         ->build();
 
-    $filters = [];
-    $query = '';
+    $filters = $templates = [];
+    $query = $preset = '';
     $size = 12;
     $from = 0;
+
+    if (isset($_GET['preset'])) {
+        $preset = $_GET['preset'];
+    }
+
+    if (isset($_GET['templates'])) {
+        $templates = $_GET['templates'];
+    }
 
     if (isset($_GET['filters'])) {
         $filters = $_GET['filters'];
@@ -51,45 +60,61 @@ function keyword_search() {
     $params = [
         'index' => ELASTICSEARCH_INDEX_NAME,
         'body' => [
+            'track_total_hits' => true,
             'query' => [
                 'bool' => [
-                    'must' => [
-                        'query_string' => [
-                            'fields' => [
-                                'label',
-                                'generated_by',
-                                'source_type',
-                                'source_repository',
-                                'place_type',
-                                'modern_country_code',
-                                'located_in',
-                                'event_type',
-                                'provides_participant_role',
-                                'name^5',
-                                'age',
-                                'occupation',
-                                'race',
-                                'sex',
-                                'person_status',
-                                'relationships',
-                                'ethnodescriptor',
-                                'participant_role',
-                                'date',
-                                'end_date'
-                            ],
-                            'lenient' => true,
-                            'query' => $query
-                        ]
-                    ]
+                    'must' => []
                 ]
             ],
             'collapse' => [
                 'field' => 'id'
             ],
             'size' => $size,
-            'from' => $from
+            'from' => $from,
+            'aggs' => [
+                'total' => [
+                'cardinality' => [
+                    'field' => 'id'
+                    ]
+                ]
+            ]
         ]
     ];
+
+    if ($query) {
+        $params['body']['query']['bool']['must'] = [
+            'query_string' => [
+                'fields' => [
+                    'label',
+                    'generated_by',
+                    'source_type',
+                    'source_repository',
+                    'place_type',
+                    'modern_country_code',
+                    'located_in',
+                    'event_type',
+                    'provides_participant_role',
+                    'name^5',
+                    'age',
+                    'occupation',
+                    'race',
+                    'sex',
+                    'person_status',
+                    'relationships',
+                    'ethnodescriptor',
+                    'participant_role',
+                    'date',
+                    'end_date'
+                ],
+                'lenient' => true,
+                'query' => $query
+            ]
+        ];
+    } else {
+        $params['body']['query']['bool']['must'] = [
+            'match_all' => new \stdClass()
+        ];
+    }
 
     if ($filters) {
         $terms = [];
@@ -108,8 +133,11 @@ function keyword_search() {
         }
         $params['body']['query']['bool']['filter'] = $terms;
     }
-    // print_r($params);
-    print_r($es->search($params));
+    print_r($params);
+    $res = $es->search($params);
+    print_r($res);
+    // return createCards($res, $templates, $preset, $res['hits']['total']['value']);
+    // return creatCards()
 }
 
 ?>

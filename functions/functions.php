@@ -978,7 +978,10 @@ function blazegraph()
             }
         }
     }
-
+    print_r($resultsArray);
+    // print_r($templates);
+    // print_r($preset);
+    // print_r($record_total);
     //Get HTML for the cards
     return createCards($resultsArray, $templates, $preset, $record_total);
 }

@@ -108,10 +108,10 @@ function searchResults(preset, limit = 12, offset = 0)
     var templates = ['gridCard', 'tableCard'];
     generateFilterCards();
 
-    console.log(preset)
-    console.log(filters)
-    console.log(templates)
-    console.log(display)
+    // console.log(preset)
+    // console.log(filters)
+    // console.log(templates)
+    // console.log(display)
 
     $.ajax({
         url: BASE_URL + "api/keywordSearch",
@@ -135,11 +135,11 @@ function searchResults(preset, limit = 12, offset = 0)
             templates: templates,
             display: display
         },
-        'success': function (data)
-        {
+        'success': function (data) {
+            console.log(data)
             isSearching = false;
             result_array = JSON.parse(data);
-            console.log('results', result_array)
+            // console.log('results', result_array)
 
             if (preset == "all"){
                 var allCounters = JSON.parse(result_array['total']);
