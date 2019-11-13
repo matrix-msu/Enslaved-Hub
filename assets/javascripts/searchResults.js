@@ -11,6 +11,7 @@ var card_offset = 0;
 var card_limit = 12;
 var filters = {};
 var display = search_type;
+var firstLoad = true;
 
 if (search_type == "all"){
     display = 'people';
@@ -55,10 +56,15 @@ if(document.location.toString().indexOf('?') !== -1)
     {
         var aux = decodeURIComponent(query[i]).split('=');
         if(!aux || aux[0] == "" || aux[1] == "") continue;
+        aux[1] = decodeURIComponent(aux[1].replace(/\+/g, ' '));
 
         if (aux[0] == "display"){
             display = aux[1];
             continue;
+        }
+
+        if (typeof(filters[aux[0]]) == 'undefined'){
+            filters[aux[0]] = []
         }
 
         // Get searchbar keywords
@@ -68,7 +74,7 @@ if(document.location.toString().indexOf('?') !== -1)
             continue;
         }
 
-        filters[aux[0]] = aux[1].split(',');
+        filters[aux[0]] = filters[aux[0]].concat(aux[1].split(','));
     }
 }
 
@@ -128,8 +134,12 @@ function searchResults(preset, limit = 12, offset = 0)
 
             if (preset == "all"){
                 var allCounters = JSON.parse(result_array['total']);
+                var firstTypeWithResults = '';
                 for (var type in filtersToSearchType){
                     var counter = allCounters[type+"count"]["value"];
+                    if (firstTypeWithResults == '' && counter > 0){
+                        firstTypeWithResults = type;
+                    }
                     var $tab = $('.categories #'+type);
                     $tab.find('span').html(counter+" ");
                     if (counter <= 0){
@@ -138,6 +148,11 @@ function searchResults(preset, limit = 12, offset = 0)
                         $tab.show();
                     }
                 }
+                if (firstTypeWithResults != '' && firstLoad){
+                    firstLoad = false;
+                    $('.categories #'+firstTypeWithResults).click();
+                }
+
 
 
                 total_length = allCounters[display+"count"]["value"];
@@ -690,6 +705,21 @@ $(document).ready(function() {
     //     $(this).find("span:first").toggleClass("show");
     //     $(this).next().toggleClass("show");
     // });
+
+
+
+    $('#date-go-btn').on('click', function() {
+        var startYear = $('#startyear')[0].value;
+        var endYear = $('#endyear')[0].value;
+        var dateString = startYear+"-"+endYear;
+
+        if (dateString != "-"){
+            filters["date"] = [dateString];
+            updateURL();
+        }
+    });
+
+
     //Sub categories
     $("li.filter-cat").click(function () { // toggle show/hide filter-by submenus
         //For drawers that shouldn't fold on click
@@ -1004,7 +1034,6 @@ function generateFilterCards(){
         $(this).parent().remove();
 
         updateURL();
-
         //Trigger the selector in the filter side menu
         $('label.'+fcat+' input[value="'+fname+'"]').trigger('click');
     });

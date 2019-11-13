@@ -1421,10 +1421,14 @@ function getFullRecordHtml(){
     }
 
     //secondarysource
-    if (isset($record['secondarysource']) && isset($record['secondarysource']['value'])  && $record['secondarysource']['value'] != '' ){
-      $recordVars['Secondary Source'] = $record['secondarysource']['value'];
+    if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])  && $record['locatedIn']['value'] != '' ){
+      $recordVars['Located In'] = $record['locatedIn']['value'];
     }
 
+    //Sex
+    if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
+      $recordVars['Sex'] = $record['sextype']['value'];
+    }
 
     //Roles
     //Gets the roles, participants, and pqID if they exist and matches them together
@@ -1688,7 +1692,7 @@ HTML;
 
 
     // dont do timeline stuff if there are less than 3 events
-    if (count($events) < 1){
+    if (count($events) < 3){
         return json_encode($htmlArray);
     }
 

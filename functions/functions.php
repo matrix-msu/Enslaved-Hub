@@ -42,6 +42,9 @@ function searchTermParser($terms){
         // print_r($GLOBALS['FILTER_TO_FILE_MAP']);die;
 
         foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
+            if ($type == "Gender"){
+                $constantsArray = allSexTypes;
+            }
             if ($type == 'Modern Countries'){   // for countries we want to check the value not the keys
                 $countries = array_values($constantsArray);
                 foreach ($countries as $countryName) {
@@ -70,6 +73,10 @@ function searchTermParser($terms){
                     }
                     if ($position !== false){
                         $found = true;
+                        if ($type == "Gender"){
+                            $genderQ = allSexTypes[ucfirst(strtolower($term))];
+                            $key = qsexTypes[$genderQ];
+                        }
                         // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;die;
                         // map the file type to a known filter and add it to the $filters array
                         $filterType = strtolower(str_replace(' ', '_', $type));
@@ -915,7 +922,6 @@ function blazegraph()
             // get the count for all search types for keyword search
             $record_total = getKeywordSearchCounters($filtersArray);
         }
-
         include BASE_PATH."queries/".$preset."Search/ids.php";
         $idQuery['query'] = $tempQuery;
         // print_r($idQuery);die;
@@ -1301,17 +1307,12 @@ HTML;
                 }
 
                 //Located In
-                $located = "";
-                if (isset($record['locatedInLabel']) && isset($record['locatedInLabel']['value'])){
-                    if($record['locatedInLabel']['value'] != ''){
-                        $located = $record['locatedInLabel']['value'];
-                    }
-                } else if (isset($record['locationlab']) && isset($record['locationlab']['value'])){
-                    if($record['locationlab']['value'] != ''){
-                        $located = $record['locationlab']['value'];
+                $locatedIn = "";
+                if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])){
+                    if($record['locatedIn']['value'] != ''){
+                        $locatedIn = $record['locatedIn']['value'];
                     }
                 }
-
                 //Counts for connections
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
                     $countpeople = $record['countpeople']['value'];
@@ -1382,14 +1383,14 @@ HTML;
                             $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p>$placeType</p></div>";
                         }
 
-                        $locatedHtml = '';
-                        if ($located != ''){
-                            $locatedHtml = "<div class='detail'><p class='detail-title'>Located In</p><p>$located</p></div>";
+                        $locatedInHtml = '';
+                        if ($locatedIn != ''){
+                            $locatedInHtml = "<div class='detail'><p class='detail-title'>Located In</p><p>$locatedIn</p></div>";
                         }
 
                         $geonamesHtml = '';
                         if ($geonames != ''){
-                            $geonames = "<div class='detail'><p class='detail-title'>Geoname Identifier</p><p>$geonames</p></div>";
+                            $geonames = "<div class='detail'><p class='detail-title'>Geoname Identifier&nbsp;</p><p>$geonames</p></div>";
                         }
 
                         $codeHtml = '';
@@ -1409,7 +1410,7 @@ HTML;
         </div>
         <div class="details">
             $typeHtml
-            $locatedHtml
+            $locatedInHtml
             $geonamesHtml
             $codeHtml
         </div>
@@ -1426,14 +1427,14 @@ HTML;
                             $headers = <<<HTML
 <tr>
     <th class="name">NAME</th>
-    <th class="gender">TYPE</th>
-    <th class="located">LOCATED</th>
+    <th class="type">TYPE</th>
+    <th class="located">LOCATED IN</th>
     <th class="geoname">GEONAME IDENTIFIER</th>
     <th class="code">MODERN COUNTRY CODE</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED', 'GEONAME IDENTIFIER', 'MODERN COUNTRY CODE'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED IN', 'GEONAME IDENTIFIER', 'MODERN COUNTRY CODE'];
 
                         }
 
@@ -1447,13 +1448,13 @@ HTML;
         <p><span class='first'>Type: </span>$placeType</p>
     </td>
     <td class='located'>
-        <p><span class='first'>Located: </span>$located</p>
+        <p><span class='first'>Located In: </span>$locatedIn</p>
     </td>
     <td class='geoname'>
-        <p><span class='first'>Located: </span>$geonames</p>
+        <p><span class='first'>Geoname: </span>$geonames</p>
     </td>
     <td class='code'>
-        <p><span class='first'>Located: </span>$code</p>
+        <p><span class='first'>Country Code: </span>$code</p>
     </td>
     <td class='meta'>
 
@@ -1465,7 +1466,9 @@ HTML;
                         $formattedData[$placeQ] = array(
                             'NAME' => $name,
                             'TYPE' => $placeType,
-                            'LOCATED' => $located,
+                            'LOCATED IN' => $locatedIn,
+                            'GEONAME' => $geonames,
+                            'COUNTRY CODE' => $code,
                         );
                     }
 
