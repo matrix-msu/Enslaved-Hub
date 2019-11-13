@@ -26,6 +26,12 @@ function keyword_search() {
     $size = 12;
     $from = 0;
 
+    $convert_filters = [
+        'gender' => 'sex',
+        'role_types' => 'participant_role',
+        'status' => 'person_status'
+    ];
+
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
     }
@@ -104,7 +110,8 @@ function keyword_search() {
                     'ethnodescriptor',
                     'participant_role',
                     'date',
-                    'end_date'
+                    'end_date',
+                    'age_category'
                 ],
                 'lenient' => true,
                 'query' => $query
@@ -118,26 +125,28 @@ function keyword_search() {
 
     if ($filters) {
         $terms = [];
-        if (count($filters) == 1 && count(array_values($filters)) == 1) {
-            $terms = ['term' => $filters];
-        } else {
-            foreach ($filters as $key => $value) {
-                if ($key != 'type')
-                    $key = $key . '.raw';
+        foreach ($filters as $key => $value) {
+            if (in_array($key, array_keys($convert_filters)))
+                $key = $convert_filters[$key];
 
-                if (is_array($value))
-                    $value = implode(' ', $value);
-
-                array_push($terms, ['terms' => [$key => $value]]);
+            if ($key == 'type') {
+                // TODO::this is annoying, will require a refactor on index
+                if ($value != 'people')
+                    $value = substr_replace($value, '', -1);
+                array_push($terms, ['term' => [$key => $value]]);
+                break;
             }
+
+            $key = $key . '.raw';
+
+            array_push($terms, ['terms' => [$key => $value]]);
         }
         $params['body']['query']['bool']['filter'] = $terms;
     }
-    print_r($params);
+    // print_r($params);
     $res = $es->search($params);
-    print_r($res);
-    // return createCards($res, $templates, $preset, $res['hits']['total']['value']);
-    // return creatCards()
+    // print_r($res);
+    return createCards($res['hits']['hits'], $templates, $preset, $res['aggregations']['total']['value']);
 }
 
 ?>
