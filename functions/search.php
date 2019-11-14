@@ -161,7 +161,7 @@ function keyword_search() {
         $params['body']['size'] = 0;
         foreach (['people', 'event', 'place', 'source'] as $type) {
             // TODO::this is annoying, will require a refactor on index (pluralize types)
-            if ($type != 'people')
+            if ($type == 'people')
                 $count_key = $type . 'count';
             else
                 $count_key = $type . 'scount';

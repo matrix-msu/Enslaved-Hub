@@ -144,7 +144,7 @@ function searchResults(preset, limit = 12, offset = 0)
             console.log('results', result_array)
 
             if (preset == "all"){
-                var allCounters = JSON.parse(result_array['total']);
+                var allCounters = result_array['total'];
                 for (var type in filtersToSearchType){
                     var counter = allCounters[type+"count"]["value"];
                     var $tab = $('.categories #'+type);
