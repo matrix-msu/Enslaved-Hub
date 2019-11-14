@@ -139,10 +139,9 @@ function searchResults(preset, limit = 12, offset = 0)
             display: display
         },
         'success': function (data) {
-            console.log(data)
             isSearching = false;
             result_array = JSON.parse(data);
-            // console.log('results', result_array)
+            console.log('results', result_array)
 
             if (preset == "all"){
                 var allCounters = JSON.parse(result_array['total']);

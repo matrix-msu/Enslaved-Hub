@@ -22,9 +22,10 @@ function keyword_search() {
                         ->build();
 
     $filters = $templates = [];
-    $query = $preset = '';
+    $query = $preset = $item_type = '';
     $size = 12;
     $from = 0;
+    $get_all_counts = false;
 
     $convert_filters = [
         'gender' => 'sex',
@@ -36,7 +37,8 @@ function keyword_search() {
         $preset = $_GET['preset'];
     }
 
-    if ($preset == 'all' && isset($_GET['display'])){
+    if ($preset == 'all' && isset($_GET['display'])) {
+        $get_all_counts = true;
         $preset = $_GET['display'];
     }
 
@@ -70,7 +72,6 @@ function keyword_search() {
     $params = [
         'index' => ELASTICSEARCH_INDEX_NAME,
         'body' => [
-            'track_total_hits' => true,
             'query' => [
                 'bool' => [
                     'must' => []
@@ -83,8 +84,8 @@ function keyword_search() {
             'from' => $from,
             'aggs' => [
                 'total' => [
-                'cardinality' => [
-                    'field' => 'id'
+                    'cardinality' => [
+                        'field' => 'id'
                     ]
                 ]
             ]
@@ -134,9 +135,11 @@ function keyword_search() {
                 $key = $convert_filters[$key];
 
             if ($key == 'type') {
-                // TODO::this is annoying, will require a refactor on index
+                // TODO::this is annoying, will require a refactor on index (pluralize types)
                 if ($value != 'people')
                     $value = substr_replace($value, '', -1);
+                // used for all preset to determine base type
+                $item_type = $value;
                 array_push($terms, ['term' => [$key => $value]]);
                 break;
             }
@@ -149,8 +152,41 @@ function keyword_search() {
     }
     // print_r($params);
     $res = $es->search($params);
+
+    $single_total = $res['aggregations']['total']['value'];
+    // $get_all_counts = true;
+    if ($get_all_counts && $item_type) {
+        $total = [];
+        unset($params['body']['from']);
+        $params['body']['size'] = 0;
+        foreach (['people', 'event', 'place', 'source'] as $type) {
+            // TODO::this is annoying, will require a refactor on index (pluralize types)
+            if ($type != 'people')
+                $count_key = $type . 'count';
+            else
+                $count_key = $type . 'scount';
+
+            if ($type == $item_type)
+                // TODO::refactor front end to ignore pointless value key
+                $total[$count_key]['value'] = $single_total;
+            else {
+                foreach ($params['body']['query']['bool']['filter'] as $key => $value) {
+                    if (array_key_exists('term', $value) && array_key_exists('type', $value['term'])) {
+                        $params['body']['query']['bool']['filter'][$key]['term']['type'] = $type;
+                        break;
+                    }
+                }
+                $count_res = $es->search($params);
+                // TODO::refactor front end to ignore pointless value key
+                $total[$count_key]['value'] = $count_res['aggregations']['total']['value'];
+            }
+        }
+    } else {
+        $total = $single_total;
+    }
+
     // print_r($res);
-    return createCards($res['hits']['hits'], $templates, $preset, $res['aggregations']['total']['value']);
+    return createCards($res['hits']['hits'], $templates, $preset, $total);
 }
 
 ?>
