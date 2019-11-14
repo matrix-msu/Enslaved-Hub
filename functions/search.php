@@ -36,6 +36,10 @@ function keyword_search() {
         $preset = $_GET['preset'];
     }
 
+    if ($preset == 'all' && isset($_GET['display'])){
+        $preset = $_GET['display'];
+    }
+
     if (isset($_GET['templates'])) {
         $templates = $_GET['templates'];
     }

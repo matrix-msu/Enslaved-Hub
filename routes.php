@@ -2,7 +2,6 @@
 
 $GLOBALS['api_routes'] = array(
     'api/getWebPages' => array('configFunctions.php', 'Kora_GetNavigationData'),
-    'api/testing' => array('functions.php', 'testingFunction'),
     'api/printEpisodes' => array('functions.php', 'printEpisodes'),
     'api/admin' => array('functions.php', 'admin'),
     'api/blazegraph' => array('functions.php', 'blazegraph'),

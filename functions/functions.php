@@ -1,11 +1,5 @@
 <?php
 
-function testingFunction(){
-    echo 'in testing function<br>';
-    print_r($_GET);
-
-}
-
 function admin(){
     if (isset($_GET['theme'])){
         $theme = $_GET['theme'];
@@ -44,8 +38,6 @@ function searchTermParser($filters){
             $filters['date'][] = $term."-";
             continue;
         }
-
-        // print_r($GLOBALS['FILTER_TO_FILE_MAP']);die;
 
         foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
             if ($type == 'Modern Countries'){   // for countries we want to check the value not the keys
@@ -107,11 +99,9 @@ function createQueryFilters($searchType, $filters)
     include BASE_LIB_PATH."variableIncluder.php";
     $queryFilters = "";
 
-    // print_r($filters);die;
     if (isset($filters["searchbar"])){
         $filters = searchTermParser($filters);
     }
-    // print_r($filters);die;
 
     foreach ($filters as $filterType => $filterValues) {
         if ($filterType == "limit" || $filterType == "offset" || !is_array($filterValues)) continue;
@@ -643,7 +633,6 @@ function getKeywordSearchCounters($filters){
 
     include BASE_PATH."queries/keywordSearch/counters.php";
     $query['query'] = $tempQuery;
-    // print_r($query);die;
     $result = blazegraphSearch($query);
     return json_encode($result[0]);
 }
@@ -689,7 +678,6 @@ function blazegraph()
 
 
         $queryFilters = createQueryFilters($preset, $filtersArray);
-        // echo $queryFilters;die;
 
         switch ($preset){
             case 'singleproject':
@@ -882,7 +870,6 @@ function blazegraph()
         if (!$isKeywordSearch){
             include BASE_PATH."queries/".$preset."Search/count.php";
             $resultCountQuery['query'] = $tempQuery;
-            // print_r($resultCountQuery);die;
             $result = blazegraphSearch($resultCountQuery);
 
             if (isset($result[0]) && isset($result[0]['count'])){
@@ -899,7 +886,6 @@ function blazegraph()
 
         include BASE_PATH."queries/".$preset."Search/ids.php";
         $idQuery['query'] = $tempQuery;
-        // print_r($idQuery);die;
         $result = blazegraphSearch($idQuery);
 
 
@@ -919,13 +905,10 @@ function blazegraph()
 
         include BASE_PATH."queries/".$preset."Search/data.php";
         $dataQuery['query'] = $tempQuery;
-        // print_r($dataQuery);die;
         $resultsArray = blazegraphSearch($dataQuery);
     } else {
         $first = true;
         $oneQuery = count($queryArray) == 1;    // count results differently when there is only one query
-
-        // print_r($queryArray);die;
 
         foreach ($queryArray as $i => $query) {
             $result = blazegraphSearch($query);
@@ -984,7 +967,6 @@ function blazegraph()
 
 
 function blazegraphSearch($query){
-    // print_r($query);die;
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
@@ -1026,6 +1008,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
     if($preset == "singleproject") $preset = "people";
 
     $first = true;  // need to know if first to add table headers
+    // print_r($preset);
 
     foreach ($results as $index => $record) {
         $record = $record['_source'];
@@ -1250,7 +1233,6 @@ HTML;
                 break;
             case 'places':
                 //Place name
-                // print_r($record);
                 $name = $record['label'];
 
                 //Place URL
@@ -2079,7 +2061,7 @@ HTML;
                 }
                 break;
             default:
-                print_r($results);
+                print_r('Error');
                 die;
                 break;
         }
