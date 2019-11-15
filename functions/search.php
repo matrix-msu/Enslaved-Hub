@@ -187,23 +187,23 @@ function keyword_search() {
         ];
     }
 
-    if (array_key_exists('person', $filters)) {
+    if (array_key_exists('name', $filters)) {
         $filters['person'][0];
         $params['body']['query']['bool']['must'] = [
             'match' => [
                 'name' => [
-                    'query' => $filters['person'][0]
+                    'query' => $filters['name'][0]
                 ]
             ]
         ];
-        unset($filters['person']);
-    } elseif (array_key_exists('place', $filters)) {
+        unset($filters['name']);
+    } elseif (array_key_exists('place_name', $filters)) {
         $params['body']['query']['bool']['must'] = [
             'term' => [
-                'label' => $filters['place']
+                'label' => $filters['place_name'][0]
             ]
         ];
-        unset($filters['place']);
+        unset($filters['place_name']);
     }
 
     if ($filters) {
