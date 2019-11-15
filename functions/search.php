@@ -205,7 +205,7 @@ function keyword_search() {
         $total = $single_total;
     }
 
-    // print_r($res);
+    // print_r($res['hits']['hits']);
     return createCards($res['hits']['hits'], $templates, $preset, $total);
 }
 

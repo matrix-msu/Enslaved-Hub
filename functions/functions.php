@@ -1068,26 +1068,18 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 //     $dateRange = $endYear;
                 // }
                 //Connection counts
-                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
-                    $countpeople = $record['countpeople']['value'];
-                } else {
-                    $countpeople = '';
-                }
-                if(isset($record['countevent']) && isset($record['countevent']['value'])){
-                    $countevent = $record['countevent']['value'];
-                } else {
-                    $countevent = '';
-                }
-                if(isset($record['countplace']) && isset($record['countplace']['value'])){
-                    $countplace = $record['countplace']['value'];
-                } else {
-                    $countplace = '';
-                }
-                if(isset($record['countsource']) && isset($record['countsource']['value'])){
-                    $countsource = $record['countsource']['value'];
-                } else {
-                    $countsource = '';
-                }
+                $countpeople = '';
+                if (array_key_exists('countpeople', $record))
+                    $countpeople = $record['countpeople'];
+                $countevent = '';
+                if (array_key_exists('countevent', $record))
+                    $countevent = $record['countevent'];
+                $countplace = '';
+                if (array_key_exists('countplace', $record))
+                    $countplace = $record['countplace'];
+                $countsource = '';
+                if (array_key_exists('countsource', $record))
+                    $countsource = $record['countsource'];
                 //Connection HTML
                 $connection_lists = Array(
                     '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
@@ -1244,26 +1236,18 @@ HTML;
                     $located = $record['located_in'][0];
 
                 //Counts for connections
-                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
-                    $countpeople = $record['countpeople']['value'];
-                } else {
-                    $countpeople = '';
-                }
-                if(isset($record['countevent']) && isset($record['countevent']['value'])){
-                    $countevent = $record['countevent']['value'];
-                } else {
-                    $countevent = '';
-                }
-                if(isset($record['countplace']) && isset($record['countplace']['value'])){
-                    $countplace = $record['countplace']['value'];
-                } else {
-                    $countplace = '';
-                }
-                if(isset($record['countsource']) && isset($record['countsource']['value'])){
-                    $countsource = $record['countsource']['value'];
-                } else {
-                    $countsource = '';
-                }
+                $countpeople = '';
+                if (array_key_exists('countpeople', $record))
+                    $countpeople = $record['countpeople'];
+                $countevent = '';
+                if (array_key_exists('countevent', $record))
+                    $countevent = $record['countevent'];
+                $countplace = '';
+                if (array_key_exists('countplace', $record))
+                    $countplace = $record['countplace'];
+                $countsource = '';
+                if (array_key_exists('countsource', $record))
+                    $countsource = $record['countsource'];
 
                 $placeType = '';
                 if (is_array($record['place_type']) && count($record['place_type']) > 0)
@@ -1451,27 +1435,18 @@ HTML;
                     $dateRange = $endYear;
                 }
 
-                //Counts for connections
-                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
-                    $countpeople = $record['countpeople']['value'];
-                } else {
-                    $countpeople = '';
-                }
-                if(isset($record['countevent']) && isset($record['countevent']['value'])){
-                    $countevent = $record['countevent']['value'];
-                } else {
-                    $countevent = '';
-                }
-                if(isset($record['countplace']) && isset($record['countplace']['value'])){
-                    $countplace = $record['countplace']['value'];
-                } else {
-                    $countplace = '';
-                }
-                if(isset($record['countsource']) && isset($record['countsource']['value'])){
-                    $countsource = $record['countsource']['value'];
-                } else {
-                    $countsource = '';
-                }
+                $countpeople = '';
+                if (array_key_exists('countpeople', $record))
+                    $countpeople = $record['countpeople'];
+                $countevent = '';
+                if (array_key_exists('countevent', $record))
+                    $countevent = $record['countevent'];
+                $countplace = '';
+                if (array_key_exists('countplace', $record))
+                    $countplace = $record['countplace'];
+                $countsource = '';
+                if (array_key_exists('countsource', $record))
+                    $countsource = $record['countsource'];
 
                 //Connection html
                 $connection_lists = Array(
@@ -1623,27 +1598,18 @@ HTML;
                     $desc = '';
                 }
 
-                //Counts for connections
-                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
-                    $countpeople = $record['countpeople']['value'];
-                } else {
-                    $countpeople = '';
-                }
-                if(isset($record['countevent']) && isset($record['countevent']['value'])){
-                    $countevent = $record['countevent']['value'];
-                } else {
-                    $countevent = '';
-                }
-                if(isset($record['countplace']) && isset($record['countplace']['value'])){
-                    $countplace = $record['countplace']['value'];
-                } else {
-                    $countplace = '';
-                }
-                if(isset($record['countsource']) && isset($record['countsource']['value'])){
-                    $countsource = $record['countsource']['value'];
-                } else {
-                    $countsource = '';
-                }
+                $countpeople = '';
+                if (array_key_exists('countpeople', $record))
+                    $countpeople = $record['countpeople'];
+                $countevent = '';
+                if (array_key_exists('countevent', $record))
+                    $countevent = $record['countevent'];
+                $countplace = '';
+                if (array_key_exists('countplace', $record))
+                    $countplace = $record['countplace'];
+                $countsource = '';
+                if (array_key_exists('countsource', $record))
+                    $countsource = $record['countsource'];
 
                 //Connection html
                 $connection_lists = Array(
