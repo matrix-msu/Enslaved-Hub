@@ -6,6 +6,7 @@ SELECT ?name ?type ?geonames ?code
 (group_concat(distinct ?pname; separator = "||") as ?projectlabel)
 (group_concat(distinct ?source; separator = "||") as ?source)
 (group_concat(distinct ?project; separator = "||") as ?project)
+(group_concat(distinct ?locatedLabel; separator = ", ") as ?locatedIn)
 
   WHERE
 {
@@ -21,8 +22,8 @@ SELECT ?name ?type ?geonames ?code
   ?place $rdfs:label ?name.
   ?place $wdt:$hasPlaceType ?placetype.
   ?placetype $rdfs:label ?type.
-  OPTIONAL{?place $wdt:$locatedIn ?locatedIn.
-          ?locatedIn $rdfs:label ?located}.
+  OPTIONAL{?place $wdt:$locatedIn ?locIn.
+          ?locIn $rdfs:label ?locatedLabel}.
   OPTIONAL{ ?place $wdt:$geonamesID ?geonames.}
     OPTIONAL{ ?place $wdt:$modernCountryCode ?code.}
 

@@ -281,6 +281,8 @@ function counterOfAge($filters=array()){
                         }group by ?agecategory ?agecategoryLabel
                         ";
 
+    // print_r($ageCategoryQuery);die;
+
     $encode=urlencode($ageCategoryQuery);
     $call=API_URL.$encode;
     $ageCategoryResult=callAPI($call,'','');
@@ -950,7 +952,7 @@ HTML;
     $html .= '</div>';
 } else if ($label == "Secondary Source"){
     $lowerlabel = "source";
-    $upperlabel = "SOURCE";
+    $upperlabel = "Source";
 
     $source = $statement;
 
@@ -1282,39 +1284,6 @@ function getFullRecordHtml(){
     //Name
     $recordVars['Name'] = $record['name']['value'];
 
-    //Description
-    if (isset($record['desc']) && isset($record['desc']['value']) ){
-      $description = $record['desc']['value'];
-    } else {
-      $description = '';
-    }
-
-    //Checks for start and end years and creates date range
-    /*
-    if (isset($record['startyear']) && isset($record['startyear']['value'])){
-        $startYears = explode('||', $record['startyear']['value']);
-        $startYear = min($startYears);
-    } else {
-        $startYear = '';
-    }
-
-    if (isset($record['endyear']) && isset($record['endyear']['value'])){
-        $endYears = explode('||', $record['endyear']['value']);
-        $endYear = max($endYears);
-    } else {
-        $endYear = '';
-    }
-
-    $dateRange = '';
-    if ($startYear != '' && $endYear != ''){
-        $dateRange = "$startYear - $endYear";
-    } elseif ($endYear == ''){
-        $dateRange = $startYear;
-    } elseif ($startYear == '') {
-        $dateRange = $endYear;
-    }
-    */
-
     //Sex
     if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
       $recordVars['Sex'] = $record['sextype']['value'];
@@ -1452,10 +1421,14 @@ function getFullRecordHtml(){
     }
 
     //secondarysource
-    if (isset($record['secondarysource']) && isset($record['secondarysource']['value'])  && $record['secondarysource']['value'] != '' ){
-      $recordVars['Secondary Source'] = $record['secondarysource']['value'];
+    if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])  && $record['locatedIn']['value'] != '' ){
+      $recordVars['Located In'] = $record['locatedIn']['value'];
     }
 
+    //Sex
+    if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
+      $recordVars['Sex'] = $record['sextype']['value'];
+    }
 
     //Roles
     //Gets the roles, participants, and pqID if they exist and matches them together
@@ -1719,7 +1692,7 @@ HTML;
 
 
     // dont do timeline stuff if there are less than 3 events
-    if (count($events) < 1){
+    if (count($events) < 3){
         return json_encode($htmlArray);
     }
 
@@ -2176,6 +2149,28 @@ QUERY;
     $connections['Event-count'] = count($result);
     $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
 
+    //sources connected to a person
+    $sourceQuery['query'] = <<<QUERY
+    SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random)
+     WHERE
+    {
+     VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
+      ?agent ?property  ?object .
+      ?object prov:wasDerivedFrom ?provenance .
+      ?provenance $pr:$isDirectlyBasedOn ?source .
+    	?source $rdfs:label ?sourcelabel
+
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+    }ORDER BY ?random
+
+QUERY;
+
+    // print_r($sourceQuery);die;
+    $result = blazegraphSearch($sourceQuery);
+    $connections['Source-count'] = count($result);
+    $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
     return json_encode($connections);
 }
 
@@ -2204,6 +2199,8 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 }ORDER BY ?random
 QUERY;
 
+    // print_r($peopleQuery);die;
+
     $result = blazegraphSearch($peopleQuery);
     $connections['Person-count'] = count($result);
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
@@ -2222,6 +2219,7 @@ SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND(
 }ORDER BY ?random
 QUERY;
 
+    // print_r($eventsQuery);die;
     $result = blazegraphSearch($eventsQuery);
     $connections['Event-count'] = count($result);
     $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
@@ -2240,6 +2238,7 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
+// print_r($placeQuery);die;
 
     $result = blazegraphSearch($placeQuery);
     $connections['Place-count'] = count($result);
@@ -2330,7 +2329,7 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
  WHERE
 {
  VALUES ?event { $wd:$QID} #Q number needs to be changed for every event.
-  ?event $wdt:$instanceOf wd:$event;
+  ?event $wdt:$instanceOf $wd:$event;
           ?property  ?object .
   	?object $prov:wasDerivedFrom ?provenance .
   	?provenance $pr:$isDirectlyBasedOn ?source .
@@ -2339,10 +2338,11 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-
+// print_r($sourceQuery);die;
     $result = blazegraphSearch($sourceQuery);
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+
 
     return json_encode($connections);
 }

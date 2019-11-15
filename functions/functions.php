@@ -26,32 +26,29 @@ function admin(){
     }
 }
 
-
-function searchTermParser($filters){
-    $terms = $filters['searchbar'];
-    unset($filters['searchbar']);
-
+// Map an array of words to known filters
+function searchTermParser($terms){
     foreach ($terms as $term) {
         // skip words that are not important
         if (in_array($term, stopwords)){
             continue;
         }
-
         $found = false;
         $termLength = strlen($term);
-
         if (ctype_digit($term)){    // check if it's an int
             $filters['date'][] = $term."-";
             continue;
         }
-
         // print_r($GLOBALS['FILTER_TO_FILE_MAP']);die;
 
         foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
+            if ($type == "Gender"){
+                $constantsArray = allSexTypes;
+            }
             if ($type == 'Modern Countries'){   // for countries we want to check the value not the keys
                 $countries = array_values($constantsArray);
                 foreach ($countries as $countryName) {
-                    if ($termLength <= 3){
+                    if ($termLength <= 2){
                         $position = (strtolower($countryName) == strtolower($term));
                     } else {
                         $position = stripos($countryName, $term);
@@ -69,13 +66,17 @@ function searchTermParser($filters){
             } else {
                 $keys = array_keys($constantsArray);
                 foreach ($keys as $key) {
-                    if ($termLength <= 3 || $type == "Gender"){
+                    if ($termLength <= 2 || $type == "Gender"){
                         $position = (strtolower($key) == strtolower($term));
                     } else {
                         $position = stripos($key, $term);
                     }
                     if ($position !== false){
                         $found = true;
+                        if ($type == "Gender"){
+                            $genderQ = allSexTypes[ucfirst(strtolower($term))];
+                            $key = qsexTypes[$genderQ];
+                        }
                         // echo 'found '.$term.' in the '.$type.' array. the match was with '.$key;die;
                         // map the file type to a known filter and add it to the $filters array
                         $filterType = strtolower(str_replace(' ', '_', $type));
@@ -106,527 +107,556 @@ function createQueryFilters($searchType, $filters)
 {
     include BASE_LIB_PATH."variableIncluder.php";
     $queryFilters = "";
+    $allFilters = array('filters' => $filters);
 
     // print_r($filters);die;
+    // $searchbarFilters = $filters['searchbar'];
+    // print_r($searchbarFilters);die;
     if (isset($filters["searchbar"])){
-        $filters = searchTermParser($filters);
+        $terms = $filters['searchbar'];
+        unset($filters['searchbar']);
+        $searchbarFilters = searchTermParser($terms);
+        $allFilters['searchbar'] = $searchbarFilters;
     }
+
+    // print_r($allFilters);die;
+
+    // print_r($searchbarFilters);die;
     // print_r($filters);die;
 
-    foreach ($filters as $filterType => $filterValues) {
-        if ($filterType == "limit" || $filterType == "offset" || !is_array($filterValues)) continue;
+    foreach ($allFilters as $filterOrigin => $filterArray){
+        $fromSearchbar = ($filterOrigin == 'searchbar' ? true : false);
+        foreach ($filterArray as $filterType => $filterValues) {
+            if ($filterType == "limit" || $filterType == "offset" || !is_array($filterValues)) continue;
 
-        $filterCount = count($filterValues) - 1;
+            $filterCount = count($filterValues) - 1;
 
-        foreach ($filterValues as $index => $value) {
-            switch ($searchType) {
-                case 'people':  // people filters
-                {
-                    if ($filterType == "name"){
-                        $queryFilters .= "?agent $wdt:$hasName ?name.
-                            FILTER regex(?name, '$value', 'i') .
-                            ";
-                    }
-
-                    if ($filterType == "gender"){
-                        if (array_key_exists($value, sexTypes)){
-                            $qGender = sexTypes[$value];
-                            if ($index == 0){
-                                $queryFilters .= "?agent $wdt:$hasSex ?sex
-                                    VALUES ?sex { $wd:$qGender ";
-                            } else {
-                                $queryFilters .= "$wd:$qGender ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
+            foreach ($filterValues as $index => $value) {
+                switch ($searchType) {
+                    case 'people':  // people filters
+                    {
+                        if ($filterType == "name"){
+                            $queryFilters .= "?agent $wdt:$hasName ?name.
+                                FILTER regex(?name, '$value', 'i') .
                                 ";
+                        }
+
+                        if ($filterType == "gender"){
+                            if (array_key_exists($value, sexTypes)){
+                                $qGender = sexTypes[$value];
+                                if ($index == 0){
+                                    $queryFilters .= "?agent $wdt:$hasSex ?sex
+                                        VALUES ?sex { $wd:$qGender ";
+                                } else {
+                                    $queryFilters .= "$wd:$qGender ";
+                                }
+                                if ($index >= $filterCount) {
+                                    $queryFilters .= "} .
+                                    ";
+                                }
                             }
                         }
-                    }
 
-                    if ($filterType == "age_category"){
-                        if (array_key_exists($value, ageCategory)){
-                            $qAge = ageCategory[$value];
+                        if ($filterType == "ethnodescriptor"){
+                            if (array_key_exists($value, ethnodescriptor)){
+                                $qEthno = ethnodescriptor[$value];
 
-                            if ($index == 0){
-                                $queryFilters .= "?agent $wdt:$hasAgeCategory ?agecat
-                                    VALUES ?agecat { $wd:$qAge ";
-                            } else {
-                                $queryFilters .= "$wd:$qAge ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-
-                    if ($filterType == "ethnodescriptor"){
-                        if (array_key_exists($value, ethnodescriptor)){
-                            $qEthno = ethnodescriptor[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "?agent $wdt:$hasECVO ?ecvo
-                                    VALUES ?ecvo { $wd:$qEthno ";
-                            } else {
-                                $queryFilters .= "$wd:$qEthno ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
+                                if ($index == 0){
+                                    $queryFilters .= "?agent $wdt:$hasECVO ?ecvo
+                                        VALUES ?ecvo { $wd:$qEthno ";
+                                } else {
+                                    $queryFilters .= "$wd:$qEthno ";
+                                }
+                                if ($index >= $filterCount) {
+                                    $queryFilters .= "} .
+                                    ";
+                                }
                             }
                         }
-                    }
 
-                    if ($filterType == "role_types"){
-                        if (array_key_exists($value, roleTypes)){
-                            $qRole = roleTypes[$value];
+                        if ($filterType == "status"){
+                            if (array_key_exists($value, personstatus)){
+                                $qStatus = personstatus[$value];
 
-                            if ($index == 0){
-                                $queryFilters .= "?agent $wdt:$hasParticipantRole ?roleType
-                                    VALUES ?roleType { $wd:$qRole ";
-                            } else {
-                                $queryFilters .= "$wd:$qRole ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-
-                    if ($filterType == "status"){
-                        if (array_key_exists($value, personstatus)){
-                            $qStatus = personstatus[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "?agent $wdt:$hasPersonStatus ?status
-                                    VALUES ?status { $wd:$qStatus ";
-                            } else {
-                                $queryFilters .= "$wd:$qStatus ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
+                                if ($index == 0){
+                                    $queryFilters .= "?agent $wdt:$hasPersonStatus ?status
+                                        VALUES ?status { $wd:$qStatus ";
+                                } else {
+                                    $queryFilters .= "$wd:$qStatus ";
+                                }
+                                if ($index >= $filterCount) {
+                                    $queryFilters .= "} .
+                                    ";
+                                }
                             }
                         }
-                    }
 
-                    if ($filterType == "occupation"){
-                        if (array_key_exists($occupation, occupation)){
-                            $qOccupation = occupation[$occupation];
+                        if (!$fromSearchbar){
+                            if ($filterType == "age_category"){
+                                if (array_key_exists($value, ageCategory)){
+                                    $qAge = ageCategory[$value];
 
-                            if ($index == 0){
-                                $queryFilters .= "?agent $wdt:$hasOccupation ?occupation
-                                    VALUES ?occupation { $wd:$qOccupation ";
-                            } else {
-                                $queryFilters .= "$wd:$qOccupation ";
+                                    if ($index == 0){
+                                        $queryFilters .= "?agent $wdt:$hasAgeCategory ?agecat
+                                            VALUES ?agecat { $wd:$qAge ";
+                                    } else {
+                                        $queryFilters .= "$wd:$qAge ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
                             }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
+
+                            if ($filterType == "role_types"){
+                                if (array_key_exists($value, roleTypes)){
+                                    $qRole = roleTypes[$value];
+
+                                    if ($index == 0){
+                                        $queryFilters .= "?agent $wdt:$hasParticipantRole ?roleType
+                                            VALUES ?roleType { $wd:$qRole ";
+                                    } else {
+                                        $queryFilters .= "$wd:$qRole ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    if ($filterType == "event_type"){
-                        if (array_key_exists($value, eventTypes)){
-                            $qType = eventTypes[$value];
+                            if ($filterType == "occupation"){
+                                if (array_key_exists($value, occupation)){
+                                    $qOccupation = occupation[$value];
 
-                            if ($index == 0){
+                                    if ($index == 0){
+                                        $queryFilters .= "?agent $wdt:$hasOccupation ?occupation
+                                            VALUES ?occupation { $wd:$qOccupation ";
+                                    } else {
+                                        $queryFilters .= "$wd:$qOccupation ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+
+                            if ($filterType == "event_type"){
+                                if (array_key_exists($value, eventTypes)){
+                                    $qType = eventTypes[$value];
+
+                                    if ($index == 0){
+                                        $queryFilters .= "?agent $p:$hasParticipantRole ?statementrole.
+                                            ?statementrole $ps:$hasParticipantRole ?role.
+                                            ?statementrole $pq:$roleProvidedBy ?event.
+                                            ?event $wdt:$hasEventType ?eventType
+                                            VALUES ?eventType { $wd:$qType ";
+                                    } else {
+                                        $queryFilters .= "$wd:$qType ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+
+                            if ($filterType == "date"){
+                                $dateRange = $value;
+                                $dateArr = explode('-', $dateRange);
+                                $from = '';
+                                if (isset($dateArr[0])){
+                                    $from = $dateArr[0];
+                                }
+                                $to = '';
+                                if (isset($dateArr[1])){
+                                    $to = $dateArr[1];
+                                }
+
                                 $queryFilters .= "?agent $p:$hasParticipantRole ?statementrole.
                                     ?statementrole $ps:$hasParticipantRole ?role.
                                     ?statementrole $pq:$roleProvidedBy ?event.
-                                    ?event $wdt:$hasEventType ?eventType
-                                    VALUES ?eventType { $wd:$qType ";
-                            } else {
-                                $queryFilters .= "$wd:$qType ";
+                                    ";
+
+                                if ($from != ''){
+                                    $queryFilters .= "
+                                        ?event $wdt:$startsAt ?startYear.
+                                        FILTER (?startYear >= \"".$from."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
+                                    ";
+                                }
+                                if ($to != ''){
+                                    $queryFilters .= "
+                                        ?event $wdt:$endsAt ?endYear.
+                                        FILTER (?endYear <= \"".$to."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
+                                    ";
+                                }
                             }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
+
+                            if ($filterType == "place_type"){
+                                if (array_key_exists($value, placeTypes)){
+                                    $qType = placeTypes[$value];
+
+                                    if ($index == 0){
+                                        $queryFilters .= "?agent $p:$hasParticipantRole ?statementrole.
+                                        ?statementrole $ps:$hasParticipantRole ?role.
+                                        ?statementrole $pq:$roleProvidedBy ?event.
+                                        ?event $wdt:$atPlace ?place.
+                                        ?place $wdt:$instanceOf $wd:$place;
+                                        $wdt:$hasPlaceType ?placeType
+                                        VALUES ?placetype { $wd:$qType ";
+                                    } else {
+                                        $queryFilters .= "$wd:$qType ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+
+                            if ($filterType == "modern_countries"){
+                                $code = array_search(strtolower($value), array_map('strtolower', countrycode));
+                                if ($code){
+                                    if ($index == 0){
+                                        $queryFilters .= "?agent $p:$hasParticipantRole ?statementrole.
+                                        ?statementrole $ps:$hasParticipantRole ?role.
+                                        ?statementrole $pq:$roleProvidedBy ?event.
+                                        ?event $wdt:$atPlace ?place.
+                                        ?place $wdt:$instanceOf $wd:$place;
+                                        $wdt:$modernCountryCode ?countryCode
+                                        VALUES ?countryCode { \"$code\" ";
+                                    } else {
+                                        $queryFilters .= "\"$code\" ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+
+                            if ($filterType == "source_type"){
+                                if (array_key_exists($value, sourceTypes)){
+                                    $qType = sourceTypes[$value];
+
+                                    if ($index == 0){
+                                        $queryFilters .= "?agent ?property  ?object .
+                                            ?object $prov:wasDerivedFrom ?provenance .
+                                            ?provenance $pr:$isDirectlyBasedOn ?source .
+                                            ?source $wdt:$hasOriginalSourceType ?sourceType
+                                        VALUES ?sourceType { $wd:$qType ";
+                                    } else {
+                                        $queryFilters .= "$wd:$qType ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+
+                            if ($filterType == "projects"){
+                                if (array_key_exists($value, projects)){
+                                    $projectQ = projects[$value];
+
+                                    if ($index == 0){
+                                        $queryFilters .= "?agent ?property  ?object .
+                                            ?object $prov:wasDerivedFrom ?provenance .
+                                            ?provenance $pr:$isDirectlyBasedOn ?source .
+                                            ?source $wdt:$generatedBy ?project
+                                            VALUES ?project { $wd:$projectQ ";
+                                    } else {
+                                        $queryFilters .= "$wd:$projectQ ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                        break;
+                    case 'events':  // events filters
+                    {
+                        if ($filterType == "name"){
+                            $queryFilters .= "?event $wdt:$hasName ?eventName.
+                                FILTER regex(?eventName, '$value', 'i') .
+                                ";
+                        }
+
+                        if ($filterType == "event_type"){
+                            if (array_key_exists($value, eventTypes)){
+                                $qType = eventTypes[$value];
+
+                                if ($index == 0){
+                                    $queryFilters .= "?event $wdt:$hasEventType ?eventType
+                                        VALUES ?eventType { $wd:$qType ";
+                                } else {
+                                    $queryFilters .= "$wd:$qType ";
+                                }
+                                if ($index >= $filterCount) {
+                                    $queryFilters .= "} .
+                                    ";
+                                }
+                            }
+                        }
+
+                        if ($filterType == "date"){
+                            $dateRange = $value;
+                            $dateArr = explode('-', $dateRange);
+                            $from = '';
+                            if (isset($dateArr[0])){
+                                $from = $dateArr[0];
+                            }
+                            $to = '';
+                            if (isset($dateArr[1])){
+                                $to = $dateArr[1];
+                            }
+                            if ($from != ''){
+                                $queryFilters .= "
+                                    ?event $wdt:$startsAt ?startYear.
+                                    FILTER (?startYear >= \"".$from."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
+                                ";
+                            }
+                            if ($to != ''){
+                                $queryFilters .= "
+                                    ?event $wdt:$endsAt ?endYear.
+                                    FILTER (?endYear <= \"".$to."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
                                 ";
                             }
                         }
-                    }
 
-                    if ($filterType == "date"){
-                        $dateRange = $value;
-                        $dateArr = explode('-', $dateRange);
-                        $from = '';
-                        if (isset($dateArr[0])){
-                            $from = $dateArr[0];
-                        }
-                        $to = '';
-                        if (isset($dateArr[1])){
-                            $to = $dateArr[1];
-                        }
 
-                        $queryFilters .= "?agent $p:$hasParticipantRole ?statementrole.
-                            ?statementrole $ps:$hasParticipantRole ?role.
-                            ?statementrole $pq:$roleProvidedBy ?event.
-                            ";
 
-                        if ($from != ''){
-                            $queryFilters .= "
-                                ?event $wdt:$startsAt ?startYear.
-                                FILTER (?startYear >= \"".$from."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
-                            ";
-                        }
-                        if ($to != ''){
-                            $queryFilters .= "
-                                ?event $wdt:$endsAt ?endYear.
-                                FILTER (?endYear <= \"".$to."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
-                            ";
-                        }
-                    }
+                        if (!$fromSearchbar){
+                            if ($filterType == "place_type"){
+                                if (array_key_exists($value, placeTypes)){
+                                    $qType = placeTypes[$value];
 
-                    if ($filterType == "place_type"){
-                        if (array_key_exists($value, placeTypes)){
-                            $qType = placeTypes[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "?agent $p:$hasParticipantRole ?statementrole.
-                                ?statementrole $ps:$hasParticipantRole ?role.
-                                ?statementrole $pq:$roleProvidedBy ?event.
-                                ?event $wdt:$atPlace ?place.
-                                ?place $wdt:$instanceOf $wd:$place;
-                                $wdt:$hasPlaceType ?placeType
-                                VALUES ?placetype { $wd:$qType ";
-                            } else {
-                                $queryFilters .= "$wd:$qType ";
+                                    if ($index == 0){
+                                        $queryFilters .= "?event $wdt:$atPlace ?place.
+                                            ?place $wdt:$instanceOf $wd:$place;
+                                            $wdt:$hasPlaceType ?placeType
+                                            VALUES ?placetype { $wd:$qType ";
+                                    } else {
+                                        $queryFilters .= "$wd:$qType ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
                             }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
+
+                            if ($filterType == "modern_countries"){
+                                $code = array_search(strtolower($value), array_map('strtolower', countrycode));
+                                if ($code){
+                                    if ($index == 0){
+                                        $queryFilters .= "?event $wdt:$atPlace ?place.
+                                            ?place $wdt:$instanceOf $wd:$place;
+                                            $wdt:$modernCountryCode ?countryCode
+                                            VALUES ?countryCode { \"$code\" ";
+                                    } else {
+                                        $queryFilters .= "\"$code\" ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+
+                            if ($filterType == "source_type"){
+                                if (array_key_exists($value, sourceTypes)){
+                                    $qType = sourceTypes[$value];
+
+                                    if ($index == 0){
+                                        $queryFilters .= "
+                                            ?event $wdt:$instanceOf $wd:$event;
+                                            ?property  ?object .
+                                            ?object prov:wasDerivedFrom ?provenance .
+                                            ?provenance $pr:$isDirectlyBasedOn ?source.
+                                            ?source $wdt:$hasOriginalSourceType ?sourceType
+                                            VALUES ?sourceType { $wd:$qType ";
+                                    } else {
+                                        $queryFilters .= "$wd:$qType ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+
+                            if ($filterType == "projects"){
+                                if (array_key_exists($value, projects)){
+                                    $projectQ = projects[$value];
+
+                                    if ($index == 0){
+                                        $queryFilters .= "
+                                            ?event $wdt:$instanceOf $wd:$event;
+                                            ?property  ?object .
+                                            ?object prov:wasDerivedFrom ?provenance .
+                                            ?provenance $pr:$isDirectlyBasedOn ?source.
+                                            ?source $wdt:$generatedBy ?project.
+                                            VALUES ?project { $wd:$projectQ ";
+                                    } else {
+                                        $queryFilters .= "$wd:$projectQ ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                        break;
+                    case 'places':  // places filters
+                    {
+                        if ($filterType == "name" || $filterType == "place_name"){
+                            $queryFilters .= "?place $rdfs:label ?placeName.
+                                FILTER regex(?placeName, '$value', 'i') .
                                 ";
+                        }
+
+                        if ($filterType == "place_type"){
+                            if (array_key_exists($value, placeTypes)){
+                                $qType = placeTypes[$value];
+
+                                if ($index == 0){
+                                    $queryFilters .= "
+                                    ?place $wdt:$hasPlaceType ?type.
+                                    VALUES ?type { $wd:$qType ";
+                                } else {
+                                    $queryFilters .= "$wd:$qType ";
+                                }
+                                if ($index >= $filterCount) {
+                                    $queryFilters .= "} .
+                                    ";
+                                }
                             }
                         }
-                    }
 
-                    if ($filterType == "modern_countries"){
-                        $code = array_search(strtolower($value), array_map('strtolower', countrycode));
-                        if ($code){
-                            if ($index == 0){
-                                $queryFilters .= "?agent $p:$hasParticipantRole ?statementrole.
-                                ?statementrole $ps:$hasParticipantRole ?role.
-                                ?statementrole $pq:$roleProvidedBy ?event.
-                                ?event $wdt:$atPlace ?place.
-                                ?place $wdt:$instanceOf $wd:$place;
-                                $wdt:$modernCountryCode ?countryCode
-                                VALUES ?countryCode { \"$code\" ";
+                        if ($filterType == "modern_countries" || $filterType == "country_code"){
+                            if ($filterType == "modern_countries"){
+                                $code = array_search(strtolower($value), array_map('strtolower', countrycode));
                             } else {
-                                $queryFilters .= "\"$code\" ";
+                                $code = $value;
                             }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
 
-                    if ($filterType == "source_type"){
-                        if (array_key_exists($value, sourceTypes)){
-                            $qType = sourceTypes[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "?agent ?property  ?object .
-                                    ?object $prov:wasDerivedFrom ?provenance .
-                                    ?provenance $pr:$isDirectlyBasedOn ?source .
-                                    ?source $wdt:$hasOriginalSourceType ?sourceType
-                                VALUES ?sourceType { $wd:$qType ";
-                            } else {
-                                $queryFilters .= "$wd:$qType ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-
-                    if ($filterType == "projects"){
-                        if (array_key_exists($value, projects)){
-                            $projectQ = projects[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "?agent ?property  ?object .
-                                    ?object $prov:wasDerivedFrom ?provenance .
-                                    ?provenance $pr:$isDirectlyBasedOn ?source .
-                                    ?source $wdt:$generatedBy ?project
-                                    VALUES ?project { $wd:$projectQ ";
-                            } else {
-                                $queryFilters .= "$wd:$projectQ ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-                }
-                    break;
-                case 'events':  // events filters
-                {
-                    if ($filterType == "name"){
-                        $queryFilters .= "?event $wdt:$hasName ?eventName.
-                            FILTER regex(?eventName, '$value', 'i') .
-                            ";
-                    }
-
-                    if ($filterType == "event_type"){
-                        if (array_key_exists($value, eventTypes)){
-                            $qType = eventTypes[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "?event $wdt:$hasEventType ?eventType
-                                    VALUES ?eventType { $wd:$qType ";
-                            } else {
-                                $queryFilters .= "$wd:$qType ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-
-                    if ($filterType == "date"){
-                        $dateRange = $value;
-                        $dateArr = explode('-', $dateRange);
-                        $from = '';
-                        if (isset($dateArr[0])){
-                            $from = $dateArr[0];
-                        }
-                        $to = '';
-                        if (isset($dateArr[1])){
-                            $to = $dateArr[1];
-                        }
-                        if ($from != ''){
-                            $queryFilters .= "
-                                ?event $wdt:$startsAt ?startYear.
-                                FILTER (?startYear >= \"".$from."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
-                            ";
-                        }
-                        if ($to != ''){
-                            $queryFilters .= "
-                                ?event $wdt:$endsAt ?endYear.
-                                FILTER (?endYear <= \"".$to."-01-01T00:00:00Z"."\"^^xsd:dateTime) .
-                            ";
-                        }
-                    }
-
-                    if ($filterType == "place_type"){
-                        if (array_key_exists($value, placeTypes)){
-                            $qType = placeTypes[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "?event $wdt:$atPlace ?place.
-                                    ?place $wdt:$instanceOf $wd:$place;
-                                    $wdt:$hasPlaceType ?placeType
-                                    VALUES ?placetype { $wd:$qType ";
-                            } else {
-                                $queryFilters .= "$wd:$qType ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-
-                    if ($filterType == "modern_countries"){
-                        $code = array_search(strtolower($value), array_map('strtolower', countrycode));
-                        if ($code){
-                            if ($index == 0){
-                                $queryFilters .= "?event $wdt:$atPlace ?place.
-                                    ?place $wdt:$instanceOf $wd:$place;
-                                    $wdt:$modernCountryCode ?countryCode
+                            if ($code){
+                                if ($index == 0){
+                                    $queryFilters .= "?place $wdt:$modernCountryCode ?countryCode
                                     VALUES ?countryCode { \"$code\" ";
-                            } else {
-                                $queryFilters .= "\"$code\" ";
+                                } else {
+                                    $queryFilters .= "\"$code\" ";
+                                }
+                                if ($index >= $filterCount) {
+                                    $queryFilters .= "} .
+                                    ";
+                                }
                             }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
+                        }
+
+                        if (!$fromSearchbar){
+                            if ($filterType == "source_type"){
+                                if (array_key_exists($value, sourceTypes)){
+                                    $qType = sourceTypes[$value];
+
+                                    if ($index == 0){
+                                        $queryFilters .= "
+                                            ?place $wdt:$instanceOf $wd:$place;
+                                            ?property  ?object .
+                                            ?object prov:wasDerivedFrom ?provenance .
+                                            ?provenance $pr:$isDirectlyBasedOn ?source.
+                                            ?source $wdt:$hasOriginalSourceType ?sourceType
+                                            VALUES ?sourceType { $wd:$qType ";
+                                    } else {
+                                        $queryFilters .= "$wd:$qType ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
+                            }
+
+                            if ($filterType == "projects"){
+                                if (array_key_exists($value, projects)){
+                                    $projectQ = projects[$value];
+
+                                    if ($index == 0){
+                                        $queryFilters .= "
+                                            ?place $wdt:$instanceOf $wd:$place;
+                                            ?property  ?object .
+                                            ?object prov:wasDerivedFrom ?provenance .
+                                            ?provenance $pr:$isDirectlyBasedOn ?source.
+                                            ?source $wdt:$generatedBy ?project.
+                                            VALUES ?project { $wd:$projectQ ";
+                                    } else {
+                                        $queryFilters .= "$wd:$projectQ ";
+                                    }
+                                    if ($index >= $filterCount) {
+                                        $queryFilters .= "} .
+                                        ";
+                                    }
+                                }
                             }
                         }
                     }
-
-                    if ($filterType == "source_type"){
-                        if (array_key_exists($value, sourceTypes)){
-                            $qType = sourceTypes[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "
-                                    ?event $wdt:$instanceOf $wd:$event;
-                                    ?property  ?object .
-                                    ?object prov:wasDerivedFrom ?provenance .
-                                    ?provenance $pr:$isDirectlyBasedOn ?source.
-                                    ?source $wdt:$hasOriginalSourceType ?sourceType
-                                    VALUES ?sourceType { $wd:$qType ";
-                            } else {
-                                $queryFilters .= "$wd:$qType ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
+                        break;
+                    case 'sources': // sources filters
+                    {
+                        if ($filterType == "name"){
+                            $queryFilters .= "?source $wdt:$hasName ?sourceName.
+                                FILTER regex(?sourceName, '$value', 'i') .
                                 ";
+                        }
+
+                        if ($filterType == "source_type"){
+                            if (array_key_exists($value, sourceTypes)){
+                                $qType = sourceTypes[$value];
+
+                                if ($index == 0){
+                                    $queryFilters .= "?source $wdt:$hasOriginalSourceType ?sourceType
+                                        VALUES ?sourceType { $wd:$qType ";
+                                } else {
+                                    $queryFilters .= "$wd:$qType ";
+                                }
+                                if ($index >= $filterCount) {
+                                    $queryFilters .= "} .
+                                    ";
+                                }
+                            }
+                        }
+
+                        if ($filterType == "projects"){
+                            if (array_key_exists($value, projects)){
+                                $projectQ = projects[$value];
+                                if ($index == 0){
+                                    $queryFilters .= "?source $wdt:$generatedBy ?project
+                                        VALUES ?project { $wd:$projectQ ";
+                                } else {
+                                    $queryFilters .= "$wd:$projectQ ";
+                                }
+                                if ($index >= $filterCount) {
+                                    $queryFilters .= "} .
+                                    ";
+                                }
                             }
                         }
                     }
-
-                    if ($filterType == "projects"){
-                        if (array_key_exists($value, projects)){
-                            $projectQ = projects[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "
-                                    ?event $wdt:$instanceOf $wd:$event;
-                                    ?property  ?object .
-                                    ?object prov:wasDerivedFrom ?provenance .
-                                    ?provenance $pr:$isDirectlyBasedOn ?source.
-                                    ?source $wdt:$generatedBy ?project.
-                                    VALUES ?project { $wd:$projectQ ";
-                            } else {
-                                $queryFilters .= "$wd:$projectQ ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
+                        break;
+                    default:
+                        // code...
+                        break;
                 }
-                    break;
-                case 'places':  // places filters
-                {
-                    if ($filterType == "name"){
-                        $queryFilters .= "?place $wdt:$hasName ?placeName.
-                            FILTER regex(?placeName, '$value', 'i') .
-                            ";
-                    }
-
-                    if ($filterType == "place_type"){
-                        if (array_key_exists($value, placeTypes)){
-                            $qType = placeTypes[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "VALUES ?type { $wd:$qType ";
-                            } else {
-                                $queryFilters .= "$wd:$qType ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-
-                    if ($filterType == "modern_countries"){
-                        $code = array_search(strtolower($value), array_map('strtolower', countrycode));
-                        if ($code){
-                            if ($index == 0){
-                                $queryFilters .= "?place $wdt:$modernCountryCode ?countryCode
-                                VALUES ?countryCode { \"$code\" ";
-                            } else {
-                                $queryFilters .= "\"$code\" ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-
-                    if ($filterType == "source_type"){
-                        if (array_key_exists($value, sourceTypes)){
-                            $qType = sourceTypes[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "
-                                    ?place $wdt:$instanceOf $wd:$place;
-                                    ?property  ?object .
-                                    ?object prov:wasDerivedFrom ?provenance .
-                                    ?provenance $pr:$isDirectlyBasedOn ?source.
-                                    ?source $wdt:$hasOriginalSourceType ?sourceType
-                                    VALUES ?sourceType { $wd:$qType ";
-                            } else {
-                                $queryFilters .= "$wd:$qType ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-
-                    if ($filterType == "projects"){
-                        if (array_key_exists($value, projects)){
-                            $projectQ = projects[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "
-                                    ?place $wdt:$instanceOf $wd:$place;
-                                    ?property  ?object .
-                                    ?object prov:wasDerivedFrom ?provenance .
-                                    ?provenance $pr:$isDirectlyBasedOn ?source.
-                                    ?source $wdt:$generatedBy ?project.
-                                    VALUES ?project { $wd:$projectQ ";
-                            } else {
-                                $queryFilters .= "$wd:$projectQ ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-                }
-                    break;
-                case 'sources': // sources filters
-                {
-                    if ($filterType == "name"){
-                        $queryFilters .= "?source $wdt:$hasName ?sourceName.
-                            FILTER regex(?sourceName, '$value', 'i') .
-                            ";
-                    }
-
-                    if ($filterType == "source_type"){
-                        if (array_key_exists($value, sourceTypes)){
-                            $qType = sourceTypes[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "?source $wdt:$hasOriginalSourceType ?sourceType
-                                    VALUES ?sourceType { $wd:$qType ";
-                            } else {
-                                $queryFilters .= "$wd:$qType ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-
-                    if ($filterType == "projects"){
-                        if (array_key_exists($value, projects)){
-                            $projectQ = projects[$value];
-
-                            if ($index == 0){
-                                $queryFilters .= "?source $wdt:$generatedBy ?project
-                                    VALUES ?project { $wd:$projectQ ";
-                            } else {
-                                $queryFilters .= "$wd:$projectQ ";
-                            }
-                            if ($index >= $filterCount) {
-                                $queryFilters .= "} .
-                                ";
-                            }
-                        }
-                    }
-                }
-                    break;
-                default:
-                    // code...
-                    break;
             }
         }
     }
@@ -636,10 +666,10 @@ return $queryFilters;
 function getKeywordSearchCounters($filters){
     include BASE_LIB_PATH."variableIncluder.php";
 
-    $peopleFilters = createQueryFilters("people", $filters);
-    $eventFilters = createQueryFilters("events", $filters);
-    $placeFilters = createQueryFilters("places", $filters);
-    $sourceFilters = createQueryFilters("sources", $filters);
+    $peopleFilters = createQueryFilters("people", $filters, true);
+    $eventFilters = createQueryFilters("events", $filters, true);
+    $placeFilters = createQueryFilters("places", $filters, true);
+    $sourceFilters = createQueryFilters("sources", $filters, true);
 
     include BASE_PATH."queries/keywordSearch/counters.php";
     $query['query'] = $tempQuery;
@@ -682,11 +712,7 @@ function blazegraph()
             if (isset($_GET['display'])){
                 $preset = $_GET['display'];
             }
-            // return keywordSearch($filtersArray);
         }
-
-
-
 
         $queryFilters = createQueryFilters($preset, $filtersArray);
         // echo $queryFilters;die;
@@ -888,20 +914,18 @@ function blazegraph()
             if (isset($result[0]) && isset($result[0]['count'])){
                 $record_total = $result[0]['count']['value'];
             }
-            // no more searching if we know there are 0 results
-            if ($record_total <= 0){
-                return createCards([], $templates, $preset, 0);
-            }
+            // // no more searching if we know there are 0 results
+            // if ($record_total <= 0){
+            //     return createCards([], $templates, $preset, 0);
+            // }
         } else {
             // get the count for all search types for keyword search
             $record_total = getKeywordSearchCounters($filtersArray);
         }
-
         include BASE_PATH."queries/".$preset."Search/ids.php";
         $idQuery['query'] = $tempQuery;
         // print_r($idQuery);die;
         $result = blazegraphSearch($idQuery);
-
 
         // get the qids from each url
         $urls = (array_column(array_column($result, $searchTypes[$preset]), 'value'));
@@ -1283,17 +1307,12 @@ HTML;
                 }
 
                 //Located In
-                $located = "";
-                if (isset($record['locatedInLabel']) && isset($record['locatedInLabel']['value'])){
-                    if($record['locatedInLabel']['value'] != ''){
-                        $located = $record['locatedInLabel']['value'];
-                    }
-                } else if (isset($record['locationlab']) && isset($record['locationlab']['value'])){
-                    if($record['locationlab']['value'] != ''){
-                        $located = $record['locationlab']['value'];
+                $locatedIn = "";
+                if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])){
+                    if($record['locatedIn']['value'] != ''){
+                        $locatedIn = $record['locatedIn']['value'];
                     }
                 }
-
                 //Counts for connections
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
                     $countpeople = $record['countpeople']['value'];
@@ -1364,14 +1383,14 @@ HTML;
                             $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p>$placeType</p></div>";
                         }
 
-                        $locatedHtml = '';
-                        if ($located != ''){
-                            $locatedHtml = "<div class='detail'><p class='detail-title'>Located In</p><p>$located</p></div>";
+                        $locatedInHtml = '';
+                        if ($locatedIn != ''){
+                            $locatedInHtml = "<div class='detail'><p class='detail-title'>Located In</p><p>$locatedIn</p></div>";
                         }
 
                         $geonamesHtml = '';
                         if ($geonames != ''){
-                            $geonames = "<div class='detail'><p class='detail-title'>Geoname Identifier</p><p>$geonames</p></div>";
+                            $geonames = "<div class='detail'><p class='detail-title'>Geoname Identifier&nbsp;</p><p>$geonames</p></div>";
                         }
 
                         $codeHtml = '';
@@ -1391,7 +1410,7 @@ HTML;
         </div>
         <div class="details">
             $typeHtml
-            $locatedHtml
+            $locatedInHtml
             $geonamesHtml
             $codeHtml
         </div>
@@ -1408,14 +1427,14 @@ HTML;
                             $headers = <<<HTML
 <tr>
     <th class="name">NAME</th>
-    <th class="gender">TYPE</th>
-    <th class="located">LOCATED</th>
+    <th class="type">TYPE</th>
+    <th class="located">LOCATED IN</th>
     <th class="geoname">GEONAME IDENTIFIER</th>
     <th class="code">MODERN COUNTRY CODE</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED', 'GEONAME IDENTIFIER', 'MODERN COUNTRY CODE'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED IN', 'GEONAME IDENTIFIER', 'MODERN COUNTRY CODE'];
 
                         }
 
@@ -1429,13 +1448,13 @@ HTML;
         <p><span class='first'>Type: </span>$placeType</p>
     </td>
     <td class='located'>
-        <p><span class='first'>Located: </span>$located</p>
+        <p><span class='first'>Located In: </span>$locatedIn</p>
     </td>
     <td class='geoname'>
-        <p><span class='first'>Located: </span>$geonames</p>
+        <p><span class='first'>Geoname: </span>$geonames</p>
     </td>
     <td class='code'>
-        <p><span class='first'>Located: </span>$code</p>
+        <p><span class='first'>Country Code: </span>$code</p>
     </td>
     <td class='meta'>
 
@@ -1447,7 +1466,9 @@ HTML;
                         $formattedData[$placeQ] = array(
                             'NAME' => $name,
                             'TYPE' => $placeType,
-                            'LOCATED' => $located,
+                            'LOCATED IN' => $locatedIn,
+                            'GEONAME' => $geonames,
+                            'COUNTRY CODE' => $code,
                         );
                     }
 
@@ -1715,13 +1736,6 @@ HTML;
                     }
                 }
 
-                // description
-                if(isset($record['desc']) && isset($record['desc']['value'])){
-                    $desc = $record['desc']['value'];
-                } else {
-                    $desc = '';
-                }
-
                 //Counts for connections
                 if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
                     $countpeople = $record['countpeople']['value'];
@@ -1786,11 +1800,6 @@ HTML;
                             $projectHtml = "<div class='detail'><p class='detail-title'>Project</p><p>$project</p></div>";
                         }
 
-                        $descHtml = '';
-                        if ($desc != ""){
-                            $descHtml = "<div class='detail'><p class='detail-title'>Description</p><p>$desc</p></div>";
-                        }
-
                         $card_icon_url = BASE_IMAGE_URL . 'Source.svg';
                         $source_url = BASE_URL . "record/source/" . $sourceQ;
 
@@ -1804,7 +1813,6 @@ HTML;
         <div class="details">
             $typeHtml
             $projectHtml
-            $descHtml
         </div>
         $connections
     </a>
@@ -1820,11 +1828,10 @@ HTML;
     <th class="name">NAME</th>
     <th class="type">TYPE</th>
     <th class="project">PROJECT</th>
-    <th class="desc">DESCRIPTION</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT', 'DESCRIPTION'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT'];
                         }
 
                         $card = <<<HTML
@@ -1838,9 +1845,6 @@ HTML;
     <td class='project'>
         <p><span class='first'>Project: </span>$project</p>
     </td>
-    <td class='desc'>
-        <p><span class='first'>Description: </span>$desc</p>
-    </td>
     <td class='meta'>
 
     </td>
@@ -1851,8 +1855,7 @@ HTML;
                         $formattedData[$sourceQ] = array(
                             'NAME' => $name,
                             'TYPE' => $type,
-                            'PROJECT' => $project,
-                            'DESCRIPTION' => $desc
+                            'PROJECT' => $project
                         );
 
                     }

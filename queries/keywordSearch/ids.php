@@ -3,7 +3,7 @@
 $tempQuery = <<<QUERY
 SELECT (count(?agent) as ?agentcount)(count(?event) as ?eventcount)(count(?place) as ?placecount)(count(?source) as ?sourcecount){
   {
-     SELECT ?agent WHERE
+     SELECT DISTINCT ?agent WHERE
             { ?agent wdt:P82  ?name.
          FILTER regex(?name, "Charles").
          ?agent wdt:P24 wd:Q199. #if somebody typed enslaved we should get enslaved person as a status
@@ -24,7 +24,7 @@ SELECT (count(?agent) as ?agentcount)(count(?event) as ?eventcount)(count(?place
     }
 
   UNION {
-        SELECT ?place WHERE
+        SELECT DISTINCT ?place WHERE
         { ?place wdt:P3 wd:Q50.
           ?place rdfs:label ?placename.
          FILTER regex(?placename, "Charles").
@@ -34,7 +34,7 @@ SELECT (count(?agent) as ?agentcount)(count(?event) as ?eventcount)(count(?place
     }
 
    UNION {
-        SELECT ?source WHERE
+        SELECT DISTINCT ?source WHERE
         { ?source wdt:P3 wd:Q16.
           ?source rdfs:label ?sourcename.
          FILTER regex(?sourcename, "Charles").

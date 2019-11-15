@@ -23,7 +23,6 @@ const properties =
   "hasExternalReference" => "P21",
   "hasOccupation" => "P22",
   "hasOriginalSourceType" => "P23",
-  "availableFrom" => "P24",
   "reportsOn" => "P25",
   "availableFrom" => "P26",
   "atPlace" => "P27",
