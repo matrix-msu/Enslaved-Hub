@@ -2,9 +2,6 @@
 
 $tempQuery = <<<QUERY
 SELECT
-(count(distinct ?people) as ?countpeople)
-(count(distinct ?event) as ?countevent)
-(count(distinct ?place) as ?countplace)
 ?name ?project ?pname ?type ?secondarysource
  WHERE
 {
@@ -23,10 +20,6 @@ SELECT
 
   OPTIONAL{?source $wdt:$availableFrom ?secondarysource}.
   OPTIONAL {?event $wdt:$atPlace ?place.}
-
-  ?people ?property  ?object .
-        ?object $prov:wasDerivedFrom ?provenance .
-        ?provenance $pr:$isDirectlyBasedOn ?source .
 
 }GROUP BY ?name ?project ?pname ?type ?secondarysource
 QUERY;
