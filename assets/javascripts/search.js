@@ -44,16 +44,18 @@ $(document).ready(function() {
     $('#life-event').select2({
         placeholder: "Select Life Event"
     });
-    
+
     $('b[role="presentation"]').hide();
     $('.select2-selection--multiple').append('<span class="select2-selection__arrow" role="presentation"></span>');
 
-    $(".s2-multiple").on('select2:select', function(e){
-        var id = e.params.data.id;
-        var option = $(e.target).children('[value='+id+']');
-        option.detach();
-        $(e.target).append(option).change();
-      });
+    // TODO::not sure what this is doing but it's just throwing an error
+    // $(".s2-multiple").on('select2:select', function(e){
+        // var id = e.params.data.id;
+        // console.log(id)
+        // var option = $(e.target).children(`[value=${id}]`);
+        // option.detach();
+        // $(e.target).append(option).change();
+      // });
 });
 
 //On form submit "removes" the empty inputs so they don't show up in the $_GET
@@ -78,7 +80,7 @@ function removeEmpty() {
 //Called by the Date input on Basic Search so that user can only enter numbers
 function validate(evt) {
     var theEvent = evt || window.event;
-  
+
     // Handle paste
     if (theEvent.type === 'paste') {
         key = event.clipboardData.getData('text/plain');
@@ -105,7 +107,7 @@ function combineDates() {
     if($('select#place-from').val() !== '' || $('select#place-to').val() !== ''){
         var placeDate = $('select#place-from').val() + '-' + $('select#place-to').val();
     }
-    
+
     $('.person-date-range').val(personDate);
     $('.event-date-range').val(eventDate);
     $('.place-date-range').val(placeDate);

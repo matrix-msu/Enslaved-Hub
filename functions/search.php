@@ -30,7 +30,8 @@ function keyword_search() {
     $convert_filters = [
         'gender' => 'sex',
         'role_types' => 'participant_role',
-        'status' => 'person_status'
+        'status' => 'person_status',
+        'event-type' => 'event_type'
     ];
 
     if (isset($_GET['preset'])) {
@@ -126,6 +127,25 @@ function keyword_search() {
         $params['body']['query']['bool']['must'] = [
             'match_all' => new \stdClass()
         ];
+    }
+
+    if (array_key_exists('person', $filters)) {
+        $filters['person'][0];
+        $params['body']['query']['bool']['must'] = [
+            'match' => [
+                'name' => [
+                    'query' => $filters['person'][0]
+                ]
+            ]
+        ];
+        unset($filters['person']);
+    } elseif (array_key_exists('place', $filters)) {
+        $params['body']['query']['bool']['must'] = [
+            'term' => [
+                'label' => $filters['place']
+            ]
+        ];
+        unset($filters['place']);
     }
 
     if ($filters) {

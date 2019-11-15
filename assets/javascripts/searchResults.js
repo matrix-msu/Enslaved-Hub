@@ -139,6 +139,7 @@ function searchResults(preset, limit = 12, offset = 0)
             display: display
         },
         'success': function (data) {
+            console.log(data)
             isSearching = false;
             result_array = JSON.parse(data);
             console.log('results', result_array)
@@ -733,6 +734,7 @@ $(document).ready(function() {
 
     // searchbar
     $(".search-form").submit(function(e) {
+        console.log('advanced')
         e.preventDefault();
         // Get search key and value
         var pparam = decodeURIComponent($(this).serialize());
