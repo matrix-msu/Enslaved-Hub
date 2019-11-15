@@ -2149,6 +2149,28 @@ QUERY;
     $connections['Event-count'] = count($result);
     $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
 
+    //sources connected to a person
+    $sourceQuery['query'] = <<<QUERY
+    SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random)
+     WHERE
+    {
+     VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
+      ?agent ?property  ?object .
+      ?object prov:wasDerivedFrom ?provenance .
+      ?provenance $pr:$isDirectlyBasedOn ?source .
+    	?source $rdfs:label ?sourcelabel
+
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+    }ORDER BY ?random
+
+QUERY;
+
+    // print_r($sourceQuery);die;
+    $result = blazegraphSearch($sourceQuery);
+    $connections['Source-count'] = count($result);
+    $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
     return json_encode($connections);
 }
 
@@ -2307,7 +2329,7 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
  WHERE
 {
  VALUES ?event { $wd:$QID} #Q number needs to be changed for every event.
-  ?event $wdt:$instanceOf wd:$event;
+  ?event $wdt:$instanceOf $wd:$event;
           ?property  ?object .
   	?object $prov:wasDerivedFrom ?provenance .
   	?provenance $pr:$isDirectlyBasedOn ?source .
@@ -2316,7 +2338,7 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-
+// print_r($sourceQuery);die;
     $result = blazegraphSearch($sourceQuery);
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
