@@ -1,7 +1,10 @@
 <!-- Author: Drew Schineller-->
 <!-- Main page-->
 
-<?php $cache_data = Json_GetData_ByTitle("Explore") ?>
+<?php
+    $cache_data = Json_GetData_ByTitle("Explore");
+    $counts = all_counts();
+?>
 <!-- Heading image and title container-->
 <div class="container header explore-header people-page">
     <div class="container middlewrap">
@@ -18,7 +21,7 @@
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                     <h3>People</h3>
-                    <span><?php echo queryAllAgentsCounter();?></span>
+                    <span><?php echo $counts['people'];?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
@@ -26,7 +29,7 @@
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                     <h3>Events</h3>
-                    <span><?php echo queryEventCounter();?></span>
+                    <span><?php echo $counts['events'];?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
@@ -34,23 +37,15 @@
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                     <h3>Places</h3>
-                    <span><?php echo queryPlaceCounter();?></span>
+                    <span><?= $counts['places'] ?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>
-            <!-- <a href="<?php echo BASE_URL;?>explore/projects">
-                <div class="content-link">
-                    <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Project-dark.svg" alt="project icon"/>
-                    <h3>Projects</h3>
-                    <span><?php echo queryProjectsCounter();?></span>
-                    <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
-                </div>
-            </a> -->
             <a href="<?php echo BASE_URL;?>explore/sources">
                 <div class="content-link">
                     <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                     <h3>Sources</h3>
-                    <span><?php echo querySourceCounter();?></span>
+                    <span><?php echo $counts['sources'];?></span>
                     <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                 </div>
             </a>

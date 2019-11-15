@@ -12,6 +12,64 @@ use Elasticsearch\ClientBuilder;
 // $response = $client->index($params);
 // print_r($response);
 
+function all_counts_ajax() {
+    echo json_encode(all_counts());
+}
+
+function all_counts() {
+    $hosts = [
+        ELASTICSEARCH_URL
+    ];
+
+    $es = ClientBuilder::create()
+                        ->setHosts($hosts)
+                        ->build();
+
+    $params = [
+        'index' => ELASTICSEARCH_INDEX_NAME,
+        'body' => [
+            'query' => [
+                'bool' => [
+                    'must' => [
+                        'match_all' => new \stdClass()
+                    ],
+                    'filter' => []
+                ]
+            ],
+            'collapse' => [
+                'field' => 'id'
+            ],
+            'size' => 0,
+            'aggs' => [
+                'total' => [
+                    'cardinality' => [
+                        'field' => 'id'
+                    ]
+                ]
+            ]
+        ]
+    ];
+
+    $res = $es->search($params);
+    $total = [];
+    $total['all'] = $res['aggregations']['total']['value'];
+
+    foreach (['people', 'event', 'place', 'source'] as $type) {
+        $tmp_params = $params;
+        array_push(
+            $tmp_params['body']['query']['bool']['filter'],
+            ['term' => ['type' => $type]]
+        );
+        $res = $es->search($tmp_params);
+        // TODO::this is annoying, will require a refactor on index (pluralize types)
+        if ($type != 'people')
+            $type = $type . 's';
+        $total[$type] = $res['aggregations']['total']['value'];
+    }
+
+    return $total;
+}
+
 function keyword_search() {
     $hosts = [
         ELASTICSEARCH_URL

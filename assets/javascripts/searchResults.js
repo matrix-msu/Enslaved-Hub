@@ -119,22 +119,6 @@ function searchResults(preset, limit = 12, offset = 0)
     // console.log(templates)
     // console.log(display)
 
-    // $.ajax({
-    //     url: BASE_URL + "api/keywordSearch",
-    //     type: "GET",
-    //     data: {
-    //         preset: preset,
-    //         filters: filters,
-    //         templates: templates,
-    //         display: display
-    //     },
-    //     'success': function(data) {
-    //         console.log(data)
-    //         result_array = JSON.parse(data);
-    //         console.log(result_array)
-    //     }
-    // });
-
     $.ajax({
         url: BASE_URL + "api/keywordSearch",
         type: "GET",
