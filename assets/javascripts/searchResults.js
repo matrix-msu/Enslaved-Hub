@@ -129,10 +129,9 @@ function searchResults(preset, limit = 12, offset = 0)
             display: display
         },
         'success': function (data) {
-            console.log(data)
+            // console.log(data)
             isSearching = false;
             result_array = JSON.parse(data);
-            console.log('results', result_array)
 
             if (preset == "all"){
                 var allCounters = result_array['total'];
@@ -200,7 +199,6 @@ function searchResults(preset, limit = 12, offset = 0)
             $(document).ready(function(){
                 appendCards();
                 setPagination(total_length, card_limit, card_offset);
-                console.log('refilling')
                 $.ajax({
                     url: BASE_URL + "api/getSearchFilterCounters",
                     type: "GET",
@@ -225,6 +223,7 @@ function fillFilterCounters(allCounters){
     $(".filter-cat li").each(function(){
         $(this).addClass("hide-category");
     });
+    console.log(allCounters)
     for (var filterType in allCounters) {
         var counterType = allCounters[filterType];
 
@@ -309,53 +308,55 @@ searchResults(search_type);
 $(document).ready(function() {
     hideFilterCategories();
 
-    var firstFilter = "";
+    // TODO::not sure if this is needed since search triggers
+    // the filters anyways
+    // var firstFilter = "";
 
-    for (filter in filters){
-        if (filter != "limit" && filter != "offset"){
-            firstFilter = filter;
-            break;
-        }
-    }
+    // for (filter in filters){
+    //     if (filter != "limit" && filter != "offset"){
+    //         firstFilter = filter;
+    //         break;
+    //     }
+    // }
 
     // get the search type filters first
-    $.ajax({
-        url: BASE_URL + "api/getSearchFilterCounters",
-        type: "GET",
-        data: {
-            search_type: search_type,
-            filters: filters,
-            filter_types: [search_type]
-        },
-        'success': function (data) {
-            var allCounters = JSON.parse(data);
-            fillFilterCounters(allCounters);
-            // console.log('success', allCounters)
+    // $.ajax({
+    //     url: BASE_URL + "api/getSearchFilterCounters",
+    //     type: "GET",
+    //     data: {
+    //         search_type: search_type,
+    //         filters: filters,
+    //         filter_types: [search_type]
+    //     },
+    //     'success': function (data) {
+    //         // get the rest of the filters
+    //         if (search_type != "all"){
+    //             $.ajax({
+    //                 url: BASE_URL + "api/getSearchFilterCounters",
+    //                 type: "GET",
+    //                 data: {
+    //                     search_type: search_type,
+    //                     filters: filters,
+    //                     filter_types: filtersToSearchType[search_type]
+    //                 },
+    //                 'success': function (data) {
+    //                     var allCounters = JSON.parse(data);
+    //                     fillFilterCounters(allCounters);
+    //                 }
+    //             });
+    //         } else {
+    //             var allCounters = JSON.parse(data);
+    //             // console.log('success', allCounters)
 
-            // open the drawer for the first filter once the counters are made
-            if (firstFilter != ""){
-                if ( !$("li[name='" + firstFilter + "']").find("span").hasClass("show") )
-                $("li[name='" + firstFilter + "']").trigger('click');
-            }
-
-            // get the rest of the filters
-            if (search_type != "all"){
-                $.ajax({
-                    url: BASE_URL + "api/getSearchFilterCounters",
-                    type: "GET",
-                    data: {
-                        search_type: search_type,
-                        filters: filters,
-                        filter_types: filtersToSearchType[search_type]
-                    },
-                    'success': function (data) {
-                        var allCounters = JSON.parse(data);
-                        fillFilterCounters(allCounters);
-                    }
-                });
-            }
-        }
-    });
+    //             // open the drawer for the first filter once the counters are made
+    //             if (firstFilter != ""){
+    //                 if ( !$("li[name='" + firstFilter + "']").find("span").hasClass("show") )
+    //                 $("li[name='" + firstFilter + "']").trigger('click');
+    //             }
+    //             fillFilterCounters(allCounters);
+    //         }
+    //     }
+    // });
 
     // hide filter categories based on hierarchy in filtersToSearchType
     function hideFilterCategories(){
@@ -383,7 +384,6 @@ $(document).ready(function() {
     upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
 
     if(upperForm.toString() == 'All'){
-        // console.log('in all')
         $( ".categories" ).html( "<ul>"+
                                     "<li class='unselected selected' id='people'><div class='person-image'></div><span class='count'></span>People</li>"+
                                     "<li class='unselected' id='events'><div class='event-image'></div><span class='count'></span>Events</li>"+
@@ -748,7 +748,6 @@ $(document).ready(function() {
 
     // searchbar
     $(".search-form").submit(function(e) {
-        console.log('advanced')
         e.preventDefault();
         // Get search key and value
         var pparam = decodeURIComponent($(this).serialize());
@@ -960,7 +959,6 @@ function get_download_content(fields, data, isAllData) {
     Convert to csv and download
 */
 function download_csv(data, fields) {
-    // console.log(data, fields)
     var qids = Object.keys(data);
     var csvString = [];
     csvString.push("QID," + fields.join(',')); // Headers

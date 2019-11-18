@@ -188,7 +188,6 @@ function keyword_search() {
     }
 
     if (array_key_exists('name', $filters)) {
-        $filters['person'][0];
         $params['body']['query']['bool']['must'] = [
             'match' => [
                 'name' => [
