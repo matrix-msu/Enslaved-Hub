@@ -558,36 +558,24 @@ function getEventDateRange() {
     include BASE_LIB_PATH."variableIncluder.php";
 
     $fullResults = [];
-    $query="
-    SELECT ?year ?yearend WHERE {
-      {SELECT ?year WHERE {
-        ?event $wdt:$instanceOf $wd:$event; #event
-               $wdt:$startsAt ?date.
-          BIND(str(YEAR(?date)) AS ?year).
-        }ORDER BY desc(?year)
-      LIMIT 1}
-      UNION
-      {
-      select ?yearend where {
-        ?event $wdt:$instanceOf $wd:$event; #event
-               $wdt:$endsAt ?enddate.
-          BIND(str(YEAR(?enddate)) AS ?yearend).
-        }ORDER BY desc(?yearend)
-      LIMIT 1
-      }
-      }";
+    $query="SELECT ?year WHERE {
+            ?event $wdt:$instanceOf $wd:$event; #event
+                   $wdt:$startsAt ?date.
+              BIND(str(YEAR(?date)) AS ?year).
+            }ORDER BY DESC(?year)
+          LIMIT 1";
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
-
     $res= json_decode($res);
-
+    // print_r($res);die;
     if (!empty($res)){
         $fullResults['max'] = $res->results->bindings;
     }else{
         $fullResults['max'] = $res;
     }
+    $fullResults['max'] = $fullResults['max'][0]->year->value;
 
     $query="SELECT ?year WHERE {
             ?event $wdt:$instanceOf $wd:$event; #event
@@ -607,6 +595,8 @@ function getEventDateRange() {
     }else{
         $fullResults['min'] = $res;
     }
+    $fullResults['min'] = $fullResults['min'][0]->year->value;
+
     return json_encode($fullResults);
 }
 
@@ -1283,7 +1273,7 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
-    // print_r($query);die;
+    print_r($query);die;
     $result = blazegraphSearch($query);
     // print_r($result);die;
     if (empty($result)){
