@@ -2,10 +2,12 @@
 
 $tempQuery = <<<QUERY
 SELECT
-?name ?project ?pname ?type ?secondarysource
+?name ?project ?pname ?type ?secondarysource ?description
  WHERE
 {
  VALUES ?source { $wd:$qid } #Q number needs to be changed for every source.
+    OPTIONAL{ ?source $wdt:$hasDescription ?description}.
+
      OPTIONAL{
          ?source $wdt:$generatedBy ?project.
          ?project $rdfs:label ?pname
@@ -21,5 +23,5 @@ SELECT
   OPTIONAL{?source $wdt:$availableFrom ?secondarysource}.
   OPTIONAL {?event $wdt:$atPlace ?place.}
 
-}GROUP BY ?name ?project ?pname ?type ?secondarysource
+}GROUP BY ?name ?project ?pname ?type ?secondarysource ?description
 QUERY;

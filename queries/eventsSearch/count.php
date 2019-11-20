@@ -6,5 +6,6 @@ WHERE {
     ?event $wdt:$instanceOf $wd:$event.
     $queryFilters
     $sourceIdFilter
+    $personIdFilter
 }
 QUERY;

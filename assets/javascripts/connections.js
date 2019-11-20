@@ -1,4 +1,4 @@
-// connections has been renamed as related records 
+// connections has been renamed as related records
 
 var connectionsArray;   // array of all connections
 
@@ -14,7 +14,7 @@ $(document).ready( function() {
         $('.selected').removeClass('selected');
         $(this).addClass('selected');
         removeConnections();
-    
+
         //People
         if($("#people").hasClass("selected")){
             CARDT="Person";
@@ -156,7 +156,7 @@ function displayConnections(cardType){
             var matchQ = conn['match']['value'];
             matchQ = matchQ.substring(matchQ.lastIndexOf('/') + 1);
             var matchUrl = BASE_URL + 'record/person/' + matchQ;
-            
+
             $('.connect-row').append('<li class="card"><a href=' + matchUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
         }
     } else {
@@ -170,7 +170,7 @@ function removeConnections(){
 }
 
 
-function loadConnections(){    
+function loadConnections(){
     if (typeof(QID) == 'undefined'){
 
         function getUrlVars() {
