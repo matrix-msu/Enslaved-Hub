@@ -19,3 +19,7 @@ assets/stylesheets/style.css
 
 # composer
 vendor
+
+# os specific
+._.DS_Store
+.DS_Store

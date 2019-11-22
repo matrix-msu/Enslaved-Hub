@@ -204,7 +204,8 @@ function searchResults(preset, limit = 12, offset = 0)
                     type: "GET",
                     data: {
                         search_type: display,
-                        filters: filters,
+                        // TODO::temp fix to show all filters
+                        filters: {'limit': limit, 'offset': offset},
                         filter_types: filtersToSearchType[display]
                     },
                     'success': function (data) {
@@ -223,7 +224,7 @@ function fillFilterCounters(allCounters){
     $(".filter-cat li").each(function(){
         $(this).addClass("hide-category");
     });
-    console.log(allCounters)
+    // console.log(allCounters)
     for (var filterType in allCounters) {
         var counterType = allCounters[filterType];
 

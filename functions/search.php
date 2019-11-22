@@ -79,6 +79,7 @@ function keyword_search() {
                         ->setHosts($hosts)
                         ->build();
 
+    $item_types = ['people', 'event', 'place', 'source'];
     $filters = $templates = [];
     $query = $preset = $item_type = '';
     $size = 12;
@@ -221,22 +222,27 @@ function keyword_search() {
                 break;
             }
 
+            // for filter by ref item id
+            if (in_array($key, $item_types)) {
+                array_push($terms, ['term' => ['ref_' . $key => $value[0]]]);
+                break;
+            }
+
             $key = $key . '.raw';
 
             array_push($terms, ['terms' => [$key => $value]]);
         }
         $params['body']['query']['bool']['filter'] = $terms;
     }
-    // print_r($params);
-    $res = $es->search($params);
 
+    $res = $es->search($params);
     $single_total = $res['aggregations']['total']['value'];
-    // $get_all_counts = true;
+
     if ($get_all_counts && $item_type) {
         $total = [];
         unset($params['body']['from']);
         $params['body']['size'] = 0;
-        foreach (['people', 'event', 'place', 'source'] as $type) {
+        foreach ($item_types as $type) {
             // TODO::this is annoying, will require a refactor on index (pluralize types)
             if ($type == 'people')
                 $count_key = $type . 'count';
@@ -262,7 +268,6 @@ function keyword_search() {
         $total = $single_total;
     }
 
-    // print_r($res['hits']['hits']);
     return createCards($res['hits']['hits'], $templates, $preset, $total);
 }
 
