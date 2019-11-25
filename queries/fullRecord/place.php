@@ -2,8 +2,6 @@
 
 $tempQuery = <<<QUERY
 SELECT ?name ?type ?geonames ?code ?description
-(group_concat(distinct ?refName; separator = "||") as ?sourceLabel)
-(group_concat(distinct ?pname; separator = "||") as ?projectlabel)
 (group_concat(distinct ?source; separator = "||") as ?source)
 (group_concat(distinct ?project; separator = "||") as ?project)
 (group_concat(distinct ?locatedLabel; separator = ", ") as ?locatedIn)
