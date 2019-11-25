@@ -1273,7 +1273,7 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
-    print_r($query);die;
+    // print_r($query);die;
     $result = blazegraphSearch($query);
     // print_r($result);die;
     if (empty($result)){

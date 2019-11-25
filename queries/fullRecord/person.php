@@ -115,7 +115,7 @@ SELECT ?description
            BIND(CONCAT(str(?allevents)," - ",str(?allplaceslabel)) as ?eventplace).
            }.
 
-  OPTIONAL {?allevents	wdt:$startsAt ?startdate.
+  OPTIONAL {?allevents	$wdt:$startsAt ?startdate.
             ?allevents $rdfs:label ?elabel.
             ?allevents $wdt:$hasEventType ?etype.
             ?etype $rdfs:label ?etypelabel.
