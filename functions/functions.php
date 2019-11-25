@@ -162,7 +162,7 @@ function createQueryFilters($searchType, $filters)
                                 $qEthno = ethnodescriptor[$value];
 
                                 if ($index == 0){
-                                    $queryFilters .= "?agent $wdt:$hasECVO ?ecvo
+                                    $queryFilters .= "?agent $wdt:$hasEthnolinguisticDescriptor ?ecvo
                                         VALUES ?ecvo { $wd:$qEthno ";
                                 } else {
                                     $queryFilters .= "$wd:$qEthno ";
@@ -788,6 +788,39 @@ function blazegraph()
                                         ?event $wdt:$atPlace ?place.
                                         ?place $rdfs:label ?placelabel . ";
                 }
+
+                // filter for places connected to a person
+                $personIdFilter = "";
+                if (isset($filtersArray['person'])){
+                    $personQids = $filtersArray['person'];
+                    foreach ($personQids as $personQid){
+                        $personIdFilter .= "
+                        VALUES ?agent { $wd:$personQid} #Q number needs to be changed for every person.
+                          ?agent $p:$hasParticipantRole ?statementrole.
+                          ?statementrole $ps:$hasParticipantRole ?roles.
+                          ?statementrole $pq:$roleProvidedBy ?roleevent.
+
+                     		  ?roleevent $wdt:$atPlace ?place.
+                    		  ?place $rdfs:label ?placelabel.
+
+                        ";
+                    }
+                }
+
+                // places connected to an event
+                // TODO
+                // $eventIdFilter = "";
+                // if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
+                //     $eventQ = $filtersArray['event'][0];
+                //     $eventIdFilter = "
+                //         VALUES ?event { $wd:$eventQ} #Q number needs to be changed for every event.
+                //         ?event $wdt:$instanceOf $wd:$event.
+                //         ?event $p:$providesParticipantRole ?statement.
+                //         ?statement $ps:$providesParticipantRole ?personname.
+                //         ?statement $pq:$hasParticipantRole ?agent.
+                //         ?agent $rdfs:label ?name.
+                //     ";
+                // }
                 break;
             case 'events':
                 // filter for events connected to a source
@@ -802,6 +835,26 @@ function blazegraph()
                         ";
                     }
                 }
+
+                // filter for events connected to a person
+                $personIdFilter = "";
+                if (isset($filtersArray['person'])){
+                    $personQids = $filtersArray['person'];
+                    foreach ($personQids as $personQid){
+                        $personIdFilter .= "
+                        VALUES ?agent { $wd:$personQid} #Q number needs to be changed for every person.
+                         ?agent $p:$hasName ?statement.
+                         ?statement $ps:$hasName ?name.
+                         ?statement $pq:$recordedAt ?recordeAt.
+                               bind(?recordedAt as ?event)
+
+                       ?agent $p:$hasParticipantRole ?statementrole.
+                                ?statementrole $ps:$hasParticipantRole ?roles.
+                                ?statementrole $pq:$roleProvidedBy ?roleevent.
+                                bind(?roleevent as ?event)
+                        ";
+                    }
+                }
                 break;
             case 'sources':
                 // filter for sources connected to an event
@@ -811,11 +864,27 @@ function blazegraph()
                     $eventIdFilter = "
                         VALUES ?event { $wd:$eventQ} #Q number needs to be changed for every event.
                         ?source $wdt:$instanceOf $wd:$entityWithProvenance. #entity with provenance
-                        ?source $wdt:$hasOriginalSourceType ?sourcetype.
                         ?source $wdt:$generatedBy ?project.
                         ?source $wdt:$reportsOn ?event.
                      ";
                 }
+
+                // filter for sources connected to a person
+                $personIdFilter = "";
+                if (isset($filtersArray['person'])){
+                    $personQids = $filtersArray['person'];
+                    foreach ($personQids as $personQid){
+                        $personIdFilter .= "
+                        VALUES ?agent { $wd:$personQid } #Q number needs to be changed for every person.
+                         ?agent ?property  ?object .
+                         ?object prov:wasDerivedFrom ?provenance .
+                         ?provenance $pr:$isDirectlyBasedOn ?source .
+                           ?source $rdfs:label ?sourcelabel
+                        ";
+                    }
+                }
+
+
                 break;
             case 'projects':
                 //todo: projects filters

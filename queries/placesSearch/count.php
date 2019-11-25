@@ -7,5 +7,6 @@ WHERE {
 	?place $wdt:$hasPlaceType ?type.
 	$queryFilters
 	$sourceIdFilter
+	$personIdFilter
 }
 QUERY;

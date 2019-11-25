@@ -1,20 +1,22 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?name ?type ?geonames ?code
-(group_concat(distinct ?refName; separator = "||") as ?sourceLabel)
-(group_concat(distinct ?pname; separator = "||") as ?projectlabel)
+SELECT ?name ?type ?geonames ?code ?description
 (group_concat(distinct ?source; separator = "||") as ?source)
 (group_concat(distinct ?project; separator = "||") as ?project)
 (group_concat(distinct ?locatedLabel; separator = ", ") as ?locatedIn)
+(group_concat(distinct ?extref; separator = "||") as ?extref)
 
   WHERE
 {
   VALUES ?place { $wd:$qid } #Q number needs to be changed for every place.
+  OPTIONAL{ ?place $wdt:$hasDescription ?description}.
+
   ?place $wdt:$instanceOf $wd:$place;
         ?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
+  OPTIONAL {?provenance $pr:$hasExternalReference ?extref}
   ?source $rdfs:label ?refName;
   OPTIONAL {?source $wdt:$generatedBy ?project.
       ?project $rdfs:label ?pname}.
@@ -28,5 +30,5 @@ SELECT ?name ?type ?geonames ?code
     OPTIONAL{ ?place $wdt:$modernCountryCode ?code.}
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?type ?geonames ?code
+}GROUP BY ?name ?type ?geonames ?code ?description
 QUERY;

@@ -1,8 +1,12 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT
+SELECT ?description
 (group_concat(distinct ?name; separator = "||") as ?name)
+(group_concat(distinct ?altname; separator = "||") as ?altname)
+(group_concat(distinct ?firstname; separator = "||") as ?firstname)
+(group_concat(distinct ?surname; separator = "||") as ?surname)
+
 (group_concat(distinct ?sextype; separator = "||") as ?sextype)
 (group_concat(distinct ?race; separator = "||") as ?race)
 
@@ -37,6 +41,7 @@ SELECT
 (group_concat(distinct ?placetype; separator = "||") as ?placetype)
 (group_concat(distinct ?eventplace; separator = "||") as ?eventplace)
 
+(group_concat(distinct ?extref; separator = "||") as ?extref)
 
  WHERE
 {
@@ -44,11 +49,16 @@ SELECT
   ?agent ?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
+
   ?source $rdfs:label ?refName;
   OPTIONAL {?source $wdt:$generatedBy ?project.
   			?project $rdfs:label ?pname}.
 
  ?agent $wdt:$hasName ?name.
+ OPTIONAL{ ?agent $wdt:$hasAlternateName ?altname}.
+ OPTIONAL{ ?agent $wdt:$hasFirstName ?firstname}.
+ OPTIONAL{ ?agent $wdt:$hasSurname ?surname}.
+ OPTIONAL{ ?agent $wdt:$hasDescription ?description}.
 
   OPTIONAL{?agent $wdt:$hasSex ?sex.
           ?sex $rdfs:label ?sextype}.
@@ -57,8 +67,8 @@ SELECT
   OPTIONAL {?agent $wdt:$hasPersonStatus ?status.
            ?status $rdfs:label ?statuslabel}.
 
-  OPTIONAL {?agent $p:$hasECVO ?statement.
-           ?statement $ps:$hasECVO ?ethnodescriptor.
+  OPTIONAL {?agent $p:$hasEthnolinguisticDescriptor  ?statement.
+           ?statement $ps:$hasEthnolinguisticDescriptor ?ethnodescriptor.
            ?ethnodescriptor $rdfs:label ?ecvo.
            OPTIONAL{?statement $pq:$referstoPlaceofOrigin ?placeofOrigin.
            ?placeofOrigin $rdfs:label ?placeOriginlabel}.
@@ -105,12 +115,12 @@ SELECT
            BIND(CONCAT(str(?allevents)," - ",str(?allplaceslabel)) as ?eventplace).
            }.
 
-  OPTIONAL {?allevents	wdt:$startsAt ?startdate.
+  OPTIONAL {?allevents	$wdt:$startsAt ?startdate.
             ?allevents $rdfs:label ?elabel.
             ?allevents $wdt:$hasEventType ?etype.
             ?etype $rdfs:label ?etypelabel.
            BIND(CONCAT(str(?elabel)," - ",str(?etypelabel)," - ",str(YEAR(?startdate))) AS ?startyear).
            OPTIONAL {?allevents $wdt:$endsAt ?enddate.
                    BIND(str(YEAR(?enddate)) AS ?endyear)}}.
-}
+} GROUP BY ?description
 QUERY;

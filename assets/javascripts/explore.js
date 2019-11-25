@@ -25,7 +25,7 @@ $(document).ready(function(){
     //     //Update max scroll width
     //     max_card_scroll = $('.explore-featured .cardwrap').get(0).scrollWidth - $('.explore-featured .cardwrap').get(0).clientWidth;
     //     //Update cards_per_page on window resize
-    //     var card_screen_width = $('.explore-featured .cardwrap2').width();     
+    //     var card_screen_width = $('.explore-featured .cardwrap2').width();
     //     cards_per_page = Math.floor(card_screen_width/card_width);
 
     //     if(cards_per_page < 1){
@@ -47,27 +47,11 @@ $(document).ready(function(){
                 method: "GET",
                 data: {type: JS_EXPLORE_FILTERS,  category:JS_EXPLORE_FORM},
                 'success': function (data) {
-                    console.log(data);
                     data = JSON.parse(data);
-                    console.log(data);
-                    var min = data['min'][0]['year']['value'];
-                    var max = '';
-                    var yearend = '';
-                    //have to do this weird check because year and yearend will randomly switch array positions every time query is executed
-                    if(data['max'][0]['year']){
-                        max = data['max'][0]['year']['value'];
-                        yearend = data['max'][1]['yearend']['value'];
-                    }
-                    else{
-                        max = data['max'][1]['year']['value'];
-                        yearend = data['max'][0]['yearend']['value'];
-                    }
+                    var min = data['min'];
+                    var max = data['max'];
 
-                    if (parseInt(max) < parseInt(yearend)) {
-                        max = yearend;
-                    }
                     for (var i = min; i <= max; i++) {
-                        console.log(i);
                         $("#event-from").append("<option value='"+i+"'>"+i+"</option>");
                         $("#event-to").append("<option value='"+i+"'>"+i+"</option>");
                     }
@@ -83,7 +67,7 @@ $(document).ready(function(){
                 'success': function (data) {
                     console.log(data);
                     data = JSON.parse(data);
-                    
+
                     data.forEach(function(record) {
                         var label = "";
                         var count = "";
@@ -103,7 +87,7 @@ $(document).ready(function(){
                                 else{
                                     count = record[key]['value'];
                                 }
-                                
+
                             }
                         }
                         if (label != ""){
