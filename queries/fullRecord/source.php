@@ -3,6 +3,8 @@
 $tempQuery = <<<QUERY
 SELECT
 ?name ?project ?pname ?type ?secondarysource ?description
+(group_concat(distinct ?extref; separator = "||") as ?extref)
+
  WHERE
 {
  VALUES ?source { $wd:$qid } #Q number needs to be changed for every source.
@@ -12,6 +14,8 @@ SELECT
          ?source $wdt:$generatedBy ?project.
          ?project $rdfs:label ?pname
      }.
+
+     OPTIONAL {?source $wdt:$hasExternalReference ?extref}
 
   ?source $rdfs:label ?name.
   OPTIONAL{
