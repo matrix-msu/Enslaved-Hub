@@ -6,6 +6,7 @@ SELECT DISTINCT ?place WHERE {
 	?place $wdt:$hasPlaceType ?type.
 	$queryFilters
 	$sourceIdFilter
+	$personIdFilter
 }
 $limitQuery
 $offsetQuery

@@ -172,7 +172,7 @@ function counterOfEthnodescriptor($filters=array()){
 
     $query="SELECT ?ethno ?ethnoLabel (count( distinct ?agent) as ?count)
         {?agent $wdt:$instanceOf $wd:$person.
-        ?agent $wdt:$hasECVO ?ethno.
+        ?agent $wdt:$hasEthnolinguisticDescriptor ?ethno.
         $queryFilters
         SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }
         }GROUP BY ?ethno ?ethnoLabel
@@ -416,36 +416,24 @@ function getEventDateRange() {
     include BASE_LIB_PATH."variableIncluder.php";
 
     $fullResults = [];
-    $query="
-    SELECT ?year ?yearend WHERE {
-      {SELECT ?year WHERE {
-        ?event $wdt:$instanceOf $wd:$event; #event
-               $wdt:$startsAt ?date.
-          BIND(str(YEAR(?date)) AS ?year).
-        }ORDER BY desc(?year)
-      LIMIT 1}
-      UNION
-      {
-      select ?yearend where {
-        ?event $wdt:$instanceOf $wd:$event; #event
-               $wdt:$endsAt ?enddate.
-          BIND(str(YEAR(?enddate)) AS ?yearend).
-        }ORDER BY desc(?yearend)
-      LIMIT 1
-      }
-      }";
+    $query="SELECT ?year WHERE {
+            ?event $wdt:$instanceOf $wd:$event; #event
+                   $wdt:$startsAt ?date.
+              BIND(str(YEAR(?date)) AS ?year).
+            }ORDER BY DESC(?year)
+          LIMIT 1";
 
     $encode=urlencode($query);
     $call=API_URL.$encode;
     $res=callAPI($call,'','');
-
     $res= json_decode($res);
-
+    // print_r($res);die;
     if (!empty($res)){
         $fullResults['max'] = $res->results->bindings;
     }else{
         $fullResults['max'] = $res;
     }
+    $fullResults['max'] = $fullResults['max'][0]->year->value;
 
     $query="SELECT ?year WHERE {
             ?event $wdt:$instanceOf $wd:$event; #event
@@ -465,6 +453,8 @@ function getEventDateRange() {
     }else{
         $fullResults['min'] = $res;
     }
+    $fullResults['min'] = $fullResults['min'][0]->year->value;
+
     return json_encode($fullResults);
 }
 
@@ -653,7 +643,7 @@ function detailPerson($statement,$label){
 <?php
 }
 
-function detailPersonHtml($statement,$label){
+function createDetailHtml($statement,$label){
   $baseurl = BASE_URL;
   $upperlabel = $label;
   $lowerlabel = strtolower($label);
@@ -823,6 +813,22 @@ HTML;
 </div>
 </div>
 HTML;
+} else if ($label == "External References"){
+    $lowerlabel = "external references";
+    $upperlabel = "External References";
+    $references = explode('||', $statement);
+
+    $html .= "<div class=\"detail $lowerlabel\">
+            <h3>$upperlabel</h3>
+            <div class='detail-bottom'>
+            ";
+
+foreach ($references as $ref) {
+    $html .= "<a href=\"$ref\" target='_blank'>$ref<a>
+        <br>";
+}
+    $html .= "</div>
+    </div>";
 } else if ($label == "relationshipsA"){
     // match relationships with people
 
@@ -917,8 +923,8 @@ HTML;
     $html .= '</div></div>';
 } else if ($label == "ecvoA"){
     // print_r($statement);die;
-    $lowerlabel = "ecvo - place of origin";
-    $upperlabel = "ECVO - Place Of Origin";
+    $lowerlabel = "ethnolinguistic descriptor - place of origin";
+    $upperlabel = "Ethnolinguistic Descriptor - Place Of Origin";
 
     $ecvos = explode('||', $statement['ecvo']);
     $originUrls = explode('||', $statement['placeofOrigin']);
@@ -1016,7 +1022,6 @@ HTML;
     $html .= '</div>';
 } else{
     //Default for details without special behavior
-
     //QID given for sources and projects to link to them
     if($label === "Sources" || $label === "Contributing Projects"){
 
@@ -1142,6 +1147,21 @@ function getFullRecordHtml(){
     //Name
     $recordVars['Name'] = $record['name']['value'];
 
+    // First Name
+    if (isset($record['firstname']) && isset($record['firstname']['value']) ){
+        $recordVars['First Name'] = $record['firstname']['value'];
+    }
+
+    // Surname
+    if (isset($record['surname']) && isset($record['surname']['value']) ){
+        $recordVars['Surname'] = $record['surname']['value'];
+    }
+
+    // Alternate name
+    if (isset($record['altname']) && isset($record['altname']['value']) ){
+        $recordVars['Alternate Name'] = $record['altname']['value'];
+    }
+
     //Sex
     if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
       $recordVars['Sex'] = $record['sextype']['value'];
@@ -1150,6 +1170,16 @@ function getFullRecordHtml(){
     //Race
     if (isset($record['race']) && isset($record['race']['value']) && $record['race']['value'] != '' ){
       $recordVars['Race'] = $record['race']['value'];
+    }
+
+    // descriptions for items
+    if (isset($record['description']) && isset($record['description']['value']) ){
+        $recordVars['Description'] = $record['description']['value'];
+    }
+
+    // descriptions for items
+    if (isset($record['extref']) && isset($record['extref']['value']) ){
+        $recordVars['External References'] = $record['extref']['value'];
     }
 
     //Status
@@ -1278,7 +1308,6 @@ function getFullRecordHtml(){
         }
     }
 
-    //secondarysource
     if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])  && $record['locatedIn']['value'] != '' ){
       $recordVars['Located In'] = $record['locatedIn']['value'];
     }
@@ -1349,8 +1378,9 @@ HTML;
 
     $html .= '<div class="detailwrap">';
 
+// print_r($recordVars);die;
     foreach($recordVars as $key => $value){
-      $html .= detailPersonHtml($value, $key);
+      $html .= createDetailHtml($value, $key);
     }
     $html .= '</div>';
 
@@ -1362,6 +1392,8 @@ HTML;
     // Code for creating events on Timeline
     // Replace with Kora 3 events
     $events = [];
+
+    // print_r($record);
 
     //Creating the events array for the timeline
     if (isset($record['allevents']) && isset($record['allevents']['value']) &&  $record['allevents']['value'] != '' ){
@@ -1447,7 +1479,7 @@ HTML;
             $allEventEndYears = explode('||', $record['endyear']['value']);
             }
 
-            // descriptions hasn't been tested or working yet
+            // descriptions for timeline events
             if (isset($record['desc']) && isset($record['desc']['value']) ){
             $allEventDescritions = explode('||', $record['desc']['value']);
             }
@@ -1899,6 +1931,8 @@ function getFullRecordConnections(){
     return getEventPageConnections($QID);
   } else if ($recordform == 'person') {
     return getPersonPageConnections($QID);
+} else if ($recordform == 'place') {
+    return getPlacePageConnections($QID);
   } else {
     return '';
   }
@@ -2204,6 +2238,67 @@ QUERY;
 
     return json_encode($connections);
 }
+
+
+
+// connections for the place full record page
+function getPlacePageConnections($QID) {
+    include BASE_LIB_PATH."variableIncluder.php";
+    $connections = array();
+
+  // people connections
+  $peopleQuery['query'] = <<<QUERY
+  SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
+  {
+  	VALUES ?place { $wd:$QID }.
+    ?event $wdt:$instanceOf $wd:$event.
+   	?event $wdt:$atPlace ?place.
+    	?event $p:$providesParticipantRole ?role.
+    	?role  $ps:$providesParticipantRole ?participant.
+    	?role  $pq:$hasParticipantRole ?people.
+    	?people $rdfs:label ?peoplename
+  }ORDER BY ?random
+QUERY;
+    $result = blazegraphSearch($peopleQuery);
+    $connections['Person-count'] = count($result);
+    $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
+
+    // events connections
+    $eventsQuery['query'] = <<<QUERY
+   SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
+
+   WHERE
+   {
+       VALUES ?place { $wd:$QID }.
+       ?event $wdt:$instanceOf $wd:$event.
+       ?event $wdt:$atPlace ?place.
+       ?event $rdfs:label ?eventlabel
+   }ORDER BY ?random
+   QUERY;
+      $result = blazegraphSearch($eventsQuery);
+      $connections['Event-count'] = count($result);
+      $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
+
+      // source connections
+    $sourceQuery['query'] = <<<QUERY
+    SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random) {
+    	VALUES ?place { $wd:$QID }.
+        ?place $p:$instanceOf  ?object .
+     	 ?object $prov:wasDerivedFrom ?provenance .
+      	 ?provenance $pr:$isDirectlyBasedOn ?source.
+      ?source $rdfs:label ?sourcelabel
+    }ORDER BY ?random
+  QUERY;
+  // print_r($sourceQuery);die;
+      $result = blazegraphSearch($sourceQuery);
+      $connections['Source-count'] = count($result);
+      $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+
+
+    return json_encode($connections);
+}
+
+
 
 
 function debugfunc($debugobject){?>
