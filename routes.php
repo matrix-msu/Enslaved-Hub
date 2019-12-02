@@ -71,6 +71,11 @@ $GLOBALS['routes'] = array(
     'directory' => 'scholarProjectDirectory.php'
 );
 
+if( !isset($_SERVER['HTTP_HOST']) ){
+    define('CURRENT_VIEW', 'home.php');
+    return;
+}
+
 //$location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 $location = "https://$_SERVER[HTTP_HOST]";
 $path = parse_url($_SERVER['REQUEST_URI'])['path'];
