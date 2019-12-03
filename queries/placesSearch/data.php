@@ -1,13 +1,13 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?place ?placelabel ?geonames ?code
+SELECT DISTINCT ?place ?placelabel ?geonames ?code
  (count(distinct ?person) as ?countpeople)
  (count(distinct ?event) as ?countevent)
  (count(distinct ?source) as ?countsource)
  (count(distinct ?locatedIn) as ?countplace)
- (group_concat(distinct ?locationlab; separator = "||") as ?location)
  (group_concat(distinct ?typelab; separator = "||") as ?types)
+ (group_concat(distinct ?locatedLabel; separator = ", ") as ?locatedIn)
 
 WHERE {
 
@@ -25,8 +25,8 @@ WHERE {
     ?place $rdfs:label ?placeLabel.
     ?place $wdt:$hasPlaceType ?type.
      ?type $rdfs:label ?typelab.
-  OPTIONAL {?place $wdt:$locatedIn ?locatedIn.
-           ?locatedIn $rdfs:label ?locationlab}.
+  OPTIONAL {?place $wdt:$locatedIn ?locIn.
+           ?locIn $rdfs:label ?locatedLabel}.
   OPTIONAL{ ?place $wdt:$geonamesID ?geonames.}
   OPTIONAL{ ?place $wdt:$modernCountryCode ?code.}
 

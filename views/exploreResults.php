@@ -132,7 +132,7 @@
                                 <label for="endYear">End Year </label>
                                 <input class="nofold" type="number" onKeyPress="if(this.value.length==4) return false;" id="endyear" placeholder="Year"/>
                                 </div>
-                                <input type="button" value="Go">';
+                                <input id="date-go-btn" type="button" value="Go">';
                         }?>
                         </ul>
                     </li>

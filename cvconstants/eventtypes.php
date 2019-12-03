@@ -20,7 +20,9 @@ const eventTypes=[
   "Membership" => "Q165",
   "Education" => "Q166",
   "Registry" => "Q250",
-  "Emancipation or Manumission" => "Q281"
+  "Emancipation or Manumission" => "Q281",
+  "Embarkation" => "Q10087",
+  "Disembarkation" => "Q10088"
 ];
 const qeventTypes = [
   "Q125" => "Self-Purchase",
@@ -43,7 +45,8 @@ const qeventTypes = [
   "Q165" => "Membership",
   "Q166" => "Education",
   "Q250" => "Registry",
-  "Q281" => "Emancipation or Manumission"
-
+  "Q281" => "Emancipation or Manumission",
+  "Q10087" => "Embarkation",
+  "Q10088" => "Disembarkation"
 ];
 ?>

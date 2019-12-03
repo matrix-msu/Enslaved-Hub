@@ -11,7 +11,7 @@
     </div>
       <div class="image-background-overlay"></div>
       <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
-    
+
     </div>
 </div>
 <main class="direct-search">
@@ -22,23 +22,23 @@
             <div class="search-section">
                 <div class="inputwrap">
                     <label for="person">Name</label>
-                    <input class="input-field" id="person" name="person" type="text" placeholder="Enter Name"/>
+                    <input class="input-field" id="person" name="name" type="text" placeholder="Enter Name"/>
                 </div>
                 <div class="inputwrap">
                     <label for="status">Person Status</label>
                     <select class="s2-single" id="status" name="status">
                         <option value=""></option>
                         <?php foreach (personstatus as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <div class="inputwrap">
-                    <label for="sex">Sex</label>
-                    <select class="s2-single" name="sex" id="sex">
+                    <label for="gender">Sex</label>
+                    <select class="s2-single" name="gender" id="sex">
                         <option value=""></option>
                         <?php foreach (sexTypes as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -47,14 +47,14 @@
                     <input class="input-field" id="age" name="age" type="text" placeholder="Enter Numerical Age"/>
                 </div>
                 <div class="inputwrap">
-                    <label for="ethno">Ethnodescriptor</label>
-                    <input class="input-field" id="ethno" name="ethno" type="text" placeholder="Enter Ethnodescriptor"/>
+                    <label for="ethnodescriptor">Ethnodescriptor</label>
+                    <input class="input-field" id="ethno" name="ethnodescriptor" type="text" placeholder="Enter Ethnodescriptor"/>
                 </div>
                 <div class="inputwrap">
                     <label for="occupation">Occupation</label>
                     <select class="s2-multiple" id="occupation" name="occupation" multiple="multiple">
                         <?php foreach (occupation as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -63,10 +63,10 @@
             <h2>Event</h2>
             <div class="search-section">
                 <div class="inputwrap">
-                    <label for="event-type">Type</label>
-                    <select class="s2-multiple" name="event-type" id="event-type" multiple="multiple">
+                    <label for="event_type">Type</label>
+                    <select class="s2-multiple" name="event_type" id="event-type" multiple="multiple">
                         <?php foreach (eventTypes as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -92,20 +92,20 @@
             <h2>Place</h2>
             <div class="search-section">
                 <div class="inputwrap">
-                    <label for="place">Place Name</label>
-                    <input class="input-field" id="place" name="place" type="text" placeholder="Enter Place Name"/>
+                    <label for="place_name">Place Name</label>
+                    <input class="input-field" id="place" name="place_name" type="text" placeholder="Enter Place Name"/>
                 </div>
                 <div class="inputwrap">
-                    <label for="place-type">Place Type</label>
-                    <select class="s2-multiple" id="place-type" name="place-type" multiple="multiple">
+                    <label for="place_type">Place Type</label>
+                    <select class="s2-multiple" id="place-type" name="place_type" multiple="multiple">
                         <?php foreach (placeTypes as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <div class="inputwrap">
-                    <label for="country">Modern Country</label>
-                    <select class="s2-multiple" id="country" name="country" multiple="multiple">
+                    <label for="country_code">Modern Country</label>
+                    <select class="s2-multiple" id="country" name="country_code" multiple="multiple">
                         <?php foreach (countrycode as $code => $country) { ?>
                             <option value="<?php echo $code; ?>"><?php echo $country; ?></option>
                         <?php } ?>
@@ -120,18 +120,18 @@
                     <input class="input-field" id="place" name="place" type="text" placeholder="Enter Place Name"/>
                 </div> -->
                 <div class="inputwrap">
-                    <label for="source-type">Source Type</label>
-                    <select class="s2-multiple" id="source-type" name="source-type" multiple="multiple">
+                    <label for="source_type">Source Type</label>
+                    <select class="s2-multiple" id="source-type" name="source_type" multiple="multiple">
                         <?php foreach (sourceTypes as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <div class="inputwrap">
-                    <label for="project">Projects</label>
-                    <select class="s2-multiple" id="project" name="project" multiple="multiple">
+                    <label for="projects">Projects</label>
+                    <select class="s2-multiple" id="project" name="projects" multiple="multiple">
                         <?php foreach (projects as $type => $qid) { ?>
-                            <option value="<?php echo $qid; ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -145,7 +145,7 @@
 </main>
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
 <script>
-    autocomplete(document.getElementById("place"), [<?php echo '"'.implode('","', qPlaces).'"' ?>]);
+    autocomplete(document.getElementById("place"), [<?php echo '"'.implode('","', array_keys(places)).'"' ?>]);
     autocomplete(document.getElementById("ethno"), [<?php echo '"'.implode('","', qethnodescriptor).'"' ?>]);
     autocomplete(document.getElementById("age"), [<?php echo '"'.implode('","', qages).'"' ?>]);
 </script>

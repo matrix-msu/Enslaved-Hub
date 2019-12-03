@@ -23,7 +23,6 @@ const properties =
   "hasExternalReference" => "P21",
   "hasOccupation" => "P22",
   "hasOriginalSourceType" => "P23",
-  "availableFrom" => "P24",
   "reportsOn" => "P25",
   "availableFrom" => "P26",
   "atPlace" => "P27",
@@ -45,7 +44,7 @@ const properties =
   "hasParent" => "P43",
   "hasSibling" => "P44",
   "has quality" => "P45",
-  "hasECVO" => "P46",
+  "hasEthnolinguisticDescriptor" => "P46",
   "referstoPlaceofOrigin" => "P47",
   "hasOwner" => "P48",
   "formatter URL" => "P49",
@@ -68,7 +67,10 @@ const properties =
   "hasDescription" => "P66",
   "hasGodparent" => "P67",
   "hasGodChild" => "P68",
-  "occursBefore" => "P69"
+  "occursBefore" => "P69",
+  "hasAlternateName" => "P71",
+  "hasSurname" => "P72",
+  "hasFirstName" => "P73"
 ];
 
 ?>

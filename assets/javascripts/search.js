@@ -44,7 +44,7 @@ $(document).ready(function() {
     $('#life-event').select2({
         placeholder: "Select Life Event"
     });
-    
+
     $('b[role="presentation"]').hide();
     $('.select2-selection--multiple').append('<span class="select2-selection__arrow" role="presentation"></span>');
 
@@ -78,7 +78,7 @@ function removeEmpty() {
 //Called by the Date input on Basic Search so that user can only enter numbers
 function validate(evt) {
     var theEvent = evt || window.event;
-  
+
     // Handle paste
     if (theEvent.type === 'paste') {
         key = event.clipboardData.getData('text/plain');
@@ -105,7 +105,7 @@ function combineDates() {
     if($('select#place-from').val() !== '' || $('select#place-to').val() !== ''){
         var placeDate = $('select#place-from').val() + '-' + $('select#place-to').val();
     }
-    
+
     $('.person-date-range').val(personDate);
     $('.event-date-range').val(eventDate);
     $('.place-date-range').val(placeDate);
