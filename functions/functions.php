@@ -1127,7 +1127,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     '<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
-                $connections = '<div class="connectionswrap"><div class="connections">';
+                $connections = '<div class="connectionswrap"><p>Person\'s Connections</p><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
@@ -1157,7 +1157,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                             $statusHtml = "<div class='detail'><p class='detail-title'>Person Status</p><p>$status</p></div>";
                         }
                         if ($statusCount > 1){
-                            $statusHtml = "<div class='detail'><p class='detail-title'>Person Status</p><p class='multiple'>Multiple<span class='tooltip'>$status</span></p></div>";
+                            $statusHtml = "<div class='detail'><p class='detail-title'>Person Status</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Statuses</span>$status</span></p></div>";
                         }
 
                         $placesHtml = '';
@@ -1165,7 +1165,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                             $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p>$places</p></div>";
                         }
                         if ($placesCount > 1){
-                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'>$places</span></p></div>";
+                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Places</span>$places</span></p></div>";
                         }
 
                         $dateRangeHtml = '';
@@ -1339,7 +1339,7 @@ HTML;
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><div class="connections">';
+                $connections = '<div class="connectionswrap"><p>Place\'s Connections</p><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
@@ -1561,8 +1561,7 @@ HTML;
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
                 //'<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
-
-                $connections = '<div class="connectionswrap"><div class="connections">';
+                $connections = '<div class="connectionswrap"><p>Event\'s Connections</p><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
@@ -1589,7 +1588,7 @@ HTML;
                             $rolesHtml = "<div class='detail'><p class='detail-title'>Role</p><p>$roles</p></div>";
                         }
                         if ($rolesCount > 1){
-                            $rolesHtml = "<div class='detail'><p class='detail-title'>Role</p><p class='multiple'>Multiple<span class='tooltip'>$roles</span></p></div>";
+                            $rolesHtml = "<div class='detail'><p class='detail-title'>Role</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Roles</span>$roles</span></p></div>";
                         }
                         // Check for multiple places
                         $placesHtml = '';
@@ -1597,7 +1596,7 @@ HTML;
                             $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p>$places</p></div>";
                         }
                         if ($placesCount > 1){
-                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'>$places</span></p></div>";
+                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Places</span>$places</span></p></div>";
                         }
 
                         $dateRangeHtml = '';
@@ -1752,7 +1751,7 @@ HTML;
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
 
-                $connections = '<div class="connectionswrap"><div class="connections">';
+                $connections = '<div class="connectionswrap"><p>Source\'s Connections</p><div class="connections">';
                 	if (intval($countpeople) > 0){
                         $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
@@ -1778,7 +1777,7 @@ HTML;
                             $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p>$type</p></div>";
                         }
                         if ($typeCount > 1){
-                            $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p class='multiple'>Multiple<span class='tooltip'>$type</span></p></div>";
+                            $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Types</span>$type</span></p></div>";
                         }
 
                         $projectHtml = '';
@@ -2125,7 +2124,7 @@ HTML;
                         '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                     );
 
-                    $connections = '<div class="connectionswrap"><div class="connections">';
+                    $connections = '<div class="connectionswrap"><p>'.$template.'\'s Connections</p><div class="connections">';
                     	// if (intval($countpeople) > 0){
                         //     $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                         // }
@@ -2447,4 +2446,10 @@ function checkKID($kid)
         return true;
     else
         return false;
+}
+
+function getQidValue(){
+    $category = $_GET['category'];
+    $qid = $_GET['qid'];
+    return array_search($qid,$GLOBALS["FILTER_TO_FILE_MAP"][ucfirst($category)]);
 }
