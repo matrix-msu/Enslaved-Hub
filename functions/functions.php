@@ -855,6 +855,18 @@ function blazegraph()
                         ";
                     }
                 }
+
+                // filter events by place id
+                $placeIdFilter = "";
+                if (isset($filtersArray['place']) && isset($filtersArray['place'][0]) ){
+                    $placeQ = $filtersArray['place'][0];
+                    $placeIdFilter .= "
+                    VALUES ?place { $wd:$placeQ }.
+                    ?event $wdt:$instanceOf $wd:$event.
+                    ?event $wdt:$atPlace ?place.
+                        ";
+                }
+
                 break;
             case 'sources':
                 // filter for sources connected to an event
@@ -884,6 +896,17 @@ function blazegraph()
                     }
                 }
 
+                // filter sources by place id
+                $placeIdFilter = "";
+                if (isset($filtersArray['place']) && isset($filtersArray['place'][0]) ){
+                    $placeQ = $filtersArray['place'][0];
+                    $placeIdFilter .= "
+                        VALUES ?place { $wd:$placeQ }.
+                        ?place $p:$instanceOf  ?object .
+                        ?object $prov:wasDerivedFrom ?provenance .
+                        ?provenance $pr:$isDirectlyBasedOn ?source.
+                    ";
+                }
 
                 break;
             case 'projects':
