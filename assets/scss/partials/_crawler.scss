@@ -49,11 +49,11 @@
                         font-size: 14px;
                     }
                 }
-                
+
                 .search-icon-2 {
                   background: none;
                 }
-                
+
                 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
                     color: #253449;
                     opacity: 1; /* Firefox */
@@ -71,6 +71,25 @@
                 }
             }
         }
+
+        .create-seed{
+            display: none;
+        }
+
+        .create-seed.show{
+            display: block;
+            cursor: pointer;
+            text-decoration: none;
+            background-color: $accent;
+            box-shadow: 0 5px 15px 0 rgba(115,47,35,0.2);
+            padding: 15px;
+            color: #FFF;
+            font-size: 20px;
+            border-radius: 5px;
+            width: fit-content;
+            transition: all .3s;
+        }
+
         .sorting-dropdowns{
             padding: 10px 15px;
             cursor: pointer;
@@ -81,7 +100,7 @@
             img {
                 transition: 200ms;
             }
-            
+
             img.show {
                 transform: rotate(-180deg);
             }
@@ -90,19 +109,19 @@
               margin-left: 20px;
               position: relative;
               }
-              
+
               .sort-by {
               margin-right: -10px;
-              } 
-              
+              }
+
               .results-per-page {
                 margin-left: 10px;
               }
-              
+
                .tag-filter {
                 text-align: left;
                 }
-            
+
             ul {
                 background: $base-dark;
                 box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
@@ -115,18 +134,18 @@
                 text-align: center;
                 width: 130px;
                 z-index: 1;
-                
+
                 li {
                     cursor: pointer;
                     font-size: 12px;
                     line-height: 15px;
                     padding: 5px 3px;
-                    
+
                     input[type='checkbox'] {
                       margin-right: 10px;
                       cursor: pointer;
                     }
-                    
+
                 }
                 li:hover {
                     color: $sub-base;
@@ -266,7 +285,7 @@
                                 font-size: 12px;
                                 line-height: 15px;
                                 padding: 5px 3px;
-                                
+
                                 input[type='checkbox'] {
                                   margin-right: 10px;
                                   cursor: pointer;
@@ -384,7 +403,7 @@
             }
         }
     }
-    .seed-wrap{
+    .seed-wrap, .add-new-seed{
         width: 100%;
         display: none;
 
@@ -760,7 +779,7 @@
         }
     }
 }
-.update-link-modal,.update-seed-modal{
+.update-link-modal,.update-seed-modal,.delete-seed-modal{
     .canvas {
         max-width: 650px;
         .body {

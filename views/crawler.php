@@ -34,6 +34,9 @@
                 <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>
             </form>
         </div>
+        <!-- <div class="add-seed"> -->
+            <a class="create-seed">Add Seed</a>
+        <!-- </div> -->
         <div class="sorting-dropdowns">
             <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
                 <ul id="sortmenu" class="sort-by">
@@ -183,7 +186,27 @@
         </div>
     </div>
 </div>
-
+<div class="crawler-modal create-seed-modal">
+    <div class="canvas">
+        <div class="body">
+            <h1 class="title">Create Seed</h1>
+            <p class="link"></p>
+            <form action="" method="post">
+                <input type="hidden" class="link-info" name="add_seed" value="">
+                <div class="info-inputs">
+                    <div class="input-wrap url-input">
+                        <label for="url">Enter the new URL here</label>
+                        <input id="url" type="text" name="url" placeholder="Enter URL">
+                    </div>
+                </div>
+                <div class="confirm-wrap">
+                        <input class="confirm" id="create" type="submit" value="Create Seed">
+                </div>
+            </form>
+            <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
+        </div>
+    </div>
+</div>
 
 <script src="<?php echo BASE_JS_URL;?>crawler.js"></script>
 <script src="<?php echo BASE_JS_URL;?>pagination.js"></script>
