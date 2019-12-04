@@ -1294,6 +1294,7 @@ function getFullRecordHtml(){
     //Name
     $recordVars['Name'] = $record['name']['value'];
 
+
     // First Name
     if (isset($record['firstname']) && isset($record['firstname']['value']) ){
         $recordVars['First Name'] = $record['firstname']['value'];
@@ -2350,6 +2351,7 @@ QUERY;
     $result = blazegraphSearch($sourceQuery);
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+
 
 
     return json_encode($connections);

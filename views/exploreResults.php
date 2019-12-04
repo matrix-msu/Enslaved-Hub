@@ -292,14 +292,15 @@
         <div class="search-record-connections">
             <div class="connectionwrap">
                 <div class="categories"></div>
-                <div id="search-result-configure-download-row">
-                    <span class="align-left">
-                        <a class="modal">Configure Table Columns</a>
-                    </span>
-                    <span class="align-right"><b>Download:</b><span id="Download_selected">Current View</span><span id="Download_all">All Results</span></span>
-                </div>
+
                 <div class="connection-cards">
                     <ul class="connect-row">
+                        <!-- <div id="search-result-configure-download-row"> -->
+                            <span class="align-left">
+                                <a class="modal">Configure Table Columns</a>
+                            </span>
+                            <span class="align-right"><b>Download:</b><span id="Download_selected">Current View</span><span id="Download_all">All Results</span></span>
+                        <!-- </div> -->
                     </ul>
                     <a class="search-all"></a>
                     <!-- <div class="load-more"><h4>Load More</h4></div> -->
