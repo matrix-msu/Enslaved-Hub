@@ -1,12 +1,10 @@
 $(document).ready(function(){
 
     $('.cards-featured li').click(function(){
-        console.log("clicked");
         window.location = $(this).find("a").attr("href");
     });
 
     $('.cards li').click(function () {
-        console.log("clicked");
         window.location = $(this).find("a").attr("href");
     });
 
@@ -61,35 +59,15 @@ $(document).ready(function(){
         }
         else{
             $.ajax({
-                url: BASE_URL + 'api/counterOfType',
+                url: BASE_URL + 'api/filteredCounts',
                 method: "GET",
                 data: {type: JS_EXPLORE_FILTERS,  category:JS_EXPLORE_FORM},
                 'success': function (data) {
-                    console.log(data);
+                    console.log(data)
                     data = JSON.parse(data);
 
-                    data.forEach(function(record) {
-                        var label = "";
-                        var count = "";
-                        console.log(record);
-                        for(var key in record) {
-                            if(key.match("Label$")) {
-                                label = record[key]['value'];
-                            }
-                            if(key.match("count$")) {
-                                count = record[key]['value'];
-                            }
-                            else if(key.match("Count$")) {
-                                if(count !== ""){
-                                    var count2 = record[key]['value'];
-                                    count = +count + +count2;
-                                }
-                                else{
-                                    count = record[key]['value'];
-                                }
-
-                            }
-                        }
+                    $.each(data, function(label, count) {
+                        console.log(label, count)
                         if (label != ""){
                             var span = $("a:contains("+label+")").find('span');
                             if ($(span).length > 0){

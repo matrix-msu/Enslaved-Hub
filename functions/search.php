@@ -70,6 +70,110 @@ function all_counts() {
     return $total;
 }
 
+function filtered_counts() {
+    $hosts = [
+        ELASTICSEARCH_URL
+    ];
+
+    $es = ClientBuilder::create()
+                        ->setHosts($hosts)
+                        ->build();
+
+    $raw_field = '';
+    if (isset($_GET['type'])){
+        $raw_field = $_GET['type'];
+    }
+
+    $category = '';
+    if (isset($_GET['category'])){
+        $category = $_GET['category'];
+    }
+
+    $field_translate = [
+        'Event Type' => [
+            'event_type' => eventTypes
+        ],
+        'Date' => [
+            'date' => ''
+        ], #todo
+        'Gender' => [
+            'sex' => sexTypes
+        ],
+        // investigate this
+        'Role Types' => [
+            'participant_role' => roleTypes
+        ],
+        'Age Category' => [
+            'age_category' => ''
+        ], #tbd
+        'Ethnodescriptor' => [
+            'ethnodescriptor' => ethnodescriptor
+        ],
+        'Place Type' => [
+            'place_type' => placeTypes
+        ],
+        'Source Type' => [
+            'source_type' => sourceTypes
+        ]
+    ];
+
+    if (
+        !in_array($category, ['Events', 'People', 'Places', 'Sources']) |
+        !array_key_exists($raw_field, $field_translate)
+    )
+        die;
+
+    $category = strtolower($category);
+
+    if ($category != 'people')
+        $category = substr_replace($category, '', -1);
+
+    $params = [
+        'index' => ELASTICSEARCH_INDEX_NAME,
+        'body' => [
+            'query' => [
+                'bool' => [
+                    'must' => [
+                        'match_all' => new \stdClass()
+                    ],
+                    'filter' => [
+                        ['term' => ['type' => $category]]
+                    ]
+                ]
+            ],
+            'collapse' => [
+                'field' => 'id'
+            ],
+            'size' => 0,
+            'aggs' => [
+                'total' => [
+                    'cardinality' => [
+                        'field' => 'id'
+                    ]
+                ]
+            ]
+        ]
+    ];
+
+    $total = [];
+
+    foreach ($field_translate[$raw_field] as $field => $values) {
+        foreach (array_keys($values) as $value) {
+            $tmp_params = $params;
+            array_push(
+                $tmp_params['body']['query']['bool']['filter'],
+                ['term' => [$field . '.raw' => $value]]
+            );
+            // print_r($tmp_params);
+            $res = $es->search($tmp_params);
+
+            $total[$value] = $res['aggregations']['total']['value'];
+        }
+    }
+
+    return json_encode($total);
+}
+
 function keyword_search() {
     $hosts = [
         ELASTICSEARCH_URL

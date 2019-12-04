@@ -1,9 +1,6 @@
 <!-- Page author: Drew Schineller-->
 <!-- Heading image and title container-->
 <?php
-//var_dump(EXPLORE_FORM);
-//var_dump(EXPLORE_FILTER);
-//var_dump($GLOBALS["FILTER_ARRAY"]);
 $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
 ?>
 
@@ -31,9 +28,7 @@ $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
       if (array_key_exists($upperWithSpaces, $GLOBALS['FILTER_TO_FILE_MAP'])){
 
           $typeCategories = $GLOBALS['FILTER_TO_FILE_MAP'][$upperWithSpaces];
-          // var_dump($typeCategories);
           ksort($typeCategories);
-          // var_dump($typeCategories);
       }
 
       foreach ($typeCategories as $category => $qid) { ?>

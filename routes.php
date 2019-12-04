@@ -16,7 +16,8 @@ $GLOBALS['api_routes'] = array(
     'api/getCrawlerResults' => array('crawler_jquery.php', ''),
     'api/getQidValue' => array('functions.php','getQidValue'),
     'api/keywordSearch' => array('search.php', 'keyword_search'),
-    'api/getAllCounts' => array('search.php', 'all_counts_ajax')
+    'api/getAllCounts' => array('search.php', 'all_counts_ajax'),
+    'api/filteredCounts' => array('search.php', 'filtered_counts')
 );
 
 $GLOBALS['routes'] = array(

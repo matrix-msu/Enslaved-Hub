@@ -1,10 +1,12 @@
 <?php
 const roleTypes=[
     'Spouse' => 'Q37',
-    'Master, Guardian, or Owner' => 'Q200',
+    'Master or Owner' => 'Q200',
     'Registered Person' => 'Q259',
     'Emancipated Person' => 'Q263',
     'Relocated Person' => 'Q272',
+    'Child' => '',
+    'Parent' => '',
     'Newborn' => 'Q273',
     'Seller' => 'Q279',
     'Buyer' => 'Q281',
@@ -14,6 +16,7 @@ const roleTypes=[
     'Runaway' => 'Q307',
     'Guardian' => 'Q315',
     'Employee' => 'Q317',
+    'Employer' => 'Q317',
     'Subject' => 'Q318',
     'Student' => 'Q324',
     'Sold Person' => 'Q504',
@@ -27,7 +30,8 @@ const roleTypes=[
     'Rebel' => 'Q554',
     'Party' => 'Q555',
     'Captured Person' => 'Q568',
-    'Soldier' => 'Q598',];
+    'Soldier' => 'Q598'
+];
 
 const qroleTypes=[
     'Q37' => 'Spouse',

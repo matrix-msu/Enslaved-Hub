@@ -18,7 +18,8 @@ assets/stylesheets/style.css
 *.sublime-project
 
 # composer
-vendor
+composer.phar
+/vendor/
 
 # os specific
 ._.DS_Store

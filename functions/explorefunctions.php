@@ -317,9 +317,6 @@ function counterOfType() {
         $category = $_GET['category'];
     }
 
-    if ($type == '' || $category == ''){
-        die;
-    }
 
     if ($category == "Events") {
         if ($type == "Event Type"){
@@ -328,9 +325,9 @@ function counterOfType() {
         if ($type == "Date"){
             return getEventDateRange();
         }
-        if ($type == "Place"){
-            return counterOfEventPlace();
-        }
+        // if ($type == "Place"){
+        //     return counterOfEventPlace();
+        // }
     }
 
     if ($category == "People") {
