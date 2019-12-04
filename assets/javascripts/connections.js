@@ -36,13 +36,6 @@ $(document).ready( function() {
             displayConnections(CARDT);
             $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] +  ' Places');
         }
-        //Projects
-        if($("#project").hasClass("selected")){
-            CARDT="Project";
-            SEARCHTYPE = "projects";
-            displayConnections(CARDT);
-            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Projects');
-        }
         //Sources
         if($("#source").hasClass("selected")){
             CARDT="Source";
@@ -121,15 +114,6 @@ function displayConnections(cardType){
             var eventUrl = BASE_URL + 'record/event/' + eventQ;
             $('.connect-row').append('<li class="card"><a href=' + eventUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div>'+'</a></li>');
         }
-    } else if (cardType == "Project") {
-        for (var i in connections) {
-            var conn = connections[i];
-            var name = conn['projectName']['value'];
-            var projectQ = conn['project']['value'];
-            projectQ = projectQ.substring(projectQ.lastIndexOf('/') + 1);
-            var projectUrl = BASE_URL + 'project/' + projectQ;
-            $('.connect-row').append('<li class="card"><a href=' + projectUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
-        }
     } else if (cardType == "Source") {
         for (var i in connections) {
             var conn = connections[i];
@@ -207,8 +191,6 @@ function loadConnections(){
                     $('#people').html('<div class="person-image"></div>'+connectionsArray['Person-count'] + ' People');
                 } else if (form == 'Event'){
                     $('#event').html('<div class="event-image"></div>' + connectionsArray['Event-count'] + ' Events');
-                } else if (form == 'Project') {
-                    $('#project').html('<div class="project-image"></div>' + connectionsArray['Project-count'] + ' Projects');
                 } else if (form == 'Source') {
                     $('#source').html('<div class="source-image"></div>' + connectionsArray['Source-count'] + ' Sources');
                 } else if (form == 'Place') {
@@ -225,9 +207,6 @@ function loadConnections(){
             }
             if (!connectionsArray['Event-count']) {
                 $('#event').hide();
-            }
-            if (!connectionsArray['Project-count']) {
-                $('#project').hide();
             }
             if (!connectionsArray['Source-count']) {
                 $('#source').hide();

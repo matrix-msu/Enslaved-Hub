@@ -6,6 +6,7 @@ SELECT DISTINCT ?event WHERE {
     $queryFilters
     $sourceIdFilter
     $personIdFilter
+    $placeIdFilter
 }
 $limitQuery
 $offsetQuery
