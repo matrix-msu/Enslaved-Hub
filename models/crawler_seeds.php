@@ -73,7 +73,7 @@ class crawler_seeds {
 	// update entry from crawler_seeds this belongs to broken links
 	public function update_seeds($old_link,$new_link)
 	{
-		 $conn=$this->connect();
+		$conn=$this->connect();
 		$query = "UPDATE crawler_seeds set htmlURL='$new_link' WHERE htmlURL='$old_link' ";
 		$result=$conn->query($query);
 		mysqli_close($conn);
@@ -81,21 +81,19 @@ class crawler_seeds {
 	//delete entry from crawler_seeds this belongs to broken links
 	public function delete_seeds($link)
 	{
-		 $conn=$this->connect();
+		$conn=$this->connect();
 		$query = "DELETE FROM crawler_seeds WHERE htmlURL='$link'";
 		$result=$conn->query($query);
 		mysqli_close($conn);
 	}
 	//delete entry from broken_links this belongs to broken links
-  public function delete_broken_links($link)
-  {
-	  $conn=$this->connect();
-		$query = "DELETE FROM broken_links WHERE link_url='$link'";
-		$result=$conn->query($query);
-		mysqli_close($conn);
-  }
-
-
+    public function delete_broken_links($link)
+    {
+        $conn=$this->connect();
+    	$query = "DELETE FROM broken_links WHERE link_url='$link'";
+    	$result=$conn->query($query);
+    	mysqli_close($conn);
+    }
 	public function get_count()
 	{
 		$conn = $this->connect();
@@ -104,17 +102,22 @@ class crawler_seeds {
 		mysqli_close($conn);
 		return $result->num_rows;
 	}
-
-	public function add_seed($url, $name)
-	{
-		$link = $this->connect();
-		if ($stmt = mysqli_prepare($link, "INSERT INTO crawler_seeds (text_name, title, htmlURL) VALUES (?, ?, ?)")) {
-			mysqli_stmt_bind_param($stmt, "sss", $name, $name, $url);
-    		mysqli_stmt_execute($stmt);
-    		mysqli_stmt_close($stmt);
-		}
-		mysqli_close($link);
-	}
+    //adding seed for URL with Name/Title fields automatically updated
+    public function add_seed($name , $title, $url)
+    {
+        $link = $this->connect();
+        $query = "SELECT * FROM crawler_seeds WHERE htmlURL = '$url'";
+        $validationResult = $link->query($query);
+        //insert seed only if url not duplicate
+        if( !$validationResult || mysqli_num_rows($validationResult) == 0 ){
+            if ($stmt = mysqli_prepare($link, "INSERT INTO crawler_seeds (text_name, title, htmlURL) VALUES ( ?, ?, ? )")) {
+                mysqli_stmt_bind_param($stmt, "sss", $name, $title, $url);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+            }
+        mysqli_close($link);
+        }
+    }
 
 }
 
