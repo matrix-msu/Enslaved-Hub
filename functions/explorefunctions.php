@@ -548,6 +548,11 @@ function getSearchFilterCounters(){
                 'Source Type' => counterOfSourceType($filters)
             );
             $counters['Source'] =$sourceFilters;
+        } else if ($filterType == "projects" || $filterType == "project"){
+            $sourceFilters = array(
+                'Projects' => 5
+            );
+            $counters['Source'] =$sourceFilters;
         }
     }
 
@@ -2306,37 +2311,6 @@ QUERY;
     $result = blazegraphSearch($peopleQuery);
     $connections['Person-count'] = count($result);
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
-
-  // project connections
-  $projectQuery['query'] = <<<QUERY
-SELECT DISTINCT ?source ?refName ?project ?projectName (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random)
-
- WHERE
-{
-VALUES ?event { $wd:$QID} #Q number needs to be changed for every event.
-  ?event $wdt:$instanceOf $wd:$event;
-  		?property  ?object .
-  ?object $prov:wasDerivedFrom ?provenance .
-  ?provenance $pr:$isDirectlyBasedOn ?source .
-  ?source $rdfs:label ?refName;
-          $wdt:$generatedBy ?project.
-  ?project $rdfs:label ?projectName.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}ORDER BY ?random
-QUERY;
-
-    $result = blazegraphSearch($projectQuery);
-    $projectConnections = array();
-
-    // clean up the data
-    foreach ($result as $res){
-        if (isset($res['project']) && isset($res['projectName'])){
-          $projectConnections[] = array('project' => $res['project'], 'projectName' => $res['projectName']);
-        }
-    }
-
-    $connections['Project-count'] = count($projectConnections);
-    $connections['Project'] = array_slice($projectConnections, 0, 8);  // return the first 8 results
 
     // places connections
   $placesQuery['query'] = <<<QUERY
