@@ -96,7 +96,8 @@ var right_col = window.document.getElementsByClassName('right');
 var selected_items = []
 $('#available-cols').on('click', 'li', function (e) {
     e.stopPropagation();
-    $(this).css('background-color', 'rgba(39, 173, 136, 0.5)');
+    $(this).css('background-color', 'rgba(194,79,60,0.15)');
+    $(this).css('color', '#C24F3C')
     selected_items.push( $(this).html() );
 });
 
@@ -104,7 +105,8 @@ $('#available-cols').on('click', 'li', function (e) {
 var other_items = []
 $('#selected-cols').on('click', 'li', function (e) {
     e.stopPropagation();
-    $(this).css('background-color', 'rgba(39, 173, 136, 0.5)');
+    $(this).css('background-color', 'rgba(194,79,60,0.15)');
+    $(this).css('color', '#C24F3C')
     $(this).addClass('selected');
     other_items.push( $(this).html() );
 });
