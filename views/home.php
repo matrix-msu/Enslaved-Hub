@@ -4,7 +4,32 @@ $bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
         'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
         'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
         'enslaved-header-bg7.jpg'];
-$randIndex = array_rand($bg);?>
+$randIndex = array_rand($bg);
+
+//kora query to get featured stories
+$koraResults = koraWrapperSearch(
+    STORY_SID,
+    'ALL',
+    ['Featured'],
+    "TRUE",
+    [],
+    0,
+    10
+);
+$featuredStories = json_decode($koraResults,true);
+$featuredResults = $featuredStories['records'][0];
+
+//get keys and randomly select 2
+$featuredKeys = array_keys($featuredResults);
+$randKeys = array_rand($featuredKeys,2);
+//use keys to get records
+$randomStory1 = $featuredKeys[$randKeys[0]];
+$randomStory2 = $featuredKeys[$randKeys[1]];
+//get titles from records
+$randomTitle1 = $featuredResults[$randomStory1]["Title"];
+$randomTitle2 = $featuredResults[$randomStory2]["Title"];
+
+?>
 <!-- Main page-->
 <!-- Heading image and title container-->
 <div class="container header home-page">
@@ -84,7 +109,7 @@ $randIndex = array_rand($bg);?>
                 </div>
 
                 <div class="col">
-                    <a class="story-card" href="#story">
+                    <!-- <a class="story-card" href="#story">
                         <img src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Story Image">
                         <h2 class="card-title">Title of Featured Story Goes Here Like This.</h2>
                         <div class="cover"></div>
@@ -93,6 +118,17 @@ $randIndex = array_rand($bg);?>
                     <a class="story-card" href="#story">
                         <img src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Story Image">
                         <h2 class="card-title">Title of Featured Story Goes Here Like This.</h2>
+                        <div class="cover"></div>
+                    </a> -->
+                    <a class="story-card" href="<?=BASE_URL;?>fullStory?kid=<?=$randomStory1;?>">
+                        <img src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Story Image">
+                        <h2 class="card-title"><?=$randomTitle1?></h2>
+                        <div class="cover"></div>
+                    </a>
+
+                    <a class="story-card" href="<?=BASE_URL;?>fullStory?kid=<?=$randomStory2;?>">
+                        <img src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Story Image">
+                        <h2 class="card-title"><?=$randomTitle2?></h2>
                         <div class="cover"></div>
                     </a>
                 </div>
