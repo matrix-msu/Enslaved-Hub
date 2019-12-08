@@ -70,6 +70,116 @@ function all_counts() {
     return $total;
 }
 
+function search_filter_counts() {
+    $hosts = [
+        ELASTICSEARCH_URL
+    ];
+
+    $es = ClientBuilder::create()
+                        ->setHosts($hosts)
+                        ->build();
+
+    $filter_types = '';
+    if (isset($_GET['filter_types'])){
+        $filter_types = $_GET['filter_types'];
+    }
+
+    $filters = [
+        'people' => [
+            'Gender' => [
+                'sex' => sexTypes
+            ],
+            // 'Age Category => '',
+            'Ethnodescriptor' => [
+                'ethnodescriptor' => ethnodescriptor
+            ],
+            'Role Types' => [
+                'participant_role' => roleTypes
+            ],
+            'Status' => [
+                'person_status' => personstatus
+            ],
+            'Occupation' => [
+                'occupation' => occupation
+            ]
+        ],
+        'event' => [
+            'Event Type' => [
+                'event_type' => eventTypes
+            ],
+            // 'Date' => [] TODO
+        ],
+        'place' => [
+            'Place Type' => [
+                'place_type' => placeTypes
+            ],
+            'Modern Countries' => [
+                'modern_country_code' => countrycode
+            ]
+        ],
+        'source' => [
+            'Source Type' => [
+                'source_type' => sourceTypes
+            ]
+        ]
+        // 'projects' => [] not sure what to do here
+    ];
+
+    $total = [];
+
+    foreach ($filters as $type => $labels) {
+        if (in_array($type, $filter_types)) {
+            $params = [
+                'index' => ELASTICSEARCH_INDEX_NAME,
+                'body' => [
+                    'query' => [
+                        'bool' => [
+                            'must' => [
+                                'match_all' => new \stdClass()
+                            ],
+                            'filter' => [
+                                ['term' => ['type' => $type]]
+                            ]
+                        ]
+                    ],
+                    'collapse' => [
+                        'field' => 'id'
+                    ],
+                    'size' => 0,
+                    'aggs' => [
+                        'total' => [
+                            'cardinality' => [
+                                'field' => 'id'
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+
+            $total[$type] = [];
+
+            foreach ($labels as $label => $fields) {
+                $total[$type][$label] = [];
+                foreach ($fields as $field => $values) {
+                    foreach (array_keys($values) as $value) {
+                        $tmp_params = $params;
+                        array_push(
+                            $tmp_params['body']['query']['bool']['filter'],
+                            ['term' => [$field . '.raw' => $value]]
+                        );
+
+                        $res = $es->search($tmp_params);
+
+                        $total[$type][$label][$value] = $res['aggregations']['total']['value'];
+                    }
+                }
+            }
+        }
+    }
+
+    return json_encode($total);
+}
+
 function filtered_counts() {
     $hosts = [
         ELASTICSEARCH_URL
@@ -99,7 +209,6 @@ function filtered_counts() {
         'Gender' => [
             'sex' => sexTypes
         ],
-        // investigate this
         'Role Types' => [
             'participant_role' => roleTypes
         ],

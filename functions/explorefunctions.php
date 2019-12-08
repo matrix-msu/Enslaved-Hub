@@ -382,7 +382,7 @@ function getSearchFilterCounters(){
             $peopleFilters = array(
                 'Gender' => counterOfAllGenders($filters),
                 'Age Category' => counterOfAge($filters),
-                'Ethnodescriptor' => counterOfEthnodescriptor($filters),
+                // 'Ethnodescriptor' => counterOfEthnodescriptor($filters),
                 'Role Types' => counterOfRole($filters),
                 'Status' => counterOfStatus($filters),
                 'Occupation' => counterOfOccupation($filters),

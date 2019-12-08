@@ -129,7 +129,6 @@ function searchResults(preset, limit = 12, offset = 0)
             display: display
         },
         'success': function (data) {
-            // console.log(data)
             isSearching = false;
             result_array = JSON.parse(data);
 
@@ -200,7 +199,7 @@ function searchResults(preset, limit = 12, offset = 0)
                 appendCards();
                 setPagination(total_length, card_limit, card_offset);
                 $.ajax({
-                    url: BASE_URL + "api/getSearchFilterCounters",
+                    url: BASE_URL + "api/searchFilterCounts",
                     type: "GET",
                     data: {
                         search_type: display,
@@ -224,42 +223,12 @@ function fillFilterCounters(allCounters){
     $(".filter-cat li").each(function(){
         $(this).addClass("hide-category");
     });
-    // console.log(allCounters)
-    for (var filterType in allCounters) {
-        var counterType = allCounters[filterType];
-
-        for (var filter in counterType) {
-            JSON.parse(counterType[filter]).forEach(function (record) {
-                var label = "";
-                var count = "";
-                var qid = "";
-
-                for (var key in record) {
-                    if (record[key]['type'] == "uri") {
-                        qid = record[key]['value'].split('/').pop()
-                    }
-
-                    if (key.match("Label$")) {
-                        label = record[key]['value'];
-                    }
-                    if (key.match("count$")) {
-                        count = record[key]['value'];
-                    }
-                    else if (key.match("Count$")) {
-                        if (count !== "") {
-                            var count2 = record[key]['value'];
-                            count = count + count2;
-                        }
-                        else {
-                            count = record[key]['value'];
-                        }
-
-                    }
-                }
-
+    $.each(allCounters, function (type, data) {
+        $.each(data, function (category, fields) {
+            $.each(fields, function (label, count) {
                 // fill in the counters for the filters
-                if (label != "" && qid != "") {
-                    var $input = $("input[data-qid='" + qid + "']");
+                if (label != "") {
+                    var $input = $("input[value='" + label + "']");
                     var $counter = $input.next().find('em');
                     $counter.html('(' + count + ')');    // show the count
 
@@ -270,8 +239,8 @@ function fillFilterCounters(allCounters){
                     }
                 }
             });
-        }
-    }
+        });
+    });
 }
 
 

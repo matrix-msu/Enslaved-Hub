@@ -17,7 +17,8 @@ $GLOBALS['api_routes'] = array(
     'api/getQidValue' => array('functions.php','getQidValue'),
     'api/keywordSearch' => array('search.php', 'keyword_search'),
     'api/getAllCounts' => array('search.php', 'all_counts_ajax'),
-    'api/filteredCounts' => array('search.php', 'filtered_counts')
+    'api/filteredCounts' => array('search.php', 'filtered_counts'),
+    'api/searchFilterCounts' => array('search.php', 'search_filter_counts')
 );
 
 $GLOBALS['routes'] = array(
