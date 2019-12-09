@@ -87,7 +87,9 @@ function Json_GetData_ByTitle($title, $all_matches = false)
 		// Data for main description field
 		if($content["Title"] == "Contributors"){
 			if(isset($content["Description"])){
-				$output["mainTitle"] = explode(".", strip_tags($content["Description"]))[0];
+				$explodeDescription = explode('.', $content["Description"],2);
+				$output["contributorsTitle"] = $explodeDescription[0] .= ".";
+				$output["contributorsSplit"] = $explodeDescription[1];
 			}
 		}
 	    if($content["Title"] == $title && array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"] != "FALSE")

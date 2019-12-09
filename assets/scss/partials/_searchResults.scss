@@ -280,35 +280,6 @@ ul.catmenu{
 .filter-menu.show {
     margin-left: 0;
 }
-span.align-left {
-    position: absolute;
-    left: 2%;
-    font-style: italic;
-}
-span.align-left:hover{
-    border-bottom: 2px solid $sub-base;
-    opacity: 1;
-}
-span.align-right {
-    position: absolute;
-    right: 2%;
-    transition: 200ms;
-    #Download_selected, #Download_all{
-        font-style: italic;
-        margin-left: 15px;
-    }
-    #Download_selected:hover, #Download_all:hover{
-        border-bottom: 2px solid $sub-base;
-        opacity: 1;
-    }
-    b{
-        font-size: 12px;
-    }
-}
-span.align-right.show {
-    transform: rotate(180deg);
-}
-
 
 #searchResults {
     position: relative;
@@ -316,7 +287,7 @@ span.align-right.show {
     vertical-align: top;
     max-width: 1000px;
     min-width: 300px;
-    margin: 60px auto 0;
+    margin: 0px auto;
 
     .showing-results{
         color: $base-dark;
@@ -378,15 +349,16 @@ span.align-right.show {
                 padding: 10px;
                 bottom: 32px;
                 right: -25px;
+                border-radius: 5px;
             }
             span.table-view p.tooltip {
                 right: -30px;
             }
             span.view-toggle p.tooltip.hovered {
                 display: block;
-                border-style: solid;
-                border-color: $sub-base;
-                border-width: 2px;
+                // border-style: solid;
+                // border-color: $sub-base;
+                // border-width: 2px;
                 z-index: 999;
             }
             span.view-toggle img.show {
@@ -698,6 +670,7 @@ span.align-right.show {
         ul{
             display: flex;
             flex-wrap: wrap;
+            justify-content: space-between;
             list-style-type: none;
             margin: 32px 0 30px;
             padding: 0;
@@ -875,6 +848,42 @@ span.align-right.show {
                         }
                     }
                 }
+            }
+            span.align-left {
+                // position: absolute;
+                // left: 2%;
+                font-style: italic;
+                border-bottom: 2px solid $sub-base;
+            }
+
+            span.align-left:hover{
+                border-bottom: 3px solid $accent;
+                padding-bottom: 2px;
+                transition: .1s;
+            }
+
+            span.align-right {
+                // position: absolute;
+                // right: 2%;
+                margin-left: auto;
+                transition: 200ms;
+                #Download_selected, #Download_all{
+                    font-style: italic;
+                    margin-left: 15px;
+                    border-bottom: 2px solid $sub-base;
+                }
+                #Download_selected:hover, #Download_all:hover{
+                    border-bottom: 3px solid $accent;
+                    padding-bottom: 2px;
+                    transition: .1s;
+                }
+                b{
+                    font-size: 12px;
+                }
+            }
+
+            span.align-right.show {
+                transform: rotate(180deg);
             }
         }
     }
@@ -1205,7 +1214,8 @@ span.align-right.show {
             h4 {
                 font-size: 30px;
                 margin-bottom: 20px;
-                font-family: aleobold;
+                font-family: EB Garamond;
+                font-weight: Bold;
                 text-align: left;
             }
             p {
@@ -1358,6 +1368,7 @@ span.align-right.show {
                 margin-top: 15px;
                 margin-bottom: 20px;
                 padding: 15px 35px;
+                border-radius: 4px;
             }
             div.close:hover,
             div.update-columns-button:hover {
@@ -1375,7 +1386,6 @@ span.align-right.show {
 
 @media screen and (max-width: 935px){
     #searchResults div#search-result-wrap #search-result-table {
-        margin-left: 145px;
         table thead tr th:first-child,
         table tbody tr td:first-child {
             width: 145px;
@@ -1422,7 +1432,6 @@ span.align-right.show {
 }
 @media screen and (max-width: 620px) {
     #searchResults div#search-result-wrap #search-result-table {
-        margin-left: 135px;
         table thead tr th:first-child,
         table tbody tr td:first-child {
             width: 135px;
@@ -1534,7 +1543,7 @@ span.align-right.show {
     .search-results{
         padding-right: 0px;
         #searchResults{
-            margin: 60px 10% 0;
+            margin: 0px 10%;
         }
     }
 }

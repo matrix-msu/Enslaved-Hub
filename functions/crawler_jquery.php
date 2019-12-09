@@ -20,6 +20,7 @@ $crawler_deleted_keywords = new crawler_deleted_keywords();
 $broken_links = new crawler_broken_links();
 $seeds = new crawler_seeds();
 
+// var_dump($_POST);
 
 //Get limit, offset and sort values
 if(isset($_POST["limit"]))
@@ -191,8 +192,17 @@ if(isset($_POST["count_seeds"]))
 //add a seed
 if(isset($_POST["add_seed"]))
 {
-	$seeds->add_seed($_POST["add_seed"], $_POST["name"]);
+	$html = file_get_contents($_POST["url"]);
 
+	$title = explode('<title>',$html);
+	if(count($title)>1){
+		$title = explode('</title>',$title[1]);
+		$seeds->add_seed(htmlentities($title[0]),htmlentities($title[0]),$_POST["url"]);
+	}else{
+		$title = '';
+		$seeds->add_seed($title,$title,$_POST["url"]);
+	}
+	// $seeds->add_seed(htmlentities($title[0]),htmlentities($title[0]),$_POST["rss"],$_POST["url"],$_POST["twitter"]);
 	echo(json_encode('success'));
 }
 ?>

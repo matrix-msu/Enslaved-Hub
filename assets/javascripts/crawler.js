@@ -93,14 +93,17 @@ $(document).ready(function(){
 		if(tab_type == "results"){
 			type['get_results'] = 'ok';
 			count_type = 'count_results';
+			$('.create-seed').removeClass('show');
 		}
 		else if(tab_type == "broken"){
 			type['get_links'] = 'ok';
 			count_type = 'count_links';
+			$('.create-seed').removeClass('show');
 		}
 		else if(tab_type == "seeds"){
 			type['get_seeds'] = 'ok';
 			count_type = 'count_seeds';
+			$('.create-seed').addClass('show');
 		}
 
 		showResults(type, count_type);
@@ -151,6 +154,20 @@ $(document).ready(function(){
 		});
 	});
 
+});
+
+//Need to uniform with original code
+$('.create-seed').click(function(){
+	console.log('hello');
+	$('.create-seed-modal').css("display", "flex");
+	setTimeout(function(){
+		$('.create-seed-modal .canvas').css('opacity', '1');
+		$('.create-seed-modal').css('background', 'rgba(0, 0, 0, 0.7)');
+	}, 50);
+});
+
+$('#create').click(function(){
+	console.log('in');
 });
 
 //Main function for showing results, gets total count of results first and then calls the ajax to get the results
@@ -432,7 +449,6 @@ function installModalListeners(){
 			$('.'+ modalType +'-modal .link-info').attr('value', seedid);
 		}
 
-
 		//Display modal after setting info
 		$('.'+ modalType +'-modal').css("display", "flex");
 		setTimeout(function(){
@@ -440,13 +456,11 @@ function installModalListeners(){
 			$('.'+ modalType +'-modal').css('background', 'rgba(0, 0, 0, 0.7)');
 		}, 50);
 	});
-
 	// Call off before adding click listener so that the listeners dont stack
 	$('.crawler-modal form').off().submit(function(e){
 		e.preventDefault();
 
 		var form = $(this);
-
 		$.ajax({
 			type: "POST",
 			url: BASE_URL + "api/getCrawlerResults",
@@ -454,6 +468,7 @@ function installModalListeners(){
 			dataType: "JSON",
 			success:function(data){
 				//after ajax close modal and refresh tab
+				// console.log(data)
 				$('.crawler-modal .close').trigger('click');
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
@@ -461,6 +476,7 @@ function installModalListeners(){
 				console.log(xhr.responseText);
 			}
 		});
+		// }
 	});
 
 	$(".add-tag").off().click(function (e) {

@@ -42,6 +42,17 @@ if(category == 'people' || category == 'events' || category == 'places' || categ
     $(".heading-search").empty()
 }
 
+$( ".page-numbers" ).click(function() {
+    scrollToTop();
+});
+
+function scrollToTop(){
+    // console.log('in');
+    // var position = $('#searchResults').position();
+    // console.log(position.top);
+    $(window).scrollTop(320);
+}
+
 // Get params from url
 if(document.location.toString().indexOf('?') !== -1)
 {
@@ -1007,6 +1018,8 @@ function generateFilterCards(){
         $('label.'+fcat+' input[value="'+fname+'"]').trigger('click');
     });
 }
+
+var showFilter = 0;
 //check window size and display/hide filter-menu
 function mediaMode() {
     if($(window).innerWidth() > 600) {
@@ -1025,11 +1038,21 @@ $(window).bind('resize',function(){
 //change text for Filter Menu
 $(".show-menu").click(function(){
     $(".filter-menu").toggleClass('show');
-    // if ()
     if ($('#showfilter').text() == 'Show Filter Menu'){
         $('#showfilter').text('Hide Filter Menu')
+        showFilter = 1;
     }
     else {
         $('#showfilter').text('Show Filter Menu')
+        showFilter = 0;
+    }
+});
+
+//hide filter on non-filter click
+$('div').not('.filter-menu').mouseup(function() {
+    if(showFilter == 1){
+        $(".filter-menu").toggleClass('show');
+        $('#showfilter').text('Show Filter Menu')
+        showFilter = 0;
     }
 });

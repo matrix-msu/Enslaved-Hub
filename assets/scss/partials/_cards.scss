@@ -108,7 +108,7 @@
                     font-size: 1.5em;
                     color: $white;
                     margin-bottom: 22px;
-                    line-height: 1; 
+                    line-height: 1;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     -webkit-line-clamp: 3;
@@ -146,6 +146,48 @@
     }
 }
 
+// // Contributor Cards
+// .card.contributor{
+//     margin-bottom: 20px;
+//     box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+//     border-radius: 5px;
+//     border: 2px solid transparent;
+//     background-color: $white;
+//     transition: all .3s;
+//     position: relative;
+//     padding: 20px;
+//
+//     h2 {
+//       line-height: 1;
+//     }
+//
+//     .row {
+//       bottom: 0;
+//       margin: 15px 0 0 0;
+//
+//       .detail{
+//         margin-right: 30px;
+//
+//         .title{
+//           font-style: italic;
+//         }
+//         .content {
+//           font-family: aleoregular;
+//         }
+//       }
+//
+//       .detail.two {
+//         .content{
+//         color: $accent;
+//         cursor: pointer;
+//         font-family: aleobold;
+//         text-decoration: underline;
+//         }
+//       }
+//     }
+//
+//     }
+
 // Contributor Cards
 .card.contributor{
     margin-bottom: 20px;
@@ -161,32 +203,18 @@
       line-height: 1;
     }
 
-    .row {
+    p {
       bottom: 0;
-      margin: 15px 0 0 0;
-
-      .detail{
-        margin-right: 30px;
-
-        .title{
-          font-style: italic;
-        }
-        .content {
-          font-family: aleoregular;
-        }
-      }
-
-      .detail.two {
-        .content{
+      margin: 15px 30px 0 0;
+      font-family: aleoregular;
+    }
+        a {
         color: $accent;
         cursor: pointer;
         font-family: aleobold;
         text-decoration: underline;
         }
-      }
-    }
-
-    }
+}
 
     // Contributor Cards
 .card.partner{
@@ -224,73 +252,4 @@
 	    }
     }
 
-}
-
-.card.directory {
-    margin-bottom: 20px;
-    box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
-    border-radius: 5px;
-    border: 2px solid transparent;
-    background-color: $white;
-    transition: all .3s;
-    position: relative;
-    padding: 20px;
-
-    h2 {
-        line-height: 1;
-    }
-    p.classifier {
-        font-family: aleobold;
-        font-size: 14px;
-        font-style: italic;
-        margin-bottom: 7px;
-    }
-
-    .row {
-        bottom: 0;
-        margin: 25px 0 0 0;
-
-        .detail {
-            margin-right: 30px;
-            p {
-                font-size: 14px;
-            }
-
-            .title {
-                font-style: italic;
-                font-family: aleobold;
-            }
-            .content {
-                font-family: aleoregular;
-            }
-        }
-
-
-    }
-}
-
-.card.directory.project {
-    .row {
-        .detail.four {
-            .content {
-                color: $accent;
-                cursor: pointer;
-                font-family: aleobold;
-                text-decoration: underline;
-            }
-        }
-    }
-}
-
-.card.directory.scholar {
-    .row{
-        .detail.two, .detail.three {
-            .content {
-                color: $accent;
-                cursor: pointer;
-                font-family: aleobold;
-                text-decoration: underline;
-            }
-        }
-    }
 }

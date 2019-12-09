@@ -7,5 +7,6 @@ WHERE {
     $queryFilters
     $sourceIdFilter
     $personIdFilter
+    $placeIdFilter
 }
 QUERY;

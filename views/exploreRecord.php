@@ -1,13 +1,16 @@
 <!-- Author: Drew Schineller-->
 <!-- Explore Full Record page-->
 <!-- Heading image and title container-->
-<div class="container header record-header people-page">
-    <div class="container middlewrap">
-<!--        <h4 class="last-page-header"><a id="last-page" href="--><?php //echo BASE_URL;?><!--explorePeople"><span id="previous-title">People // </span></a><span id="current-title">Firstname Lastname</span></h4>-->
-<!--        <h1>--><?php //echo $person_array['Name'];?><!--</h1>-->
-<!--        <h2 class="date-range"><span>1840</span>-<span>1864</span></h2>-->
+<div class="container header">
+    <div class="image-container record-page image-only">
+        <div class="container middlewrap"></div>
+        <div class="image-background-overlay"></div>
+        <img class="header-background full-height record-page" src="<?php echo BASE_URL;?>assets/images/PersonLanding.jpg" alt="Enslaved Background Image">
     </div>
 </div>
+
+
+
 <div class="jump-buttons person-buttons">
     <div class="jumpwrap">
         <?php
@@ -17,16 +20,6 @@
         ?>
         <!-- <button class="jump-button" id="details">Jump to <?php echo ucfirst(RECORD_FORM); ?> Details</button> -->
     </div>
-</div>
-<!-- tabs -->
-<div class="project-tab">
-    <!-- <h2>VIEW RECORD DETAILS FROM</h2>
-    <ul>
-        <li class="tabbed">All</li>
-        <li>Project Name</li>
-        <li>Other Project Name</li>
-        <hr>
-    </ul> -->
 </div>
 <!-- info container-->
 <div class="container info person-record-info">
@@ -73,7 +66,6 @@
             ?>
                 <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
                 <li class="unselected" id="place"><div class="place-image"></div>Places</li>
-                <li class="unselected" id="project"><div class="project-image"></div>Projects</li>
                 <li class="unselected" id="source"><div class="source-image"></div>Sources</li>
             <?php
                 } else if (RECORD_FORM == 'person') {
@@ -81,7 +73,6 @@
                 <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
                 <li class="unselected" id="event"><div class="event-image"></div>Events</li>
                 <li class="unselected" id="place"><div class="place-image"></div>Places</li>
-                <li class="unselected" id="project"><div class="project-image"></div>Projects</li>
                 <li class="unselected" id="source"><div class="source-image"></div>Sources</li>
                 <li class="unselected" id="closeMatch"><div class="person-image"></div>Close Matches</li>
             <?php
@@ -90,7 +81,6 @@
                 <li class="unselected selected" id="people"><div class="person-image"></div>People</li>
                 <li class="unselected" id="event"><div class="event-image"></div>Events</li>
                 <li class="unselected" id="place"><div class="place-image"></div>Places</li>
-                <li class="unselected" id="project"><div class="project-image"></div>Projects</li>
                 <li class="unselected" id="source"><div class="source-image"></div>Sources</li>
             <?php
                 }

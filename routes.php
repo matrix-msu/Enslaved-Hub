@@ -69,8 +69,7 @@ $GLOBALS['routes'] = array(
     'projects' => 'projects.php',
     'crawler' => 'crawler.php',
     'current' => 'current.php',
-    'links' => 'links.php',
-    'directory' => 'scholarProjectDirectory.php'
+    'links' => 'links.php'
 );
 
 if( !isset($_SERVER['HTTP_HOST']) ){
