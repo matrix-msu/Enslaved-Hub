@@ -2,7 +2,7 @@
 const sexTypes =
 ['Male' => 'Q48',
 'Female' => 'Q47',
-'Unknown' => 'Q177'];
+'Intersex' => 'Q177'];
 
 const qsexTypes =
 ['Q48' => 'Male',

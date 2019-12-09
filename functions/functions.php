@@ -1,11 +1,5 @@
 <?php
 
-function testingFunction(){
-    echo 'in testing function<br>';
-    print_r($_GET);
-
-}
-
 function admin(){
     if (isset($_GET['theme'])){
         $theme = $_GET['theme'];
@@ -39,7 +33,6 @@ function searchTermParser($terms){
             $filters['date'][] = $term."-";
             continue;
         }
-        // print_r($GLOBALS['FILTER_TO_FILE_MAP']);die;
 
         foreach ($GLOBALS['FILTER_TO_FILE_MAP'] as $type => $constantsArray) {
             if ($type == "Gender"){
@@ -109,9 +102,6 @@ function createQueryFilters($searchType, $filters)
     $queryFilters = "";
     $allFilters = array('filters' => $filters);
 
-    // print_r($filters);die;
-    // $searchbarFilters = $filters['searchbar'];
-    // print_r($searchbarFilters);die;
     if (isset($filters["searchbar"])){
         $terms = $filters['searchbar'];
         unset($filters['searchbar']);
@@ -673,7 +663,6 @@ function getKeywordSearchCounters($filters){
 
     include BASE_PATH."queries/keywordSearch/counters.php";
     $query['query'] = $tempQuery;
-    // print_r($query);die;
     $result = blazegraphSearch($query);
     return json_encode($result[0]);
 }
@@ -715,7 +704,6 @@ function blazegraph()
         }
 
         $queryFilters = createQueryFilters($preset, $filtersArray);
-        // echo $queryFilters;die;
 
         switch ($preset){
             case 'singleproject':
@@ -1000,7 +988,6 @@ function blazegraph()
         if (!$isKeywordSearch){
             include BASE_PATH."queries/".$preset."Search/count.php";
             $resultCountQuery['query'] = $tempQuery;
-            // print_r($resultCountQuery);die;
             $result = blazegraphSearch($resultCountQuery);
 
             if (isset($result[0]) && isset($result[0]['count'])){
@@ -1016,7 +1003,6 @@ function blazegraph()
         }
         include BASE_PATH."queries/".$preset."Search/ids.php";
         $idQuery['query'] = $tempQuery;
-        // print_r($idQuery);die;
         $result = blazegraphSearch($idQuery);
 
         // get the qids from each url
@@ -1035,13 +1021,10 @@ function blazegraph()
 
         include BASE_PATH."queries/".$preset."Search/data.php";
         $dataQuery['query'] = $tempQuery;
-        // print_r($dataQuery);die;
         $resultsArray = blazegraphSearch($dataQuery);
     } else {
         $first = true;
         $oneQuery = count($queryArray) == 1;    // count results differently when there is only one query
-
-        // print_r($queryArray);die;
 
         foreach ($queryArray as $i => $query) {
             $result = blazegraphSearch($query);
@@ -1094,14 +1077,12 @@ function blazegraph()
             }
         }
     }
-
     //Get HTML for the cards
     return createCards($resultsArray, $templates, $preset, $record_total);
 }
 
 
 function blazegraphSearch($query){
-    // print_r($query);die;
     $ch = curl_init(BLAZEGRAPH_URL);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query));
@@ -1137,105 +1118,84 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
     foreach ($templates as $template) {
         $cards[$template] = array();
     }
-    $cards['total'] =  $count;
+    $cards['total'] = $count;
 
     // use same people display for people in single project
     if($preset == "singleproject") $preset = "people";
 
-
     $first = true;  // need to know if first to add table headers
+    // print_r($preset);
 
     foreach ($results as $index => $record) {
+        $record = $record['_source'];
         $card = '';
         switch ($preset){
             case 'people':
-                // print_r($record);die;
                 //Person Name
-                $name = $record['name1']['value'];
+                $name = $record['name'][0];
                 //Person QID
-                $personUrl = $record['agent']['value'];
-                $xplode = explode('/', $personUrl);
-                $personQ = end($xplode);
+                $personQ = $record['id'];
                 $person_url = BASE_URL . "record/person/" . $personQ;
                 //Person Sex
                 $sex = "";
-                if (isset($record['sex1']) && isset($record['sex1']['value'])){
-                    if($record['sex1']['value'] != ''){
-                        $sex = $record['sex1']['value'];
-                    }
+                if(is_array($record['sex']) && count($record['sex']) > 0) {
+                    $sex = $record['sex'][0];
                 }
                 //Person Status
                 $status = '';
                 $statusCount = 0;
-                if (isset($record['status1']) && isset($record['status1']['value'])){
-                    $statusArray = explode('||', $record['status1']['value']);
-                    foreach ($statusArray as $stat) {
-                        if (!empty($stat)){
-                            if ($statusCount > 0){
-                                $status .= ", $stat";
-                            } else {
-                                $status .= "$stat";
-                            }
-                            $statusCount++;
-                        }
-                    }
+                if (is_array($record['person_status']) && count($record['person_status']) > 0){
+                    $statusCount = count($record['person_status']);
+                    $status = implode(', ', $record['person_status']);
                 }
                 //Person location
                 $places = '';
                 $placesCount = 0;
-                if (isset($record['place1']) && isset($record['place1']['value'])){
-                    $placesArray = explode('||', $record['place1']['value']);
-                    foreach ($placesArray as $place) {
-                        if (!empty($place)){
-                            if ($placesCount > 0){
-                                $places .= ", $place";
-                            } else {
-                                $places .= "$place";
-                            }
-                            $placesCount++;
-                        }
-                    }
-                }
+                // if (isset($record['place1']) && isset($record['place1']['value'])){
+                //     $placesArray = explode('||', $record['place1']['value']);
+                //     foreach ($placesArray as $place) {
+                //         if (!empty($place)){
+                //             if ($placesCount > 0){
+                //                 $places .= ", $place";
+                //             } else {
+                //                 $places .= "$place";
+                //             }
+                //             $placesCount++;
+                //         }
+                //     }
+                // }
                 //Date Range
                 $startYear = '';
-                if (isset($record['startyear1']) && isset($record['startyear1']['value'])){
-                    $startYears = explode('||', $record['startyear1']['value']);
-                    $startYear = min($startYears);
-                }
+                // if (isset($record['startyear1']) && isset($record['startyear1']['value'])){
+                //     $startYears = explode('||', $record['startyear1']['value']);
+                //     $startYear = min($startYears);
+                // }
                 $endYear = '';
-                if (isset($record['endyear1']) && isset($record['endyear1']['value'])){
-                    $endYears = explode('||', $record['endyear1']['value']);
-                    $endYear = max($endYears);
-                }
+                // if (isset($record['endyear1']) && isset($record['endyear1']['value'])){
+                //     $endYears = explode('||', $record['endyear1']['value']);
+                //     $endYear = max($endYears);
+                // }
                 $dateRange = '';
-                if ($startYear != '' && $endYear != ''){
-                    $dateRange = "$startYear - $endYear";
-                } elseif ($endYear == ''){
-                    $dateRange = $startYear;
-                } elseif ($startYear == '') {
-                    $dateRange = $endYear;
-                }
+                // if ($startYear != '' && $endYear != ''){
+                //     $dateRange = "$startYear - $endYear";
+                // } elseif ($endYear == ''){
+                //     $dateRange = $startYear;
+                // } elseif ($startYear == '') {
+                //     $dateRange = $endYear;
+                // }
                 //Connection counts
-                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
-                    $countpeople = $record['countpeople']['value'];
-                } else {
-                    $countpeople = '';
-                }
-                if(isset($record['countevent']) && isset($record['countevent']['value'])){
-                    $countevent = $record['countevent']['value'];
-                } else {
-                    $countevent = '';
-                }
-                if(isset($record['countplace']) && isset($record['countplace']['value'])){
-                    $countplace = $record['countplace']['value'];
-                } else {
-                    $countplace = '';
-                }
-                if(isset($record['countsource']) && isset($record['countsource']['value'])){
-                    $countsource = $record['countsource']['value'];
-                } else {
-                    $countsource = '';
-                }
+                $countpeople = '';
+                if (array_key_exists('countpeople', $record))
+                    $countpeople = $record['countpeople'];
+                $countevent = '';
+                if (array_key_exists('countevent', $record))
+                    $countevent = $record['countevent'];
+                $countplace = '';
+                if (array_key_exists('countplace', $record))
+                    $countplace = $record['countplace'];
+                $countsource = '';
+                if (array_key_exists('countsource', $record))
+                    $countsource = $record['countsource'];
                 //Connection HTML
                 $connection_lists = Array(
                     '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
@@ -1380,67 +1340,42 @@ HTML;
 
                 break;
             case 'places':
-                // print_r($record);die;
-
                 //Place name
-                $name = $record['placelabel']['value'];
+                $name = $record['label'];
 
                 //Place URL
-                $placeUrl = $record['place']['value'];
-                $xplode = explode('/', $placeUrl);
-                $placeQ = end($xplode); //qid
-
-                //Place Type
-                $type = "";
-                if (isset($record['placetype']) && isset($record['placetype']['value'])){
-                    if($record['placetype']['value'] != ''){
-                        $type = $record['placetype']['value'];
-                    }
-                }
+                $placeQ = $record['id'];
 
                 //Located In
                 $locatedIn = "";
-                if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])){
-                    if($record['locatedIn']['value'] != ''){
-                        $locatedIn = $record['locatedIn']['value'];
-                    }
-                }
+                if (is_array($record['located_in']) && count($record['located_in']) > 0)
+                    $locatedIn = $record['located_in'][0];
+
                 //Counts for connections
-                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
-                    $countpeople = $record['countpeople']['value'];
-                } else {
-                    $countpeople = '';
-                }
-                if(isset($record['countevent']) && isset($record['countevent']['value'])){
-                    $countevent = $record['countevent']['value'];
-                } else {
-                    $countevent = '';
-                }
-                if(isset($record['countplace']) && isset($record['countplace']['value'])){
-                    $countplace = $record['countplace']['value'];
-                } else {
-                    $countplace = '';
-                }
-                if(isset($record['countsource']) && isset($record['countsource']['value'])){
-                    $countsource = $record['countsource']['value'];
-                } else {
-                    $countsource = '';
-                }
-                 if(isset($record['types']) && isset($record['types']['value'])){
-                    $placeType = $record['types']['value'];
-                } else {
-                    $placeType = '';
-                }
-                if(isset($record['geonames']) && isset($record['geonames']['value'])){
-                    $geonames = $record['geonames']['value'];
-                } else {
-                    $geonames = '';
-                }
-                if(isset($record['code']) && isset($record['code']['value'])){
-                    $code = $record['code']['value'];
-                } else {
-                    $code = '';
-                }
+                $countpeople = '';
+                if (array_key_exists('countpeople', $record))
+                    $countpeople = $record['countpeople'];
+                $countevent = '';
+                if (array_key_exists('countevent', $record))
+                    $countevent = $record['countevent'];
+                $countplace = '';
+                if (array_key_exists('countplace', $record))
+                    $countplace = $record['countplace'];
+                $countsource = '';
+                if (array_key_exists('countsource', $record))
+                    $countsource = $record['countsource'];
+
+                $placeType = '';
+                if (is_array($record['place_type']) && count($record['place_type']) > 0)
+                    $placeType = $record['place_type'][0];
+
+                $geonames = '';
+                if (is_array($record['geoname_id']) && count($record['geoname_id']) > 0)
+                    $geonames = $record['geoname_id'][0];
+
+                $code = '';
+                if (is_array($record['modern_country_code']) && count($record['modern_country_code']) > 0)
+                    $code = $record['modern_country_code'][0];
 
                 //Connection html
                 $connection_lists = Array(
@@ -1570,69 +1505,42 @@ HTML;
                 break;
             case 'events':
                 //Event name
-                $name = $record['eventlab']['value'];
+                $name = $record['label'];
 
                 //Event URL
-                $eventUrl = $record['event']['value'];
-                $xplode = explode('/', $eventUrl);
-                $eventQ = end($xplode); //qid
+                $eventQ = $record['id'];
 
                 //Event Type
-                $type = "Unidentified";
-                if (isset($record['eventtypeLabel']) && isset($record['eventtypeLabel']['value'])){
-                    if($record['eventtypeLabel']['value'] != ''){
-                        $type = $record['eventtypeLabel']['value'];
-                    }
-                }
+                $type = 'Unidentified';
+                if (is_array($record['event_type']) && count($record['event_type']) > 0)
+                    $type = $record['event_type'][0];
 
                 //Event Roles
                 $roles = '';
                 $rolesCount = 0;
-                if (isset($record['roles']) && isset($record['roles']['value'])){
-                    $rolesArray = explode('||', $record['roles']['value']);
-
-                    foreach ($rolesArray as $role) {
-                        if (!empty($role)){
-                            if ($rolesCount > 0){
-                                $roles .= ", $role";
-                            } else {
-                                $roles .= "$role";
-                            }
-                            $rolesCount++;
-                        }
-                    }
+                if (is_array($record['provides_participant_role']) && count($record['provides_participant_role']) > 0) {
+                    $roles = implode(', ', $record['provides_participant_role']);
+                    $rolesCount = count($record['provides_participant_role']);
                 }
 
                 // Event Places
                 $places = '';
                 $placesCount = 0;
-                if (isset($record['places']) && isset($record['places']['value'])){
-                    $placesArray = explode('||', $record['places']['value']);
-
-                    foreach ($placesArray as $place) {
-                        if (!empty($place)){
-                            if ($placesCount > 0){
-                                $places .= ", $place";
-                            } else {
-                                $places .= "$place";
-                            }
-                            $placesCount++;
-                        }
-                    }
+                if (is_array($record['at_place']) && count($record['at_place']) > 0) {
+                    $places = implode(', ', $record['at_place']);
+                    $placesCount = count($record['at_place']);
                 }
 
                 //Event Start Year
                 $startYear = '';
-                if (isset($record['startyear']) && isset($record['startyear']['value'])){
-                    $startYears = explode('||', $record['startyear']['value']);
-                    $startYear = min($startYears);
+                if ($record['date'] != 0000) {
+                    $startYear = $record['date'][0];
                 }
 
                 //Event End Year
                 $endYear = '';
-                if (isset($record['endyear']) && isset($record['endyear']['value'])){
-                    $endYears = explode('||', $record['endyear']['value']);
-                    $endYear = max($endYears);
+                if ($record['end_date'] != 0000) {
+                    $startYear = $record['end_date'][0];
                 }
 
                 //Date range
@@ -1645,27 +1553,18 @@ HTML;
                     $dateRange = $endYear;
                 }
 
-                //Counts for connections
-                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
-                    $countpeople = $record['countpeople']['value'];
-                } else {
-                    $countpeople = '';
-                }
-                if(isset($record['countevent']) && isset($record['countevent']['value'])){
-                    $countevent = $record['countevent']['value'];
-                } else {
-                    $countevent = '';
-                }
-                if(isset($record['countplace']) && isset($record['countplace']['value'])){
-                    $countplace = $record['countplace']['value'];
-                } else {
-                    $countplace = '';
-                }
-                if(isset($record['countsource']) && isset($record['countsource']['value'])){
-                    $countsource = $record['countsource']['value'];
-                } else {
-                    $countsource = '';
-                }
+                $countpeople = '';
+                if (array_key_exists('countpeople', $record))
+                    $countpeople = $record['countpeople'];
+                $countevent = '';
+                if (array_key_exists('countevent', $record))
+                    $countevent = $record['countevent'];
+                $countplace = '';
+                if (array_key_exists('countplace', $record))
+                    $countplace = $record['countplace'];
+                $countsource = '';
+                if (array_key_exists('countsource', $record))
+                    $countsource = $record['countsource'];
 
                 //Connection html
                 $connection_lists = Array(
@@ -1791,63 +1690,43 @@ HTML;
                 break;
             case 'sources':
                 //Source name
-                $name = $record['sourceLabel']['value'];
+                $name = $record['label'];
 
                 //Source URL
-                $sourceUrl = $record['source']['value'];
-                $xplode = explode('/', $sourceUrl);
-                $sourceQ = end($xplode); //qid
+                $sourceQ = $record['id'];
 
                 //Source Type
                 $type = "Unidentified";
                 $typeCount = 0;
-                if (isset($record['sourcetypeLabel']) && isset($record['sourcetypeLabel']['value'])){
-                    if($record['sourcetypeLabel']['value'] != ''){
-                        $types = explode('||', $record['sourcetypeLabel']['value']);
-                        $type = "";
-
-                        foreach ($types as $t) {
-                            if (!empty($t)){
-                                if ($typeCount > 0){
-                                    $type .= ", $t";
-                                } else {
-                                    $type .= "$t";
-                                }
-                                $typeCount++;
-                            }
-                        }
-                    }
+                if (is_array($record['source_type']) && count($record['source_type']) > 0) {
+                    $type = implode(' ,', $record['source_type']);
+                    $typeCount = count($record['source_type']);
                 }
 
                 //Source Project
                 $project = "";
-                if (isset($record['projectLabel']) && isset($record['projectLabel']['value'])){
-                    if($record['projectLabel']['value'] != ''){
-                        $project = $record['projectLabel']['value'];
-                    }
+                if (is_array($record['generated_by']) && count($record['generated_by']) > 0)
+                    $project = $record['generated_by'][0];
+
+                // description (not capturing this currently)
+                if(isset($record['desc']) && isset($record['desc']['value'])){
+                    $desc = $record['desc']['value'];
+                } else {
+                    $desc = '';
                 }
 
-                //Counts for connections
-                if(isset($record['countpeople']) && isset($record['countpeople']['value'])){
-                    $countpeople = $record['countpeople']['value'];
-                } else {
-                    $countpeople = '';
-                }
-                if(isset($record['countevent']) && isset($record['countevent']['value'])){
-                    $countevent = $record['countevent']['value'];
-                } else {
-                    $countevent = '';
-                }
-                if(isset($record['countplace']) && isset($record['countplace']['value'])){
-                    $countplace = $record['countplace']['value'];
-                } else {
-                    $countplace = '';
-                }
-                if(isset($record['countsource']) && isset($record['countsource']['value'])){
-                    $countsource = $record['countsource']['value'];
-                } else {
-                    $countsource = '';
-                }
+                $countpeople = '';
+                if (array_key_exists('countpeople', $record))
+                    $countpeople = $record['countpeople'];
+                $countevent = '';
+                if (array_key_exists('countevent', $record))
+                    $countevent = $record['countevent'];
+                $countplace = '';
+                if (array_key_exists('countplace', $record))
+                    $countplace = $record['countplace'];
+                $countsource = '';
+                if (array_key_exists('countsource', $record))
+                    $countsource = $record['countsource'];
 
                 //Connection html
                 $connection_lists = Array(
@@ -2254,7 +2133,7 @@ HTML;
                 }
                 break;
             default:
-                print_r($results);
+                print_r('Error');
                 die;
                 break;
         }

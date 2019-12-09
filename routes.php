@@ -2,7 +2,6 @@
 
 $GLOBALS['api_routes'] = array(
     'api/getWebPages' => array('configFunctions.php', 'Kora_GetNavigationData'),
-    'api/testing' => array('functions.php', 'testingFunction'),
     'api/printEpisodes' => array('functions.php', 'printEpisodes'),
     'api/admin' => array('functions.php', 'admin'),
     'api/blazegraph' => array('functions.php', 'blazegraph'),
@@ -10,13 +9,16 @@ $GLOBALS['api_routes'] = array(
 	'api/counterOfGender' => array('explorefunctions.php', 'counterOfGender'),
 	'api/counterOfType' => array('explorefunctions.php', 'counterOfType'),
 	'api/getSearchFilterCounters' => array('explorefunctions.php', 'getSearchFilterCounters'),
-	'api/getHomePageCounters' => array('explorefunctions.php', 'getHomePageCounters'),
 	'api/getFullRecordHtml' => array('explorefunctions.php', 'getFullRecordHtml'),
     'api/getDateRange' => array('explorefunctions.php', 'getEventDateRange'),
     'api/getProjectFullInfo' => array('explorefunctions.php', 'getProjectFullInfo'),
     'api/getFullRecordConnections' => array('explorefunctions.php', 'getFullRecordConnections'),
     'api/getCrawlerResults' => array('crawler_jquery.php', ''),
-    'api/getQidValue' => array('functions.php','getQidValue')
+    'api/getQidValue' => array('functions.php','getQidValue'),
+    'api/keywordSearch' => array('search.php', 'keyword_search'),
+    'api/getAllCounts' => array('search.php', 'all_counts_ajax'),
+    'api/filteredCounts' => array('search.php', 'filtered_counts'),
+    'api/searchFilterCounts' => array('search.php', 'search_filter_counts')
 );
 
 $GLOBALS['routes'] = array(

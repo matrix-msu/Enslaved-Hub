@@ -1,10 +1,12 @@
 <?php
+//TODO::q numbers are wrong
 const personstatus=[
 'Freed Person'	          => 'Q58',
+'Free Person'            => 'Q58',
 'Enslaved Person'	      => 'Q199',
-'Master/Guardian/Owner'	  => 'Q200',
-'Indentured'	          => 'Q201',
-'Emancipated Person'      => 'Q263'
+'Master or Owner'	  => 'Q200',
+'Indentured, Apprentice, or Pawn' => 'Q201',
+'Person with Liminal Status' => ''
 ];
 
 const qpersonstatus=[

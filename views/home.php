@@ -73,7 +73,7 @@ $randomTitle2 = $featuredResults[$randomStory2]["Title"];
                     <a class="content-link" href="<?php echo BASE_URL;?>search/people">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                         <p class="type">People</p>
-                        <p class="count" id="count-agents"></p>
+                        <p class="count" id="count-people"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a  class="content-link"href="<?php echo BASE_URL;?>search/events">

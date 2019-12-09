@@ -31,6 +31,10 @@ define('WIKI_ENTITY_URL', BASE_WIKI_URL.'entity/');
 define('BLAZEGRAPH_URL', BASE_BLAZEGRAPH_URL.'namespace/wdq/sparql');
 define('API_URL', BASE_BLAZEGRAPH_URL.'sparql?query=');
 
+//elasticsearch
+define('ELASTICSEARCH_URL', '');
+define('ELASTICSEARCH_INDEX_NAME', '');
+
 //kora project information - change these for your project
 define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');
 define('STORY_SID', 23);
@@ -154,6 +158,7 @@ require_once( BASE_LIB_PATH . "mySqlWrapper.php" );
 require_once( BASE_FUNCTIONS_PATH . "explorefunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "storyfunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "functions.php");
+require_once( BASE_FUNCTIONS_PATH . "search.php");
 
 //database info for crawler
 define("Host", "rush.matrix.msu.edu");

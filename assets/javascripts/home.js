@@ -1,10 +1,22 @@
 $(document).ready(function () {
     // Fill in the counters
+    // $.ajax({
+    //     url: BASE_URL + "api/getHomePageCounters",
+    //     type: "GET",
+    //     'success': function (data) {
+    //         result_array = JSON.parse(data);
+    //         for (var key in result_array) {
+    //             $("#count-"+key).html(result_array[key])
+    //         }
+    //     }
+    // });
+
     $.ajax({
-        url: BASE_URL + "api/getHomePageCounters",
+        url: BASE_URL + "api/getAllCounts",
         type: "GET",
         'success': function (data) {
             result_array = JSON.parse(data);
+            console.log(result_array)
             for (var key in result_array) {
                 $("#count-"+key).html(result_array[key])
             }

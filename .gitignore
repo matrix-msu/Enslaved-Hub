@@ -16,3 +16,11 @@ assets/stylesheets/style.css
 # Editor files
 *.sublime-workspace
 *.sublime-project
+
+# composer
+composer.phar
+/vendor/
+
+# os specific
+._.DS_Store
+.DS_Store
