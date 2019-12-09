@@ -226,13 +226,11 @@ function fillFilterCounters(allCounters){
     $.each(allCounters, function (type, data) {
         $.each(data, function (category, fields) {
             $.each(fields, function (label, count) {
-                // fill in the counters for the filters
                 if (label != "") {
-                    var $input = $("input[value='" + label + "']");
+                    var $input = $(`input[value='${label}'][data-category='${category}']`);
                     var $counter = $input.next().find('em');
-                    $counter.html('(' + count + ')');    // show the count
+                    $counter.html('(' + count + ')');
 
-                    // hide filter if count is 0
                     if (count > 0){
                         var $li = $input.parent().parent();
                         $li.removeClass('hide-category')

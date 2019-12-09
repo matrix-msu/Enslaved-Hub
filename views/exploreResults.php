@@ -90,7 +90,7 @@
                         foreach ($typeCats as $category => $qid) { ?>
                             <li class="hide-category">
                                 <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>" data-category="<?php echo $type; ?>">
                                     <p><?php echo $category; ?> <em></em></p>
                                     <span></span>
                                 </label>
