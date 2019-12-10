@@ -3,15 +3,6 @@ require_once(BASE_PATH . 'vendor/autoload.php');
 require_once(BASE_PATH . 'functions/functions.php');
 use Elasticsearch\ClientBuilder;
 
-// $params = [
-//     'index' => 'my_index',
-//     'id'    => 'my_id',
-//     'body'  => ['testField' => 'abc']
-// ];
-
-// $response = $client->index($params);
-// print_r($response);
-
 function all_counts_ajax() {
     echo json_encode(all_counts());
 }
@@ -84,6 +75,14 @@ function search_filter_counts() {
         $filter_types = $_GET['filter_types'];
     }
 
+    $search_type = '';
+    if (isset($_GET['search_type'])){
+        $search_type = $_GET['search_type'];
+    }
+
+    if ($search_type != 'people')
+        $search_type = substr_replace($search_type, '', -1);
+
     $filters = [
         'people' => [
             'Gender' => [
@@ -106,8 +105,7 @@ function search_filter_counts() {
         'event' => [
             'Event Type' => [
                 'event_type' => eventTypes
-            ],
-            // 'Date' => [] TODO
+            ]
         ],
         'place' => [
             'Place Type' => [
@@ -121,8 +119,12 @@ function search_filter_counts() {
             'Source Type' => [
                 'source_type' => sourceTypes
             ]
+        ],
+        'project' => [
+            'Projects' => [
+                'generated_by' => projects
+            ]
         ]
-        // 'projects' => [] not sure what to do here
     ];
 
     $total = [];
@@ -138,7 +140,7 @@ function search_filter_counts() {
                                 'match_all' => new \stdClass()
                             ],
                             'filter' => [
-                                ['term' => ['type' => $type]]
+                                ['term' => ['type' => $search_type]]
                             ]
                         ]
                     ],
@@ -273,7 +275,6 @@ function filtered_counts() {
                 $tmp_params['body']['query']['bool']['filter'],
                 ['term' => [$field . '.raw' => $value]]
             );
-            // print_r($tmp_params);
             $res = $es->search($tmp_params);
 
             $total[$value] = $res['aggregations']['total']['value'];
@@ -303,7 +304,9 @@ function keyword_search() {
         'gender' => 'sex',
         'role_types' => 'participant_role',
         'status' => 'person_status',
-        'event-type' => 'event_type'
+        'event-type' => 'event_type',
+        'projects' => 'generated_by',
+        'modern_countries' => 'modern_country_code'
     ];
 
     if (isset($_GET['preset'])) {
@@ -441,10 +444,30 @@ function keyword_search() {
                 break;
             }
 
-            $key = $key . '.raw';
-
-            array_push($terms, ['terms' => [$key => $value]]);
+            if ($key == 'date') {
+                $dates = explode('-', $value[0]);
+                //TODO::add gte or lte separate
+                $range_filter = [
+                    'range' => [
+                        'date.raw' => [
+                            'gte' => $dates[0],
+                            'lte' => $dates[1]
+                        ]
+                    ]
+                ];
+                array_push($terms, $range_filter);
+            } else if ($key == 'modern_country_code') {
+                $codes = [];
+                foreach ($value as $country) {
+                    array_push($codes, reversecountrycode[$country]);
+                }
+                array_push($terms, ['terms' => ['modern_country_code.raw' => $codes]]);
+            } else {
+                $key = $key . '.raw';
+                array_push($terms, ['terms' => [$key => $value]]);
+            }
         }
+
         $params['body']['query']['bool']['filter'] = $terms;
     }
 

@@ -63,11 +63,9 @@ $(document).ready(function(){
                 method: "GET",
                 data: {type: JS_EXPLORE_FILTERS,  category:JS_EXPLORE_FORM},
                 'success': function (data) {
-                    console.log(data)
                     data = JSON.parse(data);
 
                     $.each(data, function(label, count) {
-                        console.log(label, count)
                         if (label != ""){
                             var span = $("a:contains("+label+")").find('span');
                             if ($(span).length > 0){

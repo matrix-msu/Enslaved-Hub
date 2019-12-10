@@ -125,11 +125,6 @@ function searchResults(preset, limit = 12, offset = 0)
     var templates = ['gridCard', 'tableCard'];
     generateFilterCards();
 
-    // console.log(preset)
-    // console.log(filters)
-    // console.log(templates)
-    // console.log(display)
-
     $.ajax({
         url: BASE_URL + "api/keywordSearch",
         type: "GET",
@@ -238,7 +233,11 @@ function fillFilterCounters(allCounters){
         $.each(data, function (category, fields) {
             $.each(fields, function (label, count) {
                 if (label != "") {
-                    var $input = $(`input[value='${label}'][data-category='${category}']`);
+                    if (category == 'Modern Countries') {
+                        var $input = $(`[data-countryCode='${label}'][data-category='${category}']`);
+                    } else {
+                        var $input = $(`input[value='${label}'][data-category='${category}']`);
+                    }
                     var $counter = $input.next().find('em');
                     $counter.html('(' + count + ')');
 

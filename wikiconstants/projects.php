@@ -8,12 +8,9 @@ const qprojects=['Q18' => 'Liberated Africans',
 'Q577' => 'Freedom Narratives'];
 
 const projects=[
-  'Liberated Africans' => 'Q18',
-  'Slave Biographies' => 'Q25',
-  'Voyages: The Trans-Atlantic Slave Trade Database' => 'Q216',
-  'African American National Biography (AANB)' => 'Q523',
-  'Slave Societies Digital Archive' => 'Q537',
-  'Legacies of British Slave Ownership' => 'Q570',
-  'Freedom Narratives' => 'Q577'
+    'Enslaved Project' => 'Q464',
+    'Voyages: The Trans-Atlantic Slave Trade Database' => 'Q9866',
+    'African Origins' => 'Q9867',
+    'Maranhão Inventories Slave Database (MISD)' => 'Q108034'
 ];
 ?>
