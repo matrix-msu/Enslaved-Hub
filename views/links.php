@@ -10,7 +10,7 @@
     <div class="image-container search-page image-only">
 	    <div class="container middlewrap">
         <div class="search-title">
-            <h1>Web Crawler</h1>
+            <h1>Resources</h1>
         </div>
     </div>
       <div class="image-background-overlay"></div>
