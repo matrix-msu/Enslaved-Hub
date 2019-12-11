@@ -58,10 +58,27 @@ $cache_Data = Json_GetData_ByTitle("Stories");
         <div class="cardwrap2">
             <ul class="cards">
                 <?php
+                $bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+                        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+                        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+                        'enslaved-header-bg7.jpg'];
+
+                // print_r($featured);die;
                 foreach ($featured as $kid => $story) {
-                    echo '<li class="card card-story"><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
+                    //get images from records
+                    $storyImages = $story["Images"];
+                    if (isset($storyImages[0])){
+                        $storyImage = $storyImages[0]['url'];
+                    } else {
+                        $storyIndex = array_rand($bg);
+                        $storyImage = BASE_URL.'assets/images/'.$bg[$storyIndex];
+                    }
+
+                    echo '<li class="card card-story" style="background-image: url('.$storyImage.')">';
+                    echo '<div class="overlay">';
+                    echo '<a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
                     echo '<h2 class="card-title">'.$story['Title'].'</h2>';
-                    echo '</a></li>';
+                    echo '</a></div></li>';
                 }
                 ?>
             </ul>

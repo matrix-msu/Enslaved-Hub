@@ -3,7 +3,7 @@
 }
 
 .header{
-	
+
         h1{
             font-size: 65px;
             line-height: 1.2;
@@ -39,7 +39,7 @@
                 }
             }
         }
-        
+
         .heading-search {
             h3 {
                 font-size: 20px;
@@ -50,7 +50,7 @@
                 border-radius: 5px;
                 position: relative;
                 margin: 20px 0 0;
-                
+
                 .search-field{
                     border: 2px solid #FFF;
                     border-radius: 5px;
@@ -66,7 +66,7 @@
                     height: 60px;
                     width: 100%;
                     padding-right: 60px;
-        
+
                     &:hover{
                         border: 2px solid $sub-base;
                     }
@@ -79,12 +79,12 @@
                     opacity: 1; /* Firefox */
                     font-style: italic;
                 }
-                
+
                 :-ms-input-placeholder { /* Internet Explorer 10-11 */
                     color: $base-dark;
                     font-style: italic;
                 }
-                
+
                 ::-ms-input-placeholder { /* Microsoft Edge */
                     color: $base-dark;
                     font-style: italic;
@@ -99,7 +99,7 @@
                 float: right;
                 margin-left: 20px;
             }
-        
+
     }
 
     @media screen and (max-width: $max-width-tablet) {
@@ -167,20 +167,20 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
-    
+
      .section-epp {
         background: url('../images/enslaved-epp-bg.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        padding: 90px 0 70px 0; 
+        padding: 90px 0 70px 0;
         z-index: 1;
     }
 
     .section-project {
       	box-shadow: 0 20px 40px 0 rgba(0,0,0,0.1);
       	position: relative;
-      	
+
         .col img {
             border-radius: 5px;
             box-shadow: 0 10px 20px 0 rgba(0,0,0,0.15);
@@ -226,12 +226,12 @@
                 list-style-type: none;
                 margin: 0 0 0 0;
                 padding: 0;
-    
+
                 li{
                     width: 100%; //card sizing
                     margin-bottom: 25px; //card placement for this and 2 child stylings
                     padding: 0;
-    
+
                     a{
                         color: inherit;
                         text-decoration: none;
@@ -240,21 +240,21 @@
                     &:last-child{
                         margin-bottom: 0;
                     }
-    
+
                     &:nth-child(2n-1){
                         background-image: url(../images/Rectangle7Copy.jpg);
                         background-position: center;
                         background-size: cover;
                         background-repeat: no-repeat;
                     }
-    
+
                     &:nth-child(2n){
                         background-image: url(../images/Rectangle7.jpg);
                         background-position: center;
                         background-size: cover;
                         background-repeat: no-repeat;
                     }
-    
+
                     .cards{
                         border: 3px solid rgba(13,18,48,0);
                         box-shadow: 0 2px 3px 0 rgba(30,30,30,0.05);
@@ -265,7 +265,7 @@
                         padding: 20px;
                         position: relative;
                         transition: border 0.3s ease, box-shadow 0.3s ease;
-    
+
                         p{
                             display: -webkit-box;
                             font-size: 14px;
@@ -275,12 +275,12 @@
                             -webkit-line-clamp: 3;
                             -webkit-box-orient: vertical;
                         }
-    
+
                         .card-title{
                             font-size: 26px;
                             max-width: 280px;
                         }
-    
+
                         .card-view-story{
                             bottom: 15px;
                             right: 15px;
@@ -288,7 +288,7 @@
                             position: absolute;
                             transition: color 0.3s ease;
                             font-style: italic;
-    
+
                             .view-arrow{
                                 transform: rotate(270deg);
                                 float: right;
@@ -299,17 +299,17 @@
                                 background-image: url(../images/Arrow.svg);
                                 background-repeat: no-repeat;
                                 transition: background-image 0.3s ease;
-                                
+
                             }
                         }
-    
+
                         &:hover{
                             border: 3px solid $sub-base;
                             box-shadow: 0 12px 13px 0 rgba(30,30,30,0.05);
-    
+
                             .card-view-story{
                                 color: $sub-base;
-    
+
                                 .view-arrow{
                                     background-image: url(../images/Arrow_colored.svg);
                                 }
@@ -390,6 +390,10 @@
                     -webkit-box-orient: vertical;
                 }
 
+                // .overlay{
+                //     background: linear-gradient(180deg, rgba(14,50,50,0.5) 0%, rgba(14,50,50,0) 100%);
+                // }
+
                 .card-title{
                     font-size: 26px;
                     max-width: 280px;
@@ -413,7 +417,7 @@
                         background-image: url(../images/Arrow.svg);
                         background-repeat: no-repeat;
                         transition: background-image 0.3s ease;
-                        
+
                     }
                 }
 

@@ -907,20 +907,11 @@ HTML;
 
     //Loop through and match up
     $matched = '';
-    for($i=0; $i < sizeof($projectUrls); $i++){
-        if (!isset($projectNames[$i]) ){
-          continue;
-        }
-
-        $explode = explode('/', $projectUrls[$i]);
-        $projectQ = end($explode);
-        $projectUrl = $baseurl . 'project/' . $projectQ;
-        $matched = $projectNames[$i];
-
-        $html .= <<<HTML
-<div class="detail-bottom">
-    <a href='$projectUrl'>$projectNames[$i]</a>
-HTML;
+    foreach($projectNames as $projectName){
+            $html .= <<<HTML
+    <div class="detail-bottom">
+        <p>$projectName</p>
+    HTML;
     }
     $html .= '</div></div>';
 } else if ($label == "ecvoA"){
@@ -1104,7 +1095,7 @@ HTML;
             continue;
         }
         else{
-          $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
+          // $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
         }
         $detailname = $statementArr[$x];
         $html .= "<div>" . $detailname;

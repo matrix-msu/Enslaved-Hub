@@ -60,10 +60,25 @@ function getStories($page = 1, $count = 8, $sort = []){
 }
 
 function displayStories($stories){
+    $bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+            'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+            'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+            'enslaved-header-bg7.jpg'];
+
     foreach ($stories['records'][0] as $kid => $story) {
-        echo '<li class="card"><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
+        //get images from records
+        $storyImages = $story["Images"];
+        if (isset($storyImages[0])){
+            $storyImage = $storyImages[0]['url'];
+        } else {
+            $storyIndex = array_rand($bg);
+            $storyImage = BASE_URL.'assets/images/'.$bg[$storyIndex];
+        }
+
+        echo '<li class="card" style="background-image: url('.$storyImage.')"><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
+        echo '<div class="overlay">';
         echo '<h2 class="card-title">'.$story['Title'].'</h2>';
-        echo '</a></li>';
+        echo '</a></div></li>';
     }
 }
 
