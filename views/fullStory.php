@@ -237,6 +237,7 @@ else {
 <div class="extra-info">
     <div class="share-links">
         <h2>Share this Record</h2>
+        <a href="facebook.com" target="_blank"></a>
         <img src="<?php echo BASE_URL;?>/assets/images/Facebook.svg" alt="facebook"/>
         <img src="<?php echo BASE_URL;?>/assets/images/Twitter.svg" alt="twitter"/>
         <!-- <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
