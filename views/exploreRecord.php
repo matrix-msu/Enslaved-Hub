@@ -1,13 +1,16 @@
 <!-- Author: Drew Schineller-->
 <!-- Explore Full Record page-->
 <!-- Heading image and title container-->
-<div class="container header record-header people-page">
-    <div class="container middlewrap">
-<!--        <h4 class="last-page-header"><a id="last-page" href="--><?php //echo BASE_URL;?><!--explorePeople"><span id="previous-title">People // </span></a><span id="current-title">Firstname Lastname</span></h4>-->
-<!--        <h1>--><?php //echo $person_array['Name'];?><!--</h1>-->
-<!--        <h2 class="date-range"><span>1840</span>-<span>1864</span></h2>-->
+<div class="container header">
+    <div class="image-container record-page image-only">
+        <div class="container middlewrap"></div>
+        <div class="image-background-overlay"></div>
+        <img class="header-background full-height record-page" src="<?php echo BASE_URL;?>assets/images/PersonLanding.jpg" alt="Enslaved Background Image">
     </div>
 </div>
+
+
+
 <div class="jump-buttons person-buttons">
     <div class="jumpwrap">
         <?php
@@ -135,9 +138,7 @@ if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
     </div>
     <div class="copyright">
         <h2>Copyright</h2>
-        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
-            <img class="cc-by-nc" src="<?php echo BASE_URL;?>assets/images/CC-BY-NC.svg" alt="copyrights"/>
-        </a>
+        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg" alt="copyrights"/>
     </div>
 </div>
 
