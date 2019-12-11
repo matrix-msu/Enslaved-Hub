@@ -26,6 +26,18 @@ function Kora_GetNavigationData()
 	// echo($koraResults);die;
 	if(array_key_exists("error", $decode_results)) return json_encode("failed");
 
+	// if (!file_exists('cache')) {
+	//     mkdir('cache', 0777, true);
+	// }
+
+	// if (!file_exists('cache/webPages.json')) {
+	//     touch('cache/webPages.json');
+	// }
+	//
+	// if (!file_exists('cache/navContents.json')) {
+	//     touch('cache/webPages.json');
+	// }
+
 	// Read from the webPages file and compare to the kora results
 	$cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
 	if($cached_data == json_encode(json_decode($koraResults)->records[0])) return json_encode("similar");
