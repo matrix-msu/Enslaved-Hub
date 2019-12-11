@@ -117,7 +117,8 @@
                         foreach ($typeCats as $category => $qid) { ?>
                             <li class="hide-category">
                                 <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?> " data-qid="<?php echo $qid; ?>">
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>"
+                                    data-category="<?php echo $type; ?>">
                                     <p><?php echo $category; ?> <em></em></p>
                                     <span></span>
                                 </label>
@@ -159,7 +160,8 @@
                             foreach ($typeCats as $countryCode => $countryName) { ?>
                                 <li >
                                     <label class="<?php echo $catLower; ?>">
-                                        <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-countryCode="<?php echo $countryCode; ?>">
+                                        <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-countryCode="<?php echo $countryCode; ?>"
+                                        data-category="<?php echo $type; ?>">
                                         <p><?php echo $countryName; ?> <em></em></p>
                                         <span></span>
                                     </label>
@@ -169,7 +171,8 @@
                             foreach ($typeCats as $category => $qid) { ?>
                                 <li class="hide-category">
                                     <label class="<?php echo $catLower; ?>">
-                                        <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
+                                        <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>"
+                                        data-category="<?php echo $type; ?>">
                                         <p><?php echo $category; ?> <em></em></p>
                                         <span></span>
                                     </label>
@@ -198,7 +201,8 @@
                         foreach ($typeCats as $category => $qid) { ?>
                             <li class="hide-category">
                                 <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>"
+                                    data-category="<?php echo $type; ?>">
                                     <p><?php echo $category; ?> <em></em></p>
                                     <span></span>
                                 </label>
@@ -227,8 +231,9 @@
                         foreach ($typeCats as $category => $qid) { ?>
                             <li>
                                 <label class="<?php echo $catLower; ?>">
-                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>">
-                                    <p><?php echo $category; ?></p>
+                                    <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>"
+                                    data-category="<?php echo $type; ?>">
+                                    <p><?php echo $category; ?> <em></em></p>
                                     <span></span>
                                 </label>
                             </li>

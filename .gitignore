@@ -24,3 +24,6 @@ composer.phar
 # os specific
 ._.DS_Store
 .DS_Store
+
+# project specific
+cache/*
