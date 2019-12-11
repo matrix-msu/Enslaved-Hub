@@ -42,6 +42,17 @@ if(category == 'people' || category == 'events' || category == 'places' || categ
     $(".heading-search").empty()
 }
 
+$( ".page-numbers" ).click(function() {
+    scrollToTop();
+});
+
+function scrollToTop(){
+    // console.log('in');
+    // var position = $('#searchResults').position();
+    // console.log(position.top);
+    $(window).scrollTop(320);
+}
+
 // Get params from url
 if(document.location.toString().indexOf('?') !== -1)
 {
@@ -112,28 +123,28 @@ function searchResults(preset, limit = 12, offset = 0)
     filters['offset'] = offset;
     card_offset = offset;
     var templates = ['gridCard', 'tableCard'];
-    // console.log(preset, filters, templates);
     generateFilterCards();
 
-    console.log(preset, filters, templates, display)
+    // console.log(preset)
+    // console.log(filters)
+    // console.log(templates)
+    // console.log(display)
 
     $.ajax({
-        url: BASE_URL + "api/blazegraph",
+        url: BASE_URL + "api/keywordSearch",
         type: "GET",
         data: {
             preset: preset,
             filters: filters,
             templates: templates,
-            display:display
+            display: display
         },
-        'success': function (data)
-        {
+        'success': function (data) {
             isSearching = false;
             result_array = JSON.parse(data);
-            console.log('results', result_array)
 
             if (preset == "all"){
-                var allCounters = JSON.parse(result_array['total']);
+                var allCounters = result_array['total'];
                 var firstTypeWithResults = '';
                 for (var type in filtersToSearchType){
                     var counter = allCounters[type+"count"]["value"];
@@ -198,13 +209,13 @@ function searchResults(preset, limit = 12, offset = 0)
             $(document).ready(function(){
                 appendCards();
                 setPagination(total_length, card_limit, card_offset);
-                console.log('refilling')
                 $.ajax({
-                    url: BASE_URL + "api/getSearchFilterCounters",
+                    url: BASE_URL + "api/searchFilterCounts",
                     type: "GET",
                     data: {
                         search_type: display,
-                        filters: filters,
+                        // TODO::temp fix to show all filters
+                        filters: {'limit': limit, 'offset': offset},
                         filter_types: filtersToSearchType[display]
                     },
                     'success': function (data) {
@@ -223,53 +234,22 @@ function fillFilterCounters(allCounters){
     $(".filter-cat li").each(function(){
         $(this).addClass("hide-category");
     });
-    for (var filterType in allCounters) {
-        var counterType = allCounters[filterType];
-
-        for (var filter in counterType) {
-            JSON.parse(counterType[filter]).forEach(function (record) {
-                var label = "";
-                var count = "";
-                var qid = "";
-
-                for (var key in record) {
-                    if (record[key]['type'] == "uri") {
-                        qid = record[key]['value'].split('/').pop()
-                    }
-
-                    if (key.match("Label$")) {
-                        label = record[key]['value'];
-                    }
-                    if (key.match("count$")) {
-                        count = record[key]['value'];
-                    }
-                    else if (key.match("Count$")) {
-                        if (count !== "") {
-                            var count2 = record[key]['value'];
-                            count = count + count2;
-                        }
-                        else {
-                            count = record[key]['value'];
-                        }
-
-                    }
-                }
-
-                // fill in the counters for the filters
-                if (label != "" && qid != "") {
-                    var $input = $("input[data-qid='" + qid + "']");
+    $.each(allCounters, function (type, data) {
+        $.each(data, function (category, fields) {
+            $.each(fields, function (label, count) {
+                if (label != "") {
+                    var $input = $(`input[value='${label}'][data-category='${category}']`);
                     var $counter = $input.next().find('em');
-                    $counter.html('(' + count + ')');    // show the count
+                    $counter.html('(' + count + ')');
 
-                    // hide filter if count is 0
                     if (count > 0){
                         var $li = $input.parent().parent();
                         $li.removeClass('hide-category')
                     }
                 }
             });
-        }
-    }
+        });
+    });
 }
 
 
@@ -307,53 +287,55 @@ searchResults(search_type);
 $(document).ready(function() {
     hideFilterCategories();
 
-    var firstFilter = "";
+    // TODO::not sure if this is needed since search triggers
+    // the filters anyways
+    // var firstFilter = "";
 
-    for (filter in filters){
-        if (filter != "limit" && filter != "offset"){
-            firstFilter = filter;
-            break;
-        }
-    }
+    // for (filter in filters){
+    //     if (filter != "limit" && filter != "offset"){
+    //         firstFilter = filter;
+    //         break;
+    //     }
+    // }
 
     // get the search type filters first
-    $.ajax({
-        url: BASE_URL + "api/getSearchFilterCounters",
-        type: "GET",
-        data: {
-            search_type: search_type,
-            filters: filters,
-            filter_types: [search_type]
-        },
-        'success': function (data) {
-            var allCounters = JSON.parse(data);
-            fillFilterCounters(allCounters);
-            // console.log('success', allCounters)
+    // $.ajax({
+    //     url: BASE_URL + "api/getSearchFilterCounters",
+    //     type: "GET",
+    //     data: {
+    //         search_type: search_type,
+    //         filters: filters,
+    //         filter_types: [search_type]
+    //     },
+    //     'success': function (data) {
+    //         // get the rest of the filters
+    //         if (search_type != "all"){
+    //             $.ajax({
+    //                 url: BASE_URL + "api/getSearchFilterCounters",
+    //                 type: "GET",
+    //                 data: {
+    //                     search_type: search_type,
+    //                     filters: filters,
+    //                     filter_types: filtersToSearchType[search_type]
+    //                 },
+    //                 'success': function (data) {
+    //                     var allCounters = JSON.parse(data);
+    //                     fillFilterCounters(allCounters);
+    //                 }
+    //             });
+    //         } else {
+    //             var allCounters = JSON.parse(data);
+    //             // console.log('success', allCounters)
 
-            // open the drawer for the first filter once the counters are made
-            if (firstFilter != ""){
-                if ( !$("li[name='" + firstFilter + "']").find("span").hasClass("show") )
-                $("li[name='" + firstFilter + "']").trigger('click');
-            }
-
-            // get the rest of the filters
-            if (search_type != "all"){
-                $.ajax({
-                    url: BASE_URL + "api/getSearchFilterCounters",
-                    type: "GET",
-                    data: {
-                        search_type: search_type,
-                        filters: filters,
-                        filter_types: filtersToSearchType[search_type]
-                    },
-                    'success': function (data) {
-                        var allCounters = JSON.parse(data);
-                        fillFilterCounters(allCounters);
-                    }
-                });
-            }
-        }
-    });
+    //             // open the drawer for the first filter once the counters are made
+    //             if (firstFilter != ""){
+    //                 if ( !$("li[name='" + firstFilter + "']").find("span").hasClass("show") )
+    //                 $("li[name='" + firstFilter + "']").trigger('click');
+    //             }
+    //             fillFilterCounters(allCounters);
+    //         }
+    //     }
+    // });
 
     // hide filter categories based on hierarchy in filtersToSearchType
     function hideFilterCategories(){
@@ -381,7 +363,6 @@ $(document).ready(function() {
     upperForm = JS_EXPLORE_FORM.charAt(0).toUpperCase() + JS_EXPLORE_FORM.slice(1);
 
     if(upperForm.toString() == 'All'){
-        // console.log('in all')
         $( ".categories" ).html( "<ul>"+
                                     "<li class='unselected selected' id='people'><div class='person-image'></div><span class='count'></span>People</li>"+
                                     "<li class='unselected' id='events'><div class='event-image'></div><span class='count'></span>Events</li>"+
@@ -530,9 +511,6 @@ $(document).ready(function() {
     // Display the Grid View
     $("span.grid-view").click(function gridView (e) { // grid view
         e.stopPropagation();
-
-        var $connectRow = $('.connect-row');
-        $connectRow.css('display', 'none');
         //$('tbody > tr').remove();
         cards = false;
         view = 'grid';
@@ -563,9 +541,6 @@ $(document).ready(function() {
     // Display the Table View
     $("span.table-view").click(function tableView (e) { // table view
         e.stopPropagation()
-        var $connectRow = $('.connect-row');
-        $connectRow.css('display', 'flex');
-
         if (cards === true) {
             cards = false
             window.localStorage.setItem('cards', cards)
@@ -963,7 +938,6 @@ function get_download_content(fields, data, isAllData) {
     Convert to csv and download
 */
 function download_csv(data, fields) {
-    // console.log(data, fields)
     var qids = Object.keys(data);
     var csvString = [];
     csvString.push("QID," + fields.join(',')); // Headers
@@ -1044,6 +1018,8 @@ function generateFilterCards(){
         $('label.'+fcat+' input[value="'+fname+'"]').trigger('click');
     });
 }
+
+var showFilter = 0;
 //check window size and display/hide filter-menu
 function mediaMode() {
     if($(window).innerWidth() > 600) {
@@ -1062,11 +1038,21 @@ $(window).bind('resize',function(){
 //change text for Filter Menu
 $(".show-menu").click(function(){
     $(".filter-menu").toggleClass('show');
-    // if ()
     if ($('#showfilter').text() == 'Show Filter Menu'){
         $('#showfilter').text('Hide Filter Menu')
+        showFilter = 1;
     }
     else {
         $('#showfilter').text('Show Filter Menu')
+        showFilter = 0;
+    }
+});
+
+//hide filter on non-filter click
+$('div').not('.filter-menu').mouseup(function() {
+    if(showFilter == 1){
+        $(".filter-menu").toggleClass('show');
+        $('#showfilter').text('Show Filter Menu')
+        showFilter = 0;
     }
 });

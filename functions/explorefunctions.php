@@ -18,134 +18,6 @@ function callAPI($url,$limit,$offset){
 
 }
 
-
-
-
-
-
-
-
-//get all agents numbers
-function queryAllAgentsCounter(){
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $query="SELECT  (COUNT(distinct ?agent) AS ?count)
-        WHERE {
-                ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent. #agent or subclass of agent
-            MINUS{?agent $wdt:$hasParticipantRole $wd:$researcher}
-            SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\" . }
-        }
-
-        ORDER BY ?count
-    ";
-
-  $encode=urlencode($query);
-  $call=API_URL.$encode;
-  $res=callAPI($call,'','');
-
-  $res= json_decode($res);
-  if (!empty($res)){
-    return $res->results->bindings[0]->count->value;
-  }else{
-    return $res;
-  }
-}
-
-//get all events counter
-function queryEventCounter(){
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $query="SELECT (COUNT(distinct ?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$event .}";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        return $res->results->bindings[0]->count->value;
-    }else{
-        return $res;
-    }
-}
-
-//get all places counter
-function queryPlaceCounter(){
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $query="SELECT (count( distinct ?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$place .}";
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        return $res->results->bindings[0]->count->value;
-    }else{
-        return $res;
-    }
-}
-
-//get all contributing projects counter
-function queryProjectsCounter(){
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $query="SELECT (count( distinct ?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$researchProject .}";
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        return $res->results->bindings[0]->count->value;
-    }else{
-        return $res;
-    }
-}
-
-//get entity with provenance  counter
-function querySourceCounter(){
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $query="SELECT (count( distinct ?item) AS ?count) WHERE {?item $wdt:$instanceOf $wd:$entityWithProvenance .}";
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        return $res->results->bindings[0]->count->value;
-    }else{
-        return $res;
-    }
-}
-
-//get counter for people, event, sources, projects...
-function counterofAllitems(){
-    include BASE_LIB_PATH."variableIncluder.php";
-    $query="SELECT (count( distinct ?item) AS ?count) WHERE
-    {
-    {?item $wdt:$instanceOf $wd:$researchProject .}
-    UNION{ ?item $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent .}
-    UNION{ ?item $wdt:$instanceOf $wd:$entityWithProvenance .}
-    UNION{ ?item $wdt:$instanceOf $wd:$place .}
-    UNION{ ?item $wdt:$instanceOf $wd:$event .}
-    }";
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        return $res->results->bindings[0]->count->value;
-    }else{
-        return $res;
-    }
-}
-
 //counter of all genders
 function counterOfAllGenders($filters=array()){
     include BASE_LIB_PATH."variableIncluder.php";
@@ -445,9 +317,6 @@ function counterOfType() {
         $category = $_GET['category'];
     }
 
-    if ($type == '' || $category == ''){
-        die;
-    }
 
     if ($category == "Events") {
         if ($type == "Event Type"){
@@ -456,9 +325,9 @@ function counterOfType() {
         if ($type == "Date"){
             return getEventDateRange();
         }
-        if ($type == "Place"){
-            return counterOfEventPlace();
-        }
+        // if ($type == "Place"){
+        //     return counterOfEventPlace();
+        // }
     }
 
     if ($category == "People") {
@@ -489,20 +358,6 @@ function counterOfType() {
   }
 }
 
-function getHomePageCounters(){
-    $counters = array(
-            'all' => counterofAllitems(),
-            'agents' => queryAllAgentsCounter(),
-            'events' => queryEventCounter(),
-            'places' => queryPlaceCounter(),
-            // 'projects' => queryProjectsCounter(),
-            'sources' => querySourceCounter(),
-    );
-
-    return json_encode($counters);
-}
-
-
 function getSearchFilterCounters(){
     $searchType = '';   // what we are searching for
     $filters = array(); // array of filters
@@ -527,7 +382,7 @@ function getSearchFilterCounters(){
             $peopleFilters = array(
                 'Gender' => counterOfAllGenders($filters),
                 'Age Category' => counterOfAge($filters),
-                'Ethnodescriptor' => counterOfEthnodescriptor($filters),
+                // 'Ethnodescriptor' => counterOfEthnodescriptor($filters),
                 'Role Types' => counterOfRole($filters),
                 'Status' => counterOfStatus($filters),
                 'Occupation' => counterOfOccupation($filters),
@@ -1035,8 +890,12 @@ HTML;
     $lowerlabel = "contributing project(s)";
     $upperlabel = "Contributing Project(s)";
 
+    $projectUrls = explode('||', $statement['projectUrl']);
     $projectNames = explode('||', $statement['projectName']);
 
+    if (end($projectUrls) == '' || end($projectUrls) == ' '){
+      array_pop($projectUrls);
+    }
     if (end($projectNames) == '' || end($projectNames) == ' '){
       array_pop($projectNames);
     }
@@ -1048,10 +907,19 @@ HTML;
 
     //Loop through and match up
     $matched = '';
-    foreach($projectNames as $projectName){
+    for($i=0; $i < sizeof($projectUrls); $i++){
+        if (!isset($projectNames[$i]) ){
+          continue;
+        }
+
+        $explode = explode('/', $projectUrls[$i]);
+        $projectQ = end($explode);
+        $projectUrl = $baseurl . 'project/' . $projectQ;
+        $matched = $projectNames[$i];
+
         $html .= <<<HTML
 <div class="detail-bottom">
-    <p>$projectName</p>
+    <a href='$projectUrl'>$projectNames[$i]</a>
 HTML;
     }
     $html .= '</div></div>';
@@ -1236,7 +1104,7 @@ HTML;
             continue;
         }
         else{
-          // $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
+          $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
         }
         $detailname = $statementArr[$x];
         $html .= "<div>" . $detailname;
@@ -1280,6 +1148,7 @@ function getFullRecordHtml(){
 
     //Name
     $recordVars['Name'] = $record['name']['value'];
+
 
     // First Name
     if (isset($record['firstname']) && isset($record['firstname']['value']) ){
@@ -2337,6 +2206,7 @@ QUERY;
     $result = blazegraphSearch($sourceQuery);
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+
 
 
     return json_encode($connections);
