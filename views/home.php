@@ -29,6 +29,22 @@ $randomStory2 = $featuredKeys[$randKeys[1]];
 $randomTitle1 = $featuredResults[$randomStory1]["Title"];
 $randomTitle2 = $featuredResults[$randomStory2]["Title"];
 
+//get images from records
+$story1Images = $featuredResults[$randomStory1]["Images"];
+if (isset($story1Images[0])){
+    $story1Image = $story1Images[0]['url'];
+} else {
+    $story1Index = array_rand($bg);
+    $story1Image = BASE_URL.'assets/images/'.$bg[$story1Index];
+}
+
+$story2Images = $featuredResults[$randomStory2]["Images"];
+if (isset($story2Images[0])){
+    $story2Image = $story2Images[0]['url'];
+} else {
+    $story2Index = array_rand($bg);
+    $story2Image = BASE_URL.'assets/images/'.$bg[$story2Index];
+}
 ?>
 <!-- Main page-->
 <!-- Heading image and title container-->
@@ -121,13 +137,13 @@ $randomTitle2 = $featuredResults[$randomStory2]["Title"];
                         <div class="cover"></div>
                     </a> -->
                     <a class="story-card" href="<?=BASE_URL;?>fullStory?kid=<?=$randomStory1;?>">
-                        <img src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Story Image">
+                        <img src="<?=$story1Image?>" alt="Story Image">
                         <h2 class="card-title"><?=$randomTitle1?></h2>
                         <div class="cover"></div>
                     </a>
 
                     <a class="story-card" href="<?=BASE_URL;?>fullStory?kid=<?=$randomStory2;?>">
-                        <img src="<?php echo BASE_URL;?>assets/images/market-stand.jpg" alt="Story Image">
+                        <img src="<?=$story2Image?>" alt="Story Image">
                         <h2 class="card-title"><?=$randomTitle2?></h2>
                         <div class="cover"></div>
                     </a>

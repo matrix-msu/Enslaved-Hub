@@ -510,6 +510,8 @@ $(document).ready(function() {
     // Display the Grid View
     $("span.grid-view").click(function gridView (e) { // grid view
         e.stopPropagation();
+        var $connectRow = $('.connect-row');
+        $connectRow.css('display', 'none'); //toggle display for download button
         //$('tbody > tr').remove();
         cards = false;
         view = 'grid';
@@ -540,6 +542,8 @@ $(document).ready(function() {
     // Display the Table View
     $("span.table-view").click(function tableView (e) { // table view
         e.stopPropagation()
+        var $connectRow = $('.connect-row');
+        $connectRow.css('display', 'flex'); //toggle display for download button
         if (cards === true) {
             cards = false
             window.localStorage.setItem('cards', cards)

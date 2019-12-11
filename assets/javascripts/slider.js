@@ -1,5 +1,3 @@
-// result_array = ["ibrahima.jpg","ibrahima2.jpg","ibrahima3.jpg", "ibra4.jpeg"]; //image names (add however many you need)
-// console.log(captions);
 $.each(result_array,function ( index, value ) {
     $('<img class="mySlides fade" src="'+value+'" alt="story photo">').appendTo("div.slider"); //add images to the slider
     // $('<p class="key-events-text">Cation goes here</p>').appendTo("div.slider"); //add images to the slider
@@ -35,11 +33,11 @@ function showSlides(n) {
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
-  
+
     for (i = 0; i < dots.length; i++) {
       dots[i].className = dots[i].className.replace(" active", "");
-    }       
-    
+    }
+
     slides[slideIndex-1].style.display = "block";
 
     if (result_array.length > 1){

@@ -138,7 +138,9 @@ if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
     </div>
     <div class="copyright">
         <h2>Copyright</h2>
-        <img class="cc-by-nc" src="<?php echo BASE_URL;?>/assets/images/CC-BY-NC.svg" alt="copyrights"/>
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
+            <img class="cc-by-nc" src="<?php echo BASE_URL;?>assets/images/CC-BY-NC.svg" alt="copyrights"/>
+        </a>
     </div>
 </div>
 
