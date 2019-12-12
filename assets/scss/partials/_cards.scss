@@ -82,9 +82,9 @@
                 margin-right: 2%;
                 padding: 20px;
                 background-position: center;
-                background-size: 105%;
+                background-size: cover;
                 background-repeat: no-repeat;
-                border: 4px solid transparent;
+                border: 0px solid transparent;
                 border-radius: 5px;
                 box-shadow: 0 10px 20px 0 rgba(0,0,0,0.15);
                 transition: all 0.3s;
@@ -116,6 +116,7 @@
                     text-overflow: ellipsis;
                     -webkit-line-clamp: 3;
                     -webkit-box-orient: vertical;
+                    width: 100%;
                 }
 
                 &:hover{
