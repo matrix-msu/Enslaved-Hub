@@ -224,11 +224,13 @@ else {
                 <a href="<?php echo BASE_URL?>fullStory">
                     <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
                 </a>
+                <div class="overlay"></div>
             </li>
             <li>
                 <a href="<?php echo BASE_URL?>fullStory">
                     <h2 class="card-title">Title of Featured Story Goes Here Like This</h2>
                 </a>
+                <div class="overlay"></div>
             </li>
         </ul>
     </div>

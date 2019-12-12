@@ -76,9 +76,8 @@ function displayStories($stories){
         }
 
         echo '<li class="card" style="background-image: url('.$storyImage.')"><a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
-        echo '<div class="overlay">';
         echo '<h2 class="card-title">'.$story['Title'].'</h2>';
-        echo '</a></div></li>';
+        echo '</a><div class="overlay"></div></li>';
     }
 }
 

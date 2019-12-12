@@ -75,10 +75,9 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                     }
 
                     echo '<li class="card card-story" style="background-image: url('.$storyImage.')">';
-                    echo '<div class="overlay">';
                     echo '<a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
                     echo '<h2 class="card-title">'.$story['Title'].'</h2>';
-                    echo '</a></div></li>';
+                    echo '</a><div class="overlay"></div></li>';
                 }
                 ?>
             </ul>
