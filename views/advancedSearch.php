@@ -105,9 +105,9 @@
                 </div>
                 <div class="inputwrap">
                     <label for="country_code">Modern Country</label>
-                    <select class="s2-multiple" id="country" name="country_code" multiple="multiple">
+                    <select class="s2-multiple" id="country" name="modern_country_code" multiple="multiple">
                         <?php foreach (countrycode as $code => $country) { ?>
-                            <option value="<?php echo $code; ?>"><?php echo $country; ?></option>
+                            <option value="<?php echo $country; ?>"><?php echo $country; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -146,6 +146,6 @@
 <script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
 <script>
     autocomplete(document.getElementById("place"), [<?php echo '"'.implode('","', array_keys(places)).'"' ?>]);
-    autocomplete(document.getElementById("ethno"), [<?php echo '"'.implode('","', qethnodescriptor).'"' ?>]);
+    autocomplete(document.getElementById("ethno"), [<?php echo '"'.implode('","', array_keys(ethnodescriptor)).'"' ?>]);
     autocomplete(document.getElementById("age"), [<?php echo '"'.implode('","', qages).'"' ?>]);
 </script>

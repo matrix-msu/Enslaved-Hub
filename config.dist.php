@@ -3,8 +3,8 @@
 define("BASE_URL",  "http://dev2.matrix.msu.edu/enslaved/");
 define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
 define("KORA_BASE_URL", "https://kora.enslaved.org/");
-define("BASE_WIKI_URL", "https://sandro-16.matrix.msu.edu/");
-define("BASE_BLAZEGRAPH_URL", "https://sandro-33.matrix.msu.edu/");
+define("BASE_WIKI_URL", "");
+define("BASE_BLAZEGRAPH_URL", "");
 
 //project specific urls - you should never use relative paths
 define("BASE_JS_URL", BASE_URL . "assets/javascripts/");
@@ -41,7 +41,7 @@ define('STORY_SID', 23);
 define('PID', 16);
 define('WEBPAGES_FORM', 49);
 
-define('LOD_CONFIG', 'wikidata');
+define('LOD_CONFIG', 'enslaved');
 
 $GLOBALS['FILTER_ARRAY'] = Array(
     "events" => array(
@@ -64,34 +64,11 @@ $GLOBALS['FILTER_ARRAY'] = Array(
 );
 
 $GLOBALS['CONSTANTS_FILE_ARRAY'] = Array(
-    "wikidata" => "wikiconstants",
-    "enslaved" => "cvconstants",
+    "enslaved" => "cvconstants"
 );
 
 
 $GLOBALS['PREFIX_ARRAY'] = Array(
-    "wikidata" => array(
-        "wdata" => "wdata",
-        "wdt" => "wdt",
-        "wd" => "wd",
-        "s" => "s",
-        "ref" => "ref",
-        "v" => "v",
-        "t" => "t",
-        "p" => "p",
-        "ps"  => "ps",
-        "psv" => "psv",
-        "psn" => "psn",
-        "pq" => "pq",
-        "pqv" => "pqv",
-        "pqn" => "pqn",
-        "pr" => "pr",
-        "prv" => "prv",
-        "prn" => "prn",
-        "no" => "no",
-        "prov" => "prov",
-        "rdfs" => "rdfs"
-    ),
     "enslaved" => array(
         "wdata" => "edata",
         "wd" => "ed",
