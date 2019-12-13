@@ -139,13 +139,13 @@ if (isset($story2Images[0])){
                     <a class="story-card" href="<?=BASE_URL;?>fullStory?kid=<?=$randomStory1;?>">
                         <img src="<?=$story1Image?>" alt="Story Image">
                         <h2 class="card-title"><?=$randomTitle1?></h2>
-                        <div class="cover"></div>
+                        <div class="overlay"></div>
                     </a>
 
                     <a class="story-card" href="<?=BASE_URL;?>fullStory?kid=<?=$randomStory2;?>">
                         <img src="<?=$story2Image?>" alt="Story Image">
                         <h2 class="card-title"><?=$randomTitle2?></h2>
-                        <div class="cover"></div>
+                        <div class="overlay"></div>
                     </a>
                 </div>
             </div>
