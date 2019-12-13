@@ -2066,24 +2066,11 @@ HTML;
             case 'featured':
                 foreach ($templates as $template) {
                     $cardTitle = '';
-                    $qid = '';
+                    $qid = $record['id'];
                     if($template == 'Person'){
-                        $cardTitle = $record['agentLabel']['value'];
-                        $uri = $record['agent']['value'];
-                        $uriarr = explode('/', $uri);
-                        $qid = end($uriarr);
-                    }
-                    else if($template == 'Place'){
-                        $cardTitle = $record['placeLabel']['value'];
-                        $uri = $record['place']['value'];
-                        $uriarr = explode('/', $uri);
-                        $qid = end($uriarr);
-                    }
-                    else if($template == 'Event'){
-                        $cardTitle = $record['label']['value'];
-                        $uri = $record['event']['value'];
-                        $uriarr = explode('/', $uri);
-                        $qid = end($uriarr);
+                        $cardTitle = $record['name'][0];
+                    } else if($template == 'Event'){
+                        $cardTitle = $record['label'];
                     }
 
                     $countpeople = '1';

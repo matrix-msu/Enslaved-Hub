@@ -26,4 +26,4 @@ composer.phar
 .DS_Store
 
 # project specific
-# cache/*
+cache/*
