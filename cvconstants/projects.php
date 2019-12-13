@@ -1,13 +1,9 @@
 <?php
 const projects=[
-"Liberated Africans" => "Q89",
-"Voyages: The Trans-Atlantic Slave Trade Database" => "Q129",
-"Slave Biographies" => "Q162",
-"African American National Biography (AANB)" => "Q325",
-"Slave Societies Digital Archive" => "Q340",
-"Legacies of British Slave Ownership" => "Q376",
-"Freedom Narratives" => "Q383",
-"Enslaved project" => "Q464"
+    'Enslaved Project' => 'Q464',
+    'Voyages: The Trans-Atlantic Slave Trade Database' => 'Q9866',
+    'African Origins' => 'Q9867',
+    'Maranhão Inventories Slave Database (MISD)' => 'Q108034'
 ];
 
 const qprojects=[

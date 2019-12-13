@@ -1136,11 +1136,13 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                 //Person QID
                 $personQ = $record['id'];
                 $person_url = BASE_URL . "record/person/" . $personQ;
+
                 //Person Sex
                 $sex = "";
                 if(is_array($record['sex']) && count($record['sex']) > 0) {
                     $sex = $record['sex'][0];
                 }
+
                 //Person Status
                 $status = '';
                 $statusCount = 0;
@@ -1148,41 +1150,20 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
                     $statusCount = count($record['person_status']);
                     $status = implode(', ', $record['person_status']);
                 }
+
                 //Person location
                 $places = '';
                 $placesCount = 0;
-                // if (isset($record['place1']) && isset($record['place1']['value'])){
-                //     $placesArray = explode('||', $record['place1']['value']);
-                //     foreach ($placesArray as $place) {
-                //         if (!empty($place)){
-                //             if ($placesCount > 0){
-                //                 $places .= ", $place";
-                //             } else {
-                //                 $places .= "$place";
-                //             }
-                //             $placesCount++;
-                //         }
-                //     }
-                // }
+                if (is_array($record['display_place']) && count($record['display_place']) > 0) {
+                    $places = implode(', ', $record['display_place']);
+                    $placesCount = count($record['display_place']);
+                }
+
                 //Date Range
-                $startYear = '';
-                // if (isset($record['startyear1']) && isset($record['startyear1']['value'])){
-                //     $startYears = explode('||', $record['startyear1']['value']);
-                //     $startYear = min($startYears);
-                // }
-                $endYear = '';
-                // if (isset($record['endyear1']) && isset($record['endyear1']['value'])){
-                //     $endYears = explode('||', $record['endyear1']['value']);
-                //     $endYear = max($endYears);
-                // }
                 $dateRange = '';
-                // if ($startYear != '' && $endYear != ''){
-                //     $dateRange = "$startYear - $endYear";
-                // } elseif ($endYear == ''){
-                //     $dateRange = $startYear;
-                // } elseif ($startYear == '') {
-                //     $dateRange = $endYear;
-                // }
+                if (is_array($record['display_date_range']) && count($record['display_date_range']) > 0)
+                    $dateRange = $record['display_date_range'][0];
+
                 //Connection counts
                 $countpeople = '';
                 if (array_key_exists('countpeople', $record))
@@ -1246,7 +1227,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
 
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
-                            $dateName = ($startYear != '' && $endYear != '') ? "Date Range" : "Date";
+                            $dateName = strpos($dateRange, '-') ? "Date Range" : "Date";
                             $dateRangeHtml = "<div class='detail'><p class='detail-title'>$dateName</p><p>$dateRange</p></div>";
                         }
 
@@ -1377,6 +1358,10 @@ HTML;
                 if (is_array($record['modern_country_code']) && count($record['modern_country_code']) > 0)
                     $code = $record['modern_country_code'][0];
 
+                $country = '';
+                if ($code != '')
+                    $country = countrycode[$code];
+
                 //Connection html
                 $connection_lists = Array(
                     '<h1>'.$countpeople.' Connected People</h1><ul><li>Person Name <span>(Wife)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Brother brother brother)</span> <div id="arrow"></div></li><li>Person Name <span>(Relation)</span> <div id="arrow"></div></li><li>Person Name is Longer <span>(Father)</span> <div id="arrow"></div></li><li>Person Name <span>(Mother)</span> <div id="arrow"></div></li><li>View All People Connections <div id="arrow"></div></li></ul>',
@@ -1420,9 +1405,9 @@ HTML;
                             $geonames = "<div class='detail'><p class='detail-title'>Geoname Identifier&nbsp;</p><p>$geonames</p></div>";
                         }
 
-                        $codeHtml = '';
-                        if ($code != ''){
-                            $codeHtml = "<div class='detail'><p class='detail-title'>Modern Country Code</p><p>$code</p></div>";
+                        $countryHtml = '';
+                        if ($country != ''){
+                            $countryHtml = "<div class='detail'><p class='detail-title'>Modern Country</p><p>$country</p></div>";
                         }
 
                         $card_icon_url = BASE_IMAGE_URL . 'Place.svg';
@@ -1439,7 +1424,7 @@ HTML;
             $typeHtml
             $locatedInHtml
             $geonamesHtml
-            $codeHtml
+            $countryHtml
         </div>
         $connections
     </a>
@@ -1457,11 +1442,11 @@ HTML;
     <th class="type">TYPE</th>
     <th class="located">LOCATED IN</th>
     <th class="geoname">GEONAME IDENTIFIER</th>
-    <th class="code">MODERN COUNTRY CODE</th>
+    <th class="code">MODERN COUNTRY</th>
 </tr>
 HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED IN', 'GEONAME IDENTIFIER', 'MODERN COUNTRY CODE'];
+                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED IN', 'GEONAME IDENTIFIER', 'MODERN COUNTRY'];
 
                         }
 
@@ -1480,8 +1465,8 @@ HTML;
     <td class='geoname'>
         <p><span class='first'>Geoname: </span>$geonames</p>
     </td>
-    <td class='code'>
-        <p><span class='first'>Country Code: </span>$code</p>
+    <td class='country'>
+        <p><span class='first'>Country: </span>$country</p>
     </td>
     <td class='meta'>
 
@@ -1495,7 +1480,7 @@ HTML;
                             'TYPE' => $placeType,
                             'LOCATED IN' => $locatedIn,
                             'GEONAME' => $geonames,
-                            'COUNTRY CODE' => $code,
+                            'COUNTRY' => $country,
                         );
                     }
 
@@ -1526,9 +1511,9 @@ HTML;
                 // Event Places
                 $places = '';
                 $placesCount = 0;
-                if (is_array($record['at_place']) && count($record['at_place']) > 0) {
-                    $places = implode(', ', $record['at_place']);
-                    $placesCount = count($record['at_place']);
+                if (is_array($record['display_place']) && count($record['display_place']) > 0) {
+                    $places = implode(', ', $record['display_place']);
+                    $placesCount = count($record['display_place']);
                 }
 
                 //Event Start Year
@@ -1540,7 +1525,7 @@ HTML;
                 //Event End Year
                 $endYear = '';
                 if ($record['end_date'] != 0000) {
-                    $startYear = $record['end_date'][0];
+                    $endYear = $record['end_date'][0];
                 }
 
                 //Date range
