@@ -85,23 +85,22 @@ $(document).ready(function(){
     else if(typeof JS_EXPLORE_FORM !== 'undefined'){
         //person, place, event, source
         var type = JS_EXPLORE_FORM;
-        if( type == "People"){
-            type = "Person";
-        }
-        else{
+        if (type == 'People')
+            type = 'Person';
+        else
             type = type.slice(0, -1); //remove s on the end
-        }
 
         $.ajax({
-            url: BASE_URL+"api/blazegraph",
+            url: BASE_URL + "api/getFeatured",
             type: "GET",
-            data: {preset: 'featured', templates: [type]},
+            data: {templates: type},
             success: function (data) {
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
+                    console.log(e)
                     $('.explore-featured .cards-featured').append(e);
                 });
-                installFeaturedListeners('.explore-featured');
+                // installFeaturedListeners('.explore-featured');
             }
         });
 

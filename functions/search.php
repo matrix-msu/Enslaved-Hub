@@ -507,4 +507,63 @@ function keyword_search() {
     return createCards($res['hits']['hits'], $templates, $preset, $total);
 }
 
+function featured_items() {
+    $hosts = [
+        ELASTICSEARCH_URL
+    ];
+
+    $es = ClientBuilder::create()
+                        ->setHosts($hosts)
+                        ->build();
+
+    $preset = 'featured';
+
+    if (isset($_GET['templates'])) {
+        $template = $_GET['templates'];
+    }
+
+    if ($template == 'Person')
+        $type = 'people';
+    else
+        $type = strtolower($template);
+
+    if ($type == 'people') {
+        $must = [
+            ['exists' => ['field' => 'name']],
+            ['exists' => ['field' => 'person_status']],
+            ['exists' => ['field' => 'display_date_range']],
+            ['exists' => ['field' => 'display_place']]
+        ];
+    } else {
+        $must = [
+            ['exists' => ['field' => 'event_type']],
+            ['exists' => ['field' => 'date']],
+            ['exists' => ['field' => 'display_place']]
+        ];
+    }
+
+    $params = [
+        'index' => ELASTICSEARCH_INDEX_NAME,
+        'body' => [
+            'query' => [
+                'function_score' => [
+                    'query' => [
+                        'bool' => [
+                            'must' => $must,
+                            'filter' => [
+                                ['term' => ['type' => $type]]
+                            ]
+                        ]
+                    ],
+                    'random_score' => new \stdClass()
+                ]
+            ],
+            'size' => 4
+        ]
+    ];
+
+    $res = $es->search($params);
+    return createCards($res['hits']['hits'], [$template], $preset);
+}
+
 ?>
