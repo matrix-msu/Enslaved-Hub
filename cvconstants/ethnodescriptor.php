@@ -715,12 +715,4 @@ const ethnodescriptor=[
   'Mandinga Bambora'	 => 'Q999',
   'Planta'	 => 'Q1094'
 ];
-
-const qethnodescriptor=[
-  "Q256" => "Nago",
-  "Q363" => "Congo",
-  "Q368" => "Lucume",
-  "Q394" => "Creole",
-  "Q453" => "Unknown Ethnonym"
-];
 ?>
