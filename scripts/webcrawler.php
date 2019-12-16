@@ -84,7 +84,6 @@ class WebCrawler {
             foreach($elements as $element) {
                 $tag = $element->parentNode->tagName;
                 //use this, validate first
-                var_dump($tag);die;
                 foreach (['h1', 'h2', 'h3'] as $header) {
                     if($tag == $header && !is_numeric($element->nodeValue)) {
                         $keyword_url =  $element->getAttribute('href');
@@ -114,7 +113,6 @@ class WebCrawler {
 
             list($types, $values, $params) = $this->buildDynamicBindParams($keywords);
 
-            // var_dump("IN");die;
             //create/insert into crawler_seeds
             $mysqli = $this->instantiateMySQLi();
 
