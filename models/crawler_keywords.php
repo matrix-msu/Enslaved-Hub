@@ -34,7 +34,7 @@ class crawler_keywords {
 		if($tagIds)
 			$filter = " AND ct.tag_id IN (" . implode(', ', $tagIds) . ")";
 		$link = $this->connect();
-		$query = "SELECT ck.keyword_id, ck.keyword, ck.url FROM crawler_keywords ck LEFT JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id = ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id = ckta.tag_id WHERE NOT EXISTS (SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword = dk.keyword)".$search.$filter." GROUP BY(ck.keyword) ORDER BY ck.date_created ".$sort." LIMIT ".$limit." OFFSET ".$offset;
+		$query = "SELECT ck.keyword_id, ck.keyword, ck.url FROM crawler_keywords ck LEFT JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id = ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id = ckta.tag_id WHERE NOT EXISTS (SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword = dk.keyword)".$search.$filter." GROUP BY(keyword) ORDER BY ck.date_created ".$sort." LIMIT ".$limit." OFFSET ".$offset;
 		$result = mysqli_query($link, $query);
 		mysqli_close($link);
 		return mysqli_fetch_all($result, MYSQLI_ASSOC);
