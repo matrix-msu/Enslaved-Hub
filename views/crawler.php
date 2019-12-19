@@ -81,7 +81,7 @@
 
     <div id="pagination">
         <input class="current-page" type="hidden" value="1">
-        <span id="pagiLeft" class="align-left"><div id="pagiLeftArrow"></div></span>
+        <div class="pagi-left"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Left"/></div>
         <div class="page-numbers">
             <span class="num pagi-first">1</span>
             <span class="dotsLeft">...</span>
@@ -93,7 +93,7 @@
             <span class="dotsRight">...</span>
             <span class="num pagi-last">310</span>
         </div>
-        <span id="pagiRight" class="align-right"><div id="pagiRightArrow"></div></span>
+        <div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron-light.svg" alt="Arrow Right"/></div>
     </div>
 </div>
 

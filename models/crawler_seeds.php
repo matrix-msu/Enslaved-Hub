@@ -33,14 +33,12 @@ class crawler_seeds {
 	{
 		$link = $this->connect();
 		$query = "SELECT * FROM crawler_seeds";
-		if ($limit && $offset) {
-			$query += "LIMIT ".$limit." OFFSET ".$offset;
+		if (isset($limit) && isset($offset)) {
+			$query .= " LIMIT ".$limit." OFFSET ".$offset;
 		}
 		$result = mysqli_query($link, $query);
-		$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-		mysqli_close($link);
-		mysqli_free_result($result);
-		return $rows;
+        mysqli_close($link);
+		return mysqli_fetch_all($result, MYSQLI_ASSOC);
 	}
 
 	public function get_all_urls()
