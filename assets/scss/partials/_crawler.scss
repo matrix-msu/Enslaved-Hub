@@ -148,10 +148,10 @@
                       height: 15px;
                       width: 15px;
                       border-radius: 2px;
-                      margin-right: 10px; 
+                      margin-right: 10px;
                       cursor: pointer;
                       vertical-align: middle;
-                      
+
                       &:checked {
                         background: url('../images/check.svg') $accent;
                         background-position: center center;
@@ -577,6 +577,8 @@
                             color: $base-dark;
                             font-size: 14px;
                             line-height: 60px;
+                            height: 60px;
+                            overflow: hidden;
 
                             span.label{
                                 opacity: .8;
