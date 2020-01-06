@@ -650,21 +650,7 @@ function createQueryFilters($searchType, $filters)
             }
         }
     }
-return $queryFilters;
-}
-
-function getKeywordSearchCounters($filters){
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $peopleFilters = createQueryFilters("people", $filters, true);
-    $eventFilters = createQueryFilters("events", $filters, true);
-    $placeFilters = createQueryFilters("places", $filters, true);
-    $sourceFilters = createQueryFilters("sources", $filters, true);
-
-    include BASE_PATH."queries/keywordSearch/counters.php";
-    $query['query'] = $tempQuery;
-    $result = blazegraphSearch($query);
-    return json_encode($result[0]);
+    return $queryFilters;
 }
 
 function blazegraph()
@@ -703,8 +689,6 @@ function blazegraph()
             }
         }
 
-        $queryFilters = createQueryFilters($preset, $filtersArray);
-
         switch ($preset){
             case 'singleproject':
                 // QID is mandatory
@@ -726,180 +710,6 @@ function blazegraph()
                 array_push($queryArray, $query);
                 break;
 
-            case 'people':
-                //filter by source id
-                $sourceIdFilter = "";
-                if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
-                    $sourceQ = $filtersArray['source'][0];
-                    $sourceIdFilter = "VALUES ?source { $wd:$sourceQ} #Q number needs to be changed for every source.
-                                    ?source $wdt:$instanceOf $wd:$entityWithProvenance.
-                                    ?agent $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
-                                            ?property  ?object .
-                                    ?object $prov:wasDerivedFrom ?provenance .
-                                    ?provenance $pr:$isDirectlyBasedOn ?source .";
-                }
-
-                // people connected to an event id
-                $eventIdFilter = "";
-                if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
-                    $eventQ = $filtersArray['event'][0];
-                    $eventIdFilter = "
-                        VALUES ?event { $wd:$eventQ} #Q number needs to be changed for every event.
-                        ?event $wdt:$instanceOf $wd:$event.
-                        ?event $p:$providesParticipantRole ?statement.
-                        ?statement $ps:$providesParticipantRole ?personname.
-                        ?statement $pq:$hasParticipantRole ?agent.
-                        ?agent $rdfs:label ?name.
-                    ";
-                }
-
-                // filter people by place id
-                $placeIdFilter = "";
-                if (isset($filtersArray['place']) && isset($filtersArray['place'][0]) ){
-                    $placeQ = $filtersArray['place'][0];
-                    $placeIdFilter .= "
-                            ?agent $p:$hasParticipantRole ?statementrole.
-                            ?statementrole $ps:$hasParticipantRole ?role.
-                            ?statementrole $pq:$roleProvidedBy ?event.
-                            ?event $wdt:$atPlace $wd:$placeQ .   #this number will change for every place
-                        ";
-                }
-
-                break;
-            case 'places':
-                //filter by source
-                $sourceIdFilter = "";
-                if (isset($filtersArray['source']) && $filtersArray['source'] != ''){
-                    $sourceQ = $filtersArray['source'][0];
-                    $sourceIdFilter = "VALUES ?source { $wd:$sourceQ} #Q number needs to be changed for every source.
-                                        ?source $wdt:$reportsOn ?event.
-                                        ?event $wdt:$atPlace ?place.
-                                        ?place $rdfs:label ?placelabel . ";
-                }
-
-                // filter for places connected to a person
-                $personIdFilter = "";
-                if (isset($filtersArray['person'])){
-                    $personQids = $filtersArray['person'];
-                    foreach ($personQids as $personQid){
-                        $personIdFilter .= "
-                        VALUES ?agent { $wd:$personQid} #Q number needs to be changed for every person.
-                          ?agent $p:$hasParticipantRole ?statementrole.
-                          ?statementrole $ps:$hasParticipantRole ?roles.
-                          ?statementrole $pq:$roleProvidedBy ?roleevent.
-
-                     		  ?roleevent $wdt:$atPlace ?place.
-                    		  ?place $rdfs:label ?placelabel.
-
-                        ";
-                    }
-                }
-
-                // places connected to an event
-                // TODO
-                // $eventIdFilter = "";
-                // if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
-                //     $eventQ = $filtersArray['event'][0];
-                //     $eventIdFilter = "
-                //         VALUES ?event { $wd:$eventQ} #Q number needs to be changed for every event.
-                //         ?event $wdt:$instanceOf $wd:$event.
-                //         ?event $p:$providesParticipantRole ?statement.
-                //         ?statement $ps:$providesParticipantRole ?personname.
-                //         ?statement $pq:$hasParticipantRole ?agent.
-                //         ?agent $rdfs:label ?name.
-                //     ";
-                // }
-                break;
-            case 'events':
-                // filter for events connected to a source
-                $sourceIdFilter = "";
-                if (isset($filtersArray['source'])){
-                    $sourceQids = $filtersArray['source'];
-                    foreach ($sourceQids as $sourceQid){
-                        $sourceIdFilter .= "
-                            VALUES ?source { $wd:$sourceQid} #Q number needs to be changed for every source.
-                                ?source $wdt:$instanceOf $wd:$entityWithProvenance.
-                                ?source $wdt:$reportsOn ?event.
-                        ";
-                    }
-                }
-
-                // filter for events connected to a person
-                $personIdFilter = "";
-                if (isset($filtersArray['person'])){
-                    $personQids = $filtersArray['person'];
-                    foreach ($personQids as $personQid){
-                        $personIdFilter .= "
-                        VALUES ?agent { $wd:$personQid} #Q number needs to be changed for every person.
-                         ?agent $p:$hasName ?statement.
-                         ?statement $ps:$hasName ?name.
-                         ?statement $pq:$recordedAt ?recordeAt.
-                               bind(?recordedAt as ?event)
-
-                       ?agent $p:$hasParticipantRole ?statementrole.
-                                ?statementrole $ps:$hasParticipantRole ?roles.
-                                ?statementrole $pq:$roleProvidedBy ?roleevent.
-                                bind(?roleevent as ?event)
-                        ";
-                    }
-                }
-
-                // filter events by place id
-                $placeIdFilter = "";
-                if (isset($filtersArray['place']) && isset($filtersArray['place'][0]) ){
-                    $placeQ = $filtersArray['place'][0];
-                    $placeIdFilter .= "
-                    VALUES ?place { $wd:$placeQ }.
-                    ?event $wdt:$instanceOf $wd:$event.
-                    ?event $wdt:$atPlace ?place.
-                        ";
-                }
-
-                break;
-            case 'sources':
-                // filter for sources connected to an event
-                $eventIdFilter = "";
-                if (isset($filtersArray['event']) && $filtersArray['event'] != ''){
-                    $eventQ = $filtersArray['event'][0];
-                    $eventIdFilter = "
-                        VALUES ?event { $wd:$eventQ} #Q number needs to be changed for every event.
-                        ?source $wdt:$instanceOf $wd:$entityWithProvenance. #entity with provenance
-                        ?source $wdt:$generatedBy ?project.
-                        ?source $wdt:$reportsOn ?event.
-                     ";
-                }
-
-                // filter for sources connected to a person
-                $personIdFilter = "";
-                if (isset($filtersArray['person'])){
-                    $personQids = $filtersArray['person'];
-                    foreach ($personQids as $personQid){
-                        $personIdFilter .= "
-                        VALUES ?agent { $wd:$personQid } #Q number needs to be changed for every person.
-                         ?agent ?property  ?object .
-                         ?object prov:wasDerivedFrom ?provenance .
-                         ?provenance $pr:$isDirectlyBasedOn ?source .
-                           ?source $rdfs:label ?sourcelabel
-                        ";
-                    }
-                }
-
-                // filter sources by place id
-                $placeIdFilter = "";
-                if (isset($filtersArray['place']) && isset($filtersArray['place'][0]) ){
-                    $placeQ = $filtersArray['place'][0];
-                    $placeIdFilter .= "
-                        VALUES ?place { $wd:$placeQ }.
-                        ?place $p:$instanceOf  ?object .
-                        ?object $prov:wasDerivedFrom ?provenance .
-                        ?provenance $pr:$isDirectlyBasedOn ?source.
-                    ";
-                }
-
-                break;
-            case 'projects':
-                //todo: projects filters
-                break;
             case 'projectassoc':
                 if (isset($filtersArray['qid']) && $filtersArray['qid'][0]){
                     $qid = $filtersArray['qid'][0];
@@ -946,17 +756,6 @@ function blazegraph()
                 $query['query'] = $tempQuery;
                 array_push($queryArray, $query);
                 break;
-            case 'featured':
-                //Feature Cards on the Explore Form page
-                $query = array('query' => "");
-                include BASE_PATH."queries/".$preset."/".strtolower($templates[0]).".php";
-                $query['query'] = $tempQuery;
-                array_push($queryArray, $query);
-                break;
-            case 'all':
-                // if (isset($filtersArray['searchbar'])){
-                // }
-                break;
             default:
                 break;
         }
@@ -976,101 +775,53 @@ function blazegraph()
 
     $resultsArray = array();
 
-    // map search types to their blazegraph name
-    $searchTypes = [
-        'people' => 'agent',
-        'events' => 'event',
-        'places' => 'place',
-        'projects' => 'project',
-        'sources' => 'source'
-    ];
-    if (array_key_exists($preset, $searchTypes)){
-        if (!$isKeywordSearch){
-            include BASE_PATH."queries/".$preset."Search/count.php";
-            $resultCountQuery['query'] = $tempQuery;
-            $result = blazegraphSearch($resultCountQuery);
+    $first = true;
+    $oneQuery = count($queryArray) == 1;    // count results differently when there is only one query
 
-            if (isset($result[0]) && isset($result[0]['count'])){
-                $record_total = $result[0]['count']['value'];
+    foreach ($queryArray as $i => $query) {
+        $result = blazegraphSearch($query);
+        if(!$result) continue;
+
+        $presetToCounterFunction = [
+            'place' => 'queryPlaceCounter',
+            'singleproject' => 'queryProjectsCounter'
+        ];
+
+        $count = 0;
+        if(isset($presetToCounterFunction[$preset])){
+            $count = $presetToCounterFunction[$preset]();
+        }
+
+        if ($first){
+            $resultsArray = $result;
+            $first = false;
+
+            if ($oneQuery){ // this is needed for the search page counter to be working
+                $record_total = $count;
             }
-            // // no more searching if we know there are 0 results
-            // if ($record_total <= 0){
-            //     return createCards([], $templates, $preset, 0);
-            // }
         } else {
-            // get the count for all search types for keyword search
-            $record_total = getKeywordSearchCounters($filtersArray);
-        }
-        include BASE_PATH."queries/".$preset."Search/ids.php";
-        $idQuery['query'] = $tempQuery;
-        $result = blazegraphSearch($idQuery);
-
-        // get the qids from each url
-        $urls = (array_column(array_column($result, $searchTypes[$preset]), 'value'));
-        $qids = [];
-        foreach($urls as $url){
-		$tempQids = explode('/', $url);
-            $qids[] = end($tempQids);
-        }
-
-        // create the line in the query with the ids to search for
-        $qidList = "";
-        foreach($qids as $qid){
-            $qidList .= "$wd:$qid ";
-        }
-
-        include BASE_PATH."queries/".$preset."Search/data.php";
-        $dataQuery['query'] = $tempQuery;
-        $resultsArray = blazegraphSearch($dataQuery);
-    } else {
-        $first = true;
-        $oneQuery = count($queryArray) == 1;    // count results differently when there is only one query
-
-        foreach ($queryArray as $i => $query) {
-            $result = blazegraphSearch($query);
-            if(!$result) continue;
-
-            $presetToCounterFunction = [
-                'place' => 'queryPlaceCounter',
-                'singleproject' => 'queryProjectsCounter'
-            ];
-
-            $count = 0;
-            if(isset($presetToCounterFunction[$preset])){
-                $count = $presetToCounterFunction[$preset]();
+            if($preset == 'singleproject'){
+                //Get the count of all the results
+                $record_total += $count;
             }
-
-            if ($first){
-                $resultsArray = $result;
-                $first = false;
-
-                if ($oneQuery){ // this is needed for the search page counter to be working
-                    $record_total = $count;
-                }
-            } else {
-                if($preset == 'singleproject'){
-                    //Get the count of all the results
-                    $record_total += $count;
-                }
-                else if ($preset != "projects2") {
-                    $resultsArray = array_merge($resultsArray, $result);
-                }
-                else {
-                    foreach ($result as $count) {
-                        foreach ($resultsArray as $j => $project) {
-                            if ($project['projectLabel']['value'] == $count['projectLabel']['value']) {
-                                // how to tell which type it is? (person, place, event)
-                                if ($i == 1) {
-                                    $resultsArray[$j]['personCount'] = $count['count']['value'];
-                                }
-                                else if ($i == 2) {
-                                    $resultsArray[$j]['eventCount'] = $count['count']['value'];
-                                }
-                                else if ($i == 3) {
-                                    $resultsArray[$j]['placeCount'] = $count['count']['value'];
-                                }
-                                break;
+            else if ($preset != "projects2") {
+                $resultsArray = array_merge($resultsArray, $result);
+            }
+            else {
+                foreach ($result as $count) {
+                    foreach ($resultsArray as $j => $project) {
+                        if ($project['projectLabel']['value'] == $count['projectLabel']['value']) {
+                            // how to tell which type it is? (person, place, event)
+                            if ($i == 1) {
+                                $resultsArray[$j]['personCount'] = $count['count']['value'];
                             }
+                            else if ($i == 2) {
+                                $resultsArray[$j]['eventCount'] = $count['count']['value'];
+                            }
+                            else if ($i == 3) {
+                                $resultsArray[$j]['placeCount'] = $count['count']['value'];
+                            }
+                            break;
                         }
                     }
                 }

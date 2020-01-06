@@ -107,15 +107,23 @@ function combineDates() {
     if($('select#place-from').val() !== '' || $('select#place-to').val() !== ''){
         var placeDate = $('select#place-from').val() + '-' + $('select#place-to').val();
     }
-
     $('.person-date-range').val(personDate);
     $('.event-date-range').val(eventDate);
     $('.place-date-range').val(placeDate);
 }
 
+function combineAgeRange() {
+    if($('input#age-from').val() !== '' || $('input#age-to').val() !== ''){
+        $('.age-range').val($('input#age-from').val() + '-' + $('input#age-to').val());
+        $('input#age-to').val('')
+        $('input#age-from').val('')
+    }
+}
+
 //Calls the removeEmpty function and combineDates function
 function handleSubmit(){
     combineDates();
+    combineAgeRange();
     removeEmpty();
 }
 

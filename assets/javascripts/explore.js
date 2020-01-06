@@ -97,7 +97,6 @@ $(document).ready(function(){
             success: function (data) {
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
-                    console.log(e)
                     $('.explore-featured .cards-featured').append(e);
                 });
                 // installFeaturedListeners('.explore-featured');

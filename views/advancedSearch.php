@@ -42,9 +42,12 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="inputwrap">
-                    <label for="age">Age</label>
-                    <input class="input-field" id="age" name="age" type="text" placeholder="Enter Numerical Age"/>
+                <div class="inputwrap agewrap">
+                    <label for="age-from">Age Range</label>
+                    <input class="input-field" id="age-from" name="age-from" type="text" placeholder="From"/>
+                    <label for="age-to" class="sr-only">text</label>
+                    <input class="input-field" id="age-to" name="age-to" type="text" placeholder="To"/>
+                    <input class="age-range" type="hidden" name="age" value=""/>
                 </div>
                 <div class="inputwrap">
                     <label for="ethnodescriptor">Ethnodescriptor</label>
