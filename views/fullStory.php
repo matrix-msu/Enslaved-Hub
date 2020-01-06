@@ -1,5 +1,5 @@
 <?php
-if (isset($_GET['kid']) && checkKID($_GET['kid'])) {
+if (isset($_GET['kid']) && preg_match("/^[0-9A-F]+-[0-9A-F]+-[0-9A-F]+(-[0-9A-F]+)*$/", $_GET['kid'])) {
     // $story = storyContent($_GET['kid']);
 
     // Getting Story using korawrappper
