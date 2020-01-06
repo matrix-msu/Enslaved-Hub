@@ -66,7 +66,6 @@ function setPagination(total, limit, offset) {
             $('span.pagi-last').show();
         }
 
-
         $('div.pagi-left').css('opacity', '0.25', 'cursor', 'not-allowed');
         $('div.pagi-right').css('opacity', '', 'cursor', '');
         $('span.num').removeClass('active');
@@ -274,7 +273,9 @@ $(document).ready(function(){
     $('span.dotsRight').click(function(e) {
         // e.stopPropagation();
         if (pages - page < 10) {
-            return;
+            page = pages;
+            paginate();
+            $('.num.active').click();
         } else {
             page = page + 10;
             paginate();
@@ -291,9 +292,11 @@ $(document).ready(function(){
     });
     $('span.dotsLeft').click(function(e) {
         // e.stopPropagation();
-        if (page - 10 < 0) { // this check, and the other +10 check may not be needed
-            return; // since the dots are hidden at instances when they
-        } else { // would normally break the pagination
+        if (page - 10 < 0) {
+            page = 1;
+            paginate();
+            $('.num.active').click();
+        } else {
             page = page - 10;
             paginate();
             $('.num.active').click();

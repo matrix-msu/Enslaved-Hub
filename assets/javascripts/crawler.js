@@ -194,6 +194,7 @@ function showResults(result_type, count_type)
 		success:function(data){
 			//On success make ajax call to get the results
 			total_length = data;
+			console.log(total_length);
 			getResults(get_data);
 		},
 		error:function(xhr, status, error){
@@ -238,6 +239,7 @@ function getAllSeeds() {
 //Gets the results for the selected tab
 function getResults(get_data)
 {
+	console.log(get_data);
 	$.ajax({
 		method:'POST',
 		url: BASE_URL + "api/getCrawlerResults",
