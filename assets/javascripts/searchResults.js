@@ -47,9 +47,6 @@ $( ".page-numbers" ).click(function() {
 });
 
 function scrollToTop(){
-    // console.log('in');
-    // var position = $('#searchResults').position();
-    // console.log(position.top);
     $(window).scrollTop(320);
 }
 
@@ -285,56 +282,6 @@ searchResults(search_type);
 //Document load
 $(document).ready(function() {
     hideFilterCategories();
-
-    // TODO::not sure if this is needed since search triggers
-    // the filters anyways
-    // var firstFilter = "";
-
-    // for (filter in filters){
-    //     if (filter != "limit" && filter != "offset"){
-    //         firstFilter = filter;
-    //         break;
-    //     }
-    // }
-
-    // get the search type filters first
-    // $.ajax({
-    //     url: BASE_URL + "api/getSearchFilterCounters",
-    //     type: "GET",
-    //     data: {
-    //         search_type: search_type,
-    //         filters: filters,
-    //         filter_types: [search_type]
-    //     },
-    //     'success': function (data) {
-    //         // get the rest of the filters
-    //         if (search_type != "all"){
-    //             $.ajax({
-    //                 url: BASE_URL + "api/getSearchFilterCounters",
-    //                 type: "GET",
-    //                 data: {
-    //                     search_type: search_type,
-    //                     filters: filters,
-    //                     filter_types: filtersToSearchType[search_type]
-    //                 },
-    //                 'success': function (data) {
-    //                     var allCounters = JSON.parse(data);
-    //                     fillFilterCounters(allCounters);
-    //                 }
-    //             });
-    //         } else {
-    //             var allCounters = JSON.parse(data);
-    //             // console.log('success', allCounters)
-
-    //             // open the drawer for the first filter once the counters are made
-    //             if (firstFilter != ""){
-    //                 if ( !$("li[name='" + firstFilter + "']").find("span").hasClass("show") )
-    //                 $("li[name='" + firstFilter + "']").trigger('click');
-    //             }
-    //             fillFilterCounters(allCounters);
-    //         }
-    //     }
-    // });
 
     // hide filter categories based on hierarchy in filtersToSearchType
     function hideFilterCategories(){
@@ -908,13 +855,13 @@ function updateURL(){
 */
 function get_download_content(fields, data, isAllData) {
 
-    if (isAllData){     // make a blazegraph call to get all of the data
+    if (isAllData) {
         var templates = ['tableCard'];
         filters['offset'] = 0;
         delete filters['limit'];
 
         $.ajax({
-            url: BASE_URL + "api/blazegraph",
+            url: BASE_URL + "api/keywordSearch",
             type: "GET",
             data: {
                 preset: search_type,

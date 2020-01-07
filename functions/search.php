@@ -444,14 +444,16 @@ function keyword_search() {
                 break;
             }
 
-            if ($key == 'date') {
-                $dates = explode('-', $value[0]);
+            if ($key == 'date' | $key == 'age') {
+                $values = explode('-', $value[0]);
+                if ($key == 'date')
+                    $key = 'date.raw';
                 //TODO::add gte or lte separate
                 $range_filter = [
                     'range' => [
-                        'date.raw' => [
-                            'gte' => $dates[0],
-                            'lte' => $dates[1]
+                        $key => [
+                            'gte' => $values[0],
+                            'lte' => $values[1]
                         ]
                     ]
                 ];
