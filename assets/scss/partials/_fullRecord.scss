@@ -649,6 +649,35 @@
                 //     margin-left: -10px;
                 //     margin-bottom: -10px;
                 // }
+
+                &.hide{
+                    display: none;
+                }
+            }
+
+            .show-all{
+                margin: 15px 0 12px;
+                cursor: pointer;
+                display: flex;
+
+                p{
+                    color: $sub-base;
+                    text-decoration: underline;
+                    margin-right: 5px;
+                }
+                img{
+                    transition: .3s ease-out;
+                    margin-bottom: -4px;
+                }
+
+                &.show{
+                    img{
+                        transform: rotate(180deg);
+                    }
+                }
+                &.hide{
+                    display: none;
+                }
             }
         }
     }
