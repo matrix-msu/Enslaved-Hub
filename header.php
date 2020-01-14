@@ -34,6 +34,11 @@
                     <?php echo ($nav[0] == "Search") ? '<img class="search-icon" src="'.BASE_IMAGE_URL.'search.svg" alt="search icon" />' : "" ?>
                 </li>
             <?php } ?>
+            		
+            		<li class="nav-item donate">
+                    <a class="nav-link donate unselected" href="<?php echo BASE_URL;?>support-our-mission">Support Our Mission</a>
+                </li>
+            		
             </ul>
         </div>
     </div>
