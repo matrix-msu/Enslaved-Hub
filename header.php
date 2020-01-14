@@ -36,7 +36,7 @@
             <?php } ?>
             		
             		<li class="nav-item donate">
-                    <a class="nav-link donate unselected" href="https://givingto.msu.edu/gift/index.cfm?desi_code=AN04&desig_descrip=College%20of%20Social%20Science%20Matrix&CFID=757810&CFTOKEN=9513505b20b6aba4-E4C5564B-E081-30E7-1CB17EB97DADED75&jsessionid=f0301f221bdbcd94341b217b2976632c1f2f" target="_blank">Support Our Mission</a>
+                    <a class="nav-link donate unselected" href="<?php echo BASE_URL;?>support-our-mission">Support Our Mission</a>
                 </li>
             		
             </ul>
