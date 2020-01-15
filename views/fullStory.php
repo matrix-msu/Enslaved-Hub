@@ -117,14 +117,16 @@ else {
                         </div>
                         <img id="next-arrow" onclick="plusSlides(1)" src="<?php echo BASE_URL?>assets/images/Arrow3.svg" alt="arrow">
                     </div> -->
-                    <div class="controls">
-                        <div class="arrows">
-                            <div class="prev" onclick="plusSlides(-1)"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
-                            <div class="next" onclick="plusSlides(1)"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
-                        </div>
-                        <div class="dots">
-                        </div>
-                    </div>
+                    <?php if (isset($images) && count($images) > 1) { ?>
+                      <div class="controls">
+                          <div class="arrows">
+                              <div class="prev" onclick="plusSlides(-1)"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
+                              <div class="next" onclick="plusSlides(1)"><img src="<?php echo BASE_IMAGE_URL?>Arrow3.svg" alt="arrow"></div>
+                          </div>
+                          <div class="dots">
+                          </div>
+                      </div>
+                    <?php } ?>
                     <div class="expand modal">
                         <img src="<?php echo BASE_URL?>assets/images/maximize.svg" alt="maximize">
                     </div>
