@@ -7,14 +7,16 @@ class crawler_tags {
 	var $dbName;
 	var $password;
 
-	public function __construct() {
+	public function __construct()
+    {
 		$this->host = Host;
 		$this->user = Username;
 		$this->dbName = DBName;
 		$this->password = Password;
 	}
 
-	public function connect(){
+	public function connect()
+    {
 		$link = mysqli_connect($this->host, $this->user, $this->password, $this->dbName);
 
 		if (mysqli_connect_errno())
@@ -23,7 +25,8 @@ class crawler_tags {
 		return $link;
 	}
 
-	public function get_tags(){
+	public function get_tags()
+    {
 		$link = $this->connect();
 		$query = "SELECT tag_id, tag_name FROM crawler_tags";
 		$result = mysqli_query($link, $query);
@@ -33,15 +36,30 @@ class crawler_tags {
 		return mysqli_fetch_all($result, MYSQLI_ASSOC);
 	}
 
-	public function get_tag_name_per_keyword_ids($ids){
+	public function get_tag_name_per_keyword_ids($ids)
+    {
 		$link = $this->connect();
 		$assoc = [];
 		foreach ($ids as $id) {
-			$query = "SELECT ct.tag_id, ct.tag_name FROM crawler_tags ct INNER JOIN crawler_keyword_tags_assoc ckta ON
-			ct.tag_id = ckta.tag_id WHERE ckta.keyword_id =" . $id;
-			$result = mysqli_query($link, $query);
+			$query = 
+                "SELECT 
+                    ct.tag_id, 
+                    ct.tag_name 
+                    FROM 
+                        crawler_tags ct 
+                        INNER JOIN crawler_keyword_tags_assoc ckta ON ct.tag_id = ckta.tag_id 
+                    WHERE 
+                        ckta.keyword_id = ?
+            ";
+            
+            $stmt = mysqli_prepare($link, $query);
+            
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+            
 			$assoc[$id] = mysqli_fetch_all($result, MYSQLI_ASSOC);
-			mysqli_free_result($result);
 		}
 
 		mysqli_close($link);
@@ -49,7 +67,8 @@ class crawler_tags {
 		return $assoc;
 	}
 
-	public function update_keyword_tags($keywordId, $tagIds){
+	public function update_keyword_tags($keywordId, $tagIds)
+    {
 		$link = $this->connect();
 
 		if ($stmt = mysqli_prepare($link, "DELETE FROM crawler_keyword_tags_assoc WHERE keyword_id=?")) {
