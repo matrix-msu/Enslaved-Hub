@@ -7,5 +7,15 @@ Requirements
 
 Install
 -----------------------
-`curl -s http://getcomposer.org/installer | php`
-`php composer.phar install --no-dev`
+```
+$ curl -s http://getcomposer.org/installer | php
+$ php composer.phar install --no-dev
+```
+
+
+Configure
+-----------------------
+```
+$ cp config.dist.php config.php
+$ cp database-config.dist.php database-config.php
+```

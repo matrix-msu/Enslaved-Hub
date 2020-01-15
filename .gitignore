@@ -1,5 +1,6 @@
 # bootstrap
 config.php
+database-config.php
 config.json
 
 # htaccess files

@@ -1,8 +1,5 @@
 <?php
 
-// require_once("config.php");
-
-
 class crawler_broken_links {
 
     var $host;

@@ -1,7 +1,7 @@
 <?php
 // TO RUN: php -r "require 'path/to/webcrawler.php'; run();"
 
-require_once(realpath(dirname(__FILE__) . "/../config.php"));
+require_once(realpath(dirname(__FILE__) . "/../database-config.php"));
 error_reporting(0);
 
 class WebCrawler {

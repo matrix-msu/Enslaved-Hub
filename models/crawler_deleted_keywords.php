@@ -1,7 +1,5 @@
 <?php
 
-// require_once("config.php");
-
 class crawler_deleted_keywords {
 
     var $host;
