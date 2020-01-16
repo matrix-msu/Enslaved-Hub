@@ -6,15 +6,18 @@ class crawler_seeds {
 	var $user;
 	var $dbName;
 	var $password;
-	//constrctor function to initialize variables
-	public function __construct(  ) {
+	
+    //constrctor function to initialize variables
+	public function __construct()
+    {
 
 		$this->host=Host;
 		$this->user=Username;
 		$this->dbName=DBName;
 		$this->password=Password;
 	}
-	// connect to data base
+	
+    // connect to data base
 	public function connect(){
 		// Create connection
 		$con = mysqli_connect($this->host,$this->user,$this->password,$this->dbName);
@@ -30,11 +33,12 @@ class crawler_seeds {
 	public function get_seeds($limit, $offset)
 	{
 		$link = $this->connect();
-		$query = "SELECT * FROM crawler_seeds";
-		if (isset($limit) && isset($offset)) {
-			$query .= " LIMIT ".$limit." OFFSET ".$offset;
-		}
-		$result = mysqli_query($link, $query);
+		$query = "SELECT * FROM crawler_seeds LIMIT ? OFFSET ?";
+        $stmt = mysqli_prepare($link, $query);
+        $stmt->bind_param("ii", $limit, $offset);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
         mysqli_close($link);
 		return mysqli_fetch_all($result, MYSQLI_ASSOC);
 	}
@@ -52,54 +56,78 @@ class crawler_seeds {
 
 	public function update_seed_info($seed_id, $name , $title, $rss, $url, $twitter)
 	{
-		$conn=$this->connect();
-		$query = "UPDATE crawler_seeds set text_name='$name', title='$title', xmlURL='$rss', htmlURL='$url', twitter_handle='$twitter' WHERE id='$seed_id' ";
-		$conn->query($query);
-		mysqli_close($conn);
+		$link=$this->connect();
+		$query = "UPDATE crawler_seeds set text_name=?, title=?, xmlURL=?, htmlURL=?, twitter_handle=? WHERE id=?";
+        $stmt = mysqli_prepare($link, $query);
+        $stmt->bind_param("ssssss", $name, $title, $rss, $url, $twitter, $seed_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+		mysqli_close($link);
 	}
 
 	public function delete_seed_info($seed_id)
 	{
-		$conn=$this->connect();
-		$query = "DELETE FROM crawler_seeds WHERE id='$seed_id' ";
-		$conn->query($query);
-		mysqli_close($conn);
+		$link = $this->connect();
+		$query = "DELETE FROM crawler_seeds WHERE id=?";
+        $stmt = mysqli_prepare($link, $query);
+        $stmt->bind_param("s", $seed_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+		mysqli_close($link);
 	}
 
 	// update entry from crawler_seeds this belongs to broken links
-	public function update_seeds($old_link,$new_link)
+	public function update_seeds($old_link, $new_link)
 	{
-		$conn=$this->connect();
-		$query = "UPDATE crawler_seeds set htmlURL='$new_link' WHERE htmlURL='$old_link' ";
-		$result=$conn->query($query);
-		mysqli_close($conn);
+		$link = $this->connect();
+		$query = "UPDATE crawler_seeds set htmlURL=? WHERE htmlURL=?";
+        $stmt = mysqli_prepare($link, $query);
+        $stmt->bind_param("ss", $new_link, $old_link);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+		mysqli_close($link);
 	}
-	//delete entry from crawler_seeds this belongs to broken links
-	public function delete_seeds($link)
+	
+    //delete entry from crawler_seeds this belongs to broken links
+	public function delete_seeds($broken_link)
 	{
-		$conn=$this->connect();
-		$query = "DELETE FROM crawler_seeds WHERE htmlURL='$link'";
-		$result=$conn->query($query);
-		mysqli_close($conn);
+		$link=$this->connect();
+		$query = "DELETE FROM crawler_seeds WHERE htmlURL=?";
+        $stmt = mysqli_prepare($link, $query);
+        $stmt->bind_param("s", $broken_link);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+		mysqli_close($link);
 	}
-	//delete entry from broken_links this belongs to broken links
-    public function delete_broken_links($link)
+	
+    //delete entry from broken_links this belongs to broken links
+    public function delete_broken_links($broken_link)
     {
-        $conn=$this->connect();
-    	$query = "DELETE FROM broken_links WHERE link_url='$link'";
-    	$result=$conn->query($query);
-    	mysqli_close($conn);
+        $link = $this->connect();
+    	$query = "DELETE FROM broken_links WHERE link_url=?";
+        $stmt = mysqli_prepare($link, $query);
+        $stmt->bind_param("s", $broken_link);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+    	mysqli_close($link);
     }
-	public function get_count()
+	
+    public function get_count()
 	{
-		$conn = $this->connect();
+		$link = $this->connect();
 		$query = "SELECT * FROM crawler_seeds";
-		$result = $conn->query($query);
-		mysqli_close($conn);
+		$result = $link->query($query);
+		mysqli_close($link);
 		return $result->num_rows;
 	}
+    
     //adding seed for URL with Name/Title fields automatically updated
-    public function add_seed($name , $title, $url)
+    public function add_seed($name, $title, $url)
     {
         $link = $this->connect();
         $query = "SELECT * FROM crawler_seeds WHERE htmlURL = '$url'";
