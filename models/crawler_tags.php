@@ -38,7 +38,7 @@ class crawler_tags {
 		$assoc = [];
 		foreach ($ids as $id) {
 			$query = "SELECT ct.tag_id, ct.tag_name FROM crawler_tags ct INNER JOIN crawler_keyword_tags_assoc ckta ON
-			ct.tag_id = ckta.tag_id WHERE ckta.keyword_id =" . $id;
+			ct.tag_id = ckta.tag_id WHERE ckta.keyword_id =" . $id; // . " AND ckta.tag_id != 6"
 			$result = mysqli_query($link, $query);
 			$assoc[$id] = mysqli_fetch_all($result, MYSQLI_ASSOC);
 			mysqli_free_result($result);

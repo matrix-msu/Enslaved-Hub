@@ -20,7 +20,7 @@
 <div class="crawler">
     <div class="project-tab crawler-tabs">
         <ul>
-            <li class="tabbed" id="results">Results</li>
+            <li class="tabbed" id="results_visible">Results</li>
             <hr>
         </ul>
     </div>
@@ -58,7 +58,7 @@
     </div>
 
     <?php if($isCrawlerAdmin) {	 ?>
-    <div class="results-wrap result-container show" id="results">
+    <div class="results-wrap result-container show" id="results_visible">
         <div><span class="tag-header">Tags:</span></div>
     </div>
 

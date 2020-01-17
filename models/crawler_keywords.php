@@ -87,6 +87,30 @@ class crawler_keywords {
 		return $result->num_rows;
 	}
 
+
+    // fetch LIMIT number of keywords starting from OFFSET where visible
+	public function get_keywords_visible($limit, $offset, $sort, $terms='', $tagIds=[]){
+		$search = $filter = "";
+		if($terms)
+			$search = " AND ck.keyword LIKE '%".$terms."%' OR ck.url LIKE '%".$terms."%'";
+		if($tagIds)
+			$filter = " AND ct.tag_id IN (" . implode(', ', $tagIds) . ")";
+		$link = $this->connect();
+		$query = "SELECT ck.keyword_id, ck.keyword, ck.url FROM crawler_keywords ck LEFT JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id = ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id = ckta.tag_id WHERE ct.tag_name != 'No Display' AND NOT EXISTS (SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword = dk.keyword)".$search.$filter." ORDER BY ck.date_created ".$sort." LIMIT ".$limit." OFFSET ".$offset;
+		$result = mysqli_query($link, $query);
+		mysqli_close($link);
+		return mysqli_fetch_all($result, MYSQLI_ASSOC);
+	}
+
+    public function get_count_visible(){
+		$conn=$this->connect();
+        $query = "SELECT DISTINCT ck.keyword_id, ck.keyword, ck.url FROM crawler_keywords ck LEFT JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id = ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id = ckta.tag_id WHERE ct.tag_name != 'No Display' AND NOT EXISTS (SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword = dk.keyword)";
+		//$query = "SELECT DISTINCT keyword, url FROM crawler_keywords WHERE NOT EXISTS (SELECT keyword FROM deleted_keywords WHERE crawler_keywords.keyword = deleted_keywords.keyword)";
+		$result=$conn->query($query);
+		mysqli_close($conn);
+		return $result->num_rows;
+	}
+
 }
 
 ?>

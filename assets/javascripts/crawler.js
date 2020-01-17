@@ -105,6 +105,11 @@ $(document).ready(function(){
 			count_type = 'count_seeds';
 			$('.create-seed').addClass('show');
 		}
+		else if(tab_type == "results_visible"){
+			type['get_results_visible'] = 'ok';
+			count_type = 'count_results_visible';
+			$('.create-seed').removeClass('show');
+		}
 
 		showResults(type, count_type);
 
@@ -112,6 +117,7 @@ $(document).ready(function(){
 
 	//Trigger click on results when page loads
 	$('.crawler-tabs li#results').trigger('click');
+	$('.crawler-tabs li#results_visible').trigger('click');
 
 	// Modals
 	$('.crawler-modal .canvas').css('opacity', '0');
@@ -247,7 +253,7 @@ function getResults(get_data)
 		dataType: "JSON",
 		success:function(data){
 			if(data) {
-				if (tab_type === 'results')
+				if (tab_type === 'results' || tab_type === 'results_visible')
 					html = populateCrawlerResults(data);
 				if (tab_type === 'seeds')
 					html = populateCrawlerSeeds(data);
