@@ -84,6 +84,7 @@ div.searched-term {
                 border-bottom: 2px solid rgba(14,50,50,0.1);
 
                 span.align-right{
+                    margin-left: 5px;
                     img{
                         transform: rotate(90deg);
                     }
@@ -868,11 +869,13 @@ ul.catmenu{
                 margin-left: auto;
                 transition: 200ms;
                 #Download_selected, #Download_all{
+                    cursor: pointer;
                     font-style: italic;
                     margin-left: 15px;
                     border-bottom: 2px solid $sub-base;
                 }
                 #Download_selected:hover, #Download_all:hover{
+                    cursor: pointer;
                     border-bottom: 3px solid $accent;
                     padding-bottom: 2px;
                     transition: .1s;
@@ -1224,11 +1227,12 @@ ul.catmenu{
                 text-align: left;
                 padding-bottom: 10px;
                 select {
-                    background: #FFFFFF url(../images/Arrow-dark.svg) no-repeat;
+                    background: #FFFFFF url(../images/directory_chevron.svg) no-repeat;
+                    background-size: 6%;
                     background-position: 95%;
-                    border: 1px solid rgba(13,18,48,0.15);
-                    border-radius: 0;
-                    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+                    border: 0px solid rgba(13,18,48,0.15);
+                    border-radius: 4px;
+                    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.08);
                     font-family: aleoregular;
                     cursor: pointer;
                     display: block;
@@ -1260,7 +1264,7 @@ ul.catmenu{
                     height: 80%;
                     div {
                         background: #FFFFFF;
-                        border: 1px solid rgba(13,18,48,0.15);
+                        border: 0px solid rgba(13,18,48,0.15);
                         box-sizing: border-box;
                         margin-top: 0;
                         overflow-y: auto;
@@ -1287,13 +1291,15 @@ ul.catmenu{
                 div.left-col {
                     margin-right: 10px;
                     div {
-                        box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+                        box-shadow: 0 5px 15px 0 rgba(0,0,0,0.09);
+                        border-radius: 4px;
                     }
                 }
                 div.right-col {
                     margin-left: 10px;
                     div {
-                        box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+                        box-shadow: 0 5px 15px 0 rgba(0,0,0,0.09);
+                        border-radius: 4px;
                         position: relative;
                         ul#selected-cols {
                             width: 80%;
@@ -1311,10 +1317,11 @@ ul.catmenu{
                             transition: 400ms;
                             height: 40px;
                             width: 40px;
+                            transform: rotate(90deg);
                         }
                         img:last-child {
                             top: 25%;
-                            transform: rotate(180deg);
+                            transform: rotate(-90deg);
                             margin-bottom: 10px;
 
                         }
@@ -1341,13 +1348,14 @@ ul.catmenu{
                         transition: 400ms;
                         height: 40px;
                         width: 40px;
+                        background: white;
                     }
                     img:first-child {
                         margin-bottom: 5px;
-                        transform: rotate(-90deg)
+                        // transform: rotate(-90deg)
                     }
                     img:last-child {
-                        transform: rotate(90deg)
+                        transform: rotate(180deg)
                     }
                     img:hover {
                         background-color: #FFFFFF;
