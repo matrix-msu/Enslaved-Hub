@@ -388,8 +388,8 @@
                     </div>
                 </div>
                 <div class="arrow-wrap">
-                    <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="add item">
-                    <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="remove item">
+                    <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="add item">
+                    <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="remove item">
                 </div>
                 <div class="right-col">
                     <p>Selected Columns</p>
@@ -402,8 +402,8 @@
                             <li class="right">Column Name5</li>
                             <li class="right">Column Name6</li>
                         </ul>
-                        <img class="down" src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="move down">
-                        <img class="up" src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="move up">
+                        <img class="down" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="move down">
+                        <img class="up" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="move up">
                     </div>
                 </div>
             </div>

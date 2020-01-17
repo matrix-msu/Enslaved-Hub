@@ -38,7 +38,13 @@ $('#modal-img').click(function (e) {
     e.stopPropagation();
 })
 
-$(".modal-view").click(closeModal);
+//clicks on dark background but not child element(modal)
+$(".modal-view").click(function(){
+    closeModal();
+}).children().click(function(e) {
+    return false;
+});
+
 $("#modal-dim-background-img").click(closeModal);
 
 $('div.close').click(closeModal);

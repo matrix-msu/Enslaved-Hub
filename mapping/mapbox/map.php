@@ -3,6 +3,7 @@
 	include('includes/head.php');
 	include('includes/header.php');
 	include('includes/config.php');
+	include('includes/database-config.php');
 	include_once('/matrix/www/kora/kora/includes/koraSearch.php');
 
 	// Get KORA content that will populate the map.
