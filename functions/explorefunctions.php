@@ -2,6 +2,7 @@
 
 function callAPI($url,$limit,$offset){
   $url.='&format=json';
+
     // Create a stream
     $opts = array(
       'http'=>array(
@@ -578,7 +579,7 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
-    // print_r($query);die;
+ //print_r($query);die;
     $result = blazegraphSearch($query);
     // print_r($result);die;
     if (empty($result)){
@@ -591,8 +592,8 @@ function getFullRecordHtml(){
     //Get variables from query
     $recordVars = [];
 
-    //Name
-    $recordVars['Name'] = $record['name']['value'];
+    //Label
+    $recordVars['Name'] = $record['label']['value'];
 
 
     // First Name
@@ -695,6 +696,11 @@ function getFullRecordHtml(){
     //Code
     if (isset($record['code']) && isset($record['code']['value']) && $record['code']['value'] != ''){
       $recordVars['Modern Country Code'] = $record['code']['value'];
+    }
+
+    //Coordinates
+    if (isset($record['coordinates']) && isset($record['coordinates']['value']) && $record['coordinates']['value'] != ''){
+      $recordVars['Coordinates'] = $record['coordinates']['value'];
     }
 
     //Source

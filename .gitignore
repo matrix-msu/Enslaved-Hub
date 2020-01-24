@@ -28,3 +28,4 @@ composer.phar
 
 # project specific
 cache/*
+!cache/.gitkeep
