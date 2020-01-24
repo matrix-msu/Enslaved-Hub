@@ -440,7 +440,19 @@ function keyword_search() {
 
             // for filter by ref item id
             if (in_array($key, $item_types)) {
-                array_push($terms, ['term' => ['ref_' . $key => $value[0]]]);
+                $ref_type = $_GET['display'];
+                if ($ref_type != 'people')
+                    $ref_type = substr_replace($ref_type, '', -1);
+
+                // Have to do a search here in order to get the exact refs found in
+                // the full record
+                $res = $es->search([
+                    'index' => ELASTICSEARCH_INDEX_NAME,
+                    'body' => ['query' => ['term' => ['id' => $value[0]]], 'size' => 1]
+                ]);
+
+                // TODO::if erroring out here may want to check may want to check if hits has any results
+                array_push($terms, ['terms' => ['id' => $res['hits']['hits'][0]['_source'][ref_ . $ref_type]]]);
                 break;
             }
 
