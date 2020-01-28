@@ -158,7 +158,7 @@ if (isset($story2Images[0])){
                 <div class="col">
                   <h2 class="section-title">About</h2>
                     <p class="paragraph">Enslaved links together data from participating projects, allowing students, researchers, and the general public to search over numerous datasets at once in order to better reconstruct the lives of the people involved in the historical slave trade. You can search or browse interconnected data, generate visualizations, and explore short biographies of enslaved people. </p>
-                    <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL;?>">Learn More</a></p>
+                    <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL."about";?>">Learn More</a></p>
                 </div>
 
                 <div class="col">
