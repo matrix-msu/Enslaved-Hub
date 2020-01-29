@@ -41,19 +41,19 @@ class crawler_tags {
 		$link = $this->connect();
 		$assoc = [];
 		foreach ($ids as $id) {
-			$query = 
-                "SELECT 
-                    ct.tag_id, 
-                    ct.tag_name 
-                    FROM 
-                        crawler_tags ct 
-                        INNER JOIN crawler_keyword_tags_assoc ckta ON ct.tag_id = ckta.tag_id 
-                    WHERE 
+			$query =
+                "SELECT
+                    ct.tag_id,
+                    ct.tag_name
+                    FROM
+                        crawler_tags ct
+                        INNER JOIN crawler_keyword_tags_assoc ckta ON ct.tag_id = ckta.tag_id
+                    WHERE
                         ckta.keyword_id = ?
             ";
-            
+
             $stmt = mysqli_prepare($link, $query);
-            
+
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
