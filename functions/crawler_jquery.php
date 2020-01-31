@@ -58,6 +58,7 @@ if(isset($_POST["get_results"]))
 		array_push($keyword_ids, $value['keyword_id']);
 	}
 	$results['tags'] = $crawler_tags->get_tag_name_per_keyword_ids($keyword_ids);
+	//var_dump($results['tags']);
 	echo(json_encode($results));
 }
 
@@ -98,6 +99,26 @@ if (isset($_POST["date"])&& isset($_POST["idx"]))
 if(isset($_POST["count_results"]))
 {
 	$result = $crawler_keywords->get_count();
+	echo(json_encode($result));
+}
+
+
+//Gets results for results tab for visible results
+if(isset($_POST["get_results_visible"]))
+{
+	$results = $keyword_ids = [];
+	$results['keywords'] = $crawler_keywords->get_keywords_visible($limit,$offset,$sort,$terms,$tagIds);
+	foreach ($results['keywords'] as $key => $value) {
+		array_push($keyword_ids, $value['keyword_id']);
+	}
+	$results['tags'] = $crawler_tags->get_tag_name_per_keyword_ids($keyword_ids);
+	echo(json_encode($results));
+}
+
+//get results count
+if(isset($_POST["count_results_visible"]))
+{
+	$result = $crawler_keywords->get_count_visible();
 	echo(json_encode($result));
 }
 
