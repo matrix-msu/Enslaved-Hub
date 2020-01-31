@@ -2,8 +2,16 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url(../images/PersonLanding.jpg);
-
+    // background-image: url(../images/PersonLanding.jpg);
+    .header-background{
+      left: 0;
+      object-fit: cover;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 36%;
+    }
     .topwrap{
         padding-top: 300px;
         padding-bottom: 50px;

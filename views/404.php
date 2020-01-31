@@ -9,6 +9,8 @@ $randIndex = array_rand($bg);
 ?>
 
 <div class="top">
+ <img class="header-background 404-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+
   <div class="topwrap">
   </div>
 </div>
