@@ -1,3 +1,11 @@
+<?php
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+$randIndex = array_rand($bg);
+?>
+
 <!-- Heading image and title container-->
 <div class="container header search-page">
     <div class="image-container search-page">
@@ -54,7 +62,8 @@
             <?php //} ?>
         </div>
         <div class="image-background-overlay  search-page"></div>
-        <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg3.jpg" alt="Enslaved Background Image"></div>
+        <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image"></div>
+        <!-- <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg3.jpg" alt="Enslaved Background Image"></div> -->
     </div>
 </div>
 

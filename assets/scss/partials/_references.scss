@@ -1,10 +1,18 @@
 .header{
+  .header-background{
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
   .middlewrap{
     padding-top: 160px;
     padding-bottom: 50px;
   }
 }
-
 
 .container.info{
   .container.infowrap{
@@ -65,7 +73,4 @@
       }
     }
   }
-}
-.people-page{
-    background-image: url(../images/PersonLanding.jpg);
 }

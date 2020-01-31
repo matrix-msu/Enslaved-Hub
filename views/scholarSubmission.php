@@ -1,3 +1,14 @@
+<?php $cache_data = Json_GetData_ByTitle("scholarSubmission");
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+$randIndex = array_rand($bg);
+
+
+?>
+
+
 <div class="container header">
     <div class="image-container search-page image-only">
 	    <div class="container middlewrap">
@@ -7,8 +18,8 @@
         </div>
     </div>
       <div class="image-background-overlay"></div>
-      <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
-    
+      <img class="header-background scholarSubmission-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+
     </div>
 </div>
 <main class="direct-search">
@@ -38,7 +49,7 @@
                     <input class="input-field" id="research-specialization" name="research-specialization" type="text" placeholder="Enter Research and Specialization"/>
                 </div>
             </div>
-            
+
 
             <div class="buttonwrap">
                 <button id="direct-submit" type="submit" data-submit="...Sending">Submit Scholar</button>

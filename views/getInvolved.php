@@ -1,7 +1,16 @@
 <!-- Get Involved page-->
-<?php $cache_data = Json_GetData_ByTitle("Get Involved"); ?>
+<?php $cache_data = Json_GetData_ByTitle("Get Involved");
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+$randIndex = array_rand($bg);
+
+
+?>
 <!-- Heading image and title container-->
 <div class="container header about-header getinvolved-page">
+  <img class="header-background about-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
         <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about">
             <span id="previous-title">About / </span></a>

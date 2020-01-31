@@ -5,10 +5,17 @@ if (isset($_GET['prev'])){
     //Default to people page
     $prev = 'People';
 }
+
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+$randIndex = array_rand($bg);
 ?>
 <!-- Page author: Drew Schineller-->
 <!-- Heading image and title container-->
 <div class="container header stories">
+  <img class="header-background timeSub-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
         <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM;?>"><span id="previous-title"><?php echo ucwords(EXPLORE_FORM);?> // </span></a><span id="current-title">Date</span></h4>
         <h1>Date</h1>

@@ -1,3 +1,13 @@
+<?php $cache_data = Json_GetData_ByTitle("404");
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+$randIndex = array_rand($bg);
+
+
+?>
+
 <div class="top">
   <div class="topwrap">
   </div>

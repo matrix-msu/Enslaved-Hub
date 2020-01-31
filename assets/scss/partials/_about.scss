@@ -1,8 +1,30 @@
+
 .about-header{
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url(../images/PersonLanding.jpg);
+  .header-background {
+      left: 0;
+      object-fit: cover;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+
+      &.home-page{
+        height: 330px;
+      }
+
+      &.search-page {
+        height: 230px;
+    }
+
+      &.full-height {
+          height: 100%;
+      }
+  }
+    // background-position: center;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-image: url(../images/PersonLanding.jpg);
     .middlewrap{
         max-width: 1000px;
         width: 90%;

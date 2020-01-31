@@ -1,19 +1,24 @@
 <!-- Get Involved page-->
-<?php $cache_data = Json_GetData_ByTitle("References");?>
+<?php $cache_data = Json_GetData_ByTitle("References");
+
+
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+$randIndex = array_rand($bg);
+
+?>
 <!-- Heading image and title container-->
 <!-- <div class="container header">
     <div class="container middlewrap">
-         <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about">
-            <span id="previous-title">About // </span></a>
-            <span id="current-title"><?php echo $cache_data['title'] ?></span>
-        </h4>
         <h1><?php echo $cache_data['title'] ?></h1>
-    </div>
+        <img class="header-background home-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     </div>
 </div> -->
 
-<div class="container header references-header people-page">
+<div class="container header references-header references-page">
+    <img class="header-background references-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
         <h1><?php echo $cache_data['title'] ?></h1>
     </div>
