@@ -1,5 +1,12 @@
 <!-- Get Involved page-->
-<?php $cache_data = Json_GetData_ByTitle("Development Team"); ?>
+<?php $cache_data = Json_GetData_ByTitle("Development Team");
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+$randIndex = array_rand($bg);
+
+ ?>
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="image-container search-page image-only">
@@ -13,13 +20,10 @@
         </div>
 	    </div>
 	     <div class="image-background-overlay"></div>
-      <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
+      <img class="header-background ourPartners-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     </div>
 </div>
 <!-- info container-->
 <div class="container partner-text">
 <p><?php echo $cache_data["descr"] ?></p>
 </div>
-
-
-

@@ -50,3 +50,10 @@ function condenseRoles(){
         }
     })
 }
+$('.text').each(function(){
+    var el= $(this);
+      var textLength = el.html().length;
+       if (textLength > 60) {
+           el.css('font-size', '45px');
+       }
+});
