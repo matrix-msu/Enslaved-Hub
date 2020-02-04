@@ -85,16 +85,15 @@ div.searched-term {
 
                 span.align-right{
                     img{
-                        transform: rotate(90deg);
                         margin-left: 10px;
+                        transition: .3s ease-out;
                     }
-
-                    // &.show{
-                    //     img{
-                    //         transform: rotate(-90deg);
-                    //     }
-                    // }
-                }
+                    &:hover{
+                      img{
+                          transform: scaleY(-1);
+                        }
+                    }
+                  }
 
                 &.hidden{
                     padding-top: 0;
