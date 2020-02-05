@@ -25,9 +25,9 @@
 
                 .search-field{
                     //border: 1px solid #CED0D2;
-                    //border-radius: 5px;
+                    border-radius: 5px;
                     border: none;
-                    //box-shadow: 0 4px 36px 0 rgba(0,0,0,0.05);
+                    box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
                     color: $base-dark;
                     font-size: 16px;
                     font-family: aleoregular;
@@ -106,7 +106,9 @@
             img.show {
                 transform: rotate(-90deg);
             }
-
+            .align-center{
+                padding-bottom: 10px;
+            }
             .sortby-title, .tag-filter{
                 margin-left: 20px;
             }
@@ -136,6 +138,7 @@
                 padding: 20px;
                 position: absolute;
                 right: -14px;
+                top: 10px;
                 text-align: center;
                 width: 140px;
                 z-index: 1;
@@ -197,7 +200,7 @@
         .result_header{
             width: 100%;
             border-radius: 5px;
-            background-color: $white;
+            background-color: $base-light;
             //box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
             display: flex;
             //margin-bottom: 20px;
@@ -261,7 +264,6 @@
                     overflow: hidden;
                     text-decoration: none;
                     transition: all 0.3s;
-
                     &:hover{
                         color: $sub-base;
                     }
@@ -283,6 +285,9 @@
                     text-overflow: ellipsis;
                     overflow: hidden;
                     transition: all 0.3s;
+                    border-left: 1px solid rgba(206,208,210,0.5);
+                    padding-top: 10px;
+                    padding-bottom: 10px;
 
                     &:hover{
                         color: $sub-base;
@@ -365,7 +370,7 @@
                     }
 
                     .display-tag{
-                        //border-left: 1px solid rgba(206,208,210,0.5);
+                        border-left: 1px solid rgba(206,208,210,0.5);
                         font-size: 14px;
                         padding: 10px;
                         text-align: center;
