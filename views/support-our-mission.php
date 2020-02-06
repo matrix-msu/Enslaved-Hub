@@ -14,7 +14,7 @@
     </div>
 </div>
 <!-- text sections -->
-    <div class="container support-text">
+    <div class="container support-text"> 
 
 		<p>As you can imagine, we have a lot to do to make the Enslaved project a success and there are many ways you can help.</p>
 		
