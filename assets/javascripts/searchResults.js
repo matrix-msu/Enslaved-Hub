@@ -31,7 +31,7 @@ var currentTitle = "Search";
 
 
 var fields = [];    // fields for the table view
-var sort = 'ASC';
+var sort = 'asc'; // or desc
 var formattedData = {};
 
 var address = document.location.toString().split('/')
@@ -165,8 +165,6 @@ function searchResults(preset, limit = 12, offset = 0)
             } else {
                 total_length = JSON.parse(result_array['total']);
             }
-
-
 
             var showingResultsText = '';
             if (total_length < card_limit) {

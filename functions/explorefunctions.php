@@ -592,10 +592,12 @@ function getFullRecordHtml(){
     //Get variables from query
     $recordVars = [];
 
-    //Label
-    $recordVars['Name'] = $record['label']['value'];
+    $recordVars['Label'] = $record['label']['value'];
 
-
+    //Name
+    if (isset($record['name']) && isset($record['name']['value']) ){
+      $recordVars['Name'] = $record['name']['value'];
+    }
     // First Name
     if (isset($record['firstname']) && isset($record['firstname']['value']) ){
         $recordVars['First Name'] = $record['firstname']['value'];
@@ -627,7 +629,8 @@ function getFullRecordHtml(){
     }
 
     // descriptions for items
-    if (isset($record['extref']) && isset($record['extref']['value']) ){
+
+    if (isset($record['extref']) && isset($record['extref']['value']) && $record['extref']['value']!='' ){
         $recordVars['External References'] = $record['extref']['value'];
     }
 
@@ -809,17 +812,17 @@ function getFullRecordHtml(){
     $url = BASE_URL . "explore/" . $type;
     $recordform = ucfirst($type);
     $name = $recordVars['Name'];
+    $label= $recordVars['Label'];
     $dateRange = '';
-
     $html .= <<<HTML
 <h4 class='last-page-header'>
     <a id='last-page' href="$url"><span id=previous-title>$recordform / </span></a>
-    <span id='current-title'>$name</span>
+    <span id='current-title'>$label</span>
 </h4>
-<h1>$name</h1>
+<h1>$label</h1>
 <h2 class='date-range'><span>$dateRange</span></h2>
 HTML;
-
+//var_dump($html);
     $htmlArray['header'] = $html;
 
     //Description section
@@ -831,9 +834,8 @@ HTML;
     $html = '';
 
     $html .= '<div class="detailwrap">';
-
-// print_r($recordVars);die;
     foreach($recordVars as $key => $value){
+
       $html .= createDetailHtml($value, $key);
     }
     $html .= '</div>';
