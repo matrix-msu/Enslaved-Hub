@@ -31,7 +31,7 @@ var currentTitle = "Search";
 
 
 var fields = [];    // fields for the table view
-var sort = 'asc'; // or desc
+var sort = 'ASC';
 var formattedData = {};
 
 var address = document.location.toString().split('/')
@@ -165,6 +165,8 @@ function searchResults(preset, limit = 12, offset = 0)
             } else {
                 total_length = JSON.parse(result_array['total']);
             }
+
+
 
             var showingResultsText = '';
             if (total_length < card_limit) {
@@ -1006,5 +1008,5 @@ $('div').not('.filter-menu').mouseup(function() {
 });
 
 $("#search-results tbody td").on('click', function(event){
-    console.log(this);
+    // console.log(this);
 });
