@@ -1,9 +1,10 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?description
+SELECT ?label ?description
 (group_concat(distinct ?name1; separator = "||") as ?name)
 (group_concat(distinct ?altname1; separator = "||") as ?altname)
+(group_concat(distinct ?age1; separator = "||") as ?age)
 (group_concat(distinct ?firstname1; separator = "||") as ?firstname)
 (group_concat(distinct ?surname1; separator = "||") as ?surname)
 (group_concat(distinct ?sextype1; separator = "||") as ?sextype)
@@ -13,10 +14,10 @@ SELECT ?description
 (group_concat(distinct ?placeofOrigin1; separator = "||") as ?placeofOrigin)
 (group_concat(distinct ?placeOriginlabel1; separator = "||") as ?placeOriginlabel)
 (group_concat(distinct ?occupationlabel; separator = "||") as ?occupation)
-(group_concat(distinct ?roleslabel1; separator = "||") as ?roleslabel)
-(group_concat(distinct ?roleevent; separator = "||") as ?roleevent1)
-(group_concat(distinct ?roleeventlabel; separator = "||") as ?roleeventlabel1)
-(group_concat(distinct ?statuslabel1; separator = "||") as ?statuslabel)
+(group_concat(distinct ?roleslabel1; separator = "||") as ?roles)
+(group_concat(distinct ?roleevent1; separator = "||") as ?roleevent)
+(group_concat(distinct ?roleeventlabel1; separator = "||") as ?roleeventlabel)
+#(group_concat(distinct ?statuslabel1; separator = "||") as ?statuslabel)
 (group_concat(distinct ?statusevent1; separator = "||") as ?statusevent)
 (group_concat(distinct ?eventstatuslabel1; separator = "||") as ?eventstatuslabel)
 (group_concat(distinct ?relationslabel; separator = "||") as ?relationships)
@@ -36,12 +37,14 @@ SELECT ?description
  WHERE
 {
  VALUES ?agent { $wd:$qid }.
+  ?agent $rdfs:label ?label.
   ?agent $wdt:$hasName ?name1.
  OPTIONAL{ ?agent $wdt:$hasAlternateName ?altname1}.
  OPTIONAL{ ?agent $wdt:$hasFirstName ?firstname1}.
  OPTIONAL{ ?agent $wdt:$hasSurname ?surname1}.
  OPTIONAL{ ?agent $wdt:$hasDescription ?description}.
-
+ OPTIONAL{ ?agent $wdt:$hasAge ?ageuri.
+            ?ageuri $wdt:$hasAgeValue ?age1}.
  OPTIONAL{?agent $wdt:$hasSex ?sex.
          ?sex $rdfs:label ?sextype1}.
  OPTIONAL{?agent $wdt:$hasRace ?race1}.
@@ -55,16 +58,16 @@ SELECT ?description
          ?occupation1 $rdfs:label ?occupationlabel}.
 
 OPTIONAL {?agent $p:$hasParticipantRole ?staterole.
-         ?staterole $ps:$hasParticipantRole ?roles;
-                   $pq:$roleProvidedBy ?roleevent.
-         ?roles $rdfs:label ?roleslabel1.
-         ?roleevent $rdfs:label ?roleeventlabel.
-         bind(?roleevent as ?allevents).
+         ?staterole $ps:$hasParticipantRole ?role;
+                   $pq:$roleProvidedBy ?roleevent1.
+         ?role $rdfs:label ?roleslabel1.
+         ?roleevent1 $rdfs:label ?roleeventlabel1.
+         bind(?roleevent1 as ?allevents).
       }.
  OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
-           ?statstatus $ps:$hasPersonStatus ?status.
+           ?statstatus $ps:$hasPersonStatus ?status1.
            ?statstatus $pq:$hasStatusGeneratingEvent ?statusevent1.
-           ?status $rdfs:label ?statuslabel1.
+           ?status1 $rdfs:label ?statuslabel.
            ?statusevent1 $rdfs:label ?eventstatuslabel1.
            bind(?statusevent1 as ?allevents)}.
 OPTIONAL {?agent $p:$hasName ?statementname.
@@ -97,6 +100,6 @@ OPTIONAL {?agent $p:$hasName ?object .
           OPTIONAL {?provenance $pr:$hasExternalReference ?extref1}}.
 
 
-}GROUP BY ?description
+}GROUP BY ?label ?description
 QUERY;
 ?>
