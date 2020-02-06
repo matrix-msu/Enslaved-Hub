@@ -24,7 +24,6 @@ $cache_Data = Json_GetData_ByTitle($upper);
 <!-- explore by -->
 <div class="container explore-by">
     <h1>Explore By</h1>
-
     <ul class="cards">
         <?php foreach ($GLOBALS["FILTER_ARRAY"][EXPLORE_FORM] as $type) {
             if($type == 'Source Type' || $type == 'Place Type'){
@@ -63,7 +62,7 @@ $cache_Data = Json_GetData_ByTitle($upper);
                     </li>
             <?php }
             }
-            }
+        }
         ?>
     </ul>
 </div>
