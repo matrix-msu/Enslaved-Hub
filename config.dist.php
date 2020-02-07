@@ -128,6 +128,13 @@ $GLOBALS['FILTER_TO_FILE_MAP'] = Array(
     "Modern Countries" => countrycode
 );
 
+$GLOBALS['bg'] = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+
+$GLOBALS['randIndex'] = array_rand($bg);
+
 //include the lib files
 require_once( BASE_LIB_PATH . "configFunctions.php" );
 require_once( BASE_LIB_PATH . "koraWrapper.php" );
