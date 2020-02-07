@@ -29,8 +29,8 @@
                     border: none;
                     box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
                     color: $base-dark;
-                    font-size: 16px;
-                    font-family: aleoregular;
+                    font-size: 14px;
+                    font-family: aleobold;
                     margin: 0;
                     //outline: none;
                     padding-left: 20px;
@@ -43,11 +43,14 @@
                         //border: 1px solid $base-dark;
                     }
                     &:focus-within{
-                            //border: 1px solid $base-dark;
+                        //border: 1px solid $base-dark;
+                        //border: none;
+                        outline:none;
                     }
                     &::placeholder {
-                        //color: rgba($base-dark, .75);
+                        color: rgba($base-dark, .75);
                         font-size: 14px;
+                        font-family: aleobold;
                     }
                 }
 
@@ -59,16 +62,20 @@
                     color: #253449;
                     opacity: 1; /* Firefox */
                     font-style: italic;
+                    font-family: aleobold;
                 }
 
                 :-ms-input-placeholder { /* Internet Explorer 10-11 */
                     color: #253449;
                     font-style: italic;
+                    font-family: aleobold;
                 }
 
                 ::-ms-input-placeholder { /* Microsoft Edge */
                     color: #253449;
                     font-style: italic;
+                    font-family: aleobold;
+
                 }
             }
         }
