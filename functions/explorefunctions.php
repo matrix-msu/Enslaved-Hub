@@ -617,6 +617,17 @@ function getFullRecordHtml(){
     if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
       $recordVars['Sex'] = $record['sextype']['value'];
     }
+    //AGE
+
+    if (isset($record['age']) && isset($record['age']['value']) && $record['age']['value'] != '' ){
+      $recordVars['Age'] = $record['age']['value'];
+    }
+    //occupation
+
+    if (isset($record['occupation']) && isset($record['occupation']['value']) && $record['occupation']['value'] != '' ){
+      $recordVars['Occupation'] = $record['occupation']['value'];
+    }
+
 
     //Race
     if (isset($record['race']) && isset($record['race']['value']) && $record['race']['value'] != '' ){
@@ -720,6 +731,7 @@ function getFullRecordHtml(){
     }
 
     //Relationships
+
     if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
       if(isset($record['qrelationname']) && isset($record['qrelationname']['value']) && isset($record['relationagentlabel']) && isset($record['relationagentlabel']['value'])){
         if (empty($record['relationships']['value']) ){
@@ -774,15 +786,15 @@ function getFullRecordHtml(){
       $recordVars['Sex'] = $record['sextype']['value'];
     }
 
-    //Roles
+    //Roles for events
     //Gets the roles, participants, and pqID if they exist and matches them together
     if (isset($record['roles']) && isset($record['roles']['value']) &&  $record['roles']['value'] != ''){
-      if(isset($record['participant']) && isset($record['participant']['value']) &&
-         $record['participant']['value'] != '' &&  $record['pq']['value'] != '' ){
+      if(isset($record['roleevent']) && isset($record['roleevent']['value']) &&
+         $record['roleevent']['value'] != '' &&  $record['roleeventlabel']['value'] != '' ){
         //There are participants to match with their roles and qIDs
         $rolesArr = ['roles' => $record['roles']['value'],
-                     'participant' => $record['participant']['value'],
-                     'pq' => $record['pq']['value']
+                     'participant' => $record['roleeventlabel']['value'],
+                     'pq' => $record['roleevent']['value']
                     ];
         $recordVars['RolesA'] = $rolesArr;
       }
@@ -790,7 +802,7 @@ function getFullRecordHtml(){
         if(isset($record['roleeventlabel']) && isset($record['roleeventlabel']['value']) &&
             $record['roleeventlabel']['value'] != '' && $record['roleevent']['value'] != '' ){
           //There are participants to match with their roles and qIDs
-          $rolesArr = ['roles' => $record['roleslabel']['value'],
+          $rolesArr = ['roles' => $record['roles']['value'],
                         'eventRoles' => $record['roleevent']['value'],
                         'eventRoleLabels' => $record['roleeventlabel']['value']
                       ];
