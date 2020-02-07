@@ -295,7 +295,7 @@ function keyword_search() {
 
     $item_types = ['people', 'event', 'place', 'source'];
     $filters = $templates = [];
-    $query = $preset = $item_type = '';
+    $query = $preset = $item_type = $sort = '';
     $size = 12;
     $from = 0;
     $get_all_counts = false;
@@ -343,6 +343,11 @@ function keyword_search() {
     if (array_key_exists('limit', $filters)) {
         $size = $filters['limit'];
         unset($filters['limit']);
+    }
+
+    if (array_key_exists('sort', $filters)) {
+        $sort = $filters['sort'];
+        unset($filters['sort']);
     }
 
     $params = [
@@ -420,6 +425,12 @@ function keyword_search() {
             ]
         ];
         unset($filters['place_name']);
+    }
+
+    if ($sort) {
+        $params['body']['sort'] = [
+            'label.raw' => ['order' => $sort]
+        ];
     }
 
     if ($filters) {

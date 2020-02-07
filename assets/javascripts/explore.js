@@ -1,4 +1,10 @@
 $(document).ready(function(){
+if(JS_EXPLORE_FORM == 'Places'){
+    JS_EXPLORE_FILTERS = "Place Type";
+}
+if(JS_EXPLORE_FORM == 'Sources'){
+    JS_EXPLORE_FILTERS = "Source Type";
+}
 
     $('.cards-featured li').click(function(){
         window.location = $(this).find("a").attr("href");

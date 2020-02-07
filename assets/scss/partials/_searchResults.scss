@@ -1014,7 +1014,7 @@ ul.catmenu{
                                 padding: 15px;
                                 border-radius: 5px;
                                 font-size: 14px;
-                                font-family: aleo;
+                                font-family: aleoregular;  
 
                                 /* Position the tooltip */
                                 position: absolute;
@@ -1185,6 +1185,7 @@ ul.catmenu{
     .config-table-modal {
         background: $base-light;
         box-shadow: 0 25px 33px 0 rgba(0,0,0,0.05);
+        border-radius: 7px;
         color: $base-dark;
         font-family: aleoregular;
         margin: 100% auto;
@@ -1227,10 +1228,12 @@ ul.catmenu{
                 font-size: 15px;
                 text-align: left;
                 padding-bottom: 10px;
+                font-family: aleobold;
                 select {
                     background: #FFFFFF url(../images/directory_chevron.svg) no-repeat;
-                    background-size: 6%;
+                    background-size: 4%;
                     background-position: 95%;
+                    outline: none;
                     border: 0px solid rgba(13,18,48,0.15);
                     border-radius: 4px;
                     box-shadow: 0 5px 15px 0 rgba(0,0,0,0.08);
@@ -1303,7 +1306,7 @@ ul.catmenu{
                         border-radius: 4px;
                         position: relative;
                         ul#selected-cols {
-                            width: 80%;
+                            width: 70%;
                         }
                         img {
                             box-shadow: 0 2px 3px 0 rgba(0,0,0,0.03);
@@ -1554,5 +1557,11 @@ ul.catmenu{
         #searchResults{
             margin: 0px 10%;
         }
+    }
+}
+
+@media screen and (min-height: 785px) {
+    .modal-view .config-table-modal {
+        overflow-y: hidden;
     }
 }
