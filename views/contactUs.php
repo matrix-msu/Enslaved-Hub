@@ -1,12 +1,6 @@
 <!-- Author: Drew Schineller-->
 <!-- Contact Us page-->
 <?php $cache_data = Json_GetData_ByTitle("Contact Us");
-$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
-        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
-        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
-        'enslaved-header-bg7.jpg'];
-$randIndex = array_rand($bg);
-
 ?>
 <!-- Heading image and title container-->
 <div class="container header about-header contactus-page">

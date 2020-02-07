@@ -7,11 +7,6 @@ $upper = ucfirst(EXPLORE_FORM);
 
 // Get Title and Description from cache file
 $cache_Data = Json_GetData_ByTitle($upper);
-$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
-        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
-        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
-        'enslaved-header-bg7.jpg'];
-$randIndex = array_rand($bg);
 ?>
 
 <div class="container header explore-header about-header">
@@ -32,17 +27,43 @@ $randIndex = array_rand($bg);
     <h1>Explore By</h1>
     <ul class="cards">
         <?php foreach ($GLOBALS["FILTER_ARRAY"][EXPLORE_FORM] as $type) {
-            // TODO::Not sure if we want this showing, will disable for now.
-            if ($type != 'Modern Countries') {
-        ?>
-                <li>
-                    <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>">
-                        <p class='type-title'><?php echo $type?></p>
-                        <div id="arrow"></div>
-                    </a>
-                </li>
-        <?php }
+            if($type == 'Source Type' || $type == 'Place Type'){
+                if($type == 'Source Type'){
+                    $explore_filter = 'source_type';
+                }
+                else{
+                    $explore_filter = 'place_type';
+                }
+                $upperWithSpaces = ucwords(str_replace("_", " ", $explore_filter));
+                $typeCategories = array();
+                if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
+
+                    $typeCategories = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
+                    ksort($typeCategories);
+                }
+                foreach ($typeCategories as $category => $qid) {
+                    ?>
+                    <li class="hide-category">
+                        <a href="<?php echo BASE_URL;?>search/<?php echo EXPLORE_FORM?>?<?php echo $explore_filter;?>=<?php echo $category;?>">
+                            <p class='type-title'><?php echo $category;?></p>
+                            <div id="arrow"></div><span id="<?php echo $category;?>">0</span>
+                        </a>
+                    </li>
+                <?php }
             }
+            else{
+                // TODO::Not sure if we want this showing, will disable for now.
+                if ($type != 'Modern Countries') {
+            ?>
+                    <li>
+                        <a href="<?php echo BASE_URL?>explore/<?php echo EXPLORE_FORM.'/'.strtolower(str_replace(" ", "_", $type))?>">
+                            <p class='type-title'><?php echo $type?></p>
+                            <div id="arrow"></div>
+                        </a>
+                    </li>
+            <?php }
+            }
+        }
         ?>
     </ul>
 </div>

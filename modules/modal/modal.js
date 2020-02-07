@@ -92,6 +92,7 @@ $('#available-cols').on('click', 'li', function (e) {
     e.stopPropagation();
     $(this).css('background-color', 'rgba(194,79,60,0.15)');
     $(this).css('color', '#C24F3C')
+    $(this).css('border-radius', '7px')
     selected_items.push( $(this).html() );
 });
 
@@ -101,6 +102,7 @@ $('#selected-cols').on('click', 'li', function (e) {
     e.stopPropagation();
     $(this).css('background-color', 'rgba(194,79,60,0.15)');
     $(this).css('color', '#C24F3C')
+    $(this).css('border-radius', '7px')
     $(this).addClass('selected');
     other_items.push( $(this).html() );
 });

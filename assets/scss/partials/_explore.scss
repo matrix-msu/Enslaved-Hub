@@ -3,7 +3,7 @@
 .explore{
     max-width: 1000px;
     margin: 0 auto;
-    padding: 70px 6%;
+    padding: 70px 0;
 
     .section-wrap{
         clear: both;
@@ -169,7 +169,7 @@
     max-width: 1000px;
     margin: 0 auto;
     width: 90%;
-    padding: 60px 0 50px;
+    padding: 50px 0 50px;
     h1{
         color: $base-dark;
         font-size: 40px;
@@ -354,7 +354,7 @@
             .card-title{
                 display: flex;
                 align-items: center;
-                line-height: 1.13;
+                height: 20px;
 
                 img{
                     margin-right: 15px;
