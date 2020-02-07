@@ -1004,3 +1004,7 @@ $('div').not('.filter-menu').mouseup(function() {
         showFilter = 0;
     }
 });
+
+$("#search-results tbody td").on('click', function(event){
+    // console.log(this);
+});
