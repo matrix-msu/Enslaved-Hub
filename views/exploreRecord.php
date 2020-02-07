@@ -1,10 +1,21 @@
 <!-- Author: Drew Schineller-->
 <!-- Explore Full Record page-->
 <!-- Heading image and title container-->
+<?php
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+$randIndex = array_rand($bg);
+?>
+
+
+
 <div class="container header">
     <div class="image-container record-page image-only">
         <div class="container middlewrap"></div>
         <div class="image-background-overlay"></div>
+        <img class="header-background advancedSearch-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
         <!-- <img class="header-background full-height record-page" src="<?php echo BASE_URL;?>assets/images/PersonLanding.jpg" alt="Enslaved Background Image"> -->
     </div>
 </div>

@@ -19,12 +19,22 @@ $(document).ready(function () {
                 initializeTimeline(); //function in timeline.js
             }
             condenseRoles();
+            changeSize();
         },
         'error': function (xhr, status, error) {
             console.log('fail');
         }
     });
+
+
 });
+
+function changeSize(){
+  var title_length = $('.middlewrap h1').text().length;
+  if (title_length >= 60){
+      $('.middlewrap h1').css('font-size','45px');
+  }
+}
 
 function condenseRoles(){
     var roles_num = $('.detailwrap .roles .detail-bottom').length;
