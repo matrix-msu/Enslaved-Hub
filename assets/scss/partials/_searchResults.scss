@@ -88,11 +88,11 @@ div.searched-term {
                         margin-left: 10px;
                         transition: .3s ease-out;
                     }
-                    &:hover{
-                      img{
-                          transform: scaleY(-1);
-                        }
-                    }
+                    // &:hover{
+                    //   img{
+                    //       transform: rotate(-180deg);
+                    //     }
+                    // }
                   }
 
                 &.hidden{

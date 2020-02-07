@@ -1006,3 +1006,8 @@ $('div').not('.filter-menu').mouseup(function() {
         showFilter = 0;
     }
 });
+var degrees = 0;
+$( ".crossRotate" ).click(function() {
+    degrees += 36;
+    $(this).css("transform","rotate("+degrees+"deg)");
+});
