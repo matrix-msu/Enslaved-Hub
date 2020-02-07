@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>edit</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Broken-Links" transform="translate(-835.000000, -1639.000000)" stroke="#0E3232" stroke-width="2">
+            <g id="edit" transform="translate(836.000000, 1640.000000)">
+                <path d="M7.28571429,2.42857143 L1.61904762,2.42857143 C0.72487231,2.42857143 0,3.15344374 0,4.04761905 L0,15.3809524 C0,16.2751277 0.72487231,17 1.61904762,17 L12.952381,17 C13.8465563,17 14.5714286,16.2751277 14.5714286,15.3809524 L14.5714286,9.71428571" id="Path"></path>
+                <path d="M13.3571429,1.21428571 C14.0277743,0.543654256 15.1150828,0.543654268 15.7857143,1.21428574 C16.4563457,1.88491721 16.4563457,2.97222566 15.7857143,3.64285714 L8.0952381,11.3333333 L4.85714286,12.1428571 L5.66666667,8.9047619 L13.3571429,1.21428571 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>
