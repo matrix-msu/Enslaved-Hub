@@ -1,12 +1,5 @@
 <!-- Author: Drew Schineller-->
 <?php $cache_data = Json_GetData_ByTitle("About");
-$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
-        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
-        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
-        'enslaved-header-bg7.jpg'];
-$randIndex = array_rand($bg);
-
-
 ?>
 <!-- <style>
   div{ about-header: url(<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex]?>); }

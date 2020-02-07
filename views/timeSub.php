@@ -6,11 +6,6 @@ if (isset($_GET['prev'])){
     $prev = 'People';
 }
 
-$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
-        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
-        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
-        'enslaved-header-bg7.jpg'];
-$randIndex = array_rand($bg);
 ?>
 <!-- Page author: Drew Schineller-->
 <!-- Heading image and title container-->

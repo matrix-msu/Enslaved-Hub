@@ -2,12 +2,6 @@
 <!-- Heading image and title container-->
 <?php
 $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
-
-$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
-        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
-        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
-        'enslaved-header-bg7.jpg'];
-$randIndex = array_rand($bg);
 ?>
 
 <div class="container header stories">
