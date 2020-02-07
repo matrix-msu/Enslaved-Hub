@@ -12,7 +12,6 @@ $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
 </div>
 <!-- explore by -->
 <div class="explore-by">
-    
     <ul class="cards">
       <?php
       $lowerWithDashes = strtolower(str_replace(" ", "_", EXPLORE_FILTER));
