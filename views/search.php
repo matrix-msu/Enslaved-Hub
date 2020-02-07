@@ -18,7 +18,8 @@
             </div>
         </div>
         <div class="image-background-overlay  search-page"></div>
-        <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg3.jpg" alt="Enslaved Background Image"></div>
+        <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+        <!-- <img class="header-background search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg3.jpg" alt="Enslaved Background Image"></div> -->
     </div>
 </div>
 <div class="search-message">

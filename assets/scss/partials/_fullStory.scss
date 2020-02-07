@@ -2,8 +2,16 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url(../images/StoryLanding.jpg);
-
+    //background-image: url(../images/StoryLanding.jpg);
+    .header-background{
+      left: 0;
+      object-fit: cover;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
     .middlewrap{
         padding-bottom: 50px;
 
@@ -81,10 +89,10 @@
 
             h2 {
                 font-size: 30px;
-                color: $base-dark; 
+                color: $base-dark;
             }
         }
-        
+
         section.creator {
             border-bottom: none;
 
@@ -93,7 +101,7 @@
                 line-height: 20px;
             }
         }
-        
+
         section.editor {
             border-bottom: none;
 
@@ -104,7 +112,7 @@
         }
 
         section.online-resources{
-            
+
 
             p{
                 font-size: 14px;
@@ -198,13 +206,13 @@
                 margin: 20px auto;
                 display: flex;
                 flex-wrap: wrap;
-        
+
                 .arrows{
                     display: flex;
                     width: 100px;
                     justify-content: space-between;
                     margin-right: 30px;
-                    
+
                     .next,.prev{
                         height: 40px;
                         width: 40px;
@@ -216,11 +224,11 @@
                         align-items: center;
                         cursor: pointer;
                         transition: all .3s;
-        
+
                         img{
                             margin: 0 auto;
                         }
-        
+
                         &:hover{
                             border: 2px solid $accent;
                             box-shadow: 0 5px 20px 0 rgba(44,44,44,0.2);
@@ -237,7 +245,7 @@
                 .dots{
                     display: flex;
                     align-items: center;
-        
+
                     .dot{
                         height: 12px;
                         width: 12px;
@@ -247,7 +255,7 @@
                         margin-right: 5px;
                         cursor: pointer;
                         transition: all .3s;
-        
+
                         &:hover{
                             background-color: $accent;
                             border: 1.6px solid transparent;
@@ -582,27 +590,27 @@
                 transition: all .3s;
                 position: relative;
                 padding: 20px;
-                
-               
+
+
                 a{
                     text-decoration: none;
                 }
-    
-    
+
+
                 &:hover{
                     border: 2px solid $accent;
                     box-shadow: 0 12px 13px 0 rgba(44,44,44,0.1);
                 }
-                
+
                 .card-title{
                     display: flex;
                     align-items: center;
-                    line-height: 1; 
-    
+                    line-height: 1;
+
                     img{
                         margin-right: 15px;
                     }
-    
+
                     h3{
                         color: $base-dark;
                         font-size: 24px;
@@ -618,11 +626,11 @@
                     display: flex;
                     flex-wrap: wrap;
                     // justify-content: space-between;
-    
+
                     .detail{
                         margin-right: 25px;
                         margin-bottom: 20px;
-    
+
                         p{
                             color: $base-dark;
                             font-size: 14px;
@@ -638,27 +646,27 @@
                     bottom: 0;
                     left: 0;
                     padding-bottom: 5px;
-    
+
                     .connections{
                         min-height: 40px;
                         max-width: 100%;
                         padding: 0 10px;
                         display: flex;
                         justify-content: space-between;
-    
+
                         .card-icons{
                             position: relative;
                             display: flex;
                             align-items: center;
                             font-size: 12px;
                             padding: 0 10px;
-    
+
                             &:hover{
                                 .connection-menu{
                                     display: block;
                                 }
                             }
-    
+
                             img{
                                 margin-right: 10px;
                                 height: 22px;
@@ -682,11 +690,11 @@
                                 right: -90px;
                                 width: 220px;
                                 z-index: 10;
-    
+
                                 &.hovered{
                                     display: block;
                                 }
-    
+
                                 h1{
                                     font-size: 18px;
                                     margin-bottom: 10px;
@@ -708,7 +716,7 @@
                                         padding: 5px 0;
                                         word-wrap: break-word;
                                         white-space: normal;
-    
+
                                         #arrow{
                                             color: $base-light;
                                             background-image: url(../images/Arrow.svg);
@@ -721,14 +729,14 @@
                                             margin: 5px 0 0 10px;
                                             transition: color .2s;
                                         }
-    
+
                                         &:hover{
                                             color: $sub-base;
                                             #arrow{
                                                 background-image: url(../images/Arrow_colored.svg);
                                             }
                                         }
-    
+
                                         span{
                                             opacity: .6;
                                         }

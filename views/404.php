@@ -1,4 +1,14 @@
+<?php
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+$randIndex = array_rand($bg);
+?>
+
 <div class="top">
+ <img class="header-background 404-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+
   <div class="topwrap">
   </div>
 </div>

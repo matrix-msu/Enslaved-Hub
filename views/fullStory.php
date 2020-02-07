@@ -25,6 +25,7 @@ else {
 <!-- Full Story page-->
 <!-- Heading image and title container-->
 <div class="container header fullstory">
+  <img class="header-background fullStory-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
         <?php
         $Featured_title = "Featured Story Title Goes Here Like This";

@@ -9,7 +9,8 @@ $upper = ucfirst(EXPLORE_FORM);
 $cache_Data = Json_GetData_ByTitle($upper);
 ?>
 
-<div class="container header explore-header people-page">
+<div class="container header explore-header about-header">
+    <img class="header-background about-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
         <h1><?php echo $cache_Data['title'] ?></h1>
     </div>

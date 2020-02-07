@@ -5,7 +5,8 @@
     <div class="image-container record-page image-only">
         <div class="container middlewrap"></div>
         <div class="image-background-overlay"></div>
-        <img class="header-background full-height record-page" src="<?php echo BASE_URL;?>assets/images/PersonLanding.jpg" alt="Enslaved Background Image">
+        <img class="header-background advancedSearch-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+        <!-- <img class="header-background full-height record-page" src="<?php echo BASE_URL;?>assets/images/PersonLanding.jpg" alt="Enslaved Background Image"> -->
     </div>
 </div>
 
