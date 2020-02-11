@@ -1,5 +1,5 @@
 <!-- Author: Drew Schineller-->
-<?php $cache_data = Json_GetData_ByTitle("Contributors");
+<?php $cache_data = Json_GetData_ByTitle("Contribute");
  ?>
 <!-- About page-->
 <!-- Heading image and title container-->
