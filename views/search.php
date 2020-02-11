@@ -8,11 +8,11 @@
             </div>
             <div class="heading-search">
                 <!-- use all counts instead of counterofAllitems() -->
-                <p>Start a search across <?php //echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+                <p>Start a search across <?php //echo counterofAllitems();?> records from the historic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
                 <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
                 <form class="search-form" action="<?= BASE_URL ?>search/all">
                     <label for="searchbar" class="sr-only">searchbar</label>
-                    <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="eg: People, Places, Events, Sources, Projects, Captains, Ships, Voyages, etc."/>
+                    <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Browse People, Events, Places, and Sources"/>
                     <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
                 </form>
             </div>
