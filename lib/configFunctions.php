@@ -97,11 +97,11 @@ function Json_GetData_ByTitle($title, $all_matches = false)
 	$description = "";
 	foreach ($cached_data as $content) {
 		// Data for main description field
-		if($content["Title"] == "Contributors"){
+		if($content["Title"] == "Contribute"){
 			if(isset($content["Description"])){
 				$explodeDescription = explode('.', $content["Description"],2);
-				$output["contributorsTitle"] = $explodeDescription[0] .= ".";
-				$output["contributorsSplit"] = $explodeDescription[1];
+				$output["contributeTitle"] = $explodeDescription[0] .= ".";
+				$output["contributeSplit"] = $explodeDescription[1];
 			}
 		}
 	    if($content["Title"] == $title && array_key_exists("SubNavigation Display", $content) && $content["SubNavigation Display"] != "FALSE")
