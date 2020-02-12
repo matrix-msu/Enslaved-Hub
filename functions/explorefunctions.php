@@ -20,52 +20,6 @@ function callAPI($url,$limit,$offset){
 }
 
 
-function getEventDateRange() {
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $fullResults = [];
-    $query="SELECT ?year WHERE {
-            ?event $wdt:$instanceOf $wd:$event; #event
-                   $wdt:$startsAt ?date.
-              BIND(str(YEAR(?date)) AS ?year).
-            }ORDER BY DESC(?year)
-          LIMIT 1";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-    $res= json_decode($res);
-    // print_r($res);die;
-    if (!empty($res)){
-        $fullResults['max'] = $res->results->bindings;
-    }else{
-        $fullResults['max'] = $res;
-    }
-    $fullResults['max'] = $fullResults['max'][0]->year->value;
-
-    $query="SELECT ?year WHERE {
-            ?event $wdt:$instanceOf $wd:$event; #event
-                   $wdt:$startsAt ?date.
-              BIND(str(YEAR(?date)) AS ?year).
-            }ORDER BY ASC(?year)
-          LIMIT 1";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        $fullResults['min'] = $res->results->bindings;
-    }else{
-        $fullResults['min'] = $res;
-    }
-    $fullResults['min'] = $fullResults['min'][0]->year->value;
-
-    return json_encode($fullResults);
-}
-
 //finish to display ranks here. Error now it only displays PI with higher rank.
 function getProjectFullInfo() {
     include BASE_LIB_PATH."variableIncluder.php";
