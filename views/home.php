@@ -168,7 +168,7 @@ if (isset($story2Images[0])){
         <div class="section-content">
             <div class="row">
                     <h2 class="section-title">The Enslaved Publishing Platform</h2>
-                    <p class="paragraph"><?php echo array_key_exists("Explore", $cache_data) ? $cache_data["Explore"] : "" ?></p>
+                    <p class="paragraph"><?php echo array_key_exists("Enslaved Publishing Platform", $cache_data) ? $cache_data["Enslaved Publishing Platform"] : "" ?></p>
                     <p class="mt-lg"><a class="text-link" href="http://dev2.matrix.msu.edu/enslaved-publishing-platform/" target="_blank">Go to the Enslaved Publishing Platform</a></p>
             </div>
         </div>
