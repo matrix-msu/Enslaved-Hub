@@ -115,7 +115,7 @@ if (isset($story2Images[0])){
             <div class="row">
                 <div class="col">
                     <h2 class="section-title">Stories</h2>
-                    <p class="paragraph">“Learn about both prominent and everyday people associated with the historical slave trade through short biographical sketches.</p>
+                    <p class="paragraph">Learn about both prominent and everyday people associated with the historical slave trade through short biographical sketches.</p>
                     <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL;?>stories">View All Stories</a></p>
                 </div>
 
