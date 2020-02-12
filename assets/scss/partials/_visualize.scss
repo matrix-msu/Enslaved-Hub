@@ -1,0 +1,43 @@
+.info{
+  .infowrap{
+    p{
+      font-size: 16px;
+    }
+  }
+}
+
+.visualize{
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content:space-between;
+    li{
+      text-align: center;
+      border-radius: 5px;
+      background-color: $white;
+      box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+      height: 178px;
+      width: 245px;
+      display: inline-block;
+      margin-bottom: 80px;
+      margin-top: 60px;
+      cursor: pointer;
+
+      img{
+        height: 107px;
+        width: 78.25px;
+      }
+      p{
+        font-family: "EB Garamond";
+        font-size: 26px;
+        font-weight: bold;
+        text-shadow: 0 3px 24px 0 rgba(37,52,73,0.21);
+      }
+      &:hover {
+              border: 2px solid $accent;
+              box-sizing: border-box;
+              box-shadow: 0 15px 25px 0 rgba(18,46,70,0.1);
+      }
+    }
+
+}
