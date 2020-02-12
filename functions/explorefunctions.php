@@ -20,52 +20,6 @@ function callAPI($url,$limit,$offset){
 }
 
 
-function getEventDateRange() {
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $fullResults = [];
-    $query="SELECT ?year WHERE {
-            ?event $wdt:$instanceOf $wd:$event; #event
-                   $wdt:$startsAt ?date.
-              BIND(str(YEAR(?date)) AS ?year).
-            }ORDER BY DESC(?year)
-          LIMIT 1";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-    $res= json_decode($res);
-    // print_r($res);die;
-    if (!empty($res)){
-        $fullResults['max'] = $res->results->bindings;
-    }else{
-        $fullResults['max'] = $res;
-    }
-    $fullResults['max'] = $fullResults['max'][0]->year->value;
-
-    $query="SELECT ?year WHERE {
-            ?event $wdt:$instanceOf $wd:$event; #event
-                   $wdt:$startsAt ?date.
-              BIND(str(YEAR(?date)) AS ?year).
-            }ORDER BY ASC(?year)
-          LIMIT 1";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        $fullResults['min'] = $res->results->bindings;
-    }else{
-        $fullResults['min'] = $res;
-    }
-    $fullResults['min'] = $fullResults['min'][0]->year->value;
-
-    return json_encode($fullResults);
-}
-
 //finish to display ranks here. Error now it only displays PI with higher rank.
 function getProjectFullInfo() {
     include BASE_LIB_PATH."variableIncluder.php";
@@ -617,6 +571,17 @@ function getFullRecordHtml(){
     if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
       $recordVars['Sex'] = $record['sextype']['value'];
     }
+    //AGE
+
+    if (isset($record['age']) && isset($record['age']['value']) && $record['age']['value'] != '' ){
+      $recordVars['Age'] = $record['age']['value'];
+    }
+    //occupation
+
+    if (isset($record['occupation']) && isset($record['occupation']['value']) && $record['occupation']['value'] != '' ){
+      $recordVars['Occupation'] = $record['occupation']['value'];
+    }
+
 
     //Race
     if (isset($record['race']) && isset($record['race']['value']) && $record['race']['value'] != '' ){
@@ -720,6 +685,7 @@ function getFullRecordHtml(){
     }
 
     //Relationships
+
     if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
       if(isset($record['qrelationname']) && isset($record['qrelationname']['value']) && isset($record['relationagentlabel']) && isset($record['relationagentlabel']['value'])){
         if (empty($record['relationships']['value']) ){
@@ -774,15 +740,15 @@ function getFullRecordHtml(){
       $recordVars['Sex'] = $record['sextype']['value'];
     }
 
-    //Roles
+    //Roles for events
     //Gets the roles, participants, and pqID if they exist and matches them together
     if (isset($record['roles']) && isset($record['roles']['value']) &&  $record['roles']['value'] != ''){
-      if(isset($record['participant']) && isset($record['participant']['value']) &&
-         $record['participant']['value'] != '' &&  $record['pq']['value'] != '' ){
+      if(isset($record['roleevent']) && isset($record['roleevent']['value']) &&
+         $record['roleevent']['value'] != '' &&  $record['roleeventlabel']['value'] != '' ){
         //There are participants to match with their roles and qIDs
         $rolesArr = ['roles' => $record['roles']['value'],
-                     'participant' => $record['participant']['value'],
-                     'pq' => $record['pq']['value']
+                     'participant' => $record['roleeventlabel']['value'],
+                     'pq' => $record['roleevent']['value']
                     ];
         $recordVars['RolesA'] = $rolesArr;
       }
@@ -790,7 +756,7 @@ function getFullRecordHtml(){
         if(isset($record['roleeventlabel']) && isset($record['roleeventlabel']['value']) &&
             $record['roleeventlabel']['value'] != '' && $record['roleevent']['value'] != '' ){
           //There are participants to match with their roles and qIDs
-          $rolesArr = ['roles' => $record['roleslabel']['value'],
+          $rolesArr = ['roles' => $record['roles']['value'],
                         'eventRoles' => $record['roleevent']['value'],
                         'eventRoleLabels' => $record['roleeventlabel']['value']
                       ];

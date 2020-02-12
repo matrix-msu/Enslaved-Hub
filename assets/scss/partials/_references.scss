@@ -1,0 +1,76 @@
+.header{
+  .header-background{
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .middlewrap{
+    padding-top: 160px;
+    padding-bottom: 50px;
+  }
+}
+
+.container.info{
+  .container.infowrap{
+    .banner{
+      box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+      background-color: $white;
+      border-radius: 5px;
+      margin-bottom: 30px;
+      padding: 20px 27px 30px 25px;
+      .banner-title{
+          color: $base-dark;
+          font-family: "EB Garamond";
+          font-size: 24px;
+          font-weight: bold;
+          line-height: 33px;
+          margin-bottom: 18px;
+      }
+      .banner-content{
+        margin-bottom: 20px;
+        .title{
+          color: $base-dark;
+          font-family: aleobold;
+          font-style: italic;
+          font-size: 14px;
+          line-height: 17px;
+        }
+        .reference{
+          color: $base-dark;
+          font-family: aleoregular;
+          font-size: 14px;
+          line-height: 17px;
+        }
+        a{
+          color: $accent;
+          text-decoration: underline;
+          font-size: 14px;
+          line-height: 17px;
+        }
+      }
+    }
+    .bibliographies{
+      color: $base-dark;
+      border-radius: 5px;
+      background-color: $white;
+      box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+      margin-bottom: 60px;
+      padding: 20px 27px 30px 25px;
+      .biblio-title{
+        font-family: "EB Garamond";
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .citation{
+        font-family: aleoregular;
+        font-size: 14px;
+        line-height: 17px;
+      }
+    }
+  }
+}

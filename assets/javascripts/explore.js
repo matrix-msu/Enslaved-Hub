@@ -49,11 +49,10 @@ if(JS_EXPLORE_FORM == 'Sources'){
             $.ajax({
                 url: BASE_URL + 'api/getDateRange',
                 method: "GET",
-                data: {type: JS_EXPLORE_FILTERS,  category:JS_EXPLORE_FORM},
                 'success': function (data) {
                     data = JSON.parse(data);
-                    var min = data['min'];
-                    var max = data['max'];
+                    var min = data['min_date']['value'];
+                    var max = data['max_date']['value'];
 
                     for (var i = min; i <= max; i++) {
                         $("#event-from").append("<option value='"+i+"'>"+i+"</option>");

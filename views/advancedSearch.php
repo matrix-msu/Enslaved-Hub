@@ -10,7 +10,8 @@
         </div>
     </div>
       <div class="image-background-overlay"></div>
-      <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
+      <img class="header-background advancedSearch-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+      <!-- <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image"> -->
 
     </div>
 </div>
