@@ -1005,6 +1005,7 @@ $('div').not('.filter-menu').mouseup(function() {
     }
 });
 
-$("#search-results tbody td").on('click', function(event){
-    // console.log(this);
+//link to record page for table view
+$("#search-results tbody").on('click','tr', function(event){
+    window.location = $(this).attr('data-url');
 });
