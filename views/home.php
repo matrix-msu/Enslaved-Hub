@@ -54,7 +54,7 @@ if (isset($story2Images[0])){
             <p><?php echo $cache_data["descr"] ?> </p>
         </div>
         <div class="heading-search">
-            <p>Start a search across <span id="count-all"></span> records from the Historic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+            <p>Start a search across <span id="count-all"></span> records from the historic slave trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
