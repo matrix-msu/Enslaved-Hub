@@ -26,24 +26,13 @@ function all_counts() {
                     ],
                     'filter' => []
                 ]
-            ],
-            'collapse' => [
-                'field' => 'id'
-            ],
-            'size' => 0,
-            'aggs' => [
-                'total' => [
-                    'cardinality' => [
-                        'field' => 'id'
-                    ]
-                ]
             ]
         ]
     ];
 
-    $res = $es->search($params);
+    $res = $es->count($params);
     $total = [];
-    $total['all'] = $res['aggregations']['total']['value'];
+    $total['all'] = $res['count'];
 
     foreach (['people', 'event', 'place', 'source'] as $type) {
         $tmp_params = $params;
@@ -51,11 +40,11 @@ function all_counts() {
             $tmp_params['body']['query']['bool']['filter'],
             ['term' => ['type' => $type]]
         );
-        $res = $es->search($tmp_params);
+        $res = $es->count($tmp_params);
         // TODO::this is annoying, will require a refactor on index (pluralize types)
         if ($type != 'people')
             $type = $type . 's';
-        $total[$type] = $res['aggregations']['total']['value'];
+        $total[$type] = $res['count'];
     }
 
     return $total;
@@ -143,17 +132,6 @@ function search_filter_counts() {
                                 ['term' => ['type' => $search_type]]
                             ]
                         ]
-                    ],
-                    'collapse' => [
-                        'field' => 'id'
-                    ],
-                    'size' => 0,
-                    'aggs' => [
-                        'total' => [
-                            'cardinality' => [
-                                'field' => 'id'
-                            ]
-                        ]
                     ]
                 ]
             ];
@@ -170,9 +148,9 @@ function search_filter_counts() {
                             ['term' => [$field . '.raw' => $value]]
                         );
 
-                        $res = $es->search($tmp_params);
+                        $res = $es->count($tmp_params);
 
-                        $total[$type][$label][$value] = $res['aggregations']['total']['value'];
+                        $total[$type][$label][$value] = $res['count'];
                     }
                 }
             }
@@ -251,17 +229,6 @@ function filtered_counts() {
                         ['term' => ['type' => $category]]
                     ]
                 ]
-            ],
-            'collapse' => [
-                'field' => 'id'
-            ],
-            'size' => 0,
-            'aggs' => [
-                'total' => [
-                    'cardinality' => [
-                        'field' => 'id'
-                    ]
-                ]
             ]
         ]
     ];
@@ -275,9 +242,9 @@ function filtered_counts() {
                 $tmp_params['body']['query']['bool']['filter'],
                 ['term' => [$field . '.raw' => $value]]
             );
-            $res = $es->search($tmp_params);
+            $res = $es->count($tmp_params);
 
-            $total[$value] = $res['aggregations']['total']['value'];
+            $total[$value] = $res['count'];
         }
     }
 
@@ -358,18 +325,9 @@ function keyword_search() {
                     'must' => []
                 ]
             ],
-            'collapse' => [
-                'field' => 'id'
-            ],
             'size' => $size,
             'from' => $from,
-            'aggs' => [
-                'total' => [
-                    'cardinality' => [
-                        'field' => 'id'
-                    ]
-                ]
-            ]
+            'track_total_hits' => TRUE
         ]
     ];
 
@@ -497,7 +455,7 @@ function keyword_search() {
     }
 
     $res = $es->search($params);
-    $single_total = $res['aggregations']['total']['value'];
+    $single_total = $res['hits']['total']['value'];
 
     if ($get_all_counts && $item_type) {
         $total = [];
@@ -522,7 +480,7 @@ function keyword_search() {
                 }
                 $count_res = $es->search($params);
                 // TODO::refactor front end to ignore pointless value key
-                $total[$count_key]['value'] = $count_res['aggregations']['total']['value'];
+                $total[$count_key]['value'] = $count_res['hits']['total']['value'];
             }
         }
     } else {
