@@ -58,7 +58,7 @@ if (isset($story2Images[0])){
             <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
-                <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Search People, Events, Places, and Sources"/>
+                <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Search People, Events, and Places"/>
                 <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search.svg" alt="search-icon"></button>
             </form>
         </div>
