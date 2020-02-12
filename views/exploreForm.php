@@ -1,8 +1,4 @@
-<!-- Page author: Drew Schineller-->
-<!-- Heading image and title container-->
 <?php
-//var_dump(EXPLORE_FORM);
-//var_dump($GLOBALS["FILTER_ARRAY"]);
 $upper = ucfirst(EXPLORE_FORM);
 
 // Get Title and Description from cache file

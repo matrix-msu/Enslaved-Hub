@@ -77,7 +77,9 @@ function search_filter_counts() {
             'Gender' => [
                 'sex' => sexTypes
             ],
-            // 'Age Category => '',
+            'Age Category' => [
+                'age_category' => ageCategory
+            ],
             'Ethnodescriptor' => [
                 'ethnodescriptor' => ethnodescriptor
             ],
@@ -185,7 +187,7 @@ function filtered_counts() {
         ],
         'Date' => [
             'date' => ''
-        ], #todo
+        ],
         'Gender' => [
             'sex' => sexTypes
         ],
@@ -193,8 +195,8 @@ function filtered_counts() {
             'participant_role' => roleTypes
         ],
         'Age Category' => [
-            'age_category' => ''
-        ], #tbd
+            'age_category' => ageCategory
+        ],
         'Ethnodescriptor' => [
             'ethnodescriptor' => ethnodescriptor
         ],
