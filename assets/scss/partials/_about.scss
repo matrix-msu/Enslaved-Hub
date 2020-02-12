@@ -340,8 +340,13 @@
 .contactUs-getinvolved{
     max-width: 1000px;
     margin: 0 auto;
-    padding: 60px 0 80px;
+    padding: 60px 0 0;
     width: 90%;
+    
+    &.button {
+	    padding: 0 0 80px;
+    }
+    
     h2{
       font-size: 30px;
       font-weight: none;
