@@ -382,7 +382,7 @@ HTML;
 
 
                         $card = <<<HTML
-<tr class='tr' data-qid='$personQ'>
+<tr class='tr' data-url='$person_url'>
     <td class='name td-name'>
         <span>$name</span>
     </td>
@@ -405,7 +405,7 @@ HTML;
         <p><span class='first'>Date Range: </span>$dateRange</p>
     </td>
     <td class='meta'>
-        <a href='$person_url'>
+
     </td>
 </tr>
 HTML;
@@ -562,7 +562,7 @@ HTML;
 
 
                         $card = <<<HTML
-<tr class='tr' data-qid='$placeQ'>
+<tr class='tr' data-url='$place_url'>
     <td class='name td-name'>
         <span>$name</span>
     </td>
@@ -752,7 +752,7 @@ HTML;
                         }
 
                         $card = <<<HTML
-<tr class='tr'  data-qid='$eventQ'>
+<tr class='tr'  data-url='$event_url'>
     <td class='name td-name'>
         <span>$name</span>
     </td>
@@ -900,7 +900,7 @@ HTML;
                         }
 
                         $card = <<<HTML
-<tr class='tr' data-qid='$sourceQ'>
+<tr class='tr' data-url='$source_url'>
     <td class='name td-name'>
         <span>$name</span>
     </td>
