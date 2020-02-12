@@ -7,6 +7,30 @@ function all_counts_ajax() {
     echo json_encode(all_counts());
 }
 
+function dateRange() {
+    $hosts = [
+        ELASTICSEARCH_URL
+    ];
+
+    $es = ClientBuilder::create()
+                        ->setHosts($hosts)
+                        ->build();
+
+    $params = [
+        'index' => ELASTICSEARCH_INDEX_NAME,
+        'body' => [
+            'size' => 0,
+            'aggs' => [
+                max_date => ['max' => ['field' => 'date']],
+                min_date => ['min' => ['field' => 'date']]
+            ]
+        ]
+    ];
+
+    $res = $es->search($params);
+    return json_encode($res['aggregations']);
+}
+
 function all_counts() {
     $hosts = [
         ELASTICSEARCH_URL
