@@ -1004,14 +1004,7 @@ $('div').not('.filter-menu').mouseup(function() {
         showFilter = 0;
     }
 });
-<<<<<<< HEAD
-var degrees = 0;
-$( ".crossRotate" ).click(function() {
-    degrees += 36;
-    $(this).css("transform","rotate("+degrees+"deg)");
-=======
 
 $("#search-results tbody td").on('click', function(event){
     // console.log(this);
->>>>>>> fa066d8b0afa82e9513ec64b087b26ade7cfea7a
 });

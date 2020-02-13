@@ -81,7 +81,7 @@
                 }
                 foreach ($fullArray as $type) {
                     $catLower = strtolower(str_replace(" ", "_", $type)); ?>
-                <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron-down-dark.svg" alt="drop arrow"></span>
+                <li class="filter-cat" name="<?php echo $catLower; ?>"><?php echo $type; ?><span class="align-right"><img src="<?php echo BASE_IMAGE_URL;?>chevron.svg" alt="drop arrow"></span>
 
                     <ul id="submenu">
                         <?php
