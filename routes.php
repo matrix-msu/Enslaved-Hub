@@ -28,6 +28,7 @@ $GLOBALS['routes'] = array(
     'carousel' => 'carousel.php',
     'contribute' => 'contributors.php',
     'data' => 'data.php',
+    'learn' => 'learn.php',
     'drawers' => 'drawers.php',
     'fullRecord' => 'fullrecord.php',
     'fullRecord-2' => 'fullRecord-2.php',
