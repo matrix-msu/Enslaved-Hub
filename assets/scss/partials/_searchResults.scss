@@ -84,26 +84,24 @@ div.searched-term {
                 border-bottom: 2px solid rgba(14,50,50,0.1);
 
                 span.align-right{
-                    margin-left: 5px;
                     img{
-<<<<<<< HEAD
+                        transition: 200ms;
                         margin-left: 10px;
-                        transition: .3s ease-out;
-=======
                         transform: rotate(90deg);
-                        margin-left: 10px;
->>>>>>> fa066d8b0afa82e9513ec64b087b26ade7cfea7a
                     }
-                    // &:hover{
-                    //   img{
-                    //       transform: rotate(-180deg);
-                    //     }
-                    // }
-                  }
+
+                    &.show{
+                        img{
+                          transition: 200ms;
+                          transform: rotate(-90deg);
+                        }
+                    }
+                }
 
                 &.hidden{
                     padding-top: 0;
                 }
+
 
                 ul#submenu {
                     display: none;
@@ -1018,7 +1016,7 @@ ul.catmenu{
                                 padding: 15px;
                                 border-radius: 5px;
                                 font-size: 14px;
-                                font-family: aleoregular;  
+                                font-family: aleoregular;
 
                                 /* Position the tooltip */
                                 position: absolute;
