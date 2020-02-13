@@ -14,7 +14,7 @@
         </div>
     </div>
       <div class="image-background-overlay"></div>
-      <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
+      <img class="header-background about-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     </div>
 </div>
 <div class="crawler">
@@ -116,18 +116,22 @@
 <div class="crawler-modal update-link-modal">
     <div class="canvas">
         <div class="body">
-            <h1 class="title">Update Link</h1>
-            <p class="link">www.nameoflinkgoeshere.com</p>
+            <h1 class="title">Update Title and Link</h1>
             <form action="" method="post">
                 <div class="info-inputs">
-                    <input type="hidden" class="link-info" name="old_link" value="">
+                    <input type="hidden" class="name-info" name="update-name" value="">
+                    <input type="hidden" class="link-info" name="update-link" value="">
+                    <input type="hidden" class="keyword-id" name="keyword-id" value="">
                     <div class="input-wrap url-input">
-                        <label for="url">Enter the updated URL here</label>
-                        <input id="url" type="text" name="update_link" placeholder="Enter updated URL">
+                        <label for="url">Click on the title or link</label>
+                        <br><br>
+                        <p class="name" contenteditable="true">Title of page</p>
+                        <br>
+                        <p class="link" contenteditable="true">www.nameoflinkgoeshere.com</p>
                     </div>
                 </div>
                 <div class="confirm-wrap">
-                    <input class="confirm" id="update" type="submit" value="Update Link">
+                    <input class="confirm" id="update-link" type="submit" value="Update Link">
                 </div>
             </form>
             <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>

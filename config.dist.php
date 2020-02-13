@@ -1,10 +1,10 @@
 <?php
 //user defined
-define("BASE_URL",  "https://robbie.dev.matrix.msu.edu/~joyeandr/enslaved/");
-define("BASE_PATH",  "/home/joyeandr/website/enslaved/");
+define("BASE_URL",  "http://dev2.matrix.msu.edu/enslaved/");
+define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
 define("KORA_BASE_URL", "https://kora.enslaved.org/");
-define("BASE_WIKI_URL", "https://lod.enslaved.org/");
-define("BASE_BLAZEGRAPH_URL", "https://bg1.dev.matrix.msu.edu/bigdata/");
+define("BASE_WIKI_URL", "");
+define("BASE_BLAZEGRAPH_URL", "");
 
 //project specific urls - you should never use relative paths
 define("BASE_JS_URL", BASE_URL . "assets/javascripts/");
@@ -32,8 +32,8 @@ define('BLAZEGRAPH_URL', BASE_BLAZEGRAPH_URL.'namespace/wdq/sparql');
 define('API_URL', BASE_BLAZEGRAPH_URL.'sparql?query=');
 
 //elasticsearch
-define('ELASTICSEARCH_URL', 'elasticsearch1-dev:9200');
-define('ELASTICSEARCH_INDEX_NAME', 'enslaved-test-index');
+define('ELASTICSEARCH_URL', '');
+define('ELASTICSEARCH_INDEX_NAME', '');
 
 //kora project information - change these for your project
 define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');
@@ -128,6 +128,13 @@ $GLOBALS['FILTER_TO_FILE_MAP'] = Array(
     "Modern Countries" => countrycode
 );
 
+$GLOBALS['bg'] = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+        'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
+        'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
+        'enslaved-header-bg7.jpg'];
+
+$GLOBALS['randIndex'] = array_rand($bg);
+
 //include the lib files
 require_once( BASE_LIB_PATH . "configFunctions.php" );
 require_once( BASE_LIB_PATH . "koraWrapper.php" );
@@ -136,8 +143,3 @@ require_once( BASE_FUNCTIONS_PATH . "explorefunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "storyfunctions.php");
 require_once( BASE_FUNCTIONS_PATH . "functions.php");
 require_once( BASE_FUNCTIONS_PATH . "search.php");
-
-define("Host", "rush.matrix.msu.edu");
-define("Username", "schleusener_dev");
-define("DBName", "schleusener_dev");
-define("Password","u8xzh4isos");

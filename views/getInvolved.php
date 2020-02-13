@@ -1,7 +1,9 @@
 <!-- Get Involved page-->
-<?php $cache_data = Json_GetData_ByTitle("Get Involved"); ?>
+<?php $cache_data = Json_GetData_ByTitle("Get Involved");
+?>
 <!-- Heading image and title container-->
 <div class="container header about-header getinvolved-page">
+  <img class="header-background about-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
         <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about">
             <span id="previous-title">About / </span></a>

@@ -105,6 +105,11 @@ $(document).ready(function(){
 			count_type = 'count_seeds';
 			$('.create-seed').addClass('show');
 		}
+		else if(tab_type == "results_visible"){
+			type['get_results_visible'] = 'ok';
+			count_type = 'count_results_visible';
+			$('.create-seed').removeClass('show');
+		}
 
 		showResults(type, count_type);
 
@@ -112,6 +117,7 @@ $(document).ready(function(){
 
 	//Trigger click on results when page loads
 	$('.crawler-tabs li#results').trigger('click');
+	$('.crawler-tabs li#results_visible').trigger('click');
 
 	// Modals
 	$('.crawler-modal .canvas').css('opacity', '0');
@@ -158,16 +164,11 @@ $(document).ready(function(){
 
 //Need to uniform with original code
 $('.create-seed').click(function(){
-	console.log('hello');
 	$('.create-seed-modal').css("display", "flex");
 	setTimeout(function(){
 		$('.create-seed-modal .canvas').css('opacity', '1');
 		$('.create-seed-modal').css('background', 'rgba(0, 0, 0, 0.7)');
 	}, 50);
-});
-
-$('#create').click(function(){
-	console.log('in');
 });
 
 //Main function for showing results, gets total count of results first and then calls the ajax to get the results
@@ -194,7 +195,6 @@ function showResults(result_type, count_type)
 		success:function(data){
 			//On success make ajax call to get the results
 			total_length = data;
-			console.log(total_length);
 			getResults(get_data);
 		},
 		error:function(xhr, status, error){
@@ -239,7 +239,6 @@ function getAllSeeds() {
 //Gets the results for the selected tab
 function getResults(get_data)
 {
-	console.log(get_data);
 	$.ajax({
 		method:'POST',
 		url: BASE_URL + "api/getCrawlerResults",
@@ -247,7 +246,7 @@ function getResults(get_data)
 		dataType: "JSON",
 		success:function(data){
 			if(data) {
-				if (tab_type === 'results')
+				if (tab_type === 'results' || tab_type === 'results_visible')
 					html = populateCrawlerResults(data);
 				if (tab_type === 'seeds')
 					html = populateCrawlerSeeds(data);
@@ -360,10 +359,12 @@ function populateCrawlerResults(data) {
 		html += `
 			<div class="result" id="r${i+1}">
 				<div class="link-name">
-					<a class="link" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a>
+					<a class="name" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a>
 				</div>
 				<div class="link-wrap">
-					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
+					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>
+					<div class="update crawler-modal-open" id="update-link">
+						<img class="update-icon" src="./assets/images/edit.svg"></div>`;
 		if (location.href.match(/crawler/)) {
 	        html += `
 	        	<div class="right">
@@ -387,7 +388,7 @@ function populateCrawlerResults(data) {
 								<ul id="sortmenu" data-id="${k_id}">`;
 			$.each(all_tags, function(_, tag) {
 				checked = '';
-				if (tag_ids.length > 0 && $.inArray(tag['tag_id'], tag_ids) >= 0) {
+				if (tag_ids.length > 0 && tag_ids.includes(Number(tag['tag_id']))) {
 					checked = ' checked';
 				}
 				html += `<li data-id="${tag['tag_id']}"><input type="checkbox"${checked}>${tag['tag_name']}</li>`
@@ -434,7 +435,12 @@ function installModalListeners(){
 			$('.'+ modalType +'-modal p.link').text(url);
 		}
 		else if(modalType == "update-link"){
-			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
+			var url = $(this).parent().parent().find('.link-wrap a.link').text();
+			var keyword = $(this).parent().parent().find('.link-name a.name').text();
+			var keyword_id = $(this).parent().parent().find('[data-id]').data('id');
+
+			$('.'+ modalType +'-modal .keyword-id').attr('value', keyword_id);
+			$('.'+ modalType +'-modal p.name').text(keyword);
 			$('.'+ modalType +'-modal p.link').text(url);
 			$('.'+ modalType +'-modal .link-info').attr('value', url);
 		}
@@ -461,7 +467,12 @@ function installModalListeners(){
 	// Call off before adding click listener so that the listeners dont stack
 	$('.crawler-modal form').off().submit(function(e){
 		e.preventDefault();
-
+		var keyword = $(this).find('p.name').text();
+		var url = $(this).find('p.link').text();
+		var id = $(this).find('.keyword-id').val();
+		$('input.name-info').val(keyword);
+		$('input.link-info').val(url);
+		$('input.keyword-id').val(id);
 		var form = $(this);
 		$.ajax({
 			type: "POST",
@@ -470,7 +481,6 @@ function installModalListeners(){
 			dataType: "JSON",
 			success:function(data){
 				//after ajax close modal and refresh tab
-				// console.log(data)
 				$('.crawler-modal .close').trigger('click');
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},

@@ -1,5 +1,6 @@
 # bootstrap
 config.php
+database-config.php
 config.json
 
 # htaccess files
@@ -27,3 +28,4 @@ composer.phar
 
 # project specific
 cache/*
+!cache/.gitkeep

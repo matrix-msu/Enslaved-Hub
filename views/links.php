@@ -4,23 +4,25 @@
     $isCrawlerAdmin = true;
     $crawler_tags = new crawler_tags();
     $tags = $crawler_tags->get_tags();
+
 ?>
 
 <div class="container header">
     <div class="image-container search-page image-only">
+      <img class="header-background links-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
 	    <div class="container middlewrap">
         <div class="search-title">
             <h1>Resources</h1>
         </div>
     </div>
       <div class="image-background-overlay"></div>
-      <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
+      <!-- <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image"> -->
     </div>
 </div>
 <div class="crawler">
     <div class="project-tab crawler-tabs">
         <ul>
-            <li class="tabbed" id="results">Results</li>
+            <li class="tabbed" id="results_visible">Results</li>
             <hr>
         </ul>
     </div>
@@ -33,13 +35,13 @@
             </form>
         </div>
         <div class="sorting-dropdowns">
-            <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+            <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                 <ul id="sortmenu" class="sort-by">
                     <li data-sort="DESC">Newest</li>
                     <li data-sort="ASC">Oldest</li>
                 </ul>
             </span>
-            <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+            <span class="align-center results-per-page"><span class="sortby-title">9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                 <ul id="sortmenu" class="results-per-page">
                     <li><span>12</span> Per Page</li>
                     <li><span>24</span> Per Page</li>
@@ -47,7 +49,7 @@
                     <li><span>48</span> Per Page</li>
                 </ul>
             </span>
-            <span class="align-center tag-filter">Filter By Tags <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+            <span class="align-center tag-filter">Filter By Tags <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                 <ul id="sortmenu" class="tag-filter">
                     <?php foreach ($tags as $tag) {
                         echo '<li data-id="' . $tag['tag_id'] . '"><input type="checkbox">' . $tag['tag_name'] . '</li>';
@@ -58,8 +60,20 @@
     </div>
 
     <?php if($isCrawlerAdmin) {	 ?>
-    <div class="results-wrap result-container show" id="results">
-        <div><span class="tag-header">Tags:</span></div>
+    <div class="results-wrap result-container show" id="results_visible">
+        <div class="result_header">
+            <div class="title">
+                <p>Title</p>
+            </div>
+            <div class="url">
+                <p>URL</p>
+                <div class="right">
+                    <div class="tag">
+                        <span>Tags</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <?php } else { ?>

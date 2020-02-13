@@ -1,5 +1,4 @@
 @charset "utf-8"; //was getting some error with files not being encoded in the utf-8 charset, this fixes that issue
-
 @import "partials/colors";
 //colors needs to be loaded before base since base uses variables defined in colors
 @import "partials/fonts";
@@ -13,6 +12,7 @@
 @import "partials/search";
 @import "partials/searchResults";
 @import "partials/modal";
+
 //@import "partials/searchBar";
 @import "partials/cards";
 @import "partials/footer";
@@ -43,3 +43,6 @@
 @import "partials/peopleSub2";
 @import "partials/crawler";
 @import "partials/contributors";
+@import "partials/404";
+@import "partials/support-our-mission";
+@import "partials/references";

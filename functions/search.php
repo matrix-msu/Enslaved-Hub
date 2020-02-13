@@ -7,6 +7,30 @@ function all_counts_ajax() {
     echo json_encode(all_counts());
 }
 
+function dateRange() {
+    $hosts = [
+        ELASTICSEARCH_URL
+    ];
+
+    $es = ClientBuilder::create()
+                        ->setHosts($hosts)
+                        ->build();
+
+    $params = [
+        'index' => ELASTICSEARCH_INDEX_NAME,
+        'body' => [
+            'size' => 0,
+            'aggs' => [
+                max_date => ['max' => ['field' => 'date']],
+                min_date => ['min' => ['field' => 'date']]
+            ]
+        ]
+    ];
+
+    $res = $es->search($params);
+    return json_encode($res['aggregations']);
+}
+
 function all_counts() {
     $hosts = [
         ELASTICSEARCH_URL
@@ -26,24 +50,13 @@ function all_counts() {
                     ],
                     'filter' => []
                 ]
-            ],
-            'collapse' => [
-                'field' => 'id'
-            ],
-            'size' => 0,
-            'aggs' => [
-                'total' => [
-                    'cardinality' => [
-                        'field' => 'id'
-                    ]
-                ]
             ]
         ]
     ];
 
-    $res = $es->search($params);
+    $res = $es->count($params);
     $total = [];
-    $total['all'] = $res['aggregations']['total']['value'];
+    $total['all'] = $res['count'];
 
     foreach (['people', 'event', 'place', 'source'] as $type) {
         $tmp_params = $params;
@@ -51,11 +64,11 @@ function all_counts() {
             $tmp_params['body']['query']['bool']['filter'],
             ['term' => ['type' => $type]]
         );
-        $res = $es->search($tmp_params);
+        $res = $es->count($tmp_params);
         // TODO::this is annoying, will require a refactor on index (pluralize types)
         if ($type != 'people')
             $type = $type . 's';
-        $total[$type] = $res['aggregations']['total']['value'];
+        $total[$type] = $res['count'];
     }
 
     return $total;
@@ -88,7 +101,9 @@ function search_filter_counts() {
             'Gender' => [
                 'sex' => sexTypes
             ],
-            // 'Age Category => '',
+            'Age Category' => [
+                'age_category' => ageCategory
+            ],
             'Ethnodescriptor' => [
                 'ethnodescriptor' => ethnodescriptor
             ],
@@ -143,17 +158,6 @@ function search_filter_counts() {
                                 ['term' => ['type' => $search_type]]
                             ]
                         ]
-                    ],
-                    'collapse' => [
-                        'field' => 'id'
-                    ],
-                    'size' => 0,
-                    'aggs' => [
-                        'total' => [
-                            'cardinality' => [
-                                'field' => 'id'
-                            ]
-                        ]
                     ]
                 ]
             ];
@@ -170,9 +174,9 @@ function search_filter_counts() {
                             ['term' => [$field . '.raw' => $value]]
                         );
 
-                        $res = $es->search($tmp_params);
+                        $res = $es->count($tmp_params);
 
-                        $total[$type][$label][$value] = $res['aggregations']['total']['value'];
+                        $total[$type][$label][$value] = $res['count'];
                     }
                 }
             }
@@ -207,7 +211,7 @@ function filtered_counts() {
         ],
         'Date' => [
             'date' => ''
-        ], #todo
+        ],
         'Gender' => [
             'sex' => sexTypes
         ],
@@ -215,8 +219,8 @@ function filtered_counts() {
             'participant_role' => roleTypes
         ],
         'Age Category' => [
-            'age_category' => ''
-        ], #tbd
+            'age_category' => ageCategory
+        ],
         'Ethnodescriptor' => [
             'ethnodescriptor' => ethnodescriptor
         ],
@@ -251,17 +255,6 @@ function filtered_counts() {
                         ['term' => ['type' => $category]]
                     ]
                 ]
-            ],
-            'collapse' => [
-                'field' => 'id'
-            ],
-            'size' => 0,
-            'aggs' => [
-                'total' => [
-                    'cardinality' => [
-                        'field' => 'id'
-                    ]
-                ]
             ]
         ]
     ];
@@ -275,9 +268,9 @@ function filtered_counts() {
                 $tmp_params['body']['query']['bool']['filter'],
                 ['term' => [$field . '.raw' => $value]]
             );
-            $res = $es->search($tmp_params);
+            $res = $es->count($tmp_params);
 
-            $total[$value] = $res['aggregations']['total']['value'];
+            $total[$value] = $res['count'];
         }
     }
 
@@ -295,7 +288,7 @@ function keyword_search() {
 
     $item_types = ['people', 'event', 'place', 'source'];
     $filters = $templates = [];
-    $query = $preset = $item_type = '';
+    $query = $preset = $item_type = $sort = '';
     $size = 12;
     $from = 0;
     $get_all_counts = false;
@@ -345,6 +338,11 @@ function keyword_search() {
         unset($filters['limit']);
     }
 
+    if (array_key_exists('sort', $filters)) {
+        $sort = $filters['sort'];
+        unset($filters['sort']);
+    }
+
     $params = [
         'index' => ELASTICSEARCH_INDEX_NAME,
         'body' => [
@@ -353,18 +351,9 @@ function keyword_search() {
                     'must' => []
                 ]
             ],
-            'collapse' => [
-                'field' => 'id'
-            ],
             'size' => $size,
             'from' => $from,
-            'aggs' => [
-                'total' => [
-                    'cardinality' => [
-                        'field' => 'id'
-                    ]
-                ]
-            ]
+            'track_total_hits' => TRUE
         ]
     ];
 
@@ -422,6 +411,12 @@ function keyword_search() {
         unset($filters['place_name']);
     }
 
+    if ($sort) {
+        $params['body']['sort'] = [
+            'label.raw' => ['order' => $sort]
+        ];
+    }
+
     if ($filters) {
         $terms = [];
         foreach ($filters as $key => $value) {
@@ -440,7 +435,19 @@ function keyword_search() {
 
             // for filter by ref item id
             if (in_array($key, $item_types)) {
-                array_push($terms, ['term' => ['ref_' . $key => $value[0]]]);
+                $ref_type = $_GET['display'];
+                if ($ref_type != 'people')
+                    $ref_type = substr_replace($ref_type, '', -1);
+
+                // Have to do a search here in order to get the exact refs found in
+                // the full record
+                $res = $es->search([
+                    'index' => ELASTICSEARCH_INDEX_NAME,
+                    'body' => ['query' => ['term' => ['id' => $value[0]]], 'size' => 1]
+                ]);
+
+                // TODO::if erroring out here may want to check may want to check if hits has any results
+                array_push($terms, ['terms' => ['id' => $res['hits']['hits'][0]['_source'][ref_ . $ref_type]]]);
                 break;
             }
 
@@ -474,7 +481,7 @@ function keyword_search() {
     }
 
     $res = $es->search($params);
-    $single_total = $res['aggregations']['total']['value'];
+    $single_total = $res['hits']['total']['value'];
 
     if ($get_all_counts && $item_type) {
         $total = [];
@@ -499,7 +506,7 @@ function keyword_search() {
                 }
                 $count_res = $es->search($params);
                 // TODO::refactor front end to ignore pointless value key
-                $total[$count_key]['value'] = $count_res['aggregations']['total']['value'];
+                $total[$count_key]['value'] = $count_res['hits']['total']['value'];
             }
         }
     } else {

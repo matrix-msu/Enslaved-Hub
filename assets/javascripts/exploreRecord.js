@@ -26,6 +26,8 @@ $(document).ready(function () {
     });
 });
 
+
+
 function condenseRoles(){
     var roles_num = $('.detailwrap .roles .detail-bottom').length;
     console.log(roles_num);

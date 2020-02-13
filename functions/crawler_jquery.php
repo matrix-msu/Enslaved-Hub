@@ -48,7 +48,6 @@ if(isset($_POST["keyword_id"]))
 	$keywordId = $_POST["keyword_id"];
 }
 
-
 //Gets results for results tab
 if(isset($_POST["get_results"]))
 {
@@ -57,6 +56,7 @@ if(isset($_POST["get_results"]))
 	foreach ($results['keywords'] as $key => $value) {
 		array_push($keyword_ids, $value['keyword_id']);
 	}
+	$keyword_ids = array_unique($keyword_ids);
 	$results['tags'] = $crawler_tags->get_tag_name_per_keyword_ids($keyword_ids);
 	echo(json_encode($results));
 }
@@ -101,6 +101,26 @@ if(isset($_POST["count_results"]))
 	echo(json_encode($result));
 }
 
+
+//Gets results for results tab for visible results
+if(isset($_POST["get_results_visible"]))
+{
+	$results = $keyword_ids = [];
+	$results['keywords'] = $crawler_keywords->get_keywords_visible($limit,$offset,$sort,$terms,$tagIds);
+	foreach ($results['keywords'] as $key => $value) {
+		array_push($keyword_ids, $value['keyword_id']);
+	}
+	$results['tags'] = $crawler_tags->get_tag_name_per_keyword_ids($keyword_ids);
+	echo(json_encode($results));
+}
+
+//get results count
+if(isset($_POST["count_results_visible"]))
+{
+	$result = $crawler_keywords->get_count_visible();
+	echo(json_encode($result));
+}
+
 //filter by date
 //if (isset($_POST["date"])&& isset($_POST["MORE"]))
 //{
@@ -116,13 +136,11 @@ if(isset($_POST['get_links']))
 
 	echo(json_encode($results));
 }
-// this function edits a given link in the seeds file
-if(isset($_POST["update_link"]))
+
+if(isset($_POST["update-link"]))
 {
-	// update seeds first
-	$broken_links->update_seeds($_POST["old_link"],$_POST["update_link"]);
-	// broken links list
-	$broken_links->delete_broken_links($_POST["old_link"]);
+	$crawler_keywords->update_keyword($_POST['keyword-id'],$_POST['update-name']);
+	$crawler_keywords->update_link($_POST['keyword-id'],$_POST['update-link']);
 
 	echo(json_encode("true"));
 }

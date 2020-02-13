@@ -5,22 +5,16 @@ $upperWithSpaces = ucwords(str_replace("_", " ", EXPLORE_FILTER));
 ?>
 
 <div class="container header stories">
+    <img class="header-background exploreFilters-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+
     <div class="container middlewrap">
+
         <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM;?>"><span id="previous-title"><?php echo ucwords(EXPLORE_FORM);?> // </span></a><span id="current-title"><?php echo $upperWithSpaces; ?></span></h4>
         <h1><?php echo $upperWithSpaces; ?></h1>
     </div>
 </div>
 <!-- explore by -->
 <div class="explore-by">
-    <div class="sort-cards">
-        <p>Sort <?php echo $upperWithSpaces; ?> By <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/Arrow2.svg" alt="sort cards button"/></p>
-        <ul id="submenu" class="pagenum-menu">
-            <li>Alphabetical (A-Z)</li>
-            <li>Alphabetical (Z-A)</li>
-            <li>Resources (Most to Least)</li>
-            <li>Resources (Least to Most)</li>
-        </ul>
-    </div>
     <ul class="cards">
       <?php
       $lowerWithDashes = strtolower(str_replace(" ", "_", EXPLORE_FILTER));

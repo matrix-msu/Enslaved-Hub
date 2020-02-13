@@ -38,7 +38,13 @@ $('#modal-img').click(function (e) {
     e.stopPropagation();
 })
 
-$(".modal-view").click(closeModal);
+//clicks on dark background but not child element(modal)
+$(".modal-view").click(function(){
+    closeModal();
+}).children().click(function(e) {
+    return false;
+});
+
 $("#modal-dim-background-img").click(closeModal);
 
 $('div.close').click(closeModal);
@@ -86,6 +92,7 @@ $('#available-cols').on('click', 'li', function (e) {
     e.stopPropagation();
     $(this).css('background-color', 'rgba(194,79,60,0.15)');
     $(this).css('color', '#C24F3C')
+    $(this).css('border-radius', '7px')
     selected_items.push( $(this).html() );
 });
 
@@ -95,6 +102,7 @@ $('#selected-cols').on('click', 'li', function (e) {
     e.stopPropagation();
     $(this).css('background-color', 'rgba(194,79,60,0.15)');
     $(this).css('color', '#C24F3C')
+    $(this).css('border-radius', '7px')
     $(this).addClass('selected');
     other_items.push( $(this).html() );
 });

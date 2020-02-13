@@ -2,6 +2,7 @@
 
 function callAPI($url,$limit,$offset){
   $url.='&format=json';
+
     // Create a stream
     $opts = array(
       'http'=>array(
@@ -18,52 +19,6 @@ function callAPI($url,$limit,$offset){
 
 }
 
-
-function getEventDateRange() {
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $fullResults = [];
-    $query="SELECT ?year WHERE {
-            ?event $wdt:$instanceOf $wd:$event; #event
-                   $wdt:$startsAt ?date.
-              BIND(str(YEAR(?date)) AS ?year).
-            }ORDER BY DESC(?year)
-          LIMIT 1";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-    $res= json_decode($res);
-    // print_r($res);die;
-    if (!empty($res)){
-        $fullResults['max'] = $res->results->bindings;
-    }else{
-        $fullResults['max'] = $res;
-    }
-    $fullResults['max'] = $fullResults['max'][0]->year->value;
-
-    $query="SELECT ?year WHERE {
-            ?event $wdt:$instanceOf $wd:$event; #event
-                   $wdt:$startsAt ?date.
-              BIND(str(YEAR(?date)) AS ?year).
-            }ORDER BY ASC(?year)
-          LIMIT 1";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        $fullResults['min'] = $res->results->bindings;
-    }else{
-        $fullResults['min'] = $res;
-    }
-    $fullResults['min'] = $fullResults['min'][0]->year->value;
-
-    return json_encode($fullResults);
-}
 
 //finish to display ranks here. Error now it only displays PI with higher rank.
 function getProjectFullInfo() {
@@ -578,7 +533,7 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
-    // print_r($query);die;
+ //print_r($query);die;
     $result = blazegraphSearch($query);
     // print_r($result);die;
     if (empty($result)){
@@ -591,10 +546,12 @@ function getFullRecordHtml(){
     //Get variables from query
     $recordVars = [];
 
+    $recordVars['Label'] = $record['label']['value'];
+
     //Name
-    $recordVars['Name'] = $record['name']['value'];
-
-
+    if (isset($record['name']) && isset($record['name']['value']) ){
+      $recordVars['Name'] = $record['name']['value'];
+    }
     // First Name
     if (isset($record['firstname']) && isset($record['firstname']['value']) ){
         $recordVars['First Name'] = $record['firstname']['value'];
@@ -614,6 +571,17 @@ function getFullRecordHtml(){
     if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
       $recordVars['Sex'] = $record['sextype']['value'];
     }
+    //AGE
+
+    if (isset($record['age']) && isset($record['age']['value']) && $record['age']['value'] != '' ){
+      $recordVars['Age'] = $record['age']['value'];
+    }
+    //occupation
+
+    if (isset($record['occupation']) && isset($record['occupation']['value']) && $record['occupation']['value'] != '' ){
+      $recordVars['Occupation'] = $record['occupation']['value'];
+    }
+
 
     //Race
     if (isset($record['race']) && isset($record['race']['value']) && $record['race']['value'] != '' ){
@@ -626,7 +594,8 @@ function getFullRecordHtml(){
     }
 
     // descriptions for items
-    if (isset($record['extref']) && isset($record['extref']['value']) ){
+
+    if (isset($record['extref']) && isset($record['extref']['value']) && $record['extref']['value']!='' ){
         $recordVars['External References'] = $record['extref']['value'];
     }
 
@@ -697,6 +666,11 @@ function getFullRecordHtml(){
       $recordVars['Modern Country Code'] = $record['code']['value'];
     }
 
+    //Coordinates
+    if (isset($record['coordinates']) && isset($record['coordinates']['value']) && $record['coordinates']['value'] != ''){
+      $recordVars['Coordinates'] = $record['coordinates']['value'];
+    }
+
     //Source
     if (isset($record['sourceLabel']) && isset($record['sourceLabel']['value']) && $record['sourceLabel']['value'] != '' ){
       if(isset($record['source']['value'])){
@@ -711,6 +685,7 @@ function getFullRecordHtml(){
     }
 
     //Relationships
+
     if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
       if(isset($record['qrelationname']) && isset($record['qrelationname']['value']) && isset($record['relationagentlabel']) && isset($record['relationagentlabel']['value'])){
         if (empty($record['relationships']['value']) ){
@@ -765,15 +740,15 @@ function getFullRecordHtml(){
       $recordVars['Sex'] = $record['sextype']['value'];
     }
 
-    //Roles
+    //Roles for events
     //Gets the roles, participants, and pqID if they exist and matches them together
     if (isset($record['roles']) && isset($record['roles']['value']) &&  $record['roles']['value'] != ''){
-      if(isset($record['participant']) && isset($record['participant']['value']) &&
-         $record['participant']['value'] != '' &&  $record['pq']['value'] != '' ){
+      if(isset($record['roleevent']) && isset($record['roleevent']['value']) &&
+         $record['roleevent']['value'] != '' &&  $record['roleeventlabel']['value'] != '' ){
         //There are participants to match with their roles and qIDs
         $rolesArr = ['roles' => $record['roles']['value'],
-                     'participant' => $record['participant']['value'],
-                     'pq' => $record['pq']['value']
+                     'participant' => $record['roleeventlabel']['value'],
+                     'pq' => $record['roleevent']['value']
                     ];
         $recordVars['RolesA'] = $rolesArr;
       }
@@ -781,7 +756,7 @@ function getFullRecordHtml(){
         if(isset($record['roleeventlabel']) && isset($record['roleeventlabel']['value']) &&
             $record['roleeventlabel']['value'] != '' && $record['roleevent']['value'] != '' ){
           //There are participants to match with their roles and qIDs
-          $rolesArr = ['roles' => $record['roleslabel']['value'],
+          $rolesArr = ['roles' => $record['roles']['value'],
                         'eventRoles' => $record['roleevent']['value'],
                         'eventRoleLabels' => $record['roleeventlabel']['value']
                       ];
@@ -803,17 +778,17 @@ function getFullRecordHtml(){
     $url = BASE_URL . "explore/" . $type;
     $recordform = ucfirst($type);
     $name = $recordVars['Name'];
+    $label= $recordVars['Label'];
     $dateRange = '';
-
     $html .= <<<HTML
 <h4 class='last-page-header'>
     <a id='last-page' href="$url"><span id=previous-title>$recordform / </span></a>
-    <span id='current-title'>$name</span>
+    <span id='current-title'>$label</span>
 </h4>
-<h1>$name</h1>
+<h1>$label</h1>
 <h2 class='date-range'><span>$dateRange</span></h2>
 HTML;
-
+//var_dump($html);
     $htmlArray['header'] = $html;
 
     //Description section
@@ -825,9 +800,8 @@ HTML;
     $html = '';
 
     $html .= '<div class="detailwrap">';
-
-// print_r($recordVars);die;
     foreach($recordVars as $key => $value){
+
       $html .= createDetailHtml($value, $key);
     }
     $html .= '</div>';

@@ -31,7 +31,7 @@ var currentTitle = "Search";
 
 
 var fields = [];    // fields for the table view
-var sort = 'ASC';
+var sort = 'asc'; // or desc
 var formattedData = {};
 
 var address = document.location.toString().split('/')
@@ -165,8 +165,6 @@ function searchResults(preset, limit = 12, offset = 0)
             } else {
                 total_length = JSON.parse(result_array['total']);
             }
-
-
 
             var showingResultsText = '';
             if (total_length < card_limit) {
@@ -1006,8 +1004,14 @@ $('div').not('.filter-menu').mouseup(function() {
         showFilter = 0;
     }
 });
+<<<<<<< HEAD
 var degrees = 0;
 $( ".crossRotate" ).click(function() {
     degrees += 36;
     $(this).css("transform","rotate("+degrees+"deg)");
+=======
+
+$("#search-results tbody td").on('click', function(event){
+    // console.log(this);
+>>>>>>> fa066d8b0afa82e9513ec64b087b26ade7cfea7a
 });

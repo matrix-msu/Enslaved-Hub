@@ -40,17 +40,34 @@
                     position: relative;
 
                     .nav-link{
-                        color: #FFFFFF;
+                        color: white;
                         cursor: pointer;
                         font-size: 14px;
                         margin-left: 20px;
                         padding: 18px 0;
                         text-decoration: none;
                         transition: color 0.3s ease;
+
+                        &.donate {
+	                        color: white;
+	                    	background: $accent;
+	                    	border-radius: 5px;
+	                    	padding: 12px;
+	                    	transition: all .2s ease;
+
+	                    	&:hover {
+		                    	color: white;
+		                    	background: #CF5440;
+	                    	}
+                    	}
                     }
+
                     &:hover {
                         .nav-link{
                             color: $sub-base;
+                        }
+                        .nav-link.donate{
+	                        color: white;
                         }
                     }
 
@@ -194,7 +211,7 @@
     }
 }
 
-@media screen and (max-width: 780px){
+@media screen and (max-width: 875px){
 
     .nav-header{
 
@@ -337,7 +354,7 @@
     .cache-header-images{
         display: none;
     }
-    
+
     .header-background {
         left: 0;
         object-fit: cover;
@@ -345,6 +362,7 @@
         right: 0;
         top: 0;
         width: 100%;
+        height: 100%;
 
         &.home-page{
 	        height: 330px;
