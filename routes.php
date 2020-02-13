@@ -27,6 +27,7 @@ $GLOBALS['routes'] = array(
     'searchResults' => 'searchResults.php',
     'carousel' => 'carousel.php',
     'contribute' => 'contributors.php',
+    'data' => 'data.php',
     'drawers' => 'drawers.php',
     'fullRecord' => 'fullrecord.php',
     'fullRecord-2' => 'fullRecord-2.php',
