@@ -1,6 +1,6 @@
 <!-- Author: Drew Schineller-->
 <!-- Our Partners page-->
-<?php $cache_data = Json_GetData_ByTitle("Partner Projects");
+<?php $cache_data = Json_GetData_ByTitle("Founding Partners");
 ?>
 <!-- Heading image and title container-->
 <div class="container header">
