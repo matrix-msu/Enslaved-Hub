@@ -84,22 +84,24 @@ div.searched-term {
                 border-bottom: 2px solid rgba(14,50,50,0.1);
 
                 span.align-right{
-                    margin-left: 5px;
                     img{
-                        transform: rotate(90deg);
+                        transition: 200ms;
                         margin-left: 10px;
+                        transform: rotate(90deg);
                     }
 
-                    // &.show{
-                    //     img{
-                    //         transform: rotate(-90deg);
-                    //     }
-                    // }
+                    &.show{
+                        img{
+                          transition: 200ms;
+                          transform: rotate(-90deg);
+                        }
+                    }
                 }
 
                 &.hidden{
                     padding-top: 0;
                 }
+
 
                 ul#submenu {
                     display: none;
@@ -1014,7 +1016,7 @@ ul.catmenu{
                                 padding: 15px;
                                 border-radius: 5px;
                                 font-size: 14px;
-                                font-family: aleoregular;  
+                                font-family: aleoregular;
 
                                 /* Position the tooltip */
                                 position: absolute;
