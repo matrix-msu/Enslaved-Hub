@@ -6,7 +6,7 @@
   }
 }
 .visualize{
-  max-width: 1000px;
+  max-width: 800px;
   margin: 0 auto;
   display: flex;
   justify-content:space-between;
@@ -27,16 +27,23 @@
       img{
       }
       .byData{
+        margin-top: 49px;
         height: 30px;
         width: 56px;
+        margin-bottom: 18px;
       }
       .bySpace{
-        width: 42px;
-        height: 42px;
+        margin-top: 45px;
+        width: 34px;
+        height: 35px;
+        margin-bottom: 17px;
       }
       .byTime{
-        width: 61px;
-        height: 61px;
+        margin-top: 33px;
+        margin-bottom: 8px;
+        width: 58px;
+        height: 58px;
+
       }
       p{
         font-family: "EB Garamond";
@@ -51,5 +58,12 @@
               transition: 0.3s ease;
       }
     }
-
+}
+@media screen and (max-width: 561px) {
+  .visualize{
+    margin-bottom: 55px;
+    li{
+      margin-bottom: 0px;
+    }
+  }
 }
