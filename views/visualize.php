@@ -20,15 +20,16 @@
 
 <div class="cardwrap visualize">
   <li class="card">
-    <img src="assets/images/BySpace.svg">
+    <img src="assets/images/ByData.svg" class="byData" alt="byData">
+    <p>By Data</p>
+  </li>
+  <li class="card">
+    <img src="assets/images/BySpace.svg" class="bySpace" alt="bySpace">
     <p>By Space</p>
   </li>
   <li class="card">
-    <img src="assets/images/ByTime.svg">
+    <img src="assets/images/ByTime.svg" class="byTime" alt="byTime">
     <p>By Time</p>
   </li>
-  <li class="card">
-    <img src="assets/images/ByData.svg">
-    <p>By Data</p>
-  </li>
+
 </div>
