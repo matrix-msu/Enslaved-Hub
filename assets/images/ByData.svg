@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="128px" height="96px" viewBox="0 0 128 96" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
-    <title>1B8166D0-09BC-4091-AC4B-9C3EC06C09F0</title>
+<svg width="58px" height="32px" viewBox="0 0 58 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 63.1 (101010) - https://sketch.com -->
+    <title>9838E138-8BD2-4111-A5DC-ED4741C75800</title>
     <desc>Created with sketchtool.</desc>
-    <defs>
-        <filter x="-74.3%" y="-105.3%" width="248.6%" height="373.7%" filterUnits="objectBoundingBox" id="filter-1">
-            <feOffset dx="0" dy="12" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feGaussianBlur stdDeviation="15" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0.0710264264   0 0 0 0 0.180718126   0 0 0 0 0.274739583  0 0 0 0.539515399 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
-            <feMerge>
-                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
-                <feMergeNode in="SourceGraphic"></feMergeNode>
-            </feMerge>
-        </filter>
-    </defs>
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="ByData" transform="translate(-59.000000, -36.000000)" stroke="#FBF9F5">
-            <g filter="url(#filter-1)" transform="translate(88.000000, 53.000000)" id="Shape">
-                <path d="M26,8 L44,31"></path>
-                <path d="M8,31 L26,8"></path>
-                <path d="M45,31 L63,8"></path>
-                <path d="M0,30.5 C0,26.3575991 3.58260543,23 8.00075139,23 C12.4173946,23 16,26.3575991 16,30.5 C16,34.6424009 12.4173946,38 8.00075139,38 C3.58260543,38 0,34.6424009 0,30.5 Z" fill="#586B7C" fill-rule="nonzero"></path>
-                <path d="M54,7.5 C54,3.3575991 57.5826054,0 61.9992486,0 C66.4173946,0 70,3.3575991 70,7.5 C70,11.6424009 66.4173946,15 61.9992486,15 C57.5826054,15 54,11.6424009 54,7.5 Z" fill="#586B7C" fill-rule="nonzero"></path>
-                <path d="M18,7.5 C18,3.3575991 21.581439,0 26,0 C30.418561,0 34,3.3575991 34,7.5 C34,11.6424009 30.418561,15 26,15 C21.581439,15 18,11.6424009 18,7.5 Z" fill="#586B7C" fill-rule="nonzero"></path>
-                <path d="M36,30.5 C36,26.3575991 39.581439,23 44,23 C48.418561,23 52,26.3575991 52,30.5 C52,34.6424009 48.418561,38 44,38 C39.581439,38 36,34.6424009 36,30.5 Z" fill="#586B7C" fill-rule="nonzero"></path>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Visualize" transform="translate(-763.000000, -588.000000)" stroke="#0E3232" stroke-width="2">
+            <g id="ByData" transform="translate(669.000000, 540.000000)">
+                <g transform="translate(95.000000, 49.000000)" id="Shape">
+                    <line x1="20.5263158" y1="6.31578947" x2="34.7368421" y2="24.4736842"></line>
+                    <line x1="6.31578947" y1="24.4736842" x2="20.5263158" y2="6.31578947"></line>
+                    <line x1="35.5263158" y1="24.4736842" x2="49.7368421" y2="6.31578947"></line>
+                    <path d="M0,24.0789474 C0,20.8086309 2.82837271,18.1578947 6.31638267,18.1578947 C9.80320624,18.1578947 12.6315789,20.8086309 12.6315789,24.0789474 C12.6315789,27.3492639 9.80320624,30 6.31638267,30 C2.82837271,30 0,27.3492639 0,24.0789474 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    <path d="M42.6315789,5.92105263 C42.6315789,2.65073613 45.4599517,0 48.9467752,0 C52.4347852,0 55.2631579,2.65073613 55.2631579,5.92105263 C55.2631579,9.19136913 52.4347852,11.8421053 48.9467752,11.8421053 C45.4599517,11.8421053 42.6315789,9.19136913 42.6315789,5.92105263 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    <path d="M14.2105263,5.92105263 C14.2105263,2.65073613 17.0379782,0 20.5263158,0 C24.0146534,0 26.8421053,2.65073613 26.8421053,5.92105263 C26.8421053,9.19136913 24.0146534,11.8421053 20.5263158,11.8421053 C17.0379782,11.8421053 14.2105263,9.19136913 14.2105263,5.92105263 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    <path d="M28.4210526,24.0789474 C28.4210526,20.8086309 31.2485045,18.1578947 34.7368421,18.1578947 C38.2251797,18.1578947 41.0526316,20.8086309 41.0526316,24.0789474 C41.0526316,27.3492639 38.2251797,30 34.7368421,30 C31.2485045,30 28.4210526,27.3492639 28.4210526,24.0789474 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+                </g>
             </g>
         </g>
     </g>
