@@ -101,12 +101,12 @@
 <div class="crawler-modal delete-link-modal">
     <div class="canvas">
         <div class="body">
-            <h1 class="title">Delete Link?</h1>
-            <p class="link">www.nameoflinkgoeshere.com</p>
+            <h1 class="title">Delete Result?</h1>
             <form action="" method="post">
-                <input type="hidden" class="link-info" name="" value="">
+                <p class="name">Title of page</p>
+                <input type="hidden" class="name-info" name="delete_result" value="">
                 <div class="confirm-wrap">
-                    <input class="confirm" id="delete" type="submit" value="Delete Link">
+                    <input class="confirm" id="delete-result" type="submit" value="Delete Result">
                 </div>
             </form>
             <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
@@ -121,7 +121,7 @@
                 <div class="info-inputs">
                     <input type="hidden" class="name-info" name="update-name" value="">
                     <input type="hidden" class="link-info" name="update-link" value="">
-                    <input type="hidden" class="keyword-id" name="keyword-id" value="">
+                    <input type="hidden" class="id" name="id" value="">
                     <div class="input-wrap url-input">
                         <p>Title</p>
                         <p class="name" contenteditable="true">Title of page</p>
@@ -141,9 +141,10 @@
     <div class="canvas">
         <div class="body">
             <h1 class="title">Delete Seed?</h1>
-            <p class="link">www.nameoflinkgoeshere.com</p>
             <form action="" method="post">
+                <p class="link">www.nameoflinkgoeshere.com</p>
                 <input type="hidden" class="link-info" name="delete_seed" value="">
+                <input type="hidden" class="id" name="id" value="">
                 <div class="confirm-wrap">
                     <input class="confirm" id="delete" type="submit" value="Delete Seed">
                 </div>
@@ -159,6 +160,7 @@
             <p class="link">www.nameoflinkgoeshere.com</p>
             <form action="" method="post">
                 <input type="hidden" class="link-info" name="update_seed" value="">
+                <input type="hidden" class="id" name="id" value="">
                 <div class="info-inputs">
                     <div class="input-wrap url-input">
                         <label for="url">Enter the updated URL here</label>
