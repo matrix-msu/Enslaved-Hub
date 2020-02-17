@@ -691,7 +691,7 @@ function getFullRecordHtml(){
 
     //Relationships
 
-    if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
+/*    if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
       if(isset($record['qrelationname']) && isset($record['qrelationname']['value']) && isset($record['relationagentlabel']) && isset($record['relationagentlabel']['value'])){
         if (empty($record['relationships']['value']) ){
             $recordVars['relationshipsA'] = [];
@@ -703,7 +703,7 @@ function getFullRecordHtml(){
             $recordVars['relationshipsA'] = $relationsipArr;
         }
       }
-    }
+    }*/
 
     //CloseMatch
     if (isset($record['match']) && isset($record['match']['value']) && $record['match']['value'] != ''  ){
