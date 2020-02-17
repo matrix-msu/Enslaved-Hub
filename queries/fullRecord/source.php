@@ -2,7 +2,7 @@
 
 $tempQuery = <<<QUERY
 SELECT
- ?label ?name ?project ?pname ?type ?secondarysource ?description
+ ?label ?name ?project ?pname ?type ?availableFrom ?description
 (group_concat(distinct ?extref1; separator = "||") as ?extref)
 
  WHERE
@@ -24,9 +24,9 @@ SELECT
   }.
   OPTIONAL{?source $wdt:$reportsOn ?event}.
 
-  OPTIONAL{?source $wdt:$availableFrom ?secondarysource}.
+  OPTIONAL{?source $wdt:$availableFrom ?availableFrom}.
   OPTIONAL {?source edt:P20 ?name}.
   OPTIONAL {?event $wdt:$atPlace ?place.}
 
-}GROUP BY ?label ?name ?project ?pname ?type ?secondarysource ?description
+}GROUP BY ?label ?name ?project ?pname ?type ?availableFrom ?description
 QUERY;

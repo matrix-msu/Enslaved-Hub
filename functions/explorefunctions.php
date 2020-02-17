@@ -656,6 +656,11 @@ function getFullRecordHtml(){
       $recordVars['Type'] = $record['type']['value'];
     }
 
+    //available from
+    if (isset($record['availableFrom']) && isset($record['availableFrom']['value']) && $record['availableFrom']['value'] != '' ){
+      $recordVars['Available From'] = $record['availableFrom']['value'];
+    }
+
     //Geonames
     if (isset($record['geonames']) && isset($record['geonames']['value']) && $record['geonames']['value'] != '' ){
       $recordVars['Geoname Identifier'] = $record['geonames']['value'];
