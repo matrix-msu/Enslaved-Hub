@@ -369,9 +369,6 @@ function populateCrawlerResults(data) {
 					<div class="update crawler-modal-open" id="update-link">
 						<img class="update-icon" src="./assets/images/edit.svg">
 					</div>
-	        		<div class="trash crawler-modal-open" id="delete-link">
-						<img class="trash-icon" src="./assets/images/Delete.svg">
-					</div>
 						<div class="add-seed">`;
 			if ($.inArray(result['url'], seed_urls) >= 0) {
 				html += `<p>In Seeds</p>`;
@@ -395,7 +392,9 @@ function populateCrawlerResults(data) {
 				}
 				html += `<li data-id="${tag['tag_id']}"><input type="checkbox"${checked}>${tag['tag_name']}</li>`
 			});
-			html += '</ul></span></div></div>';
+			html += `</ul></span></div>
+			<div class="trash crawler-modal-open" id="delete-link">
+				<img class="trash-icon" src="./assets/images/Delete.svg" alt="trash-icon"></div></div>`;
 	    } else {
 	    	html += '<div class="right"><div class="display-tag"><span>';
 	    	if(tag_names.length > 0) {
@@ -493,6 +492,15 @@ function installModalListeners(){
 		// }
 	});
 
+	$(document).click(function (e) {
+	    e.stopPropagation();
+	    var container = $("#sortmenu");
+
+	    //check if the clicked area is dropDown or not
+	    if (container.has(e.target).length === 0) {
+	        $(".add-tag").find('.show').toggleClass('show');
+	    }
+	})
 	$(".add-tag").off().click(function (e) {
 		e.stopPropagation();
         $(this).find("#sortmenu").toggleClass('show');
