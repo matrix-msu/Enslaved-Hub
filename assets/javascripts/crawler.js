@@ -362,14 +362,16 @@ function populateCrawlerResults(data) {
 					<a class="name" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a>
 				</div>
 				<div class="link-wrap">
-					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>
-					<div class="update crawler-modal-open" id="update-link">
-						<img class="update-icon" src="./assets/images/edit.svg"></div>`;
+					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
 		if (location.href.match(/crawler/)) {
 	        html += `
-	        	<div class="right">
+				<div class="right">
+					<div class="update crawler-modal-open" id="update-link">
+						<img class="update-icon" src="./assets/images/edit.svg">
+					</div>
 	        		<div class="trash crawler-modal-open" id="delete-link">
-	        			<img class="trash-icon" src="./assets/images/Delete.svg"></div>
+						<img class="trash-icon" src="./assets/images/Delete.svg">
+					</div>
 						<div class="add-seed">`;
 			if ($.inArray(result['url'], seed_urls) >= 0) {
 				html += `<p>In Seeds</p>`;
@@ -435,9 +437,9 @@ function installModalListeners(){
 			$('.'+ modalType +'-modal p.link').text(url);
 		}
 		else if(modalType == "update-link"){
-			var url = $(this).parent().parent().find('.link-wrap a.link').text();
-			var keyword = $(this).parent().parent().find('.link-name a.name').text();
-			var keyword_id = $(this).parent().parent().find('[data-id]').data('id');
+			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
+			var keyword = $(this).parent().parent().parent().find('.link-name a.name').text();
+			var keyword_id = $(this).parent().parent().parent().find('[data-id]').data('id');
 
 			$('.'+ modalType +'-modal .keyword-id').attr('value', keyword_id);
 			$('.'+ modalType +'-modal p.name').text(keyword);

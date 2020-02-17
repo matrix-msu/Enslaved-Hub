@@ -307,7 +307,7 @@
                 .right{
                     display: flex;
 
-                    .trash{
+                    .trash, .update{
                         width: 60px;
                         height: 60px;
                         border-left: 1px solid rgba(206,208,210,0.5);
@@ -441,7 +441,7 @@
                 .right{
                     display: flex;
 
-                    .trash{
+                    .trash, .update{
                         width: 60px;
                         height: 60px;
                         border-left: 1px solid rgba(206,208,210,0.5);
@@ -450,18 +450,6 @@
                         display: flex;
                         flex-shrink: 0;
                         justify-content: center;
-                    }
-
-                    .update{
-                        text-align: center;
-                        background-color: rgba(18,46,70,0.8);
-                        width: 150px;
-                        cursor: pointer;
-                        p{
-                            color: $base-light;
-                            font-size: 16px;
-                            line-height: 60px;
-                        }
                     }
                 }
             }
@@ -588,7 +576,7 @@
                 .right{
                     display: flex;
 
-                    .trash{
+                    .trash, .update{
                         width: 60px;
                         height: 60px;
                         border-left: 1px solid #CED0D2;
@@ -597,19 +585,6 @@
                         display: flex;
                         flex-shrink: 0;
                         justify-content: center;
-                    }
-
-                    .update{
-                        text-align: center;
-                        background-color: rgba(18,46,70,0.8);
-                        width: 150px;
-                        cursor: pointer;
-                        p{
-                            color: $base-light;
-                            font-size: 16px;
-                            line-height: 60px;
-                            padding: 0;
-                        }
                     }
                 }
             }
