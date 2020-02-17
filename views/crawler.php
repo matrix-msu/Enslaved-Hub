@@ -14,7 +14,7 @@
         </div>
     </div>
       <div class="image-background-overlay"></div>
-      <img class="header-background about-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+      <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
     </div>
 </div>
 <div class="crawler">
@@ -38,13 +38,13 @@
             <a class="create-seed">Add Seed</a>
         <!-- </div> -->
         <div class="sorting-dropdowns">
-            <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+            <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                 <ul id="sortmenu" class="sort-by">
                     <li data-sort="DESC">Newest</li>
                     <li data-sort="ASC">Oldest</li>
                 </ul>
             </span>
-            <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+            <span class="align-center results-per-page"><span class="sortby-title">9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                 <ul id="sortmenu" class="results-per-page">
                     <li><span>12</span> Per Page</li>
                     <li><span>24</span> Per Page</li>
@@ -52,7 +52,7 @@
                     <li><span>48</span> Per Page</li>
                 </ul>
             </span>
-            <span class="align-center tag-filter">Filter By Tags <img src="<?php echo BASE_URL;?>assets/images/Arrow-dark.svg" alt="results per page button">
+            <span class="align-center tag-filter">Filter By Tags <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                 <ul id="sortmenu" class="tag-filter">
                     <?php foreach ($tags as $tag) {
                         echo '<li data-id="' . $tag['tag_id'] . '"><input type="checkbox">' . $tag['tag_name'] . '</li>';
@@ -123,10 +123,9 @@
                     <input type="hidden" class="link-info" name="update-link" value="">
                     <input type="hidden" class="keyword-id" name="keyword-id" value="">
                     <div class="input-wrap url-input">
-                        <label for="url">Click on the title or link</label>
-                        <br><br>
+                        <p>Title</p>
                         <p class="name" contenteditable="true">Title of page</p>
-                        <br>
+                        <p>Link URL</p>
                         <p class="link" contenteditable="true">www.nameoflinkgoeshere.com</p>
                     </div>
                 </div>
