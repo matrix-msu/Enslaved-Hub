@@ -656,6 +656,11 @@ function getFullRecordHtml(){
       $recordVars['Type'] = $record['type']['value'];
     }
 
+    //available from
+    if (isset($record['availableFrom']) && isset($record['availableFrom']['value']) && $record['availableFrom']['value'] != '' ){
+      $recordVars['Available From'] = $record['availableFrom']['value'];
+    }
+
     //Geonames
     if (isset($record['geonames']) && isset($record['geonames']['value']) && $record['geonames']['value'] != '' ){
       $recordVars['Geoname Identifier'] = $record['geonames']['value'];
@@ -686,7 +691,7 @@ function getFullRecordHtml(){
 
     //Relationships
 
-    if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
+/*    if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
       if(isset($record['qrelationname']) && isset($record['qrelationname']['value']) && isset($record['relationagentlabel']) && isset($record['relationagentlabel']['value'])){
         if (empty($record['relationships']['value']) ){
             $recordVars['relationshipsA'] = [];
@@ -698,7 +703,7 @@ function getFullRecordHtml(){
             $recordVars['relationshipsA'] = $relationsipArr;
         }
       }
-    }
+    }*/
 
     //CloseMatch
     if (isset($record['match']) && isset($record['match']['value']) && $record['match']['value'] != ''  ){

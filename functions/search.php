@@ -8,6 +8,9 @@ function all_counts_ajax() {
 }
 
 function dateRange() {
+    // NOTE: The results here are wildly different depending on
+    // versions of elasticsearch, 7.5+ look at value as string
+    // for 7.4 and lower look at value.
     $hosts = [
         ELASTICSEARCH_URL
     ];
@@ -21,8 +24,8 @@ function dateRange() {
         'body' => [
             'size' => 0,
             'aggs' => [
-                max_date => ['max' => ['field' => 'date']],
-                min_date => ['min' => ['field' => 'date']]
+                'max_date' => ['max' => ['field' => 'date', 'format' => 'yyyy']],
+                'min_date' => ['min' => ['field' => 'date', 'format' => 'yyyy']]
             ]
         ]
     ];

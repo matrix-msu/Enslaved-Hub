@@ -200,7 +200,7 @@ function showResults(result_type, count_type)
 		error:function(xhr, status, error){
 			console.log(xhr.responseText);
 		}
-	});//ajax
+	});
 
 }
 
@@ -262,7 +262,7 @@ function getResults(get_data)
 		error:function(xhr, status, error){
 			console.log(xhr.responseText);
 		}
-	});//ajax
+	});
 }
 
 function populateCrawlerBrokenLinks(data) {
@@ -362,14 +362,13 @@ function populateCrawlerResults(data) {
 					<a class="name" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a>
 				</div>
 				<div class="link-wrap">
-					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>
-					<div class="update crawler-modal-open" id="update-link">
-						<img class="update-icon" src="./assets/images/edit.svg"></div>`;
+					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
 		if (location.href.match(/crawler/)) {
 	        html += `
-	        	<div class="right">
-	        		<div class="trash crawler-modal-open" id="delete-link">
-	        			<img class="trash-icon" src="./assets/images/Delete.svg"></div>
+				<div class="right">
+					<div class="update crawler-modal-open" id="update-link">
+						<img class="update-icon" src="./assets/images/edit.svg">
+					</div>
 						<div class="add-seed">`;
 			if ($.inArray(result['url'], seed_urls) >= 0) {
 				html += `<p>In Seeds</p>`;
@@ -393,7 +392,9 @@ function populateCrawlerResults(data) {
 				}
 				html += `<li data-id="${tag['tag_id']}"><input type="checkbox"${checked}>${tag['tag_name']}</li>`
 			});
-			html += '</ul></span></div></div>';
+			html += `</ul></span></div>
+			<div class="trash crawler-modal-open" id="delete-link">
+				<img class="trash-icon" src="./assets/images/Delete.svg" alt="trash-icon"></div></div>`;
 	    } else {
 	    	html += '<div class="right"><div class="display-tag"><span>';
 	    	if(tag_names.length > 0) {
@@ -415,31 +416,24 @@ function installModalListeners(){
 
 		//Dynamically put selected info into correct modal
 		if(modalType == "delete-link"){
-			var url = '';
+			var keyword = $(this).parent().parent().parent().find('.link-name a.name').text();
+			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
+
 			if($(".crawler-tabs li#results").hasClass("tabbed")){
-				//On results tab, type = delete result
-				var keyword = $(this).parent().parent().parent().find('.link-name a.link').text();
-				url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
-
-				$('.'+ modalType +'-modal .link-info').attr('name', 'delete_result');
-				$('.'+ modalType +'-modal .link-info').attr('value', keyword);
-			}
-			else if($(".crawler-tabs li#broken").hasClass("tabbed")){
-				//On broken links tab, type = delete link
-				url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
-
+				$('.'+ modalType +'-modal p.name').text(keyword);
+			} else if($(".crawler-tabs li#broken").hasClass("tabbed")){
 				$('.'+ modalType +'-modal .link-info').attr('name', 'delete_link');
-				$('.'+ modalType +'-modal .link-info').attr('value', url);
 			}
 
+			$('.'+ modalType +'-modal .link-info').attr('value', url);
 			$('.'+ modalType +'-modal p.link').text(url);
 		}
 		else if(modalType == "update-link"){
-			var url = $(this).parent().parent().find('.link-wrap a.link').text();
-			var keyword = $(this).parent().parent().find('.link-name a.name').text();
-			var keyword_id = $(this).parent().parent().find('[data-id]').data('id');
+			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
+			var keyword = $(this).parent().parent().parent().find('.link-name a.name').text();
+			var keyword_id = $(this).parent().parent().parent().find('[data-id]').data('id');
 
-			$('.'+ modalType +'-modal .keyword-id').attr('value', keyword_id);
+			$('.'+ modalType +'-modal .id').attr('value', keyword_id);
 			$('.'+ modalType +'-modal p.name').text(keyword);
 			$('.'+ modalType +'-modal p.link').text(url);
 			$('.'+ modalType +'-modal .link-info').attr('value', url);
@@ -448,13 +442,14 @@ function installModalListeners(){
 			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
 			var seedid = $(this).parent().parent().parent().find('.link-wrap a.link').attr('id');
 			$('.'+ modalType +'-modal p.link').text(url);
-			$('.'+ modalType +'-modal .link-info').attr('value', seedid);
+			$('.'+ modalType +'-modal .id').attr('value', seedid);
 		}
 		else if(modalType == "update-seed"){
 			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
 			var seedid = $(this).parent().parent().parent().find('.link-wrap a.link').attr('id');
 			$('.'+ modalType +'-modal p.link').text(url);
-			$('.'+ modalType +'-modal .link-info').attr('value', seedid);
+			$('.'+ modalType +'-modal input#url').val(url);
+			$('.'+ modalType +'-modal .id').attr('value', seedid);
 		}
 
 		//Display modal after setting info
@@ -469,10 +464,10 @@ function installModalListeners(){
 		e.preventDefault();
 		var keyword = $(this).find('p.name').text();
 		var url = $(this).find('p.link').text();
-		var id = $(this).find('.keyword-id').val();
+		var id = $(this).find('.id').val();
 		$('input.name-info').val(keyword);
 		$('input.link-info').val(url);
-		$('input.keyword-id').val(id);
+		$('input.id').val(id);
 		var form = $(this);
 		$.ajax({
 			type: "POST",
@@ -488,9 +483,17 @@ function installModalListeners(){
 				console.log(xhr.responseText);
 			}
 		});
-		// }
 	});
 
+	$(document).click(function (e) {
+	    e.stopPropagation();
+	    var container = $("#sortmenu");
+
+	    //check if the clicked area is dropDown or not
+	    if (container.has(e.target).length === 0) {
+	        $(".add-tag").find('.show').toggleClass('show');
+	    }
+	})
 	$(".add-tag").off().click(function (e) {
 		e.stopPropagation();
         $(this).find("#sortmenu").toggleClass('show');
