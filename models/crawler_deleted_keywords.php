@@ -6,7 +6,7 @@ class crawler_deleted_keywords {
 	var $user;
 	var $dbName;
 	var $password;
-	
+
     //constrctor function to initialize variables
 	public function __construct()
     {
@@ -15,7 +15,7 @@ class crawler_deleted_keywords {
 		$this->dbName=DBName;
 		$this->password=Password;
 	}
-	
+
     // connect to data base
 	public function connect()
     {
@@ -28,19 +28,17 @@ class crawler_deleted_keywords {
 		}
 		return $con;
 	}
-	
+
     //delete a keyword
 	public function add_to_deleted ($deleted_keyword)
 	{
 		$link = $this->connect();
-		$link->query("INSERT IGNORE INTO deleted_keywords (keyword) VALUES (?)");
-        
-        $stmt = mysqli_prepare($link, $query);
-        $stmt->bind_param("s", $deleted_keyword);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-		mysqli_close($link);
+		if ($stmt = $link->prepare("INSERT IGNORE INTO deleted_keywords (keyword) VALUES (?)")) {
+			$stmt->bind_param("s", $deleted_keyword);
+			$stmt->execute();
+			$stmt->close();
+		}
+		$link->close();
 	}
 
 }

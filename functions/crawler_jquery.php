@@ -12,15 +12,12 @@ $offset = 0;
 $sort = 'ASC';
 $terms = '';
 $tagIds = [];
-$keywordId = null;
 // connect to keywords, broken links and deleted keywords databases
 $crawler_keywords = new crawler_keywords();
 $crawler_tags = new crawler_tags();
 $crawler_deleted_keywords = new crawler_deleted_keywords();
 $broken_links = new crawler_broken_links();
 $seeds = new crawler_seeds();
-
-// var_dump($_POST);
 
 //Get limit, offset and sort values
 if(isset($_POST["limit"]))
@@ -43,10 +40,6 @@ if(isset($_POST["tag_ids"]))
 {
 	$tagIds = $_POST["tag_ids"];
 }
-if(isset($_POST["keyword_id"]))
-{
-	$keywordId = $_POST["keyword_id"];
-}
 
 //Gets results for results tab
 if(isset($_POST["get_results"]))
@@ -63,7 +56,7 @@ if(isset($_POST["get_results"]))
 
 if(isset($_POST["update_tags"]))
 {
-	$results = $crawler_tags->update_keyword_tags($keywordId, $tagIds);
+	$results = $crawler_tags->update_keyword_tags($_POST['id'], $tagIds);
 	echo(json_encode('success'));
 }
 
@@ -71,7 +64,7 @@ if(isset($_POST["update_tags"]))
 if(isset($_POST["delete_result"]))
 {
 	$crawler_deleted_keywords->add_to_deleted($_POST["delete_result"]);
-	echo(json_encode("true"));
+	echo(json_encode("success"));
 }
 
 if(isset($_POST["get_tags"]))
@@ -139,8 +132,8 @@ if(isset($_POST['get_links']))
 
 if(isset($_POST["update-link"]))
 {
-	$crawler_keywords->update_keyword($_POST['keyword-id'],$_POST['update-name']);
-	$crawler_keywords->update_link($_POST['keyword-id'],$_POST['update-link']);
+	$crawler_keywords->update_keyword($_POST['id'],$_POST['update-name']);
+	$crawler_keywords->update_link($_POST['id'],$_POST['update-link']);
 
 	echo(json_encode("true"));
 }
@@ -187,14 +180,14 @@ if (isset($_POST["more_seeds"]))
 
 if(isset($_POST['update_seed']))
 {
-	$seeds->update_seed_info($_POST['update_seed'],$_POST['name'],$_POST['title'],$_POST['rss'],$_POST['url'],$_POST['twitter']);
+	$seeds->update_seed_info($_POST['id'],$_POST['name'],$_POST['title'],$_POST['rss'],$_POST['url'],$_POST['twitter']);
 
 	echo(json_encode("true"));
 }
 
 if(isset($_POST['delete_seed']))
 {
-	$seeds->delete_seed_info($_POST['delete_seed']);
+	$seeds->delete_seed_by_id($_POST['id']);
 
 	echo(json_encode("true"));
 }
@@ -210,17 +203,20 @@ if(isset($_POST["count_seeds"]))
 //add a seed
 if(isset($_POST["add_seed"]))
 {
-	$html = file_get_contents($_POST["url"]);
+	if ($_POST["add_seed"]) {
+		$seeds->add_seed($_POST["name"], $_POST["name"], $_POST["add_seed"]);
+	} else {
+		$html = file_get_contents($_POST["url"]);
+		$title = explode('<title>', $html);
 
-	$title = explode('<title>',$html);
-	if(count($title)>1){
-		$title = explode('</title>',$title[1]);
-		$seeds->add_seed(htmlentities($title[0]),htmlentities($title[0]),$_POST["url"]);
-	}else{
-		$title = '';
-		$seeds->add_seed($title,$title,$_POST["url"]);
+		if(count($title)>1){
+			$title = explode('</title>', $title[1]);
+			$seeds->add_seed(htmlentities($title[0]), htmlentities($title[0]), $_POST["url"]);
+		} else {
+			$seeds->add_seed('', '', $_POST["url"]);
+		}
 	}
-	// $seeds->add_seed(htmlentities($title[0]),htmlentities($title[0]),$_POST["rss"],$_POST["url"],$_POST["twitter"]);
+
 	echo(json_encode('success'));
 }
 ?>
