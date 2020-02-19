@@ -416,7 +416,7 @@ function keyword_search() {
 
     if ($sort) {
         $params['body']['sort'] = [
-            'label.raw' => ['order' => $sort]
+            'label.sort' => ['order' => $sort]
         ];
     }
 
