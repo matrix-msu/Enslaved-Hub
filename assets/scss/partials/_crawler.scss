@@ -24,9 +24,8 @@
                 width: fit-content;
 
                 .search-field{
-                    //border: 1px solid #CED0D2;
+                    border: 2px solid transparent;
                     border-radius: 5px;
-                    border: none;
                     box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
                     color: $base-dark;
                     font-size: 14px;
@@ -35,16 +34,15 @@
                     //outline: none;
                     padding-left: 20px;
                     padding-right: 60px;
-                    //transition: border 0.3s ease;
+                    transition: border 0.3s ease;
                     height: 60px;
                     width: 380px;
 
                     &:hover{
-                        //border: 1px solid $base-dark;
+                        border: 2px solid $sub-base;
                     }
                     &:focus-within{
-                        //border: 1px solid $base-dark;
-                        //border: none;
+                        border: 2px solid $sub-base;
                         outline:none;
                     }
                     &::placeholder {
@@ -85,17 +83,18 @@
         }
 
         .create-seed.show{
-            display: block;
+            display: inline-block;
             cursor: pointer;
             text-decoration: none;
             background-color: $accent;
             box-shadow: 0 5px 15px 0 rgba(115,47,35,0.2);
-            padding: 15px;
+            padding: 15px 30px;
             color: #FFF;
             font-size: 20px;
             border-radius: 5px;
             width: fit-content;
             transition: all .3s;
+            margin-left: 50px;
         }
 
         .sorting-dropdowns{
@@ -319,7 +318,7 @@
                 .right{
                     display: flex;
 
-                    .trash, .update{
+                    .trash{
                         width: 60px;
                         height: 60px;
                         border-left: 1px solid rgba(206,208,210,0.5);
@@ -445,12 +444,13 @@
 
         .result{
             width: 100%;
-            border: 1px solid #CED0D2;
+            //border: 1px solid #CED0D2;
             background-color: #FFFDFB;
-            box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+            box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
             display: flex;
             flex-wrap: wrap;
             margin-bottom: 20px;
+            border-radius: 5px;
 
             .link-wrap{
                 width: 100%;
@@ -458,16 +458,17 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                border-bottom: 1px solid #CED0D2;
+                //border-bottom: 1px solid #CED0D2;
 
                 a.link{
                     padding-left: 20px;
                     color: $base-dark;
-                    font-size: 14px;
+                    font-size: 16px;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     overflow: hidden;
                     transition: all 0.3s;
+                    text-decoration: none;
 
                     &:hover{
                         color: $sub-base;
@@ -477,7 +478,7 @@
                 .right{
                     display: flex;
 
-                    .trash, .update{
+                    .trash{
                         width: 60px;
                         height: 60px;
                         border-left: 1px solid rgba(206,208,210,0.5);
@@ -486,18 +487,41 @@
                         display: flex;
                         flex-shrink: 0;
                         justify-content: center;
+                        img {
+                            opacity: 0.7;
+                            transition: all 0.3s;
+                        }
+                        &:hover {
+                            img {
+                                opacity: 1;
+                            }
+                        }
+                    }
+
+                    .update{
+                        text-align: center;
+                        background-color: $white;
+                        padding: 0 20px;
+                        cursor: pointer;
+                        p{
+                            color: $base-dark;
+                            font-size: 14px;
+                            line-height: 60px;
+                        }
                     }
                 }
             }
 
             .message{
-                padding: 20px;
+                padding: 10px 20px;
                 width: 100%;
 
-                p{
+                p, a{
                     font-size: 14px;
                     color: $base-dark;
                     margin-bottom: 10px;
+                    text-decoration: none;
+
 
                     &:last-child{
                         margin-bottom: 0;
@@ -566,12 +590,14 @@
 
         .result{
             width: 100%;
-            border: 1px solid #CED0D2;
-            background-color: #FFFDFB;
-            box-shadow: 0 5px 15px 0 rgba(0,0,0,0.04);
+            //border: 1px solid #CED0D2;
+            background-color: $white;
+            box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+            border-radius: 5px;
             display: flex;
             flex-wrap: wrap;
             margin-bottom: 20px;
+            padding-bottom: 10px;
 
             .link-wrap{
                 width: 100%;
@@ -579,7 +605,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                border-bottom: 1px solid #CED0D2;
+                //border-bottom: 1px solid #CED0D2;
 
                 p{
                     color: $base-dark;
@@ -596,31 +622,55 @@
                     }
 
                     a.link{
-                        color: $base-dark;
-                        font-size: 14px;
+                        color: $sub-base;
+                        font-size: 16px;
                         white-space: nowrap;
                         text-overflow: ellipsis;
                         overflow: hidden;
                         transition: all 0.3s;
-
-                        &:hover{
-                            color: $sub-base;
-                        }
                     }
                 }
 
                 .right{
                     display: flex;
 
-                    .trash, .update{
+                    .trash{
                         width: 60px;
                         height: 60px;
-                        border-left: 1px solid #CED0D2;
+                        border-left:2px solid rgba(14,50,50,0.1);
                         cursor: pointer;
                         align-items: center;
                         display: flex;
                         flex-shrink: 0;
                         justify-content: center;
+                        img {
+                            opacity: 0.7;
+                            transition: all 0.3s;
+                        }
+                        &:hover {
+                            img {
+                                opacity: 1;
+                            }
+                        }
+                    }
+
+                    .update{
+                        text-align: center;
+                        background-color: $white;
+                        width: 150px;
+                        cursor: pointer;
+                        p{
+                            color: $base-dark;
+                            font-size: 14px;
+                            line-height: 60px;
+                            padding: 0;
+                            transition: all 0.3s;
+                        }
+                        &:hover {
+                          p {
+                            color: $sub-base;
+                          }
+                        }
                     }
                 }
             }
@@ -632,48 +682,45 @@
 
                 .detail-row{
                     width: 100%;
-                    border-bottom: 1px solid #CED0D2;
                     display: flex;
                     flex-wrap: wrap;
 
-                    &:last-child{
-                        border-bottom: none;
-                    }
 
                     .cell{
-                        width: 49.8%;
+                        max-width: 40%;
                         height: 60px;
-                        border-right: 1px solid #CED0D2;
-
-                        &:last-child{
-                            border-right: none;
-                        }
 
                         p{
                             padding-left: 20px;
                             color: $base-dark;
                             font-size: 14px;
-                            line-height: 60px;
+                            line-height: 20px;
                             height: 60px;
+                            overflow: hidden;
+                            padding-top: 10px;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
                             overflow: hidden;
 
                             span.label{
-                                opacity: .8;
-                                font-size: 12px;
+                                font-family: aleobold;
+                                font-style: italic;
+                                font-size: 14px;
                                 margin-right: 10px;
+                                display: block;
+                            }
+                            #name, #title {
+                              font-family: aleoregular;
                             }
 
                             a{
-                                color: $base-dark;
+                                color: $sub-base;
                                 font-size: 14px;
                                 white-space: nowrap;
                                 text-overflow: ellipsis;
                                 overflow: hidden;
                                 transition: all 0.3s;
 
-                                &:hover{
-                                    color: $sub-base;
-                                }
                             }
                         }
                     }
@@ -817,6 +864,7 @@
 
                 .input-wrap{
                     width: 49%;
+                    padding-bottom: 25px;
                     p{
                       font-family: aleobold;
                       font-size: 16px;
@@ -846,7 +894,7 @@
                     input{
                         width: 100%;
                         height: 60px;
-                        border: 1px solid transparent;
+                        border: 2px solid transparent;
                         border-radius: 5px;
                         background-color: $white;
                         box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
@@ -861,10 +909,10 @@
                         font-style: none;
 
                         &:hover{
-                            border: 1px solid $sub-base;
+                            border: 2px solid $sub-base;
                         }
                         &:focus-within{
-                            border: 1px solid $sub-base;
+                            border: 2px solid $sub-base;
                         }
                     }
                     ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
