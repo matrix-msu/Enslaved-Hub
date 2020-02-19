@@ -104,6 +104,7 @@ $(document).ready(function(){
 			type['get_seeds'] = 'ok';
 			count_type = 'count_seeds';
 			$('.create-seed').addClass('show');
+			$('.sorting-dropdowns').css('padding-right', '0');
 		}
 		else if(tab_type == "results_visible"){
 			type['get_results_visible'] = 'ok';
@@ -308,31 +309,29 @@ function populateCrawlerSeeds(data) {
 		html += `
 		<div class="result" id="r${i+1}">
 			<div class="link-wrap">
-				<p><span>URL:</span><a class="link" id="${result['id']}" href="${result['htmlURL']}" target="_blank">${result['htmlURL']}</a></p>
+				<p><a class="link" id="${result['id']}" href="${result['htmlURL']}" target="_blank">${result['htmlURL']}</a></p>
 				<div class="right">
-					<div class="trash crawler-modal-open" id="delete-seed">
-						<img class="trash-icon" src="./assets/images/Delete.svg">
-					</div>
 					<div class="update crawler-modal-open" id="update-seed">
 						<p>Update Seed</p>
+					</div>
+					<div class="trash crawler-modal-open" id="delete-seed">
+						<img class="trash-icon" src="./assets/images/Delete.svg">
 					</div>
 				</div>
 			</div>
 			<div class="details">
 				<div class="detail-row">
 					<div class="cell">
-						<p><span class="label">NAME:</span>${result['text_name']}</p>
+						<p><span class="label">Name</span><span id="name">${result['text_name']}</span></p>
 					</div>
 					<div class="cell">
-						<p><span class="label">TITLE:</span>${result['title']}</p>
-					</div>
-				</div>
-				<div class="detail-row">
-					<div class="cell">
-						<p><span class="label">TWITTER:</span><a href="" target="_blank">${result['twitter_handle']}</a></p>
+						<p><span class="label">Title</span><span id="title">${result['title']}</span></p>
 					</div>
 					<div class="cell">
-						<p><span class="label">RSS:</span><a href="" target="_blank">${result['xmlURL']}</a></p>
+						<p><span class="label">Twitter</span><a href="" target="_blank" id="twitter">${result['twitter_handle']}</a></p>
+					</div>
+					<div class="cell">
+						<p><span class="label">RSS</span><a href="" target="_blank" id="rss">${result['xmlURL']}</a></p>
 					</div>
 				</div>
 			</div>
@@ -446,9 +445,17 @@ function installModalListeners(){
 		}
 		else if(modalType == "update-seed"){
 			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
+			var name = $(this).parent().parent().parent().find('.details span#name').text();
+			var title = $(this).parent().parent().parent().find('.details span#title').text();
+			var twitter = $(this).parent().parent().parent().find('.details a#twitter').text();
+			var rss = $(this).parent().parent().parent().find('.details a#rss').text();
 			var seedid = $(this).parent().parent().parent().find('.link-wrap a.link').attr('id');
 			$('.'+ modalType +'-modal p.link').text(url);
 			$('.'+ modalType +'-modal input#url').val(url);
+			$('.'+ modalType +'-modal input#name').val(name);
+			$('.'+ modalType +'-modal input#title').val(title);
+			$('.'+ modalType +'-modal input#twitter').val(twitter);
+			$('.'+ modalType +'-modal input#rss').val(rss);
 			$('.'+ modalType +'-modal .id').attr('value', seedid);
 		}
 
