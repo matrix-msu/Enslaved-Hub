@@ -283,13 +283,16 @@ function populateCrawlerBrokenLinks(data) {
 		<div class="result" id="r${i+1}">
 			<div style="display:none" id="hid${i+1}">${url}</div>
 			<div class="link-wrap">
-				<a class="link" href="${url}" target="_blank">${url}</a>
+				<div class="title-wrap">
+					<p class="title">Title</p>
+					<a class="link" href="${url}" target="_blank">${url}</a>
+				</div>
 				<div class="right">
-					<div class="trash crawler-modal-open" id="delete-link">
-						<img class="trash-icon" src="./assets/images/Delete.svg">
-					</div>
 					<div class="update crawler-modal-open" id="update-link">
 						<p>Update Link</p>
+					</div>
+					<div class="trash crawler-modal-open" id="delete-link">
+						<img class="trash-icon" src="./assets/images/Delete.svg">
 					</div>
 				</div>
 			</div>
@@ -364,10 +367,10 @@ function populateCrawlerResults(data) {
 					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
 		if (location.href.match(/crawler/)) {
 	        html += `
-				<div class="right">
-					<div class="update crawler-modal-open" id="update-link">
-						<img class="update-icon" src="./assets/images/edit.svg">
-					</div>
+						<div class="update crawler-modal-open" id="update-link">
+								<img class="update-icon" src="./assets/images/edit.svg" alt="update-icon">
+						</div>
+	        	<div class="right">
 						<div class="add-seed">`;
 			if ($.inArray(result['url'], seed_urls) >= 0) {
 				html += `<p>In Seeds</p>`;
