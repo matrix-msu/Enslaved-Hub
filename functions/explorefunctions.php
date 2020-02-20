@@ -1574,7 +1574,7 @@ function getEventPageConnections($QID) {
 
   // people connections
   $peopleQuery['query'] = <<<QUERY
-SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
+SELECT DISTINCT ?people ?peoplename ?role (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
 
  WHERE
 {
@@ -1584,6 +1584,7 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
   ?statement $ps:$providesParticipantRole ?name.
   ?statement $pq:$hasParticipantRole ?people.
   ?people $rdfs:label ?peoplename.
+  ?name $rdfs:label ?role.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
@@ -1591,6 +1592,7 @@ QUERY;
     $result = blazegraphSearch($peopleQuery);
     $connections['Person-count'] = count($result);
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
+    
 
     // places connections
   $placesQuery['query'] = <<<QUERY
