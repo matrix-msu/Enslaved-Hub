@@ -275,8 +275,8 @@
             <span class="sorting-dropdowns">
                 <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                     <ul id="sortmenu" class="sort-by">
-                        <li>A - Z</li>
-                        <li>Z - A</li>
+                      <li><span>A - Z</span></li>
+                      <li><span>Z - A</span></li>
                     </ul>
                 </span>
                 <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
@@ -307,7 +307,7 @@
                             <span class="align-left">
                                 <a class="modal">Configure Table Columns</a>
                             </span>
-                            <span class="align-right"><b>Download:</b><span id="Download_selected">Current View</span><span id="Download_all">All Results</span></span>
+                            <span class="align-right">Download:<span id="Download_selected">Current View</span><span id="Download_all">All Results</span></span>
                         <!-- </div> -->
                     </ul>
                     <a class="search-all"></a>

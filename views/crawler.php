@@ -35,7 +35,7 @@
             </form>
         </div>
         <!-- <div class="add-seed"> -->
-            <a class="create-seed">Add Seed</a>
+            <!-- <a class="create-seed">Add Seed</a> -->
         <!-- </div> -->
         <div class="sorting-dropdowns">
             <span class="align-center sort-by">Sort By <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
@@ -59,6 +59,7 @@
                     } ?>
                 </ul>
             </span>
+            <a class="create-seed">Add Seed</a>
         </div>
     </div>
 

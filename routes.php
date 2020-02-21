@@ -79,6 +79,11 @@ if( !isset($_SERVER['HTTP_HOST']) ){
     return;
 }
 
+require_once( BASE_LIB_PATH . "xss.php" );
+$_GET = xss_clean($_GET);
+$_POST = xss_clean($_POST);
+//echo $_GET['test']; //a sample xss test. only uncomment for testing
+
 //$location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 $location = "https://$_SERVER[HTTP_HOST]";
 $path = parse_url($_SERVER['REQUEST_URI'])['path'];
