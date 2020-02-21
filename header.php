@@ -11,9 +11,9 @@
         </div>
         <div class="rightnav">
             <ul class="nav-menu">
-            <?php 
+            <?php
             $navigations = Json_GetNavigationData();
-            foreach ($navigations as $nav) 
+            foreach ($navigations as $nav)
             {
                 $toUrl = ($nav[0] == "Explore") ? BASE_URL."explore/" : BASE_URL;
                 if(count($nav[1]) > 0 && $nav[1][0] != null) { ?>
@@ -28,17 +28,17 @@
                         </li>
                     </ul>
                 </li>
-                <?php continue;} ?> 
+                <?php continue;} ?>
                 <li class="nav-item">
                     <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo BASE_URL.lcfirst($nav[0])?>"><?php echo $nav[0]?></a>
                     <?php echo ($nav[0] == "Search") ? '<img class="search-icon" src="'.BASE_IMAGE_URL.'search.svg" alt="search icon" />' : "" ?>
                 </li>
             <?php } ?>
-            		
+
             		<li class="nav-item donate">
                     <a class="nav-link donate unselected" href="<?php echo BASE_URL;?>support-our-mission">Support Our Mission</a>
                 </li>
-            		
+
             </ul>
         </div>
     </div>
