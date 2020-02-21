@@ -44,7 +44,6 @@
         margin-bottom: 8px;
         width: 58px;
         height: 58px;
-
       }
       p{
         font-family: "EB Garamond";
@@ -60,16 +59,17 @@
       }
     }
 }
-@media screen and (max-width: 833px) {
+@media screen and (max-width: 896px) {
   .visualize{
     margin-bottom: 55px;
     li{
-      width: 50%;
+      width: 47%;
+      margin-top: 36px;
       margin-bottom: 0px;
     }
   }
 }
-@media screen and (max-width: 561px) {
+@media screen and (max-width: 593px) {
   .visualize{
     li{
       width: 100%;
