@@ -5,11 +5,9 @@
 
 <div class="container header visualize-header">
   <img class="header-background visualize-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
-
     <div class="container middlewrap">
         <h1><?php echo $cache_data['title'] ?></h1>
   </div>
-
 </div>
 
 <div class="container info">
@@ -20,16 +18,15 @@
 
 <div class="cardwrap visualize">
   <li class="card">
-    <img src="assets/images/ByData.svg" class="byData" alt="byData">
-    <p>By Data</p>
+    <img src="<?php echo BASE_URL;?>assets/images/charts.svg" class="charts" alt="charts">
+    <p>Charts</p>
   </li>
   <li class="card">
-    <img src="assets/images/BySpace.svg" class="bySpace" alt="bySpace">
-    <p>By Space</p>
+    <img src="<?php echo BASE_URL;?>assets/images/maps.svg" class="maps" alt="maps">
+    <p>Maps</p>
   </li>
   <li class="card">
-    <img src="assets/images/ByTime.svg" class="byTime" alt="byTime">
-    <p>By Time</p>
+    <img src="<?php echo BASE_URL;?>assets/images/timeline.svg" class="timeline" alt="timeline">
+    <p>Timeline</p>
   </li>
-
 </div>

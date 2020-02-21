@@ -6,7 +6,7 @@
   }
 }
 .visualize{
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   display: flex;
   justify-content:space-between;
@@ -18,7 +18,8 @@
       background-color: $white;
       box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
       height: 178px;
-      width: 245px;
+      min-width: 245px;
+      width: 31%;
       display: inline-block;
       margin-bottom: 80px;
       margin-top: 60px;
@@ -26,19 +27,19 @@
       border: 2px solid transparent;
       img{
       }
-      .byData{
+      .charts{
         margin-top: 49px;
         height: 30px;
         width: 56px;
         margin-bottom: 18px;
       }
-      .bySpace{
+      .maps{
         margin-top: 45px;
         width: 34px;
         height: 35px;
         margin-bottom: 17px;
       }
-      .byTime{
+      .timeline{
         margin-top: 33px;
         margin-bottom: 8px;
         width: 58px;
@@ -59,11 +60,19 @@
       }
     }
 }
-@media screen and (max-width: 561px) {
+@media screen and (max-width: 833px) {
   .visualize{
     margin-bottom: 55px;
     li{
+      width: 50%;
       margin-bottom: 0px;
+    }
+  }
+}
+@media screen and (max-width: 561px) {
+  .visualize{
+    li{
+      width: 100%;
     }
   }
 }
