@@ -21,9 +21,18 @@ if (isset($_GET['kid']) && preg_match("/^[0-9A-F]+-[0-9A-F]+-[0-9A-F]+(-[0-9A-F]
 else {
 
 }
+  $url = BASE_URL."fullStory/?kid=".$_GET['kid'];
 ?>
 <!-- Full Story page-->
 <!-- Heading image and title container-->
+<head>
+  <meta property="og:url"           content='"'.<?php echo $url ?>.'"' />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Peoples of the Historic Slave Trade" />
+  <meta property="og:description"   content="" />
+  <meta property="og:image"         content="/assets/images/IMG02.jpg" />
+
+</head>
 <div class="container header fullstory">
   <img class="header-background fullStory-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
@@ -243,8 +252,13 @@ else {
     <div class="share-links">
         <h2>Share this Record</h2>
         <a href="facebook.com" target="_blank"></a>
-        <img src="<?php echo BASE_URL;?>/assets/images/Facebook.svg" alt="facebook"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/Twitter.svg" alt="twitter"/>
+
+        <div class="fb-share-button"
+          data-href="https://robbie.dev.matrix.msu.edu/~will.crecelius/enslaved/fullStory?kid=16-23-106174"
+          data-layout="button_count">
+        </div>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">
+        </a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         <!-- <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
         <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/> -->
     </div>
@@ -260,6 +274,10 @@ else {
     <div class="modal-image">
     </div>
 </div>
+
+<style>
+.twitter-share-button[style] { vertical-align: text-bottom !important; }
+</style>
 
 <script>
 var captions = <?php echo json_encode($caption); ?>;
