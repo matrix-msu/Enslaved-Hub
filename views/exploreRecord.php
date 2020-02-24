@@ -132,8 +132,14 @@ if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
 <div class="extra-info">
     <div class="share-links">
         <h2>Share this Record</h2>
-        <img src="<?php echo BASE_URL;?>/assets/images/Facebook.svg" alt="facebook"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/Twitter.svg" alt="twitter"/>
+          <div class="fb-share-button"
+            data-href="https://robbie.dev.matrix.msu.edu/~will.crecelius/enslaved/fullStory?kid=16-23-106174"
+            data-layout="button_count">
+          </div>
+
+          <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">
+          </a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
         <!-- <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
         <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/> -->
     </div>
@@ -149,7 +155,9 @@ if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
     var QID = "<?php echo QID;?>";
     var recordform = "<?php echo RECORD_FORM ?>";
 </script>
-
+<style>
+.twitter-share-button[style] { vertical-align: text-bottom !important; }
+</style>
 <script src="<?php echo BASE_URL;?>assets/javascripts/timeline.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/exploreRecord.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/fullRecord.js"></script>
