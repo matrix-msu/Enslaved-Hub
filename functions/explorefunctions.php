@@ -20,52 +20,6 @@ function callAPI($url,$limit,$offset){
 }
 
 
-function getEventDateRange() {
-    include BASE_LIB_PATH."variableIncluder.php";
-
-    $fullResults = [];
-    $query="SELECT ?year WHERE {
-            ?event $wdt:$instanceOf $wd:$event; #event
-                   $wdt:$startsAt ?date.
-              BIND(str(YEAR(?date)) AS ?year).
-            }ORDER BY DESC(?year)
-          LIMIT 1";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-    $res= json_decode($res);
-    // print_r($res);die;
-    if (!empty($res)){
-        $fullResults['max'] = $res->results->bindings;
-    }else{
-        $fullResults['max'] = $res;
-    }
-    $fullResults['max'] = $fullResults['max'][0]->year->value;
-
-    $query="SELECT ?year WHERE {
-            ?event $wdt:$instanceOf $wd:$event; #event
-                   $wdt:$startsAt ?date.
-              BIND(str(YEAR(?date)) AS ?year).
-            }ORDER BY ASC(?year)
-          LIMIT 1";
-
-    $encode=urlencode($query);
-    $call=API_URL.$encode;
-    $res=callAPI($call,'','');
-
-    $res= json_decode($res);
-
-    if (!empty($res)){
-        $fullResults['min'] = $res->results->bindings;
-    }else{
-        $fullResults['min'] = $res;
-    }
-    $fullResults['min'] = $fullResults['min'][0]->year->value;
-
-    return json_encode($fullResults);
-}
-
 //finish to display ranks here. Error now it only displays PI with higher rank.
 function getProjectFullInfo() {
     include BASE_LIB_PATH."variableIncluder.php";
@@ -702,6 +656,11 @@ function getFullRecordHtml(){
       $recordVars['Type'] = $record['type']['value'];
     }
 
+    //available from
+    if (isset($record['availableFrom']) && isset($record['availableFrom']['value']) && $record['availableFrom']['value'] != '' ){
+      $recordVars['Available From'] = $record['availableFrom']['value'];
+    }
+
     //Geonames
     if (isset($record['geonames']) && isset($record['geonames']['value']) && $record['geonames']['value'] != '' ){
       $recordVars['Geoname Identifier'] = $record['geonames']['value'];
@@ -732,7 +691,7 @@ function getFullRecordHtml(){
 
     //Relationships
 
-    if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
+/*    if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
       if(isset($record['qrelationname']) && isset($record['qrelationname']['value']) && isset($record['relationagentlabel']) && isset($record['relationagentlabel']['value'])){
         if (empty($record['relationships']['value']) ){
             $recordVars['relationshipsA'] = [];
@@ -744,7 +703,7 @@ function getFullRecordHtml(){
             $recordVars['relationshipsA'] = $relationsipArr;
         }
       }
-    }
+    }*/
 
     //CloseMatch
     if (isset($record['match']) && isset($record['match']['value']) && $record['match']['value'] != ''  ){
@@ -1615,7 +1574,7 @@ function getEventPageConnections($QID) {
 
   // people connections
   $peopleQuery['query'] = <<<QUERY
-SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
+SELECT DISTINCT ?people ?peoplename ?role (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
 
  WHERE
 {
@@ -1625,6 +1584,7 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
   ?statement $ps:$providesParticipantRole ?name.
   ?statement $pq:$hasParticipantRole ?people.
   ?people $rdfs:label ?peoplename.
+  ?name $rdfs:label ?role.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
@@ -1632,6 +1592,7 @@ QUERY;
     $result = blazegraphSearch($peopleQuery);
     $connections['Person-count'] = count($result);
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
+    
 
     // places connections
   $placesQuery['query'] = <<<QUERY

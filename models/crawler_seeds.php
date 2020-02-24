@@ -6,7 +6,7 @@ class crawler_seeds {
 	var $user;
 	var $dbName;
 	var $password;
-	
+
     //constrctor function to initialize variables
 	public function __construct()
     {
@@ -16,7 +16,7 @@ class crawler_seeds {
 		$this->dbName=DBName;
 		$this->password=Password;
 	}
-	
+
     // connect to data base
 	public function connect(){
 		// Create connection
@@ -66,16 +66,15 @@ class crawler_seeds {
 		mysqli_close($link);
 	}
 
-	public function delete_seed_info($seed_id)
+	public function delete_seed_by_id($seed_id)
 	{
 		$link = $this->connect();
-		$query = "DELETE FROM crawler_seeds WHERE id=?";
-        $stmt = mysqli_prepare($link, $query);
-        $stmt->bind_param("s", $seed_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-		mysqli_close($link);
+		if ($stmt = $link->prepare("DELETE FROM crawler_seeds WHERE id=?")) {
+			$stmt->bind_param("s", $seed_id);
+			$stmt->execute();
+			$stmt->close();
+		}
+		$link->close();
 	}
 
 	// update entry from crawler_seeds this belongs to broken links
@@ -90,7 +89,7 @@ class crawler_seeds {
         $stmt->close();
 		mysqli_close($link);
 	}
-	
+
     //delete entry from crawler_seeds this belongs to broken links
 	public function delete_seeds($broken_link)
 	{
@@ -103,7 +102,7 @@ class crawler_seeds {
         $stmt->close();
 		mysqli_close($link);
 	}
-	
+
     //delete entry from broken_links this belongs to broken links
     public function delete_broken_links($broken_link)
     {
@@ -116,7 +115,7 @@ class crawler_seeds {
         $stmt->close();
     	mysqli_close($link);
     }
-	
+
     public function get_count()
 	{
 		$link = $this->connect();
@@ -125,7 +124,7 @@ class crawler_seeds {
 		mysqli_close($link);
 		return $result->num_rows;
 	}
-    
+
     //adding seed for URL with Name/Title fields automatically updated
     public function add_seed($name, $title, $url)
     {

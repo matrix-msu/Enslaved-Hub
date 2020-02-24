@@ -16,6 +16,8 @@
 </div>
 <!-- info container-->
 <p><?php echo $cache_data["descr"] ?></p>
+    
+    <div class="container contactUs-getinvolved button">
     <a href="<?php echo BASE_URL?>getInvolved">
         <div class="buttons">
             <h3>Get Involved</h3>

@@ -104,6 +104,7 @@ $(document).ready(function(){
 			type['get_seeds'] = 'ok';
 			count_type = 'count_seeds';
 			$('.create-seed').addClass('show');
+			$('.sorting-dropdowns').css('padding-right', '0');
 		}
 		else if(tab_type == "results_visible"){
 			type['get_results_visible'] = 'ok';
@@ -200,7 +201,7 @@ function showResults(result_type, count_type)
 		error:function(xhr, status, error){
 			console.log(xhr.responseText);
 		}
-	});//ajax
+	});
 
 }
 
@@ -262,7 +263,7 @@ function getResults(get_data)
 		error:function(xhr, status, error){
 			console.log(xhr.responseText);
 		}
-	});//ajax
+	});
 }
 
 function populateCrawlerBrokenLinks(data) {
@@ -282,13 +283,16 @@ function populateCrawlerBrokenLinks(data) {
 		<div class="result" id="r${i+1}">
 			<div style="display:none" id="hid${i+1}">${url}</div>
 			<div class="link-wrap">
-				<a class="link" href="${url}" target="_blank">${url}</a>
+				<div class="title-wrap">
+					<p class="title">Title</p>
+					<a class="link" href="${url}" target="_blank">${url}</a>
+				</div>
 				<div class="right">
-					<div class="trash crawler-modal-open" id="delete-link">
-						<img class="trash-icon" src="./assets/images/Delete.svg">
-					</div>
 					<div class="update crawler-modal-open" id="update-link">
 						<p>Update Link</p>
+					</div>
+					<div class="trash crawler-modal-open" id="delete-link">
+						<img class="trash-icon" src="./assets/images/Delete.svg">
 					</div>
 				</div>
 			</div>
@@ -308,31 +312,29 @@ function populateCrawlerSeeds(data) {
 		html += `
 		<div class="result" id="r${i+1}">
 			<div class="link-wrap">
-				<p><span>URL:</span><a class="link" id="${result['id']}" href="${result['htmlURL']}" target="_blank">${result['htmlURL']}</a></p>
+				<p><a class="link" id="${result['id']}" href="${result['htmlURL']}" target="_blank">${result['htmlURL']}</a></p>
 				<div class="right">
-					<div class="trash crawler-modal-open" id="delete-seed">
-						<img class="trash-icon" src="./assets/images/Delete.svg">
-					</div>
 					<div class="update crawler-modal-open" id="update-seed">
 						<p>Update Seed</p>
+					</div>
+					<div class="trash crawler-modal-open" id="delete-seed">
+						<img class="trash-icon" src="./assets/images/Delete.svg">
 					</div>
 				</div>
 			</div>
 			<div class="details">
 				<div class="detail-row">
 					<div class="cell">
-						<p><span class="label">NAME:</span>${result['text_name']}</p>
+						<p><span class="label">Name</span><span id="name">${result['text_name']}</span></p>
 					</div>
 					<div class="cell">
-						<p><span class="label">TITLE:</span>${result['title']}</p>
-					</div>
-				</div>
-				<div class="detail-row">
-					<div class="cell">
-						<p><span class="label">TWITTER:</span><a href="" target="_blank">${result['twitter_handle']}</a></p>
+						<p><span class="label">Title</span><span id="title">${result['title']}</span></p>
 					</div>
 					<div class="cell">
-						<p><span class="label">RSS:</span><a href="" target="_blank">${result['xmlURL']}</a></p>
+						<p><span class="label">Twitter</span><a href="" target="_blank" id="twitter">${result['twitter_handle']}</a></p>
+					</div>
+					<div class="cell">
+						<p><span class="label">RSS</span><a href="" target="_blank" id="rss">${result['xmlURL']}</a></p>
 					</div>
 				</div>
 			</div>
@@ -362,14 +364,13 @@ function populateCrawlerResults(data) {
 					<a class="name" href="${google_search_url}${result['keyword']}"target="_blank">${result['keyword']}</a>
 				</div>
 				<div class="link-wrap">
-					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>
-					<div class="update crawler-modal-open" id="update-link">
-						<img class="update-icon" src="./assets/images/edit.svg"></div>`;
+					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
 		if (location.href.match(/crawler/)) {
 	        html += `
+						<div class="update crawler-modal-open" id="update-link">
+								<img class="update-icon" src="./assets/images/edit.svg" alt="update-icon">
+						</div>
 	        	<div class="right">
-	        		<div class="trash crawler-modal-open" id="delete-link">
-	        			<img class="trash-icon" src="./assets/images/Delete.svg"></div>
 						<div class="add-seed">`;
 			if ($.inArray(result['url'], seed_urls) >= 0) {
 				html += `<p>In Seeds</p>`;
@@ -393,7 +394,9 @@ function populateCrawlerResults(data) {
 				}
 				html += `<li data-id="${tag['tag_id']}"><input type="checkbox"${checked}>${tag['tag_name']}</li>`
 			});
-			html += '</ul></span></div></div>';
+			html += `</ul></span></div>
+			<div class="trash crawler-modal-open" id="delete-link">
+				<img class="trash-icon" src="./assets/images/Delete.svg" alt="trash-icon"></div></div>`;
 	    } else {
 	    	html += '<div class="right"><div class="display-tag"><span>';
 	    	if(tag_names.length > 0) {
@@ -415,31 +418,24 @@ function installModalListeners(){
 
 		//Dynamically put selected info into correct modal
 		if(modalType == "delete-link"){
-			var url = '';
+			var keyword = $(this).parent().parent().parent().find('.link-name a.name').text();
+			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
+
 			if($(".crawler-tabs li#results").hasClass("tabbed")){
-				//On results tab, type = delete result
-				var keyword = $(this).parent().parent().parent().find('.link-name a.link').text();
-				url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
-
-				$('.'+ modalType +'-modal .link-info').attr('name', 'delete_result');
-				$('.'+ modalType +'-modal .link-info').attr('value', keyword);
-			}
-			else if($(".crawler-tabs li#broken").hasClass("tabbed")){
-				//On broken links tab, type = delete link
-				url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
-
+				$('.'+ modalType +'-modal p.name').text(keyword);
+			} else if($(".crawler-tabs li#broken").hasClass("tabbed")){
 				$('.'+ modalType +'-modal .link-info').attr('name', 'delete_link');
-				$('.'+ modalType +'-modal .link-info').attr('value', url);
 			}
 
+			$('.'+ modalType +'-modal .link-info').attr('value', url);
 			$('.'+ modalType +'-modal p.link').text(url);
 		}
 		else if(modalType == "update-link"){
-			var url = $(this).parent().parent().find('.link-wrap a.link').text();
-			var keyword = $(this).parent().parent().find('.link-name a.name').text();
-			var keyword_id = $(this).parent().parent().find('[data-id]').data('id');
+			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
+			var keyword = $(this).parent().parent().parent().find('.link-name a.name').text();
+			var keyword_id = $(this).parent().parent().parent().find('[data-id]').data('id');
 
-			$('.'+ modalType +'-modal .keyword-id').attr('value', keyword_id);
+			$('.'+ modalType +'-modal .id').attr('value', keyword_id);
 			$('.'+ modalType +'-modal p.name').text(keyword);
 			$('.'+ modalType +'-modal p.link').text(url);
 			$('.'+ modalType +'-modal .link-info').attr('value', url);
@@ -448,13 +444,22 @@ function installModalListeners(){
 			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
 			var seedid = $(this).parent().parent().parent().find('.link-wrap a.link').attr('id');
 			$('.'+ modalType +'-modal p.link').text(url);
-			$('.'+ modalType +'-modal .link-info').attr('value', seedid);
+			$('.'+ modalType +'-modal .id').attr('value', seedid);
 		}
 		else if(modalType == "update-seed"){
 			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
+			var name = $(this).parent().parent().parent().find('.details span#name').text();
+			var title = $(this).parent().parent().parent().find('.details span#title').text();
+			var twitter = $(this).parent().parent().parent().find('.details a#twitter').text();
+			var rss = $(this).parent().parent().parent().find('.details a#rss').text();
 			var seedid = $(this).parent().parent().parent().find('.link-wrap a.link').attr('id');
 			$('.'+ modalType +'-modal p.link').text(url);
-			$('.'+ modalType +'-modal .link-info').attr('value', seedid);
+			$('.'+ modalType +'-modal input#url').val(url);
+			$('.'+ modalType +'-modal input#name').val(name);
+			$('.'+ modalType +'-modal input#title').val(title);
+			$('.'+ modalType +'-modal input#twitter').val(twitter);
+			$('.'+ modalType +'-modal input#rss').val(rss);
+			$('.'+ modalType +'-modal .id').attr('value', seedid);
 		}
 
 		//Display modal after setting info
@@ -469,10 +474,10 @@ function installModalListeners(){
 		e.preventDefault();
 		var keyword = $(this).find('p.name').text();
 		var url = $(this).find('p.link').text();
-		var id = $(this).find('.keyword-id').val();
+		var id = $(this).find('.id').val();
 		$('input.name-info').val(keyword);
 		$('input.link-info').val(url);
-		$('input.keyword-id').val(id);
+		$('input.id').val(id);
 		var form = $(this);
 		$.ajax({
 			type: "POST",
@@ -488,9 +493,17 @@ function installModalListeners(){
 				console.log(xhr.responseText);
 			}
 		});
-		// }
 	});
 
+	$(document).click(function (e) {
+	    e.stopPropagation();
+	    var container = $("#sortmenu");
+
+	    //check if the clicked area is dropDown or not
+	    if (container.has(e.target).length === 0) {
+	        $(".add-tag").find('.show').toggleClass('show');
+	    }
+	})
 	$(".add-tag").off().click(function (e) {
 		e.stopPropagation();
         $(this).find("#sortmenu").toggleClass('show');

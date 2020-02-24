@@ -1,5 +1,5 @@
 <!-- Author: Drew Schineller-->
-<?php $cache_data = Json_GetData_ByTitle("Contribute");
+<?php $cache_data = Json_GetData_ByTitle("Data");
  ?>
 <!-- About page-->
 <!-- Heading image and title container-->
@@ -12,9 +12,9 @@
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p><?php echo $cache_data['contributeTitle'] ?></p>
+        <p><?php echo $cache_data['dataTitle'] ?></p>
     </div>
 </div>
 <div class="cardwrap contributors">
-    <?php echo $cache_data['contributeSplit'] ?>
+    <?php echo $cache_data['dataSplit'] ?>
 </div>

@@ -19,6 +19,7 @@ $(document).ready(function () {
                 initializeTimeline(); //function in timeline.js
             }
             condenseRoles();
+            changeSize();
         },
         'error': function (xhr, status, error) {
             console.log('fail');
@@ -51,4 +52,11 @@ function condenseRoles(){
             $('.detailwrap .roles .detail-bottom:eq(0)').nextAll('.detail-bottom').addClass('hide');
         }
     })
+}
+
+function changeSize(){
+  var title_length = $('.middlewrap h1').text().length;
+  if (title_length >= 60){
+      $('.middlewrap h1').css('font-size','45px');
+  }
 }

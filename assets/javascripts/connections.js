@@ -59,7 +59,6 @@ $(document).ready( function() {
 //but this is clear enought at the moment
 function displayConnections(cardType){
     var connections = connectionsArray[cardType];
-    console.log(connections, cardType);
 
     if (typeof(connectionsArray[cardType + '-count']) == 'undefined' || connectionsArray[cardType+'-count'] <= 8){
         $('.search-all').hide();
@@ -92,6 +91,7 @@ function displayConnections(cardType){
             var conn = connections[i];
             var name = conn['peoplename']['value'];
             var agentQ = conn['people']['value'];
+            var role = conn['role']['value'];
             agentQ = agentQ.substring(agentQ.lastIndexOf('/') + 1);
             var personUrl = BASE_URL + 'record/person/' + agentQ;
 
@@ -102,7 +102,7 @@ function displayConnections(cardType){
                 relationshipLabel = conn['relationslabel']['value'];
                 $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + ' - ' + relationshipLabel+'</h3></div>'+'</a></li>');
             } else {
-                $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
+                $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + ' - ' + role+'</h3></div>'+'</a></li>');
             }
         }
     } else if (cardType == "Event") {
@@ -169,7 +169,6 @@ function loadConnections(){
         QID = getUrlVars()["kid"];
         recordform = 'Story';
     }
-    console.log(recordform)
 
 
     $.ajax({
@@ -180,11 +179,11 @@ function loadConnections(){
                 recordForm: recordform
               },
         success: function (data) {
+            // console.log(data);
             if (data == " "){
                 return;
             }
             connectionsArray = JSON.parse(data);
-
             // display the counts for connections
             for (var form in connectionsArray){
                 if (form == 'Person'){

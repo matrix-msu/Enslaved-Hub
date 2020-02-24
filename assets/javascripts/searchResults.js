@@ -31,7 +31,7 @@ var currentTitle = "Search";
 
 
 var fields = [];    // fields for the table view
-var sort = 'asc'; // or desc
+var sort = ''; // or desc
 var formattedData = {};
 
 var address = document.location.toString().split('/')
@@ -59,7 +59,6 @@ if(document.location.toString().indexOf('?') !== -1)
         .replace(/^.*?\?/, '')
         .replace(/#.*$/, '')
         .split('&');
-
     for(var i=0; i < query.length; i++)
     {
         var aux = decodeURIComponent(query[i]).split('=');
@@ -81,8 +80,11 @@ if(document.location.toString().indexOf('?') !== -1)
             filters[aux[0]] = aux[1].split('+');
             continue;
         }
-
         filters[aux[0]] = filters[aux[0]].concat(aux[1].split(','));
+        // Delete sort from url after refresh
+        if(aux[0] == "sort"){
+          delete filters[aux[0]];
+        }
     }
 }
 
@@ -114,11 +116,13 @@ function searchResults(preset, limit = 12, offset = 0)
 {
     if(isSearching) return;
     isSearching = true;
-
     filters['limit'] = limit;
     card_limit = limit;
     filters['offset'] = offset;
     card_offset = offset;
+    if(sort != ''){
+      filters['sort'] = sort;
+    }
     var templates = ['gridCard', 'tableCard'];
     generateFilterCards();
 
@@ -429,6 +433,20 @@ $(document).ready(function() {
     });
 
     $('span.results-per-page > span').html(card_limit);
+    $("ul.sort-by li").click(function (e) { // set the per-page value
+        e.stopPropagation();
+        sort_by_temp = $(this).find('span:first').html();
+        card_offset = 0; //reset offset to 0 when changing results-per-page to go to first page
+        if (sort_by_temp == "A - Z"){
+          sort = "asc";
+        }
+        if (sort_by_temp == "Z - A"){
+          sort = "desc";
+        }
+        searchResults(search_type, 12, 0);
+        $('span.sort-by > span').html(sort);
+        $(document).trigger('click');
+    });
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
         card_limit = parseInt($(this).find('span:first').html());
@@ -475,7 +493,6 @@ $(document).ready(function() {
             // if (result) {
             //     result_array.length = result
             // }
-
             cards = true;
             view = 'grid';
             window.localStorage.setItem('cards', cards);
@@ -955,9 +972,14 @@ function generateFilterCards(){
     $('.filter-cards .option-wrap img.remove').click(function(){
         var fcat = $(this).parent().attr('id');
         var fname = $(this).parent().find('p').text();
-
-        filters[fcat] = filters[fcat].filter(function(value, index, arr) { return value != fname; });
-        if(filters[fcat].length == 0) delete filters[fcat];
+        if(fcat == "sort"){
+          delete filters[fcat];
+          sort = '';
+        }
+        else{
+          filters[fcat] = filters[fcat].filter(function(value, index, arr) { return value != fname; });
+          if(filters[fcat].length == 0) delete filters[fcat];
+        }
 
         $(this).parent().remove();
 
@@ -1005,6 +1027,7 @@ $('div').not('.filter-menu').mouseup(function() {
     }
 });
 
-$("#search-results tbody td").on('click', function(event){
-    // console.log(this);
+//link to record page for table view
+$("#search-results tbody").on('click','tr', function(event){
+    window.location = $(this).attr('data-url');
 });

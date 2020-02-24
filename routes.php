@@ -7,7 +7,7 @@ $GLOBALS['api_routes'] = array(
     'api/blazegraph' => array('functions.php', 'blazegraph'),
     'api/updateConstants' => array('functions.php', 'updateConstants'),
 	'api/getFullRecordHtml' => array('explorefunctions.php', 'getFullRecordHtml'),
-    'api/getDateRange' => array('explorefunctions.php', 'getEventDateRange'),
+    'api/getDateRange' => array('search.php', 'dateRange'),
     'api/getProjectFullInfo' => array('explorefunctions.php', 'getProjectFullInfo'),
     'api/getFullRecordConnections' => array('explorefunctions.php', 'getFullRecordConnections'),
     'api/getCrawlerResults' => array('crawler_jquery.php', ''),
@@ -26,7 +26,9 @@ $GLOBALS['routes'] = array(
     'search' => 'search.php',
     'searchResults' => 'searchResults.php',
     'carousel' => 'carousel.php',
-    'contributors' => 'contributors.php',
+    'contribute' => 'contributors.php',
+    'data' => 'data.php',
+    'learn' => 'learn.php',
     'drawers' => 'drawers.php',
     'fullRecord' => 'fullrecord.php',
     'fullRecord-2' => 'fullRecord-2.php',
@@ -54,7 +56,7 @@ $GLOBALS['routes'] = array(
 	'getInvolved' => 'getInvolved.php',
     'projectSubmission' => 'projectSubmission.php',
     'scholarSubmission' => 'scholarSubmission.php',
-	'ourPartners' => 'ourPartners.php',
+	'foundingPartners' => 'foundingPartners.php',
     'contactUs' => 'contactUs.php',
     'ourTeam' => 'ourTeam.php',
     'references' => 'references.php',
@@ -68,13 +70,19 @@ $GLOBALS['routes'] = array(
     'current' => 'current.php',
     'links' => 'links.php',
     'support-our-mission' => 'support-our-mission.php',
-    'resources' => 'links.php'
+    'resources' => 'links.php',
+    'visualize' => 'visualize.php'
 );
 
 if( !isset($_SERVER['HTTP_HOST']) ){
     define('CURRENT_VIEW', 'home.php');
     return;
 }
+
+require_once( BASE_LIB_PATH . "xss.php" );
+$_GET = xss_clean($_GET);
+$_POST = xss_clean($_POST);
+//echo $_GET['test']; //a sample xss test. only uncomment for testing
 
 //$location = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 $location = "https://$_SERVER[HTTP_HOST]";
