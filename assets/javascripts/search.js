@@ -56,6 +56,25 @@ $(document).ready(function() {
         // option.detach();
         // $(e.target).append(option).change();
       // });
+
+    // Fill dates from elasticsearch
+    $.ajax({
+        url: BASE_URL + 'api/getDateRange',
+        method: "GET",
+        'success': function (data) {
+            data = JSON.parse(data);
+            var min = data['min_date']['value_as_string'];
+            var max = data['max_date']['value_as_string'];
+
+            // Doing this for safety purposes
+            if (min <= max) {
+                for (var i = min; i <= max; i++) {
+                    $("#event-from").append("<option value='"+i+"'>"+i+"</option>");
+                    $("#event-to").append("<option value='"+i+"'>"+i+"</option>");
+                }
+            }
+        }
+    });
 });
 
 //On form submit "removes" the empty inputs so they don't show up in the $_GET

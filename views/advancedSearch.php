@@ -78,16 +78,10 @@
                     <label for="event-from">Date Range</label>
                     <select class="s2-single date-from" id="event-from" name="">
                         <option value=""></option>
-                        <option value="1800">1800</option>
-                        <option value="1900">1900</option>
-                        <option value="2000">2000</option>
                     </select>
                     <label for="event-to" class="sr-only">dropdown</label>
                     <select class="s2-single date-to" id="event-to" name="">
                         <option value=""></option>
-                        <option value="1800">1800</option>
-                        <option value="1900">1900</option>
-                        <option value="2000">2000</option>
                     </select>
                     <input class="event-date-range" type="hidden" name="date" value=""/>
                 </div>
