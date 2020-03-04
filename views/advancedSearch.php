@@ -3,13 +3,13 @@
 <!-- Heading image and title container-->
 <div class="container header">
     <div class="image-container search-page image-only">
-    <div class="image-background-overlay"></div>
 	  <div class="container middlewrap">
       <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>search"><span id="previous-title">Search / </span></a><span id="current-title">Advanced Search</span></h4>
           <div class="search-title">
               <h1>Advanced Search</h1>
           </div>
     </div>
+    <div class="image-background-overlay"></div>
     <img class="header-background advancedSearch-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
       <!-- <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image"> -->
 

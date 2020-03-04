@@ -3,13 +3,16 @@
 ?>
 <!-- Heading image and title container-->
 <div class="container header about-header getinvolved-page">
-  <img class="header-background about-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
-    <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about">
-            <span id="previous-title">About / </span></a>
-            <span id="current-title"><?php echo $cache_data['title'] ?></span>
-        </h4>
-        <h1><?php echo $cache_data['title'] ?></h1>
+  <div class="image-container getInvolved-page image-only">
+    <img class="header-background about-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+      <div class="container middlewrap">
+          <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>about">
+              <span id="previous-title">About / </span></a>
+              <span id="current-title"><?php echo $cache_data['title'] ?></span>
+          </h4>
+          <h1><?php echo $cache_data['title'] ?></h1>
+      </div>
+      <div class="image-background-overlay"></div>
     </div>
 </div>
 
