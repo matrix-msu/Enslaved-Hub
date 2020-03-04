@@ -34,27 +34,30 @@ else {
 
 </head>
 <div class="container header fullstory">
-  <img class="header-background fullStory-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+  <div class="image-container fullStory-page image-only">
+    <img class="header-background fullStory-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
-        <?php
-        $Featured_title = "Featured Story Title Goes Here Like This";
-        if (isset($story['Title'])) {
-            $Featured_title = $story['Title'];
-        }
-        ?>
-        <!-- <h1>Ibrahima Abd al-Rahman</h1>
-        <h3>(18th/19th century)</h3> -->
+          <?php
+          $Featured_title = "Featured Story Title Goes Here Like This";
+          if (isset($story['Title'])) {
+              $Featured_title = $story['Title'];
+          }
+          ?>
+          <!-- <h1>Ibrahima Abd al-Rahman</h1>
+          <h3>(18th/19th century)</h3> -->
 
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories / </span></a><span id="current-title"><?php echo $Featured_title; ?></span></h4>
+          <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories / </span></a><span id="current-title"><?php echo $Featured_title; ?></span></h4>
 
-        <?php
-        if (isset($story['Title'])) {
-            echo '<h1>'.$story['Title'].'</h1>';
-        }
-        ?>
-        <!-- <h2>Sub Title</h2> -->
+          <?php
+          if (isset($story['Title'])) {
+              echo '<h1>'.$story['Title'].'</h1>';
+          }
+          ?>
+          <!-- <h2>Sub Title</h2> -->
 
     </div>
+    <div class="image-background-overlay"></div>
+  </div>
 </div>
 <!-- Main content (left/right columns)-->
 <main class="story-content">

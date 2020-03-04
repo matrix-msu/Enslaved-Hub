@@ -4,9 +4,12 @@
 ?>
 
 <div class="container header visualize-header">
-  <img class="header-background visualize-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
-    <div class="container middlewrap">
-        <h1><?php echo $cache_data['title'] ?></h1>
+  <div class="image-container visualize-page image-only">
+    <img class="header-background visualize-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+      <div class="container middlewrap">
+          <h1><?php echo $cache_data['title'] ?></h1>
+    </div>
+    <div class="image-background-overlay"></div>
   </div>
 </div>
 

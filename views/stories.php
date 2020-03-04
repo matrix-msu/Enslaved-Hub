@@ -41,10 +41,13 @@ $cache_Data = Json_GetData_ByTitle("Stories");
 <!-- Stories page-->
 <!-- Heading image and title container-->
 <div class="container header stories">
-  <img class="header-background stories-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
-    <div class="container middlewrap">
-        <h1><?php echo $cache_Data['title'] ?></h1>
-    </div>
+  <div class="image-container stories-page image-only">
+    <img class="header-background stories-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+      <div class="container middlewrap">
+          <h1><?php echo $cache_Data['title'] ?></h1>
+      </div>
+      <div class="image-background-overlay"></div>
+  </div>
 </div>
 <!-- info container-->
 <div class="container info">
