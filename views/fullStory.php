@@ -33,6 +33,8 @@ else {
   <meta property="og:image"         content="/assets/images/IMG02.jpg" />
 
 </head>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
 <div class="container header fullstory">
   <div class="image-container fullStory-page image-only">
     <img class="header-background fullStory-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
@@ -254,14 +256,13 @@ else {
 <div class="extra-info">
     <div class="share-links">
         <h2>Share this Record</h2>
-        <a href="facebook.com" target="_blank"></a>
+        <img src="<?php echo BASE_IMAGE_URL . "Facebook.svg" ?>" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href),'facebook-share-dialog','width=626,height=436'); return false;">
 
-        <div class="fb-share-button"
-          data-href="https://robbie.dev.matrix.msu.edu/~will.crecelius/enslaved/fullStory?kid=16-23-106174"
-          data-layout="button_count">
-        </div>
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">
-        </a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <img src="<?php echo BASE_IMAGE_URL . "Twitter.svg" ?>" alt="Share on Twitter" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(window.location.href),'twitter-share-dialog','width=626,height=436'); return false;">
+
+            <!-- <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">
+            </a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+
         <!-- <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
         <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/> -->
     </div>
