@@ -86,6 +86,11 @@ function search_filter_counts() {
                         ->setHosts($hosts)
                         ->build();
 
+    $filters = [];
+    if (isset($_GET['filters'])) {
+        $filters = $_GET['filters'];
+    }
+
     $filter_types = '';
     if (isset($_GET['filter_types'])){
         $filter_types = $_GET['filter_types'];
@@ -94,6 +99,11 @@ function search_filter_counts() {
     $search_type = '';
     if (isset($_GET['search_type'])){
         $search_type = $_GET['search_type'];
+    }
+
+    if (array_key_exists('searchbar', $filters)) {
+        $query = implode(' AND ', $filters['searchbar']);
+        unset($filters['searchbar']);
     }
 
     if ($search_type != 'people')
@@ -154,9 +164,7 @@ function search_filter_counts() {
                 'body' => [
                     'query' => [
                         'bool' => [
-                            'must' => [
-                                'match_all' => new \stdClass()
-                            ],
+                            'must' => [],
                             'filter' => [
                                 ['term' => ['type' => $search_type]]
                             ]
@@ -164,6 +172,42 @@ function search_filter_counts() {
                     ]
                 ]
             ];
+
+            if ($query) {
+                $params['body']['query']['bool']['must'] = [
+                    'query_string' => [
+                        'fields' => [
+                            'label',
+                            'generated_by',
+                            'source_type',
+                            'source_repository',
+                            'place_type',
+                            'modern_country_code',
+                            'located_in',
+                            'event_type',
+                            'provides_participant_role',
+                            'name^5',
+                            'age',
+                            'occupation',
+                            'race',
+                            'sex',
+                            'person_status',
+                            'relationships',
+                            'ethnodescriptor',
+                            'participant_role',
+                            'date',
+                            'end_date',
+                            'age_category'
+                        ],
+                        'lenient' => true,
+                        'query' => $query
+                    ]
+                ];
+            } else {
+                $params['body']['query']['bool']['must'] = [
+                    'match_all' => new \stdClass()
+                ];
+            }
 
             $total[$type] = [];
 
