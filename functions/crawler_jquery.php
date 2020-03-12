@@ -56,7 +56,9 @@ if(isset($_POST["get_results"]))
 
 if(isset($_POST["update_tags"]))
 {
-	$results = $crawler_tags->update_keyword_tags($_POST['id'], $tagIds);
+	var_dump($_POST['keyword_id']);
+	var_dump($tagIds);
+	$results = $crawler_tags->update_keyword_tags($_POST['keyword_id'], $tagIds);
 	echo(json_encode('success'));
 }
 
@@ -132,8 +134,15 @@ if(isset($_POST['get_links']))
 
 if(isset($_POST["update-link"]))
 {
+	$keyword_id = array();
+	foreach( $_POST as $key => $value ) {
+		if(is_int($key)){
+			array_push($keyword_id, strval($key));
+		}
+	}
 	$crawler_keywords->update_keyword($_POST['id'],$_POST['update-name']);
 	$crawler_keywords->update_link($_POST['id'],$_POST['update-link']);
+	$crawler_tags->update_keyword_tags($_POST['id'], $keyword_id);
 
 	echo(json_encode("true"));
 }

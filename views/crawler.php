@@ -128,6 +128,7 @@
                         <p class="name" contenteditable="true">Title of page</p>
                         <p>Link URL</p>
                         <p class="link" contenteditable="true">www.nameoflinkgoeshere.com</p>
+                        <ul id="sortmenu" data-id=""></ul>
                     </div>
                 </div>
                 <div class="confirm-wrap">
@@ -167,22 +168,22 @@
                         <label for="url">Enter the updated URL here</label>
                         <input id="url" type="text" name="url" placeholder="Enter updated URL">
                     </div>
-                    <div class="input-wrap">
+                    <!-- <div class="input-wrap">
                         <label for="name">Name</label>
                         <input id="name" type="text" name="name" placeholder="Enter updated URL">
-                    </div>
+                    </div> -->
                     <div class="input-wrap">
                         <label for="title">Title</label>
                         <input id="title" type="text" name="title" placeholder="Enter updated URL">
                     </div>
-                    <div class="input-wrap">
+                    <!-- <div class="input-wrap">
                         <label for="twitter">Twitter</label>
                         <input id="twitter" type="text" name="twitter" placeholder="Enter updated URL">
                     </div>
                     <div class="input-wrap">
                         <label for="rss">RSS</label>
                         <input id="rss" type="text" name="rss" placeholder="Enter updated URL">
-                    </div>
+                    </div> -->
                 </div>
                 <div class="confirm-wrap">
                         <input class="confirm" id="update" type="submit" value="Update Seed">

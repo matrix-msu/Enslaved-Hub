@@ -254,7 +254,7 @@ function getResults(get_data)
 				if (tab_type === 'broken')
 					html = populateCrawlerBrokenLinks(data);
 				$(".result-container").append(html);
-				installModalListeners(); //install the modal listeners after content is generated
+				installModalListeners(data); //install the modal listeners after content is generated
 				$(document).ready(function(){
 					setPagination(total_length, card_limit, card_offset);
 				});
@@ -409,7 +409,7 @@ function populateCrawlerResults(data) {
 	return html;
 }
 
-function installModalListeners(){
+function installModalListeners(data){
 	var crawlerModalButton = $('.crawler-modal-open');
 
 	// Call off before adding click listener so that the listeners dont stack
@@ -431,14 +431,32 @@ function installModalListeners(){
 			$('.'+ modalType +'-modal p.link').text(url);
 		}
 		else if(modalType == "update-link"){
-			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
-			var keyword = $(this).parent().parent().parent().find('.link-name a.name').text();
+			var url = $(this).parent().parent().find('.link-wrap a.link').text();
+			var keyword = $(this).parent().parent().find('.link-name a.name').text();
 			var keyword_id = $(this).parent().parent().parent().find('[data-id]').data('id');
 
 			$('.'+ modalType +'-modal .id').attr('value', keyword_id);
+			$('.'+ modalType +'-modal #sortmenu').attr('data-id', keyword_id);
 			$('.'+ modalType +'-modal p.name').text(keyword);
 			$('.'+ modalType +'-modal p.link').text(url);
 			$('.'+ modalType +'-modal .link-info').attr('value', url);
+
+			html = '';
+			k_id = keyword_id;
+			tag_ids = [];
+			if ($.inArray(k_id in data['tags']) && data['tags'][k_id].length > 0) {
+	    		$.each(data['tags'][k_id], function (_, tag) {
+	    			tag_ids.push(tag['tag_id']);
+	    		});
+	    	}
+			$.each(all_tags, function(_, tag) {
+				checked = '';
+				if (tag_ids.length > 0 && tag_ids.includes(Number(tag['tag_id']))) {
+					checked = ' checked';
+				}
+				html += `<li data-id="${tag['tag_id']}"><input type="checkbox" name=${tag['tag_id']}${checked}>${tag['tag_name']}</li>`
+			});
+			$('.'+ modalType +'-modal #sortmenu').html(html);
 		}
 		else if(modalType == "delete-seed"){
 			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
@@ -448,17 +466,17 @@ function installModalListeners(){
 		}
 		else if(modalType == "update-seed"){
 			var url = $(this).parent().parent().parent().find('.link-wrap a.link').text();
-			var name = $(this).parent().parent().parent().find('.details span#name').text();
+			// var name = $(this).parent().parent().parent().find('.details span#name').text();
 			var title = $(this).parent().parent().parent().find('.details span#title').text();
-			var twitter = $(this).parent().parent().parent().find('.details a#twitter').text();
-			var rss = $(this).parent().parent().parent().find('.details a#rss').text();
+			// var twitter = $(this).parent().parent().parent().find('.details a#twitter').text();
+			// var rss = $(this).parent().parent().parent().find('.details a#rss').text();
 			var seedid = $(this).parent().parent().parent().find('.link-wrap a.link').attr('id');
 			$('.'+ modalType +'-modal p.link').text(url);
 			$('.'+ modalType +'-modal input#url').val(url);
-			$('.'+ modalType +'-modal input#name').val(name);
+			// $('.'+ modalType +'-modal input#name').val(name);
 			$('.'+ modalType +'-modal input#title').val(title);
-			$('.'+ modalType +'-modal input#twitter').val(twitter);
-			$('.'+ modalType +'-modal input#rss').val(rss);
+			// $('.'+ modalType +'-modal input#twitter').val(twitter);
+			// $('.'+ modalType +'-modal input#rss').val(rss);
 			$('.'+ modalType +'-modal .id').attr('value', seedid);
 		}
 
@@ -485,6 +503,7 @@ function installModalListeners(){
 			data: form.serialize(),
 			dataType: "JSON",
 			success:function(data){
+				// console.log(data);
 				//after ajax close modal and refresh tab
 				$('.crawler-modal .close').trigger('click');
 				$('.crawler-tabs li.tabbed').trigger('click');
@@ -512,6 +531,7 @@ function installModalListeners(){
     $(".add-tag ul li").off().click(function (e) {
 		keyword_tag_filter_ids = [];
 		k_id = $(this).parent().data('id');
+		console.log(k_id);
         $(this).parent().children().each(function () {
         	if ($(this).find("input[type=checkbox]").prop("checked")) {
         		keyword_tag_filter_ids.push($(this).data('id'));
