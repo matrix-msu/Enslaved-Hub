@@ -10,9 +10,12 @@
 </div> -->
 
 <div class="container header references-header references-page">
-    <img class="header-background references-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
-    <div class="container middlewrap">
-        <h1><?php echo $cache_data['title'] ?></h1>
+    <div class="image-container references-page image-only">
+      <img class="header-background references-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+      <div class="container middlewrap">
+          <h1><?php echo $cache_data['title'] ?></h1>
+      </div>
+      <div class="image-background-overlay"></div>
     </div>
 </div>
 <!-- info container-->

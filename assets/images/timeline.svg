@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="59px" viewBox="0 0 56 59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 63.1 (101010) - https://sketch.com -->
+    <title>FF079815-1781-463B-960B-8693434ADFB7</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <polyline id="path-1" points="16.7570515 4.14473684 16.7570515 17.9605263 6.34050596 17.5789934"></polyline>
+        <filter x="-379.5%" y="-249.7%" width="858.8%" height="671.8%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="1" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="5" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="5" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="12" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.0549019608   0 0 0 0 0.196078431   0 0 0 0 0.196078431  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Visualize" transform="translate(-476.000000, -573.000000)">
+            <g id="ByTime" transform="translate(389.000000, 540.000000)">
+                <g transform="translate(101.000000, 45.000000)" id="Shape">
+                    <path d="M0,17.5 C0,7.83512064 7.70525677,0 17.2099448,0 C26.7146327,0 34.4198895,7.83512064 34.4198895,17.5 C34.4198895,27.1648794 26.7146327,35 17.2099448,35 C7.70525677,35 0,27.1648794 0,17.5 Z" stroke="#0E3232" stroke-width="2" fill="#FFFFFF"></path>
+                    <g stroke-linecap="round" stroke-linejoin="round">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                        <use stroke="#0E3232" stroke-width="2" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

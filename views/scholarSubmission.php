@@ -12,7 +12,6 @@
     </div>
       <div class="image-background-overlay"></div>
       <img class="header-background scholarSubmission-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
-
     </div>
 </div>
 <main class="direct-search">

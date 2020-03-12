@@ -6,10 +6,13 @@ $cache_Data = Json_GetData_ByTitle($upper);
 ?>
 
 <div class="container header explore-header about-header">
-    <img class="header-background about-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
-    <div class="container middlewrap">
-        <h1><?php echo $cache_Data['title'] ?></h1>
-    </div>
+  <div class="image-container exploreForm-page image-only">
+      <img class="header-background about-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+      <div class="container middlewrap">
+          <h1><?php echo $cache_Data['title'] ?></h1>
+      </div>
+      <div class="image-background-overlay"></div>
+  </div>
 </div>
 <!-- info container-->
 <div class="container info">

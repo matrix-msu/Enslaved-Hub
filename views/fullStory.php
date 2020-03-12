@@ -21,31 +21,45 @@ if (isset($_GET['kid']) && preg_match("/^[0-9A-F]+-[0-9A-F]+-[0-9A-F]+(-[0-9A-F]
 else {
 
 }
+  $url = BASE_URL."fullStory/?kid=".$_GET['kid'];
 ?>
 <!-- Full Story page-->
 <!-- Heading image and title container-->
+<head>
+  <meta property="og:url"           content='"'.<?php echo $url ?>.'"' />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Peoples of the Historic Slave Trade" />
+  <meta property="og:description"   content="" />
+  <meta property="og:image"         content="/assets/images/IMG02.jpg" />
+
+</head>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
 <div class="container header fullstory">
-  <img class="header-background fullStory-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+  <div class="image-container fullStory-page image-only">
+    <img class="header-background fullStory-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
-        <?php
-        $Featured_title = "Featured Story Title Goes Here Like This";
-        if (isset($story['Title'])) {
-            $Featured_title = $story['Title'];
-        }
-        ?>
-        <!-- <h1>Ibrahima Abd al-Rahman</h1>
-        <h3>(18th/19th century)</h3> -->
+          <?php
+          $Featured_title = "Featured Story Title Goes Here Like This";
+          if (isset($story['Title'])) {
+              $Featured_title = $story['Title'];
+          }
+          ?>
+          <!-- <h1>Ibrahima Abd al-Rahman</h1>
+          <h3>(18th/19th century)</h3> -->
 
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories / </span></a><span id="current-title"><?php echo $Featured_title; ?></span></h4>
+          <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>stories"><span id="previous-title">Stories / </span></a><span id="current-title"><?php echo $Featured_title; ?></span></h4>
 
-        <?php
-        if (isset($story['Title'])) {
-            echo '<h1>'.$story['Title'].'</h1>';
-        }
-        ?>
-        <!-- <h2>Sub Title</h2> -->
+          <?php
+          if (isset($story['Title'])) {
+              echo '<h1>'.$story['Title'].'</h1>';
+          }
+          ?>
+          <!-- <h2>Sub Title</h2> -->
 
     </div>
+    <div class="image-background-overlay"></div>
+  </div>
 </div>
 <!-- Main content (left/right columns)-->
 <main class="story-content">
@@ -242,9 +256,13 @@ else {
 <div class="extra-info">
     <div class="share-links">
         <h2>Share this Record</h2>
-        <a href="facebook.com" target="_blank"></a>
-        <img src="<?php echo BASE_URL;?>/assets/images/Facebook.svg" alt="facebook"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/Twitter.svg" alt="twitter"/>
+        <img src="<?php echo BASE_IMAGE_URL . "Facebook.svg" ?>" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href),'facebook-share-dialog','width=626,height=436'); return false;">
+
+        <img src="<?php echo BASE_IMAGE_URL . "Twitter.svg" ?>" alt="Share on Twitter" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(window.location.href),'twitter-share-dialog','width=626,height=436'); return false;">
+
+            <!-- <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">
+            </a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+
         <!-- <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
         <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/> -->
     </div>
@@ -260,6 +278,10 @@ else {
     <div class="modal-image">
     </div>
 </div>
+
+<style>
+.twitter-share-button[style] { vertical-align: text-bottom !important; }
+</style>
 
 <script>
 var captions = <?php echo json_encode($caption); ?>;

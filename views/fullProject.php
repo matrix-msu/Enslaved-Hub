@@ -1,12 +1,15 @@
 <!-- Page author: Drew Schineller-->
 <!-- Heading image and title container-->
 <div class="container header full-project stories">
-    <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>projects"><span id="previous-title">Projects // </span></a><span id="current-title">Project Name</span></h4>
-        <div class="project-headers">
-            <h1>Project Name</h1>
-            <h2><span>234</span> Resources</h2>
-        </div>
+    <div class="image-container fullProject-page image-only">
+      <div class="container middlewrap">
+          <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>projects"><span id="previous-title">Projects // </span></a><span id="current-title">Project Name</span></h4>
+          <div class="project-headers">
+              <h1>Project Name</h1>
+              <h2><span>234</span> Resources</h2>
+          </div>
+      </div>
+      <div class="image-background-overlay"></div>
     </div>
 </div>
 <div class="jump-buttons project-button">

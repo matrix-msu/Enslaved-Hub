@@ -10,10 +10,13 @@ if (isset($_GET['prev'])){
 <!-- Page author: Drew Schineller-->
 <!-- Heading image and title container-->
 <div class="container header stories">
-  <img class="header-background timeSub-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
-    <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM;?>"><span id="previous-title"><?php echo ucwords(EXPLORE_FORM);?> // </span></a><span id="current-title">Date</span></h4>
-        <h1>Date</h1>
+  <div class="image-container timeSub-page image-only">
+    <img class="header-background timeSub-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+      <div class="container middlewrap">
+          <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>explore/<?php echo EXPLORE_FORM;?>"><span id="previous-title"><?php echo ucwords(EXPLORE_FORM);?> // </span></a><span id="current-title">Date</span></h4>
+          <h1>Date</h1>
+      </div>
+      <div class="image-background-overlay"></div>
     </div>
 </div>
 <!-- info container-->

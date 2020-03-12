@@ -208,8 +208,7 @@ function searchResults(preset, limit = 12, offset = 0)
                     type: "GET",
                     data: {
                         search_type: display,
-                        // TODO::temp fix to show all filters
-                        filters: {'limit': limit, 'offset': offset},
+                        filters: filters,
                         filter_types: filtersToSearchType[display]
                     },
                     'success': function (data) {
