@@ -952,6 +952,50 @@
             p.link{
                 margin-bottom: 40px;
             }
+            .info-inputs{
+              .input-wrap{
+                #sortmenu{
+                  display: block;
+                }
+                  ul {
+                      background: $base-dark;
+                      box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
+                      color: $base-light;
+                      display: none;
+                      list-style: none;
+                      padding: 15px;
+                      // position: absolute;
+                      // right: -40px;
+                      // top: 20px;
+                      width: 130px;
+                      text-align: left;
+                      z-index: 1;
+                      border-radius: 5px;
+                      li {
+                          cursor: pointer;
+                          font-size: 12px;
+                          line-height: 15px;
+                          padding: 5px 3px;
+
+                          input[type='checkbox'] {
+                            margin-right: 10px;
+                            cursor: pointer;
+
+                          }
+                          input{
+                            width: 12px;
+                            height: auto;
+                          }
+                      }
+                      li:hover {
+                          color: $sub-base;
+                      }
+                  }
+                  ul.show {
+                      display: block;
+                  }
+              }
+            }
         }
     }
 }

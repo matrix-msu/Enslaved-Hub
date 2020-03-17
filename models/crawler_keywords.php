@@ -73,7 +73,8 @@ class crawler_keywords {
             ORDER BY ck.date_created $sort
             LIMIT ? OFFSET ?
         ";
-
+        // var_dump($query);
+        // var_dump($offset);
         $stmt = mysqli_prepare($link, $query);
 
         if ($terms)
