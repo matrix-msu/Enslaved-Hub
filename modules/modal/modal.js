@@ -9,6 +9,9 @@ for (var i=0; i < modals.length; i++) {
 
 function showModal(i) {
     return function(){
+
+        populateColumnOptions(display);
+
         $(document.body).css('overflow', 'hidden');
         hidden_modals[i].style.display = 'block';
         hidden_modals[i].style.height = '100%';
@@ -83,11 +86,35 @@ $('.minus').click(function () {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 // get all options from left and right columns
-var left_col = window.document.getElementsByClassName('left');
-var right_col = window.document.getElementsByClassName('right');
+// var left_col = window.document.getElementsByClassName('left');
+// var right_col = window.document.getElementsByClassName('right');
+
+function populateColumnOptions(type) {
+    $.ajax({
+        url: BASE_URL + "api/getColumns",
+        type: "GET",
+        data: {
+            'type': type
+        },
+        'success': function (data) {
+            var columns = JSON.parse(data);
+
+            for (var col in columns) {
+                $('#available-cols').append(`<li class="left">${columns[col]}</li>`);
+            }
+
+        }
+    });
+}
+
+
+
+
+// Columns
+
 
 // select thing from left column
-var selected_items = []
+var selected_items = [];
 $('#available-cols').on('click', 'li', function (e) {
     e.stopPropagation();
     $(this).css('background-color', 'rgba(194,79,60,0.15)');
@@ -97,7 +124,7 @@ $('#available-cols').on('click', 'li', function (e) {
 });
 
 // select things on the right column
-var other_items = []
+var other_items = [];
 $('#selected-cols').on('click', 'li', function (e) {
     e.stopPropagation();
     $(this).css('background-color', 'rgba(194,79,60,0.15)');
@@ -168,6 +195,11 @@ $('.config-table-modal').click(function () {
     selected_items.length = 0
     other_items.length = 0
 });
+
+$('.update-columns-button').click(function() {
+    console.log(selected_items);
+    console.log(other_items);
+})
 
 // ~~~~~~~~~~~~~~~ //
 // DRAGGABLE MODAL //

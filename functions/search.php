@@ -349,6 +349,23 @@ function keyword_search() {
         'modern_countries' => 'modern_country_code'
     ];
 
+    if (isset($_GET['column'])) {
+        $columns = $_GET['column'];
+    } else if (isset($_GET['display'])) {
+        if ($_GET['display'] == 'people') {
+            $columns = [
+                'name' => 'Name',
+                'occupation' => 'Occupation',
+                'participant_role' => 'Role',
+                'event_type' => 'Event',
+                'date' => 'Date',
+                'place_type' => 'Place type',
+                'located_in' => 'Location',
+                'source_type' => 'Source type'
+            ];
+        }
+    }
+
     if (isset($_GET['preset'])) {
         $preset = $_GET['preset'];
     }
@@ -563,6 +580,47 @@ function keyword_search() {
     return createCards($res['hits']['hits'], $templates, $preset, $total);
 }
 
+function get_columns() {
+    // TODO::Not sure why this has to be an ajax call when
+    // it's just getting some arrays. Can move directly to js.
+    $type = isset($_GET['type']) ? $_GET['type'] : 'people';
+
+    $columns = [
+        'people' => [
+            'name' => 'Name',
+            'occupation' => 'Occupation',
+            'participant_role' => 'Role',
+            'event_type' => 'Event',
+            'date' => 'Date',
+            'place_type' => 'Place type',
+            'located_in' => 'Location',
+            'source_type' => 'Source type'
+        ],
+        'places' => [
+            'label' => 'Name',
+            'generated_by' => 'Database',
+            'source_type' => 'Source type',
+            'located_in' => 'Location',
+            'place_type' => 'Place type'
+        ],
+        'events' => [
+            'event_type' => 'Event type',
+            'name' => 'Name',
+            'source_type' => 'Source type',
+            'display_date_range' => 'Date range',
+            'place_type' => 'Place type',
+            'display_place' => 'Display place',
+            'date' => 'Start date',
+            'end_date' => 'End date'
+        ],
+        'sources' => [
+            'label' => 'Name',
+            'generated_by' => 'Database'
+        ]
+    ];
+    echo json_encode($columns[$type]);
+}
+
 function featured_items() {
     $hosts = [
         ELASTICSEARCH_URL
@@ -619,6 +677,9 @@ function featured_items() {
     ];
 
     $res = $es->search($params);
+
+
+
     return createCards($res['hits']['hits'], [$template], $preset);
 }
 
