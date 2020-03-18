@@ -15,7 +15,8 @@ $GLOBALS['api_routes'] = array(
     'api/getAllCounts' => array('search.php', 'all_counts_ajax'),
     'api/filteredCounts' => array('search.php', 'filtered_counts'),
     'api/searchFilterCounts' => array('search.php', 'search_filter_counts'),
-    'api/getFeatured' => array('search.php', 'featured_items')
+    'api/getFeatured' => array('search.php', 'featured_items'),
+    'api/getColumns' => array('search.php', 'get_columns')
 );
 
 $GLOBALS['routes'] = array(

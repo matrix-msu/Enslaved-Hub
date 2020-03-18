@@ -20,8 +20,7 @@ function admin(){
     }
 }
 
-function blazegraph()
-{
+function blazegraph() {
     if (isset($_GET['filters'])){
         $filtersArray = $_GET['filters'];
 
@@ -1182,6 +1181,8 @@ HTML;
     }
 
     $cards['formatted_data'] = $formattedData;
+
+
     return json_encode($cards);
 }
 

@@ -1,4 +1,5 @@
 <!-- Heading image and title container-->
+
 <div class="container header search-page">
     <div class="image-container search-page">
         <div class="container middlewrap search-page">
@@ -297,6 +298,7 @@
                 <img class="remove" src="<?php echo BASE_IMAGE_URL;?>x-dark.svg" />
             </div>
         </div>
+
         <div class="search-record-connections">
             <div class="connectionwrap">
                 <div class="categories"></div>
@@ -315,9 +317,11 @@
                 </div>
             </div>
         </div>
+
         <div class="show-menu">
             <img src="<?php echo BASE_IMAGE_URL;?>filter.svg" alt="drop arrow"><p id="showfilter">Show Filter Menu</p>
         </div>
+
         <div id="search-result-wrap">
             <div id="search-result-table">
                 <table id="search-results">
@@ -374,7 +378,7 @@
                     <p>Available Columns</p>
                     <div>
                         <ul id="available-cols">
-                            <li class="left">ID</li>
+                            <!-- <li class="left">ID</li>
                             <li class="left">Sex</li>
                             <li class="left">Enslaved Role</li>
                             <li class="left">Origin / Ethnicity</li>
@@ -385,7 +389,7 @@
                             <li class="left">Column Name</li>
                             <li class="left">Column Name</li>
                             <li class="left">Column Name</li>
-                            <li class="left">Column Name</li>
+                            <li class="left">Column Name</li> -->
                         </ul>
                     </div>
                 </div>
@@ -397,12 +401,12 @@
                     <p>Selected Columns</p>
                     <div>
                         <ul id="selected-cols">
-                            <li class="right">Column Name1</li>
+                            <!-- <li class="right">Column Name1</li>
                             <li class="right">Column Name2</li>
                             <li class="right">Column Name3</li>
                             <li class="right">Column Name4</li>
                             <li class="right">Column Name5</li>
-                            <li class="right">Column Name6</li>
+                            <li class="right">Column Name6</li> -->
                         </ul>
                         <img class="down" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="move down">
                         <img class="up" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="move up">
