@@ -54,7 +54,7 @@ function getProjectFullInfo() {
     }
 }
 
-function createDetailHtml($statement,$label){
+function createDetailHtml($statement,$label,$link=''){
   $baseurl = BASE_URL;
   $upperlabel = $label;
   $lowerlabel = strtolower($label);
@@ -506,8 +506,14 @@ HTML;
         else{
           // $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
         }
+
         $detailname = $statementArr[$x];
-        $html .= "<div>" . $detailname;
+        if($label == 'Located In'){
+          $html .= "<div><a href='" . BASE_URL . "record/place/" . $link . "'>" . $detailname . "</a>";
+        }
+        else{
+          $html .= "<div>" . $detailname;
+        }
         if(array_key_exists($detailname,controlledVocabulary)){
           $detailinfo = ucfirst(controlledVocabulary[$detailname]);
           $html .= "<div class='detail-menu'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
@@ -533,9 +539,8 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
- //print_r($query);die;
+    // print_r($query);
     $result = blazegraphSearch($query);
-    // print_r($result);die;
     if (empty($result)){
       echo json_encode(Array());
       die;
@@ -737,7 +742,13 @@ function getFullRecordHtml(){
     }
 
     if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])  && $record['locatedIn']['value'] != '' ){
+      // var_dump($record);
       $recordVars['Located In'] = $record['locatedIn']['value'];
+    }
+
+    if (isset($record['locIn']) && isset($record['locIn']['value'])  && $record['locIn']['value'] != '' ){
+      // var_dump($record);
+      $recordVars['Loc In'] = $record['locIn']['value'];
     }
 
     //Sex
@@ -806,8 +817,16 @@ HTML;
 
     $html .= '<div class="detailwrap">';
     foreach($recordVars as $key => $value){
-
-      $html .= createDetailHtml($value, $key);
+      if($key == "Located In"){
+        $url = explode("/", $recordVars['Loc In']);
+        $html .= createDetailHtml($value, $key, end($url));
+      }
+      else if($key == "Loc In"){
+        continue;
+      }
+      else{
+        $html .= createDetailHtml($value, $key);
+      }
     }
     $html .= '</div>';
 
@@ -1592,7 +1611,7 @@ QUERY;
     $result = blazegraphSearch($peopleQuery);
     $connections['Person-count'] = count($result);
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
-    
+
 
     // places connections
   $placesQuery['query'] = <<<QUERY
