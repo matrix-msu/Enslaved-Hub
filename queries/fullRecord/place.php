@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?label ?geonames ?code ?description ?coordinates
+SELECT ?label ?geonames ?code ?description ?coordinates ?locIn
 (group_concat(distinct ?name1; separator = "||") as ?name)
 (group_concat(distinct ?alternativename; separator = "||") as ?altname)
 (group_concat(distinct ?Ptype; separator = "||") as ?type)
@@ -25,5 +25,5 @@ SELECT ?label ?geonames ?code ?description ?coordinates
   OPTIONAL{?place $wdt:$hasAlternateName ?alternativename}.
   OPTIONAL{?place $wdt:$hasCoordinates ?coordinates}.
 
-}GROUP BY ?label ?geonames ?code ?description ?coordinates
+}GROUP BY ?label ?geonames ?code ?description ?coordinates ?locIn
 QUERY;
