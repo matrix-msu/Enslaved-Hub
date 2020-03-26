@@ -184,6 +184,7 @@ function loadConnections(){
                 return;
             }
             connectionsArray = JSON.parse(data);
+            // console.log(connectionsArray);
             // display the counts for connections
             for (var form in connectionsArray){
                 if (form == 'Person'){
