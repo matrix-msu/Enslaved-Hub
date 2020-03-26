@@ -1707,10 +1707,40 @@ QUERY;
       ?source $rdfs:label ?sourcelabel
     }ORDER BY ?random
   QUERY;
-  // print_r($sourceQuery);die;
+  // print_r($sourceQuery);
       $result = blazegraphSearch($sourceQuery);
       $connections['Source-count'] = count($result);
       $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+
+      // place connections
+    $placeQuery['query'] = <<<QUERY
+    SELECT DISTINCT ?relatedPlaces ?otherp (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
+    WHERE {
+      VALUES ?place { $wd:$QID}.
+      ?place $wdt:P74 ?bucket.
+      ?otherp $wdt:P74 ?bucket.
+         FILTER (?otherp != ?place).
+      ?place $rdfs:label ?placeLabel.
+      ?otherp $rdfs:label ?placels.
+      ?otherp $wdt:P8 ?ptypes.
+      ?ptypes $rdfs:label ?types.
+        BIND(CONCAT(?placels," - " )  AS ?placelabels ) .
+        BIND(CONCAT(?types," - " )  AS ?placeTypes ) .
+        BIND(CONCAT(?placelabels,?types )  AS ?relatedPlaces ) .
+    }ORDER BY ?random
+  QUERY;
+  // print_r($placeQuery);
+      $result = blazegraphSearch($placeQuery);
+      // var_dump($result);
+      foreach ($result as $key => $value) {
+        $result[$key]['place'] = $result[$key]['otherp'];
+        unset($result[$key]['otherp']);
+        $result[$key]['placelabel'] = $result[$key]['relatedPlaces'];
+        unset($result[$key]['relatedPlaces']);
+      }
+      // var_dump($result);
+      $connections['Place-count'] = count($result);
+      $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
 
 
     return json_encode($connections);

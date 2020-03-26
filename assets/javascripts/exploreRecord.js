@@ -33,7 +33,7 @@ $(document).ready(function () {
 
 function condenseRoles(){
     var roles_num = $('.detailwrap .roles .detail-bottom').length;
-    console.log(roles_num);
+    // console.log(roles_num);
     if(roles_num > 1){
         //Add Show All Roles button, when pressed changes to Condense Roles
         $('.detailwrap .roles .detail-bottom:eq(0)').after('<div class="show-all"><p>Show All Roles</p><img src="'+BASE_IMAGE_URL+'Arrow-colored.svg" alt="Arrow"></div>');
