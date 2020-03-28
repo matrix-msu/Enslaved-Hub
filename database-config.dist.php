@@ -1,8 +1,6 @@
 <?php
 
-define("Host", "localhost");
-define("Username", "enslaved");
-define("DBName", "enslaved");
-define("Password","enslavedDbPassword");
-
-?>
+define("Host", "rush.matrix.msu.edu");
+define("Username", "schleusener_dev");
+define("DBName", "schleusener_dev");
+define("Password","u8xzh4isos");
