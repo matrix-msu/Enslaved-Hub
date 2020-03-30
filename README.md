@@ -21,3 +21,11 @@ cp config.dist.php config.php
 cp database-config.dist.php database-config.php
 cp .dist.htaccess .htaccess
 ```
+
+Cache
+----------------------
+```
+chmod 777 cache
+load webpage twice
+chmod 775 cache
+```
