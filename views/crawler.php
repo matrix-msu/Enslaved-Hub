@@ -5,6 +5,10 @@
     $crawler_tags = new crawler_tags();
     $tags = $crawler_tags->get_tags();
 ?>
+<?php $cache_data = Json_GetData_ByTitle("Resources");
+// var_dump($cache_data);die;
+ ?>
+
 
 <div class="container header">
     <div class="image-container search-page image-only">
@@ -17,6 +21,13 @@
       <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image">
     </div>
 </div>
+<!-- info container-->
+<div class="container info">
+    <div class="container infowrap">
+        <p><?php echo $cache_data['descr'] ?></p>
+    </div>
+</div>
+
 <div class="crawler">
     <div class="project-tab crawler-tabs">
         <ul>
