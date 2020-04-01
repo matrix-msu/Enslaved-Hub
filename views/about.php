@@ -17,7 +17,7 @@
   </div>
 </div>
 
-
+<!--
 <!-- buttons -->
 <div class="container info">
 <div class="about-buttons">
@@ -80,7 +80,7 @@
         </ul>
     </div>
 </div>
-
+-->
 <!-- info container-->
         <p><?php echo $cache_data['descr'] ?></p>
 </div>
