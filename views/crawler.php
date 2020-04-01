@@ -8,7 +8,7 @@
     $crawler_tags = new crawler_tags();
     $tags = $crawler_tags->get_tags();
 ?>
-<!-- Resources page-->
+<!-- Web Crawler administrative page-->
 <!-- Heading image and title container-->
 <div class="container header explore-header people-page">
     <div class="image-container search-page image-only">
