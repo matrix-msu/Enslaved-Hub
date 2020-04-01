@@ -1,3 +1,6 @@
+<?php $cache_data = Json_GetData_ByTitle("Resources");
+// var_dump($cache_data);die;
+ ?>
 <?php
     require_once(BASE_PATH . "models/crawler_tags.php");
 
@@ -6,19 +9,24 @@
     $tags = $crawler_tags->get_tags();
 
 ?>
-
-<div class="container header">
+<!-- Resources page-->
+<!-- Heading image and title container-->
+<div class="container header explore-header people-page">
     <div class="image-container search-page image-only">
-      <img class="header-background links-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
-	    <div class="container middlewrap">
-        <div class="search-title">
-            <h1>Resources</h1>
-        </div>
+    <img class="header-background contributors-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+    <div class="container middlewrap">
+        <h1><?php echo $cache_data['title'] ?></h1>
     </div>
-      <div class="image-background-overlay"></div>
-      <!-- <img class="header-background full-height search-page" src="<?php echo BASE_URL;?>assets/images/enslaved-header-bg2.jpg" alt="Enslaved Background Image"> -->
+    <div class="image-background-overlay"></div>
+  </div>
+</div>
+<!-- info container-->
+<div class="container info">
+    <div class="container infowrap">
+        <p><?php echo $cache_data['descr'] ?></p>
     </div>
 </div>
+
 <div class="crawler">
     <div class="project-tab crawler-tabs">
         <ul>
