@@ -1,15 +1,13 @@
-<?php
+<?php $cache_data = Json_GetData_ByTitle("Resources");
+// var_dump($cache_data);die;
+ ?>
+ <?php
     require_once(BASE_PATH . "models/crawler_tags.php");
 
     $isCrawlerAdmin = true;
     $crawler_tags = new crawler_tags();
     $tags = $crawler_tags->get_tags();
 ?>
-<?php $cache_data = Json_GetData_ByTitle("Resources");
-// var_dump($cache_data);die;
- ?>
-
-
 <div class="container header">
     <div class="image-container search-page image-only">
 	    <div class="container middlewrap">
