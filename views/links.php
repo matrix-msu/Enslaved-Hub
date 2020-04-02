@@ -23,7 +23,7 @@
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p class="paragraph"><?php echo $cache_data['descr'] ?></p>
+        <p><?php echo $cache_data['descr'] ?></p>
     </div>
 </div>
 
