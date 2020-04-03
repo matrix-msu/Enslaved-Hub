@@ -15,7 +15,7 @@
             $navigations = Json_GetNavigationData();
             foreach ($navigations as $nav)
             {
-                $toUrl = ($nav[0] == "Explore") ? BASE_URL."explore/" : BASE_URL;
+                $toUrl = ($nav[0] == "Explore") ? BASE_URL."explore/people/" : BASE_URL;
                 if(count($nav[1]) > 0 && $nav[1][0] != null) { ?>
                 <li class="nav-item drop-link">
                     <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo BASE_URL.strtolower($nav[0])?>"><?php echo $nav[0]?></a>
