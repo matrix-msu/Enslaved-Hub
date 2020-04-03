@@ -25,7 +25,7 @@
 </div>
 
 <!-- buttons -->
-<div class="container info">
+<!--<div class="container info">
 <div class="about-buttons">
     <div class="buttonwrap">
         <ul class="row">
@@ -86,4 +86,4 @@
         </ul>
     </div>
 </div>
-</div>
+</div>-->
