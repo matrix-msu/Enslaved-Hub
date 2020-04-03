@@ -30,6 +30,7 @@ $GLOBALS['routes'] = array(
     'contribute' => 'contributors.php',
     'data' => 'data.php',
     'learn' => 'learn.php',
+    'projectHistory' => 'learn.php',
     'drawers' => 'drawers.php',
     'fullRecord' => 'fullrecord.php',
     'fullRecord-2' => 'fullRecord-2.php',
