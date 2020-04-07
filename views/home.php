@@ -167,9 +167,9 @@ if (isset($story2Images[0])){
     <section class="section section-epp">
         <div class="section-content">
             <div class="row">
-                    <h2 class="section-title">The Enslaved Publishing Platform</h2>
-                    <p class="paragraph"><?php echo array_key_exists("Enslaved Publishing Platform", $cache_data) ? $cache_data["Enslaved Publishing Platform"] : "" ?></p>
-                    <p class="mt-lg"><a class="text-link" href="http://dev2.matrix.msu.edu/enslaved-publishing-platform/" target="_blank">Go to the Enslaved Publishing Platform</a></p>
+                    <h2 class="section-title">Journal of Slavery &amp; Data Preservation</h2>
+                    <p class="paragraph"><?php echo array_key_exists("Journal of Slavery &amp; Data Preservation", $cache_data) ? $cache_data["Journal of Slavery &amp; Data Preservation"] : "" ?></p>
+                    <p class="mt-lg"><a class="text-link" href="http://jsdp.enslaved.org" target="_blank">Go to the <em>Journal of Slavery &amp; Data Preservation</em></a></p>
             </div>
         </div>
     </section>

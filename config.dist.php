@@ -1,10 +1,11 @@
 <?php
 //user defined
-define("BASE_URL",  "http://dev2.matrix.msu.edu/enslaved/");
-define("BASE_PATH",  "/matrix/dev/public_html/enslaved/");
+define("BASE_URL",  "https://robbie.dev.matrix.msu.edu/~christj2/enslaved/");
+define("BASE_PATH",  "/home/christj2/website/enslaved/");
 define("KORA_BASE_URL", "https://kora.enslaved.org/");
-define("BASE_WIKI_URL", "");
-define("BASE_BLAZEGRAPH_URL", "");
+define("BASE_WIKI_URL", "https://lod.enslaved.org/");
+define("BASE_BLAZEGRAPH_URL", "https://bg1.dev.matrix.msu.edu/bigdata/");
+
 
 //project specific urls - you should never use relative paths
 define("BASE_JS_URL", BASE_URL . "assets/javascripts/");
@@ -32,8 +33,8 @@ define('BLAZEGRAPH_URL', BASE_BLAZEGRAPH_URL.'namespace/wdq/sparql');
 define('API_URL', BASE_BLAZEGRAPH_URL.'sparql?query=');
 
 //elasticsearch
-define('ELASTICSEARCH_URL', '');
-define('ELASTICSEARCH_INDEX_NAME', '');
+define('ELASTICSEARCH_URL', 'enslaved-es:9200');
+define('ELASTICSEARCH_INDEX_NAME', 'enslaved-index');
 
 //kora project information - change these for your project
 define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');

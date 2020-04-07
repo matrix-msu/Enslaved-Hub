@@ -8,14 +8,24 @@ Requirements
 Install
 -----------------------
 ```
-$ curl -s http://getcomposer.org/installer | php
-$ php composer.phar install --no-dev
+curl -s http://getcomposer.org/installer | php
+php composer.phar install --no-dev
+compass compile
 ```
 
 
 Configure
 -----------------------
 ```
-$ cp config.dist.php config.php
-$ cp database-config.dist.php database-config.php
+cp config.dist.php config.php
+cp database-config.dist.php database-config.php
+cp .dist.htaccess .htaccess
+```
+
+Cache
+----------------------
+```
+chmod 777 cache
+load webpage twice
+chmod 775 cache
 ```
