@@ -100,7 +100,7 @@ function populateColumnOptions(type) {
             var columns = JSON.parse(data);
 
             for (var col in columns) {
-                $('#available-cols').append(`<li class="left">${columns[col]}</li>`);
+                $('#available-cols').append(`<li class="left" value=${columns[col]}>${columns[col]}</li>`);
             }
 
         }
@@ -137,31 +137,19 @@ $('#selected-cols').on('click', 'li', function (e) {
 // move selected things from left column to right column
 $('div.arrow-wrap > img:first-child').click(function (e) {
     e.stopPropagation()
-    $('#available-cols > li').css('background', '');
     for ( var i = 0; i < selected_items.length; i++) {
         window.document.getElementById('selected-cols').insertAdjacentHTML('beforeend', '<li class="right">' + selected_items[i] + '</li>');
-        for (var x = 0; x < left_col.length; x++) {
-            if (selected_items[i] === left_col[x].textContent) {
-                left_col[x].remove();
-            }
-        }
+        $(`#available-cols li:contains(${selected_items[i]})`).remove();
     }
-    selected_items.length = 0
 });
 
 // move selected things from right to left
 $('div.arrow-wrap > img:last-child').click(function (e) {
     e.stopPropagation();
-    $('#selected-cols > li').css('background', '');
     for ( var i = 0; i < other_items.length; i++) {
         window.document.getElementById('available-cols').insertAdjacentHTML('beforeend', '<li class="left">' + other_items[i] + '</li>');
-        for (var x = 0; x < right_col.length; x++) {
-            if (other_items[i] === right_col[x].textContent) {
-                right_col[x].remove();
-            }
-        }
+        $(`#selected-cols li:contains(${other_items[i]})`).remove();
     }
-    other_items.length = 0;
 });
 
 // http://www.slavevoyages.org/voyage/search
@@ -190,15 +178,18 @@ $('img.up').click(function (e) {
 $('.config-table-modal').click(function () {
     $('#selected-cols > li').css('background', '');
     $('#available-cols > li').css('background', '');
+    $('#selected-cols > li').css('color', '');
+    $('#available-cols > li').css('color', '');
     $('#selected-cols > li').removeClass('selected');
     $('#available-cols > li').removeClass('selected');
     selected_items.length = 0
     other_items.length = 0
 });
 
-$('.update-columns-button').click(function() {
-    console.log(selected_items);
-    console.log(other_items);
+$('.update-columns-button').click(function(e) {
+    // console.log(selected_items);
+    // console.log(other_items);
+    // closeModal();
 })
 
 // ~~~~~~~~~~~~~~~ //

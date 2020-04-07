@@ -12,7 +12,8 @@ var card_limit = 12;
 var filters = {};
 var display = search_type;
 var firstLoad = true;
-
+var selected_fields = ['Name', 'Occupation', 'Role', 'Event', 'Date', 'Place type', 'Location', 'Source type'];
+// console.log(selected_items);
 if (search_type == "all"){
     display = 'people';
 }
@@ -123,6 +124,7 @@ function searchResults(preset, limit = 12, offset = 0)
     if(sort != ''){
       filters['sort'] = sort;
     }
+    console.log(selected_fields);
     var templates = ['gridCard', 'tableCard'];
     generateFilterCards();
 
@@ -133,11 +135,14 @@ function searchResults(preset, limit = 12, offset = 0)
             preset: preset,
             filters: filters,
             templates: templates,
-            display: display
+            display: display,
+            fields: selected_fields
         },
         'success': function (data) {
+            console.log(data);
             isSearching = false;
             result_array = JSON.parse(data);
+            // console.log(result_array);
 
             if (preset == "all"){
                 var allCounters = result_array['total'];
@@ -265,6 +270,7 @@ function appendCards()
 
     $("thead").empty(); //empty headers before adding them
     var headers = result_array['tableCard']['headers'];
+    console.log(headers);
     $(headers).appendTo("thead");
 
     $("tbody").empty(); //empty grid before appending more
@@ -1030,3 +1036,12 @@ $('div').not('.filter-menu').mouseup(function() {
 $("#search-results tbody").on('click','tr', function(event){
     window.location = $(this).attr('data-url');
 });
+
+//submit button in configure tables modals
+$('.update-columns-button').click(function(e) {
+    console.log("This is a test");
+    console.log(selected_items);
+    selected_fields = selected_items;
+    closeModal();
+    searchResults(search_type);
+})

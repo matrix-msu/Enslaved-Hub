@@ -216,11 +216,11 @@ function blazegraphSearch($query){
  * \param $templates : Array of the type of cards to make
  * \param $preset :
  */
-function createCards($results, $templates, $preset = 'default', $count = 0){
+function createCards($results, $templates, $select_fields, $preset = 'default', $count = 0){
     if (!is_array($results)){
         $results = array();
     }
-
+    // var_dump($select_fields);
     $cards = Array();
     $formattedData = array();   // data formatted to be turned into csv
 
@@ -236,6 +236,7 @@ function createCards($results, $templates, $preset = 'default', $count = 0){
     // print_r($preset);
 
     foreach ($results as $index => $record) {
+        // var_dump($record);
         $record = $record['_source'];
         $card = '';
         $countpeople = '';
@@ -363,50 +364,81 @@ HTML;
                         if ($first) {
                             $first = false;
 
-                            $headers = <<<HTML
-<tr>
-    <th class="name">NAME</th>
-    <th class="gender">GENDER</th>
-    <th class="age">AGE</th>
-    <th class="status">STATUS</th>
-    <th class="origin">ORIGIN</th>
-    <th class="location">LOCATION</th>
-    <th class="dateRange">DATE RANGE</th>
-</tr>
-HTML;
+                            $fields = [];
+                            $headers = "<tr>";
+                            foreach ($select_fields as $field) {
+                              $headers .= "<th class='" . strtolower($field) . "'>" . strtoupper($field) . "</th>";
+                              array_push($fields, strtoupper($field));
+                            }
+                            $headers .= "</tr>";
+                            // var_dump($headers);
+//                             $headers = <<<HTML
+// <tr>
+//     <th class="name">NAME</th>
+//     <th class="gender">GENDER</th>
+//     <th class="age">AGE</th>
+//     <th class="status">STATUS</th>
+//     <th class="origin">ORIGIN</th>
+//     <th class="location">LOCATION</th>
+//     <th class="dateRange">DATE RANGE</th>
+// </tr>
+// HTML;
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'GENDER', 'AGE', 'STATUS', 'ORIGIN', 'LOCATION', 'DATE RANGE'];
+                            $cards['fields'] = $fields;
                         }
 
-
-                        $card = <<<HTML
-<tr class='tr' data-url='$person_url'>
-    <td class='name td-name'>
-        <span>$name</span>
-    </td>
-    <td class='gender'>
-        <p><span class='first'>Gender: </span>$sex</p>
-    </td>
-    <td class='age'>
-        <p><span class='first'>Age: </span></p>
-    </td>
-    <td class='status'>
-        <p><span class='first'>Status: </span>$status</p>
-    </td>
-    <td class='origin'>
-        <p><span class='first'>Origin: </span></p>
-    </td>
-    <td class='location'>
-        <p><span class='first'>Location: </span>$places</p>
-    </td>
-    <td class='dateRange'>
-        <p><span class='first'>Date Range: </span>$dateRange</p>
-    </td>
-    <td class='meta'>
-
-    </td>
-</tr>
-HTML;
+                        $card = "<tr> class='tr' data-url='" . $person_url . "'>";
+                        foreach ($select_fields as $index => $field) {
+                          // var_dump($record);
+                          if($field == "Name"){
+                            $value = $record['name'][0];
+                          }if($field == "Occupation"){
+                            $value = "Need occupation from query";
+                          }if($field == "Role"){
+                            $value = $record['participant_role'][0];
+                          }if($field == "Event"){
+                            $value = $record['event_type'][0];
+                          }if($field == "Date"){
+                            $value = $record['date'][0];
+                          }if($field == "Place type"){
+                            $value = implode(', ', $record['place_type']);
+                          }if($field == "Location"){
+                            $value = implode(', ', $record['display_place']);
+                          }if($field == "Source type"){
+                            $value = $record['source_type'][0];
+                          }
+                          $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
+                        }
+                        $card .= "</tr>";
+                        // var_dump($card);
+//                         $card = <<<HTML
+// <tr class='tr' data-url='$person_url'>
+//     <td class='name td-name'>
+//         <span>$name</span>
+//     </td>
+//     <td class='gender'>
+//         <p><span class='first'>Gender: </span>$sex</p>
+//     </td>
+//     <td class='age'>
+//         <p><span class='first'>Age: </span></p>
+//     </td>
+//     <td class='status'>
+//         <p><span class='first'>Status: </span>$status</p>
+//     </td>
+//     <td class='origin'>
+//         <p><span class='first'>Origin: </span></p>
+//     </td>
+//     <td class='location'>
+//         <p><span class='first'>Location: </span>$places</p>
+//     </td>
+//     <td class='dateRange'>
+//         <p><span class='first'>Date Range: </span>$dateRange</p>
+//     </td>
+//     <td class='meta'>
+//
+//     </td>
+// </tr>
+// HTML;
                     // format this row for csv download
                     $formattedData[$personQ] = array(
                         'NAME' => $name,
