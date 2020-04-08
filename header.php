@@ -14,11 +14,11 @@
             <?php
             $navigations = Json_GetNavigationData();
             foreach ($navigations as $nav)
-            {
-                $toUrl = ($nav[0] == "Explore") ? BASE_URL."explore/" : BASE_URL;
-                if(count($nav[1]) > 0 && $nav[1][0] != null) { ?>
+            {$toUrl = ($nav[0] == "Explore") ? BASE_URL."explore/" : BASE_URL;
+                if(count($nav[1]) > 0 && $nav[1][0] != null) {
+                  $link = ($nav[0] == "Explore") ? BASE_URL."explore/people" : BASE_URL.strtolower($nav[0]);?>
                 <li class="nav-item drop-link">
-                    <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo BASE_URL.strtolower($nav[0])?>"><?php echo $nav[0]?></a>
+                    <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo $link?>"><?php echo $nav[0]?></a>
                     <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg" alt="dropdown carrat"/></span>
                     <ul class="sub-list">
                         <li class="subwrap" id="explore-sub">
