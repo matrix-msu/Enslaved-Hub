@@ -333,7 +333,7 @@ function keyword_search() {
                         ->setHosts($hosts)
                         ->build();
 
-    $item_types = ['people', 'event', 'place', 'source'];
+    $item_types = ['person', 'event', 'place', 'source'];
     $filters = $templates = [];
     $query = $preset = $item_type = $sort = '';
     $size = 12;
@@ -553,9 +553,10 @@ function keyword_search() {
         $params['body']['size'] = 0;
         foreach ($item_types as $type) {
             // TODO::this is annoying, will require a refactor on index (pluralize types)
-            if ($type == 'people')
+            if ($type == 'person') {
+                $type = 'people';
                 $count_key = $type . 'count';
-            else
+            } else
                 $count_key = $type . 'scount';
 
             if ($type == $item_type)
