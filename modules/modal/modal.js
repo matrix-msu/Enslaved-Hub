@@ -2,6 +2,8 @@ var modals = document.getElementsByClassName('modal');
 var hidden_modals = document.getElementsByClassName('modal-view');
 var modalImage = $('img.modal-img-view');
 var height;
+var avail_columns = [];
+var selected_columns = [];
 
 for (var i=0; i < modals.length; i++) {
     modals[i].addEventListener('click', showModal(i));
@@ -98,9 +100,11 @@ function populateColumnOptions(type) {
         },
         'success': function (data) {
             var columns = JSON.parse(data);
-
             for (var col in columns) {
-                $('#available-cols').append(`<li class="left" value=${columns[col]}>${columns[col]}</li>`);
+                if(!avail_columns.includes(columns[col])){
+                  $('#available-cols').append(`<li class="left" value=${columns[col]}>${columns[col]}</li>`);
+                  avail_columns.push(columns[col]);
+                }
             }
 
         }
@@ -124,32 +128,43 @@ $('#available-cols').on('click', 'li', function (e) {
 });
 
 // select things on the right column
-var other_items = [];
+var deselected_items = [];
 $('#selected-cols').on('click', 'li', function (e) {
     e.stopPropagation();
     $(this).css('background-color', 'rgba(194,79,60,0.15)');
     $(this).css('color', '#C24F3C')
     $(this).css('border-radius', '7px')
     $(this).addClass('selected');
-    other_items.push( $(this).html() );
+    deselected_items.push( $(this).html() );
 });
 
 // move selected things from left column to right column
 $('div.arrow-wrap > img:first-child').click(function (e) {
-    e.stopPropagation()
+    e.stopPropagation();
     for ( var i = 0; i < selected_items.length; i++) {
+      if(!selected_columns.includes(selected_items[i])){
         window.document.getElementById('selected-cols').insertAdjacentHTML('beforeend', '<li class="right">' + selected_items[i] + '</li>');
         $(`#available-cols li:contains(${selected_items[i]})`).remove();
+        selected_columns.push(selected_items[i]);
+      }
     }
+    selected_items.length = 0;
 });
 
 // move selected things from right to left
 $('div.arrow-wrap > img:last-child').click(function (e) {
     e.stopPropagation();
-    for ( var i = 0; i < other_items.length; i++) {
-        window.document.getElementById('available-cols').insertAdjacentHTML('beforeend', '<li class="left">' + other_items[i] + '</li>');
-        $(`#selected-cols li:contains(${other_items[i]})`).remove();
+    for ( var i = 0; i < deselected_items.length; i++) {
+        window.document.getElementById('available-cols').insertAdjacentHTML('beforeend', '<li class="left">' + deselected_items[i] + '</li>');
+        $(`#selected-cols li:contains(${deselected_items[i]})`).remove();
+        // remove deselected items from selected items array
+        for ( var j = 0; j < selected_columns.length; j++){
+          if(deselected_items[i] == selected_columns[j]){
+            selected_columns.splice(j, 1);
+          }
+        }
     }
+    deselected_items.length = 0;
 });
 
 // http://www.slavevoyages.org/voyage/search
@@ -161,8 +176,8 @@ $('div.arrow-wrap > img:last-child').click(function (e) {
 $('img.down').click(function (e) {
     e.stopPropagation();
     // move down
-    var $other_items = $('#selected-cols li.selected');
-    $other_items.last().next().after($other_items);
+    var $deselected_items = $('#selected-cols li.selected');
+    $deselected_items.last().next().after($deselected_items);
 });
 
 // move selected items up when up arrow is clicked
@@ -170,8 +185,8 @@ $('img.down').click(function (e) {
 $('img.up').click(function (e) {
     e.stopPropagation();
     // move up
-    var $other_items = $('#selected-cols li.selected');
-    $other_items.first().prev().before($other_items);
+    var $deselected_items = $('#selected-cols li.selected');
+    $deselected_items.first().prev().before($deselected_items);
 });
 
 // deselect all elements when clicking off of items
@@ -182,8 +197,6 @@ $('.config-table-modal').click(function () {
     $('#available-cols > li').css('color', '');
     $('#selected-cols > li').removeClass('selected');
     $('#available-cols > li').removeClass('selected');
-    selected_items.length = 0
-    other_items.length = 0
 });
 
 $('.update-columns-button').click(function(e) {

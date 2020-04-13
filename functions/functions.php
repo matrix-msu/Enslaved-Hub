@@ -366,34 +366,22 @@ HTML;
 
                             $fields = [];
                             $headers = "<tr>";
-                            foreach ($select_fields as $field) {
+                            foreach ($select_fields[0] as $field) {
                               $headers .= "<th class='" . strtolower($field) . "'>" . strtoupper($field) . "</th>";
                               array_push($fields, strtoupper($field));
                             }
                             $headers .= "</tr>";
-                            // var_dump($headers);
-//                             $headers = <<<HTML
-// <tr>
-//     <th class="name">NAME</th>
-//     <th class="gender">GENDER</th>
-//     <th class="age">AGE</th>
-//     <th class="status">STATUS</th>
-//     <th class="origin">ORIGIN</th>
-//     <th class="location">LOCATION</th>
-//     <th class="dateRange">DATE RANGE</th>
-// </tr>
-// HTML;
                             $cards['tableCard']['headers'] = $headers;
                             $cards['fields'] = $fields;
                         }
-
+// People page
                         $card = "<tr> class='tr' data-url='" . $person_url . "'>";
-                        foreach ($select_fields as $index => $field) {
+                        foreach ($select_fields[0] as $index => $field) {
                           // var_dump($record);
                           if($field == "Name"){
                             $value = $record['name'][0];
                           }if($field == "Occupation"){
-                            $value = "Need occupation from query";
+                            $value = "";
                           }if($field == "Role"){
                             $value = $record['participant_role'][0];
                           }if($field == "Event"){
@@ -411,34 +399,6 @@ HTML;
                         }
                         $card .= "</tr>";
                         // var_dump($card);
-//                         $card = <<<HTML
-// <tr class='tr' data-url='$person_url'>
-//     <td class='name td-name'>
-//         <span>$name</span>
-//     </td>
-//     <td class='gender'>
-//         <p><span class='first'>Gender: </span>$sex</p>
-//     </td>
-//     <td class='age'>
-//         <p><span class='first'>Age: </span></p>
-//     </td>
-//     <td class='status'>
-//         <p><span class='first'>Status: </span>$status</p>
-//     </td>
-//     <td class='origin'>
-//         <p><span class='first'>Origin: </span></p>
-//     </td>
-//     <td class='location'>
-//         <p><span class='first'>Location: </span>$places</p>
-//     </td>
-//     <td class='dateRange'>
-//         <p><span class='first'>Date Range: </span>$dateRange</p>
-//     </td>
-//     <td class='meta'>
-//
-//     </td>
-// </tr>
-// HTML;
                     // format this row for csv download
                     $formattedData[$personQ] = array(
                         'NAME' => $name,
@@ -562,43 +522,34 @@ HTML;
                             //todo create the correct place headers
                             $first = false;
 
-                            $headers = <<<HTML
-<tr>
-    <th class="name">NAME</th>
-    <th class="type">TYPE</th>
-    <th class="located">LOCATED IN</th>
-    <th class="geoname">GEONAME IDENTIFIER</th>
-    <th class="code">MODERN COUNTRY</th>
-</tr>
-HTML;
+                            $fields = [];
+                            $headers = "<tr>";
+                            foreach ($select_fields[2] as $field) {
+                              $headers .= "<th class='" . strtolower($field) . "'>" . strtoupper($field) . "</th>";
+                              array_push($fields, strtoupper($field));
+                            }
+                            $headers .= "</tr>";
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'LOCATED IN', 'GEONAME IDENTIFIER', 'MODERN COUNTRY'];
-
+                            $cards['fields'] = $fields;
                         }
 
+                        $card = "<tr> class='tr' data-url='" . $place_url . "'>";
+                        foreach ($select_fields[2] as $index => $field) {
+                          if($field == "Name"){
+                            $value = $record['name'][0];
+                          }if($field == "Database"){
+                            $value = $record['generated_by'][0];
+                          }if($field == "Source type"){
+                            $value = $record['source_type'][0];
+                          }if($field == "Location"){
+                            $value = $record['located_in'][0];
+                          }if($field == "Place type"){
+                            $value = $record['place_type'][0];
+                          }
+                          $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
+                        }
+                        $card .= "</tr>";
 
-                        $card = <<<HTML
-<tr class='tr' data-url='$place_url'>
-    <td class='name td-name'>
-        <span>$name</span>
-    </td>
-    <td class='type'>
-        <p><span class='first'>Type: </span>$placeType</p>
-    </td>
-    <td class='located'>
-        <p><span class='first'>Located In: </span>$locatedIn</p>
-    </td>
-    <td class='geoname'>
-        <p><span class='first'>Geoname: </span>$geonames</p>
-    </td>
-    <td class='country'>
-        <p><span class='first'>Country: </span>$country</p>
-    </td>
-    <td class='meta'>
-
-    </td>
-</tr>
-HTML;
 
                         // format this row for csv download
                         $formattedData[$placeQ] = array(
@@ -742,37 +693,40 @@ HTML;
                             //todo: create the correct event headers
                             $first = false;
 
-                            $headers = <<<HTML
-<tr>
-    <th class="name">NAME</th>
-    <th class="type">TYPE</th>
-    <th class="places">PLACES</th>
-    <th class="dateRange">DATE RANGE</th>
-</tr>
-HTML;
+                            $fields = [];
+                            $headers = "<tr>";
+                            foreach ($select_fields[1] as $field) {
+                              $headers .= "<th class='" . strtolower($field) . "'>" . strtoupper($field) . "</th>";
+                              array_push($fields, strtoupper($field));
+                            }
+                            $headers .= "</tr>";
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'PLACES', 'DATE RANGE'];
+                            $cards['fields'] = $fields;
                         }
 
-                        $card = <<<HTML
-<tr class='tr'  data-url='$event_url'>
-    <td class='name td-name'>
-        <span>$name</span>
-    </td>
-    <td class='type'>
-        <p><span class='first'>Type: </span>$type</p>
-    </td>
-    <td class='places'>
-        <p><span class='first'>Places: </span>$places</p>
-    </td>
-    <td class='dateRange'>
-        <p><span class='first'>Date Range: </span>$dateRange</p>
-    </td>
-    <td class='meta'>
-
-    </td>
-</tr>
-HTML;
+                        $card = "<tr> class='tr' data-url='" . $event_url . "'>";
+                        foreach ($select_fields[1] as $index => $field) {
+                          // var_dump($record);
+                          if($field == "Name"){
+                            $value = $record['name'][0];
+                          }if($field == "Event type"){
+                            $value = $record['event_type'][0];
+                          }if($field == "Source type"){
+                            $value = $record['source_type'][0];
+                          }if($field == "Date range"){
+                            $value = "";
+                          }if($field == "Place type"){
+                            $value = $record['place_type'][0];
+                          }if($field == "Display place"){
+                            $value = $record['display_place'][0];
+                          }if($field == "Start date"){
+                            $value = "";
+                          }if($field == "End date"){
+                            $value = "";
+                          }
+                          $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
+                        }
+                        $card .= "</tr>";
                         // format this row for csv download
                         $formattedData[$eventQ] = array(
                             'NAME' => $name,
@@ -878,33 +832,28 @@ HTML;
                         if ($first) {
                             $first = false;
 
-                            $headers = <<<HTML
-<tr>
-    <th class="name">NAME</th>
-    <th class="type">TYPE</th>
-    <th class="project">PROJECT</th>
-</tr>
-HTML;
+                            $fields = [];
+                            $headers = "<tr>";
+                            foreach ($select_fields[3] as $field) {
+                              $headers .= "<th class='" . strtolower($field) . "'>" . strtoupper($field) . "</th>";
+                              array_push($fields, strtoupper($field));
+                            }
+                            $headers .= "</tr>";
                             $cards['tableCard']['headers'] = $headers;
-                            $cards['fields'] = ['NAME', 'TYPE', 'PROJECT'];
+                            $cards['fields'] = $fields;
                         }
 
-                        $card = <<<HTML
-<tr class='tr' data-url='$source_url'>
-    <td class='name td-name'>
-        <span>$name</span>
-    </td>
-    <td class='type'>
-        <p><span class='first'>Type: </span>$type</p>
-    </td>
-    <td class='project'>
-        <p><span class='first'>Project: </span>$project</p>
-    </td>
-    <td class='meta'>
-
-    </td>
-</tr>
-HTML;
+                        $card = "<tr> class='tr' data-url='" . $source_url . "'>";
+                        foreach ($select_fields[3] as $index => $field) {
+                          // var_dump($record);
+                          if($field == "Name"){
+                            $value = $record['name'][0];
+                          }if($field == "Database"){
+                            $value = $record['generated_by'][0];
+                          }
+                          $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
+                        }
+                        $card .= "</tr>";
 
                         // format this row for csv download
                         $formattedData[$sourceQ] = array(

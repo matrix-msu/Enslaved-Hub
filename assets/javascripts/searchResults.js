@@ -12,7 +12,12 @@ var card_limit = 12;
 var filters = {};
 var display = search_type;
 var firstLoad = true;
-var selected_fields = ['Name', 'Occupation', 'Role', 'Event', 'Date', 'Place type', 'Location', 'Source type'];
+var selected_fields_people = ['Name', 'Occupation', 'Role', 'Event', 'Date', 'Place type', 'Location', 'Source type'];
+var selected_fields_events = ['Event type', 'Name', 'Source type', 'Date range', 'Place type', 'Display place', 'Start date', 'End date'];
+var selected_fields_places = ['Name', 'Database', 'Source type', 'Location', 'Place type'];
+var selected_fields_source = ['Name', 'Database'];
+// var selected_fields_places = [];
+// var selected_fields_source = [];
 // console.log(selected_items);
 if (search_type == "all"){
     display = 'people';
@@ -124,8 +129,8 @@ function searchResults(preset, limit = 12, offset = 0)
     if(sort != ''){
       filters['sort'] = sort;
     }
-    console.log(selected_fields);
     var templates = ['gridCard', 'tableCard'];
+    var selected_fields = [selected_fields_people, selected_fields_events, selected_fields_places, selected_fields_source];
     generateFilterCards();
 
     $.ajax({
@@ -270,7 +275,7 @@ function appendCards()
 
     $("thead").empty(); //empty headers before adding them
     var headers = result_array['tableCard']['headers'];
-    console.log(headers);
+    // console.log(headers);
     $(headers).appendTo("thead");
 
     $("tbody").empty(); //empty grid before appending more
@@ -1039,9 +1044,17 @@ $("#search-results tbody").on('click','tr', function(event){
 
 //submit button in configure tables modals
 $('.update-columns-button').click(function(e) {
-    console.log("This is a test");
-    console.log(selected_items);
-    selected_fields = selected_items;
+    category = $('.selected').attr('id');
+    if (category == 'people'){
+      selected_fields_people = selected_columns;
+    }if (category == 'events'){
+      selected_fields_events = selected_columns;
+    }if (category == 'places'){
+      selected_fields_places = selected_columns;
+    }if (category == 'source'){
+      selected_fields_source = selected_columns;
+    }
+    // selected_fields = selected_items;
     closeModal();
     searchResults(search_type);
 })
