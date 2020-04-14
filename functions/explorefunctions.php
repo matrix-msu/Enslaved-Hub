@@ -100,7 +100,7 @@ HTML;
 
       $explode = explode('/', $pq[$i]);
       $pqid = end($explode);
-      $pqurl = $baseurl . 'record/person/' . $pqid;
+      $pqurl = $baseurl . 'record/event/' . $pqid;
       $matched = $roles[$i] . ' - ' . $participants[$i];
 
       $html .= <<<HTML

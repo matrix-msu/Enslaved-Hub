@@ -22,8 +22,8 @@ const eventTypes=[
     'Trade' => 'Q166',
     'Voyage' => 'Q250',
     'Emancipation or Manumission' => 'Q281',
-    'Embarkation' => '',
-    'Disembarkation' => ''
+    'Embarkation' => 'Q10087',
+    'Disembarkation' => 'Q10088'
 ];
 
 const qeventTypes = [
@@ -47,6 +47,8 @@ const qeventTypes = [
   "Q165" => "Self-Purchase",
   "Q166" => "Trade",
   "Q250" => "Voyage",
-  "Q281" => "Emancipation or Manumission"
+  "Q281" => "Emancipation or Manumission",
+  "Q10087" => "Embarkation",
+  "Q10088" => "Disembarkation"	
 ];
 ?>

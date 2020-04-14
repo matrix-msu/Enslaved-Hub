@@ -15,9 +15,10 @@
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p><?php echo $cache_data['contributeTitle'] ?></p>
+        <p><?php echo $cache_data['descr'] ?></p>
     </div>
 </div>
-<div class="cardwrap contributors">
+<!--<div class="cardwrap contributors">
     <?php echo $cache_data['contributeSplit'] ?>
 </div>
+-->

@@ -84,7 +84,14 @@ function Json_GetNavigationData()
 	$navContents = file_get_contents(BASE_PATH . "cache/navContents.json");
 	// echo '<script>console.log('.$navContents.')</script>';
 	$navContents = json_decode($navContents, true);
-	return $navContents;
+	$formattedContents = array();
+	foreach( $navContents as $content ){
+		if( $content[0] != null ){
+			$formattedContents[] = $content;
+		}
+	}
+	//var_dump($formattedContents);die;
+	return $formattedContents;
 }
 
 function Json_GetData_ByTitle($title, $all_matches = false)

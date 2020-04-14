@@ -1,5 +1,5 @@
 <!-- Author: Drew Schineller-->
-<?php $cache_data = Json_GetData_ByTitle("Learn");
+<?php $cache_data = Json_GetData_ByTitle("Project History");
  ?>
 <!-- About page-->
 <!-- Heading image and title container-->
@@ -15,7 +15,7 @@
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p><?php echo $cache_data['learnTitle'] ?></p>
+        <p><?php echo $cache_data['descr'] ?></p>
     </div>
 </div>
 <div class="cardwrap contributors">

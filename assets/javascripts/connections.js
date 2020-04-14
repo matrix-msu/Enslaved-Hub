@@ -91,7 +91,7 @@ function displayConnections(cardType){
             var conn = connections[i];
             var name = conn['peoplename']['value'];
             var agentQ = conn['people']['value'];
-            var role = conn['role']['value'];
+            var role = conn['relationslabel']['value'];
             agentQ = agentQ.substring(agentQ.lastIndexOf('/') + 1);
             var personUrl = BASE_URL + 'record/person/' + agentQ;
 
