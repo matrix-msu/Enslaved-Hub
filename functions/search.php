@@ -339,6 +339,7 @@ function keyword_search() {
     $size = 12;
     $from = 0;
     $get_all_counts = false;
+    $select_fields = $_GET['fields'];
 
     $convert_filters = [
         'gender' => 'sex',
@@ -578,7 +579,7 @@ function keyword_search() {
         $total = $single_total;
     }
 
-    return createCards($res['hits']['hits'], $templates, $preset, $total);
+    return createCards($res['hits']['hits'], $templates, $select_fields, $preset, $total);
 }
 
 function get_columns() {
