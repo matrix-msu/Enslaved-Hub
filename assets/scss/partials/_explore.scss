@@ -196,6 +196,7 @@
             padding: 17px 20px;
             color: $base-dark;
             font-size: 18px;
+            line-height: 1;
             max-height: 60px;
             cursor: pointer;
             margin-bottom: 15px;
@@ -208,6 +209,8 @@
                 overflow: hidden;
                 display: inline-block;
                 vertical-align: middle;
+                font-family: aleobold;
+				line-height: 1;
             }
 
             //&:nth-child(3n){
@@ -217,6 +220,7 @@
             span{
                 float: right;
                 margin-right: 12px;
+                line-height: 1.2;
                 font-size: 16px;
             }
 
@@ -227,7 +231,7 @@
                 width: 9px;
                 height: 15px;
                 float: right;
-                margin-top: 4px;
+                margin-top: 2px;
                 transition: .2s;
             }
 

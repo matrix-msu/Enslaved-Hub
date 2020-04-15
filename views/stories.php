@@ -50,7 +50,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
   </div>
 </div>
 <!-- info container-->
-<div class="container info">
+<div class="container info stories">
     <div class="container infowrap">
         <p><?php echo $cache_Data['descr'] ?></p>
     </div>

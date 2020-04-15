@@ -18,25 +18,13 @@
     }
 }
 
-.info{
-    height: auto;
-    padding: 60px 0 20px; //add side padding at certain width
-    width: 100%;
+.info {
 
-    .infowrap{
-        margin: 0 auto;
-        max-width: 1000px;
-        width: 90%;
-
-        p{
-            color: $base-dark;
-            line-height: 32px;
-            position: relative;
-            text-align: left;
-            font-size: 18px;
-        }
-    }
+	&.stories{
+	    padding: 60px 0 20px;
+	}
 }
+
 .card-slider{
     .cards{
          display: flex;
@@ -210,7 +198,7 @@
                 margin-right: 40px;
 
                 .sort-stories-text{
-                    font-size: 14px;
+                    font-size: 16px;
                     color: $base-dark;
                 }
 
@@ -219,7 +207,6 @@
                     box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
                     color: $white;
                     border-radius: 5px;
-                    width: max-content;
                     text-align: center;
                     display: none;
                     list-style: none;
@@ -230,7 +217,9 @@
                     z-index: 2;
                     li {
                         cursor: pointer;
-                        font-size: 12px;
+                        font-family: aleobold;
+                        font-size: 14px;
+                        white-space: nowrap;
                         line-height: 15px;
                         padding: 5px 3px;
                     }
@@ -281,7 +270,8 @@
             float: left;
             line-height: 50px;
             color: #253449;
-            font-size: 14px;
+            font-family: aleobold;
+            font-size: 16px;
             cursor: pointer;
             img {
                 transition: 400ms;
@@ -312,8 +302,10 @@
             min-width: 100px;
             li {
                 cursor: pointer;
-                font-size: 12px;
-                line-height: 15px;
+                font-family: aleobold;
+                font-size: 14px;
+                white-space: nowrap;
+                line-height: 1;
                 padding: 5px 3px;
                 transition: color 0.3s ease;
                 margin: 0px 5px;
