@@ -85,13 +85,18 @@ function displayConnections(cardType){
 
     var details = '<div class="details"><div class="detail"><p class="detail-title">Person Status</p><p>Enslaved</p></div><div class="detail"><p class="detail-title">Sex</p><p>Unidentified</p></div><div class="detail"><p class="detail-title">Location</p><p>Location Name</p></div><div class="detail"><p class="detail-title">Origin</p><p>Location Name</p></div><div class="detail"><p class="detail-title">Date Range</p><p>1840-1864</p></div></div>';
 
-
     if( cardType == "Person"){
         for (var i in connections){
             var conn = connections[i];
             var name = conn['peoplename']['value'];
             var agentQ = conn['people']['value'];
-            var role = conn['relationslabel']['value'];
+            var role;
+            if(typeof conn['relationslabel'] !== 'undefined'){
+              role = conn['relationslabel']['value'];
+            }
+            else{
+              role = conn['role']['value'];
+            }
             agentQ = agentQ.substring(agentQ.lastIndexOf('/') + 1);
             var personUrl = BASE_URL + 'record/person/' + agentQ;
 
@@ -108,6 +113,7 @@ function displayConnections(cardType){
     } else if (cardType == "Event") {
         for (var i in connections){
             var conn = connections[i];
+            console.log(conn);
             var name = conn['eventlabel']['value'];
             var eventQ = conn['event']['value'];
             eventQ = eventQ.substring(eventQ.lastIndexOf('/') + 1);
