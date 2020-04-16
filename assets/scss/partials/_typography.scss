@@ -9,12 +9,23 @@ h1, h2, h3, h4, h5, p, a, span, li, label, dinput{
 
 h1, h2, h3 {
   font-family: ebgaramond;
-  font-weight: bold;
 }
 
 h4,h5,p,a,span,li,label,input {
   font-family: aleobold;
   font-weight: 300;
+}
+
+a {
+	color: $sub-base;
+	font-family: aleobold;
+}
+
+p, ol, ul, li {
+	font-family: aleoregular;
+	font-size: 18px;
+	line-height: 1.5;
+	
 }
 
 .background-image {
@@ -26,15 +37,6 @@ h4,h5,p,a,span,li,label,input {
 
 .italic {
   font-style: italic;
-}
-
-.paragraph {
-  font-size: 16px;
-  line-height: 24px;
-
-  a {
-    @extend .text-link;
-  }
 }
 
 .section-title {
