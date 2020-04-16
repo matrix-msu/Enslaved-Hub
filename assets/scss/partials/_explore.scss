@@ -151,7 +151,12 @@
             }
         }
     }
+    
+    &.explore{
+	    padding: 60px 0 20px;
+	}
 }
+
 
 .people-page{
     background-image: url(../images/PersonLanding.jpg);
