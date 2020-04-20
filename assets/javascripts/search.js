@@ -63,8 +63,12 @@ $(document).ready(function() {
         method: "GET",
         'success': function (data) {
             data = JSON.parse(data);
-            var min = data['min_date']['value_as_string'];
-            var max = data['max_date']['value_as_string'];
+            dates = []
+            $.each(data, function(_, date) {
+                dates.push(date['value_as_string'])
+            });
+            var min = Math.min.apply(Math, dates);
+            var max = Math.max.apply(Math, dates);
 
             // Doing this for safety purposes
             if (min <= max) {

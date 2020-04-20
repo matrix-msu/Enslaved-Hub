@@ -16,9 +16,7 @@ var selected_fields_people = ['Name', 'Occupation', 'Role', 'Event', 'Date', 'Pl
 var selected_fields_events = ['Event type', 'Name', 'Source type', 'Date range', 'Place type', 'Display place', 'Start date', 'End date'];
 var selected_fields_places = ['Name', 'Database', 'Source type', 'Location', 'Place type'];
 var selected_fields_source = ['Name', 'Database'];
-// var selected_fields_places = [];
-// var selected_fields_source = [];
-// console.log(selected_items);
+
 if (search_type == "all"){
     display = 'people';
 }
@@ -144,10 +142,8 @@ function searchResults(preset, limit = 12, offset = 0)
             fields: selected_fields
         },
         'success': function (data) {
-            // console.log(data);
             isSearching = false;
             result_array = JSON.parse(data);
-            // console.log(result_array);
 
             if (preset == "all"){
                 var allCounters = result_array['total'];
@@ -275,7 +271,6 @@ function appendCards()
 
     $("thead").empty(); //empty headers before adding them
     var headers = result_array['tableCard']['headers'];
-    // console.log(headers);
     $(headers).appendTo("thead");
 
     $("tbody").empty(); //empty grid before appending more

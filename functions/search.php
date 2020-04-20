@@ -25,7 +25,9 @@ function dateRange() {
             'size' => 0,
             'aggs' => [
                 'max_date' => ['max' => ['field' => 'date', 'format' => 'yyyy']],
-                'min_date' => ['min' => ['field' => 'date', 'format' => 'yyyy']]
+                'min_date' => ['min' => ['field' => 'date', 'format' => 'yyyy']],
+                'max_end_date' => ['max' => ['field' => 'end_date', 'format' => 'yyyy']],
+                'min_end_date' => ['min' => ['field' => 'end_date', 'format' => 'yyyy']]
             ]
         ]
     ];
@@ -518,18 +520,24 @@ function keyword_search() {
 
             if ($key == 'date' | $key == 'age') {
                 $values = explode('-', $value[0]);
+                // Note: have to include end_date
+                // when date is filtered.
                 if ($key == 'date')
-                    $key = 'date.raw';
+                    $key = ['date.raw', 'end_date.raw'];
+                else
+                    $key = [$key];
                 //TODO::add gte or lte separate
-                $range_filter = [
-                    'range' => [
-                        $key => [
-                            'gte' => $values[0],
-                            'lte' => $values[1]
+                foreach ($key as $range_key) {
+                    $range_filter = [
+                        'range' => [
+                            $range_key => [
+                                'gte' => $values[0],
+                                'lte' => $values[1]
+                            ]
                         ]
-                    ]
-                ];
-                array_push($terms, $range_filter);
+                    ];
+                    array_push($terms, $range_filter);
+                }
             } else if ($key == 'modern_country_code') {
                 $codes = [];
                 foreach ($value as $country) {
