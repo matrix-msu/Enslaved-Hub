@@ -433,7 +433,7 @@ function installModalListeners(data){
 		else if(modalType == "update-link"){
 			var url = $(this).parent().parent().find('.link-wrap a.link').text();
 			var keyword = $(this).parent().parent().find('.link-name a.name').text();
-			var keyword_id = $(this).parent().parent().parent().find('[data-id]').data('id');
+			var keyword_id = $(this).parent().parent().find('[data-id]').data('id');
 
 			$('.'+ modalType +'-modal .id').attr('value', keyword_id);
 			$('.'+ modalType +'-modal #sortmenu').attr('data-id', keyword_id);

@@ -12,6 +12,10 @@ var card_limit = 12;
 var filters = {};
 var display = search_type;
 var firstLoad = true;
+var selected_fields_people = ['Name', 'Occupation', 'Role', 'Event', 'Date', 'Place type', 'Location', 'Source type'];
+var selected_fields_events = ['Event type', 'Name', 'Source type', 'Date range', 'Place type', 'Display place', 'Start date', 'End date'];
+var selected_fields_places = ['Name', 'Database', 'Source type', 'Location', 'Place type'];
+var selected_fields_source = ['Name', 'Database'];
 
 if (search_type == "all"){
     display = 'people';
@@ -124,6 +128,7 @@ function searchResults(preset, limit = 12, offset = 0)
       filters['sort'] = sort;
     }
     var templates = ['gridCard', 'tableCard'];
+    var selected_fields = [selected_fields_people, selected_fields_events, selected_fields_places, selected_fields_source];
     generateFilterCards();
 
     $.ajax({
@@ -133,7 +138,8 @@ function searchResults(preset, limit = 12, offset = 0)
             preset: preset,
             filters: filters,
             templates: templates,
-            display: display
+            display: display,
+            fields: selected_fields
         },
         'success': function (data) {
             isSearching = false;
@@ -1030,3 +1036,20 @@ $('div').not('.filter-menu').mouseup(function() {
 $("#search-results tbody").on('click','tr', function(event){
     window.location = $(this).attr('data-url');
 });
+
+//submit button in configure tables modals
+$('.update-columns-button').click(function(e) {
+    category = $('.selected').attr('id');
+    if (category == 'people'){
+      selected_fields_people = selected_columns;
+    }if (category == 'events'){
+      selected_fields_events = selected_columns;
+    }if (category == 'places'){
+      selected_fields_places = selected_columns;
+    }if (category == 'source'){
+      selected_fields_source = selected_columns;
+    }
+    // selected_fields = selected_items;
+    closeModal();
+    searchResults(search_type);
+})

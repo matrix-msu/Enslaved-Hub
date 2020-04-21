@@ -215,7 +215,6 @@
 
     p {
       bottom: 0;
-      margin: 15px 30px 0 0;
       font-family: aleoregular;
     }
         a {
@@ -224,9 +223,13 @@
         font-family: aleobold;
         text-decoration: underline;
         }
+    ul {
+	    margin: 0;
+		padding: 0 25px;
+    }
 }
 
-    // Contributor Cards
+// Partner Cards
 .card.partner{
     margin-bottom: 20px;
     box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);

@@ -60,6 +60,7 @@ div.searched-term {
 
             li.cat-cat{
                 cursor: pointer;
+                font-family: aleobold;
                 font-size: 16px;
                 letter-spacing: 1.75px;
                 padding: 0 0 10px;
@@ -76,6 +77,7 @@ div.searched-term {
             li.filter-cat {
                 cursor: pointer;
                 color: $base-dark;
+                font-family: aleobold;
                 font-size: 16px;
                 padding: 15px 0;
                 position: relative;
@@ -127,6 +129,7 @@ div.searched-term {
                                 font-size: 14px;
                                 padding-top: 1px;
                                 color: $base-dark;
+                                line-height: 1;
 
                                 em {
                                     font-style: normal;
@@ -181,7 +184,7 @@ div.searched-term {
                         background-color: #0E3232;
                         color: white;
                         margin-left: 5px;
-                        margin-top: 22px;
+                        margin-top: 29px;
                         border: none;
                         border-radius: 4px;
                         width: 40px;
@@ -394,8 +397,11 @@ ul.catmenu{
                 min-width: 100px;
                 li {
                     cursor: pointer;
-                    font-size: 12px;
+                    font-family: aleobold;
+                    font-size: 14px;
+                    white-space: nowrap;
                     padding: 5px 0 5px;
+                    line-height: 1;
                     transition: all .3s;
                 }
                 li:hover {
@@ -555,7 +561,7 @@ ul.catmenu{
                             top: 0;
                         }
                         td:last-child {
-                            display: none;
+                            // display: none;
                         }
                         a {
                             color: $base-dark;
@@ -611,6 +617,7 @@ ul.catmenu{
             li{
                 display: inline;
                 cursor: pointer;
+                font-family: aleobold;
                 font-size: 16px;
                 color: rgb(37, 52, 73);
                 opacity: .25;
@@ -659,10 +666,11 @@ ul.catmenu{
             .selected{
                 border-bottom: 2px solid $sub-base;
                 opacity: 1;
+                font-family: aleobold;
             }
 
             hr{
-                margin-top: 19px;
+                margin-top: 17px;
                 border: none;
                 border-bottom: 2px solid #E4DED5;
                 width: 100%;
@@ -1064,6 +1072,7 @@ ul.catmenu{
 
                     p{
                         color: $base-dark;
+                        font-family: aleobold;
                         font-size: 14px;
                         font-style: italic;
                         margin-bottom: 5px;

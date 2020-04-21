@@ -25,7 +25,9 @@ function dateRange() {
             'size' => 0,
             'aggs' => [
                 'max_date' => ['max' => ['field' => 'date', 'format' => 'yyyy']],
-                'min_date' => ['min' => ['field' => 'date', 'format' => 'yyyy']]
+                'min_date' => ['min' => ['field' => 'date', 'format' => 'yyyy']],
+                'max_end_date' => ['max' => ['field' => 'end_date', 'format' => 'yyyy']],
+                'min_end_date' => ['min' => ['field' => 'end_date', 'format' => 'yyyy']]
             ]
         ]
     ];
@@ -333,12 +335,13 @@ function keyword_search() {
                         ->setHosts($hosts)
                         ->build();
 
-    $item_types = ['people', 'event', 'place', 'source'];
+    $item_types = ['person', 'event', 'place', 'source'];
     $filters = $templates = [];
     $query = $preset = $item_type = $sort = '';
     $size = 12;
     $from = 0;
     $get_all_counts = false;
+    $select_fields = $_GET['fields'];
 
     $convert_filters = [
         'gender' => 'sex',
@@ -517,18 +520,24 @@ function keyword_search() {
 
             if ($key == 'date' | $key == 'age') {
                 $values = explode('-', $value[0]);
+                // Note: have to include end_date
+                // when date is filtered.
                 if ($key == 'date')
-                    $key = 'date.raw';
+                    $key = ['date.raw', 'end_date.raw'];
+                else
+                    $key = [$key];
                 //TODO::add gte or lte separate
-                $range_filter = [
-                    'range' => [
-                        $key => [
-                            'gte' => $values[0],
-                            'lte' => $values[1]
+                foreach ($key as $range_key) {
+                    $range_filter = [
+                        'range' => [
+                            $range_key => [
+                                'gte' => $values[0],
+                                'lte' => $values[1]
+                            ]
                         ]
-                    ]
-                ];
-                array_push($terms, $range_filter);
+                    ];
+                    array_push($terms, $range_filter);
+                }
             } else if ($key == 'modern_country_code') {
                 $codes = [];
                 foreach ($value as $country) {
@@ -553,9 +562,10 @@ function keyword_search() {
         $params['body']['size'] = 0;
         foreach ($item_types as $type) {
             // TODO::this is annoying, will require a refactor on index (pluralize types)
-            if ($type == 'people')
+            if ($type == 'person') {
+                $type = 'people';
                 $count_key = $type . 'count';
-            else
+            } else
                 $count_key = $type . 'scount';
 
             if ($type == $item_type)
@@ -577,7 +587,7 @@ function keyword_search() {
         $total = $single_total;
     }
 
-    return createCards($res['hits']['hits'], $templates, $preset, $total);
+    return createCards($res['hits']['hits'], $templates, $select_fields, $preset, $total);
 }
 
 function get_columns() {

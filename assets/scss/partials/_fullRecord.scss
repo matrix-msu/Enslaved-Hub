@@ -136,6 +136,7 @@
                 display: inline;
                 cursor: pointer;
                 font-size: 16px;
+                font-family: aleobold;
                 color: rgb(37, 52, 73);
                 opacity: .25;
                 padding-bottom: 20px;
@@ -182,11 +183,12 @@
             }
             .selected{
                 border-bottom: 2px solid $sub-base;
+                font-family: aleobold;
                 opacity: 1;
             }
 
             hr{
-                margin-top: 19px;
+                margin-top: 17px;
                 border: none;
                 border-bottom: 2px solid #E4DED5;
                 width: 100%;
@@ -903,7 +905,6 @@
 
             p{
                 padding-bottom: 10px;
-                font-family: aleoregular;
 
                 .bold{
                     font-family: aleobold;
