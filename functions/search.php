@@ -522,12 +522,19 @@ function keyword_search() {
                 $values = explode('-', $value[0]);
                 // Note: have to include end_date
                 // when date is filtered.
-                if ($key == 'date')
+                if ($key == 'date') {
                     $key = ['date.raw', 'end_date.raw'];
-                else
+                } else {
                     $key = [$key];
-                //TODO::add gte or lte separate
+                }
+
                 foreach ($key as $range_key) {
+                    // Term filter was not working so if trying to find
+                    // an exact date or age, finding the one in the middle.
+                    if ($values[0] == $values[1]) {
+                        $values[0] = $values[0] - 1;
+                        $values[1] = $values[1] + 1;
+                    }
                     $range_filter = [
                         'range' => [
                             $range_key => [
@@ -549,7 +556,6 @@ function keyword_search() {
                 array_push($terms, ['terms' => [$key => $value]]);
             }
         }
-
         $params['body']['query']['bool']['filter'] = $terms;
     }
 
