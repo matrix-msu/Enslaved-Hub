@@ -520,31 +520,25 @@ function keyword_search() {
 
             if ($key == 'date' | $key == 'age') {
                 $values = explode('-', $value[0]);
-                // Note: have to include end_date
-                // when date is filtered.
                 if ($key == 'date') {
-                    $key = ['date.raw', 'end_date.raw'];
-                } else {
-                    $key = [$key];
+                    $values[0] = $values[0] . '||/y';
+                    $values[1] = $values[1] . '||/y';
                 }
 
-                foreach ($key as $range_key) {
-                    // Term filter was not working so if trying to find
-                    // an exact date or age, finding the one in the middle.
-                    if ($values[0] == $values[1]) {
-                        $values[0] = $values[0] - 1;
-                        $values[1] = $values[1] + 1;
-                    }
-                    $range_filter = [
-                        'range' => [
-                            $range_key => [
-                                'gte' => $values[0],
-                                'lte' => $values[1]
-                            ]
+                // Note: Will have to update format
+                // once more exact dates get indexed.
+                // Age still works fine with format.
+                $range_filter = [
+                    'range' => [
+                        $key => [
+                            'gte' => $values[0],
+                            'lte' => $values[1],
+                            'format' => 'yyyy'
                         ]
-                    ];
-                    array_push($terms, $range_filter);
-                }
+                    ]
+                ];
+
+                array_push($terms, $range_filter);
             } else if ($key == 'modern_country_code') {
                 $codes = [];
                 foreach ($value as $country) {
