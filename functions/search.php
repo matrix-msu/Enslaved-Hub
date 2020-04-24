@@ -520,24 +520,25 @@ function keyword_search() {
 
             if ($key == 'date' | $key == 'age') {
                 $values = explode('-', $value[0]);
-                // Note: have to include end_date
-                // when date is filtered.
-                if ($key == 'date')
-                    $key = ['date.raw', 'end_date.raw'];
-                else
-                    $key = [$key];
-                //TODO::add gte or lte separate
-                foreach ($key as $range_key) {
-                    $range_filter = [
-                        'range' => [
-                            $range_key => [
-                                'gte' => $values[0],
-                                'lte' => $values[1]
-                            ]
-                        ]
-                    ];
-                    array_push($terms, $range_filter);
+                if ($key == 'date') {
+                    $values[0] = $values[0] . '||/y';
+                    $values[1] = $values[1] . '||/y';
                 }
+
+                // Note: Will have to update format
+                // once more exact dates get indexed.
+                // Age still works fine with format.
+                $range_filter = [
+                    'range' => [
+                        $key => [
+                            'gte' => $values[0],
+                            'lte' => $values[1],
+                            'format' => 'yyyy'
+                        ]
+                    ]
+                ];
+
+                array_push($terms, $range_filter);
             } else if ($key == 'modern_country_code') {
                 $codes = [];
                 foreach ($value as $country) {
@@ -549,7 +550,6 @@ function keyword_search() {
                 array_push($terms, ['terms' => [$key => $value]]);
             }
         }
-
         $params['body']['query']['bool']['filter'] = $terms;
     }
 
