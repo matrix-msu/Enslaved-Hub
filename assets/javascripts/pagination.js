@@ -17,26 +17,26 @@ function setPagination(total, limit, offset) {
     pages = Math.ceil(total / limit);
     page = Math.ceil(offset / limit) + 1;
 
-    $('span.pagi-last').html(pages); //last pagination number to number of pages
+    $('div.pagi-last').attr('value', pages); //last pagination number to number of pages
 
     if (pages < 2) { // sets pagination on page load
         $('div.pagi-left').css('opacity', '0.25', 'cursor', 'not-allowed');
         $('div.pagi-right').css('opacity', '0.25', 'cursor', 'not-allowed');
         $('span.dotsLeft').hide();
         $('span.dotsRight').hide();
-        $('span.pagi-first').hide();
+        // $('span.pagi-first').hide();
         $('span.one').hide();
         $('span.two').hide();
         $('span.three').hide();
         $('span.four').hide();
         $('span.five').hide();
-        $('span.pagi-last').hide();
+        // $('span.pagi-last').hide();
     } else {
         $('span.dotsLeft').hide();
         $('span.dotsRight').hide();
         $('span.pagi-first').show();
-        $('span.pagi-first').html(1);
-        $('span.pagi-last').hide();
+        // $('span.pagi-first').html(1);
+        // $('span.pagi-last').hide();
         $('span.one').hide();
         $('span.two').hide();
         $('span.three').hide();
@@ -63,13 +63,13 @@ function setPagination(total, limit, offset) {
         }
         if (pages > 6) {
             $('span.dotsRight').show();
-            $('span.pagi-last').show();
+            // $('span.pagi-last').show();
         }
 
         $('div.pagi-left').css('opacity', '0.25', 'cursor', 'not-allowed');
         $('div.pagi-right').css('opacity', '', 'cursor', '');
         $('span.num').removeClass('active');
-        $('span.pagi-first').addClass('active');
+        // $('span.pagi-first').addClass('active');
     }
     paginate();
 }
@@ -85,8 +85,8 @@ function paginate() {
 
         $('span.dotsLeft').hide();
         // $('span.dotsRight').hide();
-        $('span.pagi-first').show();
-        $('span.pagi-first').html(1);
+        // $('span.pagi-first').show();
+        // $('span.pagi-first').html(1);
         $('span.one').hide();
         $('span.two').hide();
         $('span.three').hide();
@@ -116,7 +116,7 @@ function paginate() {
         }
         if (pages > 6) {
             $('span.dotsRight').show();
-            $('span.pagi-last').show();
+            // $('span.pagi-last').show();
         }
 
         if(page == pages){
@@ -126,13 +126,13 @@ function paginate() {
         }
         $('div.pagi-left').css('opacity', '0.25', 'cursor', 'not-allowed');
         $('span.num').removeClass('active');
-        $('span.pagi-first').addClass('active');
+        // $('span.pagi-first').addClass('active');
 
     } else if (page >= 2 && page <= 5) {
         $('span.dotsLeft').hide();
         // $('span.dotsRight').hide();
-        $('span.pagi-first').show();
-        $('span.pagi-first').html(1);
+        // $('span.pagi-first').show();
+        // $('span.pagi-first').html(1);
         $('span.one').hide();
         $('span.two').hide();
         $('span.three').hide();
@@ -159,7 +159,7 @@ function paginate() {
         }
         if (pages > 6) {
             $('span.dotsRight').show();
-            $('span.pagi-last').show();
+            // $('span.pagi-last').show();
         }
 
         if(page == pages){
@@ -173,7 +173,7 @@ function paginate() {
     } else if (pages - page >= 5) {
         $('div.pagi-left').css('opacity', '', 'cursor', '');
         $('div.pagi-right').css('opacity', '', 'cursor', '');
-        $('span.pagi-first').show();
+        // $('span.pagi-first').show();
         $('span.dotsLeft').show();
         $('span.dotsRight').show();
         $('span.one').html(page - 2);
@@ -201,8 +201,8 @@ function paginate() {
 
             $('span.dotsLeft').hide();
             // $('span.dotsRight').hide();
-            $('span.pagi-first').show();
-            $('span.pagi-first').html(1);
+            // $('span.pagi-first').show();
+            // $('span.pagi-first').html(1);
             $('span.one').hide();
             $('span.two').hide();
             $('span.three').hide();
@@ -244,7 +244,7 @@ function paginate() {
             $('span.four').html(page - 2);
             $('span.five').html(page - 1);
             $('span.num').removeClass('active');
-            $('span.pagi-last').addClass('active');
+            // $('span.pagi-last').addClass('active');
         }
     }
     //Set hidden input to value of the current page after pagination has completed
