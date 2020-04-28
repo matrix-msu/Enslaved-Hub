@@ -218,10 +218,15 @@ function search_filter_counts() {
                 foreach ($fields as $field => $values) {
                     foreach (array_keys($values) as $value) {
                         $tmp_params = $params;
-                        array_push(
-                            $tmp_params['body']['query']['bool']['filter'],
-                            ['term' => [$field . '.raw' => $value]]
-                        );
+
+                        if ($value == 'No Sex Recorded') {
+                            $tmp_params['body']['query']['bool']['must_not'] = ['exists' => ['field' => $field]];
+                        } else {
+                            array_push(
+                                $tmp_params['body']['query']['bool']['filter'],
+                                ['term' => [$field . '.raw' => $value]]
+                            );
+                        }
 
                         $res = $es->count($tmp_params);
 
@@ -313,10 +318,16 @@ function filtered_counts() {
     foreach ($field_translate[$raw_field] as $field => $values) {
         foreach (array_keys($values) as $value) {
             $tmp_params = $params;
-            array_push(
-                $tmp_params['body']['query']['bool']['filter'],
-                ['term' => [$field . '.raw' => $value]]
-            );
+
+            if ($value == 'No Sex Recorded') {
+                $tmp_params['body']['query']['bool']['must_not'] = ['exists' => ['field' => $field]];
+            } else {
+                array_push(
+                    $tmp_params['body']['query']['bool']['filter'],
+                    ['term' => [$field . '.raw' => $value]]
+                );
+            }
+
             $res = $es->count($tmp_params);
 
             $total[$value] = $res['count'];
@@ -546,8 +557,19 @@ function keyword_search() {
                 }
                 array_push($terms, ['terms' => ['modern_country_code.raw' => $codes]]);
             } else {
-                $key = $key . '.raw';
-                array_push($terms, ['terms' => [$key => $value]]);
+                // In order to filter a does not exist query alongside term filters of the
+                // same field, you must do this insanely nested bullshit.
+                if (in_array('No Sex Recorded', $value)) {
+                    $should = ['bool' => ['should' => array(['bool' => ['must_not' => ['exists' => ['field' => $key]]]])]];
+                    $value = array_diff($value, ['No Sex Recorded']);
+                    if ($value) {
+                        // Elasticsearch will freak out if array values aren't reset.
+                        array_push($should['bool']['should'], ['terms' => [$key . '.raw' => array_values($value)]]);
+                    }
+                    array_push($terms, $should);
+                } else {
+                    array_push($terms, ['terms' => [$key . '.raw' => $value]]);
+                }
             }
         }
         $params['body']['query']['bool']['filter'] = $terms;
