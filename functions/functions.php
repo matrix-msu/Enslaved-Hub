@@ -377,22 +377,21 @@ HTML;
 // People page
                         $card = "<tr> class='tr' data-url='" . $person_url . "'>";
                         foreach ($select_fields[0] as $index => $field) {
-                          // var_dump($record);
                           if($field == "Name"){
                             $value = $record['name'][0];
-                          }if($field == "Occupation"){
-                            $value = "";
+                          }if($field == "Person Status"){
+                            $value = $record['person_status'][0];
                           }if($field == "Role"){
                             $value = $record['participant_role'][0];
                           }if($field == "Event"){
                             $value = $record['event_type'][0];
                           }if($field == "Date"){
                             $value = $record['date'][0];
-                          }if($field == "Place type"){
+                          }if($field == "Place Type"){
                             $value = implode(', ', $record['place_type']);
-                          }if($field == "Location"){
+                          }if($field == "Place"){
                             $value = implode(', ', $record['display_place']);
-                          }if($field == "Source type"){
+                          }if($field == "Source Type"){
                             $value = $record['source_type'][0];
                           }
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
@@ -536,14 +535,12 @@ HTML;
                         $card = "<tr> class='tr' data-url='" . $place_url . "'>";
                         foreach ($select_fields[2] as $index => $field) {
                           if($field == "Name"){
-                            $value = $record['name'][0];
+                            $value = $record['label'];
                           }if($field == "Database"){
                             $value = $record['generated_by'][0];
-                          }if($field == "Source type"){
-                            $value = $record['source_type'][0];
                           }if($field == "Location"){
                             $value = $record['located_in'][0];
-                          }if($field == "Place type"){
+                          }if($field == "Place Type"){
                             $value = $record['place_type'][0];
                           }
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
@@ -706,23 +703,18 @@ HTML;
 
                         $card = "<tr> class='tr' data-url='" . $event_url . "'>";
                         foreach ($select_fields[1] as $index => $field) {
-                          // var_dump($record);
                           if($field == "Name"){
-                            $value = $record['name'][0];
-                          }if($field == "Event type"){
+                            $value = $record['label'];
+                          }if($field == "Event Type"){
                             $value = $record['event_type'][0];
-                          }if($field == "Source type"){
+                          }if($field == "Source Type"){
                             $value = $record['source_type'][0];
-                          }if($field == "Date range"){
-                            $value = "";
-                          }if($field == "Place type"){
+                          }if($field == "Date Range"){
+                            $value = $record['display_date_range'][0];
+                          }if($field == "Place Type"){
                             $value = $record['place_type'][0];
-                          }if($field == "Display place"){
+                          }if($field == "Place"){
                             $value = $record['display_place'][0];
-                          }if($field == "Start date"){
-                            $value = "";
-                          }if($field == "End date"){
-                            $value = "";
                           }
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
                         }
@@ -845,7 +837,6 @@ HTML;
 
                         $card = "<tr> class='tr' data-url='" . $source_url . "'>";
                         foreach ($select_fields[3] as $index => $field) {
-                          // var_dump($record);
                           if($field == "Name"){
                             $value = $record['name'][0];
                           }if($field == "Database"){

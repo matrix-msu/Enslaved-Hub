@@ -598,30 +598,27 @@ function get_columns() {
     $columns = [
         'people' => [
             'name' => 'Name',
-            'occupation' => 'Occupation',
+            'person_status' => 'Person Status',
             'participant_role' => 'Role',
             'event_type' => 'Event',
             'date' => 'Date',
-            'place_type' => 'Place type',
-            'located_in' => 'Location',
-            'source_type' => 'Source type'
+            'place_type' => 'Place Type',
+            'display_place' => 'Place',
+            'source_type' => 'Source Type'
         ],
         'places' => [
             'label' => 'Name',
             'generated_by' => 'Database',
-            'source_type' => 'Source type',
             'located_in' => 'Location',
-            'place_type' => 'Place type'
+            'place_type' => 'Place Type'
         ],
         'events' => [
-            'event_type' => 'Event type',
             'name' => 'Name',
-            'source_type' => 'Source type',
-            'display_date_range' => 'Date range',
-            'place_type' => 'Place type',
-            'display_place' => 'Display place',
-            'date' => 'Start date',
-            'end_date' => 'End date'
+            'event_type' => 'Event Type',
+            'source_type' => 'Source Type',
+            'display_date_range' => 'Date Range',
+            'place_type' => 'Place Type',
+            'display_place' => 'Place'
         ],
         'sources' => [
             'label' => 'Name',

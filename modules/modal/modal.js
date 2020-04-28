@@ -4,6 +4,12 @@ var modalImage = $('img.modal-img-view');
 var height;
 var avail_columns = [];
 var selected_columns = [];
+var mod_select_fields_people = ["Name", "Person Status", "Place"];
+var mod_select_fields_events = ["Name", "Event Type", "Place", "Date Range"];
+var mod_select_fields_places = ["Name", "Place Type", "Location"];
+var mod_select_fields_source = ["Name", "Database"];
+
+
 
 for (var i=0; i < modals.length; i++) {
     modals[i].addEventListener('click', showModal(i));
@@ -11,6 +17,16 @@ for (var i=0; i < modals.length; i++) {
 
 function showModal(i) {
     return function(){
+
+        if(display == "people"){
+          selected_columns = mod_select_fields_people;
+        }if(display == "events"){
+          selected_columns = mod_select_fields_events;
+        }if(display == "places"){
+          selected_columns = mod_select_fields_places;
+        }if(display == "sources"){
+          selected_columns = mod_select_fields_source;
+        }
 
         populateColumnOptions(display);
 
@@ -100,10 +116,15 @@ function populateColumnOptions(type) {
         },
         'success': function (data) {
             var columns = JSON.parse(data);
+            $('#available-cols').empty();
+            $('#selected-cols').empty();
             for (var col in columns) {
-                if(!avail_columns.includes(columns[col])){
+                if(!selected_columns.includes(columns[col])){
                   $('#available-cols').append(`<li class="left" value=${columns[col]}>${columns[col]}</li>`);
                   avail_columns.push(columns[col]);
+                }
+                if(selected_columns.includes(columns[col])){
+                  $('#selected-cols').append(`<li class="left" value=${columns[col]}>${columns[col]}</li>`);
                 }
             }
 
