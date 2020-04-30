@@ -342,10 +342,9 @@
         </div>
         <div id="pagination">
             <input class="current-page" type="hidden" value="1">
-            <div class="pagi-first" value="1"><p>First</p></div>
             <div class="pagi-left"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Left"/></div>
             <div class="page-numbers">
-                <!-- <span class="num pagi-first">1</span> -->
+                <span class="num pagi-first">1</span>
                 <span class="dotsLeft">...</span>
                 <span class="num one"></span>
                 <span class="num two"></span>
@@ -353,10 +352,9 @@
                 <span class="num four"></span>
                 <span class="num five"></span>
                 <span class="dotsRight">...</span>
-                <!-- <span class="num pagi-last">310</span> -->
+                <span class="num pagi-last">310</span>
             </div>
-            <div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Right"/></div>
-            <div class="pagi-last" value="1"><p>Last</p></div>
+            <div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron-light.svg" alt="Arrow Right"/></div>
         </div>
     </div>
 </main>
@@ -366,15 +364,6 @@
         <div class="config-table-modal-content-wrap">
             <div class="close"><img src="<?php echo BASE_URL;?>assets/images/x.svg" alt="close modal button"></div>
             <h4>Configure Table Columns</h4>
-            <p>Choose Group of Variables
-								<label for="dropdown-select" class="sr-only">dropdown</label>
-                <select id="dropdown-select" name="dropdown-select">
-                    <option value="1">Name of Variable Group</option>
-                    <option value="2">####</option>
-                    <option value="3">####</option>
-                    <option value="4">####</option>
-                </select>
-            </p>
             <div>
                 <div class="left-col">
                     <p>Available Columns</p>

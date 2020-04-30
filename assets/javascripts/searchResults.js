@@ -12,10 +12,10 @@ var card_limit = 12;
 var filters = {};
 var display = search_type;
 var firstLoad = true;
-var selected_fields_people = ["Name", "Person Status", "Place"];
+var selected_fields_people = ["Name", "Sex", "Person Status", "Place"];
 var selected_fields_events = ["Name", "Event Type", "Place", "Date Range"];
 var selected_fields_places = ["Name", "Place Type", "Location"];
-var selected_fields_source = ["Name", "Database"];
+var selected_fields_source = ["Name", "Project", "Source Type"];
 
 if (search_type == "all"){
     display = 'people';

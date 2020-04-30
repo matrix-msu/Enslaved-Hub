@@ -379,6 +379,8 @@ HTML;
                         foreach ($select_fields[0] as $index => $field) {
                           if($field == "Name"){
                             $value = $record['name'][0];
+                          }if($field == "Sex"){
+                            $value = $record['sex'][0];
                           }if($field == "Person Status"){
                             $value = $record['person_status'][0];
                           }if($field == "Role"){
@@ -536,7 +538,7 @@ HTML;
                         foreach ($select_fields[2] as $index => $field) {
                           if($field == "Name"){
                             $value = $record['label'];
-                          }if($field == "Database"){
+                          }if($field == "Project"){
                             $value = $record['generated_by'][0];
                           }if($field == "Location"){
                             $value = $record['located_in'][0];
@@ -839,7 +841,9 @@ HTML;
                         foreach ($select_fields[3] as $index => $field) {
                           if($field == "Name"){
                             $value = $record['name'][0];
-                          }if($field == "Database"){
+                          }if($field == "Source Type"){
+                            $value = $record['source_type'][0];
+                          }if($field == "Project"){
                             $value = $record['generated_by'][0];
                           }
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";

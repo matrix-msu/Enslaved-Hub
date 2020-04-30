@@ -598,6 +598,7 @@ function get_columns() {
     $columns = [
         'people' => [
             'name' => 'Name',
+            'sex' => 'Sex',
             'person_status' => 'Person Status',
             'participant_role' => 'Role',
             'event_type' => 'Event',
@@ -608,7 +609,7 @@ function get_columns() {
         ],
         'places' => [
             'label' => 'Name',
-            'generated_by' => 'Database',
+            'generated_by' => 'Project',
             'located_in' => 'Location',
             'place_type' => 'Place Type'
         ],
@@ -622,7 +623,8 @@ function get_columns() {
         ],
         'sources' => [
             'label' => 'Name',
-            'generated_by' => 'Database'
+            'generated_by' => 'Project',
+            'type' => 'Source Type'
         ]
     ];
     echo json_encode($columns[$type]);
