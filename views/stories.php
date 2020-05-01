@@ -6,7 +6,9 @@ $sortDirection = (isset($_GET['direction']) ? strtoupper($_GET['direction']) : '
 $storiesPerPage = (isset($_GET['count']) && is_numeric($_GET['count']) ? $_GET['count'] : '8');
 $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1');
 
-// $stories = getStories($page, $storiesPerPage, [$sortField, $sortDirection]);
+// Making sure search keyword(s) are provided
+$searchString = (!empty($_GET['searchbar']) ? htmlspecialchars($_GET['searchbar']) : "");
+$keywords = explode(" ",$searchString);
 
 // Getting Stories using korawrappper
 $fields =  ['Title', 'Featured'];
@@ -20,8 +22,9 @@ $koraResults = koraWrapperSearch(STORY_SID, $fields,
 $stories = json_decode($koraResults, true);
 $count = $stories["counts"]["global"]; // Total count of stories
 
-$featured = [];
+// echo "<script>console.log(".json_encode($stories).")</script>";
 
+$featured = [];
 foreach ($stories['records'][0] as $kid => $story) {
     if (isset($story['Featured']) && $story['Featured'] == 'TRUE') {
         $featured[$kid] = $story;
@@ -130,7 +133,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                 </ul>
             </div>
             <div class="container search">
-                <form action="submit">
+                <form action="" method="get">
                     <label for="searchbar" class="sr-only">searchbar</label>
                     <input id="searchbar" class="search-field" type="text" name="searchbar" placeholder="Find a Story By Title or Keyword"/>
                     <button class="search-icon-2" type="submit"><img src="<?php echo BASE_URL;?>/assets/images/Search-dark.svg" alt="search-icon"></button>

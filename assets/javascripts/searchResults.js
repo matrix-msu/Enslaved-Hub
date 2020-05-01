@@ -12,10 +12,12 @@ var card_limit = 12;
 var filters = {};
 var display = search_type;
 var firstLoad = true;
-var selected_fields_people = ["Name", "Sex", "Person Status", "Place"];
-var selected_fields_events = ["Name", "Event Type", "Place", "Date Range"];
-var selected_fields_places = ["Name", "Place Type", "Location"];
-var selected_fields_source = ["Name", "Project", "Source Type"];
+
+var has_data = false;
+var selected_fields_people = ['Name', 'Occupation', 'Role', 'Event', 'Date', 'Place type', 'Location', 'Source type'];
+var selected_fields_events = ['Event type', 'Name', 'Source type', 'Date range', 'Place type', 'Display place', 'Start date', 'End date'];
+var selected_fields_places = ['Name', 'Database', 'Source type', 'Location', 'Place type'];
+var selected_fields_source = ['Name', 'Database'];
 
 if (search_type == "all"){
     display = 'people';
@@ -189,8 +191,12 @@ function searchResults(preset, limit = 12, offset = 0)
                 $("ul.cards").empty();
                 $("thead").empty();
                 $("tbody").empty();
+                $("#pagination").hide();
+
+                has_data = false;
                 return;
             }
+            has_data = true;
 
             if (typeof (result_array['formatted_data']) != 'undefined'){
                 formattedData = result_array['formatted_data'];
@@ -509,8 +515,10 @@ $(document).ready(function() {
     // Display the Table View
     $("span.table-view").click(function tableView (e) { // table view
         e.stopPropagation()
-        var $connectRow = $('.connect-row');
-        $connectRow.css('display', 'flex'); //toggle display for download button
+        if(has_data) {
+          var $connectRow = $('.connect-row');
+          $connectRow.css('display', 'flex'); //toggle display for download button
+        }
         if (cards === true) {
             cards = false
             window.localStorage.setItem('cards', cards)
