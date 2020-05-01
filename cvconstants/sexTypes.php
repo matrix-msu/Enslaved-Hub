@@ -2,7 +2,8 @@
 const sexTypes =
 ['Female' => 'Q294',
 'Male' => 'Q296',
-'Intersex' => 'Q120'];
+'Intersex' => 'Q120',
+'No Sex Recorded' => ''];
 
 const qsexTypes =
 ['Q294' => 'Female',

@@ -25,7 +25,9 @@ function dateRange() {
             'size' => 0,
             'aggs' => [
                 'max_date' => ['max' => ['field' => 'date', 'format' => 'yyyy']],
-                'min_date' => ['min' => ['field' => 'date', 'format' => 'yyyy']]
+                'min_date' => ['min' => ['field' => 'date', 'format' => 'yyyy']],
+                'max_end_date' => ['max' => ['field' => 'end_date', 'format' => 'yyyy']],
+                'min_end_date' => ['min' => ['field' => 'end_date', 'format' => 'yyyy']]
             ]
         ]
     ];
@@ -216,10 +218,15 @@ function search_filter_counts() {
                 foreach ($fields as $field => $values) {
                     foreach (array_keys($values) as $value) {
                         $tmp_params = $params;
-                        array_push(
-                            $tmp_params['body']['query']['bool']['filter'],
-                            ['term' => [$field . '.raw' => $value]]
-                        );
+
+                        if ($value == 'No Sex Recorded') {
+                            $tmp_params['body']['query']['bool']['must_not'] = ['exists' => ['field' => $field]];
+                        } else {
+                            array_push(
+                                $tmp_params['body']['query']['bool']['filter'],
+                                ['term' => [$field . '.raw' => $value]]
+                            );
+                        }
 
                         $res = $es->count($tmp_params);
 
@@ -311,10 +318,16 @@ function filtered_counts() {
     foreach ($field_translate[$raw_field] as $field => $values) {
         foreach (array_keys($values) as $value) {
             $tmp_params = $params;
-            array_push(
-                $tmp_params['body']['query']['bool']['filter'],
-                ['term' => [$field . '.raw' => $value]]
-            );
+
+            if ($value == 'No Sex Recorded') {
+                $tmp_params['body']['query']['bool']['must_not'] = ['exists' => ['field' => $field]];
+            } else {
+                array_push(
+                    $tmp_params['body']['query']['bool']['filter'],
+                    ['term' => [$field . '.raw' => $value]]
+                );
+            }
+
             $res = $es->count($tmp_params);
 
             $total[$value] = $res['count'];
@@ -518,17 +531,24 @@ function keyword_search() {
 
             if ($key == 'date' | $key == 'age') {
                 $values = explode('-', $value[0]);
-                if ($key == 'date')
-                    $key = 'date.raw';
-                //TODO::add gte or lte separate
+                if ($key == 'date') {
+                    $values[0] = $values[0] . '||/y';
+                    $values[1] = $values[1] . '||/y';
+                }
+
+                // Note: Will have to update format
+                // once more exact dates get indexed.
+                // Age still works fine with format.
                 $range_filter = [
                     'range' => [
                         $key => [
                             'gte' => $values[0],
-                            'lte' => $values[1]
+                            'lte' => $values[1],
+                            'format' => 'yyyy'
                         ]
                     ]
                 ];
+
                 array_push($terms, $range_filter);
             } else if ($key == 'modern_country_code') {
                 $codes = [];
@@ -537,11 +557,21 @@ function keyword_search() {
                 }
                 array_push($terms, ['terms' => ['modern_country_code.raw' => $codes]]);
             } else {
-                $key = $key . '.raw';
-                array_push($terms, ['terms' => [$key => $value]]);
+                // In order to filter a does not exist query alongside term filters of the
+                // same field, you must do this insanely nested bullshit.
+                if (in_array('No Sex Recorded', $value)) {
+                    $should = ['bool' => ['should' => array(['bool' => ['must_not' => ['exists' => ['field' => $key]]]])]];
+                    $value = array_diff($value, ['No Sex Recorded']);
+                    if ($value) {
+                        // Elasticsearch will freak out if array values aren't reset.
+                        array_push($should['bool']['should'], ['terms' => [$key . '.raw' => array_values($value)]]);
+                    }
+                    array_push($terms, $should);
+                } else {
+                    array_push($terms, ['terms' => [$key . '.raw' => $value]]);
+                }
             }
         }
-
         $params['body']['query']['bool']['filter'] = $terms;
     }
 
@@ -590,34 +620,33 @@ function get_columns() {
     $columns = [
         'people' => [
             'name' => 'Name',
-            'occupation' => 'Occupation',
+            'sex' => 'Sex',
+            'person_status' => 'Person Status',
             'participant_role' => 'Role',
             'event_type' => 'Event',
             'date' => 'Date',
-            'place_type' => 'Place type',
-            'located_in' => 'Location',
-            'source_type' => 'Source type'
+            'place_type' => 'Place Type',
+            'display_place' => 'Place',
+            'source_type' => 'Source Type'
         ],
         'places' => [
             'label' => 'Name',
-            'generated_by' => 'Database',
-            'source_type' => 'Source type',
+            'generated_by' => 'Project',
             'located_in' => 'Location',
-            'place_type' => 'Place type'
+            'place_type' => 'Place Type'
         ],
         'events' => [
-            'event_type' => 'Event type',
             'name' => 'Name',
-            'source_type' => 'Source type',
-            'display_date_range' => 'Date range',
-            'place_type' => 'Place type',
-            'display_place' => 'Display place',
-            'date' => 'Start date',
-            'end_date' => 'End date'
+            'event_type' => 'Event Type',
+            'source_type' => 'Source Type',
+            'display_date_range' => 'Date Range',
+            'place_type' => 'Place Type',
+            'display_place' => 'Place'
         ],
         'sources' => [
             'label' => 'Name',
-            'generated_by' => 'Database'
+            'generated_by' => 'Project',
+            'type' => 'Source Type'
         ]
     ];
     echo json_encode($columns[$type]);

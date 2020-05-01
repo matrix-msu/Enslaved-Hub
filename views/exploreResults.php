@@ -364,15 +364,6 @@
         <div class="config-table-modal-content-wrap">
             <div class="close"><img src="<?php echo BASE_URL;?>assets/images/x.svg" alt="close modal button"></div>
             <h4>Configure Table Columns</h4>
-            <p>Choose Group of Variables
-								<label for="dropdown-select" class="sr-only">dropdown</label>
-                <select id="dropdown-select" name="dropdown-select">
-                    <option value="1">Name of Variable Group</option>
-                    <option value="2">####</option>
-                    <option value="3">####</option>
-                    <option value="4">####</option>
-                </select>
-            </p>
             <div>
                 <div class="left-col">
                     <p>Available Columns</p>
