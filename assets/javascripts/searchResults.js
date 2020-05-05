@@ -192,7 +192,7 @@ function searchResults(preset, limit = 12, offset = 0)
                 $("thead").empty();
                 $("tbody").empty();
                 $("#pagination").hide();
-
+                $('.connect-row').css('display', 'flex');
                 has_data = false;
                 return;
             }
