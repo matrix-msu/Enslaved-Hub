@@ -11,34 +11,55 @@
             $prevPage = end($prevPage);
             $link1 = BASE_URL. 'explore/' .EXPLORE_FORM;
             $link2;
+            $upperForm = ucfirst(EXPLORE_FORM);
 
             include BASE_LIB_PATH."variableIncluder.php";
 
-            if (count($_GET) > 0){
+            if (count($_GET) >= 0){
                 if($prevPage == "search"){
+                  $currentTitle = "Results";
                   $typeLower = $prevPage;
-                  $typeTitle = "Search";
+                  $typeTitle = "";
 
-                  $currentQ = $_GET["searchbar"];
-                  $currentTitle = str_replace('_', ' ', $currentQ);
-                  $link2 = BASE_URL . $typeLower;
+                  $link1 = BASE_URL . $typeLower;
+                  $upperForm = "Search";
                 }
                 else if ($prevPage == "advancedSearch"){
+                  $currentTitle = "Results";
                   $typeLower = $prevPage;
-                  $typeTitle = "Advanced Search";
+                  $typeTitle = "";
+                  $link1 = BASE_URL . $typeLower;
+                  $upperForm = "Advanced Search";
+                }
+                else if ($prevPage == ""){
+                  $currentTitle = "Results";
+                  $typeLower = $prevPage;
+                  $typeTitle = "";
+                  $link1 = BASE_URL;
                   $link2 = BASE_URL . $typeLower;
+                  $upperForm = "Home";
+                }
+                else if (EXPLORE_FORM == "places" || EXPLORE_FORM == "sources"){
+                  $currentTitle = ucfirst(EXPLORE_FORM) . " Results";
+                  $typeLower = array_keys($_GET)[0];
+
+                  $currentQ = $_GET[$typeLower];
+                  $currentTitle = ucfirst(EXPLORE_FORM) . " Results";
+                  $link2 = BASE_URL. 'explore/'. EXPLORE_FORM . '/' . $typeLower;
+                  $upperForm = ucfirst(EXPLORE_FORM);
                 }
                 else{
+                  $currentTitle = ucfirst(EXPLORE_FORM) . " Results";
                   $typeLower = array_keys($_GET)[0];
                   $typeTitle = ucwords(str_replace('_', ' ', $typeLower));
 
                   $currentQ = $_GET[$typeLower];
                   $currentTitle = ucfirst(EXPLORE_FORM) . " Results";
                   $link2 = BASE_URL. 'explore/'. EXPLORE_FORM . '/' . $typeLower;
+                  $upperForm = ucfirst(EXPLORE_FORM);
                 }
             }
 
-            $upperForm = ucfirst(EXPLORE_FORM);
             $showPath = false;
             $fromBrowse = false;
 
