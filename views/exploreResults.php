@@ -6,16 +6,36 @@
             <?php
             $typeTitle = "";
             $typeLower = "";
-            $currentTitle = 'Search';
+            $currentTitle = ucfirst(EXPLORE_FORM) . " Results";
+            $prevPage = explode("/",$_SERVER["HTTP_REFERER"]);
+            $prevPage = end($prevPage);
+            $link1 = BASE_URL. 'explore/' .EXPLORE_FORM;
+            $link2;
 
             include BASE_LIB_PATH."variableIncluder.php";
 
             if (count($_GET) > 0){
-                $typeLower = array_keys($_GET)[0];
-                $typeTitle = ucwords(str_replace('_', ' ', $typeLower));
+                if($prevPage == "search"){
+                  $typeLower = $prevPage;
+                  $typeTitle = "Search";
 
-                $currentQ = $_GET[$typeLower];
-                $currentTitle = str_replace('_', ' ', $currentQ);
+                  $currentQ = $_GET["searchbar"];
+                  $currentTitle = str_replace('_', ' ', $currentQ);
+                  $link2 = BASE_URL . $typeLower;
+                }
+                else if ($prevPage == "advancedSearch"){
+                  $typeLower = $prevPage;
+                  $typeTitle = "Advanced Search";
+                  $link2 = BASE_URL . $typeLower;
+                }
+                else{
+                  $typeLower = array_keys($_GET)[0];
+                  $typeTitle = ucwords(str_replace('_', ' ', $typeLower));
+
+                  $currentQ = $_GET[$typeLower];
+                  $currentTitle = ucfirst(EXPLORE_FORM) . " Results";
+                  $link2 = BASE_URL. 'explore/'. EXPLORE_FORM . '/' . $typeLower;
+                }
             }
 
             $upperForm = ucfirst(EXPLORE_FORM);
@@ -28,15 +48,15 @@
                 $fromBrowse = true;
             }
             ?>
-            <!-- <h4 class="last-page-header" style="<?php  echo (!$showPath) ? 'display:none' : '' ?> ">
-                <a id="last-page" class="prev1" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM ?>">
+            <h4 class="last-page-header">
+                <a id="last-page" class="prev1" href="<?php echo $link1 ?>">
                     <span id="previous-title"><?php echo $upperForm ?></span>
                 </a>
-                <a id="last-page" class="prev2" href="<?php echo BASE_URL. 'explore/' .EXPLORE_FORM. '/' .$typeLower ?>">
+                <a id="last-page" class="prev2" href="<?php echo $link2 ?>">
                     <span id="previous-title"><?php echo ($typeTitle != "") ? "/ " . $typeTitle : "" ?></span>
                 </a>
                 <span id="current-title"><?php echo ($currentTitle != "") ? "/ " . $currentTitle : "" ?></span>
-            </h4> -->
+            </h4>
             <div class="search-title">
                 <h1>Search Results<?php //echo $currentTitle;?></h1>
             </div>
