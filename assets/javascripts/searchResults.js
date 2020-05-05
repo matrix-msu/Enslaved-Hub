@@ -86,7 +86,7 @@ if(document.location.toString().indexOf('?') !== -1)
             filters[aux[0]] = aux[1].split('+');
             continue;
         }
-        filters[aux[0]] = filters[aux[0]].concat(aux[1].split(','));
+        filters[aux[0]] = filters[aux[0]].concat(aux[1].split(/(?!\s),(?!\s)/));
         // Delete sort from url after refresh
         if(aux[0] == "sort"){
           delete filters[aux[0]];
