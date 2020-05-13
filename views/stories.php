@@ -1,5 +1,7 @@
 <!-- Page author: Drew Schineller-->
 <?php
+include_once( BASE_LIB_PATH . "koraSearchRemote.php" );
+
 // Pagination Vars
 $sortField = (isset($_GET['field']) ? ucwords($_GET['field']) : 'Title');
 $sortDirection = (isset($_GET['direction']) ? strtoupper($_GET['direction']) : 'ASC');
@@ -8,24 +10,43 @@ $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1'
 
 // Making sure search keyword(s) are provided
 $searchString = (!empty($_GET['searchbar']) ? htmlspecialchars($_GET['searchbar']) : "");
-$keywords = explode(" ",$searchString);
+$keywords = !empty($searchString) ? explode(" ",$searchString) : [];
 
 // Getting Stories using korawrappper
-$fields =  ['Title', 'Featured'];
-$sort = [ [$sortField => $sortDirection] ];
+$fields =  ['Title', 'Featured', 'Images'];
+// $sort = [ [$sortField => $sortDirection] ];
 $startIndex = ($page - 1) * $storiesPerPage;
-$koraResults = koraWrapperSearch(STORY_SID, $fields,
- array("Display"), "TRUE", $sort, $startIndex,
- $storiesPerPage, array("size" => true)
-);
+// $koraResults = koraWrapperSearch(STORY_SID, $fields,
+//  array("Display"), "TRUE", $sort, $startIndex,
+//  $storiesPerPage, array("size" => true)
+// );
 
-$stories = json_decode($koraResults, true);
-$count = $stories["counts"]["global"]; // Total count of stories
+// $stories = json_decode($koraResults, true);
+// echo "<script>console.log(".json_encode($stories).")</script>";
+
+
+$clause = new KORA_Clause("Display", "=", "True");
+if(!empty($keywords)) {
+  $other_clause;
+  foreach ($keywords as $keyword) {
+    if(empty($other_clause)) $other_clause = new KORA_Clause("Title", "LIKE", $keyword);
+    else $other_clause = new KORA_Clause($other_clause, "OR" ,new KORA_Clause("Title", "LIKE", $keyword));
+  }
+  $clause = new KORA_Clause($clause, "AND", $other_clause);
+}
+$sort = array(array("field" => $sortField, "direction" => $sortDirection == "ASC" ? SORT_ASC : SORT_DESC));
+$stories = KORA_Search(TOKEN, PID, STORY_SID, $clause, $fields, $sort, $startIndex, $storiesPerPage);
 
 // echo "<script>console.log(".json_encode($stories).")</script>";
 
+$count = $stories["count"]; // Total count of stories
+unset($stories["count"]);
+
+// echo "<script>console.log(".json_encode($count).")</script>";
+
 $featured = [];
-foreach ($stories['records'][0] as $kid => $story) {
+// foreach ($stories['records'][0] as $kid => $story) {
+foreach ($stories as $kid => $story) {
     if (isset($story['Featured']) && $story['Featured'] == 'TRUE') {
         $featured[$kid] = $story;
     }
@@ -73,9 +94,8 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                 // print_r($featured);die;
                 foreach ($featured as $kid => $story) {
                     //get images from records
-                    $storyImages = $story["Images"];
-                    if (isset($storyImages[0])){
-                        $storyImage = $storyImages[0]['url'];
+                    if (!empty($story["Images"]["localName"])){
+                        $storyImage = $story["Images"]["localName"];
                     } else {
                         $storyIndex = array_rand($bg);
                         $storyImage = BASE_URL.'assets/images/'.$bg[$storyIndex];
@@ -175,11 +195,11 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                     $pag_html .= '<li>...</li>';
                 }
 
-                if ($page == $page_count && $page - 4 > 0) {
+                if ($page == $page_count && $page - 4 > 1) {
                     $pag_html .= '<li data-page="'.($page - 4).'">'.($page - 4).'</li>';
                 }
 
-                if ($page >= $page_count - 1 && $page - 3 > 0) {
+                if ($page >= $page_count - 1 && $page - 3 > 1) {
                     $pag_html .= '<li data-page="'.($page - 3).'">'.($page - 3).'</li>';
                 }
 
@@ -201,19 +221,19 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                     $pag_html .= '<li data-page="'.($page + 2).'">'.($page + 2).'</li>';
                 }
 
-                if ($page <= 2 && $page + 3 <= $page_count) {
+                if ($page <= 2 && $page + 3 < $page_count) {
                     $pag_html .= '<li data-page="'.($page + 3).'">'.($page + 3).'</li>';
                 }
 
-                if ($page == 1 && $page + 4 <= $page_count) {
+                if ($page == 1 && $page + 4 < $page_count) {
                     $pag_html .= '<li data-page="'.($page + 4).'">'.($page + 4).'</li>';
                 }
 
-                if ($page_count - $page > 4) {
+                if ($page_count - $page > 3) {
                     $pag_html .= '<li>...</li>';
                 }
 
-                if ($page_count - $page > 3) {
+                if ($page_count - $page >= 3) {
                     $pag_html .= '<li data-page="'.$page_count.'">'.$page_count.'</li>';
                 }
 
