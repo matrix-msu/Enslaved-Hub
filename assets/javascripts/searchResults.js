@@ -86,7 +86,7 @@ if(document.location.toString().indexOf('?') !== -1)
             filters[aux[0]] = aux[1].split('+');
             continue;
         }
-        filters[aux[0]] = filters[aux[0]].concat(aux[1].split(/(?!\s),(?!\s)/));
+        filters[aux[0]] = filters[aux[0]].concat(aux[1].split(','));
         // Delete sort from url after refresh
         if(aux[0] == "sort"){
           delete filters[aux[0]];
@@ -185,14 +185,16 @@ function searchResults(preset, limit = 12, offset = 0)
                 showingResultsText = "Showing " + (card_limit+offset) + " of " + total_length + " Results";
             }
             $('.showing-results').html(showingResultsText);
-
+            
             if (total_length <= 0){
                 // clear old results
                 $("ul.cards").empty();
                 $("thead").empty();
                 $("tbody").empty();
-                $("#pagination").hide();
 
+                // Hide pagination and configure table
+                $("#pagination").hide();
+                $('.connect-row').css('display', 'none');
                 has_data = false;
                 return;
             }

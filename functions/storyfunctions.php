@@ -65,11 +65,10 @@ function displayStories($stories){
             'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
             'enslaved-header-bg7.jpg'];
 
-    foreach ($stories['records'][0] as $kid => $story) {
+    foreach ($stories as $kid => $story) {
         //get images from records
-        $storyImages = $story["Images"];
-        if (isset($storyImages[0])){
-            $storyImage = $storyImages[0]['url'];
+        if (!empty($story["Images"]["localName"])){
+            $storyImage = $story["Images"]["localName"];
         } else {
             $storyIndex = array_rand($bg);
             $storyImage = BASE_URL.'assets/images/'.$bg[$storyIndex];
