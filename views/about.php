@@ -17,15 +17,9 @@
   </div>
 </div>
 
-<!-- info container-->
-<div class="container info">
-    <div class="container infowrap">
-        <p><?php echo $cache_data['descr'] ?></p>
-    </div>
-</div>
 
 <!-- buttons -->
-<!--<div class="container info">
+<div class="container info">
 <div class="about-buttons">
     <div class="buttonwrap">
         <ul class="row">
@@ -86,4 +80,7 @@
         </ul>
     </div>
 </div>
-</div>-->
+
+<!-- info container-->
+        <p><?php echo $cache_data['descr'] ?></p>
+</div>
