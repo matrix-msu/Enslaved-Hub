@@ -216,7 +216,7 @@ function blazegraphSearch($query){
  * \param $templates : Array of the type of cards to make
  * \param $preset :
  */
-function createCards($results, $templates, $select_fields, $preset = 'default', $count = 0){
+function createCards($results, $templates, $select_fields = array(), $preset = 'default', $count = 0){
     if (!is_array($results)){
         $results = array();
     }
