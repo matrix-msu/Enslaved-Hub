@@ -709,7 +709,6 @@ function featured_items() {
     ];
 
     $res = $es->search($params);
-    // echo "<script>console.log(".json_encode($res).")</script>";
     $select_fields = array();
     return createCards($res['hits']['hits'], [$template], $select_fields ,$preset);
 }

@@ -18,8 +18,7 @@ function Kora_GetNavigationData()
 			['Sub Navigation Order' => 'ASC']
 		)
 	);
-	// echo "<script>console.log(".json_encode($koraResults).")</script>";
-	// die;
+	
 	// Error checking
 	if(!$koraResults) return json_encode("failed");
 	$decode_results = json_decode($koraResults, true);

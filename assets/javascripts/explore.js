@@ -105,7 +105,7 @@ $(document).ready(function(){
             type: "GET",
             data: {templates: type},
             success: function (data) {
-                console.log(data);
+                
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
                     $('.explore-featured .cards-featured').append(e);

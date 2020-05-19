@@ -38,15 +38,6 @@ $clause = new KORA_Clause("Display", "=", "True");
 $clause = new KORA_Clause($clause, "AND", new KORA_Clause("Featured", "=", "TRUE"));
 $featured = KORA_Search(TOKEN, PID, STORY_SID, $clause, $fields, $sort);
 unset($featured["count"]);
-// echo "<script>console.log(".json_encode($featured).")</script>";
-
-// $featured = [];
-// foreach ($stories as $kid => $story) {
-//     if (isset($story['Featured']) && $story['Featured'] == 'TRUE') {
-//         $featured[$kid] = $story;
-//     }
-// }
-// echo "<script>console.log(".json_encode($featured).")</script>";
 
 $page_count = ceil($count / $storiesPerPage);
 if ($page < 1) {
