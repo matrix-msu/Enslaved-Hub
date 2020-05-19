@@ -143,7 +143,6 @@ function searchResults(preset, limit = 20, offset = 0)
             fields: selected_fields
         },
         'success': function (data) {
-            console.log(data);
             isSearching = false;
             result_array = JSON.parse(data);
 

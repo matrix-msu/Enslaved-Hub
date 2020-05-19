@@ -397,11 +397,12 @@ HTML;
                             $value = $record['source_type'][0];
                           }if($field == "Ethnodescriptor"){
                             $value = $record['ethnodescriptor'][0];
+                          }if($field == "Occupation"){
+                            $value = $record['occupation'][0];
                           }
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
                         }
                         $card .= "</tr>";
-                        // var_dump($card);
                     // format this row for csv download
                     $formattedData[$personQ] = array(
                         'NAME' => $record['name'][0],
@@ -413,7 +414,8 @@ HTML;
                         'PLACE TYPE' => implode(', ', $record['place_type']),
                         'PLACE' => implode(', ', $record['display_place']),
                         'SOURCE TYPE' => $record['source_type'][0],
-                        'ETHNODESCRIPTOR' => $record['ethnodescriptor'][0]
+                        'ETHNODESCRIPTOR' => $record['ethnodescriptor'][0],
+                        'OCCUPATION' => $record['occupation'][0]
                     );
 
 
