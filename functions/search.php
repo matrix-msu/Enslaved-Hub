@@ -365,19 +365,6 @@ function keyword_search() {
 
     if (isset($_GET['column'])) {
         $columns = $_GET['column'];
-    } else if (isset($_GET['display'])) {
-        if ($_GET['display'] == 'people') {
-            $columns = [
-                'name' => 'Name',
-                'occupation' => 'Occupation',
-                'participant_role' => 'Role',
-                'event_type' => 'Event',
-                'date' => 'Date',
-                'place_type' => 'Place type',
-                'located_in' => 'Location',
-                'source_type' => 'Source type'
-            ];
-        }
     }
 
     if (isset($_GET['preset'])) {
@@ -627,7 +614,8 @@ function get_columns() {
             'date' => 'Date',
             'place_type' => 'Place Type',
             'display_place' => 'Place',
-            'source_type' => 'Source Type'
+            'source_type' => 'Source Type',
+            'ethnodescriptor' => 'Ethnodescriptor'
         ],
         'places' => [
             'label' => 'Name',
@@ -639,7 +627,7 @@ function get_columns() {
             'name' => 'Name',
             'event_type' => 'Event Type',
             'source_type' => 'Source Type',
-            'display_date_range' => 'Date Range',
+            'display_date_range' => 'Date',
             'place_type' => 'Place Type',
             'display_place' => 'Place'
         ],
