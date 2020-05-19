@@ -687,6 +687,7 @@ function featured_items() {
         ];
     }
 
+
     $params = [
         'index' => ELASTICSEARCH_INDEX_NAME,
         'body' => [
@@ -708,10 +709,9 @@ function featured_items() {
     ];
 
     $res = $es->search($params);
-
-
-
-    return createCards($res['hits']['hits'], [$template], $preset);
+    // echo "<script>console.log(".json_encode($res).")</script>";
+    $select_fields = array();
+    return createCards($res['hits']['hits'], [$template], $select_fields ,$preset);
 }
 
 ?>

@@ -1,19 +1,16 @@
 var base_wrap = '';
-
 //Featured Scrolling Functionality
 function installFeaturedListeners(base_name){
     //update globals
     base_wrap = base_name;
-
     var card_width = parseInt($(base_wrap+' .cardwrap li.card').outerWidth()) + parseInt($(base_wrap+' .cardwrap li.card').css('marginRight')); //card width + margin-right (margin-right always = 20px)
     var cardwrap_width = $(base_wrap+' .cardwrap .cardwrap2').outerWidth();
     var cards_per_page = 1 + Math.floor((cardwrap_width/2)/card_width); //minimum = 1
 
     $(base_wrap+' .cardwrap li.card').last().css('margin-right', cardwrap_width+'px');
-    
+
     var num_cards = $(base_wrap+' .cardwrap li.card').length;
     var num_dots = Math.ceil(num_cards/cards_per_page);
-
 
     //populate dots container with correct amount of dots
     var dots = $(base_wrap+' .controls .dots');
@@ -39,7 +36,7 @@ function installFeaturedListeners(base_name){
     $(base_wrap+' .controls .dots .dot').off().click(function(){
         //get clicked dot
         var dotid = $(this).attr('id');
-        var page_num = dotid[1];
+        var page_num = parseInt(dotid.substr(1)); // dotid[1];
 
         $(base_wrap+' .cardwrap').animate({
             scrollLeft: card_width * (page_num-1) * cards_per_page
@@ -72,7 +69,7 @@ $(document).ready(function(){
         clearTimeout(timer);
         timer = setTimeout(function(){
             installFeaturedListeners(base_wrap);
-        }, 600);        
+        }, 600);
     });
 
 });

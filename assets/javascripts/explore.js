@@ -1,11 +1,10 @@
 $(document).ready(function(){
-if(JS_EXPLORE_FORM == 'Places'){
-    JS_EXPLORE_FILTERS = "Place Type";
-}
-if(JS_EXPLORE_FORM == 'Sources'){
-    JS_EXPLORE_FILTERS = "Source Type";
-}
-
+    if(JS_EXPLORE_FORM == 'Places'){
+        JS_EXPLORE_FILTERS = "Place Type";
+    }
+    if(JS_EXPLORE_FORM == 'Sources'){
+        JS_EXPLORE_FILTERS = "Source Type";
+    }
     $('.cards-featured li').click(function(){
         window.location = $(this).find("a").attr("href");
     });
@@ -43,7 +42,6 @@ if(JS_EXPLORE_FORM == 'Sources'){
     // });
 
     //Get counts only if on explorefilter page
-    // console.log(JS_EXPLORE_FILTERS, JS_EXPLORE_FORM)
     if( typeof JS_EXPLORE_FILTERS !== 'undefined' ){
         if (JS_EXPLORE_FILTERS == "Date") {
             $.ajax({
@@ -107,6 +105,7 @@ if(JS_EXPLORE_FORM == 'Sources'){
             type: "GET",
             data: {templates: type},
             success: function (data) {
+                console.log(data);
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
                     $('.explore-featured .cards-featured').append(e);
