@@ -313,6 +313,7 @@
   		text-shadow: 0 5px 15px rgba(0,0,0,0.5);
 
   		&.no-shadow {
+        margin-top: 25px;
     		text-shadow: none;
 	}
 	}
@@ -395,7 +396,7 @@
         }
 
         &.search-page{
-          padding-top: 190px;
+          // padding-top: 190px;
           padding-bottom: 55px;
 
           @media screen and (max-width: 470px){
