@@ -561,7 +561,7 @@ function keyword_search() {
         }
         $params['body']['query']['bool']['filter'] = $terms;
     }
-
+    
     $res = $es->search($params);
     $single_total = $res['hits']['total']['value'];
 
@@ -615,7 +615,8 @@ function get_columns() {
             'place_type' => 'Place Type',
             'display_place' => 'Place',
             'source_type' => 'Source Type',
-            'ethnodescriptor' => 'Ethnodescriptor'
+            'ethnodescriptor' => 'Ethnodescriptor',
+            'occupation' => 'Occupation'
         ],
         'places' => [
             'label' => 'Name',
@@ -675,6 +676,7 @@ function featured_items() {
         ];
     }
 
+
     $params = [
         'index' => ELASTICSEARCH_INDEX_NAME,
         'body' => [
@@ -696,10 +698,8 @@ function featured_items() {
     ];
 
     $res = $es->search($params);
-
-
-
-    return createCards($res['hits']['hits'], [$template], $preset);
+    $select_fields = array();
+    return createCards($res['hits']['hits'], [$template], $select_fields ,$preset);
 }
 
 ?>

@@ -4,7 +4,7 @@ var modalImage = $('img.modal-img-view');
 var height;
 var avail_columns = [];
 var selected_columns = [];
-var mod_select_fields_people = ['Name', 'Sex', 'Person Status', 'Place'];
+var mod_select_fields_people = ['Name', 'Sex', 'Person Status', 'Place', 'Date'];
 var mod_select_fields_events = ['Name', 'Event Type', 'Source Type', 'Date', 'Place Type', 'Place'];
 var mod_select_fields_places = ['Name', 'Project', 'Location', 'Place Type'];
 var mod_select_fields_source = ['Name', 'Project', 'Source Type'];

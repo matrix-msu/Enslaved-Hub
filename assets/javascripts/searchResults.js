@@ -14,7 +14,7 @@ var display = search_type;
 var firstLoad = true;
 
 var has_data = false;
-var selected_fields_people = ['Name', 'Sex', 'Person Status', 'Place'];
+var selected_fields_people = ['Name', 'Sex', 'Person Status', 'Place', 'Date'];
 var selected_fields_events = ['Name', 'Event Type', 'Source Type', 'Date', 'Place Type', 'Place'];
 var selected_fields_places = ['Name', 'Project', 'Location', 'Place Type'];
 var selected_fields_source = ['Name', 'Project', 'Source Type'];
@@ -143,7 +143,6 @@ function searchResults(preset, limit = 20, offset = 0)
             fields: selected_fields
         },
         'success': function (data) {
-            console.log(data);
             isSearching = false;
             result_array = JSON.parse(data);
 
