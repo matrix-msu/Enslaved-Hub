@@ -488,7 +488,8 @@ HTML;
           }
 
           if ($locationQ != ''){
-            $html .= '<a href="' . $baseurl . 'record/place/' . $locationQ . '">';
+            $html .= '<a href="' . $baseurl . 'record/place/' . $locationQ . '">' . $statementArr[$x] . "</a>";
+            continue;
           }
         }
         else if ($label === 'Roles'){
@@ -799,7 +800,7 @@ function getFullRecordHtml(){
     $html .= <<<HTML
 <h4 class='last-page-header'>
     <a id='last-page' href="$url"><span id=previous-title>$recordform / </span></a>
-    <span id='current-title'>$label</span>
+    <span id='current-title'>$name</span>
 </h4>
 <h1>$label</h1>
 <h2 class='date-range'><span>$dateRange</span></h2>
