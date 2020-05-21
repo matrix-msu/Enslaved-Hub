@@ -370,7 +370,7 @@ $(document).ready(function() {
     showDisplayType();
 
 
-    // Show selected filters
+    // Show selected
     $.each(filters, function(key, values)
     {
         if(key && key != "limit" && key != "offset") // inputs lable have classes with name as key

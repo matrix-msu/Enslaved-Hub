@@ -56,8 +56,7 @@ $GLOBALS['FILTER_ARRAY'] = Array(
         "Role Types"
     ),
     "places" => array(
-        "Place Type",
-        "Modern Countries"
+        "Place Type"
     ),
     "sources" => array(
         "Source Type"
