@@ -14,10 +14,10 @@ var display = search_type;
 var firstLoad = true;
 
 var has_data = false;
-var selected_fields_people = ['Name', 'Occupation', 'Role', 'Event', 'Date', 'Place type', 'Location', 'Source type'];
-var selected_fields_events = ['Event type', 'Name', 'Source type', 'Date range', 'Place type', 'Display place', 'Start date', 'End date'];
-var selected_fields_places = ['Name', 'Database', 'Source type', 'Location', 'Place type'];
-var selected_fields_source = ['Name', 'Database'];
+var selected_fields_people = ['Name', 'Sex', 'Person Status', 'Place', 'Date'];
+var selected_fields_events = ['Name', 'Event Type', 'Source Type', 'Date', 'Place Type', 'Place'];
+var selected_fields_places = ['Name', 'Project', 'Location', 'Place Type'];
+var selected_fields_source = ['Name', 'Project', 'Source Type'];
 
 if (search_type == "all"){
     display = 'people';
@@ -34,7 +34,6 @@ var showPath = false;
 var upperForm = "";
 var titleType = "";
 var currentTitle = "Search";
-
 
 var fields = [];    // fields for the table view
 var sort = ''; // or desc
@@ -118,7 +117,7 @@ function showDisplayType(){
 
 var isSearching  = false;
 
-function searchResults(preset, limit = 12, offset = 0)
+function searchResults(preset, limit = 20, offset = 0)
 {
     if(isSearching) return;
     isSearching = true;
@@ -185,7 +184,7 @@ function searchResults(preset, limit = 12, offset = 0)
                 showingResultsText = "Showing " + (card_limit+offset) + " of " + total_length + " Results";
             }
             $('.showing-results').html(showingResultsText);
-            
+
             if (total_length <= 0){
                 // clear old results
                 $("ul.cards").empty();
@@ -371,7 +370,7 @@ $(document).ready(function() {
     showDisplayType();
 
 
-    // Show selected filters
+    // Show selected
     $.each(filters, function(key, values)
     {
         if(key && key != "limit" && key != "offset") // inputs lable have classes with name as key
@@ -799,6 +798,21 @@ $(document).ready(function() {
     });
     // Onclick, download all data for the query as csv file
     $("#Download_all").click(function () {
+        var all_fields = [];
+        $.ajax({
+            url: BASE_URL + "api/getColumns",
+            type: "GET",
+            data: {
+                'type': display
+            },
+            'success': function (data) {
+                var columns = JSON.parse(data);
+                for (var col in columns) {
+                    all_fields.push(columns[col].toUpperCase());
+                }
+            }
+        });
+        fields = all_fields;
         get_download_content(fields, formattedData, true);
     });
 
@@ -884,7 +898,6 @@ function updateURL(){
     Split the data based on the page
 */
 function get_download_content(fields, data, isAllData) {
-
     if (isAllData) {
         var templates = ['tableCard'];
         filters['offset'] = 0;

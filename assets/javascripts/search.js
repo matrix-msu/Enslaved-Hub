@@ -39,6 +39,12 @@ $(document).ready(function() {
     $('#endYear').select2({
         placeholder: "Select or Input the End Year"
     });
+    $('#event-from').select2({
+        placeholder: "Enter Start Year"
+    });
+    $('#event-to').select2({
+        placeholder: "Enter End Year"
+    });
 
     //Basic search page
     $('#life-event').select2({

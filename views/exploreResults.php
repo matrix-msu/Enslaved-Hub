@@ -323,10 +323,11 @@
                 </span>
                 <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                     <ul id="sortmenu" class="results-per-page">
-                        <li><span>12</span> Per Page</li>
-                        <li><span>24</span> Per Page</li>
-                        <li><span>36</span> Per Page</li>
-                        <li><span>48</span> Per Page</li>
+                        <li><span>20</span> Per Page</li>
+                        <li><span>50</span> Per Page</li>
+                        <li><span>100</span> Per Page</li>
+                        <li><span>250</span> Per Page</li>
+                        <li><span>500</span> Per Page</li>
                     </ul>
                 </span>
             </span>

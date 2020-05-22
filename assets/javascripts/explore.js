@@ -57,12 +57,12 @@ $(document).ready(function(){
                     var max = Math.max.apply(Math, dates);
 
                     // Doing this for safety purposes
-                    if (min <= max) {
-                        for (var i = min; i <= max; i++) {
-                            $("#event-from").append("<option value='"+i+"'>"+i+"</option>");
-                            $("#event-to").append("<option value='"+i+"'>"+i+"</option>");
-                        }
-                    }
+                    // if (min <= max) {
+                    //     for (var i = min; i <= max; i++) {
+                    //         $("#event-from").append("<option value='"+i+"'>"+i+"</option>");
+                    //         $("#event-to").append("<option value='"+i+"'>"+i+"</option>");
+                    //     }
+                    // }
                 }
             });
             return;
@@ -105,7 +105,7 @@ $(document).ready(function(){
             type: "GET",
             data: {templates: type},
             success: function (data) {
-                
+
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
                     $('.explore-featured .cards-featured').append(e);
