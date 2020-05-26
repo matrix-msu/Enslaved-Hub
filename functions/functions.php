@@ -559,11 +559,10 @@ HTML;
 
                         // format this row for csv download
                         $formattedData[$placeQ] = array(
-                            'NAME' => $name,
-                            'TYPE' => $placeType,
-                            'LOCATED IN' => $locatedIn,
-                            'GEONAME' => $geonames,
-                            'COUNTRY' => $country,
+                            'NAME' => $record['label'],
+                            'PROJECT' => $record['generated_by'][0],
+                            'LOCATION' => $record['located_in'][0],
+                            'PLACE TYPE' => $record['place_type'][0]
                         );
                     }
 
@@ -710,7 +709,7 @@ HTML;
                             $cards['fields'] = $fields;
                         }
 
-                        $card = "<tr> class='tr' data-url='" . $event_url . "'>";
+                        $card = "<tr class='tr' data-url='" . $event_url . "'>";
                         foreach ($select_fields[1] as $index => $field) {
                           if($field == "Name"){
                             $value = $record['label'];
@@ -730,10 +729,12 @@ HTML;
                         $card .= "</tr>";
                         // format this row for csv download
                         $formattedData[$eventQ] = array(
-                            'NAME' => $name,
-                            'TYPE' => $type,
-                            'PLACES' => $places,
-                            'DATE RANGE' => $dateRange
+                            'NAME' => $record['label'],
+                            'EVENT TYPE' => $record['event_type'][0],
+                            'SOURCE TYPE' => $record['source_type'][0],
+                            'DATE' => $record['date'][0],
+                            'PLACE TYPE' => $record['place_type'][0],
+                            'PLACE' => $record['display_place'][0]
                         );
                     }
 
@@ -859,9 +860,9 @@ HTML;
 
                         // format this row for csv download
                         $formattedData[$sourceQ] = array(
-                            'NAME' => $name,
-                            'TYPE' => $type,
-                            'PROJECT' => $project
+                            'NAME' => $record['name'][0],
+                            'SOURCE TYPE' => $$record['source_type'][0],
+                            'PROJECT' => $record['generated_by'][0]
                         );
 
                     }

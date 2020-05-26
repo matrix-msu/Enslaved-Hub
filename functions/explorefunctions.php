@@ -534,8 +534,9 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
-    // print_r($query);
+    print_r($query);
     $result = blazegraphSearch($query);
+    var_dump($result);
     if (empty($result)){
       echo json_encode(Array());
       die;
