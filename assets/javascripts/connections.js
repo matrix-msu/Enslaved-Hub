@@ -113,7 +113,7 @@ function displayConnections(cardType){
     } else if (cardType == "Event") {
         for (var i in connections){
             var conn = connections[i];
-            console.log(conn);
+            // console.log(conn);
             var name = conn['eventlabel']['value'];
             var eventQ = conn['event']['value'];
             eventQ = eventQ.substring(eventQ.lastIndexOf('/') + 1);
