@@ -6,7 +6,7 @@ const projects=[
     'Enslaved Project' => 'Q464',
     'Voyages: The Trans-Atlantic Slave Trade Database' => 'Q9866',
     'African Origins' => 'Q9867',
-    'Maranhão Inventories Slave Database (MISD)' => 'Q108034'
+    'Maranhão Inventories Slave Database' => 'Q11585'
 ];
 
 const qprojects=[
