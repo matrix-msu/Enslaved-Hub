@@ -536,11 +536,12 @@ function getFullRecordHtml(){
     $query['query'] = $tempQuery;
     // print_r($query);
     $result = blazegraphSearch($query);
-    if (empty($result)){
+    if(empty($result)){
       echo json_encode(Array());
       die;
     }
     $record = $result[0];
+    // print_r($record);
 
     //Get variables from query
     $recordVars = [];
@@ -785,7 +786,7 @@ function getFullRecordHtml(){
     <a id='last-page' href="$url"><span id=previous-title>$recordform / </span></a>
     <span id='current-title'>$name</span>
 </h4>
-<h1>$label</h1>
+<h1>$name</h1>
 <h2 class='date-range'><span>$dateRange</span></h2>
 HTML;
 //var_dump($html);
@@ -801,6 +802,8 @@ HTML;
 
     $html .= '<div class="detailwrap">';
     foreach($recordVars as $key => $value){
+      if($key == "Label") continue;
+
       if($key == "Located In"){
         $Qid = [];
         foreach($recordVars['Loc In'] as $Q){

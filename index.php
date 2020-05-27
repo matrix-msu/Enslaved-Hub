@@ -42,6 +42,9 @@
 </head>
 <body>
 <?php
+
+    echo "<script>console.log(".json_encode(CURRENT_VIEW).")</script>";
+
     include 'header.php';
     include BASE_VIEW_PATH . CURRENT_VIEW;
     include 'footer.php';
