@@ -33,7 +33,7 @@
       </select>
     </div>
   </div>
-  <div class="container infowrap">
+  <div class="container datawrap">
     <iframe id="data-frame"></iframe>
   </div>
 </div>
