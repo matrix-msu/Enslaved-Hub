@@ -49,7 +49,8 @@ const places =
 "Australia" => "Q289",
 "Asia" => "Q290",
 "Brazil" => "Q292",
-"Jamaica" => "Q295"
+"Jamaica" => "Q295",
+"Baton Rouge" => "Q407902"
 ];
 
 ?>

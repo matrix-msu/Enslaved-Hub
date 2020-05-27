@@ -94,7 +94,7 @@ function displayConnections(cardType){
             if(typeof conn['relationslabel'] !== 'undefined'){
               role = conn['relationslabel']['value'];
             }
-            else{
+            else if(typeof conn['role'] !== 'undefined'){
               role = conn['role']['value'];
             }
             agentQ = agentQ.substring(agentQ.lastIndexOf('/') + 1);
@@ -106,14 +106,15 @@ function displayConnections(cardType){
             if (typeof(conn['relationslabel']) != 'undefined'){
                 relationshipLabel = conn['relationslabel']['value'];
                 $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + ' - ' + relationshipLabel+'</h3></div>'+'</a></li>');
-            } else {
+            } else if(typeof conn['role'] !== 'undefined'){
                 $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + ' - ' + role+'</h3></div>'+'</a></li>');
+            } else{
+                $('.connect-row').append('<li class="card"><a href=' + personUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div>'+'</a></li>');
             }
         }
     } else if (cardType == "Event") {
         for (var i in connections){
             var conn = connections[i];
-            // console.log(conn);
             var name = conn['eventlabel']['value'];
             var eventQ = conn['event']['value'];
             eventQ = eventQ.substring(eventQ.lastIndexOf('/') + 1);
@@ -185,7 +186,6 @@ function loadConnections(){
                 recordForm: recordform
               },
         success: function (data) {
-            // console.log(data);
             if (data == " "){
                 return;
             }
