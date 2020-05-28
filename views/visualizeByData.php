@@ -32,6 +32,14 @@
         <option value="15yo">Ages - 15 years old</option>
       </select>
     </div>
+    <div class="inputwrap">
+      <label for="chart_field">Project</label>
+      <select class="s2-single" id="chart-project" name="chart_project">
+        <?php foreach (projects as $type => $qid) { ?>
+            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
+        <?php } ?>
+      </select>
+    </div>
   </div>
   <div class="container datawrap">
     <iframe id="data-frame"></iframe>

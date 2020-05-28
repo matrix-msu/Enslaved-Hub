@@ -11,6 +11,9 @@ $(document).ready( function() {
   $('#chart-field').select2({
       placeholder: "Select Chart Field"
   });
+  $('#chart-project').select2({
+      placeholder: "Select Project"
+  });
   $('.select2-selection--multiple').append('<span class="select2-selection__arrow" role="presentation"></span>');
 
   addFields();
