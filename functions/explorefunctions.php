@@ -751,6 +751,11 @@ function getFullRecordHtml(){
       $recordVars['Occurs After'] = $record['occursafter']['value'];
     }
 
+    //Circa
+    if (isset($record['circa']) && isset($record['circa']['value']) && $record['circa']['value'] != '' ){
+      $recordVars['Circa'] = $record['circa']['value'];
+    }
+
     //Roles for events
     //Gets the roles, participants, and pqID if they exist and matches them together
     if (isset($record['roles']) && isset($record['roles']['value']) &&  $record['roles']['value'] != ''){
