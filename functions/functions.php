@@ -845,7 +845,7 @@ HTML;
                             $cards['fields'] = $fields;
                         }
 
-                        $card = "<tr> class='tr' data-url='" . $source_url . "'>";
+                        $card = "<tr class='tr' data-url='" . $source_url . "'>";
                         foreach ($select_fields[3] as $index => $field) {
                           if($field == "Name"){
                             $value = $record['name'][0];
