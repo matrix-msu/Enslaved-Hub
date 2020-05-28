@@ -503,7 +503,7 @@ HTML;
 
         $detailname = $statementArr[$x];
         if($label == 'Located In'){
-          $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[$x] . "'>" . $detailname . "</a>";
+          $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[$x] . "'>" . $detailname . "</a></div>";
           continue;
         }
         else{
@@ -534,9 +534,8 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
-    print_r($query);
+    // print_r($query);
     $result = blazegraphSearch($query);
-    var_dump($result);
     if (empty($result)){
       echo json_encode(Array());
       die;
@@ -739,6 +738,16 @@ function getFullRecordHtml(){
     //Sex
     if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
       $recordVars['Sex'] = $record['sextype']['value'];
+    }
+
+    //Occurs Before
+    if (isset($record['occursbefore']) && isset($record['occursbefore']['value']) && $record['occursbefore']['value'] != '' ){
+      $recordVars['Occurs Before'] = $record['occursbefore']['value'];
+    }
+
+    //Occurs Before
+    if (isset($record['occursafter']) && isset($record['occursafter']['value']) && $record['occursafter']['value'] != '' ){
+      $recordVars['Occurs After'] = $record['occursafter']['value'];
     }
 
     //Roles for events
