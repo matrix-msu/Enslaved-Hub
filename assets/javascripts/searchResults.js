@@ -143,6 +143,7 @@ function searchResults(preset, limit = 20, offset = 0)
             fields: selected_fields
         },
         'success': function (data) {
+            console.log(data);
             isSearching = false;
             result_array = JSON.parse(data);
 
@@ -458,6 +459,24 @@ $(document).ready(function() {
         searchResults(search_type, 12, 0);
         $('span.sort-by > span').html(sort);
         $(document).trigger('click');
+    });
+    var table = document.getElementById("search-results");
+    var thead = table.getElementsByTagName("thead")[0];
+    thead.onclick = (function (e) {
+       e = e || window.event;
+       var th = e.target || e.srcElement;  //assumes there are no other elements in the th
+       console.log(th);
+       console.log(sort);
+       if(sort == ""){
+         sort = "asc";
+       }
+       else if(sort == "asc"){
+         sort = "desc";
+       }
+       else if(sort == "desc"){
+         sort = "asc";
+       }
+       searchResults(search_type, 12, 0);
     });
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
@@ -798,21 +817,6 @@ $(document).ready(function() {
     });
     // Onclick, download all data for the query as csv file
     $("#Download_all").click(function () {
-        var all_fields = [];
-        $.ajax({
-            url: BASE_URL + "api/getColumns",
-            type: "GET",
-            data: {
-                'type': display
-            },
-            'success': function (data) {
-                var columns = JSON.parse(data);
-                for (var col in columns) {
-                    all_fields.push(columns[col].toUpperCase());
-                }
-            }
-        });
-        fields = all_fields;
         get_download_content(fields, formattedData, true);
     });
 
@@ -901,7 +905,7 @@ function get_download_content(fields, data, isAllData) {
     if (isAllData) {
         var templates = ['tableCard'];
         filters['offset'] = 0;
-        delete filters['limit'];
+        filters['limit'] = total_length;
 
         $.ajax({
             url: BASE_URL + "api/keywordSearch",
