@@ -18,6 +18,7 @@ var selected_fields_people = ['Name', 'Sex', 'Person Status', 'Place', 'Date'];
 var selected_fields_events = ['Name', 'Event Type', 'Source Type', 'Date', 'Place Type', 'Place'];
 var selected_fields_places = ['Name', 'Project', 'Location', 'Place Type'];
 var selected_fields_source = ['Name', 'Project', 'Source Type'];
+var sort_field = "label.sort";
 
 if (search_type == "all"){
     display = 'people';
@@ -140,10 +141,11 @@ function searchResults(preset, limit = 20, offset = 0)
             filters: filters,
             templates: templates,
             display: display,
-            fields: selected_fields
+            fields: selected_fields,
+            sort_field: sort_field
         },
         'success': function (data) {
-            console.log(data);
+            // console.log(data);
             isSearching = false;
             result_array = JSON.parse(data);
 
@@ -462,11 +464,15 @@ $(document).ready(function() {
     });
     var table = document.getElementById("search-results");
     var thead = table.getElementsByTagName("thead")[0];
+    //sorting by headers
     thead.onclick = (function (e) {
+       e.stopPropagation();
        e = e || window.event;
        var th = e.target || e.srcElement;  //assumes there are no other elements in the th
-       console.log(th);
-       console.log(sort);
+       var header = th.className;
+       updateSortField(header);
+
+       //Switch sort direction when clicked
        if(sort == ""){
          sort = "asc";
        }
@@ -476,8 +482,10 @@ $(document).ready(function() {
        else if(sort == "desc"){
          sort = "asc";
        }
+
        searchResults(search_type, 12, 0);
     });
+
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
         card_limit = parseInt($(this).find('span:first').html());
@@ -1080,3 +1088,51 @@ $('.update-columns-button').click(function(e) {
     closeModal();
     searchResults(search_type);
 })
+
+function updateSortField(header){
+  console.log(header);
+  //people
+  if(header == "sex"){
+    sort_field = "sex.raw";
+  }
+  if(header == "person status"){
+    sort_field = "person_status.raw";
+  }
+  if(header == "place"){
+    //does not work
+    // sort_field = "display_place.raw";
+  }
+  if(header == "date"){
+    sort_field = "date";
+  }
+  if(header == "role"){
+    sort_field = "participant_role.raw";
+  }
+  if(header == "event"){
+    sort_field = "event_type.raw";
+  }
+  if(header == "place type"){
+    sort_field = "place_type.raw";
+  }
+  if(header == "source type"){
+    sort_field = "source_type.raw";
+  }
+  if(header == "ethnodescriptor"){
+    sort_field = "ethnodescriptor.raw";
+  }
+  if(header == "occupation"){
+    sort_field = "occupation.raw";
+  }
+  //events
+  if(header == "event type"){
+    sort_field = "event_type.raw";
+  }
+  //places
+  if(header == "project"){
+    sort_field = "generated_by.raw";
+  }
+  if(header == "location"){
+    //does not work
+    sort_field = "located_in.raw";
+  }
+}

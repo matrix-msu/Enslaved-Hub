@@ -477,8 +477,9 @@ function keyword_search() {
     }
 
     if ($sort) {
+        $sort_field = $_GET['sort_field'];
         $params['body']['sort'] = [
-            'label.sort' => ['order' => $sort]
+            $sort_field => ['order' => $sort]
         ];
     }
 
@@ -561,7 +562,7 @@ function keyword_search() {
         }
         $params['body']['query']['bool']['filter'] = $terms;
     }
-    var_dump($params);
+    // var_dump($params);
     $res = $es->search($params);
     $single_total = $res['hits']['total']['value'];
 
