@@ -2,7 +2,7 @@
 <header class="nav-header">
     <div class="headerwrap">
         <div class="leftnav">
-            <div class="logo"><a href="<?php echo BASE_URL;?>"><img src="<?php echo BASE_IMAGE_URL;?>Logo.svg" width="157" height="42" alt="Enslaved People of Historic Slave Trade"/></a></div>
+            <div class="logo"><a href="<?php echo BASE_URL;?>"><img src="<?php echo BASE_IMAGE_URL;?>Logo.svg" width="157" height="42" alt="Enslaved People of Historical Slave Trade"/></a></div>
         </div>
         <div class="dropdown-menu">
             <div class="responsive-menu">
