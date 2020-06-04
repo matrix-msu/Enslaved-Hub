@@ -9,7 +9,6 @@ $(document).ready(function () {
             type: recordform
         },
         'success': function (json) {
-            console.log(json);
             var html = JSON.parse(json);
 
             $('.middlewrap').html(html.header);
