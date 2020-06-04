@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?label ?description
+SELECT ?label ?description ?project
 (group_concat(distinct ?name1; separator = "||") as ?name)
 (group_concat(distinct ?altname1; separator = "||") as ?altname)
 (group_concat(distinct ?age1; separator = "||") as ?age)
@@ -97,9 +97,11 @@ OPTIONAL {?allevents	$wdt:$startsAt ?startdate.
 OPTIONAL {?agent $p:$hasName ?object .
           ?object $prov:wasDerivedFrom ?provenance .
           ?provenance $pr:$isDirectlyBasedOn ?source .
+          ?source $wdt:$generatedBy ?proj.
+          ?proj $rdfs:label ?project.
           OPTIONAL {?provenance $pr:$hasExternalReference ?extref1}}.
 
 
-}GROUP BY ?label ?description
+}GROUP BY ?label ?description ?project
 QUERY;
 ?>
