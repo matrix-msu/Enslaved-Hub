@@ -145,6 +145,7 @@ function searchResults(preset, limit = 20, offset = 0)
             sort_field: sort_field
         },
         'success': function (data) {
+            // console.log(data);
             isSearching = false;
             result_array = JSON.parse(data);
 

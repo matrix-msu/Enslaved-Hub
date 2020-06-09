@@ -84,7 +84,7 @@
             <?php //if(!$fromBrowse) { ?>
             <div class="heading-search">
                 <!-- use all counts instead of counterofAllitems() -->
-            <p>Start a search across <?php //echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+            <p>Start a search across <?php //echo counterofAllitems();?> records from the historical slave trade<a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
@@ -305,11 +305,11 @@
             <span class="view-modes">
                 <span class="grid-view view-toggle">
                     <img class="grid-icon show" src="../assets/images/List.svg" alt="grid view button">
-                    <p class="tooltip">View Grid</p>
+                    <p class="tooltip">Card View</p>
                 </span>
                 <span class="table-view view-toggle">
                     <img class="table-icon" src="../assets/images/Table.svg" alt="table view button">
-                    <p class="tooltip">View Table</p>
+                    <p class="tooltip">Table View</p>
                 </span>
                 <span class="time-view view-toggle visualize-hide">
                     <img class="time-icon" src="../assets/images/time2.svg" alt="time view button">
