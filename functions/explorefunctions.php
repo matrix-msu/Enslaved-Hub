@@ -296,8 +296,8 @@ HTML;
     }
     $html .= '</div>';
 } else if ($label == "projectsA"){
-    $lowerlabel = "contributing project(s)";
-    $upperlabel = "Contributing Project(s)";
+    $lowerlabel = "contributing project";
+    $upperlabel = "Contributing Project";
 
     $projectUrls = explode('||', $statement['projectUrl']);
     $projectNames = explode('||', $statement['projectName']);
@@ -317,10 +317,9 @@ HTML;
     //Loop through and match up
     $matched = '';
     foreach($projectNames as $projectName){
-            $html .= <<<HTML
-    <div class="detail-bottom">
-        <p>$projectName</p>
-    HTML;
+      $url = BASE_URL . 'search/all?projects=' . rawurlencode($projectName);
+      $html .= "<div class='detail-bottom'>
+          <a href=$url class='highlight'>$projectName</a>";
     }
     $html .= '</div></div>';
 } else if ($label == "ecvoA"){
@@ -716,6 +715,12 @@ function getFullRecordHtml(){
             $projectArr = ['projectUrl' => $record['project']['value'],
                            'projectName' => $record['pname']['value']
                           ];
+            $recordVars['projectsA'] = $projectArr;
+        }
+        else{
+          $projectArr = ['projectUrl' => $record['project']['value'],
+                         'projectName' => $record['project']['value']
+                        ];
             $recordVars['projectsA'] = $projectArr;
         }
     }
