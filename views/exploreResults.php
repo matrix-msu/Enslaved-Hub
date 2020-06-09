@@ -299,11 +299,11 @@
             <span class="view-modes">
                 <span class="grid-view view-toggle">
                     <img class="grid-icon show" src="../assets/images/List.svg" alt="grid view button">
-                    <p class="tooltip">View Grid</p>
+                    <p class="tooltip">Card View</p>
                 </span>
                 <span class="table-view view-toggle">
                     <img class="table-icon" src="../assets/images/Table.svg" alt="table view button">
-                    <p class="tooltip">View Table</p>
+                    <p class="tooltip">Table View</p>
                 </span>
                 <span class="time-view view-toggle visualize-hide">
                     <img class="time-icon" src="../assets/images/time2.svg" alt="time view button">
