@@ -1171,6 +1171,64 @@ ul.catmenu{
                                     }
                                 }
                             }
+                            #person{
+                              margin-left: -152px;
+                            }
+                            #place{
+                              margin-left: -88px;
+                            }
+                            #event{
+                              margin-left: -24px;
+                            }
+                            #source{
+                              margin-left: 40px;
+                            }
+                            .tooltip{
+                                visibility: hidden;
+                                width: 95px;
+                                background-color: $base-dark;
+                                color: $base-light;
+                                padding: 15px;
+                                border-radius: 5px;
+                                font-size: 14px;
+                                font-family: aleo;
+                                font-family: aleoregular;
+                                opacity: 1;
+
+                                /* Position the tooltip */
+                                position: absolute;
+                                z-index: 100;
+                                bottom: 60%;
+                                left: 33%;
+
+                                .head{
+                                    font-size: 15px;
+                                    font-style: italic;
+                                    font-family: aleobold;
+                                    display: block;
+                                    padding-bottom: 5px;
+                                    color: #FAF7F2;
+                                    text-align: center;
+                                    opacity: 1;
+                                }
+                            }
+                            .tooltip::after {
+                                content: " ";
+                                position: absolute;
+                                top: 100%; /* At the bottom of the tooltip */
+                                left: 50%;
+                                margin-left: -5px;
+                                border-width: 5px;
+                                border-style: solid;
+                                border-color: $base-dark transparent transparent transparent;
+                            }
+
+                            &:hover{
+
+                                .tooltip{
+                                    visibility: visible;
+                                }
+                            }
                         }
                     }
                 }

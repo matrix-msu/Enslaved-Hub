@@ -295,16 +295,16 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
                 );
                 $connections = '<div class="connectionswrap"><p>Person\'s Connections</p><div class="connections">';
                 	if (intval($countpeople) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span class="tooltip" id="person"><span class="head">Person</span></span><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
                     if (intval($countplace) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span class="tooltip" id="place"><span class="head">Place</span></span><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
                     }
                     if (intval($countevent) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span class="tooltip" id="event"><span class="head">Event</span></span><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
                     }
                     if (intval($countsource) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span class="tooltip" id="source"><span class="head">Source</span></span><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
                     }
                 $connections .= '</div></div>';
 
@@ -331,6 +331,7 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
                             $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p>$places</p></div>";
                         }
                         if ($placesCount > 1){
+                            $places = str_replace(",", ";", $places);
                             $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Places</span>$places</span></p></div>";
                         }
 

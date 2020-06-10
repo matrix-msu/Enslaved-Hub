@@ -294,6 +294,12 @@
 
     <div id="searchResults">
         <h2 class="showing-results"></h2>
+        <div class="filter-cards">
+            <div class="option-wrap">
+                <p>Option Title</p>
+                <img class="remove" src="<?php echo BASE_IMAGE_URL;?>x-dark.svg" />
+            </div>
+        </div>
         <div id="search-result-controls">
             <!-- <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span> -->
             <span class="view-modes">
@@ -331,14 +337,6 @@
                     </ul>
                 </span>
             </span>
-        </div>
-
-
-        <div class="filter-cards">
-            <div class="option-wrap">
-                <p>Option Title</p>
-                <img class="remove" src="<?php echo BASE_IMAGE_URL;?>x-dark.svg" />
-            </div>
         </div>
 
         <div class="search-record-connections">

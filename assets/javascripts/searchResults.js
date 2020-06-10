@@ -362,12 +362,14 @@ $(document).ready(function() {
         }
 
         //Check a checkbox if EXPLORE_FORM is set to this type
-        else if( $(this).find("p").text() == upperForm)
+        else if( $(this).find("p").text() == upperForm){
             $(this).find("input").prop('checked', true);
+        }
 
         //Set all checkboxes to checked
-        else if(upperForm === 'All')
+        else if(upperForm === 'All'){
             $(this).find("input").prop('checked', true);
+        }
     });
 
     showDisplayType();
@@ -390,6 +392,14 @@ $(document).ready(function() {
                     //Looks for input where value = value
                     if($(that).find('input').val() == value) {
                         $(that).find("input").prop("checked", true);
+                    }
+                    if($(that).parent().parent().parent().attr('name') == 'date'){
+                        $(that).parent().parent().parent().find("span:first").addClass("show");
+                        $(that).parent().parent().parent().find("ul#submenu").addClass("showdate");
+                    }
+                    else{
+                        $(that).parent().parent().parent().find("span:first").addClass("show");
+                        $(that).parent().parent().parent().find("ul#submenu").addClass("show");
                     }
                 });
             });
