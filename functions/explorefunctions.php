@@ -296,8 +296,8 @@ HTML;
     }
     $html .= '</div>';
 } else if ($label == "projectsA"){
-    $lowerlabel = "contributing project(s)";
-    $upperlabel = "Contributing Project(s)";
+    $lowerlabel = "contributing project";
+    $upperlabel = "Contributing Project";
 
     $projectUrls = explode('||', $statement['projectUrl']);
     $projectNames = explode('||', $statement['projectName']);
@@ -317,10 +317,9 @@ HTML;
     //Loop through and match up
     $matched = '';
     foreach($projectNames as $projectName){
-            $html .= <<<HTML
-    <div class="detail-bottom">
-        <p>$projectName</p>
-    HTML;
+      $url = BASE_URL . 'search/all?projects=' . rawurlencode($projectName);
+      $html .= "<div class='detail-bottom'>
+          <a href=$url class='highlight'>$projectName</a>";
     }
     $html .= '</div></div>';
 } else if ($label == "ecvoA"){
@@ -450,6 +449,9 @@ HTML;
       if (end($statementArr) == '' || end($statementArr) == ' '){
         array_pop($statementArr);
       }
+      if($label === "Located In"){
+        $statementArr = $statement;
+      }
     }
 
     $html .= <<<HTML
@@ -488,20 +490,11 @@ HTML;
           }
 
           if ($locationQ != ''){
-            $html .= '<a href="' . $baseurl . 'record/place/' . $locationQ . '">';
+            $html .= '<a href="' . $baseurl . 'record/place/' . $locationQ . '">' . $statementArr[$x] . "</a>";
+            continue;
           }
         }
         else if ($label === 'Roles'){
-        }
-        else if ($label === 'Modern Country Code'){
-            $countryCode = $statementArr[$x];
-            $html .= "<div>" . $countryCode;
-            if(array_key_exists($countryCode,countrycode)){
-              $countryName = ucfirst(countrycode[$countryCode]);
-              $html .= "<div class='detail-menu'> <h1>$countryCode</h1> <p>$countryName</p> </div>";
-            }
-            $html .= "</div>";
-            continue;
         }
         else{
           // $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
@@ -509,7 +502,8 @@ HTML;
 
         $detailname = $statementArr[$x];
         if($label == 'Located In'){
-          $html .= "<div><a href='" . BASE_URL . "record/place/" . $link . "'>" . $detailname . "</a>";
+          $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[$x] . "'>" . $detailname . "</a></div>";
+          continue;
         }
         else{
           $html .= "<div>" . $detailname;
@@ -541,12 +535,12 @@ function getFullRecordHtml(){
     $query['query'] = $tempQuery;
     // print_r($query);
     $result = blazegraphSearch($query);
-    if (empty($result)){
+    if(empty($result)){
       echo json_encode(Array());
       die;
     }
-
     $record = $result[0];
+    // print_r($record);
 
     //Get variables from query
     $recordVars = [];
@@ -694,22 +688,6 @@ function getFullRecordHtml(){
       }
     }
 
-    //Relationships
-
-/*    if (isset($record['relationships']) && isset($record['relationships']['value']) && $record['relationships']['value'] != '' ){
-      if(isset($record['qrelationname']) && isset($record['qrelationname']['value']) && isset($record['relationagentlabel']) && isset($record['relationagentlabel']['value'])){
-        if (empty($record['relationships']['value']) ){
-            $recordVars['relationshipsA'] = [];
-        } else {
-            $relationsipArr = ['relationships' => $record['relationships']['value'],
-                              'qrelationUrls' => $record['qrelationname']['value'],
-                              'relationshipLabels' => $record['relationagentlabel']['value']
-                              ];
-            $recordVars['relationshipsA'] = $relationsipArr;
-        }
-      }
-    }*/
-
     //CloseMatch
     if (isset($record['match']) && isset($record['match']['value']) && $record['match']['value'] != ''  ){
       if(isset($record['matchlabel']) && isset($record['matchlabel']['value']) &&
@@ -739,21 +717,48 @@ function getFullRecordHtml(){
                           ];
             $recordVars['projectsA'] = $projectArr;
         }
+        else{
+          $projectArr = ['projectUrl' => $record['project']['value'],
+                         'projectName' => $record['project']['value']
+                        ];
+            $recordVars['projectsA'] = $projectArr;
+        }
     }
 
     if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])  && $record['locatedIn']['value'] != '' ){
-      // var_dump($record);
-      $recordVars['Located In'] = $record['locatedIn']['value'];
+      $locatedIn = [];
+      foreach($result as $res){
+        array_push($locatedIn, $res['locatedIn']['value']);
+      }
+      $recordVars['Located In'] = $locatedIn;
     }
 
     if (isset($record['locIn']) && isset($record['locIn']['value'])  && $record['locIn']['value'] != '' ){
-      // var_dump($record);
-      $recordVars['Loc In'] = $record['locIn']['value'];
+      $locIn = [];
+      foreach($result as $res){
+        array_push($locIn, $res['locIn']['value']);
+      }
+      $recordVars['Loc In'] = $locIn;
     }
 
     //Sex
     if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
       $recordVars['Sex'] = $record['sextype']['value'];
+    }
+
+    //Occurs Before
+    if (isset($record['occursbefore']) && isset($record['occursbefore']['value']) && $record['occursbefore']['value'] != '' ){
+      $recordVars['Occurs Before'] = $record['occursbefore']['value'];
+    }
+
+    //Occurs Before
+    if (isset($record['occursafter']) && isset($record['occursafter']['value']) && $record['occursafter']['value'] != '' ){
+      $recordVars['Occurs After'] = $record['occursafter']['value'];
+    }
+
+    //Circa
+    if (isset($record['circa']) && isset($record['circa']['value']) && $record['circa']['value'] != '' ){
+      $recordVars['Circa'] = $record['circa']['value'];
     }
 
     //Roles for events
@@ -799,9 +804,9 @@ function getFullRecordHtml(){
     $html .= <<<HTML
 <h4 class='last-page-header'>
     <a id='last-page' href="$url"><span id=previous-title>$recordform / </span></a>
-    <span id='current-title'>$label</span>
+    <span id='current-title'>$name</span>
 </h4>
-<h1>$label</h1>
+<h1>$name</h1>
 <h2 class='date-range'><span>$dateRange</span></h2>
 HTML;
 //var_dump($html);
@@ -817,11 +822,21 @@ HTML;
 
     $html .= '<div class="detailwrap">';
     foreach($recordVars as $key => $value){
+      if($key == "Label") continue;
+
       if($key == "Located In"){
-        $url = explode("/", $recordVars['Loc In']);
-        $html .= createDetailHtml($value, $key, end($url));
+        $Qid = [];
+        foreach($recordVars['Loc In'] as $Q){
+          $urlQ = explode("/", $Q);
+          $urlQ = end($urlQ);
+          array_push($Qid, $urlQ);
+        }
+        $html .= createDetailHtml($value, $key, $Qid);
       }
       else if($key == "Loc In"){
+        continue;
+      }
+      else if($key == "Modern Country Code"){
         continue;
       }
       else{
@@ -1731,7 +1746,6 @@ QUERY;
   QUERY;
   // print_r($placeQuery);
       $result = blazegraphSearch($placeQuery);
-      // var_dump($result);
       foreach ($result as $key => $value) {
         $result[$key]['place'] = $result[$key]['otherp'];
         unset($result[$key]['otherp']);

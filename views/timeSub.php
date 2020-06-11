@@ -34,26 +34,12 @@ if (isset($_GET['prev'])){
             <div class="search-section">
                 <div class="inputwrap">
                     <label for="startYear">Start Year</label>
-                    <select class="s2-single date-from" id="event-from" name="">
-                        <option value""></option>
-                        <!-- <option value="1840">1840</option>
-                        <option value="1841">1841</option>
-                        <option value="1842">1842</option>
-                        <option value="1840">1843</option>
-                        <option value="1841">1844</option>
-                        <option value="1842">1845</option> -->
+                    <select class="s2-single" id="event-from" name="" multiple="multiple">
                     </select>
                 </div>
                 <div class="inputwrap">
                     <label for="endYear">End Year</label>
-                    <select class="s2-single date-to" id="event-to" name="">
-                        <option value""></option>
-                        <!-- <option value="1840">1840</option>
-                        <option value="1841">1841</option>
-                        <option value="1842">1842</option>
-                        <option value="1840">1843</option>
-                        <option value="1841">1844</option>
-                        <option value="1842">1845</option> -->
+                    <select class="s2-single" id="event-to" name="" multiple="multiple">
                     </select>
                 </div>
                 <input class="event-date-range" type="hidden" name="date" value=""/>

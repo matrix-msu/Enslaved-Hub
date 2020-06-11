@@ -1,35 +1,44 @@
 <!-- Page author: Drew Schineller-->
 <?php
+include_once( BASE_LIB_PATH . "koraSearchRemote.php" );
+
 // Pagination Vars
 $sortField = (isset($_GET['field']) ? ucwords($_GET['field']) : 'Title');
 $sortDirection = (isset($_GET['direction']) ? strtoupper($_GET['direction']) : 'ASC');
-$storiesPerPage = (isset($_GET['count']) && is_numeric($_GET['count']) ? $_GET['count'] : '8');
+$storiesPerPage = (isset($_GET['count']) && is_numeric($_GET['count']) ? $_GET['count'] : '10');
 $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1');
 
 // Making sure search keyword(s) are provided
 $searchString = (!empty($_GET['searchbar']) ? htmlspecialchars($_GET['searchbar']) : "");
-$keywords = explode(" ",$searchString);
+$keywords = !empty($searchString) ? explode(" ",$searchString) : [];
 
-// Getting Stories using korawrappper
-$fields =  ['Title', 'Featured'];
-$sort = [ [$sortField => $sortDirection] ];
+// Getting Stories using KORA_Search
+$fields =  ['Title', 'Featured', 'Images'];
 $startIndex = ($page - 1) * $storiesPerPage;
-$koraResults = koraWrapperSearch(STORY_SID, $fields,
- array("Display"), "TRUE", $sort, $startIndex,
- $storiesPerPage, array("size" => true)
-);
 
-$stories = json_decode($koraResults, true);
-$count = $stories["counts"]["global"]; // Total count of stories
 
-// echo "<script>console.log(".json_encode($stories).")</script>";
-
-$featured = [];
-foreach ($stories['records'][0] as $kid => $story) {
-    if (isset($story['Featured']) && $story['Featured'] == 'TRUE') {
-        $featured[$kid] = $story;
-    }
+$clause = new KORA_Clause("Display", "=", "True");
+if(!empty($keywords)) {
+  $other_clause;
+  foreach ($keywords as $keyword) {
+    if(empty($other_clause)) $other_clause = new KORA_Clause("Title", "LIKE", $keyword);
+    else $other_clause = new KORA_Clause($other_clause, "OR" ,new KORA_Clause("Title", "LIKE", $keyword));
+  }
+  $clause = new KORA_Clause($clause, "AND", $other_clause);
 }
+$sort = array(array("field" => $sortField, "direction" => $sortDirection == "ASC" ? SORT_ASC : SORT_DESC));
+$stories = KORA_Search(TOKEN, PID, STORY_SID, $clause, $fields, $sort, $startIndex, $storiesPerPage);
+
+
+$count = $stories["count"]; // Total count of stories
+unset($stories["count"]);
+
+// Gettting featured records
+$clause = new KORA_Clause("Display", "=", "True");
+$clause = new KORA_Clause($clause, "AND", new KORA_Clause("Featured", "=", "TRUE"));
+$featured = KORA_Search(TOKEN, PID, STORY_SID, $clause, $fields, $sort);
+unset($featured["count"]);
+
 $page_count = ceil($count / $storiesPerPage);
 if ($page < 1) {
     $page == 1;
@@ -73,9 +82,8 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                 // print_r($featured);die;
                 foreach ($featured as $kid => $story) {
                     //get images from records
-                    $storyImages = $story["Images"];
-                    if (isset($storyImages[0])){
-                        $storyImage = $storyImages[0]['url'];
+                    if (!empty($story["Images"]["localName"])){
+                        $storyImage = $story["Images"]["localName"];
                     } else {
                         $storyIndex = array_rand($bg);
                         $storyImage = BASE_URL.'assets/images/'.$bg[$storyIndex];
@@ -104,9 +112,19 @@ $cache_Data = Json_GetData_ByTitle("Stories");
     <div id="all-header" class="container cardheader-wrap">
         <h2 class="column-header">All Stories</h2>
         <div class="sort-search">
+          <div class="container pagiwrap">
+              <div class="sort-pages">
+                  <p><span class="per-page-text"><?= (isset($_GET['count']) ? $_GET['count'] : '10') ?></span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/chevron.svg" alt="sort stories button"/></p>
+                  <ul id="submenu" class="pagenum-menu">
+                      <li class="count-option" data-count="10"><span>10</span> Per Page</li>
+                      <li class="count-option" data-count="20"><span>20</span> Per Page</li>
+                      <li class="count-option" data-count="50"><span>50</span> Per Page</li>
+                  </ul>
+              </div>
+            </div>
             <div class="container sort-stories">
                 <?php
-                $sort_text = "Sort Stories By";
+                $sort_text = "Sort By";
                 if (isset($_GET['field']) && isset($_GET['direction'])) {
                     if ($_GET['field'] == 'title') {
                         if ($_GET['direction'] == 'asc') {
@@ -124,7 +142,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                     }
                 }
                 ?>
-                <span class="sort-stories-text"><?= $sort_text; ?> <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/chevron.svg" alt="sort stories button"></span>
+                <span class="sort-stories-text"><span style="white-space: nowrap;"> <?= $sort_text; ?> </span><img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/chevron.svg" alt="sort stories button"></span>
                 <ul id="submenu" class="sorting-menu">
                     <li class="sort-option" data-field="title" data-direction="asc">Alphabetically (A-Z)</li>
                     <li class="sort-option" data-field="title" data-direction="desc">Alphabetically (Z-A)</li>
@@ -132,6 +150,8 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                     <li class="sort-option" data-field="start date" data-direction="asc">Date (Oldest First)</li>
                 </ul>
             </div>
+          </div>
+          <div class="sort-search">
             <div class="container search">
                 <form action="" method="get">
                     <label for="searchbar" class="sr-only">searchbar</label>
@@ -150,15 +170,15 @@ $cache_Data = Json_GetData_ByTitle("Stories");
     </div>
     <div class="container pagiwrap">
         <div class="sort-pages">
-            <p><span class="per-page-text"><?= (isset($_GET['count']) ? $_GET['count'] : '8') ?></span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/chevron.svg" alt="sort stories button"/></p>
+          <!-- I just keep this to push the pagination to the right bottom
+            <p><span class="per-page-text"><?= (isset($_GET['count']) ? $_GET['count'] : '10') ?></span> Per Page <img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/chevron.svg" alt="sort stories button"/></p>
             <ul id="submenu" class="pagenum-menu">
-                <li class="count-option" data-count="8"><span>8</span> Per Page</li>
-                <li class="count-option" data-count="12"><span>12</span> Per Page</li>
-                <li class="count-option" data-count="16"><span>16</span> Per Page</li>
+                <li class="count-option" data-count="10"><span>10</span> Per Page</li>
                 <li class="count-option" data-count="20"><span>20</span> Per Page</li>
+                <li class="count-option" data-count="50"><span>50</span> Per Page</li>
             </ul>
+            -->
         </div>
-
         <div class="pagination-container">
             <div class="pagination-prev btn-prev no-select" data-page="<?php echo ($page > 0 ? $page - 1 : ''); ?>">
                 <img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="Previous Featured Biography">
@@ -175,11 +195,11 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                     $pag_html .= '<li>...</li>';
                 }
 
-                if ($page == $page_count && $page - 4 > 0) {
+                if ($page == $page_count && $page - 4 > 1) {
                     $pag_html .= '<li data-page="'.($page - 4).'">'.($page - 4).'</li>';
                 }
 
-                if ($page >= $page_count - 1 && $page - 3 > 0) {
+                if ($page >= $page_count - 1 && $page - 3 > 1) {
                     $pag_html .= '<li data-page="'.($page - 3).'">'.($page - 3).'</li>';
                 }
 
@@ -201,19 +221,19 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                     $pag_html .= '<li data-page="'.($page + 2).'">'.($page + 2).'</li>';
                 }
 
-                if ($page <= 2 && $page + 3 <= $page_count) {
+                if ($page <= 2 && $page + 3 < $page_count) {
                     $pag_html .= '<li data-page="'.($page + 3).'">'.($page + 3).'</li>';
                 }
 
-                if ($page == 1 && $page + 4 <= $page_count) {
+                if ($page == 1 && $page + 4 < $page_count) {
                     $pag_html .= '<li data-page="'.($page + 4).'">'.($page + 4).'</li>';
                 }
 
-                if ($page_count - $page > 4) {
+                if ($page_count - $page > 3) {
                     $pag_html .= '<li>...</li>';
                 }
 
-                if ($page_count - $page > 3) {
+                if ($page_count - $page >= 3) {
                     $pag_html .= '<li data-page="'.$page_count.'">'.$page_count.'</li>';
                 }
 

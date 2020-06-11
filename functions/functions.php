@@ -216,7 +216,7 @@ function blazegraphSearch($query){
  * \param $templates : Array of the type of cards to make
  * \param $preset :
  */
-function createCards($results, $templates, $select_fields, $preset = 'default', $count = 0){
+function createCards($results, $templates, $select_fields = array(), $preset = 'default', $count = 0){
     if (!is_array($results)){
         $results = array();
     }
@@ -295,16 +295,16 @@ function createCards($results, $templates, $select_fields, $preset = 'default', 
                 );
                 $connections = '<div class="connectionswrap"><p>Person\'s Connections</p><div class="connections">';
                 	if (intval($countpeople) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span class="tooltip" id="person"><span class="head">Person</span></span><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
                     if (intval($countplace) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span class="tooltip" id="place"><span class="head">Place</span></span><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
                     }
                     if (intval($countevent) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span class="tooltip" id="event"><span class="head">Event</span></span><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
                     }
                     if (intval($countsource) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span class="tooltip" id="source"><span class="head">Source</span></span><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
                     }
                 $connections .= '</div></div>';
 
@@ -331,6 +331,7 @@ function createCards($results, $templates, $select_fields, $preset = 'default', 
                             $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p>$places</p></div>";
                         }
                         if ($placesCount > 1){
+                            $places = str_replace(",", ";", $places);
                             $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Places</span>$places</span></p></div>";
                         }
 
@@ -375,7 +376,7 @@ HTML;
                             $cards['fields'] = $fields;
                         }
 // People page
-                        $card = "<tr> class='tr' data-url='" . $person_url . "'>";
+                        $card = "<tr class='tr' data-url='" . $person_url . "'>";
                         foreach ($select_fields[0] as $index => $field) {
                           if($field == "Name"){
                             $value = $record['name'][0];
@@ -395,20 +396,27 @@ HTML;
                             $value = implode(', ', $record['display_place']);
                           }if($field == "Source Type"){
                             $value = $record['source_type'][0];
+                          }if($field == "Ethnodescriptor"){
+                            $value = $record['ethnodescriptor'][0];
+                          }if($field == "Occupation"){
+                            $value = $record['occupation'][0];
                           }
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
                         }
                         $card .= "</tr>";
-                        // var_dump($card);
                     // format this row for csv download
                     $formattedData[$personQ] = array(
-                        'NAME' => $name,
-                        'GENDER' => $sex,
-                        'AGE' => '',
-                        'STATUS' => $status,
-                        'ORIGIN' => '',
-                        'LOCATION' => $places,
-                        'DATE RANGE' => $dateRange
+                        'NAME' => $record['name'][0],
+                        'SEX' => $record['sex'][0],
+                        'PERSON STATUS' => $record['person_status'][0],
+                        'ROLE' => $record['participant_role'][0],
+                        'EVENT' => $record['event_type'][0],
+                        'DATE' => $record['date'][0],
+                        'PLACE TYPE' => implode(', ', $record['place_type']),
+                        'PLACE' => implode(', ', $record['display_place']),
+                        'SOURCE TYPE' => $record['source_type'][0],
+                        'ETHNODESCRIPTOR' => $record['ethnodescriptor'][0],
+                        'OCCUPATION' => $record['occupation'][0]
                     );
 
 
@@ -534,7 +542,7 @@ HTML;
                             $cards['fields'] = $fields;
                         }
 
-                        $card = "<tr> class='tr' data-url='" . $place_url . "'>";
+                        $card = "<tr class='tr' data-url='" . $place_url . "'>";
                         foreach ($select_fields[2] as $index => $field) {
                           if($field == "Name"){
                             $value = $record['label'];
@@ -552,11 +560,10 @@ HTML;
 
                         // format this row for csv download
                         $formattedData[$placeQ] = array(
-                            'NAME' => $name,
-                            'TYPE' => $placeType,
-                            'LOCATED IN' => $locatedIn,
-                            'GEONAME' => $geonames,
-                            'COUNTRY' => $country,
+                            'NAME' => $record['label'],
+                            'PROJECT' => $record['generated_by'][0],
+                            'LOCATION' => $record['located_in'][0],
+                            'PLACE TYPE' => $record['place_type'][0]
                         );
                     }
 
@@ -703,7 +710,7 @@ HTML;
                             $cards['fields'] = $fields;
                         }
 
-                        $card = "<tr> class='tr' data-url='" . $event_url . "'>";
+                        $card = "<tr class='tr' data-url='" . $event_url . "'>";
                         foreach ($select_fields[1] as $index => $field) {
                           if($field == "Name"){
                             $value = $record['label'];
@@ -711,8 +718,8 @@ HTML;
                             $value = $record['event_type'][0];
                           }if($field == "Source Type"){
                             $value = $record['source_type'][0];
-                          }if($field == "Date Range"){
-                            $value = $record['display_date_range'][0];
+                          }if($field == "Date"){
+                            $value = $record['date'][0];
                           }if($field == "Place Type"){
                             $value = $record['place_type'][0];
                           }if($field == "Place"){
@@ -723,10 +730,12 @@ HTML;
                         $card .= "</tr>";
                         // format this row for csv download
                         $formattedData[$eventQ] = array(
-                            'NAME' => $name,
-                            'TYPE' => $type,
-                            'PLACES' => $places,
-                            'DATE RANGE' => $dateRange
+                            'NAME' => $record['label'],
+                            'EVENT TYPE' => $record['event_type'][0],
+                            'SOURCE TYPE' => $record['source_type'][0],
+                            'DATE' => $record['date'][0],
+                            'PLACE TYPE' => $record['place_type'][0],
+                            'PLACE' => $record['display_place'][0]
                         );
                     }
 
@@ -837,7 +846,7 @@ HTML;
                             $cards['fields'] = $fields;
                         }
 
-                        $card = "<tr> class='tr' data-url='" . $source_url . "'>";
+                        $card = "<tr class='tr' data-url='" . $source_url . "'>";
                         foreach ($select_fields[3] as $index => $field) {
                           if($field == "Name"){
                             $value = $record['name'][0];
@@ -852,9 +861,9 @@ HTML;
 
                         // format this row for csv download
                         $formattedData[$sourceQ] = array(
-                            'NAME' => $name,
-                            'TYPE' => $type,
-                            'PROJECT' => $project
+                            'NAME' => $record['name'][0],
+                            'SOURCE TYPE' => $$record['source_type'][0],
+                            'PROJECT' => $record['generated_by'][0]
                         );
 
                     }

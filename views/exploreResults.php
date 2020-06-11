@@ -84,7 +84,7 @@
             <?php //if(!$fromBrowse) { ?>
             <div class="heading-search">
                 <!-- use all counts instead of counterofAllitems() -->
-            <p>Start a search across <?php //echo counterofAllitems();?> records from the Atlantic Slave Trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+            <p>Start a search across <?php //echo counterofAllitems();?> records from the historical slave trade<a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>
@@ -294,16 +294,22 @@
 
     <div id="searchResults">
         <h2 class="showing-results"></h2>
+        <div class="filter-cards">
+            <div class="option-wrap">
+                <p>Option Title</p>
+                <img class="remove" src="<?php echo BASE_IMAGE_URL;?>x-dark.svg" />
+            </div>
+        </div>
         <div id="search-result-controls">
             <!-- <span class="show-filter" class="show-filter"><img src="<?php echo BASE_URL;?>assets/images/arrow-right.svg" alt="show filter menu button"> Show Filter Menu</span> -->
             <span class="view-modes">
                 <span class="grid-view view-toggle">
                     <img class="grid-icon show" src="../assets/images/List.svg" alt="grid view button">
-                    <p class="tooltip">View Grid</p>
+                    <p class="tooltip">Card View</p>
                 </span>
                 <span class="table-view view-toggle">
                     <img class="table-icon" src="../assets/images/Table.svg" alt="table view button">
-                    <p class="tooltip">View Table</p>
+                    <p class="tooltip">Table View</p>
                 </span>
                 <span class="time-view view-toggle visualize-hide">
                     <img class="time-icon" src="../assets/images/time2.svg" alt="time view button">
@@ -323,21 +329,14 @@
                 </span>
                 <span class="align-center results-per-page"><span>9</span> Per Page <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                     <ul id="sortmenu" class="results-per-page">
-                        <li><span>12</span> Per Page</li>
-                        <li><span>24</span> Per Page</li>
-                        <li><span>36</span> Per Page</li>
-                        <li><span>48</span> Per Page</li>
+                        <li><span>20</span> Per Page</li>
+                        <li><span>50</span> Per Page</li>
+                        <li><span>100</span> Per Page</li>
+                        <li><span>250</span> Per Page</li>
+                        <li><span>500</span> Per Page</li>
                     </ul>
                 </span>
             </span>
-        </div>
-
-
-        <div class="filter-cards">
-            <div class="option-wrap">
-                <p>Option Title</p>
-                <img class="remove" src="<?php echo BASE_IMAGE_URL;?>x-dark.svg" />
-            </div>
         </div>
 
         <div class="search-record-connections">

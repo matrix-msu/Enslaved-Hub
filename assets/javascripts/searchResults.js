@@ -14,10 +14,11 @@ var display = search_type;
 var firstLoad = true;
 
 var has_data = false;
-var selected_fields_people = ['Name', 'Occupation', 'Role', 'Event', 'Date', 'Place type', 'Location', 'Source type'];
-var selected_fields_events = ['Event type', 'Name', 'Source type', 'Date range', 'Place type', 'Display place', 'Start date', 'End date'];
-var selected_fields_places = ['Name', 'Database', 'Source type', 'Location', 'Place type'];
-var selected_fields_source = ['Name', 'Database'];
+var selected_fields_people = ['Name', 'Sex', 'Person Status', 'Place', 'Date'];
+var selected_fields_events = ['Name', 'Event Type', 'Source Type', 'Date', 'Place Type', 'Place'];
+var selected_fields_places = ['Name', 'Project', 'Location', 'Place Type'];
+var selected_fields_source = ['Name', 'Project', 'Source Type'];
+var sort_field = "label.sort";
 
 if (search_type == "all"){
     display = 'people';
@@ -34,7 +35,6 @@ var showPath = false;
 var upperForm = "";
 var titleType = "";
 var currentTitle = "Search";
-
 
 var fields = [];    // fields for the table view
 var sort = ''; // or desc
@@ -86,7 +86,7 @@ if(document.location.toString().indexOf('?') !== -1)
             filters[aux[0]] = aux[1].split('+');
             continue;
         }
-        filters[aux[0]] = filters[aux[0]].concat(aux[1].split(/(?!\s),(?!\s)/));
+        filters[aux[0]] = filters[aux[0]].concat(aux[1].split(','));
         // Delete sort from url after refresh
         if(aux[0] == "sort"){
           delete filters[aux[0]];
@@ -118,7 +118,7 @@ function showDisplayType(){
 
 var isSearching  = false;
 
-function searchResults(preset, limit = 12, offset = 0)
+function searchResults(preset, limit = 20, offset = 0)
 {
     if(isSearching) return;
     isSearching = true;
@@ -141,9 +141,11 @@ function searchResults(preset, limit = 12, offset = 0)
             filters: filters,
             templates: templates,
             display: display,
-            fields: selected_fields
+            fields: selected_fields,
+            sort_field: sort_field
         },
         'success': function (data) {
+            // console.log(data);
             isSearching = false;
             result_array = JSON.parse(data);
 
@@ -191,8 +193,10 @@ function searchResults(preset, limit = 12, offset = 0)
                 $("ul.cards").empty();
                 $("thead").empty();
                 $("tbody").empty();
-                $("#pagination").hide();
 
+                // Hide pagination and configure table
+                $("#pagination").hide();
+                $('.connect-row').css('display', 'none');
                 has_data = false;
                 return;
             }
@@ -358,18 +362,20 @@ $(document).ready(function() {
         }
 
         //Check a checkbox if EXPLORE_FORM is set to this type
-        else if( $(this).find("p").text() == upperForm)
+        else if( $(this).find("p").text() == upperForm){
             $(this).find("input").prop('checked', true);
+        }
 
         //Set all checkboxes to checked
-        else if(upperForm === 'All')
+        else if(upperForm === 'All'){
             $(this).find("input").prop('checked', true);
+        }
     });
 
     showDisplayType();
 
 
-    // Show selected filters
+    // Show selected
     $.each(filters, function(key, values)
     {
         if(key && key != "limit" && key != "offset") // inputs lable have classes with name as key
@@ -386,6 +392,14 @@ $(document).ready(function() {
                     //Looks for input where value = value
                     if($(that).find('input').val() == value) {
                         $(that).find("input").prop("checked", true);
+                    }
+                    if($(that).parent().parent().parent().attr('name') == 'date'){
+                        $(that).parent().parent().parent().find("span:first").addClass("show");
+                        $(that).parent().parent().parent().find("ul#submenu").addClass("showdate");
+                    }
+                    else{
+                        $(that).parent().parent().parent().find("span:first").addClass("show");
+                        $(that).parent().parent().parent().find("ul#submenu").addClass("show");
                     }
                 });
             });
@@ -458,6 +472,30 @@ $(document).ready(function() {
         $('span.sort-by > span').html(sort);
         $(document).trigger('click');
     });
+    var table = document.getElementById("search-results");
+    var thead = table.getElementsByTagName("thead")[0];
+    //sorting by headers
+    thead.onclick = (function (e) {
+       e.stopPropagation();
+       e = e || window.event;
+       var th = e.target || e.srcElement;  //assumes there are no other elements in the th
+       var header = th.className;
+       updateSortField(header);
+
+       //Switch sort direction when clicked
+       if(sort == ""){
+         sort = "asc";
+       }
+       else if(sort == "asc"){
+         sort = "desc";
+       }
+       else if(sort == "desc"){
+         sort = "asc";
+       }
+
+       searchResults(search_type, 12, 0);
+    });
+
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
         card_limit = parseInt($(this).find('span:first').html());
@@ -882,11 +920,10 @@ function updateURL(){
     Split the data based on the page
 */
 function get_download_content(fields, data, isAllData) {
-
     if (isAllData) {
         var templates = ['tableCard'];
         filters['offset'] = 0;
-        delete filters['limit'];
+        filters['limit'] = total_length;
 
         $.ajax({
             url: BASE_URL + "api/keywordSearch",
@@ -1061,3 +1098,51 @@ $('.update-columns-button').click(function(e) {
     closeModal();
     searchResults(search_type);
 })
+
+function updateSortField(header){
+  console.log(header);
+  //people
+  if(header == "sex"){
+    sort_field = "sex.raw";
+  }
+  if(header == "person status"){
+    sort_field = "person_status.raw";
+  }
+  if(header == "place"){
+    //does not work
+    // sort_field = "display_place.raw";
+  }
+  if(header == "date"){
+    sort_field = "date";
+  }
+  if(header == "role"){
+    sort_field = "participant_role.raw";
+  }
+  if(header == "event"){
+    sort_field = "event_type.raw";
+  }
+  if(header == "place type"){
+    sort_field = "place_type.raw";
+  }
+  if(header == "source type"){
+    sort_field = "source_type.raw";
+  }
+  if(header == "ethnodescriptor"){
+    sort_field = "ethnodescriptor.raw";
+  }
+  if(header == "occupation"){
+    sort_field = "occupation.raw";
+  }
+  //events
+  if(header == "event type"){
+    sort_field = "event_type.raw";
+  }
+  //places
+  if(header == "project"){
+    sort_field = "generated_by.raw";
+  }
+  if(header == "location"){
+    //does not work
+    sort_field = "located_in.raw";
+  }
+}
