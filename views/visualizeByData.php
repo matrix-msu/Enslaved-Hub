@@ -19,24 +19,27 @@
     <div class="inputwrap">
       <label for="chart_type">Chart Type</label>
       <select class="s2-single" id="chart-type" name="chart_type">
-        <option value="pie">Pie</option>
         <option value="bar">Bar</option>
-        <option value="line">Line</option>
+        <option value="pie">Pie</option>
+        <!-- <option value="line">Line</option> -->
       </select>
     </div>
     <div class="inputwrap">
       <label for="chart_field">Chart Field</label>
       <select class="s2-single" id="chart-field" name="chart_field">
-        <option value="ages">Ages</option>
-        <option value="agesBySex">Ages - Sex</option>
-        <option value="15yo">Ages - 15 years old</option>
+        <option value="ef">Enslaved Female</option>
+        <option value="ec">Enslaved Child</option>
+        <option value="em">Enslaved Male</option>
+        <option value="mf">Master Female</option>
+        <option value="f">Female</option>
+        <option value="ethno">Ethnodescriptor</option>
       </select>
     </div>
     <div class="inputwrap">
       <label for="chart_field">Project</label>
       <select class="s2-single" id="chart-project" name="chart_project">
         <?php foreach (projects as $type => $qid) { ?>
-            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
+            <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
         <?php } ?>
       </select>
     </div>
