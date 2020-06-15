@@ -31,6 +31,23 @@ var filtersToSearchType = {
     'sources' : ['source', 'project']
 };
 
+var sort_map = {
+    'name': 'name.raw',
+    'sex': 'sex.raw',
+    'person status': 'person_status.raw',
+    'place': 'place.raw',
+    'date': 'date',
+    'role': 'participant_role.raw',
+    'event': 'event_type.raw',
+    'event type': 'event_type.raw',
+    'place type': 'place_type.raw',
+    'source type': 'source_type.raw',
+    'ethnodescriptor': 'ethnodescriptor.raw',
+    'occupation': 'occupation.raw',
+    'project': 'generated_by.raw',
+    'location': 'located_in.raw'
+}
+
 var showPath = false;
 var upperForm = "";
 var titleType = "";
@@ -145,7 +162,6 @@ function searchResults(preset, limit = 20, offset = 0)
             sort_field: sort_field
         },
         'success': function (data) {
-            // console.log(data);
             isSearching = false;
             result_array = JSON.parse(data);
 
@@ -480,7 +496,7 @@ $(document).ready(function() {
        e = e || window.event;
        var th = e.target || e.srcElement;  //assumes there are no other elements in the th
        var header = th.className;
-       updateSortField(header);
+       sort_field = sort_map[header];
 
        //Switch sort direction when clicked
        if(sort == ""){
@@ -1098,51 +1114,3 @@ $('.update-columns-button').click(function(e) {
     closeModal();
     searchResults(search_type);
 })
-
-function updateSortField(header){
-  console.log(header);
-  //people
-  if(header == "sex"){
-    sort_field = "sex.raw";
-  }
-  if(header == "person status"){
-    sort_field = "person_status.raw";
-  }
-  if(header == "place"){
-    //does not work
-    // sort_field = "display_place.raw";
-  }
-  if(header == "date"){
-    sort_field = "date";
-  }
-  if(header == "role"){
-    sort_field = "participant_role.raw";
-  }
-  if(header == "event"){
-    sort_field = "event_type.raw";
-  }
-  if(header == "place type"){
-    sort_field = "place_type.raw";
-  }
-  if(header == "source type"){
-    sort_field = "source_type.raw";
-  }
-  if(header == "ethnodescriptor"){
-    sort_field = "ethnodescriptor.raw";
-  }
-  if(header == "occupation"){
-    sort_field = "occupation.raw";
-  }
-  //events
-  if(header == "event type"){
-    sort_field = "event_type.raw";
-  }
-  //places
-  if(header == "project"){
-    sort_field = "generated_by.raw";
-  }
-  if(header == "location"){
-    //does not work
-    sort_field = "located_in.raw";
-  }
-}

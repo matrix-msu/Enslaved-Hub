@@ -562,7 +562,7 @@ function keyword_search() {
         }
         $params['body']['query']['bool']['filter'] = $terms;
     }
-    // var_dump($params);
+
     $res = $es->search($params);
     $single_total = $res['hits']['total']['value'];
 
