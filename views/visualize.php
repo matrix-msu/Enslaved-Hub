@@ -21,8 +21,10 @@
 
 <div class="cardwrap visualize">
   <li class="card">
-    <img src="<?php echo BASE_URL;?>assets/images/charts.svg" class="charts" alt="charts">
-    <p>Charts</p>
+      <a href="<?php echo BASE_URL;?>visualizeByData">
+      <img src="<?php echo BASE_URL;?>assets/images/charts.svg" class="charts" alt="charts">
+      <p>Charts</p>
+      </a>
   </li>
   <li class="card">
     <img src="<?php echo BASE_URL;?>assets/images/maps.svg" class="maps" alt="maps">
