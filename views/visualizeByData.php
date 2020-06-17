@@ -21,6 +21,7 @@
       <select class="s2-single" id="chart-type" name="chart_type">
         <option value="bar">Bar</option>
         <option value="pie">Pie</option>
+        <option value="tab">Table</option>
         <!-- <option value="line">Line</option> -->
       </select>
     </div>
