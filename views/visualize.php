@@ -21,7 +21,7 @@
 
 <div class="cardwrap visualize">
   <li class="card">
-      <a href="<?php echo BASE_URL;?>visualizeByData">
+      <a href="<?php echo BASE_URL;?>visualizedata">
       <img src="<?php echo BASE_URL;?>assets/images/charts.svg" class="charts" alt="charts">
       <p>Charts</p>
       </a>
