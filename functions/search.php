@@ -519,24 +519,46 @@ function keyword_search() {
 
             if ($key == 'date' | $key == 'age') {
                 $values = explode('-', $value[0]);
+                $range_filter = [];
                 if ($key == 'date') {
                     $values[0] = $values[0] . '||/y';
                     $values[1] = $values[1] . '||/y';
-                }
+                    // Note: Will have to update format
+                    // once more exact dates get indexed.
+                    // Age still works fine with format.
 
-                // Note: Will have to update format
-                // once more exact dates get indexed.
-                // Age still works fine with format.
-                $range_filter = [
-                    'range' => [
-                        $key => [
-                            'gte' => $values[0],
-                            'lte' => $values[1],
-                            'format' => 'yyyy'
+                    $range_filter = [
+                        'bool' => [
+                            'should' => [
+                                ['range' => [
+                                    'date' => [
+                                        'gte' => $values[0],
+                                        'lte' => $values[1],
+                                        'format' => 'yyyy']
+                                        ]
+                                    ],
+                                ['range' => [
+                                    'circa' => [
+                                        'gte' => $values[0],
+                                        'lte' => $values[1],
+                                        'format' => 'yyyy'
+                                        ]
+                                    ]
+                                ]
+                            ]
                         ]
-                    ]
-                ];
-
+                    ];
+                } else {
+                    $range_filter = [
+                        'range' => [
+                            $key => [
+                                'gte' => $values[0],
+                                'lte' => $values[1],
+                                'format' => 'yyyy'
+                            ]
+                        ]
+                    ];
+                }
                 array_push($terms, $range_filter);
             } else if ($key == 'modern_country_code') {
                 $codes = [];
