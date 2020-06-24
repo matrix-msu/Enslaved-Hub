@@ -18,6 +18,7 @@ var selected_fields_people = ['Name', 'Sex', 'Person Status', 'Place', 'Date'];
 var selected_fields_events = ['Name', 'Event Type', 'Source Type', 'Date', 'Place Type', 'Place'];
 var selected_fields_places = ['Name', 'Project', 'Location', 'Place Type'];
 var selected_fields_source = ['Name', 'Project', 'Source Type'];
+var sort_field = "label.sort";
 
 if (search_type == "all"){
     display = 'people';
@@ -29,6 +30,23 @@ var filtersToSearchType = {
     'places' : ['place', 'source', 'project'],
     'sources' : ['source', 'project']
 };
+
+var sort_map = {
+    'name': 'name.raw',
+    'sex': 'sex.raw',
+    'person status': 'person_status.raw',
+    'place': 'place.raw',
+    'date': 'date',
+    'role': 'participant_role.raw',
+    'event': 'event_type.raw',
+    'event type': 'event_type.raw',
+    'place type': 'place_type.raw',
+    'source type': 'source_type.raw',
+    'ethnodescriptor': 'ethnodescriptor.raw',
+    'occupation': 'occupation.raw',
+    'project': 'generated_by.raw',
+    'location': 'located_in.raw'
+}
 
 var showPath = false;
 var upperForm = "";
@@ -140,7 +158,8 @@ function searchResults(preset, limit = 20, offset = 0)
             filters: filters,
             templates: templates,
             display: display,
-            fields: selected_fields
+            fields: selected_fields,
+            sort_field: sort_field
         },
         'success': function (data) {
             isSearching = false;
@@ -359,12 +378,14 @@ $(document).ready(function() {
         }
 
         //Check a checkbox if EXPLORE_FORM is set to this type
-        else if( $(this).find("p").text() == upperForm)
+        else if( $(this).find("p").text() == upperForm){
             $(this).find("input").prop('checked', true);
+        }
 
         //Set all checkboxes to checked
-        else if(upperForm === 'All')
+        else if(upperForm === 'All'){
             $(this).find("input").prop('checked', true);
+        }
     });
 
     showDisplayType();
@@ -387,6 +408,14 @@ $(document).ready(function() {
                     //Looks for input where value = value
                     if($(that).find('input').val() == value) {
                         $(that).find("input").prop("checked", true);
+                    }
+                    if($(that).parent().parent().parent().attr('name') == 'date'){
+                        $(that).parent().parent().parent().find("span:first").addClass("show");
+                        $(that).parent().parent().parent().find("ul#submenu").addClass("showdate");
+                    }
+                    else{
+                        $(that).parent().parent().parent().find("span:first").addClass("show");
+                        $(that).parent().parent().parent().find("ul#submenu").addClass("show");
                     }
                 });
             });
@@ -459,6 +488,30 @@ $(document).ready(function() {
         $('span.sort-by > span').html(sort);
         $(document).trigger('click');
     });
+    var table = document.getElementById("search-results");
+    var thead = table.getElementsByTagName("thead")[0];
+    //sorting by headers
+    thead.onclick = (function (e) {
+       e.stopPropagation();
+       e = e || window.event;
+       var th = e.target || e.srcElement;  //assumes there are no other elements in the th
+       var header = th.className;
+       sort_field = sort_map[header];
+
+       //Switch sort direction when clicked
+       if(sort == ""){
+         sort = "asc";
+       }
+       else if(sort == "asc"){
+         sort = "desc";
+       }
+       else if(sort == "desc"){
+         sort = "asc";
+       }
+
+       searchResults(search_type, 12, 0);
+    });
+
     $("ul.results-per-page li").click(function (e) { // set the per-page value
         e.stopPropagation();
         card_limit = parseInt($(this).find('span:first').html());
@@ -798,21 +851,6 @@ $(document).ready(function() {
     });
     // Onclick, download all data for the query as csv file
     $("#Download_all").click(function () {
-        var all_fields = [];
-        $.ajax({
-            url: BASE_URL + "api/getColumns",
-            type: "GET",
-            data: {
-                'type': display
-            },
-            'success': function (data) {
-                var columns = JSON.parse(data);
-                for (var col in columns) {
-                    all_fields.push(columns[col].toUpperCase());
-                }
-            }
-        });
-        fields = all_fields;
         get_download_content(fields, formattedData, true);
     });
 
@@ -901,7 +939,7 @@ function get_download_content(fields, data, isAllData) {
     if (isAllData) {
         var templates = ['tableCard'];
         filters['offset'] = 0;
-        delete filters['limit'];
+        filters['limit'] = total_length;
 
         $.ajax({
             url: BASE_URL + "api/keywordSearch",

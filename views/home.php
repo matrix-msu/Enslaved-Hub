@@ -48,13 +48,13 @@ if (isset($story2Images[0])){
     <div class="container middlewrap home-page">
         <div class="heading-text">
             <div class="heading-title">
-                <img class="logo-main" src="<?php echo BASE_IMAGE_URL;?>Logo-Landing.svg" width="780" height="99" alt="Enslaved People of Historic Slave Trade"/>
-                <img class="logo-mobile" src="<?php echo BASE_IMAGE_URL;?>Logo-Landing-Mobile.svg" width="409" height="132" alt="Enslaved People of Historic Slave Trade"/>
+                <img class="logo-main" src="<?php echo BASE_IMAGE_URL;?>Logo-Landing.svg" width="780" height="99" alt="Enslaved Peoples of Historical Slave Trade"/>
+                <img class="logo-mobile" src="<?php echo BASE_IMAGE_URL;?>Logo-Landing-Mobile.svg" width="409" height="132" alt="Enslaved Peoples of Historical Slave Trade"/>
             </div>
             <p><?php echo $cache_data["descr"] ?> </p>
         </div>
         <div class="heading-search">
-            <p>Start a search across <span id="count-all"></span> records from the historic slave trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+            <p>Start a search across <span id="count-all"></span> records from the historical slave trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
             <form class="search-form" action="<?= BASE_URL ?>search/all">
                 <label for="searchbar" class="sr-only">searchbar</label>

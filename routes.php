@@ -73,7 +73,8 @@ $GLOBALS['routes'] = array(
 //    'links' => 'links.php',
     'support-our-mission' => 'support-our-mission.php',
     'resources' => 'links.php',
-    'visualize' => 'visualize.php'
+    'visualize' => 'visualize.php',
+    'visualizedata' => 'visualizeByData.php'
 );
 
 if( !isset($_SERVER['HTTP_HOST']) ){

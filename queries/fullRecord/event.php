@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?name ?type ?date ?endDate ?occursbefore ?occursafter ?circa ?description
+SELECT ?name ?type ?date ?endDate ?occursbefore ?occursafter ?circa ?description ?project
 (group_concat(distinct ?rolename; separator = "||") as ?roles)
 (group_concat(distinct ?participantname; separator = "||") as ?participant)
 (group_concat(distinct ?part; separator = "||") as ?pq)
@@ -13,6 +13,8 @@ VALUES ?event { $wd:$qid }.
 OPTIONAL {?event $p:$hasEventType  ?object .
 ?object prov:wasDerivedFrom ?provenance .
 ?provenance $pr:$isDirectlyBasedOn ?source .
+?source $wdt:$generatedBy ?proj.
+?proj $rdfs:label ?project.
 OPTIONAL {?provenance $pr:$hasExternalReference ?extref1}}.
 ?event $rdfs:label ?name.
 OPTIONAL {?event $wdt:$hasEventType ?eventtype.
@@ -58,5 +60,5 @@ OPTIONAL{
 ?statement $pq:$hasParticipantRole ?part.
 ?part $rdfs:label ?participantname}.
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?type ?date ?endDate ?occursbefore ?occursafter ?circa ?description
+}GROUP BY ?name ?type ?date ?endDate ?occursbefore ?occursafter ?circa ?description ?project
 QUERY;
