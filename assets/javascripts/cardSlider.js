@@ -3,7 +3,8 @@ var base_wrap = '';
 function installFeaturedListeners(base_name){
     //update globals
     base_wrap = base_name;
-    var card_width = parseInt($(base_wrap+' .cardwrap li.card').outerWidth()) + parseInt($(base_wrap+' .cardwrap li.card').css('marginRight')); //card width + margin-right (margin-right always = 20px)
+    //card width + margin-right (margin-right always = 20px)
+    var card_width = parseInt($(base_wrap+' .cardwrap li.card').outerWidth()) + parseInt($(base_wrap+' .cardwrap li.card').css('marginRight'));
     var cardwrap_width = $(base_wrap+' .cardwrap .cardwrap2').outerWidth();
     var cards_per_page = 1 + Math.floor((cardwrap_width/2)/card_width); //minimum = 1
 
@@ -36,8 +37,9 @@ function installFeaturedListeners(base_name){
     $(base_wrap+' .controls .dots .dot').off().click(function(){
         //get clicked dot
         var dotid = $(this).attr('id');
-        var page_num = parseInt(dotid.substr(1)); // dotid[1];
+        var page_num = parseInt(dotid.substr(1));
 
+        // Scroll to page
         $(base_wrap+' .cardwrap').animate({
             scrollLeft: card_width * (page_num-1) * cards_per_page
         }, 500);
@@ -47,14 +49,18 @@ function installFeaturedListeners(base_name){
     $(base_wrap+' .controls .prev').off().click(function(){
         //get current active dot
         var dotid = $(base_wrap+' .controls .dots .active').attr('id');
-        var prev_page = dotid[1] - 1;
+        var prev_page = parseInt(dotid.substr(1)) - 1;
+        if(prev_page < 1) prev_page = num_dots;
+
         //trigger click on prev dot
         $(base_wrap+' .controls .dots .dot#d'+prev_page).trigger('click');
     });
     $(base_wrap+' .controls .next').off().click(function(){
         //get current active dot
         var dotid = $(base_wrap+' .controls .dots .active').attr('id');
-        var next_page = parseInt(dotid[1]) + 1;
+        var next_page = parseInt(dotid.substr(1)) + 1;
+        if(next_page > num_dots) next_page = 1;
+
         //trigger click on next dot
         $(base_wrap+' .controls .dots .dot#d'+next_page).trigger('click');
     });
