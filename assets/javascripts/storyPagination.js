@@ -123,9 +123,7 @@ function initializePagination() {
     var $prev = $pagContainer.find('.pagination-prev');
 
     $pagSelect.click(function() {
-        var $sel = $(this);
-        var newPage = $sel.data('page');
-
+        var newPage = $(this).data('page');
         if (newPage && newPage != "") {
             setPage(newPage);
         }
@@ -133,7 +131,6 @@ function initializePagination() {
 
     $next.click(function() {
         var newPage = $(this).data('page');
-
         if (newPage && newPage != "") {
             setPage(newPage);
         }
@@ -141,14 +138,13 @@ function initializePagination() {
 
     $prev.click(function() {
         var newPage = $(this).data('page');
-
         if (newPage && newPage != "") {
             setPage(newPage);
         }
     });
 }
 
-scrollToAll()
+scrollToAll();
 initializeSort();
 initializeCount();
 initializePagination();
