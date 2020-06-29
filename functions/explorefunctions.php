@@ -16,7 +16,6 @@ function callAPI($url,$limit,$offset){
     // Open the file using the HTTP headers set above
     $json = file_get_contents($url,false,$context);
     return $json;
-
 }
 
 
@@ -65,8 +64,10 @@ function createDetailHtml($statement,$label,$link=''){
     return "";
   }
 
+  // echo "<script>console.log(".json_encode([$label, $statement]).")</script>";
 
   if($label === "RolesA"){
+    // echo "<script>console.log(".json_encode([$label, $statement]).")</script>";
     //Multiple roles in the roles array so match them up with the participant
     $lowerlabel = "roles";
     $upperlabel = "Roles";
@@ -116,7 +117,7 @@ HTML;
 
       $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
     }
-    $html .= '</div>';
+    $html .= '</div><br>';
 
 } else if ($label == "eventRolesA"){
     // match roles with events
@@ -169,7 +170,7 @@ HTML;
 
         $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventRoleLabels[$i]</a></div>";
     }
-    $html .= '</div>';
+    $html .= '</div><br>';
 } else if ($label == "closeMatchA"){
     $lowerlabel = "close match";
     $upperlabel = "Close Match";
@@ -296,8 +297,8 @@ HTML;
     }
     $html .= '</div>';
 } else if ($label == "projectsA"){
-    $lowerlabel = "contributing project";
-    $upperlabel = "Contributing Project";
+    $lowerlabel = "contributing project(s)";
+    $upperlabel = "Contributing Project(s)";
 
     $projectUrls = explode('||', $statement['projectUrl']);
     $projectNames = explode('||', $statement['projectName']);
@@ -317,9 +318,10 @@ HTML;
     //Loop through and match up
     $matched = '';
     foreach($projectNames as $projectName){
-      $url = BASE_URL . 'search/all?projects=' . rawurlencode($projectName);
-      $html .= "<div class='detail-bottom'>
-          <a href=$url class='highlight'>$projectName</a>";
+            $html .= <<<HTML
+    <div class="detail-bottom">
+        <p>$projectName</p>
+    HTML;
     }
     $html .= '</div></div>';
 } else if ($label == "ecvoA"){
@@ -442,6 +444,15 @@ HTML;
         $qid = end($urlArr);
         array_push($qidArr, $qid);
       }
+    } elseif($label == "Occupation")
+    {
+      $statement = str_replace(" and ", "", $statement);
+      $statement = str_replace(" or ", "", $statement);
+      $statement = str_replace(" and/or ", "", $statement);
+      $statementArr = explode(',', $statement);
+      if (end($statementArr) == '' || end($statementArr) == ' '){
+        array_pop($statementArr);
+      }
     }
     else{
       //Splits the statement(detail) up into multiple parts for multiple details, also trims whitespace off end
@@ -460,6 +471,7 @@ HTML;
     <div class="detail-bottom">
 HTML;
 
+  // echo "<script>console.log(".json_encode([$label, $statementArr]).")</script>";
     //For each detail to add create it in seperate divs with a detail menu in each
     for ($x = 0; $x <= (count($statementArr) - 1); $x++){
         if($label === "Name"){
@@ -501,8 +513,8 @@ HTML;
         }
 
         $detailname = $statementArr[$x];
-        if($label == 'Located In'){
-          $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[$x] . "'>" . $detailname . "</a></div>";
+        if($label == 'Located In' || $label == "Occupation"){
+          $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[$x] . "'>" . $detailname . "</a></div><br>";
           continue;
         }
         else{
@@ -540,7 +552,7 @@ function getFullRecordHtml(){
       die;
     }
     $record = $result[0];
-    // print_r($record);
+    // echo "<script>console.log(".json_encode($result).")</script>";
 
     //Get variables from query
     $recordVars = [];
@@ -717,12 +729,6 @@ function getFullRecordHtml(){
                           ];
             $recordVars['projectsA'] = $projectArr;
         }
-        else{
-          $projectArr = ['projectUrl' => $record['project']['value'],
-                         'projectName' => $record['project']['value']
-                        ];
-            $recordVars['projectsA'] = $projectArr;
-        }
     }
 
     if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])  && $record['locatedIn']['value'] != '' ){
@@ -730,6 +736,7 @@ function getFullRecordHtml(){
       foreach($result as $res){
         array_push($locatedIn, $res['locatedIn']['value']);
       }
+      $locatedIn = array_unique($locatedIn);
       $recordVars['Located In'] = $locatedIn;
     }
 
@@ -816,10 +823,8 @@ HTML;
     $html = '';
 
     $htmlArray['description'] = $html;
-
     //Detail section
     $html = '';
-
     $html .= '<div class="detailwrap">';
     foreach($recordVars as $key => $value){
       if($key == "Label") continue;
@@ -831,6 +836,7 @@ HTML;
           $urlQ = end($urlQ);
           array_push($Qid, $urlQ);
         }
+        // echo "<script>console.log(".json_encode($value).")</script>";
         $html .= createDetailHtml($value, $key, $Qid);
       }
       else if($key == "Loc In"){
