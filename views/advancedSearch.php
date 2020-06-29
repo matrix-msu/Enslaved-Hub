@@ -76,11 +76,11 @@
                 </div>
                 <div class="inputwrap datewrap">
                     <label for="event-from">Date Range</label>
-                    <select class="s2-single date-from" id="event-from" name="">
+                    <select class="s2-multiple date-from" id="event-from" name="" multiple="multiple">
                         <option value=""></option>
                     </select>
                     <label for="event-to" class="sr-only">dropdown</label>
-                    <select class="s2-single date-to" id="event-to" name="">
+                    <select class="s2-multiple date-to" id="event-to" name="" multiple="multiple">
                         <option value=""></option>
                     </select>
                     <input class="event-date-range" type="hidden" name="date" value=""/>
