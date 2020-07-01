@@ -578,6 +578,11 @@
 
             .detail-bottom{
 
+                div {
+                  display: inline;
+                  font-family: aleoregular;
+                }
+
                 .highlight {
                     color: $sub-base;
                     font-family: aleobold;
@@ -611,6 +616,7 @@
                         }
                     }
                 }
+
                 h4{
                     font-size: 18px;
                     color: $base-dark;
