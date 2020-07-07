@@ -28,12 +28,12 @@
     <div class="inputwrap">
       <label for="chart_field">Chart Field</label>
       <select class="s2-single" id="chart-field" name="chart_field">
-        <option value="ef">Enslaved Female</option>
-        <option value="ec">Enslaved Child</option>
-        <option value="em">Enslaved Male</option>
-        <option value="mf">Master Female</option>
-        <option value="f">Female</option>
-        <option value="ethno">Ethnodescriptor</option>
+        <option value="ef">Enslaved Female Records</option>
+        <option value="ec">Enslaved Child Records</option>
+        <option value="em">Enslaved Male Records</option>
+        <option value="mf">Master Female Records</option>
+        <option value="f">Female Records</option>
+        <option value="ethno">Ethnodescriptor Records</option>
       </select>
     </div>
     <div class="inputwrap">
@@ -48,5 +48,6 @@
   <div class="container datawrap">
     <iframe id="data-frame"></iframe>
   </div>
+  <p class="container info infowrap">Learn more about the <a href="https://docs.enslaved.org/controlledVocabulary/" target="_blank"/>Enslaved Controlled Vocabulary</a></p>
 </div>
 <script src="<?php echo BASE_URL;?>assets/javascripts/visualizeByData.js"></script>
