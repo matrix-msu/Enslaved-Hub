@@ -1,6 +1,6 @@
 <!-- Author: Hyeungsuk Kim-->
 <!-- Visualize page-->
-<?php $cache_data = Json_GetData_ByTitle("Visualize");
+<?php $cache_data = Json_GetData_ByTitle("Visualizations");
 ?>
 
 <div class="container header visualize-header">
@@ -15,7 +15,7 @@
 
 <div class="container info">
   <div class="container infowrap">
-    <p>Brief info on Section. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur a tempor incididunt ut labore et dolore magna Lorem ipsum dolor tempor aliqua  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum  consectetur  Lorem ipsum.</p>
+    <p><?php echo $cache_data['descr'] ?></p> 
   </div>
 </div>
 

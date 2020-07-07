@@ -77,6 +77,10 @@ var tab_date_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/5c0e9
 var tab_pt_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/5f3fac20-aff8-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_mc_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/6ba6ae10-aff7-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_st_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/bf741ef0-aff8-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+var tab_psTotal_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/bf741ef0-aff8-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+var tab_ethnoTotal_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+
+https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=()&_a=
 
 
 var concat_url = BASE_URL + "visualizedata";
@@ -84,26 +88,28 @@ var url = new URL(concat_url);
 var search_params = url.searchParams;
 
 var barFields = {
-  'ef': "<option value='ef'>Enslaved Female</option>",
-  'ec': "<option value='ec'>Enslaved Child</option>",
-  'em': "<option value='em'>Enslaved Male</option>",
-  'mf': "<option value='mf'>Master Female</option>"
+  'ef': "<option value='ef'>Enslaved Female Records</option>",
+  'ec': "<option value='ec'>Enslaved Child Records</option>",
+  'em': "<option value='em'>Enslaved Male Records</option>",
+  'mf': "<option value='mf'>Master Female Records</option>"
 };
 var pieFields = {
-  'ef': "<option value='ef'>Enslaved Female</option>",
-  'f': "<option value='f'>Female</option>",
-  'ethno': "<option value='ethno'>Ethnodescriptor</option>"
+  'ef': "<option value='ef'>Enslaved Female Records</option>",
+  'f': "<option value='f'>Female Records</option>",
+  'ethno': "<option value='ethno'>Ethnodescriptor Records</option>"
 }
 var tabFields = {
   'ps': "<option value='ps'>Person Status</option>",
+  'psTotal': "<option value='psTotal'>Person Status - Total</option>",
   'pr': "<option value='pr'>Person Role</option>",
   'ethno': "<option value='ethno'>Ethnodescriptor</option>",
+  'ethnoTotal': "<option value='ethnoTotal'>Ethnodescriptor - Total</option>",
   'age': "<option value='age'>Age</option>",
   'occ': "<option value='occ'>Occupation</option>",
   'et': "<option value='et'>Event Type</option>",
   'date': "<option value='date'>Date</option>",
   'pt': "<option value='pt'>Place Type</option>",
-  'mc': "<option value='mc'>Modern Country</option>",
+  //'mc': "<option value='mc'>Modern Country</option>",
   'st': "<option value='st'>Source Type</option>",
 }
 var projects = {
