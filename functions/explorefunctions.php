@@ -1417,15 +1417,12 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
 
  WHERE
 {
- VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
+ VALUES ?agent { $wd:$QID}.
  	?agent $p:$hasInterAgentRelationship ?staterel .
 	?staterel $ps:$hasInterAgentRelationship ?relations .
   	?relations $rdfs:label ?relationslabel.
 	?staterel $pq:$isRelationshipTo ?people.
-  	?people $rdfs:label ?peoplename.
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE]\". }
-}ORDER BY ?random";
+  	?people $rdfs:label ?peoplename.";
 
     $result = blazegraphSearch($personQuery);
     $connections['Person-count'] = count($result);
@@ -1546,43 +1543,65 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
 
  WHERE
 {
- VALUES ?source { $wd:$QID} #Q number needs to be changed for every source.
+ VALUES ?source { $wd:$QID}
   ?source $wdt:$instanceOf $wd:$entityWithProvenance.
-  ?people $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent; #agent or subclass of agent
+  ?people $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent;
   		?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
   ?people $rdfs:label ?peoplename
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}ORDER BY ?random
+}LIMIT 8
 QUERY;
-
+$peoplecounter['query'] = <<<QUERY
+SELECT DISTINCT (count(?people) as ?count)
+WHERE
+{
+VALUES ?source { $wd:$QID}
+?people $wdt:$instanceOf/$wdt:$subclassOf $wd:$agent;
+        $p:$hasName  ?object .
+?object $prov:wasDerivedFrom ?provenance .
+?provenance $pr:$isDirectlyBasedOn ?source .
+}
+QUERY;
     // print_r($peopleQuery);die;
 
     $result = blazegraphSearch($peopleQuery);
-    $connections['Person-count'] = count($result);
-    $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
-
+    $counter= blazegraphSearch($peoplecounter);
+    $connections['Person'] = $result;  // return the first 8 results
+    $connections['Person-count'] = $counter[0]['count']['value'];
   // events connections
   $eventsQuery['query'] = <<<QUERY
 SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
-
  WHERE
 {
- VALUES ?source { $wd:$QID} #Q number needs to be changed for every source.
-  ?source $wdt:$reportsOn ?event.
-  ?event $rdfs:label ?eventlabel
+ VALUES ?source { $wd:$QID}
+ ?event $wdt:$instanceOf $wd:$event;
+          $p:$hasName  ?object .
+ ?object $prov:wasDerivedFrom ?provenance .
+ ?provenance $pr:$isDirectlyBasedOn ?source .
+   ?event $rdfs:label ?eventlabel
+}LIMIT 8
 
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}ORDER BY ?random
 QUERY;
+$eventscounter['query'] = <<<QUERY
+SELECT DISTINCT (count(?event) as ?count)
+WHERE
+{
+VALUES ?source { $wd:$QID}
+?event $wdt:$instanceOf $wd:$event;
+        $p:$hasName  ?object .
+?object $prov:wasDerivedFrom ?provenance .
+?provenance $pr:$isDirectlyBasedOn ?source .
 
-    // print_r($eventsQuery);die;
+}
+QUERY;
+     //print_r($eventsQuery);
     $result = blazegraphSearch($eventsQuery);
-    $connections['Event-count'] = count($result);
-    $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
-
+    $counter= blazegraphSearch($eventscounter);
+//    print_r($counter);
+    $connections['Event-count'] = $counter[0]['count']['value'];
+//    $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
+    $connections['Event']=$result;
   // place connections
   $placeQuery['query'] = <<<QUERY
 SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
@@ -1590,12 +1609,12 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
  WHERE
 {
  VALUES ?source { $wd:$QID} #Q number needs to be changed for every source.
-  ?source $wdt:$reportsOn ?event.
-  ?event $wdt:$atPlace ?place.
+ ?place $wdt:$instanceOf $wd:$place;
+          $p:$hasName  ?object .
+ ?object $prov:wasDerivedFrom ?provenance .
+ ?provenance $pr:$isDirectlyBasedOn ?source .
   ?place $rdfs:label ?placelabel
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}ORDER BY ?random
+}
 QUERY;
 // print_r($placeQuery);die;
 
