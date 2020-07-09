@@ -77,8 +77,8 @@ var tab_date_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/5c0e9
 var tab_pt_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/5f3fac20-aff8-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_mc_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/6ba6ae10-aff7-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_st_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/bf741ef0-aff8-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
-var tab_psTotal_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/bf741ef0-aff8-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
-var tab_ethnoTotal_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+var tab_psSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/e0255b80-c076-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+var tab_ethnoSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 
 https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=()&_a=
 
@@ -100,10 +100,10 @@ var pieFields = {
 }
 var tabFields = {
   'ps': "<option value='ps'>Person Status</option>",
-  'psTotal': "<option value='psTotal'>Person Status - Total</option>",
+  'psSex': "<option value='psSex'>Person Status - Sex</option>",
   'pr': "<option value='pr'>Person Role</option>",
   'ethno': "<option value='ethno'>Ethnodescriptor</option>",
-  'ethnoTotal': "<option value='ethnoTotal'>Ethnodescriptor - Total</option>",
+  'ethnoSex': "<option value='ethnoSex'>Ethnodescriptor - Sex</option>",
   'age': "<option value='age'>Age</option>",
   'occ': "<option value='occ'>Occupation</option>",
   'et': "<option value='et'>Event Type</option>",
