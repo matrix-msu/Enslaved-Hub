@@ -22,6 +22,7 @@
         <option value="bar">Bar</option>
         <option value="pie">Pie</option>
         <option value="tab">Table</option>
+        <option value="dash">Dashboard</option> 
         <!-- <option value="line">Line</option> -->
       </select>
     </div>
