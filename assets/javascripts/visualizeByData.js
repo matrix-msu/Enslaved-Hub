@@ -80,6 +80,11 @@ var tab_st_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/bf741ef
 var tab_psSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/e0255b80-c076-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_ethnoSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 
+//Dashboards
+var dash_psLouisianaMaranhao_All = "https://kibana.enslaved.org/app/kibana#/dashboard/4489df30-c142-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+var dash_ps2LouisianaMaranhao_All = "https://kibana.enslaved.org/app/kibana#/dashboard/6d60d700-c157-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+var dash_ethnoVoyagesMaranhao_All = "https://kibana.enslaved.org/app/kibana#/dashboard/f0d9ee20-c150-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+
 https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=()&_a=
 
 
@@ -111,6 +116,11 @@ var tabFields = {
   'pt': "<option value='pt'>Place Type</option>",
   //'mc': "<option value='mc'>Modern Country</option>",
   'st': "<option value='st'>Source Type</option>",
+}
+var dashFields = {
+  'psLouisianaMaranhao': "<option value='psLouisianaMaranhao'>Person Status - Maranhao Vs Louisiana</option>",
+  'ps2LouisianaMaranhao': "<option value='ps2LouisianaMaranhao'>Person Status - Pie & Metric - Maranhao Vs Louisiana</option>",
+  'ethnoVoyagesMaranhao': "<option value='ethnoVoyagesMaranhao'>Ethnodescriptor - Maranhao Vs Voyages</option>"
 }
 var projects = {
   'All': "<option value='All Projects'>All Projects</option>",
@@ -173,6 +183,8 @@ function addFieldsT(type, field = "default", proj = "default"){
   if(field == "default" && proj == "default"){
     if (type == "bar"){
       $('iframe').attr("src", bar_ef_All);
+      $('iframe').css("top","-138px");
+      $('.datawrap').css("height","450px");
       //Add bar fields to dropdown
       for (var key in barFields){
         $("#chart-field").append(barFields[key]);
@@ -181,6 +193,8 @@ function addFieldsT(type, field = "default", proj = "default"){
     }
     if (type == "pie"){
       $('iframe').attr("src", pie_ef_All);
+      $('iframe').css("top","-138px");
+      $('.datawrap').css("height","450px");
       //Add pie fields to dropdown
       for (var key in pieFields){
         $("#chart-field").append(pieFields[key]);
@@ -188,9 +202,20 @@ function addFieldsT(type, field = "default", proj = "default"){
     }
     if (type == "tab"){
       $('iframe').attr("src", tab_ps_All);
+      $('iframe').css("top","-138px");
+      $('.datawrap').css("height","450px");
       //Add table fields to dropdown
       for (var key in tabFields){
         $("#chart-field").append(tabFields[key]);
+      }
+    }
+    if (type == "dash"){
+      $('iframe').attr("src", dash_psLouisianaMaranhao_All);
+      $('iframe').css("top","-50px");
+      $('.datawrap').css("height","537px");
+      //Add table fields to dropdown
+      for (var key in dashFields){
+        $("#chart-field").append(dashFields[key]);
       }
     }
     //Add projects to dropdown
@@ -213,6 +238,7 @@ function addFieldsT(type, field = "default", proj = "default"){
       $("#chart-type").append("<option value='bar'>Bar</option>");
       $("#chart-type").append("<option value='pie'>Pie</option>");
       $("#chart-type").append("<option value='tab'>Table</option>");
+      $("#chart-type").append("<option value='dash'>Dashboard</option>");
     }
     if (type == "pie"){
       //Add pie fields to dropdown
@@ -226,6 +252,7 @@ function addFieldsT(type, field = "default", proj = "default"){
       $("#chart-type").append("<option value='pie'>Pie</option>");
       $("#chart-type").append("<option value='bar'>Bar</option>");
       $("#chart-type").append("<option value='tab'>Table</option>");
+      $("#chart-type").append("<option value='dash'>Dashboard</option>");
     }
     if (type == "tab"){
       //Add table fields to dropdown
@@ -239,6 +266,21 @@ function addFieldsT(type, field = "default", proj = "default"){
       $("#chart-type").append("<option value='tab'>Table</option>");
       $("#chart-type").append("<option value='pie'>Pie</option>");
       $("#chart-type").append("<option value='bar'>Bar</option>");
+      $("#chart-type").append("<option value='dash'>Dashboard</option>");
+    }
+    if (type == "dash"){
+      //Add table fields to dropdown
+      $("#chart-field").append(tabFields[field]);
+      for (var key in tabFields){
+        if(tabFields[key] != tabFields[field]){
+          $("#chart-field").append(tabFields[key]);
+        }
+      }
+      //Add types to dropdown
+      $("#chart-type").append("<option value='tab'>Table</option>");
+      $("#chart-type").append("<option value='pie'>Pie</option>");
+      $("#chart-type").append("<option value='bar'>Bar</option>");
+      $("#chart-type").append("<option value='dash'>Dashboard</option>");
     }
     //Add projects to dropdown
     $("#chart-project").append(projects[proj]);
