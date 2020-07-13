@@ -7,6 +7,7 @@
     RewriteRule ^assets/.*$ - [PT]
     RewriteRule ^ontology/.*$ - [PT]
 	RewriteRule ^modules/.*$ - [PT]
+    RewriteRule ^newticket.php$ newticket.php [L]
     RewriteRule ^.*$ index.php [L]
 
 </IfModule>
