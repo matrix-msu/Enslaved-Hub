@@ -23,6 +23,7 @@
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>modal.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=<?php echo RECAPTCHA_SITE_KEY;?>"></script>
     <script> grecaptcha.ready(function () {}); </script>
+    <style> .grecaptcha-badge { opacity:0;} </style>
 
     <!-- select2 cdn links -->
     <link href="<?php echo BASE_URL;?>assets/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
