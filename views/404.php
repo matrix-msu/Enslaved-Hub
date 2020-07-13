@@ -25,7 +25,7 @@ $randIndex = array_rand($bg);
   </div>
 
   <div class="button">
-    <a href='https://robbie.dev.matrix.msu.edu/~kimiris/enslaved/'>Go Home</a>
+    <a href="<?php echo BASE_URL;?>"'>Go Home</a>
   </div>
 </div>
 
