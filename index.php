@@ -21,6 +21,9 @@
     <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>header.js"></script>
     <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>modal.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=<?php echo RECAPTCHA_SITE_KEY;?>"></script>
+    <script> grecaptcha.ready(function () {}); </script>
+
     <!-- select2 cdn links -->
     <link href="<?php echo BASE_URL;?>assets/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
     <script src="<?php echo BASE_URL;?>assets/select2/4.0.7/js/select2.js"></script>
