@@ -27,12 +27,6 @@ $(document).ready(function() {
     $('#project').select2({
         placeholder: "Select Project"
     });
-    $('.date-from').select2({
-        placeholder: "From"
-    });
-    $('.date-to').select2({
-        placeholder: "To"
-    });
     $('#startYear').select2({
         placeholder: "Select or Input the Start Year"
     });
@@ -130,12 +124,13 @@ function combineDates() {
     if($('select#person-from').val() !== '' || $('select#person-to').val() !== ''){
         var personDate = $('select#person-from').val() + '-' + $('select#person-to').val();
     }
-    if($('select#event-from').val() !== '' || $('select#event-to').val() !== ''){
+    if($('select#event-from').val() !== null || $('select#event-to').val() !== null){
         var eventDate = $('select#event-from').val() + '-' + $('select#event-to').val();
     }
     if($('select#place-from').val() !== '' || $('select#place-to').val() !== ''){
         var placeDate = $('select#place-from').val() + '-' + $('select#place-to').val();
     }
+
     $('.person-date-range').val(personDate);
     $('.event-date-range').val(eventDate);
     $('.place-date-range').val(placeDate);
