@@ -147,6 +147,9 @@ if ($fileArray[0] == 'explore' && count($fileArray) > 2){ //filter
 }elseif( $fileArray[0] == 'explore' && count($fileArray) > 1 && $fileArray[1] == 'projects' ){
     $currentFile = 'projects';
 
+}elseif( $fileArray[0] == 'explore' && count($fileArray) > 1 && $fileArray[1] == 'visualizations' ){
+    $currentFile = 'visualizedata';
+
 }elseif ($fileArray[0] == 'explore' && count($fileArray) > 1){ //form
     define('EXPLORE_FORM', $fileArray[1]);
     $currentFile = 'exploreForm';
