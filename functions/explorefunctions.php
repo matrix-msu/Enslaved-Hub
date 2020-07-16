@@ -64,10 +64,7 @@ function createDetailHtml($statement,$label,$link=''){
     return "";
   }
 
-  // echo "<script>console.log(".json_encode([$label, $statement]).")</script>";
-
   if($label === "RolesA"){
-    // echo "<script>console.log(".json_encode([$label, $statement]).")</script>";
     //Multiple roles in the roles array so match them up with the participant
     $lowerlabel = "roles";
     $upperlabel = "Roles";
@@ -286,7 +283,6 @@ HTML;
     <div>$relationships[$i]
 HTML;
 
-// print_r(controlledVocabulary);die;
         // relationship tool tip
         if(array_key_exists($relationships[$i],controlledVocabulary)){
             $detailinfo = ucfirst(controlledVocabulary[$relationships[$i]]);
@@ -325,7 +321,6 @@ HTML;
     }
     $html .= '</div></div>';
 } else if ($label == "ecvoA"){
-    // print_r($statement);die;
     $lowerlabel = "ethnolinguistic descriptor - place of origin";
     $upperlabel = "Ethnolinguistic Descriptor - Place Of Origin";
 
@@ -471,7 +466,6 @@ HTML;
     <div class="detail-bottom">
 HTML;
 
-  // echo "<script>console.log(".json_encode([$label, $statementArr]).")</script>";
     //For each detail to add create it in seperate divs with a detail menu in each
     for ($x = 0; $x <= (count($statementArr) - 1); $x++){
         if($label === "Name"){
@@ -505,11 +499,6 @@ HTML;
             $html .= '<a href="' . $baseurl . 'record/place/' . $locationQ . '">' . $statementArr[$x] . "</a>";
             continue;
           }
-        }
-        else if ($label === 'Roles'){
-        }
-        else{
-          // $html .= '<a href="' . $baseurl . 'search/all?' . $lowerlabel . '=' . $statementArr[$x] . '">';
         }
 
         $detailname = $statementArr[$x];
@@ -552,7 +541,6 @@ function getFullRecordHtml(){
       die;
     }
     $record = $result[0];
-    // echo "<script>console.log(".json_encode($result).")</script>";
 
     //Get variables from query
     $recordVars = [];
@@ -734,7 +722,10 @@ function getFullRecordHtml(){
     if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])  && $record['locatedIn']['value'] != '' ){
       $locatedIn = [];
       foreach($result as $res){
-        array_push($locatedIn, $res['locatedIn']['value']);
+        if (strpos($res['locatedIn']['value'], '||') !== false) {
+          $locatedIn = array_merge($locatedIn, explode('||', $res['locatedIn']['value']));
+        } else
+          array_push($locatedIn, $res['locatedIn']['value']);
       }
       $locatedIn = array_unique($locatedIn);
       $recordVars['Located In'] = $locatedIn;
@@ -743,7 +734,10 @@ function getFullRecordHtml(){
     if (isset($record['locIn']) && isset($record['locIn']['value'])  && $record['locIn']['value'] != '' ){
       $locIn = [];
       foreach($result as $res){
-        array_push($locIn, $res['locIn']['value']);
+        if (strpos($res['locIn']['value'], '||') !== false) {
+          $locIn = array_merge($locIn, explode('||', $res['locIn']['value']));
+        } else
+          array_push($locIn, $res['locIn']['value']);
       }
       $recordVars['Loc In'] = $locIn;
     }
@@ -836,7 +830,6 @@ HTML;
           $urlQ = end($urlQ);
           array_push($Qid, $urlQ);
         }
-        // echo "<script>console.log(".json_encode($value).")</script>";
         $html .= createDetailHtml($value, $key, $Qid);
       }
       else if($key == "Loc In"){
@@ -859,8 +852,6 @@ HTML;
     // Code for creating events on Timeline
     // Replace with Kora 3 events
     $events = [];
-
-    // print_r($record);
 
     //Creating the events array for the timeline
     if (isset($record['allevents']) && isset($record['allevents']['value']) &&  $record['allevents']['value'] != '' ){
@@ -1053,8 +1044,6 @@ HTML;
         return json_encode($htmlArray);
     }
 
-    // print_r($events);die;
-
     $timeline_event_dates = [];
     $unknownEvents = [];    // events without dates
 
@@ -1068,11 +1057,6 @@ HTML;
             array_push($unknownEvents, $event);
         }
     }
-
-    // echo 'here  ';
-    // print_r($unknownEvents);
-    // echo 'aae  ';
-    // print_r($timeline_event_dates);die;
 
     if (!empty($timeline_event_dates)){
         $first_date = min($timeline_event_dates);
@@ -1219,7 +1203,6 @@ HTML;
 
     $activeSet = false; // set the first event with a date as active
 
-    // print_r($events);die;
     foreach($events as $index => $event) {
         $eventQ = $event['kid'];
 
@@ -1389,7 +1372,6 @@ function getFullRecordConnections(){
 
   $QID = $_REQUEST['Qid'];
   $recordform = $_REQUEST['recordForm'];
-  // echo $QID.' '.$recordform;die;
 
   // these need to be filled in for each type of form
   if ($recordform == 'source'){
@@ -1521,7 +1503,6 @@ QUERY;
 
 QUERY;
 
-    // print_r($sourceQuery);die;
     $result = blazegraphSearch($sourceQuery);
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
@@ -1563,7 +1544,6 @@ VALUES ?source { $wd:$QID}
 ?provenance $pr:$isDirectlyBasedOn ?source .
 }
 QUERY;
-    // print_r($peopleQuery);die;
 
     $result = blazegraphSearch($peopleQuery);
     $counter= blazegraphSearch($peoplecounter);
@@ -1595,12 +1575,9 @@ VALUES ?source { $wd:$QID}
 
 }
 QUERY;
-     //print_r($eventsQuery);
     $result = blazegraphSearch($eventsQuery);
     $counter= blazegraphSearch($eventscounter);
-//    print_r($counter);
     $connections['Event-count'] = $counter[0]['count']['value'];
-//    $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
     $connections['Event']=$result;
   // place connections
   $placeQuery['query'] = <<<QUERY
@@ -1616,7 +1593,6 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
   ?place $rdfs:label ?placelabel
 }
 QUERY;
-// print_r($placeQuery);die;
 
     $result = blazegraphSearch($placeQuery);
     $connections['Place-count'] = count($result);
@@ -1687,7 +1663,7 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
-// print_r($sourceQuery);die;
+
     $result = blazegraphSearch($sourceQuery);
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
@@ -1747,7 +1723,6 @@ QUERY;
       ?source $rdfs:label ?sourcelabel
     }ORDER BY ?random
   QUERY;
-  // print_r($sourceQuery);
       $result = blazegraphSearch($sourceQuery);
       $connections['Source-count'] = count($result);
       $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
@@ -1769,7 +1744,6 @@ QUERY;
         BIND(CONCAT(?placelabels,?types )  AS ?relatedPlaces ) .
     }ORDER BY ?random
   QUERY;
-  // print_r($placeQuery);
       $result = blazegraphSearch($placeQuery);
       foreach ($result as $key => $value) {
         $result[$key]['place'] = $result[$key]['otherp'];

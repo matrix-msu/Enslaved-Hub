@@ -6,6 +6,7 @@ SELECT ?name ?type ?date ?endDate ?occursbefore ?occursafter ?circa ?description
 (group_concat(distinct ?participantname; separator = "||") as ?participant)
 (group_concat(distinct ?part; separator = "||") as ?pq)
 (group_concat(distinct ?extref1; separator = "||") as ?extref)
+(group_concat(distinct ?place; separator = "||") as ?locIn)
 (group_concat(distinct ?located; separator = "||") as ?locatedIn)
 WHERE
 {
