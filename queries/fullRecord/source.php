@@ -25,7 +25,7 @@ SELECT
   OPTIONAL{?source $wdt:$reportsOn ?event}.
 
   OPTIONAL{?source $wdt:$availableFrom ?availableFrom}.
-  OPTIONAL {?source edt:P20 ?name}.
+  OPTIONAL {?source $wdt:$hasName ?name}.
   OPTIONAL {?event $wdt:$atPlace ?place.}
 
 }GROUP BY ?label ?name ?project ?pname ?type ?availableFrom ?description

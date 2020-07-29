@@ -6,6 +6,7 @@ SELECT ?name ?type ?date ?endDate ?occursbefore ?occursafter ?circa ?description
 (group_concat(distinct ?participantname; separator = "||") as ?participant)
 (group_concat(distinct ?part; separator = "||") as ?pq)
 (group_concat(distinct ?extref1; separator = "||") as ?extref)
+(group_concat(distinct ?place; separator = "||") as ?locIn)
 (group_concat(distinct ?located; separator = "||") as ?locatedIn)
 WHERE
 {
@@ -16,7 +17,7 @@ OPTIONAL {?event $p:$hasEventType  ?object .
 ?source $wdt:$generatedBy ?proj.
 ?proj $rdfs:label ?project.
 OPTIONAL {?provenance $pr:$hasExternalReference ?extref1}}.
-?event $rdfs:label ?name.
+?event $wdt:$hasName ?name.
 OPTIONAL {?event $wdt:$hasEventType ?eventtype.
 ?eventtype $rdfs:label ?type}.
 OPTIONAL{ ?event $wdt:$hasDescription ?description}.
