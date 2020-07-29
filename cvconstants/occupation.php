@@ -22,4 +22,3 @@ const occupation = [
     'Writing and/or Publishing' => '',
     'Other Occupation' => ''
 ];
-?>

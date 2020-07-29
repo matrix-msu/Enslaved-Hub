@@ -16,4 +16,3 @@ const placeTypes=[
     'Worship Site' => 'Q435',
     'Other Place Type' => ''
 ];
-?>

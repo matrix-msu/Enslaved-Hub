@@ -121,4 +121,3 @@ const controlledVocabulary=[
 "Worship Site" => "building or site used for religious purposes",
 "Writing and/or Publishing" => "work involving the creation, editing, and publication of an original spoken or written work"
 ];
-?>

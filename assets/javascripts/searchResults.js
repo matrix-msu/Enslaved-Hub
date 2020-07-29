@@ -940,27 +940,51 @@ function get_download_content(fields, data, isAllData) {
         var templates = ['tableCard'];
         filters['offset'] = 0;
         filters['limit'] = total_length;
-
         $.ajax({
-            url: BASE_URL + "api/keywordSearch",
+            url: BASE_URL + "api/createCSV",
             type: "GET",
             data: {
                 preset: search_type,
                 filters: filters,
                 templates: templates,
-                display: display
+                display: display,
+                createCSV: true,
+                downloadFields: fields
             },
             'success': function (data)
             {
-                var allResults = JSON.parse(data);
-                if (typeof (allResults['formatted_data']) != 'undefined'){
-                    download_csv(allResults['formatted_data'], fields);
-                }
+                setTimeout(function(){
+                    checkCSV(data);
+                },2000);
             }
         });
     } else {
         download_csv(data, fields);
     }
+}
+
+function checkCSV(tmpName){
+    $.ajax({
+        url: BASE_URL + "api/checkCSV",
+        type: "GET",
+        data: {
+            csvName: tmpName
+        },
+        'success': function (data)
+        {
+            if(data == 'false'){
+                setTimeout(function(){
+                    checkCSV(tmpName);
+                },5000);
+            }else if(data == 'true'){
+                var params = {
+                    csvName: tmpName
+                };
+                params = $.param(params);
+                window.location.href = BASE_URL + "api/downloadCSV?" + params;
+            }
+        }
+    });
 }
 
 

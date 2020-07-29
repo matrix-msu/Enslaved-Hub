@@ -1,7 +1,17 @@
 <?php
+if(isset($argv)){
+    require_once("./config.php");
+    // echo getcwd();die;
+    // echo json_encode($argv[1]);
+    $_GET = json_decode($argv[1],true);
+}
 require_once(BASE_PATH . 'vendor/autoload.php');
 require_once(BASE_PATH . 'functions/functions.php');
 use Elasticsearch\ClientBuilder;
+
+if(isset($argv)){
+    keyword_search();
+}
 
 function all_counts_ajax() {
     echo json_encode(all_counts());
@@ -342,6 +352,7 @@ function keyword_search() {
         ELASTICSEARCH_URL
     ];
 
+    // echo ELASTICSEARCH_URL;die;
     $es = ClientBuilder::create()
                         ->setHosts($hosts)
                         ->build();
@@ -352,7 +363,9 @@ function keyword_search() {
     $size = 12;
     $from = 0;
     $get_all_counts = false;
-    $select_fields = $_GET['fields'];
+    if(isset($_GET['fields'])){
+        $select_fields = $_GET['fields'];
+    }
 
     $convert_filters = [
         'gender' => 'sex',
@@ -584,8 +597,22 @@ function keyword_search() {
         }
         $params['body']['query']['bool']['filter'] = $terms;
     }
-
+    // $params['body']['size'] = "25000";
+// echo ini_get('error_log');die;
+    // $chunkFrom = 10000;
+    // $chunkLimit = 10000;
+    $chunkTotal = intval($params['body']['size']);
+    if($chunkTotal >= 10000){
+        // $params['body']['from'] = "0";
+        // $params['body']['size'] = "100";
+        ini_set("memory_limit", "-1");
+        set_time_limit(0);
+    }
+    // if(isset($_GET['createCSV'])){
+    //     $params['body']['size'] = "1000";
+    // }
     $res = $es->search($params);
+    // echo json_encode($res["hits"]["hits"]);die;
     $single_total = $res['hits']['total']['value'];
 
     if ($get_all_counts && $item_type) {
@@ -619,7 +646,24 @@ function keyword_search() {
         $total = $single_total;
     }
 
-    return createCards($res['hits']['hits'], $templates, $select_fields, $preset, $total);
+    $formattedData = @createCards($res['hits']['hits'], $templates, $select_fields, $preset, $total);
+
+    if(isset($_GET['createCSV'])){
+        $downloadFields = $_GET['downloadFields'];
+        $csv = 'QID,'.implode($downloadFields,",")."\n";
+        $formattedData = json_decode($formattedData,true);
+        foreach($formattedData['formatted_data'] as $qid => $row){
+            $csv .= $qid.",";
+            foreach($downloadFields as $name){
+                $csv .= '"'.$row[$name].'",';
+            }
+            $csv = substr($csv, 0, -1)."\n";
+        }
+        file_put_contents($_GET['csv_name'],$csv);
+        rename($_GET['csv_name'], $_GET['csv_name'].'.csv');
+        die;
+    }
+    return $formattedData;
 }
 
 function get_columns() {

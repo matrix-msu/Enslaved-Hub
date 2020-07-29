@@ -72,5 +72,3 @@ const properties =
   "hasSurname" => "P72",
   "hasFirstName" => "P73"
 ];
-
-?>

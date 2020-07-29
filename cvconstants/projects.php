@@ -17,4 +17,3 @@ const qprojects=[
   "Q376" => "Legacies of British Slave Ownership",
   "Q383" => "Freedom Narratives",
 ];
-?>

@@ -13,4 +13,3 @@ const qageCategory= [
 "Q427" => "Child Age Group",
 "Q429" => "Older Person Age Group"
 ];
-?>

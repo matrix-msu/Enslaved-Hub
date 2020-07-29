@@ -8,5 +8,3 @@ const provinces =
 "Saint-Domingue" => "Q317"
 
 ];
-
-?>

@@ -23,5 +23,3 @@ const qcities =[
   "Q403" => "Sherbro",
   "Q448" => "Accra"
 ];
-
-?>

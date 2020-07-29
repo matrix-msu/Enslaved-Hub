@@ -715,4 +715,3 @@ const ethnodescriptor=[
   'Mandinga Bambora'	 => 'Q999',
   'Planta'	 => 'Q1094'
 ];
-?>

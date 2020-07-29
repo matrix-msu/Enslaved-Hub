@@ -52,5 +52,3 @@ const places =
 "Jamaica" => "Q295",
 "Baton Rouge" => "Q407902"
 ];
-
-?>

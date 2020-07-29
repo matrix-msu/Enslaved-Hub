@@ -49,6 +49,5 @@ const qeventTypes = [
   "Q250" => "Voyage",
   "Q281" => "Emancipation or Manumission",
   "Q10087" => "Embarkation",
-  "Q10088" => "Disembarkation"	
+  "Q10088" => "Disembarkation"
 ];
-?>

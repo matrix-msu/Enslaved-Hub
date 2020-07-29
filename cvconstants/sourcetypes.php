@@ -18,4 +18,3 @@ const sourceTypes=[
     'Newspaper' => '',
     'Secondary Source' => ''
 ];
-?>

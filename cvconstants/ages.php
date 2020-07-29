@@ -1,4 +1,4 @@
- <?php
+<?php
  const qages=[
    "Q2" => "18",
    "Q3" => "17",
@@ -168,5 +168,3 @@
  const AgeCategoryOld = [
 
  ];
-
- ?>

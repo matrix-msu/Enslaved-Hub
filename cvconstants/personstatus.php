@@ -8,4 +8,3 @@ const personstatus=[
     'Indentured, Apprentice, or Pawn' => 'Q201',
     'Person with Liminal Status' => ''
 ];
-?>

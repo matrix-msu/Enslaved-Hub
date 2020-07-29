@@ -73,4 +73,3 @@ const qclass=[
   "Q463" => "Interagent Relationship"
 
 ];
- ?>

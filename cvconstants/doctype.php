@@ -34,4 +34,3 @@ const qdoctype=[
   "Q144" => "Freedom or Emancipation Document",
   "Q145" => "Bill of Sale or Receipt"
 ];
-?>

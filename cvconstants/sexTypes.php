@@ -18,5 +18,3 @@ const allSexTypes =
 'Man' => 'Q296',
 'Men' => 'Q296',
 'Intersex' => 'Q120'];
-
- ?>
