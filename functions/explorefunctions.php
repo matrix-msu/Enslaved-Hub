@@ -541,7 +541,6 @@ function getFullRecordHtml(){
       die;
     }
     $record = $result[0];
-
     //Get variables from query
     $recordVars = [];
 
@@ -800,17 +799,19 @@ function getFullRecordHtml(){
     $url = BASE_URL . "explore/" . $type;
     $recordform = ucfirst($type);
     $name = $recordVars['Name'];
+
     $label= $recordVars['Label'];
     $dateRange = '';
     $html .= <<<HTML
 <h4 class='last-page-header'>
     <a id='last-page' href="$url"><span id=previous-title>$recordform / </span></a>
     <span id='current-title'>$name</span>
+
 </h4>
 <h1>$name</h1>
 <h2 class='date-range'><span>$dateRange</span></h2>
 HTML;
-//var_dump($html);
+
     $htmlArray['header'] = $html;
 
     //Description section
@@ -1217,7 +1218,7 @@ HTML;
         // title html
         $titleHtml = "";
         if (isset($event['title']) && $event['title'] != ''){
-            $titleHtml = "<p class='large-text'>".$event['title']."</p>";
+            $titleHtml = "<p class='large-text'>".$event['f']."</p>";
         }
         // date html
         $dateHtml = "";
@@ -1412,25 +1413,33 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
 
     // places connected to a person
     $placeQuery['query'] = <<<QUERY
-SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
+SELECT DISTINCT ?place ?placelabel
 
  WHERE
 {
- VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
+ VALUES ?agent { $wd:$QID}.
 
+  {
+  OPTIONAL {
+    ?agent $p:$hasName ?statement.
+    ?statement $ps:$hasName ?name.
+    ?statement $pq:$recordedAt ?event.
+    ?event  $wdt:$atPlace ?place.
+    ?place $rdfs:label ?placelabel.
+   }
+ }
+ UNION {
     OPTIONAL {
       ?agent $p:$hasParticipantRole ?statementrole.
       ?statementrole $ps:$hasParticipantRole ?roles.
       ?statementrole $pq:$roleProvidedBy ?roleevent.
-
- 		  ?roleevent $wdt:$atPlace ?place.
-		  ?place $rdfs:label ?placelabel.
+ 	  ?roleevent $wdt:$atPlace ?place.
+        ?place $rdfs:label ?placelabel.
     }.
+  }
 
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}ORDER BY ?random
+}LIMIT 8
 QUERY;
-
     $result = blazegraphSearch($placeQuery);
     $connections['Place-count'] = count($result);
     $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
@@ -1456,33 +1465,34 @@ QUERY;
 
     //events connected to a person
     $eventQuery['query'] = <<<QUERY
-SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
+SELECT DISTINCT ?event ?eventlabel
 
  WHERE
 {
- VALUES ?agent { $wd:$QID} #Q number needs to be changed for every source.
-  ?agent $p:$hasName ?statement.
-  ?statement $ps:$hasName ?name.
-  OPTIONAL{ ?statement $pq:$recordedAt ?recordeAt.
-            bind(?recordedAt as ?event)}
+ VALUES ?agent { $wd:$QID}.
+ {
+ OPTIONAL {
+   ?agent $p:$hasName ?statement.
+   ?statement $ps:$hasName ?name.
+   ?statement $pq:$recordedAt ?event.
+   ?event $rdfs:label ?eventlabel.
+  }
+}
+union{
   OPTIONAL {?agent $p:$hasParticipantRole ?statementrole.
            ?statementrole $ps:$hasParticipantRole ?roles.
-           ?statementrole $pq:$roleProvidedBy ?roleevent.
-           bind(?roleevent as ?event)
-
-         }.
-
+           ?statementrole $pq:$roleProvidedBy ?event.
+             ?event $rdfs:label ?eventlabel.}.
+}
+union{
  OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
            ?statstatus $ps:$hasPersonStatus ?status.
-           ?statstatus $pq:$hasStatusGeneratingEvent ?statusevent.
-          bind(?statusevent as ?event)}.
-  ?event $rdfs:label ?eventlabel.
-
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}ORDER BY ?random
+           ?statstatus $pq:$hasStatusGeneratingEvent ?event.
+           ?event $rdfs:label ?eventlabel.}.
+}
+}LIMIT 8
 
 QUERY;
-
     $result = blazegraphSearch($eventQuery);
     $connections['Event-count'] = count($result);
     $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results

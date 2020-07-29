@@ -17,7 +17,7 @@ OPTIONAL {?event $p:$hasEventType  ?object .
 ?source $wdt:$generatedBy ?proj.
 ?proj $rdfs:label ?project.
 OPTIONAL {?provenance $pr:$hasExternalReference ?extref1}}.
-?event $rdfs:label ?name.
+?event $wdt:$hasName ?name.
 OPTIONAL {?event $wdt:$hasEventType ?eventtype.
 ?eventtype $rdfs:label ?type}.
 OPTIONAL{ ?event $wdt:$hasDescription ?description}.
