@@ -724,6 +724,12 @@ HTML;
                             $value = $record['place_type'][0];
                           }if($field == "Place"){
                             $value = $record['display_place'][0];
+                          }if($field == "Occurs Before"){
+                            $value = $record['occurs_before'][0];
+                          }if($field == "Occurs After"){
+                            $value = $record['occurs_after'][0];
+                          }if($field == "Circa"){
+                            $value = $record['circa'][0];
                           }
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
                         }
@@ -735,7 +741,10 @@ HTML;
                             'SOURCE TYPE' => $record['source_type'][0],
                             'DATE' => $record['date'][0],
                             'PLACE TYPE' => $record['place_type'][0],
-                            'PLACE' => $record['display_place'][0]
+                            'PLACE' => $record['display_place'][0],
+                            'OCCURS BEFORE' => $record['occurs_before'][0],
+                            'OCCURS AFTER' => $record['occurs_after'][0],
+                            'CIRCA' => $record['circa'][0]
                         );
                     }
 

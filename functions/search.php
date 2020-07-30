@@ -1,8 +1,6 @@
 <?php
 if(isset($argv)){
     require_once("./config.php");
-    // echo getcwd();die;
-    // echo json_encode($argv[1]);
     $_GET = json_decode($argv[1],true);
 }
 require_once(BASE_PATH . 'vendor/autoload.php');
@@ -352,7 +350,6 @@ function keyword_search() {
         ELASTICSEARCH_URL
     ];
 
-    // echo ELASTICSEARCH_URL;die;
     $es = ClientBuilder::create()
                         ->setHosts($hosts)
                         ->build();
@@ -595,22 +592,14 @@ function keyword_search() {
         }
         $params['body']['query']['bool']['filter'] = $terms;
     }
-    // $params['body']['size'] = "25000";
-// echo ini_get('error_log');die;
-    // $chunkFrom = 10000;
-    // $chunkLimit = 10000;
+
     $chunkTotal = intval($params['body']['size']);
     if($chunkTotal >= 10000){
-        // $params['body']['from'] = "0";
-        // $params['body']['size'] = "100";
         ini_set("memory_limit", "-1");
         set_time_limit(0);
     }
-    // if(isset($_GET['createCSV'])){
-    //     $params['body']['size'] = "1000";
-    // }
+
     $res = $es->search($params);
-    // echo json_encode($res["hits"]["hits"]);die;
     $single_total = $res['hits']['total']['value'];
 
     if ($get_all_counts && $item_type) {
@@ -662,48 +651,6 @@ function keyword_search() {
         die;
     }
     return $formattedData;
-}
-
-function get_columns() {
-    // TODO::Not sure why this has to be an ajax call when
-    // it's just getting some arrays. Can move directly to js.
-    $type = isset($_GET['type']) ? $_GET['type'] : 'people';
-
-    $columns = [
-        'people' => [
-            'name' => 'Name',
-            'sex' => 'Sex',
-            'person_status' => 'Person Status',
-            'participant_role' => 'Role',
-            'event_type' => 'Event',
-            'date' => 'Date',
-            'place_type' => 'Place Type',
-            'display_place' => 'Place',
-            'source_type' => 'Source Type',
-            'ethnodescriptor' => 'Ethnodescriptor',
-            'occupation' => 'Occupation'
-        ],
-        'places' => [
-            'label' => 'Name',
-            'generated_by' => 'Project',
-            'located_in' => 'Location',
-            'place_type' => 'Place Type'
-        ],
-        'events' => [
-            'name' => 'Name',
-            'event_type' => 'Event Type',
-            'source_type' => 'Source Type',
-            'display_date_range' => 'Date',
-            'place_type' => 'Place Type',
-            'display_place' => 'Place'
-        ],
-        'sources' => [
-            'label' => 'Name',
-            'generated_by' => 'Project',
-            'type' => 'Source Type'
-        ]
-    ];
-    echo json_encode($columns[$type]);
 }
 
 function featured_items() {

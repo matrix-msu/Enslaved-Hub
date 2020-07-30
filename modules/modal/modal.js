@@ -1,3 +1,41 @@
+const es_field_to_label = {
+    'people' : {
+        'name' : 'Name',
+        'sex' : 'Sex',
+        'person_status' : 'Person Status',
+        'participant_role' : 'Role',
+        'event_type' : 'Event',
+        'date' : 'Date',
+        'place_type' : 'Place Type',
+        'display_place' : 'Place',
+        'source_type' : 'Source Type',
+        'ethnodescriptor' : 'Ethnodescriptor',
+        'occupation' : 'Occupation'
+    },
+    'places' : {
+        'label' : 'Name',
+        'generated_by' : 'Project',
+        'located_in' : 'Location',
+        'place_type' : 'Place Type'
+    },
+    'events' : {
+        'name' : 'Name',
+        'event_type' : 'Event Type',
+        'source_type' : 'Source Type',
+        'display_date_range' : 'Date',
+        'place_type' : 'Place Type',
+        'display_place' : 'Place',
+        'occurs_before' : 'Occurs Before',
+        'occurs_after' : 'Occurs After',
+        'circa' : 'Circa'
+    },
+    'sources' : {
+        'label' : 'Name',
+        'generated_by' : 'Project',
+        'type' : 'Source Type'
+    }
+};
+
 var modals = document.getElementsByClassName('modal');
 var hidden_modals = document.getElementsByClassName('modal-view');
 var modalImage = $('img.modal-img-view');
@@ -8,8 +46,6 @@ var mod_select_fields_people = ['Name', 'Sex', 'Person Status', 'Place', 'Date']
 var mod_select_fields_events = ['Name', 'Event Type', 'Source Type', 'Date', 'Place Type', 'Place'];
 var mod_select_fields_places = ['Name', 'Project', 'Location', 'Place Type'];
 var mod_select_fields_source = ['Name', 'Project', 'Source Type'];
-
-
 
 for (var i=0; i < modals.length; i++) {
     modals[i].addEventListener('click', showModal(i));
@@ -28,7 +64,18 @@ function showModal(i) {
           selected_columns = mod_select_fields_source;
         }
 
-        populateColumnOptions(display);
+        $('#available-cols').empty();
+        $('#selected-cols').empty();
+        columns = es_field_to_label[display];
+        for (var col in columns) {
+            if(!selected_columns.includes(columns[col])){
+                $('#available-cols').append(`<li class="left" value=${columns[col]}>${columns[col]}</li>`);
+                avail_columns.push(columns[col]);
+            }
+            if(selected_columns.includes(columns[col])){
+                $('#selected-cols').append(`<li class="left" value=${columns[col]}>${columns[col]}</li>`);
+            }
+        }
 
         $(document.body).css('overflow', 'hidden');
         hidden_modals[i].style.display = 'block';
@@ -103,41 +150,7 @@ $('.minus').click(function () {
 // TABLE MODAL HANDLED BELOW HERE //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
-// get all options from left and right columns
-// var left_col = window.document.getElementsByClassName('left');
-// var right_col = window.document.getElementsByClassName('right');
-
-function populateColumnOptions(type) {
-    $.ajax({
-        url: BASE_URL + "api/getColumns",
-        type: "GET",
-        data: {
-            'type': type
-        },
-        'success': function (data) {
-            var columns = JSON.parse(data);
-            $('#available-cols').empty();
-            $('#selected-cols').empty();
-            for (var col in columns) {
-                if(!selected_columns.includes(columns[col])){
-                  $('#available-cols').append(`<li class="left" value=${columns[col]}>${columns[col]}</li>`);
-                  avail_columns.push(columns[col]);
-                }
-                if(selected_columns.includes(columns[col])){
-                  $('#selected-cols').append(`<li class="left" value=${columns[col]}>${columns[col]}</li>`);
-                }
-            }
-
-        }
-    });
-}
-
-
-
-
 // Columns
-
-
 // select thing from left column
 var selected_items = [];
 $('#available-cols').on('click', 'li', function (e) {

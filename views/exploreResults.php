@@ -414,20 +414,7 @@
                 <div class="left-col">
                     <p>Available Columns</p>
                     <div>
-                        <ul id="available-cols">
-                            <!-- <li class="left">ID</li>
-                            <li class="left">Sex</li>
-                            <li class="left">Enslaved Role</li>
-                            <li class="left">Origin / Ethnicity</li>
-                            <li class="left">Color</li>
-                            <li class="left">Occupation</li>
-                            <li class="left">Column Name</li>
-                            <li class="left">Column Name</li>
-                            <li class="left">Column Name</li>
-                            <li class="left">Column Name</li>
-                            <li class="left">Column Name</li>
-                            <li class="left">Column Name</li> -->
-                        </ul>
+                        <ul id="available-cols"></ul>
                     </div>
                 </div>
                 <div class="arrow-wrap">
@@ -437,14 +424,7 @@
                 <div class="right-col">
                     <p>Selected Columns</p>
                     <div>
-                        <ul id="selected-cols">
-                            <!-- <li class="right">Column Name1</li>
-                            <li class="right">Column Name2</li>
-                            <li class="right">Column Name3</li>
-                            <li class="right">Column Name4</li>
-                            <li class="right">Column Name5</li>
-                            <li class="right">Column Name6</li> -->
-                        </ul>
+                        <ul id="selected-cols"></ul>
                         <img class="down" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="move down">
                         <img class="up" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="move up">
                     </div>
