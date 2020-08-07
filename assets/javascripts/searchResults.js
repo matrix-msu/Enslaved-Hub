@@ -45,7 +45,11 @@ var sort_map = {
     'ethnodescriptor': 'ethnodescriptor.raw',
     'occupation': 'occupation.raw',
     'project': 'generated_by.raw',
-    'location': 'located_in.raw'
+    'location': 'located_in.raw',
+    'occurs before': 'occurs_before',
+    'occurs after': 'occurs_after',
+    'circa': 'circa',
+
 }
 
 var showPath = false;
