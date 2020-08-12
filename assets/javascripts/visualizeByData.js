@@ -81,6 +81,7 @@ var tab_psSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/e025
 var tab_ethnoSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 
 //Dashboards
+var dash_main_All = "https://kibana.enslaved.org/app/kibana#/dashboard/95bfce60-dbf4-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_psLouisianaMaranhao_All = "https://kibana.enslaved.org/app/kibana#/dashboard/4489df30-c142-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var dash_ps2LouisianaMaranhao_All = "https://kibana.enslaved.org/app/kibana#/dashboard/6d60d700-c157-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var dash_ethnoVoyagesMaranhao_All = "https://kibana.enslaved.org/app/kibana#/dashboard/f0d9ee20-c150-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
@@ -118,9 +119,7 @@ var tabFields = {
   'st': "<option value='st'>Source Type</option>",
 }
 var dashFields = {
-  'psLouisianaMaranhao': "<option value='psLouisianaMaranhao'>Person Status - Maranhao Vs Louisiana</option>",
-  'ps2LouisianaMaranhao': "<option value='ps2LouisianaMaranhao'>Person Status - Pie & Metric - Maranhao Vs Louisiana</option>",
-  'ethnoVoyagesMaranhao': "<option value='ethnoVoyagesMaranhao'>Ethnodescriptor - Maranhao Vs Voyages</option>"
+  'main': "<option value='main'>Project Overview</option>"
 }
 var projects = {
   'All': "<option value='All Projects'>All Projects</option>",
@@ -210,7 +209,7 @@ function addFieldsT(type, field = "default", proj = "default"){
       }
     }
     if (type == "dash"){
-      $('iframe').attr("src", dash_psLouisianaMaranhao_All);
+      $('iframe').attr("src", dash_main_All);
       $('iframe').css("top","-50px");
       $('.datawrap').css("height","537px");
       //Add table fields to dropdown
