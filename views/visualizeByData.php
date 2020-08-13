@@ -19,10 +19,10 @@
     <div class="inputwrap">
       <label for="chart_type">Chart Type</label>
       <select class="s2-single" id="chart-type" name="chart_type">
+        <option value="dash">Dashboard</option>
         <option value="bar">Bar</option>
         <option value="pie">Pie</option>
         <option value="tab">Table</option>
-        <option value="dash">Dashboard</option> 
         <!-- <option value="line">Line</option> -->
       </select>
     </div>
