@@ -7,8 +7,8 @@
   <div class="image-container visualizeByData-page image-only">
     <img class="header-background visualizeByData-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
       <div class="container middlewrap">
-        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>visualize"><span id="previous-title">Visualize / </span></a><span id="current-title">Visualize By Data</span></h4>
-          <h1><?php echo "Visualize By Data" ?></h1>
+        <h4 class="last-page-header"><a id="last-page" href="<?php echo BASE_URL;?>visualize"><span id="previous-title">Visualize / </span></a><span id="current-title">Visualize Data</span></h4>
+          <h1><?php echo "Visualize Data" ?></h1>
     </div>
     <div class="image-background-overlay"></div>
   </div>
