@@ -133,7 +133,7 @@ class crawler_seeds {
         $validationResult = $link->query($query);
         //insert seed only if url not duplicate
         if( !$validationResult || mysqli_num_rows($validationResult) == 0 ){
-            if ($stmt = mysqli_prepare($link, "INSERT INTO crawler_seeds (text_name, title, htmlURL) VALUES ( ?, ?, ? )")) {
+            if ($stmt = mysqli_prepare($link, "INSERT IGNORE INTO crawler_seeds (text_name, title, htmlURL) VALUES ( ?, ?, ? )")) {
                 mysqli_stmt_bind_param($stmt, "sss", $name, $title, $url);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
