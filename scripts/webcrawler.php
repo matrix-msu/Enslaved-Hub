@@ -118,7 +118,7 @@ class WebCrawler {
 
             $stmt = $mysqli->stmt_init();
 
-            if ($stmt = $mysqli->prepare("INSERT INTO crawler_keywords (keyword, url) VALUES " . $values)) {
+            if ($stmt = $mysqli->prepare("INSERT IGNORE INTO crawler_keywords (keyword, url) VALUES " . $values)) {
                 $stmt->bind_param($types, ...$params);
                 $stmt->execute();
                 $stmt->close();
