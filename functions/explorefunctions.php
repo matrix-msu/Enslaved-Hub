@@ -1377,9 +1377,8 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
   	?people $rdfs:label ?peoplename.";
 
     $result = blazegraphSearch($personQuery);
-  //  $connections['Person-count'] = count($result);
-  //  $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
-    print_r($result);
+    $connections['Person-count'] = count($result);
+    $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
     // places connected to a person
     $placeQuery['query'] = <<<QUERY
 SELECT DISTINCT ?place ?placelabel
