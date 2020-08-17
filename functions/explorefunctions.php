@@ -1409,9 +1409,9 @@ SELECT DISTINCT ?place ?placelabel
 }LIMIT 8
 QUERY;
     $result = blazegraphSearch($placeQuery);
-    $connections['Place-count'] = count($result[0]);
-    //  print_r($result);
-    $connections['Place'] = array_slice($result[0], 0, 8);  // return the first 8 results
+      if (empty($result[0])) $result=array();
+    $connections['Place-count'] = count($result);
+    $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
 
 
 
@@ -1463,7 +1463,7 @@ union{
 
 QUERY;
     $result = blazegraphSearch($eventQuery);
-  //    print_r($result);
+    if (empty($result[0])) $result=array();
     $connections['Event-count'] = count($result);
     $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
 
