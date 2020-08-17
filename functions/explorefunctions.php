@@ -1409,9 +1409,9 @@ SELECT DISTINCT ?place ?placelabel
 }LIMIT 8
 QUERY;
     $result = blazegraphSearch($placeQuery);
-  //  $connections['Place-count'] = count($result[0]);
-      print_r($result);
-    //$connections['Place'] = array_slice($result[0], 0, 8);  // return the first 8 results
+    $connections['Place-count'] = count($result[0]);
+    //  print_r($result);
+    $connections['Place'] = array_slice($result[0], 0, 8);  // return the first 8 results
 
 
 
@@ -1429,9 +1429,9 @@ SELECT DISTINCT ?match ?matchlabel (SHA512(CONCAT(STR(?match), STR(RAND()))) as 
 QUERY;
 
     $result = blazegraphSearch($closeMatchQuery);
-  //  $connections['CloseMatch-count'] = count($result);
-  //  $connections['CloseMatch'] = array_slice($result, 0, 8);  // return the first 8 results
-  print_r($result);
+    $connections['CloseMatch-count'] = count($result);
+    $connections['CloseMatch'] = array_slice($result, 0, 8);  // return the first 8 results
+  //print_r($result);
     //events connected to a person
     $eventQuery['query'] = <<<QUERY
 SELECT DISTINCT ?event ?eventlabel
@@ -1464,8 +1464,8 @@ union{
 QUERY;
     $result = blazegraphSearch($eventQuery);
       print_r($result);
-  //  $connections['Event-count'] = count($result);
-  //  $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
+    $connections['Event-count'] = count($result);
+    $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
 
     //sources connected to a person
     $sourceQuery['query'] = <<<QUERY
@@ -1485,8 +1485,8 @@ QUERY;
 
     $result = blazegraphSearch($sourceQuery);
       print_r($result);
-  //  $connections['Source-count'] = count($result);
-  //  $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+    $connections['Source-count'] = count($result);
+    $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
 
 
     return json_encode($connections);
