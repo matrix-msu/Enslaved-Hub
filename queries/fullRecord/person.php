@@ -17,14 +17,8 @@ SELECT ?label ?description ?project
 (group_concat(distinct ?roleslabel1; separator = "||") as ?roles)
 (group_concat(distinct ?roleevent1; separator = "||") as ?roleevent)
 (group_concat(distinct ?roleeventlabel1; separator = "||") as ?roleeventlabel)
-#(group_concat(distinct ?statuslabel1; separator = "||") as ?statuslabel)
 (group_concat(distinct ?statusevent1; separator = "||") as ?statusevent)
 (group_concat(distinct ?eventstatuslabel1; separator = "||") as ?eventstatuslabel)
-(group_concat(distinct ?relationslabel; separator = "||") as ?relationships)
-(group_concat(distinct ?relationname; separator = "||") as ?qrelationname)
-(group_concat(distinct ?relationagentlabel1; separator = "||") as ?relationagentlabel)
-(group_concat(distinct ?match1; separator = "||") as ?match)
-(group_concat(distinct ?matchlabel1; separator = "||") as ?matchlabel)
 (group_concat(distinct ?allevents; separator = "||") as ?allevents1)
 (group_concat(distinct ?alleventslabel1; separator = "||") as ?alleventslabel)
 (group_concat(distinct ?places; separator = "||") as ?allplaces)
@@ -74,25 +68,17 @@ OPTIONAL {?agent $p:$hasName ?statementname.
             ?statementname $ps:$hasName ?person.
             ?statementname $pq:$recordedAt ?rec.
             bind(?rec as ?allevents)}.
-OPTIONAL{
-          ?agent $p:$hasInterAgentRelationship ?staterel .
-          ?staterel $ps:$hasInterAgentRelationship ?relations .
-        	?relations $rdfs:label ?relationslabel.
-          ?staterel $pq:$isRelationshipTo ?relationname.
-        	?relationname $rdfs:label ?relationagentlabel1}.
-OPTIONAL {?agent $wdt:$closeMatch ?match1.
-          ?match1 $rdfs:label ?matchlabel1}.
-?allevents $rdfs:label ?alleventslabel1.
-OPTIONAL {?allevents $wdt:$atPlace ?places.
-          ?allevents $rdfs:label ?evlabel.
-          ?places $rdfs:label ?placeslabel.
+BIND(exists{?allevents $rdfs:label ?alleventslabel1} as ?alleventslabel1).
+OPTIONAL {BIND(exists{?allevents $wdt:$atPlace ?places} as ?places).
+          BIND(exists{?allevents $rdfs:label ?evlabel} as ?evlabel).
+          BIND(exists{?places $rdfs:label ?placeslabel} as ?placeslabel).
          BIND(CONCAT(str(?allevents)," - ",str(?placeslabel)) as ?eventplace1).
          }.
 
-OPTIONAL {?allevents	$wdt:$startsAt ?startdate.
+OPTIONAL {BIND(exists{?allevents	$wdt:$startsAt ?startdate} as ?startdate).
         BIND(CONCAT(str(?elabel)," - ",str(?etypelabel)," - ",str(YEAR(?startdate))) AS ?startyear1).
-        OPTIONAL {?allevents $wdt:$endsAt ?enddate.
-                BIND(str(YEAR(?enddate)) AS ?endyear1)}}.
+        BIND(exists{?allevents $wdt:$endsAt ?enddate} as ?enddate).
+                BIND(str(YEAR(?enddate)) AS ?endyear1)}.
 
 OPTIONAL {?agent $p:$hasName ?object .
           ?object $prov:wasDerivedFrom ?provenance .
