@@ -1463,7 +1463,7 @@ union{
 
 QUERY;
     $result = blazegraphSearch($eventQuery);
-      print_r($result);
+  //    print_r($result);
     $connections['Event-count'] = count($result);
     $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
 
@@ -1484,7 +1484,7 @@ QUERY;
 QUERY;
 
     $result = blazegraphSearch($sourceQuery);
-      print_r($result);
+      //print_r($result);
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
 
