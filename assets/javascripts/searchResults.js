@@ -648,7 +648,6 @@ $(document).ready(function() {
     ///******************************************************************* */
 
     var filter = false;
-    var tableWidth = 0;
     $(".show-filter").click(function(e){ // toggle show/hide filter menu
         e.stopPropagation();
         filter = !filter;
@@ -666,8 +665,22 @@ $(document).ready(function() {
             setTimeout(function () {
                 $(".filter-menu").removeClass("show");
                 $('div#searchResults').css('width','');
-            $("#searchResults").removeClass("show");
+                $("#searchResults").removeClass("show");
             }, 50);
+        }
+    });
+
+    $("#view_visual").click(function(e){
+        e.preventDefault();
+        console.log(filters)
+        if ('projects' in filters && filters['projects'].length === 1) {
+            projects = {
+                'Louisiana Slave Database': 'Louisiana',
+                'Free Blacks Database': 'Free',
+                'Voyages: The Trans-Atlantic Slave Trade Database': 'Voyages',
+                'Maranhão Inventories Slave Database' : 'Maranhão'
+            };
+            window.location = BASE_URL + `visualizedata?type=tab&field=ps&proj=${projects[filters['projects'][0]]}`;
         }
     });
 
@@ -676,10 +689,6 @@ $(document).ready(function() {
         if (window.innerWidth <= 920) {
             $('div#searchResults.show').css('width','');
             $("#searchResults").removeClass("show");
-        } else {
-            // tableWidth = window.innerWidth - 330;
-            // $('div#searchResults').css('max-width', '3000px');// remove max-width property
-            // $('div#searchResults.show').css('width', tableWidth); // apply width
         }
     }
 

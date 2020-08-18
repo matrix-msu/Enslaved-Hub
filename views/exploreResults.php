@@ -348,8 +348,7 @@
                         <span class="align-left">
                             <a class="modal">Configure Table Columns</a>
                         </span>
-                        <!-- <span class="align-right">Download:<span id="Download_selected">Current View</span><span id="Download_all">All Results</span></span> -->
-                        <span class="align-right">Link to Kibana:</span>
+                        <span class="align-right"><span id="view_visual">View Project Visualization</span></span>
                     </ul>
                     <a class="search-all"></a>
                 </div>
