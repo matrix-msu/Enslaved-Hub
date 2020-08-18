@@ -1,7 +1,5 @@
-<?php $cache_data = Json_GetData_ByTitle("Web Crawler");
-// var_dump($cache_data);die;
- ?>
- <?php
+<?php
+    $cache_data = Json_GetData_ByTitle("Web Crawler");
     require_once(BASE_PATH . "models/crawler_tags.php");
 
     $isCrawlerAdmin = true;
@@ -91,9 +89,11 @@
 
     <div id="pagination">
         <input class="current-page" type="hidden" value="1">
-        <div class="pagi-left"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Left"/></div>
+        <div class="first-prev">
+            <div class="pagi-first" value="1"><p>First</p></div>
+            <div class="pagi-left"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Left"/></div>
+        </div>
         <div class="page-numbers">
-            <span class="num pagi-first">1</span>
             <span class="dotsLeft">...</span>
             <span class="num one"></span>
             <span class="num two"></span>
@@ -101,9 +101,11 @@
             <span class="num four"></span>
             <span class="num five"></span>
             <span class="dotsRight">...</span>
-            <span class="num pagi-last">310</span>
         </div>
-        <div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron-light.svg" alt="Arrow Right"/></div>
+        <div class="last-next">
+            <div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Right"/></div>
+            <div class="pagi-last" value="1"><p>Last</p></div>
+        </div>
     </div>
 </div>
 
@@ -177,22 +179,10 @@
                         <label for="url">Enter the updated URL here</label>
                         <input id="url" type="text" name="url" placeholder="Enter updated URL">
                     </div>
-                    <!-- <div class="input-wrap">
-                        <label for="name">Name</label>
-                        <input id="name" type="text" name="name" placeholder="Enter updated URL">
-                    </div> -->
                     <div class="input-wrap">
                         <label for="title">Title</label>
                         <input id="title" type="text" name="title" placeholder="Enter updated URL">
                     </div>
-                    <!-- <div class="input-wrap">
-                        <label for="twitter">Twitter</label>
-                        <input id="twitter" type="text" name="twitter" placeholder="Enter updated URL">
-                    </div>
-                    <div class="input-wrap">
-                        <label for="rss">RSS</label>
-                        <input id="rss" type="text" name="rss" placeholder="Enter updated URL">
-                    </div> -->
                 </div>
                 <div class="confirm-wrap">
                         <input class="confirm" id="update" type="submit" value="Update Seed">
