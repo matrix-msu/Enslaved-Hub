@@ -345,15 +345,13 @@
 
                 <div class="connection-cards">
                     <ul class="connect-row">
-                        <!-- <div id="search-result-configure-download-row"> -->
-                            <span class="align-left">
-                                <a class="modal">Configure Table Columns</a>
-                            </span>
-                            <span class="align-right">Download:<span id="Download_selected">Current View</span><span id="Download_all">All Results</span></span>
-                        <!-- </div> -->
+                        <span class="align-left">
+                            <a class="modal">Configure Table Columns</a>
+                        </span>
+                        <!-- <span class="align-right">Download:<span id="Download_selected">Current View</span><span id="Download_all">All Results</span></span> -->
+                        <span class="align-right">Link to Kibana:</span>
                     </ul>
                     <a class="search-all"></a>
-                    <!-- <div class="load-more"><h4>Load More</h4></div> -->
                 </div>
             </div>
         </div>

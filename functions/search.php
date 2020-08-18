@@ -1,15 +1,7 @@
 <?php
-if(isset($argv)){
-    require_once("./config.php");
-    $_GET = json_decode($argv[1],true);
-}
 require_once(BASE_PATH . 'vendor/autoload.php');
 require_once(BASE_PATH . 'functions/functions.php');
 use Elasticsearch\ClientBuilder;
-
-if(isset($argv)){
-    keyword_search();
-}
 
 function all_counts_ajax() {
     echo json_encode(all_counts());
@@ -593,12 +585,6 @@ function keyword_search() {
         $params['body']['query']['bool']['filter'] = $terms;
     }
 
-    $chunkTotal = intval($params['body']['size']);
-    if($chunkTotal >= 10000){
-        ini_set("memory_limit", "-1");
-        set_time_limit(0);
-    }
-
     $res = $es->search($params);
     $single_total = $res['hits']['total']['value'];
 
@@ -635,21 +621,6 @@ function keyword_search() {
 
     $formattedData = @createCards($res['hits']['hits'], $templates, $select_fields, $preset, $total);
 
-    if(isset($_GET['createCSV'])){
-        $downloadFields = $_GET['downloadFields'];
-        $csv = 'QID,'.implode($downloadFields,",")."\n";
-        $formattedData = json_decode($formattedData,true);
-        foreach($formattedData['formatted_data'] as $qid => $row){
-            $csv .= $qid.",";
-            foreach($downloadFields as $name){
-                $csv .= '"'.$row[$name].'",';
-            }
-            $csv = substr($csv, 0, -1)."\n";
-        }
-        file_put_contents($_GET['csv_name'],$csv);
-        rename($_GET['csv_name'], $_GET['csv_name'].'.csv');
-        die;
-    }
     return $formattedData;
 }
 
