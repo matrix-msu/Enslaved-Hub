@@ -1,13 +1,10 @@
-<?php $cache_data = Json_GetData_ByTitle("Resources");
-// var_dump($cache_data);die;
- ?>
 <?php
+    $cache_data = Json_GetData_ByTitle("Resources");
     require_once(BASE_PATH . "models/crawler_tags.php");
 
     $isCrawlerAdmin = true;
     $crawler_tags = new crawler_tags();
     $tags = $crawler_tags->get_tags();
-
 ?>
 <!-- Resources page-->
 <!-- Heading image and title container-->
@@ -92,9 +89,11 @@
 
     <div id="pagination">
         <input class="current-page" type="hidden" value="1">
-        <div class="pagi-left"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Left"/></div>
+        <div class="first-prev">
+            <div class="pagi-first" value="1"><p>First</p></div>
+            <div class="pagi-left"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Left"/></div>
+        </div>
         <div class="page-numbers">
-            <span class="num pagi-first">1</span>
             <span class="dotsLeft">...</span>
             <span class="num one"></span>
             <span class="num two"></span>
@@ -102,9 +101,11 @@
             <span class="num four"></span>
             <span class="num five"></span>
             <span class="dotsRight">...</span>
-            <span class="num pagi-last">310</span>
         </div>
-        <div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron-light.svg" alt="Arrow Right"/></div>
+        <div class="last-next">
+            <div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Right"/></div>
+            <div class="pagi-last" value="1"><p>Last</p></div>
+        </div>
     </div>
 </div>
 
