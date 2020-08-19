@@ -45,14 +45,11 @@
 
 </head>
 <body>
-<?php
-
-    echo "<script>console.log(".json_encode(CURRENT_VIEW).")</script>";
-    include 'header.php';
-    include BASE_VIEW_PATH . CURRENT_VIEW;
-    include 'footer.php';
-?>
-
-<script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>navContents.js"></script>
+    <?php
+        include 'header.php';
+        include BASE_VIEW_PATH . CURRENT_VIEW;
+        include 'footer.php';
+    ?>
+    <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>navContents.js"></script>
 </body>
 </html>

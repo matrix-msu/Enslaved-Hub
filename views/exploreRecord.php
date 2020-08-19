@@ -1,6 +1,10 @@
 <!-- Author: Drew Schineller-->
 <!-- Explore Full Record page-->
 <!-- Heading image and title container-->
+
+<!-- loading overlay -->
+<div id="overlay"></div>
+
 <div class="container header">
     <div class="image-container record-page image-only">
         <div class="container middlewrap"></div>
@@ -9,8 +13,6 @@
         <!-- <img class="header-background full-height record-page" src="<?php echo BASE_URL;?>assets/images/PersonLanding.jpg" alt="Enslaved Background Image"> -->
     </div>
 </div>
-
-
 
 <div class="jump-buttons person-buttons">
     <div class="jumpwrap">
@@ -22,7 +24,12 @@
         <!-- <button class="jump-button" id="details">Jump to <?php echo ucfirst(RECORD_FORM); ?> Details</button> -->
     </div>
 </div>
-<!-- info container-->
+<!-- loading spinner -->
+<div class="spinner sk-center" hidden>
+  <div class="double-bounce1"></div>
+  <div class="double-bounce2"></div>
+</div>
+<!-- info container -->
 <div class="container info person-record-info">
     <div class="container infowrap">
     </div>
