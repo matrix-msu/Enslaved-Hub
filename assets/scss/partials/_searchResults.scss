@@ -865,8 +865,6 @@ ul.catmenu{
                 }
             }
             span.align-left a.modal{
-                // position: absolute;
-                // left: 2%;
                 font-style: italic;
                 border-bottom: 2px solid $sub-base;
             }
@@ -878,17 +876,15 @@ ul.catmenu{
             }
 
             span.align-right {
-                // position: absolute;
-                // right: 2%;
                 margin-left: auto;
                 transition: 200ms;
-                #Download_selected, #Download_all{
+                #view_visual{
                     cursor: pointer;
                     font-style: italic;
                     margin-left: 15px;
                     border-bottom: 2px solid $sub-base;
                 }
-                #Download_selected:hover, #Download_all:hover{
+                #view_visual:hover{
                     cursor: pointer;
                     border-bottom: 3px solid $accent;
                     padding-bottom: 2px;
