@@ -23,6 +23,7 @@ const controlledVocabulary=[
 "Country" => "an autonomous political division with distinct characteristics",
 "County or Parish" => "defined political or ecclesiastical jurisdiction within a larger state or province",
 "Court" => "judicial institution with the authority to adjudicate criminal, civil, or religious matters within a given jurisdiction",
+"Crafts and Trades" => "work involving a particular set of skills and knowledge required of a specialized trade. Including but not limited to smiths, coopers, tailors, cobblers, masons, wrights, etc.",
 "Creole" => "ethnolinguistic descriptor",
 "Crime" => "work that involves making a living from illegal and extralegal activities. For example, thief.",
 "Criminal Document" => "A document related to alleged violations of criminal law",

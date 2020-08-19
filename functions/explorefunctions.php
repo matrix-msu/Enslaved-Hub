@@ -441,10 +441,7 @@ HTML;
       }
     } elseif($label == "Occupation")
     {
-      $statement = str_replace(" and ", "", $statement);
-      $statement = str_replace(" or ", "", $statement);
-      $statement = str_replace(" and/or ", "", $statement);
-      $statementArr = explode(',', $statement);
+        $statementArr = explode('||', $statement);
       if (end($statementArr) == '' || end($statementArr) == ' '){
         array_pop($statementArr);
       }
@@ -468,6 +465,7 @@ HTML;
 
     //For each detail to add create it in seperate divs with a detail menu in each
     for ($x = 0; $x <= (count($statementArr) - 1); $x++){
+
         if($label === "Name"){
           $detailname = $statementArr[$x];
           $html .= "<div>" . $detailname;
@@ -502,7 +500,7 @@ HTML;
         }
 
         $detailname = $statementArr[$x];
-        if($label == 'Located In' || $label == "Occupation"){
+        if($label == 'Located In'){
           $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[$x] . "'>" . $detailname . "</a></div><br>";
           continue;
         }
