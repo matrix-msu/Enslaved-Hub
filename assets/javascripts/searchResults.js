@@ -20,6 +20,13 @@ var selected_fields_places = ['Name', 'Project', 'Location', 'Place Type'];
 var selected_fields_source = ['Name', 'Project', 'Source Type'];
 var sort_field = "label.sort";
 
+var projects = {
+    'Louisiana Slave Database': 'Louisiana',
+    'Free Blacks Database': 'Free',
+    'Voyages: The Trans-Atlantic Slave Trade Database': 'Voyages',
+    'Maranhão Inventories Slave Database' : 'Maranhão'
+};
+
 if (search_type == "all"){
     display = 'people';
 }
@@ -59,7 +66,6 @@ var currentTitle = "Search";
 
 var fields = [];    // fields for the table view
 var sort = ''; // or desc
-var formattedData = {};
 
 var address = document.location.toString().split('/')
 var category = address[address.length - 1].split('?')[0]
@@ -222,18 +228,19 @@ function searchResults(preset, limit = 20, offset = 0)
             }
             has_data = true;
 
-            if (typeof (result_array['formatted_data']) != 'undefined'){
-                formattedData = result_array['formatted_data'];
-            }
             if (typeof (result_array['fields']) != 'undefined') {
                 fields = result_array['fields'];
             }
 
             searchBarFilter = filters != undefined ? filters : '';
-            // searchBarPlaceholder = "Search Across " + total_length + " " + searchBarFilter + " Results";
             searchBarPlaceholder = "Search Across "  + total_length + " Results";
             $('.main-search').attr("placeholder", searchBarPlaceholder);
 
+            // Toggling visualization link
+            $('#view_visual').hide();
+            if ('projects' in filters && filters['projects'].length === 1 && filters['projects'][0] in projects) {
+                $('#view_visual').show();
+            }
 
             //Wait till doc is ready
             $(document).ready(function(){
@@ -553,7 +560,6 @@ $(document).ready(function() {
         if (cards === false) {
             //$('tbody > tr').remove();
             $('.result-column').show();
-            $("#search-result-configure-download-row").hide();
             $("#search-result-table").hide();
             $('span.view-toggle img').removeClass('show'); //make all view-toggle icons inactive
             $('span.view-toggle .grid-icon').addClass('show'); //make the grid-icon active
@@ -587,7 +593,6 @@ $(document).ready(function() {
             $('span.view-toggle .table-icon').addClass('show'); //make the table-icon active
             $(this).addClass("show");
             $("span.grid-view").removeClass("show");
-            $("#search-result-configure-download-row").show();
             $('table').css('width', '', 'margin', '');
             var view = 'table'
             window.localStorage.setItem('view', view)
@@ -654,7 +659,6 @@ $(document).ready(function() {
     ///******************************************************************* */
 
     var filter = false;
-    var tableWidth = 0;
     $(".show-filter").click(function(e){ // toggle show/hide filter menu
         e.stopPropagation();
         filter = !filter;
@@ -672,8 +676,15 @@ $(document).ready(function() {
             setTimeout(function () {
                 $(".filter-menu").removeClass("show");
                 $('div#searchResults').css('width','');
-            $("#searchResults").removeClass("show");
+                $("#searchResults").removeClass("show");
             }, 50);
+        }
+    });
+
+    $("#view_visual").click(function(e){
+        e.preventDefault();
+        if ('projects' in filters && filters['projects'].length === 1) {
+            window.location = BASE_URL + `visualizedata?type=tab&field=ps&proj=${projects[filters['projects'][0]]}`;
         }
     });
 
@@ -682,10 +693,6 @@ $(document).ready(function() {
         if (window.innerWidth <= 920) {
             $('div#searchResults.show').css('width','');
             $("#searchResults").removeClass("show");
-        } else {
-            // tableWidth = window.innerWidth - 330;
-            // $('div#searchResults').css('max-width', '3000px');// remove max-width property
-            // $('div#searchResults.show').css('width', tableWidth); // apply width
         }
     }
 
@@ -844,20 +851,6 @@ $(document).ready(function() {
 
         updateURL();
     });
-
-
-    // Onclick, download visible selected data as csv file
-    var page = 0;
-    var resultSize = 0;
-
-    $("#Download_selected").click(function () {
-        get_download_content(fields, formattedData, false);
-    });
-    // Onclick, download all data for the query as csv file
-    $("#Download_all").click(function () {
-        get_download_content(fields, formattedData, true);
-    });
-
 });
 
 function updateURL(){
@@ -935,99 +928,6 @@ function updateURL(){
     searchResults(search_type);
 }
 
-
-/*
-    Split the data based on the page
-*/
-function get_download_content(fields, data, isAllData) {
-    if (isAllData) {
-        var templates = ['tableCard'];
-        filters['offset'] = 0;
-        filters['limit'] = total_length;
-        $.ajax({
-            url: BASE_URL + "api/createCSV",
-            type: "GET",
-            data: {
-                preset: search_type,
-                filters: filters,
-                templates: templates,
-                display: display,
-                createCSV: true,
-                downloadFields: fields
-            },
-            'success': function (data)
-            {
-                setTimeout(function(){
-                    checkCSV(data);
-                },2000);
-            }
-        });
-    } else {
-        download_csv(data, fields);
-    }
-}
-
-function checkCSV(tmpName){
-    $.ajax({
-        url: BASE_URL + "api/checkCSV",
-        type: "GET",
-        data: {
-            csvName: tmpName
-        },
-        'success': function (data)
-        {
-            if(data == 'false'){
-                setTimeout(function(){
-                    checkCSV(tmpName);
-                },5000);
-            }else if(data == 'true'){
-                var params = {
-                    csvName: tmpName
-                };
-                params = $.param(params);
-                window.location.href = BASE_URL + "api/downloadCSV?" + params;
-            }
-        }
-    });
-}
-
-
-/*
-    Build csv style string and
-    Convert to csv and download
-*/
-function download_csv(data, fields) {
-    var qids = Object.keys(data);
-    var csvString = [];
-    csvString.push("QID," + fields.join(',')); // Headers
-
-    // Build csv style string
-    for (const qid of qids) {
-        let csvS = qid;
-        let obj = data[qid];
-
-        for (const field of fields) {
-            // Note: Making sure commas wihin a field are escaped
-            if (field in obj) {
-                csvS += obj[field] ? ",\"" + obj[field] + "\"" : ",";
-            }
-            else csvS += ",";
-        }
-        csvString.push(csvS);
-    }
-    csvString = csvString.join("\r\n");
-
-    // Convert to csv and download
-    var a_tag = document.createElement('a');
-    a_tag.href = "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvString);
-    a_tag.target = '_blank';
-    a_tag.textContent = 'download';
-    a_tag.download = 'data.csv';
-    a_tag.id = "download_selected_data";
-
-    document.body.appendChild(a_tag);
-    a_tag.click();
-}
 
 /*
     Adds a filter card to the filter-cards section
