@@ -220,9 +220,7 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
     if (!is_array($results)){
         $results = array();
     }
-    // var_dump($select_fields);
     $cards = Array();
-    $formattedData = array();   // data formatted to be turned into csv
 
     foreach ($templates as $template) {
         $cards[$template] = array();
@@ -233,10 +231,8 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
     if($preset == "singleproject") $preset = "people";
 
     $first = true;  // need to know if first to add table headers
-    // print_r($preset);
 
     foreach ($results as $index => $record) {
-        // var_dump($record);
         $record = $record['_source'];
         $card = '';
         $countpeople = '';
@@ -404,24 +400,6 @@ HTML;
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
                         }
                         $card .= "</tr>";
-                    // format this row for csv download
-                    $formattedData[$personQ] = array(
-                        'NAME' => $record['name'][0],
-                        'SEX' => $record['sex'][0],
-                        'PERSON STATUS' => $record['person_status'][0],
-                        'ROLE' => $record['participant_role'][0],
-                        'EVENT' => $record['event_type'][0],
-                        'DATE' => $record['date'][0],
-                        'PLACE TYPE' => implode(', ', $record['place_type']),
-                        'PLACE' => implode(', ', $record['display_place']),
-                        'SOURCE TYPE' => $record['source_type'][0],
-                        'ETHNODESCRIPTOR' => $record['ethnodescriptor'][0],
-                        'OCCUPATION' => $record['occupation'][0]
-                    );
-
-
-
-
                     }
 
 
@@ -556,15 +534,6 @@ HTML;
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
                         }
                         $card .= "</tr>";
-
-
-                        // format this row for csv download
-                        $formattedData[$placeQ] = array(
-                            'NAME' => $record['label'],
-                            'PROJECT' => $record['generated_by'][0],
-                            'LOCATION' => $record['located_in'][0],
-                            'PLACE TYPE' => $record['place_type'][0]
-                        );
                     }
 
 
@@ -734,18 +703,6 @@ HTML;
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
                         }
                         $card .= "</tr>";
-                        // format this row for csv download
-                        $formattedData[$eventQ] = array(
-                            'NAME' => $record['label'],
-                            'EVENT TYPE' => $record['event_type'][0],
-                            'SOURCE TYPE' => $record['source_type'][0],
-                            'DATE' => $record['date'][0],
-                            'PLACE TYPE' => $record['place_type'][0],
-                            'PLACE' => $record['display_place'][0],
-                            'OCCURS BEFORE' => $record['occurs_before'][0],
-                            'OCCURS AFTER' => $record['occurs_after'][0],
-                            'CIRCA' => $record['circa'][0]
-                        );
                     }
 
 
@@ -867,14 +824,6 @@ HTML;
                           $card .= "<td class='" . $field . "'><p><span class='first'>" . $field . ": </span>" . $value . "</p></td>";
                         }
                         $card .= "</tr>";
-
-                        // format this row for csv download
-                        $formattedData[$sourceQ] = array(
-                            'NAME' => $record['name'][0],
-                            'SOURCE TYPE' => $$record['source_type'][0],
-                            'PROJECT' => $record['generated_by'][0]
-                        );
-
                     }
 
 
@@ -1173,9 +1122,6 @@ HTML;
         }
 
     }
-
-    $cards['formatted_data'] = $formattedData;
-
 
     return json_encode($cards);
 }

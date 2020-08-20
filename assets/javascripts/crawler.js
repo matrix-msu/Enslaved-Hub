@@ -503,7 +503,6 @@ function installModalListeners(data){
 			data: form.serialize(),
 			dataType: "JSON",
 			success:function(data){
-				// console.log(data);
 				//after ajax close modal and refresh tab
 				$('.crawler-modal .close').trigger('click');
 				$('.crawler-tabs li.tabbed').trigger('click');

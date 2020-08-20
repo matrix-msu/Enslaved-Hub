@@ -82,11 +82,11 @@ var tab_ethnoSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/2
 
 //Dashboards
 var dash_main_All = "https://kibana.enslaved.org/app/kibana#/dashboard/95bfce60-dbf4-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
-var dash_psLouisianaMaranhao_All = "https://kibana.enslaved.org/app/kibana#/dashboard/4489df30-c142-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
-var dash_ps2LouisianaMaranhao_All = "https://kibana.enslaved.org/app/kibana#/dashboard/6d60d700-c157-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
-var dash_ethnoVoyagesMaranhao_All = "https://kibana.enslaved.org/app/kibana#/dashboard/f0d9ee20-c150-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
-
-https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=()&_a=
+var dash_main_Louisiana = "https://kibana.enslaved.org/app/kibana#/dashboard/3354a000-dca5-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
+var dash_main_Maranhão = "https://kibana.enslaved.org/app/kibana#/dashboard/aaff2460-e220-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
+var dash_main_Voyages = "https://kibana.enslaved.org/app/kibana#/dashboard/267b9e30-dcad-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
+var dash_main_Legacies = "https://kibana.enslaved.org/app/kibana#/dashboard/66730960-e180-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
+var dash_main_Hutchins = "https://kibana.enslaved.org/app/kibana#/dashboard/c316dd50-e22e-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 
 
 var concat_url = BASE_URL + "visualizedata";
@@ -126,6 +126,8 @@ var projects = {
   'Louisiana': "<option value='Louisiana Slave Database'>Louisiana Slave Database</option>",
   'Free': "<option value='Free Blacks Database'>Free Blacks Database</option>",
   'Voyages': "<option value='Voyages: The Trans-Atlantic Slave Trade Database'>Voyages: The Trans-Atlantic Slave Trade Database</option>",
+  'Legacies': "<option value='Legacies of British Slave-Ownership'>Legacies of British Slave-Ownership</option>",
+  'Hutchins': "<option value='Hutchins Center for African & African American Research'>Hutchins Center for African & African American Research</option>",
   'Maranhão': "<option value='Maranhão Inventories Slave Database'>Maranhão Inventories Slave Database</option>"
 }
 

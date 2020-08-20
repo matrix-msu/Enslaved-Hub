@@ -345,15 +345,12 @@
 
                 <div class="connection-cards">
                     <ul class="connect-row">
-                        <!-- <div id="search-result-configure-download-row"> -->
-                            <span class="align-left">
-                                <a class="modal">Configure Table Columns</a>
-                            </span>
-                            <span class="align-right">Download:<span id="Download_selected">Current View</span><span id="Download_all">All Results</span></span>
-                        <!-- </div> -->
+                        <span class="align-left">
+                            <a class="modal">Configure Table Columns</a>
+                        </span>
+                        <span class="align-right"><span id="view_visual">View Project Visualization</span></span>
                     </ul>
                     <a class="search-all"></a>
-                    <!-- <div class="load-more"><h4>Load More</h4></div> -->
                 </div>
             </div>
         </div>
@@ -387,7 +384,6 @@
 	            <div class="pagi-left"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Left"/></div>
             </div>
             <div class="page-numbers">
-                <!-- <span class="num pagi-first">1</span> -->
                 <span class="dotsLeft">...</span>
                 <span class="num one"></span>
                 <span class="num two"></span>
@@ -395,7 +391,6 @@
                 <span class="num four"></span>
                 <span class="num five"></span>
                 <span class="dotsRight">...</span>
-                <!-- <span class="num pagi-last">310</span> -->
             </div>
             <div class="last-next">
             	<div class="pagi-right"><img src="<?php echo BASE_IMAGE_URL; ?>chevron.svg" alt="Arrow Right"/></div>
