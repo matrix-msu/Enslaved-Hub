@@ -21,6 +21,8 @@ var selected_fields_source = ['Name', 'Project', 'Source Type'];
 var sort_field = "label.sort";
 
 var projects = {
+    'Hutchins Center for African & African American Research': 'Hutchins',
+    'Legacies of British Slave-ownership': 'Legacies',
     'Louisiana Slave Database': 'Louisiana',
     'Free Blacks Database': 'Free',
     'Voyages: The Trans-Atlantic Slave Trade Database': 'Voyages',
@@ -238,6 +240,7 @@ function searchResults(preset, limit = 20, offset = 0)
 
             // Toggling visualization link
             $('#view_visual').hide();
+            console.log(filters)
             if ('projects' in filters && filters['projects'].length === 1 && filters['projects'][0] in projects) {
                 $('#view_visual').show();
             }
@@ -684,7 +687,7 @@ $(document).ready(function() {
     $("#view_visual").click(function(e){
         e.preventDefault();
         if ('projects' in filters && filters['projects'].length === 1) {
-            window.location = BASE_URL + `visualizedata?type=tab&field=ps&proj=${projects[filters['projects'][0]]}`;
+            window.location = BASE_URL + `visualizedata?type=dash&field=ps&proj=${projects[filters['projects'][0]]}`;
         }
     });
 
