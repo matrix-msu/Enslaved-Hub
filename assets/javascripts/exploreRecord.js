@@ -39,12 +39,13 @@ function changeSize(){
 
 function underlineTooltips(){
     $('.detailwrap .detail').each(function(){
-        $(this).find('.detail-bottom div').first().addClass('detail-text');
+        $(this).find('.detail-bottom div').addClass('detail-text');
         if ($(this).find('.detail-menu').length > 0 ) {
             $(this).find('.detail-bottom div').attr('tabindex', '0');
             $(this).find('.detail-bottom .detail-menu').attr('role', 'tooltip');
-            $(this).find('.detail-bottom div').first().attr('aria-describedby','tooltip');
-            $(this).find('.detail-bottom div').first().css('text-decoration','underline');
+            $(this).find('.detail-bottom .detail-menu').css('display', 'none');
+            $(this).find('.detail-bottom div').attr('aria-describedby','tooltip');
+            $(this).find('.detail-bottom div').css('text-decoration','underline');
         }
     });
 }
