@@ -3,6 +3,7 @@ $(document).ready(function () {
     // name, details, timeline, connections, featured stories
     $('.spinner').show();
     $('#overlay').css('display', 'block');
+    $('#overlay').css('opacity', '1');
     $.ajax({
         url: BASE_URL + "api/getFullRecordHtml",  // in exploreFunctions.php
         type: "GET",
