@@ -282,8 +282,6 @@ function fillFilterCounters(allCounters){
                     } else {
                         var $input = $(`input[value='${label}'][data-category='${category}']`);
                     }
-                    var $counter = $input.next().find('em');
-                    $counter.html('(' + count + ')');
 
                     if (count > 0){
                         var $li = $input.parent().parent();
