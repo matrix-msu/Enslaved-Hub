@@ -1,6 +1,9 @@
 // use ajax to get full record html.
 $(document).ready(function () {
     // name, details, timeline, connections, featured stories
+    $('.spinner').show();
+    $('#overlay').css('display', 'block');
+    $('#overlay').css('opacity', '1');
     $.ajax({
         url: BASE_URL + "api/getFullRecordHtml",  // in exploreFunctions.php
         type: "GET",
@@ -23,8 +26,12 @@ $(document).ready(function () {
             changeSize();
             underlineTooltips();
         },
-        'error': function (xhr, status, error) {
-            console.log('fail');
+        'error': function (_, _, error) {
+            console.log(`Error: ${error}`);
+        },
+        'complete': function() {
+            $('.spinner').hide();
+            $('#overlay').css('display', 'none');
         }
     });
 });
