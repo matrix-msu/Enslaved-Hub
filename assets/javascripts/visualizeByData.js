@@ -164,28 +164,33 @@ $(document).ready( function() {
 
 $( "#chart-type" ).change(function() {
   changeIframe();
-
   addFieldsT($('#chart-type').val());
 });
-$( "#chart-field" ).change(function() {
-  changeIframe();
 
+$("#chart-field, #chart-project").change(function() {
+  changeIframe();
 });
 
-$( "#chart-project" ).change(function() {
-  changeIframe();
-
-});
 
 function addFieldsT(type, field = "default", proj = "default"){
   $("#chart-field").empty();
   $("#chart-project").empty();
 
+  $.each({
+    'bar': {'top': '-138px', 'height': '450px'},
+    'pie': {'top': '-138px', 'height': '450px'},
+    'tab': {'top': '-138px', 'height': '450px'},
+    'dash': {'top': '-50px', 'height': '537px'},
+  }, function (chart_type, dims) {
+    if (type == chart_type){
+      $('iframe').css('top', dims['top']);
+      $('.datawrap').css('height', dims['height']);
+    }
+  });
+
   if(field == "default" && proj == "default"){
     if (type == "bar"){
       $('iframe').attr("src", bar_ef_All);
-      $('iframe').css("top","-138px");
-      $('.datawrap').css("height","450px");
       //Add bar fields to dropdown
       for (var key in barFields){
         $("#chart-field").append(barFields[key]);
@@ -194,8 +199,6 @@ function addFieldsT(type, field = "default", proj = "default"){
     }
     if (type == "pie"){
       $('iframe').attr("src", pie_ef_All);
-      $('iframe').css("top","-138px");
-      $('.datawrap').css("height","450px");
       //Add pie fields to dropdown
       for (var key in pieFields){
         $("#chart-field").append(pieFields[key]);
@@ -203,8 +206,6 @@ function addFieldsT(type, field = "default", proj = "default"){
     }
     if (type == "tab"){
       $('iframe').attr("src", tab_ps_All);
-      $('iframe').css("top","-138px");
-      $('.datawrap').css("height","450px");
       //Add table fields to dropdown
       for (var key in tabFields){
         $("#chart-field").append(tabFields[key]);
@@ -212,8 +213,6 @@ function addFieldsT(type, field = "default", proj = "default"){
     }
     if (type == "dash"){
       $('iframe').attr("src", dash_main_All);
-      $('iframe').css("top","-50px");
-      $('.datawrap').css("height","537px");
       //Add table fields to dropdown
       for (var key in dashFields){
         $("#chart-field").append(dashFields[key]);
@@ -226,63 +225,29 @@ function addFieldsT(type, field = "default", proj = "default"){
   }
   else{
     $("#chart-type").empty();
-
-    if (type == "bar"){
-      //Add bar fields to dropdown
-      $("#chart-field").append(barFields[field]);
-      for (var key in barFields){
-        if(barFields[key] != barFields[field]){
-          $("#chart-field").append(barFields[key]);
+    $.each({
+      'bar': barFields,
+      'pie': pieFields,
+      'tab': tabFields,
+      'dash': dashFields
+    }, function (chart_type, fields) {
+      if (type == chart_type) {
+        $("#chart-field").append(fields[field]);
+        for (var key in fields){
+          if(fields[key] != fields[field]){
+            $("#chart-field").append(fields[key]);
+          }
         }
+        $.each({
+          'tab': 'Table',
+          'pie': 'Pie',
+          'bar': 'Bar',
+          'dash': 'Dashboard'
+        }, function (value, label) {
+          $("#chart-type").append(`<option selected=${'selected' ? value == type : ''} value='${value}'>${label}</option>`);
+        });
       }
-      //Add types to dropdown
-      $("#chart-type").append("<option value='bar'>Bar</option>");
-      $("#chart-type").append("<option value='pie'>Pie</option>");
-      $("#chart-type").append("<option value='tab'>Table</option>");
-      $("#chart-type").append("<option value='dash'>Dashboard</option>");
-    }
-    if (type == "pie"){
-      //Add pie fields to dropdown
-      $("#chart-field").append(pieFields[field]);
-      for (var key in pieFields){
-        if(pieFields[key] != pieFields[field]){
-          $("#chart-field").append(pieFields[key]);
-        }
-      }
-      //Add types to dropdown
-      $("#chart-type").append("<option value='pie'>Pie</option>");
-      $("#chart-type").append("<option value='bar'>Bar</option>");
-      $("#chart-type").append("<option value='tab'>Table</option>");
-      $("#chart-type").append("<option value='dash'>Dashboard</option>");
-    }
-    if (type == "tab"){
-      //Add table fields to dropdown
-      $("#chart-field").append(tabFields[field]);
-      for (var key in tabFields){
-        if(tabFields[key] != tabFields[field]){
-          $("#chart-field").append(tabFields[key]);
-        }
-      }
-      //Add types to dropdown
-      $("#chart-type").append("<option value='tab'>Table</option>");
-      $("#chart-type").append("<option value='pie'>Pie</option>");
-      $("#chart-type").append("<option value='bar'>Bar</option>");
-      $("#chart-type").append("<option value='dash'>Dashboard</option>");
-    }
-    if (type == "dash"){
-      //Add table fields to dropdown
-      $("#chart-field").append(tabFields[field]);
-      for (var key in tabFields){
-        if(tabFields[key] != tabFields[field]){
-          $("#chart-field").append(tabFields[key]);
-        }
-      }
-      //Add types to dropdown
-      $("#chart-type").append("<option value='tab'>Table</option>");
-      $("#chart-type").append("<option value='pie'>Pie</option>");
-      $("#chart-type").append("<option value='bar'>Bar</option>");
-      $("#chart-type").append("<option value='dash'>Dashboard</option>");
-    }
+    });
     //Add projects to dropdown
     $("#chart-project").append(projects[proj]);
     for (var key in projects){

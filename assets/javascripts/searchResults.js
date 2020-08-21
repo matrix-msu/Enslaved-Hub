@@ -685,7 +685,7 @@ $(document).ready(function() {
     $("#view_visual").click(function(e){
         e.preventDefault();
         if ('projects' in filters && filters['projects'].length === 1) {
-            window.location = BASE_URL + `visualizedata?type=dash&field=ps&proj=${projects[filters['projects'][0]]}`;
+            window.location = BASE_URL + `visualizedata?type=dash&field=main&proj=${projects[filters['projects'][0]]}`;
         }
     });
 
