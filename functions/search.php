@@ -648,14 +648,14 @@ function featured_items() {
         $must = [
             ['exists' => ['field' => 'name']],
             ['exists' => ['field' => 'person_status']],
-            ['exists' => ['field' => 'display_date_range']],
-            ['exists' => ['field' => 'display_place']]
+            ['exists' => ['field' => 'date']],
+            ['exists' => ['field' => 'place']]
         ];
     } else {
         $must = [
             ['exists' => ['field' => 'event_type']],
             ['exists' => ['field' => 'date']],
-            ['exists' => ['field' => 'display_place']]
+            ['exists' => ['field' => 'place']]
         ];
     }
 

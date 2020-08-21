@@ -24,23 +24,6 @@ $(document).ready(function(){
         $('.sort-cards p').next().removeClass('show');
     });
 
-    // $(window).on('resize', function(){
-    //     //Update max scroll width
-    //     max_card_scroll = $('.explore-featured .cardwrap').get(0).scrollWidth - $('.explore-featured .cardwrap').get(0).clientWidth;
-    //     //Update cards_per_page on window resize
-    //     var card_screen_width = $('.explore-featured .cardwrap2').width();
-    //     cards_per_page = Math.floor(card_screen_width/card_width);
-
-    //     if(cards_per_page < 1){
-    //         cards_per_page = 1;
-    //     }
-
-    //     if(cards_per_page != old_per_page){
-    //         old_per_page = cards_per_page;
-    //         installFeaturedListeners();
-    //     }
-    // });
-
     //Get counts only if on explorefilter page
     if( typeof JS_EXPLORE_FILTERS !== 'undefined' ){
         if (JS_EXPLORE_FILTERS == "Date") {
@@ -55,14 +38,6 @@ $(document).ready(function(){
                     });
                     var min = Math.min.apply(Math, dates);
                     var max = Math.max.apply(Math, dates);
-
-                    // Doing this for safety purposes
-                    // if (min <= max) {
-                    //     for (var i = min; i <= max; i++) {
-                    //         $("#event-from").append("<option value='"+i+"'>"+i+"</option>");
-                    //         $("#event-to").append("<option value='"+i+"'>"+i+"</option>");
-                    //     }
-                    // }
                 }
             });
             return;
@@ -105,12 +80,10 @@ $(document).ready(function(){
             type: "GET",
             data: {templates: type},
             success: function (data) {
-
                 data = JSON.parse(data);
                 data[type].forEach(function (e) {
                     $('.explore-featured .cards-featured').append(e);
                 });
-                // installFeaturedListeners('.explore-featured');
             }
         });
 
