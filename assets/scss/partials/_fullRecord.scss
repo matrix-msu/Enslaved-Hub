@@ -674,7 +674,7 @@
                             color: rgba($base-dark, 0.7);
 
                             .detail-menu{
-                                display: block;
+                                display: block !important;
                             }
                         }
                     }
@@ -698,11 +698,10 @@
                     box-shadow: 0 25px 35px 0 rgba(13,18,48,0.15);
                     color: $base-light;
                     //white-space: nowrap;
-                    position: absolute;
+                    position: absolute !important;
                     padding: 20px;
-                    bottom: 100%; //150
-                    left: 50%;
-                    margin-left: -9vw; //-100px
+                    bottom: 150%;
+                    left: -20%;
                     z-index: 404;
 
                     // &.hovered{
@@ -712,6 +711,7 @@
                     h1{
                         font-size: 18px;
                         margin-bottom: 10px;
+                        color: $base-light;
                     }
                     p{
                         font-size: 14px;
