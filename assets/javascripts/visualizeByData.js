@@ -87,6 +87,7 @@ var dash_main_Maranhão = "https://kibana.enslaved.org/app/kibana#/dashboard/aaf
 var dash_main_Voyages = "https://kibana.enslaved.org/app/kibana#/dashboard/267b9e30-dcad-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Legacies = "https://kibana.enslaved.org/app/kibana#/dashboard/66730960-e180-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Hutchins = "https://kibana.enslaved.org/app/kibana#/dashboard/c316dd50-e22e-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
+var dash_main_Free = "https://kibana.enslaved.org/app/kibana#/dashboard/95245570-e62b-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 
 
 var concat_url = BASE_URL + "visualizedata";
