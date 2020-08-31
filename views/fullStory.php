@@ -80,15 +80,6 @@ else {
                 }
                 ?>
             </section>
-            <section class="pdf">
-                <?php
-                if (isset($story['Object PDF']) && isset($story['Object PDF'][0])) {
-                    $pdf_url = $story['Object PDF'][0]['url'];
-                    echo '<h2>View PDF</h2>';
-                    echo '<p><a target="_blank" href="'.$pdf_url.'">'.$pdf_url.'</a></p>';
-                }
-                ?>
-            </section>
             <section class="editor">
                 <?php
                 if (isset($story['Contributor'])) {
@@ -108,6 +99,12 @@ else {
                 if (isset($story['Online Resources'])) {
                     echo '<h2>Online Resources</h2>';
                     echo $story['Online Resources'];
+                }
+                ?>
+                <?php
+                if (isset($story['Object PDF']) && isset($story['Object PDF'][0])) {
+                    $pdf_url = $story['Object PDF'][0]['url'];
+                    echo '<p><a target="_blank" href="'.$pdf_url.'">View Story PDF</a></p>';
                 }
                 ?>
                 <!-- <h3>Online Resources</h3>
