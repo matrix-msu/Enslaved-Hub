@@ -101,6 +101,12 @@ else {
                     echo $story['Online Resources'];
                 }
                 ?>
+                <?php
+                if (isset($story['Object PDF']) && isset($story['Object PDF'][0])) {
+                    $pdf_url = $story['Object PDF'][0]['url'];
+                    echo '<p><a target="_blank" href="'.$pdf_url.'">View Story PDF</a></p>';
+                }
+                ?>
                 <!-- <h3>Online Resources</h3>
                 <p><a href="#">Thomas H. Gallaudet, A statement with regard to the Moorish prince, Abduhl Rahhahman (New York: Daniel Fanshaw, 1828)</a>, available online through the University of North Carolina, “Documenting the American South.”</p>
                 <p><a href="#">Cyrus Griffin, “The African Homeland of Abdul Rahman Ibrahima,”</a> Southern Galaxy, Natchez, MI, May 29, June 5 & 12, July 5, 1828, available online at the National Humanities Center Resource Toolbox, “The Making of African American Identity: Vol. 1, 1500-1865.”</p>
