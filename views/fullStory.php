@@ -192,7 +192,7 @@ else {
     </div>
 </main>
 <!-- Story Connections -->
-<div class="record-connections">
+<!--<div class="record-connections">
     <div class="connectionwrap">
     <h2>Story Connections</h2>
     <div class="categories">
@@ -235,9 +235,10 @@ else {
         <a class="search-all"></a>
     </div>
 </div>
-</div>
-<!-- Related Stories-->
-<div class="container card-column related-card">
+</div> -->
+
+<!-- Related Stories -->
+<!--<div class="container card-column related-card">
     <div class="container cardheader-wrap">
         <h2 class="column-header">Featured in these Stories</h2>
     </div>
@@ -257,8 +258,11 @@ else {
             </li>
         </ul>
     </div>
-</div>
+</div> -->
 <!-- Extra Info -->
+</br>
+</br>
+</br>
 <div class="extra-info">
     <div class="copyright">
         <h2>Copyright</h2>
