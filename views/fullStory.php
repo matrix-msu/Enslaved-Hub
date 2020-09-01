@@ -101,6 +101,12 @@ else {
                     echo $story['Online Resources'];
                 }
                 ?>
+                <?php
+                if (isset($story['Object PDF']) && isset($story['Object PDF'][0])) {
+                    $pdf_url = $story['Object PDF'][0]['url'];
+                    echo '<p><a target="_blank" href="'.$pdf_url.'">View Story PDF</a></p>';
+                }
+                ?>
                 <!-- <h3>Online Resources</h3>
                 <p><a href="#">Thomas H. Gallaudet, A statement with regard to the Moorish prince, Abduhl Rahhahman (New York: Daniel Fanshaw, 1828)</a>, available online through the University of North Carolina, “Documenting the American South.”</p>
                 <p><a href="#">Cyrus Griffin, “The African Homeland of Abdul Rahman Ibrahima,”</a> Southern Galaxy, Natchez, MI, May 29, June 5 & 12, July 5, 1828, available online at the National Humanities Center Resource Toolbox, “The Making of African American Identity: Vol. 1, 1500-1865.”</p>
@@ -186,7 +192,7 @@ else {
     </div>
 </main>
 <!-- Story Connections -->
-<div class="record-connections">
+<!--<div class="record-connections">
     <div class="connectionwrap">
     <h2>Story Connections</h2>
     <div class="categories">
@@ -229,9 +235,10 @@ else {
         <a class="search-all"></a>
     </div>
 </div>
-</div>
-<!-- Related Stories-->
-<div class="container card-column related-card">
+</div> -->
+
+<!-- Related Stories -->
+<!--<div class="container card-column related-card">
     <div class="container cardheader-wrap">
         <h2 class="column-header">Featured in these Stories</h2>
     </div>
@@ -251,21 +258,12 @@ else {
             </li>
         </ul>
     </div>
-</div>
+</div> -->
 <!-- Extra Info -->
+</br>
+</br>
+</br>
 <div class="extra-info">
-    <div class="share-links">
-        <h2>Share this Record</h2>
-        <img src="<?php echo BASE_IMAGE_URL . "Facebook.svg" ?>" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href),'facebook-share-dialog','width=626,height=436'); return false;">
-
-        <img src="<?php echo BASE_IMAGE_URL . "Twitter.svg" ?>" alt="Share on Twitter" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(window.location.href),'twitter-share-dialog','width=626,height=436'); return false;">
-
-            <!-- <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">
-            </a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
-
-        <!-- <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/> -->
-    </div>
     <div class="copyright">
         <h2>Copyright</h2>
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">

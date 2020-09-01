@@ -137,17 +137,6 @@ if(RECORD_FORM !== 'place' && RECORD_FORM !== 'source'){ ?>
 
 <!-- Extra Info -->
 <div class="extra-info">
-    <div class="share-links">
-      <h2>Share this Record</h2>
-      <img src="<?php echo BASE_IMAGE_URL . "Facebook.svg" ?>" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href),'facebook-share-dialog','width=626,height=436'); return false;">
-      <img src="<?php echo BASE_IMAGE_URL . "Twitter.svg" ?>" alt="Share on Twitter" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(window.location.href),'twitter-share-dialog','width=626,height=436'); return false;">
-
-          <!-- <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">
-          </a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
-
-        <!-- <img src="<?php echo BASE_URL;?>/assets/images/GooglePlusButtonSmall.svg" alt="google plus"/>
-        <img src="<?php echo BASE_URL;?>/assets/images/PinterestButtonSmall.svg" alt="pintrest"/> -->
-    </div>
     <div class="copyright">
         <h2>License</h2>
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
