@@ -212,19 +212,23 @@ if(isset($_POST["count_seeds"]))
 //add a seed
 if(isset($_POST["add_seed"]))
 {
+	$name = $url = '';
 	if ($_POST["add_seed"]) {
-		$seeds->add_seed($_POST["name"], $_POST["name"], $_POST["add_seed"]);
+		$name = $_POST["name"];
+		$url = $_POST["add_seed"];
 	} else {
 		$html = file_get_contents($_POST["url"]);
 		$title = explode('<title>', $html);
+		$url = $_POST["url"];
 
-		if(count($title)>1){
+		if(count($title) > 1){
 			$title = explode('</title>', $title[1]);
-			$seeds->add_seed(htmlentities($title[0]), htmlentities($title[0]), $_POST["url"]);
-		} else {
-			$seeds->add_seed('', '', $_POST["url"]);
+			$name = htmlentities($title[0]);
 		}
 	}
+
+	$seeds->add_seed($name, $name, $url);
+	$crawler_keywords->add_keyword($name, $url);
 
 	echo(json_encode('success'));
 }

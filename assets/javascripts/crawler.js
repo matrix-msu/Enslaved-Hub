@@ -240,12 +240,14 @@ function getAllSeeds() {
 //Gets the results for the selected tab
 function getResults(get_data)
 {
+	console.log(get_data)
 	$.ajax({
 		method:'POST',
 		url: BASE_URL + "api/getCrawlerResults",
 		data: get_data,
 		dataType: "JSON",
 		success:function(data){
+			console.log(data)
 			if(data) {
 				if (tab_type === 'results' || tab_type === 'results_visible')
 					html = populateCrawlerResults(data);

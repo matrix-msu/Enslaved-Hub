@@ -25,7 +25,18 @@ class crawler_keywords {
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
 
 		return $con;
-	}
+    }
+
+    public function add_keyword($keyword, $url)
+    {
+        $link = $this->connect();
+        if ($stmt = mysqli_prepare($link, "INSERT IGNORE INTO crawler_keywords (keyword, url) VALUES ( ?, ? )")) {
+            mysqli_stmt_bind_param($stmt, "ss", $keyword, $url);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+        mysqli_close($link);
+    }
 
     // fetch LIMIT number of keywords starting from OFFSET
 	public function get_keywords($limit, $offset, $sort, $terms='', $tag_ids=[]){
