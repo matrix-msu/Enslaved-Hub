@@ -87,6 +87,7 @@ var dash_main_Maranhão = "https://kibana.enslaved.org/app/kibana#/dashboard/aaf
 var dash_main_Voyages = "https://kibana.enslaved.org/app/kibana#/dashboard/267b9e30-dcad-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Legacies = "https://kibana.enslaved.org/app/kibana#/dashboard/66730960-e180-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Hutchins = "https://kibana.enslaved.org/app/kibana#/dashboard/c316dd50-e22e-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
+var dash_main_Free = "https://kibana.enslaved.org/app/kibana#/dashboard/95245570-e62b-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 
 
 var concat_url = BASE_URL + "visualizedata";
@@ -177,10 +178,10 @@ function addFieldsT(type, field = "default", proj = "default"){
   $("#chart-project").empty();
 
   $.each({
-    'bar': {'top': '-138px', 'height': '450px'},
-    'pie': {'top': '-138px', 'height': '450px'},
-    'tab': {'top': '-138px', 'height': '450px'},
-    'dash': {'top': '-50px', 'height': '537px'},
+    'bar': {'top': '-68px', 'height': '520px'},
+    'pie': {'top': '-68px', 'height': '520px'},
+    'tab': {'top': '-68px', 'height': '520px'},
+    'dash': {'top': '-78px', 'height': '510px'},
   }, function (chart_type, dims) {
     if (type == chart_type){
       $('iframe').css('top', dims['top']);
