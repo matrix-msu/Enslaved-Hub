@@ -212,19 +212,29 @@ if(isset($_POST["count_seeds"]))
 //add a seed
 if(isset($_POST["add_seed"]))
 {
-	if ($_POST["add_seed"]) {
-		$seeds->add_seed($_POST["name"], $_POST["name"], $_POST["add_seed"]);
-	} else {
-		$html = file_get_contents($_POST["url"]);
-		$title = explode('<title>', $html);
+	$name = $url = '';
 
-		if(count($title)>1){
-			$title = explode('</title>', $title[1]);
-			$seeds->add_seed(htmlentities($title[0]), htmlentities($title[0]), $_POST["url"]);
-		} else {
-			$seeds->add_seed('', '', $_POST["url"]);
-		}
+	if ($_POST["add_seed"]) {
+		$url = $_POST["add_seed"];
+	} else {
+		$url = $_POST["url"];
 	}
+
+	$html = file_get_contents($_POST["url"]);
+	$title = explode('<title>', $html);
+
+	// Not a true test of validation but good enough in this situation.
+	if(count($title) > 1){
+		$title = explode('</title>', $title[1]);
+		$name = htmlentities($title[0]);
+	} else {
+		header('HTTP/1.1 500 Internal Server Error');
+        header('Content-Type: application/json; charset=UTF-8');
+		die(json_encode(array('message' => 'Please provide a valid url.')));
+	}
+
+	$seeds->add_seed($name, $name, $url);
+	$crawler_keywords->add_keyword($name, $url);
 
 	echo(json_encode('success'));
 }
