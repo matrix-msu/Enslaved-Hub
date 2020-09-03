@@ -165,6 +165,7 @@ $(document).ready(function(){
 
 //Need to uniform with original code
 $('.create-seed').click(function(){
+	$('.error-message').remove();
 	$('.create-seed-modal').css("display", "flex");
 	setTimeout(function(){
 		$('.create-seed-modal .canvas').css('opacity', '1');
@@ -240,14 +241,12 @@ function getAllSeeds() {
 //Gets the results for the selected tab
 function getResults(get_data)
 {
-	console.log(get_data)
 	$.ajax({
 		method:'POST',
 		url: BASE_URL + "api/getCrawlerResults",
 		data: get_data,
 		dataType: "JSON",
 		success:function(data){
-			console.log(data)
 			if(data) {
 				if (tab_type === 'results' || tab_type === 'results_visible')
 					html = populateCrawlerResults(data);
@@ -381,7 +380,6 @@ function populateCrawlerResults(data) {
 					<p>Add to Seeds</p>
 					<form action="submit">
 						<input type="hidden" name="add_seed" value="${result['url']}">
-						<input type="hidden" name="name" value="${result['keyword']}">
 					</form>`;
 			}
 			html += `
@@ -509,14 +507,16 @@ function installModalListeners(data){
 				$('.crawler-modal .close').trigger('click');
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},
-			error:function(xhr, status, error){
-				console.log(xhr.responseText);
+			error:function(xhr, _, _){
+				$('.crawler-modal .info-inputs').append(
+					`<span class='error-message'>${xhr.responseJSON['message']}</span>`
+				);
 			}
 		});
 	});
 
 	$(document).click(function (e) {
-	    e.stopPropagation();
+		e.stopPropagation();
 	    var container = $("#sortmenu");
 
 	    //check if the clicked area is dropDown or not
@@ -532,7 +532,6 @@ function installModalListeners(data){
     $(".add-tag ul li").off().click(function (e) {
 		keyword_tag_filter_ids = [];
 		k_id = $(this).parent().data('id');
-		console.log(k_id);
         $(this).parent().children().each(function () {
         	if ($(this).find("input[type=checkbox]").prop("checked")) {
         		keyword_tag_filter_ids.push($(this).data('id'));

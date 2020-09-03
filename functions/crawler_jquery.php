@@ -213,18 +213,24 @@ if(isset($_POST["count_seeds"]))
 if(isset($_POST["add_seed"]))
 {
 	$name = $url = '';
+
 	if ($_POST["add_seed"]) {
-		$name = $_POST["name"];
 		$url = $_POST["add_seed"];
 	} else {
-		$html = file_get_contents($_POST["url"]);
-		$title = explode('<title>', $html);
 		$url = $_POST["url"];
+	}
 
-		if(count($title) > 1){
-			$title = explode('</title>', $title[1]);
-			$name = htmlentities($title[0]);
-		}
+	$html = file_get_contents($_POST["url"]);
+	$title = explode('<title>', $html);
+
+	// Not a true test of validation but good enough in this situation.
+	if(count($title) > 1){
+		$title = explode('</title>', $title[1]);
+		$name = htmlentities($title[0]);
+	} else {
+		header('HTTP/1.1 500 Internal Server Error');
+        header('Content-Type: application/json; charset=UTF-8');
+		die(json_encode(array('message' => 'Please provide a valid url.')));
 	}
 
 	$seeds->add_seed($name, $name, $url);
