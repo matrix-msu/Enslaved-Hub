@@ -1,33 +1,641 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="https://enslaved.org/ontology/"
      xml:base="https://enslaved.org/ontology/"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:uco="http://purl.org/cyber#"
+     xmlns:ogr="http://ogr.maptools.org/"
+     xmlns:shipment="https://onerecord.iata.org/Shipment#"
+     xmlns:cidoccrm="http://purl.org/NET/cidoc-crm/core#"
+     xmlns:icontact="http://ontology.eil.utoronto.ca/icontact.owl#"
+     xmlns:ns42="http://creativecommons.org/ns#"
+     xmlns:story="http://www.example.org/story.owl#"
+     xmlns:fm="https://www.oscinema.com.sg/week3#"
+     xmlns:ns40="http://wiki.dbpedia.org/"
+     xmlns:time="http://www.w3.org/2006/time#"
+     xmlns:time2="http://purl.oclc.org/NET/muo/ucum/unit/time/"
+     xmlns:ogc="http://www.opengis.net/"
+     xmlns:gront="http://genomic-resources.eu/ontology/"
+     xmlns:ns44="http://open.vocab.org/terms/"
+     xmlns:event="https://onerecord.iata.org/Event#"
+     xmlns:otherCharge="https://onerecord.iata.org/OtherCharge#"
+     xmlns:role="http://www.estrellaproject.org/lkif-core/role.owl#"
+     xmlns:icom_presence="http://docs.oasis-open.org/ns/icom/presence/201008#"
+     xmlns:fn="http://www.w3.org/2005/xpath-functions#"
+     xmlns:vaem="http://www.linkedmodel.org/schema/vaem#"
+     xmlns:Alternative_Term="http://www.semanticweb.org/hamide/ontologies/2019/3/untitled-ontology-14#Alternative_Term,"
+     xmlns:patterns="http://www.co-ode.org/patterns#"
+     xmlns:ebsi-notarisation="http://www.semanticweb.org/ontologies/2020/2/ebsi-notarisation/1.0.0#"
+     xmlns:mthreelite="http://purl.org/iot/vocab/m3-lite#"
+     xmlns:icom_core="http://docs.oasis-open.org/ns/icom/core/201008#"
+     xmlns:usdl-core="http://www.linked-usdl.org/ns/usdl-core#"
+     xmlns:gn="http://www.geonames.org/ontology#"
+     xmlns:bio="http://purl.org/vocab/bio/0.1/"
+     xmlns:prefix="http://purl.oclc.org/NET/muo/ucum/prefix/"
+     xmlns:ssn-system="http://www.w3.org/ns/ssn/systems/"
+     xmlns:air="http://www.megginson.com/exp/ns/airports#"
+     xmlns:km4c="http://www.disit.org/km4city/schema#"
+     xmlns:gr="http://purl.org/goodrelations/v1#"
+     xmlns:go="http://purl.obolibrary.org/obo/go#"
+     xmlns:uniprot="http://purl.uniprot.org/core/"
+     xmlns:uniprotkb="https://www.uniprot.org/uniprot/"
+     xmlns:icom_content="http://docs.oasis-open.org/ns/icom/content/201008#"
+     xmlns:greg="http://www.w3.org/ns/time/gregorian/"
+     xmlns:spdx="http://spdx.org/rdf/terms#"
+     xmlns:isbd="http://iflastandards.info/ns/isbd/elements/"
+     xmlns:handling="https://onerecord.iata.org/Handling#"
+     xmlns:plane-angle="http://purl.oclc.org/NET/muo/ucum/unit/plane-angle/"
+     xmlns:geolocation="https://onerecord.iata.org/Geolocation#"
+     xmlns:usdl-br="http://www.linked-usdl.org/ns/usdl-business-roles#"
+     xmlns:doid="http://purl.obolibrary.org/obo/doid#"
+     xmlns:map="http://www.w3c.rl.ac.uk/2003/11/21-skos-mapping#"
+     xmlns:ufo="http://onto.fel.cvut.cz/ontologies/ufo/"
+     xmlns:gres="http://genomic-resources.eu/resource/"
+     xmlns:recipesrdf="http://www.semanticweb.org/chris/ontologies/2019/1/Recipe#"
+     xmlns:customs="https://onerecord.iata.org/Customs#"
+     xmlns:upwork="http://upwork.com/upwork#"
+     xmlns:ex="http://example.org/"
+     xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+     xmlns:g="http://www.workingontologist.org/Examples/Chapter6/TheFirm.owl/"
+     xmlns:d="http://learningsparql.com/ns/data#"
+     xmlns:wdrs="http://www.w3.org/2007/05/powder-s#"
+     xmlns:c="http://s.opencalais.com/1/pred/"
+     xmlns:a="http://localhost/foo#"
+     xmlns:o="urn:schemas-microsoft-com:office:office"
+     xmlns:voag="http://voag.linkedmodel.org/voag#"
+     xmlns:voaf="http://purl.org/vocommons/voaf#"
+     xmlns:part1="https://im.internationaldataspaces.org/participant/part1"
+     xmlns:veg="http://www.opengis.net/citygml/vegetation/2.0/"
+     xmlns:sio="http://semanticscience.org/resource/"
+     xmlns:base="http://www.semanticweb.org/nelson/ontologies/2018/9/pep#"
+     xmlns:en="http://www.enseignement.org#"
+     xmlns:x="urn:schemas-microsoft-com:office:excel"
+     xmlns:categorization="https://standards.oftrust.net/v2/Vocabulary/categorization/"
+     xmlns:base_ontology-v0_9_0="http://www.onem2m.org/ontology/Base_Ontology/base_ontology-v0_9_0#"
+     xmlns:sct="http://snomed.info/id/"
+     xmlns:physical-quality="http://purl.oclc.org/NET/muo/ucum/physical-quality/"
+     xmlns:efo="http://www.ebi.ac.uk/efo/"
+     xmlns:ucum="http://purl.oclc.org/NET/muo/ucum/"
+     xmlns:nci="http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#"
+     xmlns:upworkOccupation="http://upwork.com/upworkOccupation#"
+     xmlns:contactOther="https://onerecord.iata.org/ContactOther#"
+     xmlns:chargeSummary="https://onerecord.iata.org/ChargeSummary#"
+     xmlns:houseWaybill="https://onerecord.iata.org/HouseWaybill#"
+     xmlns:family_example="https://wiki.csc.calpoly.edu/OntologyTutorial/family_example.owl#"
+     xmlns:csdo="http://www.csdo.org/2019/5/csdo#"
+     xmlns:d0="http://www.ontologydesignpatterns.org/ont/d0.owl#"
+     xmlns:usdl-price="http://www.linked-usdl.org/ns/usdl-price#"
+     xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#"
+     xmlns:dcat="http://www.w3.org/ns/dcat#"
+     xmlns:sdg="http://purl.unep.org/sdg/"
+     xmlns:quoteRequest="https://onerecord.iata.org/QuoteRequest#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:scovo="http://purl.org/NET/scovo#"
+     xmlns:transportSegment="https://onerecord.iata.org/TransportSegment#"
+     xmlns:oKIG019UCNY0YUCMakmuV="http://webprotege.stanford.edu/project/7oKIG019UCNY0YUCMakmuV#"
+     xmlns:gen="http://www.opengis.net/citygml/generics/2.0/"
+     xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+     xmlns:ogcgs="http://www.opengis.net/ont/geosparql#"
+     xmlns:chargeDescription="https://onerecord.iata.org/ChargeDescription#"
+     xmlns:swrlx="http://www.w3.org/2003/11/swrlx#"
+     xmlns:chromosome-parts="http://purl.obolibrary.org/obo/test/chromosome-parts#"
+     xmlns:ogcgsf="http://www.opengis.net/def/function/geosparql/"
+     xmlns:ocsw="http://data.diekb.org/def/ocsw#"
+     xmlns:ontology="http://www.semanticweb.org/ontologies/2013/12/ontology.owl#"
+     xmlns:country="https://onerecord.iata.org/Country#"
+     xmlns:untitled-ontology-11="http://www.semanticweb.org/dhante/ontologies/2020/5/untitled-ontology-11#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+     xmlns:sctm="http://snomed.info/sct/subset/"
+     xmlns:untitled-ontology-17="http://www.semanticweb.org/debanjalibain/ontologies/2020/3/untitled-ontology-17#"
+     xmlns:usdl-it="http://www.linked-usdl.org/ns/usdl-interaction-types#"
+     xmlns:inDestinationCurrency="https://onerecord.iata.org/InDestinationCurrency#"
+     xmlns:usdl-ir="http://www.linked-usdl.org/ns/usdl-interaction-roles#"
+     xmlns:open311="http://ontology.eil.utoronto.ca/open311#"
+     xmlns:conn2="https://aastat.gov.de/connector/conn2/"
+     xmlns:adkd="http://oziz.ffos.hr/aboras/ak-ontologija#"
+     xmlns:ogcgsr="http://www.opengis.net/def/rule/geosparql/"
+     xmlns:bookingStatus="https://onerecord.iata.org/BookingStatus#"
+     xmlns:untitled-ontology-16="http://www.semanticweb.org/user/ontologies/2020/2/untitled-ontology-16#"
+     xmlns:cc="https://w3id.org/costumeCore/ontology/"
+     xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+     xmlns:cd="http://www.recshop.fake/cd#"
+     xmlns:ldp="http://www.w3.org/ns/ldp#"
+     xmlns:collect="https://onerecord.iata.org/Collect#"
+     xmlns:span="http://www.ifomis.org/bfo/1.1/span#"
+     xmlns:insurance="https://onerecord.iata.org/Insurance#"
+     xmlns:euvoc="http://publications.europa.eu/ontology/euvoc#"
+     xmlns:specialService="https://onerecord.iata.org/SpecialService#"
+     xmlns:routing="https://onerecord.iata.org/Routing#"
+     xmlns:hsapdv="http://purl.obolibrary.org/obo/hsapdv#"
+     xmlns:mydomain="http://www.mydomain.org/my-rdf-ns"
+     xmlns:chargeDeclaration="https://onerecord.iata.org/ChargeDeclaration#"
+     xmlns:organization="http://www.ebi.ac.uk/swo/organization/"
+     xmlns:area="http://www.area.it/area#"
+     xmlns:pav="http://purl.org/pav/"
+     xmlns:idsc_prot="https://w3id.org/idsa/protocol/"
+     xmlns:transportMeans="https://onerecord.iata.org/TransportMeans#"
+     xmlns:customsInfo="https://onerecord.iata.org/CustomsInfo#"
+     xmlns:saref="https://w3id.org/saref#"
+     xmlns:dbpprop="http://dbpedia.org/property/"
+     xmlns:types="http://psi.egovpt.org/types/"
+     xmlns:sfn="http://www.w3.org/ns/sparql#"
+     xmlns:mfg="http://www.workingontologist.org/Examples/Chapter3/Product.owl#"
+     xmlns:nbo="http://purl.obolibrary.org/obo/nbo.owl#"
+     xmlns:booking="https://onerecord.iata.org/Booking#"
+     xmlns:fraction="http://purl.oclc.org/NET/muo/ucum/unit/fraction/"
+     xmlns:ubprop="http://purl.obolibrary.org/obo/ubprop#"
+     xmlns:base_ontology="http://www.onem2m.org/ontology/Base_Ontology/base_ontology#"
+     xmlns:ids="https://w3id.org/idsa/core/"
+     xmlns:dcr="http://www.isocat.org/ns/dcr.rdf#"
+     xmlns:omgeo="http://www.ontotext.com/owlim/geo#"
+     xmlns:capec="http://purl.org/cyber/capec#"
+     xmlns:xml4e22437efefd433585f53052a456fc38="http://www.w3.org/XML/1998/namespace#"
+     xmlns:nas="https://data.nasa.gov/ontologies/atmonto/NAS#"
+     xmlns:xhv="http://www.w3.org/1999/xhtml/vocab#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:dangerousGoods="https://onerecord.iata.org/DangerousGoods#"
+     xmlns:icom_task="http://docs.oasis-open.org/ns/icom/task/201008#"
+     xmlns:lvont="http://lexvo.org/ontology#"
+     xmlns:p1="http://www.owl-ontologies.com/assert.owl#"
+     xmlns:ctro="http://www.semanticweb.org/root/ontologies/2018/6/ctro#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:pieceGrouping="https://onerecord.iata.org/PieceGrouping#"
+     xmlns:grddl="http://www.w3.org/2003/g/data-view#"
+     xmlns:cellline="http://www.ebi.ac.uk/cellline/"
+     xmlns:adms="http://www.w3.org/ns/adms#"
+     xmlns:MF="http://purl.obolibrary.org/obo/MF#"
+     xmlns:od="urn:schemas-microsoft-com:officedata"
+     xmlns:zoo="http://example.org/zoo/"
+     xmlns:inventions="http://www.onto.org/inventions#"
+     xmlns:spl="http://spinrdf.org/spl#"
+     xmlns:usdl-lr="http://www.linked-usdl.org/ns/usdl-liability-roles#"
+     xmlns:ace_lexicon="http://attempto.ifi.uzh.ch/ace_lexicon#"
+     xmlns:quantitykind="http://qudt.org/vocab/quantitykind/"
+     xmlns:yago="http://dbpedia.org/class/yago/"
+     xmlns:irrig="http://www.w3id.org/def/irrig#"
+     xmlns:MO="http://lapd.pt/myOntology.owl#"
+     xmlns:idsc_cert="https://w3id.org/idsa/code/certification/"
+     xmlns:webprotege="http://webprotege.stanford.edu/"
+     xmlns:http="http://"
+     xmlns:branch="https://onerecord.iata.org/Branch#"
+     xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty"
+     xmlns:interval="http://reference.data.gov.uk/def/intervals/"
+     xmlns:gtfs="http://vocab.gtfs.org/terms#"
+     xmlns:phil="http://philosurfical.open.ac.uk/ontology/philosurfical.owl#"
+     xmlns:temporalDescriptions="http://publications.europa.eu/ontology/euvoc/temporalDescriptions#"
+     xmlns:icom_forum="http://docs.oasis-open.org/ns/icom/forum/201008#"
+     xmlns:st3="https://www.oscinema.com.sg/cinema/showtime/slot3#"
+     xmlns:st1="https://www.oscinema.com.sg/cinema/showtime/slot1#"
+     xmlns:st2="https://www.oscinema.com.sg/cinema/showtime/slot2#"
+     xmlns:dimensions="https://onerecord.iata.org/Dimensions#"
+     xmlns:cooking="http://www.semanticweb.org/learningcooking/ontologies/2019/1/Cooking#"
+     xmlns:mf="http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#"
+     xmlns:reasonsForSecurityStatus="https://onerecord.iata.org/ReasonsForSecurityStatus#"
+     xmlns:untitled-ontology-3="http://www.semanticweb.org/acer/ontologies/2020/3/untitled-ontology-3#"
+     xmlns:untitled-ontology-2="http://www.semanticweb.org/x473936/ontologies/2020/0/untitled-ontology-2#"
+     xmlns:rml="http://semweb.mmlab.be/ns/rml#"
+     xmlns:mo="http://www.movieontology.org/2009/10/01/movieontology.owl#"
+     xmlns:spatial="http://geovocab.org/spatial#"
+     xmlns:receivedFrom="https://onerecord.iata.org/ReceivedFrom#"
+     xmlns:beautiful="beautiful#"
+     xmlns:void="http://rdfs.org/ns/void#"
+     xmlns:owl-modeling="http://www.semanticweb.org/bernhard/ontologies/2019/10/owl-modeling#"
+     xmlns:stat="http://lubm.shacl.stat.io/"
+     xmlns:chargePayment="https://onerecord.iata.org/ChargePayment#"
+     xmlns:product="https://onerecord.iata.org/Product#"
+     xmlns:subsets="http://purl.obolibrary.org/obo/ro/subsets#"
+     xmlns:obo2="http://purl.obolibrary.org/obo#"
+     xmlns:obo="http://purl.obolibrary.org/obo/"
+     xmlns:ncbitaxon="http://purl.obolibrary.org/obo/ncbitaxon#"
+     xmlns:carrierProduct="https://onerecord.iata.org/CarrierProduct#"
+     xmlns:item="https://onerecord.iata.org/Item#"
+     xmlns:mereo="http://www.estrellaproject.org/lkif-core/mereology.owl#"
+     xmlns:esequip="http://vocab.linkeddata.es/datosabiertos/def/urbanismo-infraestructuras/equipamiento#"
+     xmlns:core3="http://purl.obolibrary.org/obo/core#"
+     xmlns:untitled-ontology-83="http://www.semanticweb.org/dr.soniamehla/ontologies/2016/7/untitled-ontology-83#"
+     xmlns:location="https://onerecord.iata.org/Location#"
+     xmlns:snap="http://www.ifomis.org/bfo/1.1/snap#"
+     xmlns:ranges="https://onerecord.iata.org/Ranges#"
+     xmlns:carrierSignature="https://onerecord.iata.org/CarrierSignature#"
+     xmlns:icom_doc="http://docs.oasis-open.org/ns/icom/document/201008#"
+     xmlns:schor="https://w3id.org/scholarlydata/role/"
+     xmlns:umls="http://bioportal.bioontology.org/ontologies/umls/"
+     xmlns:olia="http://purl.org/olia/olia.owl#"
+     xmlns:ind="http://manusquare.project.eu/industrial-manusquare#"
+     xmlns:family="http://www.semanticweb.org/mohammad/ontologies/2019/12/family#"
+     xmlns:action="http://www.estrellaproject.org/lkif-core/action.owl#"
+     xmlns:archimate="http://bp4mc2.org/def/archimate#"
+     xmlns:value="https://onerecord.iata.org/Value#"
+     xmlns:ruleml="http://www.w3.org/2003/11/ruleml#"
+     xmlns:WebSemProject="http://www.semanticweb.org/ontologies/WebSemProject#"
+     xmlns:cesar="http://www.cesar/"
+     xmlns:mydocuments="http://example.org/mydocuments/"
+     xmlns:mesh="https://meshb.nlm.nih.gov/record#"
+     xmlns:odrl="http://www.w3.org/ns/odrl/2/"
+     xmlns:ns16="http://dbpedia.org/ontology/Escalator/"
+     xmlns:prepaid="https://onerecord.iata.org/Prepaid#"
+     xmlns:ns17="http://dbpedia.org/ontology/Galaxy/"
+     xmlns:onto="http://fakesite.org/webcompany.owl#"
+     xmlns:ns14="http://dbpedia.org/ontology/ConveyorSystem/"
+     xmlns:ns15="http://dbpedia.org/ontology/Drug/"
+     xmlns:ns18="http://dbpedia.org/ontology/GeopoliticalOrganisation/"
+     xmlns:ns19="http://dbpedia.org/ontology/GrandPrix/"
+     xmlns:dmsgmeter="http://www.ontodata.xyz/ontologies/dmsgmeter#"
+     xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+     xmlns:j.1="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#"
+     xmlns:clmat="http://www.nsmntx.org/2019/10/clothingMaterials#"
+     xmlns:j.0="http://www.essepuntato.it/2008/12/earmark#"
+     xmlns:j.3="http://dbpedia.org/resource/Queue_(abstract_data_type)"
+     xmlns:j.2="http://ontologydesignpatterns.org/cp/owl/semiotics.owl#"
+     xmlns:ns12="http://dbpedia.org/ontology/Canal/"
+     xmlns:ns13="http://dbpedia.org/ontology/ChemicalSubstance/"
+     xmlns:ns10="http://dbpedia.org/datatype/"
+     xmlns:ns11="http://dbpedia.org/ontology/Automobile/"
+     xmlns:j.8="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"
+     xmlns:j.9="http://www.ontologydesignpatterns.org/ont/boxer/boxing.owl#"
+     xmlns:j.4="http://www.ontologydesignpatterns.org/ont/boxer/boxer.owl#"
+     xmlns:tun="http://www.opengis.net/citygml/tunnel/2.0/"
+     xmlns:j.5="http://www.ontologydesignpatterns.org/ont/fred/quantifiers.owl#"
+     xmlns:j.6="http://www.ontologydesignpatterns.org/ont/vn/abox/role/"
+     xmlns:pizza="http://www.co-ode.org/ontologies/pizza/pizza.owl#"
+     xmlns:j.7="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#%27F%27"
+     xmlns:icom_conf="http://docs.oasis-open.org/ns/icom/conference/201008#"
+     xmlns:premises-connect-topology="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example3/ethernet-top/premises-connect-topology.rdf#"
+     xmlns:spatialDescriptions="http://publications.europa.eu/ontology/euvoc/spatialDescriptions#"
+     xmlns:ns29="http://dbpedia.org/ontology/SpaceStation/"
+     xmlns:hp="http://purl.obolibrary.org/obo/hp#"
+     xmlns:ns25="http://dbpedia.org/ontology/School/"
+     xmlns:ns26="http://dbpedia.org/ontology/Software/"
+     xmlns:ns27="http://dbpedia.org/ontology/SpaceMission/"
+     xmlns:dublincorens="http://purl.org/dc/elements/1.1/"
+     xmlns:ns28="http://dbpedia.org/ontology/SpaceShuttle/"
+     xmlns:ns21="http://dbpedia.org/ontology/MovingWalkway/"
+     xmlns:dpmo="http://www.semanticweb.org/ornei/ontologies/2019/10/dpmo#"
+     xmlns:ns22="http://dbpedia.org/ontology/On-SiteTransportation/"
+     xmlns:ns23="http://dbpedia.org/ontology/Planet/"
+     xmlns:ns24="http://dbpedia.org/ontology/Rocket/"
+     xmlns:serviceRequest="https://onerecord.iata.org/ServiceRequest#"
+     xmlns:geonames="http://www.geonames.org/ontology/ontology_v3.1.rdf#"
+     xmlns:inst="http://manusquare.project.eu/instances-manusquare#/"
+     xmlns:ns20="http://dbpedia.org/ontology/LunarCrater/"
+     xmlns:dcterms="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/"
+     xmlns:pato="http://purl.obolibrary.org/obo/pato#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:arrest="http://osw2019.com/brichevg/arrest/"
+     xmlns:Cibo="http://almawave.it/ontologies/2020/01/09/Cibo#"
+     xmlns:geopolitical="http://aims.fao.org/aos/geopolitical.owl#"
+     xmlns:coronaviruses="http://coronaviruses.rdf#"
+     xmlns:sth1="https://www.oscinema.com.sg/cinema/Week/theme1/Screen3/slot1#"
+     xmlns:sth2="https://www.oscinema.com.sg/cinema/Week/theme2/Screen3/slot2#"
+     xmlns:sth3="https://www.oscinema.com.sg/cinema/Week/theme3/Screen3/slot3#"
+     xmlns:ecrm="http://erlangen-crm.org/current/"
+     xmlns:vocabulary="http://www.opensilex.org/vocabulary/oeso#"
+     xmlns:dto1="http://www.drugtargetontology.org/dto#"
+     xmlns:untitled-ontology-75="http://www.semanticweb.org/kuegler/ontologies/2017/9/untitled-ontology-75#"
+     xmlns:ns34="http://dbpedia.org/ontology/Astronaut/"
+     xmlns:ogcgml="http://www.opengis.net/ont/gml#"
+     xmlns:ns35="http://dbpedia.org/ontology/Work/"
+     xmlns:ns32="http://dbpedia.org/ontology/Infrastructure/"
+     xmlns:ns33="http://dbpedia.org/ontology/Building/"
+     xmlns:offer="https://onerecord.iata.org/Offer#"
+     xmlns:ns30="http://dbpedia.org/ontology/Spacecraft/"
+     xmlns:interface="http://www.ebi.ac.uk/swo/interface/"
+     xmlns:ns31="http://dbpedia.org/ontology/Person/"
+     xmlns:hls="#"
+     xmlns:cpannotationschema="http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl#"
+     xmlns:commodity="https://onerecord.iata.org/Commodity#"
+     xmlns:dbpediaontology="http://dbpedia.org/ontology/"
+     xmlns:terms1="http://www.geneontology.org/formats/oboInOwl#http://purl.org/dc/terms/"
+     xmlns:icom_meta="http://docs.oasis-open.org/ns/icom/metadata/201008#"
+     xmlns:rating="https://onerecord.iata.org/Rating#"
+     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#"
+     xmlns:characteristic="https://onerecord.iata.org/Characteristic#"
+     xmlns:idsc_auth="https://w3id.org/idsa/code/auth/"
+     xmlns:chebi3="http://purl.obolibrary.org/obo/chebi#"
+     xmlns:chebi4="http://purl.obolibrary.org/obo/chebi#2"
+     xmlns:chebi5="http://purl.obolibrary.org/obo/chebi#3"
+     xmlns:ombibo="http://www.wurvoc.org/bibliography/om-2/"
+     xmlns:chebi6="http://purl.obolibrary.org/obo/chebi#1"
+     xmlns:swo="http://www.ebi.ac.uk/swo/"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:dto_vocabulary_kinase_domain1="http://www.drugtargetontology.org/dto/dto_vocabulary_kinase_domain#"
+     xmlns:production="https://onerecord.iata.org/Production#"
+     xmlns:temperature="http://purl.oclc.org/NET/muo/ucum/unit/temperature/"
+     xmlns:dos="https://mohamed.eldesouki.ca/rdf#"
+     xmlns:schema="http://schema.org/"
+     xmlns:mohamedbah="http://www.semanticweb.org/mohamedbah#"
+     xmlns:esadm="http://vocab.linkeddata.es/datosabiertos/def/sector-publico/territorio#"
+     xmlns:co2CalcMethod="https://onerecord.iata.org/CO2CalcMethod#"
+     xmlns:seas="https://w3id.org/seas/"
+     xmlns:chebi="http://purl.obolibrary.org/obo/chebi/"
+     xmlns:om-2="http://www.ontology-of-units-of-measure.org/resource/om-2/"
+     xmlns:place="http://www.estrellaproject.org/lkif-core/relative-places.owl#"
+     xmlns:xf="http://www.w3.org/2004/07/xpath-functions"
+     xmlns:elements="http://www.geneontology.org/formats/oboInOwl#http://purl.org/dc/elements/1.1/"
+     xmlns:piece="https://onerecord.iata.org/Piece#"
+     xmlns:routing-domain="https://cntic10.hit.bme.hu/do/network_model/raw/master/ontology/routing-domain.owl#"
+     xmlns:v4e="http://bdi.si.ehu.es/bdi/ontologies/extrusion/visualization4ExtruOnt#"
+     xmlns:wk="https://www.oscinema.com.sg/cinema#"
+     xmlns:oeev="http://www.opensilex.org/vocabulary/oeev#"
+     xmlns:wn="http://xmlns.com/wordnet/1.6/"
+     xmlns:iot-lite="http://purl.oclc.org/NET/UNIS/fiware/iot-lite#"
+     xmlns:traffic-topology="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example3/ethernet-top/traffic-topology.rdf#"
+     xmlns:volumetricWeight="https://onerecord.iata.org/VolumetricWeight#"
+     xmlns:GConsent="https://w3id.org/GConsent#"
+     xmlns:securityStatus="https://onerecord.iata.org/SecurityStatus#"
+     xmlns:transport-topology="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example3/ethernet-top/transport-topology.rdf#"
+     xmlns:price="https://onerecord.iata.org/Price#"
+     xmlns:usdl-agreement="http://www.linked-usdl.org/ns/usdl-agreement#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:vra="http://purl.org/vra/"
+     xmlns:devices="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example2/5g_devices.rdf#"
+     xmlns:exam="http://www.cs.le.ac.uk/co7216/exam#"
+     xmlns:bldg="http://www.opengis.net/citygml/building/2.0/"
+     xmlns:data="https://data.nasa.gov/ontologies/atmonto/data#"
+     xmlns:Vocabulary="https://standards.oftrust.net/v2/Vocabulary/"
+     xmlns:conf="http:conf/"
+     xmlns:cpu-unit-ext="https://cntic10.hit.bme.hu/do/network_model/raw/master/ontology/cpu-unit-ext.owl#"
+     xmlns:central-government="http://reference.data.gov.uk/def/central-government#"
+     xmlns:ontolex="http://www.w3.org/ns/lemon/ontolex#"
+     xmlns:rut="http://rdfunit.aksw.org/ns/core#"
+     xmlns:hp2="http://purl.obolibrary.org/obo/hp.owl#"
      xmlns:opla="http://ontologydesignpatterns.org/opla#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:esco="http://data.europa.eu/esco/model#"
+     xmlns:license="http://www.ebi.ac.uk/swo/license/"
+     xmlns:bookingRequest="https://onerecord.iata.org/BookingRequest#"
+     xmlns:wtr="http://www.opengis.net/citygml/waterbody/2.0/"
+     xmlns:waybill="https://onerecord.iata.org/Waybill#"
+     xmlns:icom_card="http://docs.oasis-open.org/ns/icom/contact/201008#"
+     xmlns:obda="https://w3id.org/obda/vocabulary#"
+     xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+     xmlns:WV="http://www.wurvoc.org/vocabularies/WV/"
+     xmlns:einsteins_riddle="http://persons.iis.nsk.su/files/persons/pages/einsteins_riddle.owl#"
+     xmlns:protseq="http://purl.org/science/protein/bysequence/"
+     xmlns:ogcsf="http://www.opengis.net/ont/sf#"
+     xmlns:math="http://www.w3.org/2000/10/swap/math#"
+     xmlns:sosa="http://www.w3.org/ns/sosa#"
+     xmlns:admin="http://webns.net/mvcb/"
+     xmlns:bibo="http://purl.org/ontology/bibo/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:ub="http://swat.cse.lehigh.edu/onto/univ-bench.owl#"
+     xmlns:xsl10="http://www.w3.org/XSL/Transform/1.0"
+     xmlns:gml="http://www.opengis.net/gml/"
+     xmlns:vocab="http://what.ever.com/"
+     xmlns:km4cr="http://www.disit.org/km4city/resource#"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:v0="http://ethon.consensys.net/v0/"
      xmlns:terms="http://purl.org/dc/terms/"
-     xmlns:dcterms="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/">
+     xmlns:ssn="https://www.w3.org/ns/ssn/"
+     xmlns:qudt="http://qudt.org/2.1/schema/qudt/"
+     xmlns:dto="http://www.drugtargetontology.org/dto/"
+     xmlns:timezone="http://www.w3.org/2006/timezone#"
+     xmlns:LConsent="https://www.datavillage.me/ontologies/LConsent#"
+     xmlns:packagingType="https://onerecord.iata.org/PackagingType#"
+     xmlns:rdf1="http://www.cropontology.org/rdf/"
+     xmlns:rss="http://purl.org/rss/1.0/"
+     xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+     xmlns:parameters="https://cntic10.hit.bme.hu/do/network_model/raw/master/ontology/parameters.owl#"
+     xmlns:transport_network="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example2/transport_network.rdf#"
+     xmlns:otn="http://www.pms.ifi.uni-muenchen.de/OTN#"
+     xmlns:demand="https://cntic10.hit.bme.hu/do/network_model/raw/master/ontology/demand.owl#"
+     xmlns:paradicms="http://www.paradicms.org/ns#"
+     xmlns:efrbroo="http://erlangen-crm.org/efrbroo/"
+     xmlns:SEG="http://www.outreach.io/SEG#"
+     xmlns:wgs84_pos="http://www.w3.org/2003/01/geo/wgs84_pos#"
+     xmlns:sp="http://spinrdf.org/sp#"
+     xmlns:victim="http://osw2019.com/brichevg/victim/"
+     xmlns:sr="http://www.w3.org/ns/sosa/sampling/"
+     xmlns:sd="http://www.w3.org/ns/sparql-service-description#"
+     xmlns:sc="http://purl.org/science/owl/sciencecommons/"
+     xmlns:xmi="http://www.omg.org/XMI"
+     xmlns:sto="https://ken.baclawski.com/STO#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:kids="https://ken.baclawski.com/kids#"
+     xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#"
+     xmlns:sh="http://www.w3.org/ns/shacl#"
+     xmlns:si="https://www.w3schools.com/rdf/"
+     xmlns:quoteResponse="https://onerecord.iata.org/QuoteResponse#"
+     xmlns:caso="http://www.w3id.org/def/caso#"
+     xmlns:stx="http://purl.org/cyber/stix#"
+     xmlns:dawgt="http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#"
+     xmlns:rr="http://www.w3.org/ns/r2rml#"
+     xmlns:epo="http://data.europa.eu/a4d#"
+     xmlns:esagm="http://vocab.ciudadesabiertas.es/def/sector-publico/agenda-municipal#"
+     xmlns:legal="http://www.w3.org/ns/legal#"
+     xmlns:capacity_example="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example2/capacity_example.rdf#"
+     xmlns:rdfa="http://www.w3.org/ns/rdfa#"
+     xmlns:escjr="http://vocab.linkeddata.es/datosabiertos/def/urbanismo-infraestructuras/callejero#"
+     xmlns:covid-19="http://www.semanticweb.org/kasun/ontologies/2020/3/covid-19#"
+     xmlns:dcatap="http://data.europa.eu/r5r/"
+     xmlns:brick="https://brickschema.org/schema/1.1.0/Brick#"
+     xmlns:restaurantontology="http://example.org/RestaurantOntology.owl#"
+     xmlns:aliexpress="aliexpress.com:"
+     xmlns:www="http://www.w3.org/2001/"
+     xmlns:saref4agri="https://w3id.org/def/saref4agri#"
+     xmlns:owl2="http://www.w3.org/2006/12/owl2#"
+     xmlns:otherOnt="http://example.org/otherOntologies/families/"
+     xmlns:mvo="http://www.semanticweb.org/nataraj.bukkambudi/ontologies/2020/2/voyager_ontology.owl#mvo:"
+     xmlns:rd="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example2/compact/routed_paths2.rdf#"
+     xmlns:lang="http://purl.org/net/inkel/rdf/schemas/lang/1.1#"
+     xmlns:otherCustomsInformation="https://onerecord.iata.org/OtherCustomsInformation#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:arjun="http://lsirwww.epfl.ch/courses/dis/2005ws/exercises/rdf/www/schema.txt"
+     xmlns:grp="http://www.opengis.net/citygml/cityobjectgroup/2.0/"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:uom="http://www.opengis.net/def/uom/OGC/1.0/"
+     xmlns:5g_devices="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example2/compact/5g_devices.rdf#"
+     xmlns:qu="http://purl.org/NET/ssnx/qu/qu#"
+     xmlns:eqp="https://data.nasa.gov/ontologies/atmonto/equipment#"
+     xmlns:insect-anatomy="http://purl.obolibrary.org/obo/uberon/insect-anatomy#"
+     xmlns:otherParty="https://onerecord.iata.org/OtherParty#"
+     xmlns:top="http://www.estrellaproject.org/lkif-core/lkif-top.owl#"
+     xmlns:PPEO="http://purl.org/ppeo/PPEO.owl#"
+     xmlns:luse="http://www.opengis.net/citygml/landuse/2.0/"
+     xmlns:mus="http://data.doremus.org/ontology#"
+     xmlns:icom_ac="http://docs.oasis-open.org/ns/icom/accesscontrol/201008#"
+     xmlns:ns9="http://mappings.dbpedia.org/index.php/OntologyProperty:"
+     xmlns:ns5="http://dbpedia.org/ontology/Weapon/"
+     xmlns:qb="http://purl.org/linked-data/cube#"
+     xmlns:ns7="http://dbpedia.org/ontology/MeanOfTransportation/"
+     xmlns:muo="http://purl.oclc.org/NET/muo/muo#"
+     xmlns:ns2="http://lambda3.org/graphene/sentence#"
+     xmlns:unit="http://qudt.org/vocab/unit/"
+     xmlns:ns1="http://www.w3.org/ns/ma-ont#"
+     xmlns:visualization4ExtruOnt="http://bdi.si.ehu.es/bdi/ontologies/ExtruOnt/visualization4ExtruOnt#"
+     xmlns:ns4="http://dbpedia.org/ontology/Lake/"
+     xmlns:ns3="http://dbpedia.org/ontology/Stream/"
+     xmlns:frn="http://www.opengis.net/citygml/cityfurniture/2.0/"
+     xmlns:virtrdf="http://www.openlinksw.com/schemas/virtrdf#"
+     xmlns:univ="http://www.indoversitas.id/"
+     xmlns:cims="http://iec.ch/TC57/1999/rdf-schema-extensions-19990926#"
+     xmlns:ns0="http://oziz.ffos.hr/kdjurdjevic/dk-ontologija#"
+     xmlns:upworkModel="http://upwork.com/upworkModel#"
+     xmlns:temporal="http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:j.12="http://www.ontologydesignpatterns.org/ont/cnlp/coref.owl#"
+     xmlns:qudt-unit-1-1="http://qudt.org/vocab/unit#"
+     xmlns:j.11="http://www.ontologydesignpatterns.org/ont/fred/domain.owl#%27"
+     xmlns:html="http://www.w3.org/TR/REC-html40"
+     xmlns:core="http://www.opengis.net/citygml/2.0/"
+     xmlns:j.13="http://dbpedia.org/resource/Element_(mathematics)"
+     xmlns:collectionentity="http://www.ontologydesignpatterns.org/cp/owl/collectionentity.owl#"
+     xmlns:pr="http://purl.obolibrary.org/obo/pr#"
+     xmlns:j.10="http://www.ontologydesignpatterns.org/ont/fred/pos.owl#"
+     xmlns:person="https://onerecord.iata.org/Person#"
+     xmlns:securityInfo="https://onerecord.iata.org/SecurityInfo#"
+     xmlns:cito="http://purl.org/spar/cito/"
+     xmlns:dgu="http://reference.data.gov.uk/def/reference/"
+     xmlns:tag="https://brickschema.org/schema/1.1.0/BrickTag#"
+     xmlns:mondo="http://purl.obolibrary.org/obo/mondo#"
+     xmlns:foo="http://example.com/foo#"
+     xmlns:untitled-ontology-186="http://www.semanticweb.org/kainatansar/ontologies/2020/0/untitled-ontology-186#"
+     xmlns:people="http://www.outreach.io/people#"
+     xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+     xmlns:tim="https://www.w3.org/People/Berners-Lee/"
+     xmlns:oboInOwl1="www.geneontology.org/formats/oboInOwl#"
+     xmlns:arg="http://spinrdf.org/arg#"
+     xmlns:page="http://dbpedia.org/page/"
+     xmlns:cco="http://www.ontologyrepository.com/CommonCoreOntologies/"
+     xmlns:vin="http://www.w3.org/TR/2003/PR-owl-guide-20031209/wine#"
+     xmlns:home-activities-ontology="http://www.semanticweb.org/kass/ontologies/2020/0/home-activities-ontology#"
+     xmlns:dtype="http://www.linkedmodel.org/schema/dtype#"
+     xmlns:xslwd="http://www.w3.org/TR/WD-xsl"
+     xmlns:sika="http://ontology.sika.com/"
+     xmlns:exif="http://www.w3.org/2003/12/exif/ns#"
+     xmlns:ontoneo="http://purl.obolibrary.org/obo/ontoneo/"
+     xmlns:FriOntology="urn:absolute:FriOntology#"
+     xmlns:cdt="http://w3id.org/lindt/custom_datatypes#"
+     xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
+     xmlns:uni="http://www.mydomain.org/uni-ns#"
+     xmlns:sc3="https://www.oscinema.com.sg/cinema/Screen3#"
+     xmlns:sc2="https://www.oscinema.com.sg/cinema/Screen2#"
+     xmlns:sc1="https://www.oscinema.com.sg/cinema/Screen1#"
+     xmlns:olia_top="http://purl.org/olia/olia-top.owl#"
+     xmlns:ratings="https://onerecord.iata.org/Ratings#"
+     xmlns:lemon="http://lemon-model.net/lemon#"
+     xmlns:specialHandling="https://onerecord.iata.org/SpecialHandling#"
+     xmlns:wikidata="http://www.wikidata.org/entity/"
+     xmlns:rlog="http://persistence.uni-leipzig.org/nlp2rdf/ontologies/rlog#"
+     xmlns:externalReference="https://onerecord.iata.org/ExternalReference#"
+     xmlns:fhir="http://hl7.org/fhir/"
+     xmlns:tm2="https://www.oscinema.com.sg/cinema/Week2#"
+     xmlns:arvalis="http://www.ontology.irstea.fr/arvalis/"
+     xmlns:tm1="https://www.oscinema.com.sg/cinema/Week1#"
+     xmlns:tm3="https://www.oscinema.com.sg/cinema/Week3#"
+     xmlns:imdb="http://www.imdb.com/"
+     xmlns:mvco="http://purl.oclc.org/NET/mvco.owl#"
+     xmlns:org="http://www.w3.org/ns/org#"
+     xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#"
+     xmlns:length="http://purl.oclc.org/NET/muo/ucum/unit/length/"
+     xmlns:dei="http://www.elet.polimi.it#"
+     xmlns:spin="http://spinrdf.org/spin#"
+     xmlns:esdir="http://vocab.linkeddata.es/datosabiertos/def/commons/direccion-postal#"
+     xmlns:sesame="http://www.openrdf.org/schema/sesame#"
+     xmlns:dem="http://www.opengis.net/citygml/relief/2.0/"
+     xmlns:app="http://www.opengis.net/citygml/appearance/2.0/"
+     xmlns:olia_system="http://purl.org/olia/system.owl#"
+     xmlns:prov="http://www.w3.org/ns/prov#"
+     xmlns:jerm="http://www.mygrid.org.uk/ontology/JERMOntology#"
+     xmlns:characteristics="https://onerecord.iata.org/Characteristics#"
+     xmlns:dram="http://www.cesar/www.dramabase/ontology/"
+     xmlns:nml="https://cntic10.hit.bme.hu/do/network_model/raw/master/ontology/nml-base.owl#"
+     xmlns:fno="http://www.semanticweb.org/developer/ontologies/2020/3/Fake_news_Ontology"
+     xmlns:research="http://xmlns.com/foaf/0.1/"
+     xmlns:quest="http://obda.org/quest#"
+     xmlns:semspect="http://derivo.de/semspect#"
+     xmlns:process="http://www.estrellaproject.org/lkif-core/process.owl#"
+     xmlns:airWaybill="https://onerecord.iata.org/AirWaybill#"
+     xmlns:uld="https://onerecord.iata.org/ULD#"
+     xmlns:carex="http://biosemantics.arizona.edu/ontologies/carex#"
+     xmlns:isoform="http://purl.uniprot.org/isoforms/"
+     xmlns:brid="http://www.opengis.net/citygml/bridge/2.0/"
+     xmlns:doap="http://usefulinc.com/ns/doap#"
+     xmlns:icom_cal="http://docs.oasis-open.org/ns/icom/calendar/201008#"
+     xmlns:orges="http://vocab.linkeddata.es/datosabiertos/def/sector-publico/organizacion#"
+     xmlns:gist="https://ontologies.semanticarts.com/gist/"
+     xmlns:vcard2006="http://www.w3.org/2006/vcard/ns#"
+     xmlns:transit="http://vocab.org/transit/terms/"
+     xmlns:sioc="http://rdfs.org/sioc/ns#"
+     xmlns:olo="http://purl.org/ontology/olo/core#"
+     xmlns:mld="http://mld.ace.fordham.edu/mld"
+     xmlns:power="http://purl.oclc.org/NET/muo/ucum/unit/power/"
+     xmlns:th2="https://www.oscinema.com.sg/cinema/Week1/theme2/Screen3#"
+     xmlns:th3="https://www.oscinema.com.sg/cinema/Week1/theme3/Screen3#"
+     xmlns:virtcxml="http://www.openlinksw.com/schemas/virtcxml#"
+     xmlns:th1="https://www.oscinema.com.sg/cinema/Week1/theme1/Screen3#"
+     xmlns:icom_msg="http://docs.oasis-open.org/ns/icom/message/201008#"
+     xmlns:status="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+     xmlns:carriage="https://onerecord.iata.org/Carriage#"
+     xmlns:NCBITaxon="http://purl.obolibrary.org/obo/NCBITaxon#"
+     xmlns:tran="http://www.opengis.net/citygml/transportation/2.0/"
+     xmlns:shape="http://lubm.shacl.io/"
+     xmlns:shipperSignature="https://onerecord.iata.org/ShipperSignature#"
+     xmlns:myns="http://www.dis.uniroma1.it/%7Erosati/semanticweb/"
+     xmlns:food="http://www.w3.org/TR/2003/PR-owl-guide-20031209/food#"
+     xmlns:company="https://onerecord.iata.org/Company#"
+     xmlns:edrive="http://www.festo.com/edrive#"
+     xmlns:tex="http://www.opengis.net/citygml/texturedsurface/2.0/"
+     xmlns:dto_vocabulary_kinase_domain="http://www.drugtargetontology.org/dto/dto_vocabulary_kinase_domain.owl#"
+     xmlns:fma="http://purl.obolibrary.org/obo/fma#"
+     xmlns:crmpc="http://www.cidoc-crm.org/crm_property_classes/"
+     xmlns:fhkb_chapter_2="http://mowl-power.cs.man.ac.uk/fhkbtutorial/ontology/fhkb_chapter_2.owl#"
+     xmlns:demands="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example2/demands.rdf#"
+     xmlns:other="https://onerecord.iata.org/Other#"
+     xmlns:test-rigDemo="http://www.semanticweb.org/kuegler/ontologies/2017/9/test-rigDemo#"
+     xmlns:skosxl="http://www.w3.org/2008/05/skos-xl#"
+     xmlns:mco-core="urn:mpeg:mpeg21:mco:core:2015#"
+     xmlns:fhkb_chapter_7="http://mowl-power.cs.man.ac.uk/fhkbtutorial/ontology/fhkb_chapter_7.owl#"
+     xmlns:fhkb_chapter_4="http://mowl-power.cs.man.ac.uk/fhkbtutorial/ontology/fhkb_chapter_4.owl#"
+     xmlns:fhkb_chapter_5="http://mowl-power.cs.man.ac.uk/fhkbtutorial/ontology/fhkb_chapter_5.owl#"
+     xmlns:object="http://www.mistea.supagro.inra.fr/object#"
+     xmlns:atm="https://data.nasa.gov/ontologies/atmonto/ATM#"
+     xmlns:old-ssn="http://purl.oclc.org/NET/ssnx/ssn#"
+     xmlns:wot="http://xmlns.com/wot/0.1/"
+     xmlns:ont="http://www.co-ode.org/ontologies/ont.owl#"
+     xmlns:xsl1999="http://www.w3.org/1999/XSL/Transform"
+     xmlns:dbpedia="http://dbpedia.org/resource/"
+     xmlns:th5="https://www.oscinema.com.sg/cinema/Week2/theme2/Screen3#"
+     xmlns:th4="https://www.oscinema.com.sg/cinema/Week2/theme1/Screen3#"
+     xmlns:th7="https://www.oscinema.com.sg/cinema/Week3/theme1/Screen3#"
+     xmlns:th6="https://www.oscinema.com.sg/cinema/Week2/theme3/Screen3#"
+     xmlns:dii="urn:mpeg:mpeg21:2002:01-DII-NS#"
+     xmlns:th9="https://www.oscinema.com.sg/cinema/Week3/theme3/Screen3#"
+     xmlns:th8="https://www.oscinema.com.sg/cinema/Week3/theme2/Screen3#"
+     xmlns:film="http://www.semprog.com/film#"
+     xmlns:stakeholder="http://manusquare.project.eu/stakeholders/"
+     xmlns:lis="http://standards.iso.org/iso/15926/part14/"
+     xmlns:aliexpress5="aliexpress.com:4"
+     xmlns:lexinfo="http://www.lexinfo.net/ontology/2.0/lexinfo#"
+     xmlns:pressure="http://purl.oclc.org/NET/muo/ucum/unit/pressure/"
+     xmlns:aliexpress4="aliexpress.com:3.5"
+     xmlns:aliexpress3="aliexpress.com:3"
+     xmlns:aliexpress2="aliexpress.com:2"
+     xmlns:mo2="http://www.movieontology.org/2009/11/09/movieontology.owl#"
+     xmlns:rdfdf="http://www.openlinksw.com/virtrdf-data-formats#"
+     xmlns:locn="http://www.w3.org/ns/locn#"
+     xmlns:otherIdentifier="https://onerecord.iata.org/OtherIdentifier#"
+     xmlns:lib="http://www.m2.as.u.like/myTerms/"
+     xmlns:routed_paths="https://cntic10.hit.bme.hu/do/network_model/raw/master/examples/example2/routed_paths.rdf#"
+     xmlns:address="https://onerecord.iata.org/Address#"
+     xmlns:fhkb_chapter_9="http://mowl-power.cs.man.ac.uk/fhkbtutorial/ontology/fhkb_chapter_9.owl#"
+     xmlns:misp="http://purl.org/cyber/misp#"
+     xmlns:bevon="http://rdfs.co/bevon/">
     <owl:Ontology rdf:about="https://enslaved.org/ontology/">
-        <owl:versionIRI rdf:resource="https://enslaved.org/ontology/1.0.0"/>
-        <dc:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The Enslaved Ontology</dc:title>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cogan Shimizu</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pascal Hitzler</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Quinn Hirt</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dean Rehberger</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Seila Gonzalez Estrecha</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Catherine Foley</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Alicia M. Sheill</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Walter Hawthorne</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeff Mixter</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ethan Watrall</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ryan Carty</terms:creator>
-<terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Duncan Tarr</terms:creator>
-        <terms:license rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CC by 4.0</terms:license>
-        <terms:license rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://creativecommons.org/licenses/by/4.0/</terms:license>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Alicia M. Sheill</terms:creator>
         <terms:rights rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CC by 4.0</terms:rights>
+        <terms:license rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CC by 4.0</terms:license>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Catherine Foley</terms:creator>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cogan Shimizu</terms:creator>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dean Rehberger</terms:creator>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Duncan Tarr</terms:creator>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ethan Watrall</terms:creator>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jeff Mixter</terms:creator>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pascal Hitzler</terms:creator>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Quinn Hirt</terms:creator>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ryan Carty</terms:creator>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Seila Gonzalez Estrecha</terms:creator>
+        <dublincorens:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The Enslaved Ontology</dublincorens:title>
+        <terms:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Walter Hawthorne</terms:creator>
+        <terms:license rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://creativecommons.org/licenses/by/4.0/</terms:license>
+        <owl:versionIRI rdf:resource="https://enslaved.org/ontology/1.0.0"/>
     </owl:Ontology>
 
 
@@ -195,8 +803,8 @@
     <!-- https://enslaved.org/ontology/hasECVO -->
 
     <owl:ObjectProperty rdf:about="https://enslaved.org/ontology/hasECVO">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/OriginRecord</opla:isNativeTo>
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
     </owl:ObjectProperty>
 
 
@@ -278,10 +886,7 @@
     <!-- https://enslaved.org/ontology/hasOriginalSourceType -->
 
     <owl:ObjectProperty rdf:about="https://enslaved.org/ontology/hasOriginalSourceType">
-        <owl:propertyChainAxiom rdf:parseType="Collection">
-            <rdf:Description rdf:about="https://enslaved.org/ontology/isDirectlyBasedOn"/>
-            <rdf:Description rdf:about="https://enslaved.org/ontology/hasOriginalSourceType"/>
-        </owl:propertyChainAxiom>
+        <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/EntityWithProvenance</opla:isNativeTo>
         <owl:propertyChainAxiom rdf:parseType="Collection">
             <rdf:Description>
                 <owl:inverseOf rdf:resource="https://enslaved.org/ontology/isDirectlyBasedOn"/>
@@ -290,7 +895,10 @@
                 <owl:inverseOf rdf:resource="https://enslaved.org/ontology/hasOriginalSourceType"/>
             </rdf:Description>
         </owl:propertyChainAxiom>
-        <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/EntityWithProvenance</opla:isNativeTo>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://enslaved.org/ontology/isDirectlyBasedOn"/>
+            <rdf:Description rdf:about="https://enslaved.org/ontology/hasOriginalSourceType"/>
+        </owl:propertyChainAxiom>
     </owl:ObjectProperty>
 
 
@@ -339,8 +947,8 @@
     <!-- https://enslaved.org/ontology/hasPreferredNameVariant -->
 
     <owl:ObjectProperty rdf:about="https://enslaved.org/ontology/hasPreferredNameVariant">
-        <rdfs:subPropertyOf rdf:resource="https://enslaved.org/ontology/hasNameVariant"/>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/NameRecord</opla:isNativeTo>
+        <rdfs:subPropertyOf rdf:resource="https://enslaved.org/ontology/hasNameVariant"/>
     </owl:ObjectProperty>
 
 
@@ -364,8 +972,8 @@
     <!-- https://enslaved.org/ontology/hasStatusGeneratedEvent -->
 
     <owl:ObjectProperty rdf:about="https://enslaved.org/ontology/hasStatusGeneratedEvent">
-        <rdfs:subPropertyOf rdf:resource="https://enslaved.org/ontology/refersToEvent"/>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/PersonStatusRecord</opla:isNativeTo>
+        <rdfs:subPropertyOf rdf:resource="https://enslaved.org/ontology/refersToEvent"/>
     </owl:ObjectProperty>
 
 
@@ -466,12 +1074,12 @@
     <!-- https://enslaved.org/ontology/reportsOn -->
 
     <owl:ObjectProperty rdf:about="https://enslaved.org/ontology/reportsOn">
+        <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/EntityWithProvenance</opla:isNativeTo>
         <owl:propertyChainAxiom rdf:parseType="Collection">
             <rdf:Description rdf:about="https://enslaved.org/ontology/agentRecordSelfProperty"/>
             <rdf:Description rdf:about="https://enslaved.org/ontology/recordedAt"/>
             <rdf:Description rdf:about="https://enslaved.org/ontology/eventSelfProperty"/>
         </owl:propertyChainAxiom>
-        <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/EntityWithProvenance</opla:isNativeTo>
     </owl:ObjectProperty>
 
 
@@ -674,38 +1282,8 @@
     <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/atPlace"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Place"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasCoordinates"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Coordinates"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Description"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasExternalReference"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/ExternalReference"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasNameVariant"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/NameVariant"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasTemporalExtent"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasSurnameAsString"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -716,51 +1294,7 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/refersToEvent"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Event"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/subeventOf"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Event"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty>
-                    <rdf:Description>
-                        <owl:inverseOf rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
-                    </rdf:Description>
-                </owl:onProperty>
-                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty>
-                    <rdf:Description>
-                        <owl:inverseOf rdf:resource="https://enslaved.org/ontology/hasExternalReference"/>
-                    </rdf:Description>
-                </owl:onProperty>
-                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/fullNameAsString"/>
-                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasAlternateName"/>
-                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasFirstNameAsString"/>
                 <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -768,6 +1302,12 @@
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasLatitude"/>
                 <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasCoordinates"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Coordinates"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -784,8 +1324,76 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasSurnameAsString"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Description"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasExternalReference"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/ExternalReference"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty>
+                    <rdf:Description>
+                        <owl:inverseOf rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
+                    </rdf:Description>
+                </owl:onProperty>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasAlternateName"/>
                 <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty>
+                    <rdf:Description>
+                        <owl:inverseOf rdf:resource="https://enslaved.org/ontology/hasExternalReference"/>
+                    </rdf:Description>
+                </owl:onProperty>
+                <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/subeventOf"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Event"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/refersToEvent"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Event"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/atPlace"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Place"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasFirstNameAsString"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasNameVariant"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/NameVariant"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasTemporalExtent"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </rdf:Description>
@@ -805,6 +1413,20 @@
     <owl:Class rdf:about="https://enslaved.org/ontology/AgeRecord">
         <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/AgentRecord"/>
         <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasValue"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/AgeCategory"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasAgeValue"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
                     <owl:Restriction>
@@ -818,20 +1440,6 @@
                 </owl:unionOf>
             </owl:Class>
         </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasValue"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/AgeCategory"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasAgeValue"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/AgeRecord</opla:isNativeTo>
     </owl:Class>
 
@@ -843,22 +1451,22 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasAgentRecord"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/AgentRecord"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/Description"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasExternalReference"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/ExternalReference"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/Description"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/AgentRecord</opla:isNativeTo>
@@ -872,9 +1480,29 @@
         <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/agentRecordSelfProperty"/>
+                <owl:hasSelf rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasSelf>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/recordedAt"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/Event"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isDirectlyBasedOn"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasTemporalExtent"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -884,35 +1512,15 @@
                         <owl:inverseOf rdf:resource="https://enslaved.org/ontology/hasAgentRecord"/>
                     </rdf:Description>
                 </owl:onProperty>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/Agent"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isDirectlyBasedOn"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/recordedAt"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/Event"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/reportsOn"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/Event"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/agentRecordSelfProperty"/>
-                <owl:hasSelf rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasSelf>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/AgentRecord</opla:isNativeTo>
@@ -977,38 +1585,8 @@
     <owl:Class rdf:about="https://enslaved.org/ontology/EntityWithProvenance">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasLicenseInformation"/>
-                <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/LicenseInformation"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/attributedTo"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/generatedBy"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/ProvenanceActivity"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasLicenseInformation"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/LicenseInformation"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasOriginalSourceType"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/DocumentTypes"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isDirectlyBasedOn"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/availableFrom"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -1019,28 +1597,58 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/reportsOn"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/Event"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/attributedTo"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasLicenseInformation"/>
+                <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/LicenseInformation"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasOriginalSourceType"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/DocumentTypes"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/DocumentTypes"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/availableFrom"/>
-                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasOriginalSourceType"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/DocumentTypes"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isDirectlyBasedOn"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/availableFrom"/>
                 <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/reportsOn"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/Event"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasLicenseInformation"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/LicenseInformation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/generatedBy"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/ProvenanceActivity"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -1066,43 +1674,43 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasEventType"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/EventTypes"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/Description"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasName"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasExternalReference"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/ExternalReference"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/providesParticipantRole"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/ParticipantRoleRecord"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/Description"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasEventType"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/EventTypes"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasTemporalExtent"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasEventType"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/EventTypes"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -1113,9 +1721,9 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasName"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasTemporalExtent"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/Event</opla:isNativeTo>
@@ -1135,12 +1743,24 @@
 
     <owl:Class rdf:about="https://enslaved.org/ontology/ExternalReference">
         <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/refersTo"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/ExternalReferent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/withID"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="https://enslaved.org/ontology/refersTo"/>
-                        <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                         <owl:onClass rdf:resource="https://enslaved.org/ontology/ExternalReferent"/>
+                        <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="https://enslaved.org/ontology/withID"/>
@@ -1164,18 +1784,6 @@
                 </owl:unionOf>
             </owl:Class>
         </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/refersTo"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/ExternalReferent"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/withID"/>
-                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/ExternalReference</opla:isNativeTo>
     </owl:Class>
 
@@ -1195,41 +1803,41 @@
         <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/AgentRecord"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipFrom"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipTo"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/Agent"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipTo"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipFrom"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/Agent"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasInterAgentRelationshipType"/>
                 <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipTypes"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipFrom"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipTo"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipFrom"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/Agent"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipTo"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/Agent"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasInterAgentRelationshipType"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipTypes"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/InterAgentRelationshipRecord</opla:isNativeTo>
@@ -1259,19 +1867,6 @@
         <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/AgentRecord"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasNameVariant"/>
-                <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/NameVariant"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasPreferredNameVariant"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/NameVariant"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/fullNameAsString"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -1279,14 +1874,27 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasFirstNameAsString"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasNameVariant"/>
+                <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/NameVariant"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasPreferredNameVariant"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/NameVariant"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasSurnameAsString"/>
                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasSurnameAsString"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasFirstNameAsString"/>
                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
@@ -1311,8 +1919,8 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasValue"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/Occupations"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/OccupationRecord</opla:isNativeTo>
@@ -1342,6 +1950,19 @@
     <owl:Class rdf:about="https://enslaved.org/ontology/OriginRecord">
         <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/AgentRecord"/>
         <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasECVO"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/ECVO"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasECVO"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/ECVO"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
                     <owl:Restriction>
@@ -1357,21 +1978,8 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasECVO"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/ECVO"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/refersToPlaceOfOrigin"/>
                 <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/Place"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasECVO"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/ECVO"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/OriginRecord</opla:isNativeTo>
@@ -1404,15 +2012,15 @@
                         <owl:inverseOf rdf:resource="https://enslaved.org/ontology/providesParticipantRole"/>
                     </rdf:Description>
                 </owl:onProperty>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/Event"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasParticipantRoleType"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/ParticipantRoles"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/Event</opla:isNativeTo>
@@ -1435,8 +2043,8 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasPersonRecord"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/PersonRecord"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/AgentRole</opla:isNativeTo>
@@ -1455,8 +2063,8 @@
                         <owl:inverseOf rdf:resource="https://enslaved.org/ontology/hasPersonRecord"/>
                     </rdf:Description>
                 </owl:onProperty>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/Person"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/PersonRecord</opla:isNativeTo>
@@ -1477,8 +2085,8 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasValue"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/PSCategories"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/PersonStatusRecord</opla:isNativeTo>
@@ -1514,39 +2122,6 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/asPlaceCV"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/PlacesCV"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasPlaceType"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/PlaceTypes"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/Description"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasPlaceType"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/PlaceTypes"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/spatiallyLocatedIn"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
-                <owl:onClass rdf:resource="https://enslaved.org/ontology/Place"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasAlternateName"/>
                 <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -1554,9 +2129,42 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasPlaceType"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/PlaceTypes"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/spatiallyLocatedIn"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/Place"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/asPlaceCV"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/PlacesCV"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasDescriptionText"/>
+                <owl:onClass rdf:resource="https://enslaved.org/ontology/Description"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasName"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasPlaceType"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/PlaceTypes"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/Place</opla:isNativeTo>
@@ -1679,8 +2287,8 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasValue"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onClass rdf:resource="https://enslaved.org/ontology/SexTypes"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
             </owl:Restriction>
         </rdfs:subClassOf>
         <opla:isNativeTo rdf:datatype="http://www.w3.org/2000/01/rdf-schema#Literal">https://enslaved.org/ontology/SexRecord</opla:isNativeTo>
@@ -1701,19 +2309,7 @@
     <owl:Class rdf:about="https://enslaved.org/ontology/TemporalExtent">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/fallsWithin"/>
-                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/TimeSpan"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/contains"/>
-                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/endsAt"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/occursBefore"/>
                 <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -1725,7 +2321,19 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/occursBefore"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/contains"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/fallsWithin"/>
+                <owl:allValuesFrom rdf:resource="https://enslaved.org/ontology/TimeSpan"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/endsAt"/>
                 <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -1746,13 +2354,13 @@
         <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/endsAt"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/startsAt"/>
                 <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://enslaved.org/ontology/startsAt"/>
+                <owl:onProperty rdf:resource="https://enslaved.org/ontology/endsAt"/>
                 <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -1769,8 +2377,42 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Coordinates"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasLatitude"/>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipRecord"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipTo"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Event"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/subeventOf"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Event"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/contains"/>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/ProvenanceActivity"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/performedBy"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/ParticipantRoleRecord"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasParticipantRoleType"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/ParticipantRoles"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Event"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasEventType"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/EventTypes"/>
+    </owl:Restriction>
     <owl:Class>
-        <owl:complementOf rdf:resource="https://enslaved.org/ontology/Person"/>
         <rdfs:subClassOf>
             <owl:Class>
                 <owl:complementOf>
@@ -1792,120 +2434,90 @@
                 </owl:complementOf>
             </owl:Class>
         </rdfs:subClassOf>
+        <owl:complementOf rdf:resource="https://enslaved.org/ontology/Person"/>
     </owl:Class>
     <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/asPlaceCV"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/PlacesCV"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Place"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/fallsWithin"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/TimeSpan"/>
         <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/generatedBy"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/ProvenanceActivity"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasAgentRecord"/>
-        <owl:someValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Agent"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasCoordinates"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Coordinates"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Place"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasEventType"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/EventTypes"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Event"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasInterAgentRelationshipType"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipTypes"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipRecord"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasOriginalSourceType"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/DocumentTypes"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasParticipantRoleType"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/ParticipantRoles"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/ParticipantRoleRecord"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasPlaceType"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/PlaceTypes"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Place"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasStatusGeneratedEvent"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Event"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/PersonStatusRecord"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipFrom"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipRecord"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipTo"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipRecord"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/performedBy"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/ProvenanceActivity"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/subeventOf"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Event"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Event"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/used"/>
-        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/ProvenanceActivity"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/contains"/>
-        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/endsAt"/>
-        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasLatitude"/>
-        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Coordinates"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasLongitude"/>
-        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Coordinates"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/occursAfter"/>
-        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
-    </owl:Restriction>
-    <owl:Restriction>
-        <owl:onProperty rdf:resource="https://enslaved.org/ontology/occursBefore"/>
-        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
-    </owl:Restriction>
-    <owl:Restriction>
         <owl:onProperty rdf:resource="https://enslaved.org/ontology/startsAt"/>
         <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:Restriction>
+    <owl:Restriction>
         <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/occursBefore"/>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/generatedBy"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/ProvenanceActivity"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/endsAt"/>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Place"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/asPlaceCV"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/PlacesCV"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipRecord"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/isRelationshipFrom"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Agent"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/ProvenanceActivity"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/used"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Place"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasPlaceType"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/PlaceTypes"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Agent"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasAgentRecord"/>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Place"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasCoordinates"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Coordinates"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/occursAfter"/>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/PersonStatusRecord"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasStatusGeneratedEvent"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/Event"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/Coordinates"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasLongitude"/>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/TemporalExtent"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/fallsWithin"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/TimeSpan"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipRecord"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasInterAgentRelationshipType"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/InterAgentRelationshipTypes"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="https://enslaved.org/ontology/EntityWithProvenance"/>
+        <owl:onProperty rdf:resource="https://enslaved.org/ontology/hasOriginalSourceType"/>
+        <owl:someValuesFrom rdf:resource="https://enslaved.org/ontology/DocumentTypes"/>
     </owl:Restriction>
 </rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.5-SNAPSHOT) http://owlapi.sourceforge.net -->
