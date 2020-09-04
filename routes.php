@@ -72,7 +72,6 @@ $GLOBALS['routes'] = array(
     'projects' => 'projects.php',
     'crawler' => 'crawler.php',
     'current' => 'current.php',
-//    'links' => 'links.php',
     'support-our-mission' => 'support-our-mission.php',
     'resources' => 'links.php',
     'visualize' => 'visualize.php',

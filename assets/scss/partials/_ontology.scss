@@ -1,0 +1,403 @@
+// GENERAL PAGE STYLING //
+.container.ontology {
+    background: $base-light;
+    margin: 60px auto;
+    max-width: 1000px;
+    padding: 0 50px;
+    text-align: left;
+
+    h1, h2, h3, h4, h5, p {
+      background: $base-light;
+      color: $base-dark !important;
+    }
+
+    h1, h2 {
+      margin-top: 40px;
+    }
+
+    h3, h4 {
+      margin-top: 20px;
+    }
+
+    a {
+      color: $accent;
+
+      &:hover {
+        background: $base-light;
+      }
+    }
+
+    span.backlink {
+      background: #FFFFFF;
+      border: none;
+      box-shadow: 0 3px 10px 0 rgba(44,44,44,0.10);
+      border-radius: 5px;
+      padding: 7px;
+      display: none;
+    }
+
+    .head {
+      background: #FFFFFF;
+      border: none;
+      box-shadow: 0 3px 10px 0 rgba(44,44,44,0.10);
+      border-radius: 5px;
+      padding: 15px 20px 10px 20px;
+
+      div {
+        display: none;
+      }
+
+      dt {
+        font-family: aleobold;
+        font-weight: normal;
+        margin-bottom: 5px;
+      }
+
+      dd {
+        margin-left: 0;
+        margin-bottom: 10px;
+      }
+    }
+
+    .status {
+      opacity: 1;
+      z-index: 5;
+      left: -175px;
+      top: 200px;
+      width: auto;
+      height: auto;
+
+      div {
+        background-color: $base-dark;
+        box-shadow: 2px 3px 5px 0 rgba(0,0,0,0.15);
+        border-radius: 0 0 5px 5px;
+        padding-top: 0.2em;
+        padding-right: 6em;
+
+        span {
+          font-family: ebgaramond;
+          font-weight: normal;
+        }
+      }
+    }
+
+    #toc {
+      ul {
+        margin-top:0;
+      }
+    }
+
+    div#ns {
+      font-family: aleoregular;
+      text-align: left;
+
+      caption {
+        margin-bottom: 10px;
+        text-align: left;
+      }
+
+      table {
+        background: #FFFFFF;
+        border: none;
+        box-shadow: 0 3px 10px 0 rgba(44,44,44,0.10);
+        border-radius: 5px;
+        font-family: aleoregular;
+        margin: 20px 20px 20px 0;
+        padding: 10px 5px;
+
+        tbody {
+          background: #FFFFFF;
+
+          tr {
+            border: none;
+          }
+        }
+      }
+    }
+
+    ul.hlist {
+      margin-top: 5px;
+      background: #FFFFFF;
+      border: none;
+      box-shadow: 0 3px 10px 0 rgba(44,44,44,0.10);
+      border-radius: 5px;
+      font-family: aleoregular;
+      padding: 15px 20px;
+    }
+
+    #crossref {
+      font-family: aleoregular;
+
+      h3#classes-headline, h3#properties {
+        margin-top: 30px;
+      }
+      h3 {
+        border: none;
+        font-size: 22px;
+        margin-top: 0px;
+      }
+    }
+
+    .entity {
+      border: none;
+      margin-top: 10px;
+
+      .description {
+        background-color: rgba(14,50,50,.05);
+        border-radius: 5px;
+        border: none;
+        padding: 10px;
+
+        dl {
+          background-color: transparent;
+        }
+      }
+
+      .type-c {
+        color: $accent;
+      }
+    }
+
+    #legend {
+      .entity {
+        margin-top: 5px;
+      }
+    }
+
+    #references {
+      p {
+        margin-top: 20px;
+      }
+    }
+
+
+}
+
+
+
+// IFRAME //
+iframe {
+  background: #fff;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px 0 rgba(44,44,44,0.10);
+  margin-top: 30px;
+}
+
+.ontology-iframe {
+  background: $base-dark;
+
+  #logo h2 {
+    color: $accent;
+  }
+
+  #sidebarExpandButton {
+    background: #fff;
+    padding: 2px 9px;
+    border: 1px solid #ccc;
+    box-shadow: 0 3px 10px 0 rgba(44,44,44,0.10);
+    font-size: 18px;
+  }
+
+  #swipeBarContainer {
+    height: 45px;
+
+    #menuElementContainer>li {
+      height: 55px;
+      line-height: 1.4;
+    }
+
+    li#c_search {
+      margin-left: -1px;
+    }
+
+    .searchIcon {
+      top: 7px;
+      left: 13px;
+    }
+
+    #menuElementContainer>li>input {
+      padding: 10px 10px 10px 30px;
+    }
+  }
+
+  li {
+    line-height: 1;
+
+    label {
+      font-weight: normal;
+      font-size: 16px;
+    }
+  }
+
+  #canvasArea #graph{
+    background-color: $base-light;
+  }
+
+  #detailsArea #generalDetails h5 {
+    text-align: left;
+  }
+
+  #description {
+    text-align: left;
+  }
+
+  #progressBarValue {
+    background-color: $accent;
+  }
+
+  #detailsArea {
+    color: white;
+  }
+
+  #generalDetails span #about {
+    color: $accent;
+  }
+
+  #selection-details .propDetails a {
+    color: $accent !important;
+  }
+
+  .accordion-trigger {
+    background: $base-dark;
+  }
+
+  #optionsArea a.highlighted {
+    background-color: $accent;
+  }
+
+  .slideOption input[type=range]::-moz-range-thumb:hover {
+    background-color: $accent;
+  }
+
+  .slideOption input[type=range]::-webkit-slider-thumb:hover {
+    background-color: $accent;
+  }
+
+  .filterMenuButtonHighlight {
+    background-color: $accent;
+  }
+
+  @-webkit-keyframes buttonAnimation{0%{background-color:unset}to{background-color:$accent}}@-moz-keyframes buttonAnimation{0%{background-color:unset}to{background-color:$accent}}@-o-keyframes buttonAnimation{0%{background-color:unset}to{background-color:$accent}}@keyframes buttonAnimation{0%{background-color:unset}to{background-color:$accent}}
+
+  #zoomSlider>p:hover {
+    background-color: $accent;
+  }
+
+  #zoomSlider,#zoomSliderParagraph,p#zoomSliderParagraph:hover {
+    background-color: #FFF !important;
+    border-color: #ccc;
+  }
+
+  #centerGraphButton, #zoomInButton, #zoomOutButton {
+    border-color: #ccc;
+  }
+
+  #zoomSliderElement::-webkit-slider-runnable-track {
+    background-color: $base-dark;
+  }
+
+  #zoomSliderElement::-moz-range-track {
+    background-color: $base-dark;
+  }
+
+  #menuElementContainer a.highlighted {
+    background-color: $accent;
+  }
+
+  #menuElementContainer>li>a:hover {
+    background: $base-dark;
+  }
+
+  #menuElementContainer a.highlighted, .filterMenuButtonHighlight {
+    background-color: $accent;
+  }
+
+  #centerGraphButton {
+    font-size: 17px;
+    line-height: 22px;
+  }
+
+  #zoomInButton {
+    font-size: 25px;
+  }
+
+  .toolTipMenu a, .toolTipMenu li {
+    color: $base-dark;
+  }
+
+  .slideOption input[type=range]::-webkit-slider-runnable-track {
+    background-color: $base-dark;
+  }
+
+  #zoomSlider {
+    background: #FFFFFF;
+    box-shadow: 0 3px 10px 0 rgba(44,44,44,0.10);
+  }
+
+  #zoomSliderElement {
+    width: 140px;
+    margin: -10px 0;
+  }
+
+  #zoomSliderElement::-moz-range-thumb:hover {
+    background-color: $accent !important;
+  }
+
+  #zoomSliderElement::-ms-thumb:hover {
+    background: $accent;
+  }
+
+  #zoomSliderElement::-webkit-slider-thumb:hover {
+    background-color: $accent !important;
+  }
+
+  a#locateSearchResult.highlighted:hover {
+    background-color: $accent !important;
+  }
+
+  .allvaluesfromproperty, .class, .disjoint, .disjointwith, .equivalentproperty, .functionalproperty, .inversefunctionalproperty, .object, .objectproperty, .somevaluesfromproperty, .symmetricproperty, .transitiveproperty, .subclass {
+    fill: white;
+    stroke: $base-dark;
+    box-shadow: 0 3px 10px 0 rgba(44,44,44,0.10);
+
+    &.hovered {
+      stroke: $accent;
+      fill: #E4B4A9 !important;
+      color: #fff !important;
+    }
+
+    &.focused {
+      stroke: $accent !important;
+    }
+  }
+
+  .values-from {
+    stroke: #E4B4A9;
+
+    &.filled {
+      fill: #E4B4A9;
+    }
+  }
+
+  .focused, .hovered-MathSymbol, path.hovered {
+    stroke: $accent !important;
+
+    &.filled {
+      fill: $accent !important;
+    }
+  }
+
+  #scrollRightButton, #scrollLeftButton {
+    height: 45px;
+    background-color: $accent;
+
+    &::before {
+      position: absolute;
+      font-size: 20px;
+      left: 9px;
+      top: 9px;
+    }
+  }
+}

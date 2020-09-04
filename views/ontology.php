@@ -1,7 +1,14 @@
-<div class="container header stories">
+<?php
+    $cache_data = Json_GetData_ByTitle("Resources");
+?>
+<div class="container header explore-header people-page">
+    <div class="image-container search-page image-only">
+    <img class="header-background contributors-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
     <div class="container middlewrap">
         <h1>The Enslaved Ontology 1.0: People of the Historic Slave Trade</h1>
     </div>
+    <div class="image-background-overlay"></div>
+  </div>
 </div>
 
 <div class="text-section">
@@ -9,7 +16,7 @@
         <p class="date">April 8, 2019</p>
         <p>This version <br><a href="<?= BASE_ONTOLOGY_URL; ?>EnslavedOWLOntology.owl" download>EnslavedOWLOntology.owl</a></p>
         <p>Documentation <br><a href="<?= BASE_ONTOLOGY_URL; ?>EnslavedOntologyDocumentation_Version_1.0.pdf" download>EnslavedOntologyDocumentation_Version_1.0.pdf</a></p>
-        
+
         <h2>Contributors</h2>
         <p>COGAN SHIMIZU — Wright State University</p>
         <p>PASCAL HITZLER — Wright State University and Kansas State University QUINN HIRT — Wright State University</p>
