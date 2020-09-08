@@ -13,8 +13,9 @@
 <!-- SCHEMA.ORG METADATA -->
 <script type="application/ld+json">{"@context":"http://schema.org","@type":"TechArticle","url":"http://www.enslaved.org/1.0/","image":"http://vowl.visualdataweb.org/webvowl/#iri=http://www.enslaved.org/1.0/","name":"http://www.enslaved.org/1.0/", "headline":"Document describing the ontology http://www.enslaved.org/1.0/", "datePublished":"Wed Apr 10 09:46:12 EDT 2019"}</script>
 
-<script src="resources/jquery.js"></script>
+<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 <script src="resources/marked.min.js"></script>
+
     <script>
 function loadHash() {
   jQuery(".markdown").each(function(el){jQuery(this).after(marked(jQuery(this).text())).remove()});
@@ -61,13 +62,22 @@ function loadTOC(){
   </head>
 
 <body>
-<div class="container ontology">
+  <?php require_once('../config.php') ?>
+  <script language="JavaScript" type="text/javascript" src="../assets/javascripts/header.js"></script>
+  <script type='text/javascript'>var BASE_URL = "<?php echo BASE_URL;?>"</script>
+  <?php include '../header.php'; ?>
 
-<div class="status">
-<div>
-<span>Ontology Specification</span>
+<div class="container header explore-header people-page">
+    <div class="image-container search-page image-only">
+    <img class="header-background contributors-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">
+    <div class="container middlewrap">
+        <h1>Ontology Specifications</h1>
+    </div>
+    <div class="image-background-overlay"></div>
+    </div>
 </div>
-</div>
+
+<div class="container ontology">
 
 <div class="head">
 <div style="float:right">language <a href="index-en.php"><b>en</b></a> </div>
@@ -95,5 +105,6 @@ The authors would like to thank <a href="http://www.essepuntato.it/">Silvio Pero
 </html>
 
 </div>
+  <?php include '../footer.php'; ?>
 </body>
 </html>
