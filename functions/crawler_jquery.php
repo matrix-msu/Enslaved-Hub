@@ -56,8 +56,6 @@ if(isset($_POST["get_results"]))
 
 if(isset($_POST["update_tags"]))
 {
-	var_dump($_POST['keyword_id']);
-	var_dump($tagIds);
 	$results = $crawler_tags->update_keyword_tags($_POST['keyword_id'], $tagIds);
 	echo(json_encode('success'));
 }
@@ -115,13 +113,6 @@ if(isset($_POST["count_results_visible"]))
 	$result = $crawler_keywords->get_count_visible();
 	echo(json_encode($result));
 }
-
-//filter by date
-//if (isset($_POST["date"])&& isset($_POST["MORE"]))
-//{
-//	$results=$crawler_keywords->get_keywords_date($limit,$_POST["idx"],$_POST["date"]);
-//	echo(json_encode($results));
-//}
 
 //**********************************************************************************   Broken Links Queries
 // this function gets broken links
