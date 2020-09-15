@@ -53,7 +53,7 @@ $(document).ready(function(){
         	if ($(this).find("input[type=checkbox]").prop("checked")) {
         		tag_filter_ids.push($(this).data('id'));
         	}
-        });
+		});
 		$('.crawler-tabs li.tabbed').trigger('click');
     });
 
@@ -547,7 +547,7 @@ function installModalListeners(data){
 				'tag_ids': keyword_tag_filter_ids
 			},
 			dataType: "JSON",
-			success:function(data){
+			success:function(){
 				//after ajax refresh tab
 				$('.crawler-tabs li.tabbed').trigger('click');
 			},

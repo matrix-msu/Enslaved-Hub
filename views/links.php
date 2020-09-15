@@ -57,7 +57,9 @@
             <span class="align-center tag-filter">Filter By Tags <img src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="results per page button">
                 <ul id="sortmenu" class="tag-filter">
                     <?php foreach ($tags as $tag) {
-                        echo '<li data-id="' . $tag['tag_id'] . '"><input type="checkbox">' . $tag['tag_name'] . '</li>';
+                        if ($tag['tag_name'] != 'No Display') {
+                            echo '<li data-id="' . $tag['tag_id'] . '"><input type="checkbox">' . $tag['tag_name'] . '</li>';
+                        }
                     } ?>
                 </ul>
             </span>

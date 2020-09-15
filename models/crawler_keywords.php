@@ -219,7 +219,7 @@ class crawler_keywords {
 
     public function get_count_visible(){
 		$conn=$this->connect();
-        $query = "SELECT DISTINCT ck.keyword_id, ck.keyword, ck.url FROM crawler_keywords ck LEFT JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id = ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id = ckta.tag_id WHERE ct.tag_name != 'No Display' AND NOT EXISTS (SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword = dk.keyword)";
+        $query = "SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created AS date_sort FROM crawler_keywords ck LEFT OUTER JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id=ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id=ckta.tag_id WHERE ct.tag_name!='No Display' AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword))AS a UNION SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created FROM crawler_keywords ck WHERE ck.keyword_id NOT IN(SELECT ckta.keyword_id FROM crawler_keyword_tags_assoc ckta)AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword))AS b";
 		$result=$conn->query($query);
 		mysqli_close($conn);
 		return $result->num_rows;
