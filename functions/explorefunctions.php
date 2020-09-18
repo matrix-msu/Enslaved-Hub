@@ -108,6 +108,7 @@ HTML;
 
       // roles tool tip
       if(array_key_exists($roles[$i],controlledVocabulary)){
+
           $detailinfo = ucfirst(controlledVocabulary[$roles[$i]]);
           $html .= "<div class='detail-menu'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
       }
@@ -445,6 +446,13 @@ HTML;
       if (end($statementArr) == '' || end($statementArr) == ' '){
         array_pop($statementArr);
       }
+    }elseif($label == "Descriptive Occupation")
+    {
+        $statementArr = explode('||', $statement);
+      if (end($statementArr) == '' || end($statementArr) == ' '){
+        array_pop($statementArr);
+      }
+
     }
     else{
       //Splits the statement(detail) up into multiple parts for multiple details, also trims whitespace off end
@@ -505,6 +513,7 @@ HTML;
           continue;
         }
         else{
+
           $html .= "<div>" . $detailname;
         }
         if(array_key_exists($detailname,controlledVocabulary)){
@@ -532,8 +541,8 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
-    // print_r($query);
     $result = blazegraphSearch($query);
+
     if(empty($result)){
       echo json_encode(Array());
       die;
@@ -577,7 +586,10 @@ function getFullRecordHtml(){
     if (isset($record['occupation']) && isset($record['occupation']['value']) && $record['occupation']['value'] != '' ){
       $recordVars['Occupation'] = $record['occupation']['value'];
     }
-
+    // descriptive occupation
+    if (isset($record['descriptive_Occupation']) && isset($record['descriptive_Occupation']['value']) ){
+        $recordVars['Descriptive Occupation'] = $record['descriptive_Occupation']['value'];
+    }
 
     //Race
     if (isset($record['race']) && isset($record['race']['value']) && $record['race']['value'] != '' ){
@@ -819,6 +831,7 @@ HTML;
     //Detail section
     $html = '';
     $html .= '<div class="detailwrap">';
+  
     foreach($recordVars as $key => $value){
       if($key == "Label") continue;
 
@@ -829,6 +842,7 @@ HTML;
           $urlQ = end($urlQ);
           array_push($Qid, $urlQ);
         }
+
         $html .= createDetailHtml($value, $key, $Qid);
       }
       else if($key == "Loc In"){
@@ -1730,7 +1744,7 @@ QUERY;
         $result[$key]['placelabel'] = $result[$key]['relatedPlaces'];
         unset($result[$key]['relatedPlaces']);
       }
-      // var_dump($result);
+
       $connections['Place-count'] = count($result);
       $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
 
