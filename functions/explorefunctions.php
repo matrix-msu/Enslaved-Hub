@@ -834,7 +834,7 @@ HTML;
     //Detail section
     $html = '';
     $html .= '<div class="detailwrap">';
-  
+
     foreach($recordVars as $key => $value){
       if($key == "Label") continue;
 
@@ -1677,8 +1677,20 @@ function getPlacePageConnections($QID) {
     $connections = array();
 
   // people connections
-  $peopleQuery['query'] = <<<QUERY
-  SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
+  $peoplecounter['query'] = <<<QUERY
+   SELECT DISTINCT (COUNT(?people) as ?counter)
+   {
+   	VALUES ?place { $wd:$QID }.
+     ?event $wdt:$instanceOf $wd:$event.
+    	?event $wdt:$atPlace ?place.
+     	?event $p:$providesParticipantRole ?role.
+     	?role  $ps:$providesParticipantRole ?participant.
+     	?role  $pq:$hasParticipantRole ?people.
+     	?people $rdfs:label ?peoplename
+   }
+  QUERY;
+ $peopleQuery['query'] = <<<QUERY
+  SELECT DISTINCT ?people ?peoplename
   {
   	VALUES ?place { $wd:$QID }.
     ?event $wdt:$instanceOf $wd:$event.
@@ -1687,15 +1699,29 @@ function getPlacePageConnections($QID) {
     	?role  $ps:$providesParticipantRole ?participant.
     	?role  $pq:$hasParticipantRole ?people.
     	?people $rdfs:label ?peoplename
-  }ORDER BY ?random
+  }LIMIT 8
 QUERY;
-    $result = blazegraphSearch($peopleQuery);
-    $connections['Person-count'] = count($result);
-    $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
 
-    // events connections
+   $result = blazegraphSearch($peopleQuery);
+   $result_counter = blazegraphSearch($peoplecounter);
+
+    $connections['Person-count'] = $result_counter[0]['counter']['value'];
+    $connections['Person'] = $result;  // return the first 8 results
+
+   // events connections
+   $eventsCounter['query'] = <<<QUERY
+  SELECT DISTINCT (COUNT(?event) as ?counter)
+
+  WHERE
+  {
+      VALUES ?place { $wd:$QID }.
+      ?event $wdt:$instanceOf $wd:$event.
+      ?event $wdt:$atPlace ?place.
+      ?event $rdfs:label ?eventlabel
+  }ORDER BY ?random
+  QUERY;
     $eventsQuery['query'] = <<<QUERY
-   SELECT DISTINCT ?event ?eventlabel (SHA512(CONCAT(STR(?event), STR(RAND()))) as ?random)
+   SELECT DISTINCT ?event ?eventlabel
 
    WHERE
    {
@@ -1703,17 +1729,19 @@ QUERY;
        ?event $wdt:$instanceOf $wd:$event.
        ?event $wdt:$atPlace ?place.
        ?event $rdfs:label ?eventlabel
-   }ORDER BY ?random
+   }LIMIT 8
    QUERY;
       $result = blazegraphSearch($eventsQuery);
-      $connections['Event-count'] = count($result);
-      $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
+      $result_counter = blazegraphSearch($eventsCounter);
+  //    print_r($eventsQuery);
+      $connections['Event-count'] = $result_counter[0]['counter']['value'];
+      $connections['Event'] =$result;  // return the first 8 results
 
       // source connections
     $sourceQuery['query'] = <<<QUERY
     SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random) {
     	VALUES ?place { $wd:$QID }.
-        ?place $p:$instanceOf  ?object .
+        ?place $p:$hasName  ?object .
      	 ?object $prov:wasDerivedFrom ?provenance .
       	 ?provenance $pr:$isDirectlyBasedOn ?source.
       ?source $rdfs:label ?sourcelabel
