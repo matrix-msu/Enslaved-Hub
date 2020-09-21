@@ -89,8 +89,9 @@
 
                     .drop-carat{
                         cursor: pointer;
-                        padding-left: 7px; 
+                        padding-left: 7px;
                         padding-bottom: 10px;
+                        margin: 0px;
                         // keeps the browse tag from shifting left after a click event
                         img{
                             transition: .3s ease-out;
