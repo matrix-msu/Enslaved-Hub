@@ -63,6 +63,7 @@ $GLOBALS['routes'] = array(
 	'foundingPartners' => 'foundingPartners.php',
     'contactUs' => 'contactUs.php',
     'ourTeam' => 'ourTeam.php',
+    'ontology' => '../ontology/index-en.php',
     'references' => 'references.php',
     'advancedSearch' => 'advancedSearch.php',
     'fullStory' => 'fullStory.php',
@@ -175,4 +176,8 @@ if( isset($GLOBALS['api_routes'][$currentFile]) ){
     define('CURRENT_VIEW', '404.php');
 }else{
     define('CURRENT_VIEW', $GLOBALS['routes'][$currentFile]);
+}
+
+if($currentFile == 'documentation'){
+  header("Location: https://docs.enslaved.org/");
 }

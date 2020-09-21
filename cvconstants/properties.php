@@ -70,5 +70,6 @@ const properties =
   "occursBefore" => "P69",
   "hasAlternateName" => "P71",
   "hasSurname" => "P72",
-  "hasFirstName" => "P73"
+  "hasFirstName" => "P73",
+  "Descriptive Occupation" =>"P78"
 ];
