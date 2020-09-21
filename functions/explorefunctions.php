@@ -485,7 +485,7 @@ HTML;
           continue;
         }
         else if($label === "Geoname Identifier"){
-          $html .= '<a href="http://www.geonames.org/' . $statementArr[0] . '/">';
+          $html .= '<a target="_blank" href="http://www.geonames.org/' . $statementArr[0] . '/">';
         }
         else if($label === "Sources"){
           $html .= '<a href="' . $baseurl . 'record/source/' . $qidArr[$x] . '">';
@@ -516,6 +516,9 @@ HTML;
 
           $html .= "<div>" . $detailname;
         }
+        if($label == 'Geoname Identifier'){
+          $html .= "<div><a></a></div><br>";
+      }
         if(array_key_exists($detailname,controlledVocabulary)){
           $detailinfo = ucfirst(controlledVocabulary[$detailname]);
           $html .= "<div class='detail-menu'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
