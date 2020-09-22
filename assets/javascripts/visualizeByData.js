@@ -178,10 +178,10 @@ function addFieldsT(type, field = "default", proj = "default"){
   $("#chart-project").empty();
 
   $.each({
-    'bar': {'top': '-68px', 'height': '520px'},
-    'pie': {'top': '-68px', 'height': '520px'},
-    'tab': {'top': '-68px', 'height': '520px'},
-    'dash': {'top': '-78px', 'height': '510px'},
+    'bar': {'top': '-97px', 'height': '520px'},
+    'pie': {'top': '-97px', 'height': '520px'},
+    'tab': {'top': '-97x', 'height': '520px'},
+    'dash': {'top': '-107px', 'height': '510px'},
   }, function (chart_type, dims) {
     if (type == chart_type){
       $('iframe').css('top', dims['top']);
