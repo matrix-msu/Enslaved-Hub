@@ -1379,7 +1379,7 @@ function getPersonPageConnections($QID) {
     include BASE_LIB_PATH."variableIncluder.php";
     $connections = array();
 
-    $personQuery['query'] = "
+    $personQuery['query'] = <<<QUERY
 SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), STR(RAND()))) as ?random)
 
  WHERE
@@ -1389,8 +1389,10 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
 	?staterel $ps:$hasInterAgentRelationship ?relations .
   	?relations $rdfs:label ?relationslabel.
 	?staterel $pq:$isRelationshipTo ?people.
-  	?people $rdfs:label ?peoplename.";
-
+  	?people $rdfs:label ?peoplename.
+  }ORDER BY ?random
+QUERY;
+//print_r($personQuery);
     $result = blazegraphSearch($personQuery);
     $connections['Person-count'] = count($result);
     $connections['Person'] = array_slice($result, 0, 8);  // return the first 8 results
@@ -1752,6 +1754,7 @@ QUERY;
       $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
 
       // place connections
+      //TODO WE NEED TO REMOVE THOSE PNUMBERS
     $placeQuery['query'] = <<<QUERY
     SELECT DISTINCT ?relatedPlaces ?otherp (SHA512(CONCAT(STR(?place), STR(RAND()))) as ?random)
     WHERE {
