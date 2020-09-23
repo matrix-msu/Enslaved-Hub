@@ -36,6 +36,13 @@ $(document).ready( function() {
             displayConnections(CARDT);
             $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] +  ' Places');
         }
+        //Related Places
+        if($("#relatedPlace").hasClass("selected")){
+            CARDT="RelatedPlace";
+            SEARCHTYPE = "places";
+            displayConnections(CARDT);
+            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] +  ' Related Places');
+        }
         //Sources
         if($("#source").hasClass("selected")){
             CARDT="Source";
@@ -139,7 +146,17 @@ function displayConnections(cardType){
             var placeUrl = BASE_URL + 'record/place/' + placeQ;
             $('.connect-row').append('<li class="card"><a href=' + placeUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
         }
-    } else if (cardType == "CloseMatch") {
+    }else if (cardType == "RelatedPlace") {
+        for (var i in connections) {
+            var conn = connections[i];
+            var name = conn['relatedPlace']['value'];
+            var placeQ = conn['otherp']['value'];
+            placeQ = placeQ.substring(placeQ.lastIndexOf('/') + 1);
+            var placeUrl = BASE_URL + 'record/place/' + placeQ;
+            $('.connect-row').append('<li class="card"><a href=' + placeUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + 'Place-dark.svg" alt="Place icon"><h3>' + name + '</h3></div>'+'</a></li>');
+        }
+    }
+    else if (cardType == "CloseMatch") {
         cardType = 'Person';
         for (var i in connections) {
             var conn = connections[i];
@@ -201,7 +218,8 @@ function loadConnections(){
                     $('#source').html('<div class="source-image"></div>' + connectionsArray['Source-count'] + ' Sources');
                 } else if (form == 'Place') {
                     $('#place').html('<div class="place-image"></div>' + connectionsArray['Place-count'] + ' Places');
-
+                } else if (form == 'RelatedPlace') {
+                    $('#relatedPlace').html('<div class="place-image"></div>' + connectionsArray['RelatedPlace-count'] + ' Related Places');
                 } else if (form == 'CloseMatch') {
                     $('#closeMatch').html('<div class="person-image"></div>' + connectionsArray['CloseMatch-count'] + ' Close Matches');
                 }
@@ -222,6 +240,9 @@ function loadConnections(){
             }
             if (!connectionsArray['CloseMatch-count']) {
                 $('#closeMatch').hide();
+            }
+            if (!connectionsArray['RelatedPlace-count']) {
+                $('#relatedPlace').hide();
             }
 
             // select the first tab with content
