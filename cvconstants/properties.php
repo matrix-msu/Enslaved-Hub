@@ -71,5 +71,6 @@ const properties =
   "hasAlternateName" => "P71",
   "hasSurname" => "P72",
   "hasFirstName" => "P73",
+  "hasBroader" => "P74",
   "Descriptive Occupation" =>"P78"
 ];

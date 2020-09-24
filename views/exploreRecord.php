@@ -1,4 +1,3 @@
-<!-- Author: Drew Schineller-->
 <!-- Explore Full Record page-->
 <!-- Heading image and title container-->
 
@@ -90,6 +89,7 @@
                 <li class="unselected" id="event"><div class="event-image"></div>Events</li>
                 <li class="unselected" id="place"><div class="place-image"></div>Places</li>
                 <li class="unselected" id="source"><div class="source-image"></div>Sources</li>
+                <li class="unselected" id="relatedPlace"><div class="place-image"></div>Related Places</li>
             <?php
                 }
             ?>
