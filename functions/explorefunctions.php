@@ -449,6 +449,7 @@ HTML;
     }elseif($label == "Descriptive Occupation")
     {
         $statementArr = explode('||', $statement);
+        $upperlabel = 'Other Information';
       if (end($statementArr) == '' || end($statementArr) == ' '){
         array_pop($statementArr);
       }
@@ -518,14 +519,17 @@ HTML;
         }
         if($label == 'Geoname Identifier'){
           $html .= "<div><a></a></div><br>";
-      }
+        }
         if(array_key_exists($detailname,controlledVocabulary)){
           $detailinfo = ucfirst(controlledVocabulary[$detailname]);
           $html .= "<div class='detail-menu'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
         }
         $html .= "</div></a>";
 
-        if ($x != (count($statementArr) - 1)){
+        if( $label == "Descriptive Occupation" && $x != (count($statementArr) - 1 )){
+            $html.= "<br>";
+        }
+        else if ($x != (count($statementArr) - 1)){
             $html.= "<h4> | </h4>";
         }
     }
