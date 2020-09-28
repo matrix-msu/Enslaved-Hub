@@ -91,7 +91,7 @@ else {
             <section class="editor">
                 <?php
                 if (isset($story['Contributor'])) {
-                    echo '<h2>Adapted and additional information contributed by</h2>';
+                    echo '<h2>Adapted by</h2>';
                     echo '<p>'.$story['Contributor'].'</p>';
                 }
                 ?>
