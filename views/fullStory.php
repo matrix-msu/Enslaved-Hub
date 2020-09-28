@@ -3,7 +3,7 @@ if (isset($_GET['kid']) && preg_match("/^[0-9A-F]+-[0-9A-F]+-[0-9A-F]+(-[0-9A-F]
     // $story = storyContent($_GET['kid']);
 
     // Getting Story using korawrappper
-    $fields = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Creator', 'Contributor', 'Timeline', 'Story_Associator'];
+    $fields = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Creator', 'Contributor', 'Timeline', 'Story_Associator','Contributing Institution'];
     $koraResult = koraWrapperSearch(STORY_SID, $fields, "kid", $_GET['kid']);
     $koraResult = json_decode($koraResult, true);
     if(!array_key_exists("error", $koraResult)) $story = $koraResult['records'][0][ $_GET['kid'] ];
@@ -83,7 +83,7 @@ else {
             <section class="editor">
                 <?php
                 if (isset($story['Contributor'])) {
-                    echo '<h2>Editor</h2>';
+                    echo '<h2>Adapted and additional information contributed by</h2>';
                     echo '<p>'.$story['Contributor'].'</p>';
                 }
                 ?>
