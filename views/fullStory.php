@@ -80,6 +80,14 @@ else {
                 }
                 ?>
             </section>
+            <section class="contributing_institution">
+                <?php
+                if (isset($story['Contributing Institution'])) {
+                    echo '<h2>Contributing Institutions</h2>';
+                    echo '<p>'.$story['Contributing Institution'].'</p>';
+                }
+                ?>
+            </section>            
             <section class="editor">
                 <?php
                 if (isset($story['Contributor'])) {
