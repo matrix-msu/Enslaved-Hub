@@ -71,7 +71,7 @@ if (isset($story2Images[0])){
     </div>
     <img class="header-background home-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image"></div>
 </div>
-<main class="home">
+<main id="home" class="home">
     <section class="section section-explore">
         <div class="section-content">
             <div class="row">
@@ -197,6 +197,32 @@ if (isset($story2Images[0])){
             </div>
         </div>
     </div>
+    
+    
+    
+    <div id='underDev' class='modal'>
+      <div>
+        <div class="modal-x-btn closeUnderDev">
+          <img src='<?php echo BASE_URL;?>/assets/images/x-dark.svg' class="closeUnderDev" />
+        </div>
+        <div class='modal-content'>
+          <h1>Enslaved.org is Currently in Preview</h1>
+          <p>Enslaved.org is currently under active development. Until the final version is completed and launched, enjoy this preview. If you have any feedback, or run into any bugs or issues, feel free to use the 'Report Issue' button found within the footer.</p>
+          <form class="modal-form">
+            <div class='modalCheckbox'>
+              <input type='checkbox' value='1' id='modalCheckboxInput' name='' />
+              <label for='modalCheckboxInput' class='modalCheckboxBox'></label>
+              <label for='modalCheckboxInput' class='modalCheckboxText'>Don't Show Again</label>
+            </div>
+            <button type='button' class='modal-button closeUnderDev'>Sounds Good!</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  
 </main>
 
+
+
 <script src="<?php echo BASE_URL;?>assets/javascripts/home.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/js.cookie.js"></script>
