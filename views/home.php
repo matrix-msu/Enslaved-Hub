@@ -197,17 +197,17 @@ if (isset($story2Images[0])){
             </div>
         </div>
     </div>
-    
-    
-    
+
+
+
     <div id='underDev' class='modal'>
       <div>
         <div class="modal-x-btn closeUnderDev">
           <img src='<?php echo BASE_URL;?>/assets/images/x-dark.svg' class="closeUnderDev" />
         </div>
         <div class='modal-content'>
-          <h1>Enslaved.org is Currently in Preview</h1>
-          <p>Enslaved.org is currently under active development. Until the final version is completed and launched, enjoy this preview. If you have any feedback, or run into any bugs or issues, feel free to use the 'Report Issue' button found within the footer.</p>
+          <h1><em>Enslaved.org</em> is Currently in Preview</h1>
+          <p><em>Enslaved.org</em> is currently under active development. Until the final version is completed and launched, enjoy this preview. If you have any feedback, or run into any bugs or issues, feel free to use the 'Report Issue' button found within the footer.</p>
           <form class="modal-form">
             <div class='modalCheckbox'>
               <input type='checkbox' value='1' id='modalCheckboxInput' name='' />
@@ -219,7 +219,7 @@ if (isset($story2Images[0])){
         </div>
       </div>
     </div>
-  
+
 </main>
 
 
