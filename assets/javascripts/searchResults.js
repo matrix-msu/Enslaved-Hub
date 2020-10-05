@@ -11,7 +11,6 @@ var card_offset = 0;
 var card_limit = 12;
 var filters = {};
 var display = search_type;
-var firstLoad = true;
 
 var has_data = false;
 var selected_fields_people = ['Name', 'Sex', 'Person Status', 'Place', 'Date'];
@@ -193,12 +192,6 @@ function searchResults(preset, limit = 20, offset = 0)
                         $tab.show();
                     }
                 }
-                if (firstTypeWithResults != '' && firstLoad){
-                    firstLoad = false;
-                    $('.categories #'+firstTypeWithResults).click();
-                }
-
-
 
                 total_length = allCounters[display+"count"]["value"];
                 // todo:
@@ -240,7 +233,6 @@ function searchResults(preset, limit = 20, offset = 0)
 
             // Toggling visualization link
             $('#view_visual').hide();
-            console.log(filters)
             if ('projects' in filters && filters['projects'].length === 1 && filters['projects'][0] in projects) {
                 $('#view_visual').show();
             }

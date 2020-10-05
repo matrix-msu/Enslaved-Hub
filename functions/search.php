@@ -111,7 +111,7 @@ function search_filter_counts() {
     if ($search_type != 'people')
         $search_type = substr_replace($search_type, '', -1);
 
-    $filters = [
+    $filter_assoc = [
         'people' => [
             'Gender' => [
                 'sex' => sexTypes
@@ -159,7 +159,7 @@ function search_filter_counts() {
 
     $total = [];
 
-    foreach ($filters as $type => $labels) {
+    foreach ($filter_assoc as $type => $labels) {
         if (in_array($type, $filter_types)) {
             $params = [
                 'index' => ELASTICSEARCH_INDEX_NAME,
@@ -210,6 +210,41 @@ function search_filter_counts() {
                 $params['body']['query']['bool']['must'] = [
                     'match_all' => new \stdClass()
                 ];
+            }
+
+            if ($filters) {
+                foreach ($filters as $key => $value) {
+                    if ($key == 'date') {
+                        $values = explode('-', $value[0]);
+                        $gte_date = $values[0] . '||/y';
+                        $lte_date = $values[1] . '||/y';
+                        // Note: Will have to update format
+                        // once more exact dates get indexed.
+
+                        array_push(
+                            $params['body']['query']['bool']['filter'],
+                            ['bool' => [
+                                'should' => [
+                                    ['range' => [
+                                        'date' => [
+                                            'gte' => $gte_date,
+                                            'lte' => $lte_date,
+                                            'format' => 'yyyy']
+                                            ]
+                                        ],
+                                    ['range' => [
+                                        'circa' => [
+                                            'gte' => $gte_date,
+                                            'lte' => $lte_date,
+                                            'format' => 'yyyy'
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]);
+                    }
+                }
             }
 
             $total[$type] = [];
