@@ -39,7 +39,7 @@ class crawler_keywords {
     }
 
     // fetch LIMIT number of keywords starting from OFFSET
-	public function get_keywords($limit, $offset, $sort, $terms='', $tag_ids=[]){
+	public function get_keywords($limit, $offset, $sort, $terms='', $tagIds=[]){
         $sort = ($sort == "ASC") ? "ASC" : "DESC";
 
         $search = "";
@@ -49,21 +49,9 @@ class crawler_keywords {
         }
 
         $filter = "";
-        $tag_ids_types = str_repeat("i", count($tag_ids));
-        if($tag_ids) {
-            foreach($tag_ids as $key => $value) {
-                if (!is_numeric($value))
-                    unset($tag_ids[$key]);
-                else if ($value < 1 || $value > 6)
-                    unset($tag_ids[$key]);
-            }
-
-            if (count($tag_ids) > 0) {
-                $imploded = implode(",", $tag_ids);
-                $filter = " AND ct.tag_id IN ($imploded)";
-            }
+        if (count($tagIds) > 0) {
+            $filter = " AND ct.tag_id IN (" . implode(', ', $tagIds) . ")";
         }
-
 
 		$link = $this->connect();
 
@@ -74,16 +62,18 @@ class crawler_keywords {
                 ck.url
             FROM
                 crawler_keywords ck
+            LEFT JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id = ckta.keyword_id
+            LEFT JOIN crawler_tags ct ON ct.tag_id = ckta.tag_id
             WHERE
                 NOT EXISTS (
                     SELECT dk.keyword
                     FROM deleted_keywords dk
                     WHERE ck.keyword = dk.keyword
-                )
-            $search$filter
-            ORDER BY ck.date_created $sort
-            LIMIT ? OFFSET ?
+                )" . $search . $filter .
+            " ORDER BY ck.date_created " . $sort .
+            " LIMIT ? OFFSET ?
         ";
+
         $stmt = mysqli_prepare($link, $query);
 
         if ($terms)
@@ -208,10 +198,10 @@ class crawler_keywords {
 		$search = $filter = "";
 		if($terms)
 			$search = " AND ck.keyword LIKE '%".$terms."%' OR ck.url LIKE '%".$terms."%'";
-		if($tagIds)
+        if (count($tagIds) > 0)
 			$filter = " AND ct.tag_id IN (" . implode(', ', $tagIds) . ")";
         $link = $this->connect();
-        $query = "SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created AS date_sort FROM crawler_keywords ck LEFT OUTER JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id=ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id=ckta.tag_id WHERE ct.tag_name!='No Display' AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword)".$search.$filter.")AS a UNION SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created FROM crawler_keywords ck WHERE ck.keyword_id NOT IN(SELECT ckta.keyword_id FROM crawler_keyword_tags_assoc ckta)AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword)".$search.$filter.")AS b ORDER BY date_sort ".$sort." LIMIT ".$limit." OFFSET ".$offset;
+        $query = "SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created AS date_sort FROM crawler_keywords ck LEFT OUTER JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id=ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id=ckta.tag_id WHERE ct.tag_name!='No Display' AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword)".$search.$filter.")AS a UNION SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created FROM crawler_keywords ck WHERE ck.keyword_id NOT IN(SELECT ckta.keyword_id FROM crawler_keyword_tags_assoc ckta)AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword)".$search.")AS b ORDER BY date_sort ".$sort." LIMIT ".$limit." OFFSET ".$offset;
 		$result = mysqli_query($link, $query);
 		mysqli_close($link);
 		return mysqli_fetch_all($result, MYSQLI_ASSOC);
