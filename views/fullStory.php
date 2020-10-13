@@ -72,14 +72,14 @@ else {
                 }
                 ?>
             </section>
-            <section class="creator">
+            <!--<section class="creator">
                 <?php
                 if (isset($story['Creator'])) {
                     echo '<h2>Creator</h2>';
                     echo '<p>'.$story['Creator'].'</p>';
                 }
                 ?>
-            </section>
+            </section>-->
             <section class="online-resources">
                 <?php
                 if (isset($story['Online Resources'])) {
