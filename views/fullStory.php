@@ -80,20 +80,6 @@ else {
                 }
                 ?>
             </section>
-            <section class="editor">
-                <?php
-                if (isset($story['Contributor'])) {
-                    echo '<h2>Adapted by</h2>';
-                    echo '<p>'.$story['Contributor'].'</p>';
-                }
-                ?>
-                <!-- <p>Ibrahima Abd al-Rahman was one of only a few Africans enslaved and brought to America during the slave trade who was able to secure a return to Africa.  He was born c. 1762 in the Islamic kingdom of Futa Jallon, today located in Guinea. He was a son of the almaami of Futa Jallon, a Muslim theocratic ruler. Abd al-Rahman was raised in Timbo, the capital of Futa Jallon, where he studied the Koran as a young boy. He went on to study further in Jenne and Timbuktu, two major centers of learning, located in present day Mali.</p>
-                <p>In 1788, while leading a trade delegation to the coast, Abd al-Rahman was ambushed and captured. He was then brought to the Gambia River, where he was sold to an Englishman, John Nevin. He was shackled and brought to the West Indies on the Africa along with 177 others, 164 of who disembarked in  in Dominica after 34 days of the Middle Passage. Around one-third of them, including Abd al-Rahman, were purchased by another ship owner, who sailed them to New Orleans before continuing on to Spanish Natchez (Mississippi). In Natchez, Abd al-Rahman alongside another slave, Samba, who had been with him since Futa Jallon, were sold to Thomas Foster for the combined price of $930, and continued on to Foster’s plantation outside of Natchez.</p>
-                <p>Soon after arriving on Foster’s plantation, Abd al-Rahman ran away. Weeks later, after finding little help from the outside world, he returned. He became referred to by his master and others on the plantation as “Prince,” in reference to his claimed (and true) royal bloodline and regal bearing. Abd al-Rahman eventually came to oversee the plantation, and while he had been married in Futa Jallon, he remarried on Foster’s plantation, assuming he would never return home. Along with his wife, Isabella, he had five sons and four daughters.</p>
-                <p>His royal lineage became accepted publicly after a chance meeting in 1807 with a doctor named John Coates Cox. Cox was the first European to have spent time in Abd al-Rahman’s hometown of Timbo, where he spent six months while recovering from an illness before Abd al-Rahman’s enslavement. Cox had even lived within Abd al-Rahman’s family compound. After recognizing him, Cox confirmed Abd al-Rahman’s heritage, which had been doubted by Foster and others on the plantation. He attempted to buy Abd al-Rahman’s freedom from Foster, who refused to sell him given his important role on the plantation.</p>
-                <p>In 1826, Abd al-Rahman wrote a letter home in Arabic, but because of confusion (a local newspaperman who helped him assumed he was from Morocco), his letter was in fact sent to the US Consul in Morocco. After the Moroccans requested Abd al-Rahman’s freedom, U.S.Secretary of State Henry Clay recommended his release to none other than U.S.the American President, John Quincy Adams. In response to the Secretary of State’s request, Foster released Abd al-Rahman in 1828, on the condition that he leave the United States.</p>
-                <p>Supported by the American Colonization Society and African American leaders in the North, Abd al-Rahman attempted to raise enough money to buy his family’s freedom, and was eventually able to free his wife and and some of their children. He sailed to Africa in February 1829 on a ship headed for Liberia, with the help of the U.S. government. He died a few months after returning to West Africa. Illness prevented him making the final journey of several hundred miles to his homeland of Futa Jallon. A year after his death, however, Isabella, would welcome eight children and grandchildren to Liberia, where the family would settle.</p> -->
-            </section>
             <section class="online-resources">
                 <?php
                 if (isset($story['Online Resources'])) {
@@ -126,6 +112,14 @@ else {
                 <p>Michael A. Gomez, “Muslims in Early America,” The Journal of Southern History, Vol. 60, No. 4 (1994), pp. 671-710.</p>
                 <p>Cyrus Griffin, “The African Homeland of Abdul Rahman Ibrahima,” Southern Galaxy, Natchez, MI, May 29, June 5 & 12, July 5, 1828, available online at the National Humanities Center.</p> -->
             </section>
+            <section class="editor">
+                <?php
+                if (isset($story['Contributor'])) {
+                    echo '<h2>Adapted by</h2>';
+                    echo '<p>'.$story['Contributor'].'</p>';
+                }
+                ?>
+            </section>            
             <section class="contributing_institution">
                 <?php
                 if (isset($story['Contributing Institution'])) {
