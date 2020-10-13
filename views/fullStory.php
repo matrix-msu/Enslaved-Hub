@@ -93,10 +93,6 @@ else {
                     echo '<p><a target="_blank" href="'.$pdf_url.'">View Story PDF</a></p>';
                 }
                 ?>
-                <!-- <h3>Online Resources</h3>
-                <p><a href="#">Thomas H. Gallaudet, A statement with regard to the Moorish prince, Abduhl Rahhahman (New York: Daniel Fanshaw, 1828)</a>, available online through the University of North Carolina, “Documenting the American South.”</p>
-                <p><a href="#">Cyrus Griffin, “The African Homeland of Abdul Rahman Ibrahima,”</a> Southern Galaxy, Natchez, MI, May 29, June 5 & 12, July 5, 1828, available online at the National Humanities Center Resource Toolbox, “The Making of African American Identity: Vol. 1, 1500-1865.”</p>
-                <p><a href="#">Information on the Africa, which brought Abd al-Rahman to America.</a> From SlaveVoyages.org.</p> -->
             </section>
             <section class="bibliography">
                 <?php
@@ -105,12 +101,6 @@ else {
                     echo '<p>'.$story['Source'].'</p>';
                 }
                 ?>
-                <!-- <h3>Bibliography</h3>
-                <p>Terry Alford, Prince among Slaves (Oxford: Oxford University Press, 2007 [1977]).</p>
-                <p>Allan D. Austin, African Muslims in Antebellum America: Transatlantic Stories and Spiritual Struggles (New York: Routledge, 1997 [1984)).</p>
-                <p>Thomas H. Gallaudet, A statement with regard to the Moorish prince, Abduhl Rahhahman (New York: Daniel Fanshaw, 1828).</p>
-                <p>Michael A. Gomez, “Muslims in Early America,” The Journal of Southern History, Vol. 60, No. 4 (1994), pp. 671-710.</p>
-                <p>Cyrus Griffin, “The African Homeland of Abdul Rahman Ibrahima,” Southern Galaxy, Natchez, MI, May 29, June 5 & 12, July 5, 1828, available online at the National Humanities Center.</p> -->
             </section>
             <section class="editor">
                 <?php
