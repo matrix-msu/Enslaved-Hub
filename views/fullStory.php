@@ -80,14 +80,6 @@ else {
                 }
                 ?>
             </section>
-            <section class="contributing_institution">
-                <?php
-                if (isset($story['Contributing Institution'])) {
-                    echo '<h2>Contributing Institutions</h2>';
-                    echo '<p>'.$story['Contributing Institution'].'</p>';
-                }
-                ?>
-            </section>            
             <section class="editor">
                 <?php
                 if (isset($story['Contributor'])) {
@@ -134,6 +126,14 @@ else {
                 <p>Michael A. Gomez, “Muslims in Early America,” The Journal of Southern History, Vol. 60, No. 4 (1994), pp. 671-710.</p>
                 <p>Cyrus Griffin, “The African Homeland of Abdul Rahman Ibrahima,” Southern Galaxy, Natchez, MI, May 29, June 5 & 12, July 5, 1828, available online at the National Humanities Center.</p> -->
             </section>
+            <section class="contributing_institution">
+                <?php
+                if (isset($story['Contributing Institution'])) {
+                    echo '<h2>Contributing Institutions</h2>';
+                    echo '<p>'.$story['Contributing Institution'].'</p>';
+                }
+                ?>
+            </section>                        
         </article>
         <article class="right-column">
             <?php if (isset($images) && count($images) > 0) { ?>
