@@ -84,7 +84,7 @@ else {
                 <?php
                 if (isset($story['Online Resources'])) {
                     echo '<h2>Online Resources</h2>';
-                    echo $story['Online Resources'];
+                    echo '<p>'.$story['Online Resources'].'</p>';
                 }
                 ?>
                 <?php
@@ -102,7 +102,7 @@ else {
                 <?php
                 if (isset($story['Source'])) {
                     echo '<h2>Bibliography</h2>';
-                    echo $story['Source'];
+                    echo '<p>'.$story['Source'].'</p>';
                 }
                 ?>
                 <!-- <h3>Bibliography</h3>
