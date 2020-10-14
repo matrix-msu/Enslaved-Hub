@@ -605,7 +605,8 @@ function getFullRecordHtml(){
 
     // descriptions for items
     if (isset($record['description']) && isset($record['description']['value']) ){
-        $recordVars['Description'] = $record['description']['value'];
+        $s = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $record['description']['value']);
+        $recordVars['Description'] = $s;
     }
 
     // descriptions for items
