@@ -84,7 +84,7 @@ else {
                 <?php
                 if (isset($story['Online Resources'])) {
                     echo '<h2>Online Resources</h2>';
-                    echo '<p>'.$story['Online Resources'].'</p>';
+                    echo ''.$story['Online Resources'].'';
                 }
                 ?>
                 <?php
@@ -109,7 +109,7 @@ else {
                     echo '<p>'.$story['Contributor'].'</p>';
                 }
                 ?>
-            </section>            
+            </section>
             <section class="contributing_institution">
                 <?php
                 if (isset($story['Contributing Institution'])) {
@@ -117,7 +117,7 @@ else {
                     echo '<p>'.$story['Contributing Institution'].'</p>';
                 }
                 ?>
-            </section>                        
+            </section>
         </article>
         <article class="right-column">
             <?php if (isset($images) && count($images) > 0) { ?>

@@ -69,7 +69,7 @@ var pie_f_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/4c3e1b40
 var pie_ethno_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/fa7da680-af29-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_ps_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/7b7fd180-afe4-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_pr_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/b023ef80-afe8-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
-var tab_ethno_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/42d8bd50-afea-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+var tab_ethno_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_age_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/ce252e60-afeb-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_occ_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/2a2529d0-afed-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_et_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/ebcf16c0-aff4-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
@@ -78,7 +78,7 @@ var tab_pt_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/5f3fac2
 var tab_mc_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/6ba6ae10-aff7-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_st_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/bf741ef0-aff8-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 var tab_psSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/e0255b80-c076-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
-var tab_ethnoSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/2dc3ad90-c065-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
+var tab_ethnoSex_All = "https://kibana.enslaved.org/app/kibana#/visualize/edit/42d8bd50-afea-11ea-a46c-a3979884a476?embed=true&_g=(filters:!())";
 
 //Dashboards
 var dash_main_All = "https://kibana.enslaved.org/app/kibana#/dashboard/95bfce60-dbf4-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
