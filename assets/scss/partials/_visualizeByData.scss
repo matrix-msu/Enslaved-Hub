@@ -60,7 +60,8 @@
               font-family: aleobolditalic;
           }
 
-          .search-records-link {
+          #search-records-link {
+            display: none;
             text-decoration: none;
             float: right;
             margin-top: 20px;

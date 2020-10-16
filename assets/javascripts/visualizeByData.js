@@ -280,4 +280,33 @@ function changeIframe(){
   url.search = search_params.toString();
   var new_url = url.toString();
   window.history.replaceState(0, "", new_url);
+
+
+  //Add Dynamic 'View Project Records' Link
+  if(proj !== "All"){
+     document.getElementById("search-records-link").style.display = "block";
+  }
+  else{
+     document.getElementById("search-records-link").style.display = "none";
+  }
+
+  var projLink = document.getElementById("search-records-link");
+  if(proj == "Louisiana"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Louisiana%2BSlave%2BDatabase');
+  }
+  if(proj == "Free"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Free%20Blacks%20Database');
+  }
+  if(proj == "Voyages"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Voyages:%20The%20Trans-Atlantic%20Slave%20Trade%20Database');
+  }
+  if(proj == "Legacies"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Legacies%20of%20British%20Slave-ownership');
+  }
+  if(proj == "Hutchins"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Hutchins%20Center%20for%20African%20&%20African%20American%20Research');
+  }
+  if(proj == "Maranhão"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhão%20Inventories%20Slave%20Database');
+  }
 }
