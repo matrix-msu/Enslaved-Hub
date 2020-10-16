@@ -60,6 +60,32 @@
               font-family: aleobolditalic;
           }
 
+          .search-records-link {
+            text-decoration: none;
+            float: right;
+            margin-top: 20px;
+            margin-bottom: -10px;
+            padding-right: 16px;
+            position: relative;
+            transition: all .2s ease-in-out;
+
+              img {
+                width: 7px;
+                position: absolute;
+                top: 3px;
+                right: 3px;
+                transition: all .2s ease-in-out;
+              }
+
+              &:hover {
+                color: #CF5440;
+
+                img {
+                  right: 0px;
+                }
+              }
+          }
+
           //select2
           .select2-container{
               width: 100%!important;
