@@ -44,6 +44,7 @@
             <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
         <?php } ?>
       </select>
+      <div><a id="search-records-link" href="">Search Project Records <img src="<?php echo BASE_URL;?>assets/images/about-chevron-red.svg"/></a></div>
     </div>
   </div>
   <div class="container datawrap">
