@@ -368,6 +368,57 @@ HTML;
         $html .= "</div> - <a href='$placeUrl' class='highlight'>$originLabels[$i]</a></div>";
     }
     $html .= '</div>';
+}else if ($label == "AgeA"){
+    // match statuses with events
+    $lowerlabel = "age";
+    $upperlabel = "Age";
+
+    //Array for ststueses means there are events and labels match
+    $statuses = explode('||', $statement['ages']);
+    $statusEventUrls = explode('||', $statement['ageEvents']);
+    $eventstatusLabels = explode('||', $statement['agestatusLabels']);
+
+    //Remove whitespace from end of arrays
+    if (end($statuses) == '' || end($statuses) == ' '){
+      array_pop($statuses);
+    }
+    if (end($statusEventUrls) == '' || end($statusEventUrls) == ' '){
+      array_pop($statusEventUrls);
+    }
+    if (end($eventstatusLabels) == '' || end($eventstatusLabels) == ' '){
+      array_pop($eventstatusLabels);
+    }
+
+    $html .= <<<HTML
+<div class="detail $lowerlabel">
+  <h3>$upperlabel</h3>
+HTML;
+    //Loop through and match up
+    $matched = '';
+    for($i=0; $i < sizeof($statusEventUrls); $i++){
+      if (!isset($eventstatusLabels[$i]) || !isset($statuses[$i])){
+        continue;
+      }
+
+        $explode = explode('/', $statusEventUrls[$i]);
+        $eventQid = end($explode);
+        $eventUrl = $baseurl . 'record/event/' . $eventQid;
+        $matched = $statuses[$i] . ' - ' . $eventstatusLabels[$i];
+
+        $html .= <<<HTML
+<div class="detail-bottom">
+    <div>$statuses[$i]
+HTML;
+
+        // status tool tip
+        if(array_key_exists($statuses[$i],controlledVocabulary)){
+            $detailinfo = ucfirst(controlledVocabulary[$statuses[$i]]);
+            $html .= "<div class='detail-menu'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
+        }
+
+        $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventstatusLabels[$i]</a></div>";
+    }
+    $html .= '</div>';
 }else if ($label == "StatusA"){
     // match statuses with events
     $lowerlabel = "status";
@@ -548,6 +599,7 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
+    // echo ($query['query']);die;
     $result = blazegraphSearch($query);
 
     if(empty($result)){
@@ -584,9 +636,23 @@ function getFullRecordHtml(){
       $recordVars['Sex'] = $record['sextype']['value'];
     }
     //AGE
-
-    if (isset($record['age']) && isset($record['age']['value']) && $record['age']['value'] != '' ){
-      $recordVars['Age'] = $record['age']['value'];
+    if (isset($record['age']) && isset($record['age']['value']) && $record['age']['value'] != ''){
+      if(isset($record['agerecordedat']) && isset($record['agerecordedat']['value']) &&
+         isset($record['agerecordedatlabel']) && isset($record['agerecordedatlabel']['value']) &&
+         $record['agerecordedatlabel']['value'] != '' && $record['agerecordedat']['value'] ){
+        if (empty($record['age']['value'])) {
+          $recordVars['AgeA'] = [];
+        } else {
+          $ageArr = ['ages' => $record['age']['value'],
+                        'ageEvents' => $record['agerecordedat']['value'],
+                        'agestatusLabels' => $record['agerecordedatlabel']['value']
+                      ];
+          $recordVars['AgeA'] = $ageArr;
+        }
+      }
+      else{
+        $recordVars['Age'] = $record['age']['value'];
+      }
     }
     //occupation
 

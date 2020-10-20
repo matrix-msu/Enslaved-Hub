@@ -5,6 +5,8 @@ SELECT ?label ?description ?project
 (group_concat(distinct ?name1; separator = "||") as ?name)
 (group_concat(distinct ?altname1; separator = "||") as ?altname)
 (group_concat(distinct ?age1; separator = "||") as ?age)
+(group_concat(distinct ?agerecordedat1; separator = "||") as ?agerecordedat)
+(group_concat(distinct ?agerecordedatlabel1; separator = "||") as ?agerecordedatlabel)
 (group_concat(distinct ?firstname1; separator = "||") as ?firstname)
 (group_concat(distinct ?surname1; separator = "||") as ?surname)
 (group_concat(distinct ?sextype1; separator = "||") as ?sextype)
@@ -38,8 +40,11 @@ SELECT ?label ?description ?project
  OPTIONAL{ ?agent $wdt:$hasFirstName ?firstname1}.
  OPTIONAL{ ?agent $wdt:$hasSurname ?surname1}.
  OPTIONAL{ ?agent $wdt:$hasDescription ?description}.
- OPTIONAL{ ?agent $wdt:$hasAge ?ageuri.
-            ?ageuri $wdt:$hasAgeValue ?age1}.
+ OPTIONAL{ ?agent $p:$hasAge ?ageuri.
+            ?ageuri $ps:$hasAge ?ageuri2.
+            ?ageuri2 $wdt:$hasAgeValue ?age1.
+            ?ageuri $pq:$recordedAt ?agerecordedat1.
+            ?agerecordedat1 $rdfs:label ?agerecordedatlabel1}.
  OPTIONAL{?agent $wdt:$hasSex ?sex.
          ?sex $rdfs:label ?sextype1}.
  OPTIONAL{?agent $wdt:$hasRace ?race1}.
