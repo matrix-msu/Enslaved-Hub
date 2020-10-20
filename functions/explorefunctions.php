@@ -169,12 +169,13 @@ HTML;
         $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventRoleLabels[$i]</a></div>";
     }
     $html .= '</div><br>';
-} else if ($label == "closeMatchA"){
-    $lowerlabel = "close match";
-    $upperlabel = "Close Match";
+} else if ($label == "matches"){
+    $lowerlabel = "match";
+    $upperlabel = "Match";
 
     $matchUrls = explode('||', $statement['matchUrls']);
     $matchLabels = explode('||', $statement['matchLabels']);
+      $matchtype = explode('||', $statement['matchtype']);
 
     if (end($matchUrls) == '' || end($matchUrls) == ' '){
       array_pop($matchUrls);
@@ -182,7 +183,9 @@ HTML;
     if (end($matchLabels) == '' || end($matchLabels) == ' '){
       array_pop($matchLabels);
     }
-
+    if (end($matchtype) == '' || end($matchtype) == ' '){
+      array_pop($matchtype);
+    }
     $html .= <<<HTML
 <div class="detail $lowerlabel">
   <h3>$upperlabel</h3>
@@ -202,7 +205,7 @@ HTML;
 
         $html .= <<<HTML
 <div class="detail-bottom">
-    <a href='$matchUrl' class='highlight'>$matchLabels[$i]</a>
+    <a href='$matchUrl' class='highlight'>$matchtype[$i]$matchLabels[$i]</a>
 </div>
 HTML;
 
@@ -710,10 +713,12 @@ function getFullRecordHtml(){
       if(isset($record['matchlabel']) && isset($record['matchlabel']['value']) &&
          $record['matchlabel']['value'] != '' ){
         $closeMatchArr = ['matchLabels' => $record['matchlabel']['value'],
-                           'matchUrls' => $record['match']['value']
+                           'matchUrls' => $record['match']['value'],
+                           'matchtype' => $record['matchtype']['value']
                           ];
         $recordVars['closeMatchA'] = $closeMatchArr;
       }
+
     }
 
     //Project
@@ -1437,15 +1442,17 @@ QUERY;
 
 
   $closeMatchQuery['query'] = <<<QUERY
-SELECT DISTINCT ?match ?matchlabel (SHA512(CONCAT(STR(?match), STR(RAND()))) as ?random)
+SELECT DISTINCT ?match ?matchlabel ?matchtype (SHA512(CONCAT(STR(?match), STR(RAND()))) as ?random)
 
  WHERE
 {
- VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
- 	?agent $wdt:$closeMatch ?match.
-    ?match $rdfs:label ?matchlabel
+ VALUES ?agent { $wd:$QID}. #Q number needs to be changed for every person.
+ ?agent $p:$hasMatch ?statementname.
+  ?statementname $ps:$hasMatch ?matcht.
+  ?matcht $rdfs:label ?matchtype.
+  ?statementname $pq:$matches ?match.
+  ?match $rdfs:label ?matchlabel
 
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
 QUERY;
 
