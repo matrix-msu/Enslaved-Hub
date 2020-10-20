@@ -33,7 +33,7 @@ const properties =
   "hasRace" => "P32",
   "hasPersonStatus" => "P33",
   "hasStatusGeneratingEvent" => "P34",
-  "closeMatch" => "P35",
+  "hasMatch" => "P35",
   "Geonames ID" => "P36",
   "hasSpouse" => "P37",
   "hasChild" => "P38",
@@ -72,5 +72,6 @@ const properties =
   "hasSurname" => "P72",
   "hasFirstName" => "P73",
   "hasBroader" => "P74",
-  "Descriptive Occupation" =>"P78"
+  "Descriptive Occupation" =>"P78",
+  "matches" => "P79"
 ];

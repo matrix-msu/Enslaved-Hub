@@ -51,11 +51,11 @@ $(document).ready( function() {
             $('.search-all').html('View All ' + connectionsArray[CARDT + '-count']+ ' Sources');
         }
         //Close matches on the person page
-        if ($("#closeMatch").hasClass("selected")) {
+        if ($("#match").hasClass("selected")) {
             CARDT = "CloseMatch";
             SEARCHTYPE = "closeMatch";
             displayConnections(CARDT);
-            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Close Matches');
+            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Matches');
         }
         // set the search all button url
         $('.search-all').attr('href', BASE_URL + 'search/' + SEARCHTYPE + '?' + recordform + '=' + QID);
@@ -162,10 +162,11 @@ function displayConnections(cardType){
             var conn = connections[i];
             var name = conn['matchlabel']['value'];
             var matchQ = conn['match']['value'];
+            var matchType = conn['matchtype']['value'];
             matchQ = matchQ.substring(matchQ.lastIndexOf('/') + 1);
             var matchUrl = BASE_URL + 'record/person/' + matchQ;
 
-            $('.connect-row').append('<li class="card"><a href=' + matchUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name + '</h3></div>'+'</a></li>');
+            $('.connect-row').append('<li class="card"><a href=' + matchUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + matchType+" - "+name + '</h3></div>'+'</a></li>');
         }
     } else {
 
