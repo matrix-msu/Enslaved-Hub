@@ -1465,7 +1465,7 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
 	?staterel $ps:$hasInterAgentRelationship ?relations .
   	?relations $rdfs:label ?relationslabel.
 	?staterel $pq:$isRelationshipTo ?people.
-  	?people $rdfs:label ?peoplename.
+  	?people $wdt:$hasName ?peoplename.
   }ORDER BY ?random
 QUERY;
     $result = blazegraphSearch($personQuery);
@@ -1485,7 +1485,7 @@ SELECT DISTINCT ?place ?placelabel
     ?statement $ps:$hasName ?name.
     ?statement $pq:$recordedAt ?event.
     ?event  $wdt:$atPlace ?place.
-    ?place $rdfs:label ?placelabel.
+    ?place $wdt:$hasName ?placelabel.
    }
  }
  UNION {
@@ -1494,7 +1494,7 @@ SELECT DISTINCT ?place ?placelabel
       ?statementrole $ps:$hasParticipantRole ?roles.
       ?statementrole $pq:$roleProvidedBy ?roleevent.
  	  ?roleevent $wdt:$atPlace ?place.
-        ?place $rdfs:label ?placelabel.
+        ?place $wdt:$hasName ?placelabel.
     }.
   }
 
@@ -1517,7 +1517,7 @@ SELECT DISTINCT ?match ?matchlabel ?matchtype (SHA512(CONCAT(STR(?match), STR(RA
   ?statementname $ps:$hasMatch ?matcht.
   ?matcht $rdfs:label ?matchtype.
   ?statementname $pq:$matches ?match.
-  ?match $rdfs:label ?matchlabel
+  ?match $wdt:$hasName ?matchlabel
 
 }ORDER BY ?random
 QUERY;
@@ -1538,20 +1538,20 @@ SELECT DISTINCT ?event ?eventlabel
    ?agent $p:$hasName ?statement.
    ?statement $ps:$hasName ?name.
    ?statement $pq:$recordedAt ?event.
-   ?event $rdfs:label ?eventlabel.
+   ?event $wdt:$hasName ?eventlabel.
   }
 }
 union{
   OPTIONAL {?agent $p:$hasParticipantRole ?statementrole.
            ?statementrole $ps:$hasParticipantRole ?roles.
            ?statementrole $pq:$roleProvidedBy ?event.
-             ?event $rdfs:label ?eventlabel.}.
+             ?event $wdt:$hasName ?eventlabel.}.
 }
 union{
  OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
            ?statstatus $ps:$hasPersonStatus ?status.
            ?statstatus $pq:$hasStatusGeneratingEvent ?event.
-           ?event $rdfs:label ?eventlabel.}.
+           ?event $wdt:$hasName ?eventlabel.}.
 }
 }LIMIT 8
 
@@ -1570,10 +1570,8 @@ QUERY;
       ?agent ?property  ?object .
       ?object prov:wasDerivedFrom ?provenance .
       ?provenance $pr:$isDirectlyBasedOn ?source .
-    	?source $rdfs:label ?sourcelabel
-
-      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-    }ORDER BY ?random
+    	?source $wdt:$hasName ?sourcelabel
+  }ORDER BY ?random
 
 QUERY;
 
@@ -1605,7 +1603,7 @@ SELECT DISTINCT ?people ?peoplename (SHA512(CONCAT(STR(?people), STR(RAND()))) a
   		?property  ?object .
   ?object $prov:wasDerivedFrom ?provenance .
   ?provenance $pr:$isDirectlyBasedOn ?source .
-  ?people $rdfs:label ?peoplename
+  ?people $wdt:$hasName ?peoplename
 }LIMIT 8
 QUERY;
 $peoplecounter['query'] = <<<QUERY
@@ -1634,7 +1632,7 @@ SELECT DISTINCT ?event ?eventlabel ?source (SHA512(CONCAT(STR(?event), STR(RAND(
           $p:$hasName  ?object .
  ?object $prov:wasDerivedFrom ?provenance .
  ?provenance $pr:$isDirectlyBasedOn ?source .
-   ?event $rdfs:label ?eventlabel
+   ?event $wdt:$hasName ?eventlabel
 }LIMIT 8
 
 QUERY;
@@ -1665,7 +1663,7 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
           $p:$hasName  ?object .
  ?object $prov:wasDerivedFrom ?provenance .
  ?provenance $pr:$isDirectlyBasedOn ?source .
-  ?place $rdfs:label ?placelabel
+  ?place $wdt:$hasName ?placelabel
 }
 QUERY;
 
@@ -1693,7 +1691,7 @@ SELECT DISTINCT ?people ?peoplename ?role (SHA512(CONCAT(STR(?people), STR(RAND(
   ?event $p:$providesParticipantRole ?statement.
   ?statement $ps:$providesParticipantRole ?name.
   ?statement $pq:$hasParticipantRole ?people.
-  ?people $rdfs:label ?peoplename.
+  ?people $wdt:$hasName ?peoplename.
   ?name $rdfs:label ?role.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -1712,7 +1710,7 @@ SELECT DISTINCT ?place ?placelabel (SHA512(CONCAT(STR(?place), STR(RAND()))) as 
 {
  VALUES ?event { $wd:$QID} #Q number needs to be changed for every event.
   ?event $wdt:$atPlace ?place.
-  ?place $rdfs:label ?placelabel
+  ?place $wdt:$hasName ?placelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -1733,7 +1731,7 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
           ?property  ?object .
   	?object $prov:wasDerivedFrom ?provenance .
   	?provenance $pr:$isDirectlyBasedOn ?source .
-	?source $rdfs:label ?sourcelabel
+	?source $wdt:$hasName ?sourcelabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -1765,7 +1763,7 @@ function getPlacePageConnections($QID) {
      	?event $p:$providesParticipantRole ?role.
      	?role  $ps:$providesParticipantRole ?participant.
      	?role  $pq:$hasParticipantRole ?people.
-     	?people $rdfs:label ?peoplename
+     	?people $wdt:$hasName ?peoplename
    }
   QUERY;
  $peopleQuery['query'] = <<<QUERY
@@ -1777,7 +1775,7 @@ function getPlacePageConnections($QID) {
     	?event $p:$providesParticipantRole ?role.
     	?role  $ps:$providesParticipantRole ?participant.
     	?role  $pq:$hasParticipantRole ?people.
-    	?people $rdfs:label ?peoplename
+    	?people $wdt:$hasName ?peoplename
   }LIMIT 8
 QUERY;
 
@@ -1796,7 +1794,7 @@ QUERY;
       VALUES ?place { $wd:$QID }.
       ?event $wdt:$instanceOf $wd:$event.
       ?event $wdt:$atPlace ?place.
-      ?event $rdfs:label ?eventlabel
+      ?event $wdt:$hasName ?eventlabel
   }ORDER BY ?random
   QUERY;
     $eventsQuery['query'] = <<<QUERY
@@ -1807,7 +1805,7 @@ QUERY;
        VALUES ?place { $wd:$QID }.
        ?event $wdt:$instanceOf $wd:$event.
        ?event $wdt:$atPlace ?place.
-       ?event $rdfs:label ?eventlabel
+       ?event $wdt:$hasName ?eventlabel
    }LIMIT 8
    QUERY;
       $result = blazegraphSearch($eventsQuery);
@@ -1822,7 +1820,7 @@ QUERY;
         ?place $p:$hasName  ?object .
      	 ?object $prov:wasDerivedFrom ?provenance .
       	 ?provenance $pr:$isDirectlyBasedOn ?source.
-      ?source $rdfs:label ?sourcelabel
+      ?source $wdt:$hasName ?sourcelabel
     }ORDER BY ?random
   QUERY;
       $result = blazegraphSearch($sourceQuery);
@@ -1838,10 +1836,10 @@ QUERY;
       ?place $wdt:$hasBroader ?bucket.
       ?otherp $wdt:$hasBroader ?bucket.
          FILTER (?otherp != ?place).
-      ?place $rdfs:label ?placeLabel.
-      ?otherp $rdfs:label ?placels.
+      ?place $wdt:$hasName ?placeLabel.
+      ?otherp $wdt:$hasName ?placels.
       ?otherp $wdt:$hasPlaceType ?ptypes.
-      ?ptypes $rdfs:label ?types.
+      ?ptypes $wdt:$hasName ?types.
         BIND(CONCAT(?placels," - " )  AS ?placelabels ) .
         BIND(CONCAT(?types," - " )  AS ?placeTypes ) .
         BIND(CONCAT(?placelabels,?types )  AS ?relatedPlace ) .
@@ -1864,7 +1862,7 @@ QUERY;
   WHERE{
       	VALUES ?plid { $wd:$QID }.
         ?place $wdt:$locatedIn ?plid.
-        ?place $rdfs:label ?placelabel.
+        ?place $wdt:$hasName ?placelabel.
   }ORDER BY ?random
   QUERY;
 
