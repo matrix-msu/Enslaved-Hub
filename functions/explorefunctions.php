@@ -723,7 +723,7 @@ function getFullRecordHtml(){
         }
       }
       else{
-        $recordVars['ECVO'] = $record['ecvo']['value'];
+        $recordVars['Ethnolisguistic Descriptor'] = $record['ecvo']['value'];
       }
     }
 
