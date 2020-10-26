@@ -1,11 +1,12 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?label ?geonames ?code ?description ?coordinates ?locIn ?project
+SELECT ?label ?geonames ?code ?description ?locIn ?project
 (group_concat(distinct ?name1; separator = "||") as ?name)
 (group_concat(distinct ?alternativename; separator = "||") as ?altname)
 (group_concat(distinct ?Ptype; separator = "||") as ?type)
 (group_concat(distinct ?locatedLabel; separator = ", ") as ?locatedIn)
+(group_concat(distinct ?coordinate; separator="||") AS ?coordinates)
   WHERE
 {
   VALUES ?place { $wd:$qid }.
@@ -25,7 +26,7 @@ SELECT ?label ?geonames ?code ?description ?coordinates ?locIn ?project
   OPTIONAL{ ?place $wdt:$modernCountryCode ?code.}
   OPTIONAL{?place $wdt:$hasName ?name1}.
   OPTIONAL{?place $wdt:$hasAlternateName ?alternativename}.
-  OPTIONAL{?place $wdt:$hasCoordinates ?coordinates}.
+  OPTIONAL{?place $wdt:$hasCoordinates ?coordinate}.
 
-}GROUP BY ?label ?geonames ?code ?description ?coordinates ?locIn ?project
+}GROUP BY ?label ?geonames ?code ?description ?locIn ?project
 QUERY;

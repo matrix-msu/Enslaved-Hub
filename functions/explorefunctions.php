@@ -610,6 +610,7 @@ function getFullRecordHtml(){
       die;
     }
     $record = $result[0];
+    // var_dump($record);die;
     //Get variables from query
     $recordVars = [];
 
@@ -758,7 +759,17 @@ function getFullRecordHtml(){
 
     //Coordinates
     if (isset($record['coordinates']) && isset($record['coordinates']['value']) && $record['coordinates']['value'] != ''){
-      $recordVars['Coordinates'] = $record['coordinates']['value'];
+        $coors = explode('||',$record['coordinates']['value']);
+        foreach($coors as $i => $cor){
+            $cor = explode(' ', $cor);
+            $lat = $cor[1];
+            $lat = substr($lat,0,-1);
+            $long = $cor[0];
+            $long = substr($long,6);
+            $coors[$i] = "Point($lat $long)";
+        }
+        $coors = implode('||',$coors);
+      $recordVars['Coordinates'] = $coors;
     }
 
     //Source
