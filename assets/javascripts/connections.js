@@ -222,7 +222,7 @@ function loadConnections(){
                 } else if (form == 'RelatedPlace') {
                     $('#relatedPlace').html('<div class="place-image"></div>' + connectionsArray['RelatedPlace-count'] + ' Related Places');
                 } else if (form == 'CloseMatch') {
-                    $('#closeMatch').html('<div class="person-image"></div>' + connectionsArray['CloseMatch-count'] + ' Close Matches');
+                    $('#match').html('<div class="person-image"></div>' + connectionsArray['CloseMatch-count'] + ' Matches');
                 }
             }
 
@@ -240,7 +240,7 @@ function loadConnections(){
                 $('#place').hide();
             }
             if (!connectionsArray['CloseMatch-count']) {
-                $('#closeMatch').hide();
+                $('#match').hide();
             }
             if (!connectionsArray['RelatedPlace-count']) {
                 $('#relatedPlace').hide();
