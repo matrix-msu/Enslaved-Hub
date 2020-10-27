@@ -176,29 +176,40 @@ function searchResults(preset, limit = 20, offset = 0)
             isSearching = false;
             result_array = JSON.parse(data);
 
-            if (preset == "all"){
-                var allCounters = result_array['total'];
-                var firstTypeWithResults = '';
-                for (var type in filtersToSearchType){
-                    var counter = allCounters[type+"count"]["value"];
-                    if (firstTypeWithResults == '' && counter > 0){
-                        firstTypeWithResults = type;
-                    }
+            var selected_type = display;
+            if (selected_type !== 'people') {
+                selected_type = selected_type.slice(0, -1);
+            }
+
+            var count_per_type = {
+                'people' : 0,
+                'events' : 0,
+                'places' : 0,
+                'sources' : 0
+            };
+
+            $.each(result_array['total']['type']['buckets'], function (_, bucket) {
+                count = bucket['doc_count']
+                type = bucket['key']
+                if (type === selected_type) {
+                    total_length = count;
+                }
+                if (type !== 'people') {
+                    type = `${type}s`;
+                }
+                count_per_type[type] = count;
+            });
+
+            if (preset == "all") {
+                $.each(count_per_type, function (type, count) {
                     var $tab = $('.categories #'+type);
-                    $tab.find('span').html(counter+" ");
-                    if (counter <= 0){
+                    $tab.find('span').html(count+" ");
+                    if (count <= 0){
                         $tab.hide();
                     } else {
                         $tab.show();
                     }
-                }
-
-                total_length = allCounters[display+"count"]["value"];
-                // todo:
-                // filter counters need to update too
-                // also filters are not working for all
-            } else {
-                total_length = JSON.parse(result_array['total']);
+                });
             }
 
             var showingResultsText = '';
@@ -250,41 +261,34 @@ function searchResults(preset, limit = 20, offset = 0)
                         filter_types: filtersToSearchType[display]
                     },
                     'success': function (data) {
-                        var allCounters = JSON.parse(data);
-                        fillFilterCounters(allCounters);
+                        data = JSON.parse(data);
+                        $(".filter-cat li").each(function(){
+                            $(this).addClass("hide-category");
+                        });
+                        $.each(data['aggregations'], function (category, aggregation) {
+                            if (category === 'No Sex Recorded' && aggregation['doc_count'] > 0) {
+                                $(`input[value='${category}'][data-category='Gender']`).parent().parent().removeClass('hide-category');
+                                return true;
+                            }
+                            $.each(aggregation['buckets'], function (_, bucket) {
+                                label = bucket['key'];
+                                var $input = $(`input[value='${label}'][data-category='${category}']`);
+
+                                if (category == 'Modern Countries') {
+                                    var $input = $(`[data-countryCode='${label}'][data-category='${category}']`);
+                                }
+
+                                if (bucket['doc_count'] > 0){
+                                    $input.parent().parent().removeClass('hide-category');
+                                }
+                            });
+                        });
                     }
                 });
             });
         }
     });
 }
-
-
-// fill in the counters next to the filters
-function fillFilterCounters(allCounters){
-    $(".filter-cat li").each(function(){
-        $(this).addClass("hide-category");
-    });
-    $.each(allCounters, function (type, data) {
-        $.each(data, function (category, fields) {
-            $.each(fields, function (label, count) {
-                if (label != "") {
-                    if (category == 'Modern Countries') {
-                        var $input = $(`[data-countryCode='${label}'][data-category='${category}']`);
-                    } else {
-                        var $input = $(`input[value='${label}'][data-category='${category}']`);
-                    }
-
-                    if (count > 0){
-                        var $li = $input.parent().parent();
-                        $li.removeClass('hide-category')
-                    }
-                }
-            });
-        });
-    });
-}
-
 
 
 ///******************************************************************* */

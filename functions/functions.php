@@ -415,9 +415,12 @@ HTML;
                 $placeQ = $record['id'];
 
                 //Located In
-                $locatedIn = "";
-                if (is_array($record['located_in']) && count($record['located_in']) > 0)
-                    $locatedIn = $record['located_in'][0];
+                $locatedIn = '';
+                $locatedInCount = 0;
+                if (is_array($record['located_in']) && count($record['located_in']) > 0) {
+                    $locatedIn = implode(', ', $record['located_in']);
+                    $locatedInCount = count($record['located_in']);
+                }
 
                 $placeType = '';
                 if (is_array($record['place_type']) && count($record['place_type']) > 0)
@@ -469,8 +472,12 @@ HTML;
                         }
 
                         $locatedInHtml = '';
-                        if ($locatedIn != ''){
+                        if ($locatedInCount == 1){
                             $locatedInHtml = "<div class='detail'><p class='detail-title'>Located In</p><p>$locatedIn</p></div>";
+                        }
+                        if ($locatedInCount > 1){
+                            $locatedIn = str_replace(",", ";", $locatedIn);
+                            $locatedInHtml = "<div class='detail'><p class='detail-title'>Located In</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Located In</span>$locatedIn</span></p></div>";
                         }
 
                         $geonamesHtml = '';

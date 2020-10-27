@@ -46,23 +46,33 @@ $(document).ready(function(){
             $.ajax({
                 url: BASE_URL + 'api/filteredCounts',
                 method: "GET",
-                data: {type: JS_EXPLORE_FILTERS,  category:JS_EXPLORE_FORM},
+                data: {
+                    field: JS_EXPLORE_FILTERS,
+                    type: JS_EXPLORE_FORM
+                },
                 'success': function (data) {
                     data = JSON.parse(data);
 
-                    $.each(data, function(label, count) {
-                        if (label != ""){
-                            var span = $("a:contains("+label+")").find('span');
-                            if ($(span).length > 0){
-                                $(span).html(count);
-                            }
+                    $.each(data['aggregations'][JS_EXPLORE_FILTERS]['buckets'], function(_, bucket) {
+                        var span = $("a:contains("+bucket['key']+")").find('span');
+                        if ($(span).length > 0){
+                            $(span).html(bucket['doc_count']);
                         }
                     });
+                    if (JS_EXPLORE_FILTERS === 'Gender') {
+                        var span = $("a:contains(No Sex Recorded)").find('span');
+                        if ($(span).length > 0){
+                            $(span).html(data['aggregations']['No Sex Recorded']['doc_count']);
+                        }
+                    }
                     $(".cards li").each(function(){
                         if($(this).find("span").html() != 0){
                             $(this).removeClass("hide-category");
                         }
                     });
+                },
+                'error': function (data) {
+                    console.log(data)
                 }
             });
         }
