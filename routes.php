@@ -7,17 +7,17 @@ $GLOBALS['api_routes'] = array(
     'api/blazegraph' => array('functions.php', 'blazegraph'),
     'api/updateConstants' => array('functions.php', 'updateConstants'),
 	'api/getFullRecordHtml' => array('explorefunctions.php', 'getFullRecordHtml'),
-    'api/getDateRange' => array('search.php', 'dateRange'),
+    'api/getDateRange' => array('search.php', 'get_date_range'),
     'api/getProjectFullInfo' => array('explorefunctions.php', 'getProjectFullInfo'),
     'api/getFullRecordConnections' => array('explorefunctions.php', 'getFullRecordConnections'),
     'api/getCrawlerResults' => array('crawler_jquery.php', ''),
-    'api/keywordSearch' => array('search.php', 'keyword_search'),
+    'api/keywordSearch' => array('search.php', 'get_keyword_search_results'),
     'api/checkCSV' => array('createCSV.php', 'check_csv'),
     'api/downloadCSV' => array('createCSV.php', 'download_csv'),
-    'api/getAllCounts' => array('search.php', 'all_counts_ajax'),
-    'api/filteredCounts' => array('search.php', 'filtered_counts'),
-    'api/searchFilterCounts' => array('search.php', 'search_filter_counts'),
-    'api/getFeatured' => array('search.php', 'featured_items'),
+    'api/getTypeCounts' => array('search.php', 'get_type_counts'),
+    'api/filteredCounts' => array('search.php', 'get_field_counts'),
+    'api/searchFilterCounts' => array('search.php', 'get_search_filters'),
+    'api/getFeatured' => array('search.php', 'get_featured_records'),
     'api/getColumns' => array('search.php', 'get_columns')
 );
 

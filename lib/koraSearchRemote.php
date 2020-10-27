@@ -407,8 +407,6 @@ function KORA_Search($token,$pid,$sid,$koraClause,$fields,$order=array(),$start=
     $data["forms"] = json_encode($output);
     $data["format"] = "KORA_OLD";
 
-    // echo "<script>console.log(".json_encode($data["forms"]).")</script>";
-
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, koraApiURL);
     if(!empty($userInfo)) {

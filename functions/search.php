@@ -3,396 +3,240 @@ require_once(BASE_PATH . 'vendor/autoload.php');
 require_once(BASE_PATH . 'functions/functions.php');
 use Elasticsearch\ClientBuilder;
 
-function all_counts_ajax() {
-    echo json_encode(all_counts());
+function get_type_counts() {
+    $qi = new QueryIndex();
+    $qi->setTypeCounts();
+    echo json_encode($qi->getResults());
 }
 
-function dateRange() {
-    // NOTE: The results here are wildly different depending on
-    // versions of elasticsearch, 7.5+ look at value as string
-    // for 7.4 and lower look at value.
-    $hosts = [
-        ELASTICSEARCH_URL
-    ];
-
-    $es = ClientBuilder::create()
-                        ->setHosts($hosts)
-                        ->build();
-
-    $params = [
-        'index' => ELASTICSEARCH_INDEX_NAME,
-        'body' => [
-            'size' => 0,
-            'aggs' => [
-                'max_date' => ['max' => ['field' => 'date', 'format' => 'yyyy']],
-                'min_date' => ['min' => ['field' => 'date', 'format' => 'yyyy']],
-                'max_end_date' => ['max' => ['field' => 'end_date', 'format' => 'yyyy']],
-                'min_end_date' => ['min' => ['field' => 'end_date', 'format' => 'yyyy']]
-            ]
-        ]
-    ];
-
-    $res = $es->search($params);
+function get_date_range() {
+    $qi = new QueryIndex();
+    $qi->setDateRange();
+    $res = $qi->getResults();
     return json_encode($res['aggregations']);
 }
 
-function all_counts() {
-    $hosts = [
-        ELASTICSEARCH_URL
-    ];
+// formally filtered_counts
+function get_field_counts() {
+    $field = $type = '';
+    if (isset($_GET['field']))
+        $field = $_GET['field'];
 
-    $es = ClientBuilder::create()
-                        ->setHosts($hosts)
-                        ->build();
-
-    $params = [
-        'index' => ELASTICSEARCH_INDEX_NAME,
-        'body' => [
-            'query' => [
-                'bool' => [
-                    'must' => [
-                        'match_all' => new \stdClass()
-                    ],
-                    'filter' => []
-                ]
-            ]
-        ]
-    ];
-
-    $res = $es->count($params);
-    $total = [];
-    $total['all'] = $res['count'];
-
-    foreach (['people', 'event', 'place', 'source'] as $type) {
-        $tmp_params = $params;
-        array_push(
-            $tmp_params['body']['query']['bool']['filter'],
-            ['term' => ['type' => $type]]
-        );
-        $res = $es->count($tmp_params);
-        // TODO::this is annoying, will require a refactor on index (pluralize types)
+    if (isset($_GET['type'])) {
+        $type = strtolower($_GET['type']);
         if ($type != 'people')
-            $type = $type . 's';
-        $total[$type] = $res['count'];
+            $type = substr_replace($type, '', -1);
     }
 
-    return $total;
+    $qi = new QueryIndex([
+        'field' => $field,
+        'type' => $type
+    ]);
+    $qi->setFilteredAggs();
+    echo json_encode($qi->getResults());
 }
 
-function search_filter_counts() {
-    $hosts = [
-        ELASTICSEARCH_URL
-    ];
+function get_featured_records() {
+    $type = $template = '';
+    if (isset($_GET['templates'])) {
+        $template = $_GET['templates'];
 
-    $es = ClientBuilder::create()
-                        ->setHosts($hosts)
-                        ->build();
+        if ($template == 'Person')
+            $type = 'people';
+        else
+            $type = strtolower($template);
+    }
 
+    $qi = new QueryIndex([
+        'type' => $type,
+        'size' => 4
+    ]);
+    $qi->setFunctionScore();
+    $res = $qi->getResults();
+    return createCards($res['hits']['hits'], [$template], [], 'featured');
+}
+
+function get_search_filters() {
     $filters = [];
-    if (isset($_GET['filters'])) {
+    if (isset($_GET['filters']))
         $filters = $_GET['filters'];
-    }
 
-    $filter_types = '';
-    if (isset($_GET['filter_types'])){
-        $filter_types = $_GET['filter_types'];
-    }
-
-    $search_type = '';
-    if (isset($_GET['search_type'])){
-        $search_type = $_GET['search_type'];
-    }
-
+    $query = '';
     if (array_key_exists('searchbar', $filters)) {
-        $query = implode(' AND ', $filters['searchbar']);
+        $query = $filters['searchbar'][0];
         unset($filters['searchbar']);
     }
 
-    if ($search_type != 'people')
-        $search_type = substr_replace($search_type, '', -1);
+    $types = '';
+    if (isset($_GET['filter_types']))
+        $types = $_GET['filter_types'];
 
-    $filter_assoc = [
-        'people' => [
-            'Gender' => [
-                'sex' => sexTypes
-            ],
-            'Age Category' => [
-                'age_category' => ageCategory
-            ],
-            'Ethnodescriptor' => [
-                'ethnodescriptor' => ethnodescriptor
-            ],
-            'Role Types' => [
-                'participant_role' => roleTypes
-            ],
-            'Status' => [
-                'person_status' => personstatus
-            ],
-            'Occupation' => [
-                'occupation' => occupation
-            ]
-        ],
-        'event' => [
-            'Event Type' => [
-                'event_type' => eventTypes
-            ]
-        ],
-        'place' => [
-            'Place Type' => [
-                'place_type' => placeTypes
-            ],
-            'Modern Countries' => [
-                'modern_country_code' => countrycode
-            ]
-        ],
-        'source' => [
-            'Source Type' => [
-                'source_type' => sourceTypes
-            ]
-        ],
-        'project' => [
-            'Projects' => [
-                'generated_by' => projects
-            ]
-        ]
-    ];
-
-    $total = [];
-
-    foreach ($filter_assoc as $type => $labels) {
-        if (in_array($type, $filter_types)) {
-            $params = [
-                'index' => ELASTICSEARCH_INDEX_NAME,
-                'body' => [
-                    'query' => [
-                        'bool' => [
-                            'must' => [],
-                            'filter' => [
-                                ['term' => ['type' => $search_type]]
-                            ]
-                        ]
-                    ]
-                ]
-            ];
-
-            if ($query) {
-                $params['body']['query']['bool']['must'] = [
-                    'query_string' => [
-                        'fields' => [
-                            'label',
-                            'generated_by',
-                            'source_type',
-                            'source_repository',
-                            'place_type',
-                            'modern_country_code',
-                            'located_in',
-                            'event_type',
-                            'provides_participant_role',
-                            'name^5',
-                            'age',
-                            'occupation',
-                            'descriptive_Occupation',
-                            'race',
-                            'sex',
-                            'person_status',
-                            'relationships',
-                            'ethnodescriptor',
-                            'participant_role',
-                            'date',
-                            'end_date',
-                            'age_category'
-                        ],
-                        'lenient' => true,
-                        'query' => $query
-                    ]
-                ];
-            } else {
-                $params['body']['query']['bool']['must'] = [
-                    'match_all' => new \stdClass()
-                ];
-            }
-
-            if ($filters) {
-                foreach ($filters as $key => $value) {
-                    if ($key == 'date') {
-                        $values = explode('-', $value[0]);
-                        $gte_date = $values[0] . '||/y';
-                        $lte_date = $values[1] . '||/y';
-                        // Note: Will have to update format
-                        // once more exact dates get indexed.
-
-                        array_push(
-                            $params['body']['query']['bool']['filter'],
-                            ['bool' => [
-                                'should' => [
-                                    ['range' => [
-                                        'date' => [
-                                            'gte' => $gte_date,
-                                            'lte' => $lte_date,
-                                            'format' => 'yyyy']
-                                            ]
-                                        ],
-                                    ['range' => [
-                                        'circa' => [
-                                            'gte' => $gte_date,
-                                            'lte' => $lte_date,
-                                            'format' => 'yyyy'
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]);
-                    }
-                }
-            }
-
-            $total[$type] = [];
-
-            foreach ($labels as $label => $fields) {
-                $total[$type][$label] = [];
-                foreach ($fields as $field => $values) {
-                    foreach (array_keys($values) as $value) {
-                        $tmp_params = $params;
-
-                        if ($value == 'No Sex Recorded') {
-                            $tmp_params['body']['query']['bool']['must_not'] = ['exists' => ['field' => $field]];
-                        } else {
-                            array_push(
-                                $tmp_params['body']['query']['bool']['filter'],
-                                ['term' => [$field . '.raw' => $value]]
-                            );
-                        }
-
-                        $res = $es->count($tmp_params);
-
-                        $total[$type][$label][$value] = $res['count'];
-                    }
-                }
-            }
-        }
+    $type = '';
+    if (isset($_GET['search_type'])) {
+        $type = $_GET['search_type'];
+        if ($type != 'people')
+            $type = substr_replace($type, '', -1);
     }
 
-    return json_encode($total);
+    $qi = new QueryIndex([
+        'type' => $type
+    ]);
+
+    if ($query)
+        $qi->setQueryString($query);
+
+    $qi->setCategorizedfilteredAggs($filters, $types);
+
+    return json_encode($qi->getResults());
 }
 
-function filtered_counts() {
-    $hosts = [
-        ELASTICSEARCH_URL
-    ];
-
-    $es = ClientBuilder::create()
-                        ->setHosts($hosts)
-                        ->build();
-
-    $raw_field = '';
-    if (isset($_GET['type'])){
-        $raw_field = $_GET['type'];
-    }
-
-    $category = '';
-    if (isset($_GET['category'])){
-        $category = $_GET['category'];
-    }
-
-    $field_translate = [
-        'Event Type' => [
-            'event_type' => eventTypes
-        ],
-        'Date' => [
-            'date' => ''
-        ],
-        'Gender' => [
-            'sex' => sexTypes
-        ],
-        'Role Types' => [
-            'participant_role' => roleTypes
-        ],
-        'Age Category' => [
-            'age_category' => ageCategory
-        ],
-        'Ethnodescriptor' => [
-            'ethnodescriptor' => ethnodescriptor
-        ],
-        'Place Type' => [
-            'place_type' => placeTypes
-        ],
-        'Source Type' => [
-            'source_type' => sourceTypes
-        ]
-    ];
-
-    if (
-        !in_array($category, ['Events', 'People', 'Places', 'Sources']) |
-        !array_key_exists($raw_field, $field_translate)
-    )
-        die;
-
-    $category = strtolower($category);
-
-    if ($category != 'people')
-        $category = substr_replace($category, '', -1);
-
-    $params = [
-        'index' => ELASTICSEARCH_INDEX_NAME,
-        'body' => [
-            'query' => [
-                'bool' => [
-                    'must' => [
-                        'match_all' => new \stdClass()
-                    ],
-                    'filter' => [
-                        ['term' => ['type' => $category]]
-                    ]
-                ]
-            ]
-        ]
-    ];
-
-    $total = [];
-
-    foreach ($field_translate[$raw_field] as $field => $values) {
-        foreach (array_keys($values) as $value) {
-            $tmp_params = $params;
-
-            if ($value == 'No Sex Recorded') {
-                $tmp_params['body']['query']['bool']['must_not'] = ['exists' => ['field' => $field]];
-            } else {
-                array_push(
-                    $tmp_params['body']['query']['bool']['filter'],
-                    ['term' => [$field . '.raw' => $value]]
-                );
-            }
-
-            $res = $es->count($tmp_params);
-
-            $total[$value] = $res['count'];
-        }
-    }
-
-    return json_encode($total);
-}
-
-function keyword_search() {
-    $hosts = [
-        ELASTICSEARCH_URL
-    ];
-
-    $es = ClientBuilder::create()
-                        ->setHosts($hosts)
-                        ->build();
-
-    $item_types = ['person', 'event', 'place', 'source'];
-    $filters = $templates = [];
-    $query = $preset = $item_type = $sort = '';
-    $size = 12;
-    $from = 0;
-    $get_all_counts = false;
+function get_keyword_search_results() {
+    $select_fields = '';
     if(isset($_GET['fields'])){
         $select_fields = $_GET['fields'];
     }
 
-    $convert_filters = [
+    $preset = '';
+    $get_all_counts = false;
+    if (isset($_GET['preset'])) {
+        $preset = $_GET['preset'];
+        if ($preset == 'all' && isset($_GET['display'])) {
+            $get_all_counts = true;
+            $preset = $_GET['display'];
+        }
+    }
+
+    $templates = '';
+    if (isset($_GET['templates'])) {
+        $templates = $_GET['templates'];
+    }
+
+    $filters = '';
+    if (isset($_GET['filters'])) {
+        $filters = $_GET['filters'];
+    }
+
+    $type = '';
+    if (isset($_GET['display'])) {
+        $type = $_GET['display'];
+        if ($type != 'people')
+            $type = substr_replace($type, '', -1);
+    }
+
+    $sort_field = '';
+    if (isset($_GET['sort_field'])) {
+        $sort_field = $_GET['sort_field'];
+    }
+
+    $from = '';
+    if (array_key_exists('offset', $filters)) {
+        $from = $filters['offset'];
+        unset($filters['offset']);
+    }
+
+    $size = '';
+    if (array_key_exists('limit', $filters)) {
+        $size = $filters['limit'];
+        unset($filters['limit']);
+    }
+
+    $sort = '';
+    if (array_key_exists('sort', $filters)) {
+        $sort = $filters['sort'];
+        unset($filters['sort']);
+    }
+
+    $qi = new QueryIndex([
+        'size' => $size,
+        'from' => $from
+    ]);
+
+    if ($sort_field && $sort) {
+        $qi->setSort($sort_field, $sort);
+    }
+
+    if (array_key_exists('name', $filters)) {
+        $qi->setMatchQuery('name', $filters['name'][0]);
+        unset($filters['name']);
+    } else if (array_key_exists('place_name', $filters)) {
+        $qi->setTermQuery('label', $filters['place_name'][0]);
+        unset($filters['place_name']);
+    } else if (array_key_exists('searchbar', $filters)) {
+        $qi->setQueryString($filters['searchbar'][0]);
+        unset($filters['searchbar']);
+    }
+
+    $qi->filteredBasic($filters, $type);
+
+    // NOTE::cannot get all type counts with type filter
+    // applied by default, applying type after avoids this.
+    $qit = clone $qi;
+    $qit->setTypeCounts();
+    $qit->params['size'] = 0;
+    $res = $qit->getResults();
+    $total = $res['aggregations'];
+
+    $qi->setType($type);
+    $res = $qi->getResults();
+
+    return @createCards($res['hits']['hits'], $templates, $select_fields, $preset, $total);
+}
+
+class QueryIndex {
+    public $params = [
+        'index' => ELASTICSEARCH_INDEX_NAME,
+        'body' => [
+            'query' => [
+                'bool' => [
+                    'must' => [],
+                    'filter' => []
+                ]
+            ],
+            'aggs' => [],
+            'size' => 0,
+            'track_total_hits' => true
+        ]
+    ];
+
+    private static $categorizedEHFieldsToES = [
+        'people' => [
+            'Gender' => 'sex',
+            'Age Category' => 'age_category',
+            'Ethnodescriptor' => 'ethnodescriptor',
+            'Role Types' => 'participant_role',
+            'Status' => 'person_status',
+            'Occupation' => 'occupation'
+        ],
+        'event' => [
+            'Event Type' => 'event_type'
+        ],
+        'place' => [
+            'Place Type' => 'place_type',
+            'Modern Countries' => 'modern_country_code'
+        ],
+        'source' => [
+            'Source Type' => 'source_type'
+        ],
+        'project' => [
+            'Projects' => 'generated_by'
+        ]
+    ];
+
+    private static $EHFieldsToES = [
+        'Gender' => 'sex',
+        'Age Category' => 'age_category',
+        'Ethnodescriptor' => 'ethnodescriptor',
+        'Role Types' => 'participant_role',
+        'Status' => 'person_status',
+        'Occupation' => 'occupation',
+        'Event Type' => 'event_type',
+        'Place Type' => 'place_type',
+        'Modern Countries' => 'modern_country_code',
+        'Source Type' => 'source_type',
+        'Projects' => 'generated_by'
+    ];
+
+    private static $convertFilters = [
         'gender' => 'sex',
         'role_types' => 'participant_role',
         'status' => 'person_status',
@@ -401,67 +245,71 @@ function keyword_search() {
         'modern_countries' => 'modern_country_code'
     ];
 
-    if (isset($_GET['column'])) {
-        $columns = $_GET['column'];
+    public function __construct(array $arguments = array()) {
+        $this->es = ClientBuilder::create()
+            ->setHosts([ELASTICSEARCH_URL])
+            ->build();
+
+        $this->params['body']['query']['bool']['must'] = [
+            'match_all' => new \stdClass()
+        ];
+
+        if (!empty($arguments)) {
+            foreach ($arguments as $property => $argument) {
+                $this->{$property} = $argument;
+            }
+        }
+
+        if (property_exists($this, 'type')) {
+            $this->params['body']['query']['bool']['filter'] = [
+                ['term' => ['type' => $this->type]]
+            ];
+        }
+
+        foreach (['size', 'from'] as $property) {
+            if (property_exists($this, $property)) {
+                $this->params['body'][$property] = $this->$property;
+            }
+        }
     }
 
-    if (isset($_GET['preset'])) {
-        $preset = $_GET['preset'];
-    }
-
-    if ($preset == 'all' && isset($_GET['display'])) {
-        $get_all_counts = true;
-        $preset = $_GET['display'];
-    }
-
-    if (isset($_GET['templates'])) {
-        $templates = $_GET['templates'];
-    }
-
-    if (isset($_GET['filters'])) {
-        $filters = $_GET['filters'];
-    }
-
-    if (isset($_GET['display'])) {
-        $filters['type'] = $_GET['display'];
-    }
-
-    if (array_key_exists('searchbar', $filters)) {
-        $query = implode(' AND ', $filters['searchbar']);
-        unset($filters['searchbar']);
-    }
-
-    if (array_key_exists('offset', $filters)) {
-        $from = $filters['offset'];
-        unset($filters['offset']);
-    }
-
-    if (array_key_exists('limit', $filters)) {
-        $size = $filters['limit'];
-        unset($filters['limit']);
-    }
-
-    if (array_key_exists('sort', $filters)) {
-        $sort = $filters['sort'];
-        unset($filters['sort']);
-    }
-
-    $params = [
-        'index' => ELASTICSEARCH_INDEX_NAME,
-        'body' => [
-            'query' => [
-                'bool' => [
-                    'must' => []
+    private function setSingleAggs($label, $field, $type = '') {
+        if ($label == 'Gender') {
+            $this->params['body']['aggs']['No Sex Recorded'] = [
+                'missing' => [
+                    'field' => $field . '.raw'
                 ]
-            ],
-            'size' => $size,
-            'from' => $from,
-            'track_total_hits' => TRUE
-        ]
-    ];
+            ];
+        }
 
-    if ($query) {
-        $params['body']['query']['bool']['must'] = [
+        $this->params['body']['aggs'][$label] = [
+            'terms' => [
+                'size' => 1000,
+                'field' => $field . '.raw'
+            ],
+            'meta' => [
+                'type' => $type
+            ]
+        ];
+    }
+
+    private function setTermAsBody($field, $value) {
+        $this->params['body']['query'] = [
+            'term' => [
+                $field => $value
+            ]
+        ];
+    }
+
+    public function setType($type) {
+        array_push(
+            $this->params['body']['query']['bool']['filter'],
+            ['term' => ['type' => $type]]
+        );
+    }
+
+    public function setQueryString($text) {
+        $this->params['body']['query']['bool']['must'] = [
             'query_string' => [
                 'fields' => [
                     'label',
@@ -477,6 +325,7 @@ function keyword_search() {
                     'age',
                     'occupation',
                     'descriptive_Occupation',
+                    // 'descriptive_occupation',
                     'race',
                     'sex',
                     'person_status',
@@ -488,238 +337,262 @@ function keyword_search() {
                     'age_category'
                 ],
                 'lenient' => true,
-                'query' => $query
+                'default_operator' => 'AND',
+                'query' => $text
             ]
-        ];
-    } else {
-        $params['body']['query']['bool']['must'] = [
-            'match_all' => new \stdClass()
         ];
     }
 
-    if (array_key_exists('name', $filters)) {
-        $params['body']['query']['bool']['must'] = [
-            'match' => [
-                'name' => [
-                    'query' => $filters['name'][0]
+    public function setSort($field, $order) {
+        $this->params['body']['sort'] = [
+            $field => ['order' => $order]
+        ];
+    }
+
+    // public function __call($method, $arguments) {
+    //     $arguments = array_merge(array("stdObject" => $this), $arguments); // Note: method argument 0 will always referred to the main class ($this).
+    //     if (isset($this->{$method}) && is_callable($this->{$method})) {
+    //         return call_user_func_array($this->{$method}, $arguments);
+    //     } else {
+    //         throw new Exception("Fatal error: Call to undefined method stdObject::{$method}()");
+    //     }
+    // }
+
+    public function setDateRange() {
+        $this->params['body'] = [
+            'size' => 0,
+            'aggs' => [
+                'max_date' => ['max' => ['field' => 'date', 'format' => 'yyyy']],
+                'min_date' => ['min' => ['field' => 'date', 'format' => 'yyyy']],
+                'max_end_date' => ['max' => ['field' => 'end_date', 'format' => 'yyyy']],
+                'min_end_date' => ['min' => ['field' => 'end_date', 'format' => 'yyyy']]
+            ]
+        ];
+    }
+
+    public function setTypeCounts() {
+        $this->params['body']['aggs'] = [
+            'type' => [
+                'terms' => [
+                    'field' => 'type'
                 ]
             ]
         ];
-        unset($filters['name']);
-    } elseif (array_key_exists('place_name', $filters)) {
-        $params['body']['query']['bool']['must'] = [
-            'term' => [
-                'label' => $filters['place_name'][0]
+    }
+
+    public function setMatchQuery($field, $value) {
+        $this->params['body']['query']['bool']['must'] = [
+            'match' => [
+                $field => [
+                    'query' => $value
+                ]
             ]
         ];
-        unset($filters['place_name']);
     }
 
-    if ($sort) {
-        $sort_field = $_GET['sort_field'];
-        $params['body']['sort'] = [
-            $sort_field => ['order' => $sort]
+    public function setTermQuery($field, $value) {
+        $this->params['body']['query']['bool']['must'] = [
+            'term' => [
+                $field => $value
+            ]
         ];
     }
 
-    if ($filters) {
-        $terms = [];
+    public function setFilteredAggs() {
+        if (property_exists($this, 'field')) {
+            $this->setSingleAggs($this->field, self::$EHFieldsToES[$this->field]);
+        } else {
+            foreach (self::$EHFieldsToES as $label => $field) {
+                $this->setSingleAggs($label, $field);
+            }
+        }
+    }
+
+    public function setCategorizedfilteredAggs($filters, $types) {
         foreach ($filters as $key => $value) {
-            if (in_array($key, array_keys($convert_filters)))
-                $key = $convert_filters[$key];
+            if ($key == 'date') {
+                $rf = new RangeFilter($value, $this);
+                $rf->setDateRangeFilter();
+            }
+        }
 
-            if ($key == 'type') {
-                // TODO::this is annoying, will require a refactor on index (pluralize types)
-                if ($value != 'people')
-                    $value = substr_replace($value, '', -1);
-                // used for all preset to determine base type
-                $item_type = $value;
-                array_push($terms, ['term' => [$key => $value]]);
-                break;
+        foreach ($types as $type) {
+            foreach (self::$categorizedEHFieldsToES[$type] as $label => $field) {
+                $this->setSingleAggs($label, $field, $type);
+            }
+        }
+    }
+
+    public function filteredBasic($filters, $type) {
+        foreach ($filters as $key => $value) {
+            if (in_array($key, array_keys(self::$convertFilters))) {
+                $key = self::$convertFilters[$key];
             }
 
-            // for filter by ref item id
-            if (in_array($key, $item_types)) {
-                $ref_type = $_GET['display'];
-                if ($ref_type != 'people')
-                    $ref_type = substr_replace($ref_type, '', -1);
-
-                // Have to do a search here in order to get the exact refs found in
-                // the full record
-                $res = $es->search([
-                    'index' => ELASTICSEARCH_INDEX_NAME,
-                    'body' => ['query' => ['term' => ['id' => $value[0]]], 'size' => 1]
-                ]);
-
-                // TODO::if erroring out here may want to check may want to check if hits has any results
-                array_push($terms, ['terms' => ['id' => $res['hits']['hits'][0]['_source'][ref_ . $ref_type]]]);
-                break;
-            }
-
-            if ($key == 'date' | $key == 'age') {
-                $values = explode('-', $value[0]);
-                $range_filter = [];
-                if ($key == 'date') {
-                    $gte_date = $values[0] . '||/y';
-                    $lte_date = $values[1] . '||/y';
-                    // Note: Will have to update format
-                    // once more exact dates get indexed.
-
-                    $range_filter = [
-                        'bool' => [
-                            'should' => [
-                                ['range' => [
-                                    'date' => [
-                                        'gte' => $gte_date,
-                                        'lte' => $lte_date,
-                                        'format' => 'yyyy']
-                                        ]
-                                    ],
-                                ['range' => [
-                                    'circa' => [
-                                        'gte' => $gte_date,
-                                        'lte' => $lte_date,
-                                        'format' => 'yyyy'
-                                        ]
-                                    ]
-                                ]
+            if (in_array($key, ['person', 'event', 'place', 'source'])) {
+                $qi = new QueryIndex(['size' => 1]);
+                $qi->setTermAsBody('id', $value[0]);
+                $res = $qi->getResults();
+                if (count($res['hits']['hits']) > 0) {
+                    array_push(
+                        $this->params['body']['query']['bool']['filter'],
+                        [
+                            'terms' => [
+                                'id' => $res['hits']['hits'][0]['_source']['ref_' . $type]
                             ]
                         ]
-                    ];
-                } else {
-                    $range_filter = [
-                        'range' => [
-                            $key => [
-                                'gte' => $values[0],
-                                'lte' => $values[1]
-                            ]
-                        ]
-                    ];
+                    );
                 }
-                array_push($terms, $range_filter);
+            } else if ($key == 'date' | $key == 'age') {
+                $rf = new RangeFilter($value[0], $this);
+                if ($key == 'date')
+                    $rf->setDateRangeFilter();
+                else
+                    $rf->setAgeRangeFilter();
             } else if ($key == 'modern_country_code') {
                 $codes = [];
                 foreach ($value as $country) {
                     array_push($codes, reversecountrycode[$country]);
                 }
-                array_push($terms, ['terms' => ['modern_country_code.raw' => $codes]]);
+                array_push(
+                    $this->params['body']['query']['bool']['filter'],
+                    ['terms' => ['modern_country_code.raw' => $codes]]
+                );
+            } else if (in_array('No Sex Recorded', $value)) {
+                $should = [
+                    'bool' => [
+                        'should' => [
+                            [
+                                'bool' => [
+                                    'must_not' => [
+                                        'exists' => [
+                                            'field' => $key
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ];
+                // Finding the extra genders to add to the filter.
+                $value = array_diff($value, ['No Sex Recorded']);
+                if ($value) {
+                    // NOTE::Elasticsearch will freak out if array values aren't reset.
+                    // Using array_values() to avoid this.
+                    array_push(
+                        $should['bool']['should'],
+                        ['terms' => [$key . '.raw' => array_values($value)]]
+                    );
+                }
+                array_push(
+                    $this->params['body']['query']['bool']['filter'],
+                    $should
+                );
             } else {
-                // In order to filter a does not exist query alongside term filters of the
-                // same field, you must do this insanely nested bullshit.
-                if (in_array('No Sex Recorded', $value)) {
-                    $should = ['bool' => ['should' => array(['bool' => ['must_not' => ['exists' => ['field' => $key]]]])]];
-                    $value = array_diff($value, ['No Sex Recorded']);
-                    if ($value) {
-                        // Elasticsearch will freak out if array values aren't reset.
-                        array_push($should['bool']['should'], ['terms' => [$key . '.raw' => array_values($value)]]);
-                    }
-                    array_push($terms, $should);
-                } else {
-                    array_push($terms, ['terms' => [$key . '.raw' => $value]]);
-                }
+                array_push(
+                    $this->params['body']['query']['bool']['filter'],
+                    ['terms' => [$key . '.raw' => $value]]
+                );
             }
         }
-        $params['body']['query']['bool']['filter'] = $terms;
     }
 
-    $res = $es->search($params);
-    $single_total = $res['hits']['total']['value'];
-
-    if ($get_all_counts && $item_type) {
-        $total = [];
-        unset($params['body']['from']);
-        $params['body']['size'] = 0;
-        foreach ($item_types as $type) {
-            // TODO::this is annoying, will require a refactor on index (pluralize types)
-            if ($type == 'person') {
-                $type = 'people';
-                $count_key = $type . 'count';
-            } else
-                $count_key = $type . 'scount';
-
-            if ($type == $item_type)
-                // TODO::refactor front end to ignore pointless value key
-                $total[$count_key]['value'] = $single_total;
-            else {
-                foreach ($params['body']['query']['bool']['filter'] as $key => $value) {
-                    if (array_key_exists('term', $value) && array_key_exists('type', $value['term'])) {
-                        $params['body']['query']['bool']['filter'][$key]['term']['type'] = $type;
-                        break;
-                    }
-                }
-                $count_res = $es->search($params);
-                // TODO::refactor front end to ignore pointless value key
-                $total[$count_key]['value'] = $count_res['hits']['total']['value'];
-            }
-        }
-    } else {
-        $total = $single_total;
-    }
-
-    $formattedData = @createCards($res['hits']['hits'], $templates, $select_fields, $preset, $total);
-
-    return $formattedData;
-}
-
-function featured_items() {
-    $hosts = [
-        ELASTICSEARCH_URL
-    ];
-
-    $es = ClientBuilder::create()
-                        ->setHosts($hosts)
-                        ->build();
-
-    $preset = 'featured';
-
-    if (isset($_GET['templates'])) {
-        $template = $_GET['templates'];
-    }
-
-    if ($template == 'Person')
-        $type = 'people';
-    else
-        $type = strtolower($template);
-
-    if ($type == 'people') {
-        $must = [
-            ['exists' => ['field' => 'name']],
-            ['exists' => ['field' => 'person_status']],
+    public function setFunctionScore() {
+        $exist_fields = [
             ['exists' => ['field' => 'date']],
             ['exists' => ['field' => 'place']]
         ];
-    } else {
-        $must = [
-            ['exists' => ['field' => 'event_type']],
-            ['exists' => ['field' => 'date']],
-            ['exists' => ['field' => 'place']]
+
+        $append_fields = [
+            ['exists' => ['field' => 'event_type']]
         ];
-    }
 
+        if ($this->type == 'people') {
+            $append_fields = [
+                ['exists' => ['field' => 'name']],
+                ['exists' => ['field' => 'person_status']],
+            ];
+        }
 
-    $params = [
-        'index' => ELASTICSEARCH_INDEX_NAME,
-        'body' => [
+        $this->params['body'] = [
             'query' => [
                 'function_score' => [
                     'query' => [
                         'bool' => [
-                            'must' => $must,
+                            'must' => array_merge($exist_fields, $append_fields),
                             'filter' => [
-                                ['term' => ['type' => $type]]
+                                ['term' => ['type' => $this->type]]
                             ]
                         ]
                     ],
                     'random_score' => new \stdClass()
                 ]
             ],
-            'size' => 4
-        ]
-    ];
+            'size' => $this->size
+        ];
+    }
 
-    $res = $es->search($params);
-    $select_fields = array();
-    return createCards($res['hits']['hits'], [$template], $select_fields ,$preset);
+    public function getResults() {
+        if (empty($this->params['body']['aggs'])) {
+            unset($this->params['body']['aggs']);
+        }
+
+        return $this->es->search($this->params);
+    }
+}
+
+class RangeFilter extends QueryIndex {
+    protected function __construct($range_str, $parent) {
+        $this->_parent = $parent;
+        $this->range = explode('-', $range_str);
+    }
+
+    protected function setDateRangeFilter() {
+        // Note: Will have to update format
+        // once more exact dates get indexed.
+
+        $gte_date = $this->range[0] . '||/y';
+        $lte_date = $this->range[1] . '||/y';
+
+        array_push(
+            $this->_parent->params['body']['query']['bool']['filter'],
+            [
+                'bool' => [
+                    'should' => [
+                        ['range' => [
+                            'date' => [
+                                'gte' => $gte_date,
+                                'lte' => $lte_date,
+                                'format' => 'yyyy']
+                                ]
+                            ],
+                        ['range' => [
+                            'circa' => [
+                                'gte' => $gte_date,
+                                'lte' => $lte_date,
+                                'format' => 'yyyy'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
+
+    protected function setAgeRangeFilter() {
+        array_push(
+            $this->_parent->params['body']['query']['bool']['filter'],
+            [
+                'range' => [
+                    'age' => [
+                        'gte' => $this->range[0],
+                        'lte' => $this->range[1]
+                    ]
+                ]
+            ]
+        );
+    }
 }
 
 ?>
