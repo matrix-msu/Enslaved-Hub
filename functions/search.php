@@ -324,13 +324,13 @@ class QueryIndex {
                     'name^5',
                     'age',
                     'occupation',
-                    'descriptive_Occupation',
-                    // 'descriptive_occupation',
+                    'descriptive_occupation',
                     'race',
                     'sex',
                     'person_status',
                     'relationships',
                     'ethnodescriptor',
+                    'ethnonym_variant',
                     'participant_role',
                     'date',
                     'end_date',
@@ -434,14 +434,18 @@ class QueryIndex {
                 $qi->setTermAsBody('id', $value[0]);
                 $res = $qi->getResults();
                 if (count($res['hits']['hits']) > 0) {
-                    array_push(
-                        $this->params['body']['query']['bool']['filter'],
-                        [
-                            'terms' => [
-                                'id' => $res['hits']['hits'][0]['_source']['ref_' . $type]
+                    $ref_field = 'ref_' . $type;
+                    $document = $res['hits']['hits'][0]['_source'];
+                    if (array_key_exists($ref_field, $document)) {
+                        array_push(
+                            $this->params['body']['query']['bool']['filter'],
+                            [
+                                'terms' => [
+                                    'id' => $document[$ref_field]
+                                ]
                             ]
-                        ]
-                    );
+                        );
+                    }
                 }
             } else if ($key == 'date' | $key == 'age') {
                 $rf = new RangeFilter($value[0], $this);
