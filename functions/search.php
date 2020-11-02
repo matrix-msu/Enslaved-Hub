@@ -85,7 +85,10 @@ function get_search_filters() {
     if ($query)
         $qi->setQueryString($query);
 
-    $qi->setCategorizedfilteredAggs($filters, $types);
+    if ($filters)
+        $qi->setBasicFilters($filters, $type);
+
+    $qi->setCategorizedfilteredAggs($types);
 
     return json_encode($qi->getResults());
 }
@@ -129,21 +132,18 @@ function get_keyword_search_results() {
     }
 
     $from = '';
-    if (array_key_exists('offset', $filters)) {
-        $from = $filters['offset'];
-        unset($filters['offset']);
+    if (isset($_GET['offset'])) {
+        $from = $_GET['offset'];
     }
 
     $size = '';
-    if (array_key_exists('limit', $filters)) {
-        $size = $filters['limit'];
-        unset($filters['limit']);
+    if (isset($_GET['limit'])) {
+        $size = $_GET['limit'];
     }
 
     $sort = '';
-    if (array_key_exists('sort', $filters)) {
-        $sort = $filters['sort'];
-        unset($filters['sort']);
+    if (isset($_GET['sort'])) {
+        $sort = $_GET['sort'];
     }
 
     $qi = new QueryIndex([
@@ -166,7 +166,8 @@ function get_keyword_search_results() {
         unset($filters['searchbar']);
     }
 
-    $qi->filteredBasic($filters, $type);
+    if ($filters)
+        $qi->setBasicFilters($filters, $type);
 
     // NOTE::cannot get all type counts with type filter
     // applied by default, applying type after avoids this.
@@ -408,14 +409,7 @@ class QueryIndex {
         }
     }
 
-    public function setCategorizedfilteredAggs($filters, $types) {
-        foreach ($filters as $key => $value) {
-            if ($key == 'date') {
-                $rf = new RangeFilter($value, $this);
-                $rf->setDateRangeFilter();
-            }
-        }
-
+    public function setCategorizedfilteredAggs($types) {
         foreach ($types as $type) {
             foreach (self::$categorizedEHFieldsToES[$type] as $label => $field) {
                 $this->setSingleAggs($label, $field, $type);
@@ -423,7 +417,7 @@ class QueryIndex {
         }
     }
 
-    public function filteredBasic($filters, $type) {
+    public function setBasicFilters($filters, $type) {
         foreach ($filters as $key => $value) {
             if (in_array($key, array_keys(self::$convertFilters))) {
                 $key = self::$convertFilters[$key];

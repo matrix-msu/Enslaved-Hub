@@ -150,13 +150,9 @@ function searchResults(preset, limit = 20, offset = 0)
 {
     if(isSearching) return;
     isSearching = true;
-    filters['limit'] = limit;
     card_limit = limit;
-    filters['offset'] = offset;
     card_offset = offset;
-    if(sort != ''){
-      filters['sort'] = sort;
-    }
+
     var templates = ['gridCard', 'tableCard'];
     var selected_fields = [selected_fields_people, selected_fields_events, selected_fields_places, selected_fields_source];
     generateFilterCards();
@@ -170,7 +166,10 @@ function searchResults(preset, limit = 20, offset = 0)
             templates: templates,
             display: display,
             fields: selected_fields,
-            sort_field: sort_field
+            sort_field: sort_field,
+            limit: limit,
+            offset: offset,
+            sort: sort
         },
         'success': function (data) {
             isSearching = false;
@@ -212,13 +211,13 @@ function searchResults(preset, limit = 20, offset = 0)
                 });
             }
 
-            var showingResultsText = '';
+            var numberOfShownResults = card_limit + offset;
+
             if (total_length < card_limit) {
-                showingResultsText = "Showing " + total_length + " of " + total_length + " Results";
-            } else {
-                showingResultsText = "Showing " + (card_limit+offset) + " of " + total_length + " Results";
+                numberOfShownResults = total_length;
             }
-            $('.showing-results').html(showingResultsText);
+
+            $('.showing-results').html(`Showing ${numberOfShownResults} of ${total_length} Results`);
 
             if (total_length <= 0){
                 // clear old results
@@ -248,43 +247,45 @@ function searchResults(preset, limit = 20, offset = 0)
                 $('#view_visual').show();
             }
 
-            //Wait till doc is ready
-            $(document).ready(function(){
-                appendCards();
-                setPagination(total_length, card_limit, card_offset);
-                $.ajax({
-                    url: BASE_URL + "api/searchFilterCounts",
-                    type: "GET",
-                    data: {
-                        search_type: display,
-                        filters: filters,
-                        filter_types: filtersToSearchType[display]
-                    },
-                    'success': function (data) {
-                        data = JSON.parse(data);
-                        $(".filter-cat li").each(function(){
-                            $(this).addClass("hide-category");
-                        });
-                        $.each(data['aggregations'], function (category, aggregation) {
-                            if (category === 'No Sex Recorded' && aggregation['doc_count'] > 0) {
+            appendCards();
+            setPagination(total_length, card_limit, card_offset);
+
+            $.ajax({
+                url: BASE_URL + "api/searchFilterCounts",
+                type: "GET",
+                data: {
+                    search_type: display,
+                    filters: filters,
+                    filter_types: filtersToSearchType[display]
+                },
+                'success': function (data) {
+                    data = JSON.parse(data);
+                    $(".filter-cat li").each(function(){
+                        $(this).addClass("hide-category");
+                    });
+                    $.each(data['aggregations'], function (category, aggregation) {
+                        if (category === 'No Sex Recorded') {
+                            if (aggregation['doc_count'] > 0) {
                                 $(`input[value='${category}'][data-category='Gender']`).parent().parent().removeClass('hide-category');
-                                return true;
                             }
-                            $.each(aggregation['buckets'], function (_, bucket) {
-                                label = bucket['key'];
-                                var $input = $(`input[value='${label}'][data-category='${category}']`);
+                            // Will always need to continue on No Sex Recorded
+                            // in order to avoid undefined in the next loop.
+                            return true;
+                        }
+                        $.each(aggregation['buckets'], function (_, bucket) {
+                            label = bucket['key'];
+                            var $input = $(`input[value='${label}'][data-category='${category}']`);
 
-                                if (category == 'Modern Countries') {
-                                    var $input = $(`[data-countryCode='${label}'][data-category='${category}']`);
-                                }
+                            if (category == 'Modern Countries') {
+                                var $input = $(`[data-countryCode='${label}'][data-category='${category}']`);
+                            }
 
-                                if (bucket['doc_count'] > 0){
-                                    $input.parent().parent().removeClass('hide-category');
-                                }
-                            });
+                            if (bucket['doc_count'] > 0){
+                                $input.parent().parent().removeClass('hide-category');
+                            }
                         });
-                    }
-                });
+                    });
+                }, 'error':function(data) {console.log(data)}
             });
         }
     });
