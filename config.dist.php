@@ -135,11 +135,6 @@ $GLOBALS['bg'] = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
 
 $GLOBALS['randIndex'] = array_rand($bg);
 
-define("RECAPTCHA_SITE_KEY", "6Ld7_bAZAAAAAOi4tCtX8-6AXF5BTfGeGNrnt_nR");
-define("RECAPTCHA_SECRET_KEY", "6Ld7_bAZAAAAAJBgsypqX2ayUAtAgrFqvUGIFQHT");
-
-define("GITLAB_API_KEY", "_PYAAioBvMc_vEW9DS3j");
-
 //include the lib files
 require_once( BASE_LIB_PATH . "configFunctions.php" );
 require_once( BASE_LIB_PATH . "koraWrapper.php" );
