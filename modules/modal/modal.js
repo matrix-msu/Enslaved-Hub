@@ -7,7 +7,7 @@ const es_field_to_label = {
         'event_type' : 'Event',
         'date' : 'Date',
         'place_type' : 'Place Type',
-        'display_place' : 'Place',
+        'place' : 'Place',
         'source_type' : 'Source Type',
         'ethnodescriptor' : 'Ethnodescriptor',
         'occupation' : 'Occupation'
@@ -24,7 +24,7 @@ const es_field_to_label = {
         'source_type' : 'Source Type',
         'display_date_range' : 'Date',
         'place_type' : 'Place Type',
-        'display_place' : 'Place',
+        'place' : 'Place',
         'occurs_before' : 'Occurs Before',
         'occurs_after' : 'Occurs After',
         'circa' : 'Circa'

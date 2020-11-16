@@ -62,7 +62,6 @@ $(document).ready(function() {
         url: BASE_URL + 'api/getDateRange',
         method: "GET",
         'success': function (data) {
-            console.log(data)
             data = JSON.parse(data);
             dates = []
             $.each(data, function(_, date) {

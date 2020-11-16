@@ -272,9 +272,9 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
                 //Person location
                 $places = '';
                 $placesCount = 0;
-                if (is_array($record['display_place']) && count($record['display_place']) > 0) {
-                    $places = implode(', ', $record['display_place']);
-                    $placesCount = count($record['display_place']);
+                if (is_array($record['place']) && count($record['place']) > 0) {
+                    $places = implode(', ', $record['place']);
+                    $placesCount = count($record['place']);
                 }
 
                 //Date Range
@@ -389,7 +389,7 @@ HTML;
                           }if($field == "Place Type"){
                             $value = implode(', ', $record['place_type']);
                           }if($field == "Place"){
-                            $value = implode(', ', $record['display_place']);
+                            $value = implode(', ', $record['place']);
                           }if($field == "Source Type"){
                             $value = $record['source_type'][0];
                           }if($field == "Ethnodescriptor"){
@@ -570,9 +570,9 @@ HTML;
                 // Event Places
                 $places = '';
                 $placesCount = 0;
-                if (is_array($record['display_place']) && count($record['display_place']) > 0) {
-                    $places = implode(', ', $record['display_place']);
-                    $placesCount = count($record['display_place']);
+                if (is_array($record['place']) && count($record['place']) > 0) {
+                    $places = implode(', ', $record['place']);
+                    $placesCount = count($record['place']);
                 }
 
                 //Event Start Year
@@ -699,7 +699,7 @@ HTML;
                           }if($field == "Place Type"){
                             $value = $record['place_type'][0];
                           }if($field == "Place"){
-                            $value = $record['display_place'][0];
+                            $value = $record['place'][0];
                           }if($field == "Occurs Before"){
                             $value = $record['occurs_before'][0];
                           }if($field == "Occurs After"){

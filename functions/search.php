@@ -326,6 +326,7 @@ class QueryIndex {
                     'age',
                     'occupation',
                     'descriptive_occupation',
+                    'place_of_origin',
                     'race',
                     'sex',
                     'person_status',
