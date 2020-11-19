@@ -90,19 +90,19 @@ if (isset($story2Images[0])){
                     <a  class="content-link"href="<?php echo BASE_URL;?>search/events">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                         <p class="type">Events</p>
-                        <p class="count" id="count-events"></p>
+                        <p class="count" id="count-event"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a class="content-link" href="<?php echo BASE_URL;?>search/places">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                         <p class="type">Places</p>
-                        <p class="count" id="count-places"></p>
+                        <p class="count" id="count-place"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a class="content-link" href="<?php echo BASE_URL;?>search/sources">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                         <p class="type">Sources</p>
-                        <p class="count" id="count-sources"></p>
+                        <p class="count" id="count-source"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                 </div>
