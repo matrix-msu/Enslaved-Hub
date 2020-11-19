@@ -90,19 +90,19 @@ if (isset($story2Images[0])){
                     <a  class="content-link"href="<?php echo BASE_URL;?>search/events">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                         <p class="type">Events</p>
-                        <p class="count" id="count-event"></p>
+                        <p class="count" id="count-events"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a class="content-link" href="<?php echo BASE_URL;?>search/places">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                         <p class="type">Places</p>
-                        <p class="count" id="count-place"></p>
+                        <p class="count" id="count-places"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a class="content-link" href="<?php echo BASE_URL;?>search/sources">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                         <p class="type">Sources</p>
-                        <p class="count" id="count-source"></p>
+                        <p class="count" id="count-sources"></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                 </div>
@@ -200,7 +200,7 @@ if (isset($story2Images[0])){
 
 
 
-    <div id='underDev' class='modal'>
+    <div id='underDev' class='modal-preview'>
       <div>
         <div class="modal-x-btn closeUnderDev">
           <img src='<?php echo BASE_URL;?>/assets/images/x-dark.svg' class="closeUnderDev" />
