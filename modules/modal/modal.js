@@ -8,6 +8,7 @@ const es_field_to_label = {
         'date' : 'Date',
         'place_type' : 'Place Type',
         'place' : 'Place',
+        'place_of_origin': 'Place of Origin',
         'source_type' : 'Source Type',
         'ethnodescriptor' : 'Ethnodescriptor',
         'occupation' : 'Occupation'
