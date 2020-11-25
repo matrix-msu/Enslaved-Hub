@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    
+
     // var url = window.location.href.split('/');
     // var last_part = url[url.length-1];
     // if (last_part.indexOf("?searchbar=") >= 0){
@@ -14,7 +14,7 @@ $(document).ready(function () {
     $(".dropdown-button, #menu-button").on("click",function(event){
         $(".rightnav").toggleClass("dropclass");
     });
-    
+
     $("#menu-button").on("click",function(){
         if($(".rightnav").hasClass("dropclass")){
              $(".hamburger").attr('src',x_url);
@@ -34,7 +34,7 @@ $(document).ready(function () {
         }
     });
 
-    // when width of browser more than 780px dropdown appears on hover of browse  
+    // when width of browser more than 780px dropdown appears on hover of browse
     $(".drop-link").on("mouseenter",function(){
         if( $(window).width() > 780 ){
             $(this).children(".sub-list").addClass('sub-showing');
@@ -48,22 +48,22 @@ $(document).ready(function () {
         }
     });
 
-    // whens its less than 780px 
+    // whens its less than 780px
     $(".drop-link").on("click", function(){
         if( $(window).width() <= 780 ){
             // on click dropdown of browse, sub menu appears
             // and the down carat changes to up carat icon
             if($(this).children(".sub-list").hasClass("sub-showing")){
-                $(this).children('.sub-list').removeClass("sub-showing");                   
+                $(this).children('.sub-list').removeClass("sub-showing");
                 $(this).children('.drop-carat').removeClass('carat-up');
             }
             else{
-                $(this).children('.sub-list').addClass("sub-showing"); 
+                $(this).children('.sub-list').addClass("sub-showing");
                 $(this).children('.drop-carat').addClass('carat-up');
             }
         }
     });
-    
+
     // close menu on click outside
     $(document).click(function(event){
         if(!$(event.target).parents(".rightnav").is(".rightnav") && !$(event.target).parents(".dropdown-menu").is(".dropdown-menu")){
@@ -75,7 +75,7 @@ $(document).ready(function () {
                 $(".hamburger").attr('src',hamburger_url);
             }
         }
-        
+
     });
 
     //fix header after landing section
@@ -86,12 +86,12 @@ $(document).ready(function () {
         else{
             $(".nav-header").removeClass("fixedheader");
             $(".nav-header").css("top","unset");
-        }      
+        }
         if(window.scrollY > 300){
-            $(".fixedheader").css("top","0px");
+            $(".fixedheader").css("top","-35px");
         }
         else{
-            $(".fixedheader").css("top","-50px");
+            $(".fixedheader").css("top","-100px");
         }
     });
 
