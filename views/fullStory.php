@@ -82,15 +82,14 @@ else {
             </section>-->
             <section class="online-resources">
                 <?php
+                if (isset($story['Object PDF']) && isset($story['Object PDF'][0])) {
+                    $pdf_url = $story['Object PDF'][0]['url'];
+                    echo '<p><a target="_blank" href="'.$pdf_url.'">View complete story (pdf)</a></p>';
+                }
+                ?>                <?php
                 if (isset($story['Online Resources'])) {
                     echo '<h2>Online Resources</h2>';
                     echo ''.$story['Online Resources'].'';
-                }
-                ?>
-                <?php
-                if (isset($story['Object PDF']) && isset($story['Object PDF'][0])) {
-                    $pdf_url = $story['Object PDF'][0]['url'];
-                    echo '<p><a target="_blank" href="'.$pdf_url.'">View Story PDF</a></p>';
                 }
                 ?>
             </section>
