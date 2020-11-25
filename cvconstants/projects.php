@@ -6,7 +6,8 @@ const projects=[
     'Voyages: The Trans-Atlantic Slave Trade Database' => 'Q9866',
     'African Origins' => 'Q9867',
     'Maranhão Inventories Slave Database' => 'Q11585',
-    "Legacies of British Slave-ownership" => "Q376"
+    "Legacies of British Slave-ownership" => "Q376",
+    "Contested Freedom" => "Q624610"
 ];
 
 const qprojects=[
@@ -17,4 +18,5 @@ const qprojects=[
   "Q340" => "Slave Societies Digital Archive",
   "Q376" => "Legacies of British Slave-ownership",
   "Q383" => "Freedom Narratives",
+  "Q624610" => "Contested Freedom"
 ];
