@@ -214,7 +214,7 @@ if (isset($story2Images[0])){
               <label for='modalCheckboxInput' class='modalCheckboxBox'></label>
               <label for='modalCheckboxInput' class='modalCheckboxText'>Don't Show Again</label>
             </div>
-            <button type='button' class='modal-button closeUnderDev'>Sounds Good!</button>
+            <button type='button' class='modal-button closeUnderDev'>Start Browsing</button>
           </form>
         </div>
       </div>
