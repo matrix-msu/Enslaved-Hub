@@ -206,15 +206,15 @@ if (isset($story2Images[0])){
           <img src='<?php echo BASE_URL;?>/assets/images/x-dark.svg' class="closeUnderDev" />
         </div>
         <div class='modal-content'>
-          <h1><em>Enslaved.org</em> is Currently in Preview</h1>
-          <p><em>Enslaved.org</em> is currently under active development. Until the final version is completed and launched, enjoy this preview. If you have any feedback, or run into any bugs or issues, feel free to use the 'Report Issue' button found within the footer.</p>
+          <h1>Welcome to the launch of <em>Enslaved.org</em></h1>
+          <p>As of December 2020, we have built a robust, open-source architecture to discover and explore nearly a half million people records and 5 million data points. From archival fragments and spreadsheet entries, we see the lives of the enslaved in richer detail. Yet there’s much more work to do, and with the help of scholars, educators, and family historians, <em>Enslaved.org</em> will be rapidly expanding in 2021. Don't hesitate to give us feedback by visiting our <a href="<?php echo BASE_URL;?>about">About page</a>.<br><br>We are just getting started.</p>
           <form class="modal-form">
             <div class='modalCheckbox'>
               <input type='checkbox' value='1' id='modalCheckboxInput' name='' />
               <label for='modalCheckboxInput' class='modalCheckboxBox'></label>
               <label for='modalCheckboxInput' class='modalCheckboxText'>Don't Show Again</label>
             </div>
-            <button type='button' class='modal-button closeUnderDev'>Sounds Good!</button>
+            <button type='button' class='modal-button closeUnderDev'>Start Browsing</button>
           </form>
         </div>
       </div>
