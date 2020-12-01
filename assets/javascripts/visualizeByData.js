@@ -88,6 +88,7 @@ var dash_main_Voyages = "https://kibana.enslaved.org/app/kibana#/dashboard/267b9
 var dash_main_Legacies = "https://kibana.enslaved.org/app/kibana#/dashboard/66730960-e180-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Hutchins = "https://kibana.enslaved.org/app/kibana#/dashboard/c316dd50-e22e-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Free = "https://kibana.enslaved.org/app/kibana#/dashboard/95245570-e62b-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
+var dash_main_Contested = "https://kibana.enslaved.org/app/kibana#/dashboard/27034a40-331c-11eb-9912-5716c793fbae?embed=true&_g=(filters:!())";
 
 
 var concat_url = BASE_URL + "visualizedata";
@@ -129,7 +130,8 @@ var projects = {
   'Voyages': "<option value='Voyages: The Trans-Atlantic Slave Trade Database'>Voyages: The Trans-Atlantic Slave Trade Database</option>",
   'Legacies': "<option value='Legacies of British Slave-Ownership'>Legacies of British Slave-Ownership</option>",
   'Hutchins': "<option value='Hutchins Center for African & African American Research'>Hutchins Center for African & African American Research</option>",
-  'Maranhão': "<option value='Maranhão Inventories Slave Database'>Maranhão Inventories Slave Database</option>"
+  'Maranhão': "<option value='Maranhão Inventories Slave Database'>Maranhão Inventories Slave Database</option>",
+  'Contested': "<option value='Contested Freedom'>Contested Freedom</option>"
 }
 
 $(document).ready( function() {
@@ -305,5 +307,8 @@ function changeIframe(){
   }
   if(proj == "Hutchins"){
     projLink.setAttribute('href', BASE_URL+'search/all?projects=Hutchins%20Center%20for%20African%20&%20African%20American%20Research');
+  }
+  if(proj == "Contested"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Contested%20Freedom');
   }
 }
