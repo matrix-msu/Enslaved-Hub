@@ -1,4 +1,10 @@
 <!-- Header/Navigation -->
+<div class="universal-nav">
+  <div class="universal-links">
+    <a href="https://enslaved.org" class="universal-enslaved">Enslaved.org</a>
+    <a href="https://jsdp.enslaved.org" class="universal-jsdp">Journal of Slavery and Data Preservation</a>
+  </div>
+</div>
 <header class="nav-header">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54531960-14"></script>

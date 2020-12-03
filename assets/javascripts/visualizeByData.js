@@ -125,7 +125,7 @@ var dashFields = {
 var projects = {
   'All': "<option value='All Projects'>All Projects</option>",
   'Louisiana': "<option value='Louisiana Slave Database'>Louisiana Slave Database</option>",
-  'Free': "<option value='Free Blacks Database'>Free Blacks Database</option>",
+  'Free': "<option value='Free Blacks Database'>Free Blacks Database: New Orleans, 1840-1860</option>",
   'Voyages': "<option value='Voyages: The Trans-Atlantic Slave Trade Database'>Voyages: The Trans-Atlantic Slave Trade Database</option>",
   'Legacies': "<option value='Legacies of British Slave-Ownership'>Legacies of British Slave-Ownership</option>",
   'Hutchins': "<option value='Hutchins Center for African & African American Research'>Hutchins Center for African & African American Research</option>",
@@ -305,8 +305,5 @@ function changeIframe(){
   }
   if(proj == "Hutchins"){
     projLink.setAttribute('href', BASE_URL+'search/all?projects=Hutchins%20Center%20for%20African%20&%20African%20American%20Research');
-  }
-  if(proj == "Maranhão"){
-    projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhão%20Inventories%20Slave%20Database');
   }
 }

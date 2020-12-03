@@ -1,17 +1,64 @@
  // LANDING HEADER STYLING FOR HOME, SEARCH, and SUB PAGES after navigation styling
 
+ .universal-nav {
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+   border-top: 5px solid #0E3232;
+   z-index: 10002;
+   position: absolute;
+   background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+   height: 150px;
+
+   .universal-links {
+     margin: 6px 0 9px;
+     height: 20px;
+
+     a {
+       color: #fff;
+       background: rgba(8,33,33,.3);
+       font-family: aleoregular;
+       font-size: 14px;
+       text-decoration: none;
+     }
+
+     .universal-enslaved {
+       padding: 6px 15px;
+       margin-right: -4px;
+       background: rgba(8,33,33,.8);
+       border-top: 5px solid $accent;
+     }
+
+     .universal-jsdp {
+       padding: 6px 15px;
+       opacity: .7;
+       white-space: nowrap;
+       transition: all .2s ease-in-out;
+
+       &:hover {
+         opacity: 1;
+         background: $base-dark;
+         border-top: 5px solid $accent;
+       }
+     }
+   }
+ }
+
 .nav-header{
     color: $base-light;
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 95px;
-    z-index: 1001;
+    //height: 150px;
+    margin-top: 35px;
+    z-index: 10579;
     position: absolute;
-    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+    //background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
     //box-shadow: 0 5px 10px 0 rgba(13,18,48,0.16);
     //background-color: rgba(18, 46, 70, .5);
     //overflow: hidden;
+
+
 
     .headerwrap{
         width: 97.5%;
@@ -19,7 +66,8 @@
         .leftnav{
             float: left;
             div.logo{
-                padding-top: 10px;
+                margin-left: 30px;
+                marigin-top: 2px;
 
                 img{
                     height: auto;
@@ -162,7 +210,7 @@
             }
         }
         .responsive-menu{
-            margin: 6px;
+            margin: 12px;
             width: 100%;
         }
 
@@ -198,10 +246,22 @@
     box-shadow: 0 5px 10px 0 rgba(13,18,48,0.16);
     background: $base-dark;
     position: fixed;
-    height: 65px;
+    margin-top: 23px;
+    height: 83px;
+    padding: 10px 0 20px;
     // top: -50px;
     transition: top 0.3s;
     //overflow: hidden;
+
+    .headerwrap{
+        .leftnav{
+            div.logo{
+                margin: 12px 0;
+              }
+            }
+          }
+
+
     .left-section{
         margin-top: 10px;
         img{
@@ -213,7 +273,7 @@
     }
 }
 
-@media screen and (max-width: 1050px){
+@media screen and (max-width: 900px){
 
     .nav-header{
 
@@ -221,7 +281,7 @@
             display: block !important;
             position: absolute;
             right: 0;
-            top: 50px;
+            top: 70px;
         }
         .rightnav{
             background-color: $base-dark;
@@ -407,3 +467,28 @@
 			}
    }
 }
+
+@media screen and (max-width: 600px){
+  .universal-links {
+    width: 100%;
+    margin: -5px 0 !important;
+    height: 40px !important;
+    padding: 10px 10px 10px 0;
+    white-space: nowrap;
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar{
+      display: none;
+    }
+  }
+
+  .nav-header{
+    .headerwrap{
+        .leftnav{
+            div.logo{
+              margin-left: 10px;
+            }
+          }
+        }
+      }
+  }
