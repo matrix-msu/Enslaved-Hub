@@ -20,7 +20,9 @@
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p><?php echo $cache_data['descr'] ?></p>
+        <p><!-- <?php echo $cache_data['descr'] ?>-->
+The following is a list of resources found by our discovery tool that weekly searches the internet for resources about historical slavery.  If you know of sources -- particularly projects and archives with records about those enslaved -- please let us know (as well as about sources that should not be included).  To let us know, go to our <a href="<?php echo BASE_URL;?>about">Contact</a> page.
+        </p>
     </div>
 </div>
 
