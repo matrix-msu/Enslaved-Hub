@@ -159,7 +159,7 @@ function get_keyword_search_results() {
         $qi->setMatchQuery('name', $filters['name'][0]);
         unset($filters['name']);
     } else if (array_key_exists('place_name', $filters)) {
-        $qi->setTermQuery('label', $filters['place_name'][0]);
+        $qi->setMatchQuery('place', $filters['place_name'][0]);
         unset($filters['place_name']);
     } else if (array_key_exists('searchbar', $filters)) {
         $qi->setQueryString($filters['searchbar'][0]);
@@ -388,14 +388,6 @@ class QueryIndex {
                 $field => [
                     'query' => $value
                 ]
-            ]
-        ];
-    }
-
-    public function setTermQuery($field, $value) {
-        $this->params['body']['query']['bool']['must'] = [
-            'term' => [
-                $field => $value
             ]
         ];
     }
