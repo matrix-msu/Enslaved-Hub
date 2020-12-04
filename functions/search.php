@@ -61,12 +61,6 @@ function get_search_filters() {
     if (isset($_GET['filters']))
         $filters = $_GET['filters'];
 
-    $query = '';
-    if (array_key_exists('searchbar', $filters)) {
-        $query = $filters['searchbar'][0];
-        unset($filters['searchbar']);
-    }
-
     $types = '';
     if (isset($_GET['filter_types']))
         $types = $_GET['filter_types'];
@@ -82,8 +76,17 @@ function get_search_filters() {
         'type' => $type
     ]);
 
-    if ($query)
-        $qi->setQueryString($query);
+    foreach (['name' => 'name', 'place_name' => 'place'] as $key => $field) {
+        if (array_key_exists($key, $filters)) {
+            $qi->setMatchQuery($field, $filters[$key][0]);
+            unset($filters[$key]);
+        }
+    }
+
+    if (array_key_exists('searchbar', $filters)) {
+        $qi->setQueryString($filters['searchbar'][0]);
+        unset($filters['searchbar']);
+    }
 
     if ($filters)
         $qi->setBasicFilters($filters, $type);
@@ -155,13 +158,14 @@ function get_keyword_search_results() {
         $qi->setSort($sort_field, $sort);
     }
 
-    if (array_key_exists('name', $filters)) {
-        $qi->setMatchQuery('name', $filters['name'][0]);
-        unset($filters['name']);
-    } else if (array_key_exists('place_name', $filters)) {
-        $qi->setMatchQuery('place', $filters['place_name'][0]);
-        unset($filters['place_name']);
-    } else if (array_key_exists('searchbar', $filters)) {
+    foreach (['name' => 'name', 'place_name' => 'place'] as $key => $field) {
+        if (array_key_exists($key, $filters)) {
+            $qi->setMatchQuery($field, $filters[$key][0]);
+            unset($filters[$key]);
+        }
+    }
+
+    if (array_key_exists('searchbar', $filters)) {
         $qi->setQueryString($filters['searchbar'][0]);
         unset($filters['searchbar']);
     }
@@ -255,6 +259,10 @@ class QueryIndex {
             'match_all' => new \stdClass()
         ];
 
+        // Used to manage potential multiple full text query scenario
+        // Any new must queries will have to append to this array.
+        $this->should = [];
+
         if (!empty($arguments)) {
             foreach ($arguments as $property => $argument) {
                 $this->{$property} = $argument;
@@ -310,7 +318,7 @@ class QueryIndex {
     }
 
     public function setQueryString($text) {
-        $this->params['body']['query']['bool']['must'] = [
+        $query = [
             'query_string' => [
                 'fields' => [
                     'label',
@@ -343,6 +351,8 @@ class QueryIndex {
                 'query' => $text
             ]
         ];
+        $this->params['body']['query']['bool']['must'] = $query;
+        array_push($this->should, $query);
     }
 
     public function setSort($field, $order) {
@@ -383,13 +393,15 @@ class QueryIndex {
     }
 
     public function setMatchQuery($field, $value) {
-        $this->params['body']['query']['bool']['must'] = [
+        $query = [
             'match' => [
                 $field => [
                     'query' => $value
                 ]
             ]
         ];
+        $this->params['body']['query']['bool']['must'] = $query;
+        array_push($this->should, $query);
     }
 
     public function setFilteredAggs() {
@@ -526,6 +538,14 @@ class QueryIndex {
     public function getResults() {
         if (empty($this->params['body']['aggs'])) {
             unset($this->params['body']['aggs']);
+        }
+
+        if (count($this->should) > 1) {
+            $this->params['body']['query']['bool']['must'] = [
+                'bool' => [
+                    'should' => $this->should
+                ]
+            ];
         }
 
         return $this->es->search($this->params);
