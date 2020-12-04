@@ -285,7 +285,7 @@ function searchResults(preset, limit = 20, offset = 0)
                             }
                         });
                     });
-                }, 'error':function(data) {console.log(data)}
+                }
             });
         }
     });
