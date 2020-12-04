@@ -297,7 +297,7 @@ function changeIframe(){
     projLink.setAttribute('href', BASE_URL+'search/all?projects=Louisiana%2BSlave%2BDatabase');
   }
   if(proj == "Free"){
-    projLink.setAttribute('href', BASE_URL+'search/all?projects=Free%20Blacks%20Database');
+    projLink.setAttribute('href', BASE_URL+'https://enslaved.org/search/all?projects=Free%20Blacks%20Database,Free%20Blacks%20Database%20New%20Orleans%201840-1860');
   }
   if(proj == "Voyages"){
     projLink.setAttribute('href', BASE_URL+'search/all?projects=Voyages:%20The%20Trans-Atlantic%20Slave%20Trade%20Database');
