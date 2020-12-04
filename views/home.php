@@ -64,11 +64,6 @@ if (isset($story2Images[0])){
         </div>
     </div>
     <div class="image-background-overlay home-page"></div>
-    <div class="cache-header-images">
-        <?php foreach ($bg as $background){
-            echo "<img src=".BASE_URL."assets/images/".$background.">";
-        }?>
-    </div>
     <img class="header-background home-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image"></div>
 </div>
 <main id="home" class="home">
