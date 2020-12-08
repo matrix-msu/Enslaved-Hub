@@ -187,35 +187,46 @@ function searchResults(preset, limit = 20, offset = 0)
                 'sources' : 0
             };
 
-            $.each(result_array['total']['type']['buckets'], function (_, bucket) {
-                count = bucket['doc_count']
-                type = bucket['key']
-                if (type === selected_type) {
-                    total_length = count;
-                }
-                if (type !== 'people') {
-                    type = `${type}s`;
-                }
-                count_per_type[type] = count;
-            });
+            // Zeroing out everything here to prevent fake result numbers
+            var numberOfShownResults = numberOfShownResults = total_length = 0;
 
-            if (preset == "all") {
-                $.each(count_per_type, function (type, count) {
-                    var $tab = $('.categories #'+type);
-                    $tab.find('span').html(count+" ");
-                    if (count <= 0){
-                        $tab.hide();
-                    } else {
-                        $tab.show();
+            if (result_array['total']['type']['buckets'].length > 0) {
+                $.each(result_array['total']['type']['buckets'], function (_, bucket) {
+                    count = bucket['doc_count']
+                    type = bucket['key']
+                    if (type === selected_type) {
+                        total_length = count;
                     }
+                    if (type !== 'people') {
+                        type = `${type}s`;
+                    }
+                    count_per_type[type] = count;
+                });
+
+                if (preset == "all") {
+                    $.each(count_per_type, function (type, count) {
+                        var $tab = $('.categories #'+type);
+                        $tab.find('span').html(count+" ");
+                        if (count <= 0){
+                            $tab.hide();
+                        } else {
+                            $tab.show();
+                        }
+                    });
+                }
+
+                numberOfShownResults = card_limit + offset;
+
+                if (total_length < card_limit) {
+                    numberOfShownResults = total_length;
+                }
+            } else {
+                $.each(count_per_type, function (type) {
+                    var $tab = $('.categories #'+type);
+                    $tab.find('span').html('');
                 });
             }
 
-            var numberOfShownResults = card_limit + offset;
-
-            if (total_length < card_limit) {
-                numberOfShownResults = total_length;
-            }
 
             $('.showing-results').html(`Showing ${numberOfShownResults} of ${total_length} Results`);
 
@@ -788,8 +799,8 @@ $(document).ready(function() {
         var counter = 0;
         $.each(filters, function(key, value)
         {
-            if(key && value && key != "limit" && key != "offset")
-            {
+            if(key && value && key != "limit" && key != "offset") {
+                value = encodeURIComponent(value);
                 if(!counter) url_address += key + '=' + value;
                 else url_address += '&' + key + '=' + value;
                 ++counter;
