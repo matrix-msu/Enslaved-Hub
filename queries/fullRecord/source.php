@@ -2,7 +2,7 @@
 
 $tempQuery = <<<QUERY
 SELECT
- ?label ?name ?project ?pname ?type ?availableFrom ?description
+ ?label ?name ?project ?pname ?type ?availableFrom ?description ?projref
 (group_concat(distinct ?extref1; separator = "||") as ?extref)
 
  WHERE
@@ -12,10 +12,11 @@ SELECT
 
      OPTIONAL{
          ?source $wdt:$generatedBy ?project.
-         ?project $rdfs:label ?pname
+         ?project $wdt:$hasName ?pname.
+         ?project $wdt:$hasExternalReference ?projref
      }.
 
-     OPTIONAL {?source $wdt:$hasExternalReference ?extref1}
+     OPTIONAL {?source $wdt:$hasExternalReference ?extref1}.
 
   ?source $rdfs:label ?label.
   OPTIONAL{
@@ -28,5 +29,5 @@ SELECT
   OPTIONAL {?source $wdt:$hasName ?name}.
   OPTIONAL {?event $wdt:$atPlace ?place.}
 
-}GROUP BY ?label ?name ?project ?pname ?type ?availableFrom ?description
+}GROUP BY ?label ?name ?project ?pname ?type ?availableFrom ?description ?projref
 QUERY;
