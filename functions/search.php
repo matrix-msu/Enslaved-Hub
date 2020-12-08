@@ -3,6 +3,25 @@ require_once(BASE_PATH . 'vendor/autoload.php');
 require_once(BASE_PATH . 'functions/functions.php');
 use Elasticsearch\ClientBuilder;
 
+
+function set_text_query($filters, $qi) {
+    foreach (['name' => 'name', 'place_name' => 'place'] as $key => $field) {
+        if (array_key_exists($key, $filters)) {
+            $str = preg_replace("/[^A-Za-z0-9. ]/", '', $filters[$key][0]);
+            $qi->setMatchQuery($field, $str);
+            unset($filters[$key]);
+        }
+    }
+
+    if (array_key_exists('searchbar', $filters)) {
+        $str = preg_replace("/[^A-Za-z0-9. ]/", '', $filters['searchbar'][0]);
+        $qi->setQueryString($str);
+        unset($filters['searchbar']);
+    }
+
+    return array($filters, $qi);
+}
+
 function get_type_counts() {
     $qi = new QueryIndex();
     $qi->setTypeCounts();
@@ -76,17 +95,7 @@ function get_search_filters() {
         'type' => $type
     ]);
 
-    foreach (['name' => 'name', 'place_name' => 'place'] as $key => $field) {
-        if (array_key_exists($key, $filters)) {
-            $qi->setMatchQuery($field, $filters[$key][0]);
-            unset($filters[$key]);
-        }
-    }
-
-    if (array_key_exists('searchbar', $filters)) {
-        $qi->setQueryString($filters['searchbar'][0]);
-        unset($filters['searchbar']);
-    }
+    list ($filters, $qi) = set_text_query($filters, $qi);
 
     if ($filters)
         $qi->setBasicFilters($filters, $type);
@@ -158,17 +167,7 @@ function get_keyword_search_results() {
         $qi->setSort($sort_field, $sort);
     }
 
-    foreach (['name' => 'name', 'place_name' => 'place'] as $key => $field) {
-        if (array_key_exists($key, $filters)) {
-            $qi->setMatchQuery($field, $filters[$key][0]);
-            unset($filters[$key]);
-        }
-    }
-
-    if (array_key_exists('searchbar', $filters)) {
-        $qi->setQueryString($filters['searchbar'][0]);
-        unset($filters['searchbar']);
-    }
+    list ($filters, $qi) = set_text_query($filters, $qi);
 
     if ($filters)
         $qi->setBasicFilters($filters, $type);
