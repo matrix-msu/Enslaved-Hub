@@ -44,7 +44,7 @@ SELECT ?label ?description ?project
             ?ageuri $ps:$hasAge ?ageuri2.
             ?ageuri2 $wdt:$hasAgeValue ?age1.
             ?ageuri $pq:$recordedAt ?agerecordedat1.
-            ?agerecordedat1 $rdfs:label ?agerecordedatlabel1}.
+            ?agerecordedat1 $wdt:$hasName ?agerecordedatlabel1}.
  OPTIONAL{?agent $wdt:$hasSex ?sex.
          ?sex $rdfs:label ?sextype1}.
  OPTIONAL{?agent $wdt:$hasRace ?race1}.
@@ -52,7 +52,7 @@ SELECT ?label ?description ?project
           ?statement $ps:$hasEthnolinguisticDescriptor ?ethnodescriptor.
           ?ethnodescriptor $rdfs:label ?ecvo1.
           OPTIONAL{?statement $pq:$referstoPlaceofOrigin ?placeofOrigin1.
-          ?placeofOrigin1 $rdfs:label ?placeOriginlabel1}.
+          ?placeofOrigin1 $wdt:$hasName ?placeOriginlabel1}.
           }.
  OPTIONAL {?agent $wdt:$hasOccupation ?occupation1.
          ?occupation1 $rdfs:label ?occupationlabel}.
@@ -61,23 +61,23 @@ OPTIONAL {?agent $p:$hasParticipantRole ?staterole.
          ?staterole $ps:$hasParticipantRole ?role;
                    $pq:$roleProvidedBy ?roleevent1.
          ?role $rdfs:label ?roleslabel1.
-         ?roleevent1 $rdfs:label ?roleeventlabel1.
+         ?roleevent1 $wdt:$hasName ?roleeventlabel1.
          bind(?roleevent1 as ?allevents).
       }.
  OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
            ?statstatus $ps:$hasPersonStatus ?status1.
            ?statstatus $pq:$hasStatusGeneratingEvent ?statusevent1.
            ?status1 $rdfs:label ?statuslabel.
-           ?statusevent1 $rdfs:label ?eventstatuslabel1.
+           ?statusevent1 $wdt:$hasName ?eventstatuslabel1.
            bind(?statusevent1 as ?allevents)}.
 OPTIONAL {?agent $p:$hasName ?statementname.
             ?statementname $ps:$hasName ?person.
             ?statementname $pq:$recordedAt ?rec.
             bind(?rec as ?allevents)}.
-BIND(exists{?allevents $rdfs:label ?alleventslabel1} as ?alleventslabel1).
+BIND(exists{?allevents $wdt:$hasName ?alleventslabel1} as ?alleventslabel1).
 OPTIONAL {BIND(exists{?allevents $wdt:$atPlace ?places} as ?places).
-          BIND(exists{?allevents $rdfs:label ?evlabel} as ?evlabel).
-          BIND(exists{?places $rdfs:label ?placeslabel} as ?placeslabel).
+          BIND(exists{?allevents $wdt:$hasName ?evlabel} as ?evlabel).
+          BIND(exists{?places $wdt:$hasName ?placeslabel} as ?placeslabel).
          BIND(CONCAT(str(?allevents)," - ",str(?placeslabel)) as ?eventplace1).
          }.
 
