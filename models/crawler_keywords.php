@@ -70,7 +70,7 @@ class crawler_keywords {
                     FROM deleted_keywords dk
                     WHERE ck.keyword = dk.keyword
                 )" . $search . $filter .
-            " ORDER BY ck.date_created " . $sort .
+            " GROUP BY ck.keyword_id ORDER BY ck.date_created " . $sort .
             " LIMIT ? OFFSET ?
         ";
 
