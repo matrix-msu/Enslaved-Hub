@@ -580,7 +580,7 @@ HTML;
         }
         $html .= "</div></a>";
 
-        if( $label == "Descriptive Occupation" && $x != (count($statementArr) - 1 )){
+        if( ($label=="Descriptive Occupation"||$label=="Coordinates") && $x != (count($statementArr) - 1 )){
             $html.= "<br>";
         }
         else if ($x != (count($statementArr) - 1)){
