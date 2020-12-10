@@ -23,6 +23,8 @@ if(!empty($keywords)) {
   foreach ($keywords as $keyword) {
     if(empty($other_clause)) $other_clause = new KORA_Clause("Title", "LIKE", $keyword);
     else $other_clause = new KORA_Clause($other_clause, "OR" ,new KORA_Clause("Title", "LIKE", $keyword));
+
+    $other_clause = new KORA_Clause($other_clause, "OR" ,new KORA_Clause("Text", "LIKE", $keyword));
   }
   $clause = new KORA_Clause($clause, "AND", $other_clause);
 }
@@ -108,7 +110,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
     </div>
 </div>
 <!-- all stories container-->
-<div class="container card-column storycard">
+<div id="all-header-scroll" class="container card-column storycard">
     <div id="all-header" class="container cardheader-wrap">
         <h2 class="column-header">All Stories</h2>
         <div class="sort-search">
