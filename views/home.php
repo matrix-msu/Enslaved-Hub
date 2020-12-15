@@ -181,7 +181,7 @@ if (isset($story2Images[0])){
                       <a class="news-logo" target="_blank" href="https://www.npr.org/2020/12/09/944739710/enslaved-org-shares-lives-and-experiences-of-the-enslaved"><img src="<?php echo BASE_URL;?>/assets/images/news-npr.svg" /></a>
                       <a class="news-logo" target="_blank" href="https://www.fastcompany.com/90582344/this-massive-database-reveals-the-names-and-stories-behind-the-history-of-slavery"><img src="<?php echo BASE_URL;?>/assets/images/news-fastcompany.svg" /></a>
                     </div>
-                    <p class="mt-lg"><a class="text-link wrap" href="http://jsdp.enslaved.org" target="_blank">View All Featured News</em></a></p>
+                    <p class="mt-lg"><a class="text-link wrap" href="<?php echo BASE_URL."featuredNews";?>">View All Featured News</em></a></p>
 
         </div>
     </section>
