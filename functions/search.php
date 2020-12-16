@@ -35,7 +35,6 @@ function get_date_range() {
     return json_encode($res['aggregations']);
 }
 
-// formally filtered_counts
 function get_field_counts() {
     $field = $type = '';
     if (isset($_GET['field']))
@@ -48,10 +47,14 @@ function get_field_counts() {
     }
 
     $qi = new QueryIndex([
-        'field' => $field,
         'type' => $type
     ]);
-    $qi->setFilteredAggs();
+
+    if ($field)
+        $qi->setSingleFieldAggs($field);
+    else
+        $qi->setAllFieldAggs();
+
     echo json_encode($qi->getResults());
 }
 
@@ -180,7 +183,7 @@ function get_keyword_search_results() {
     $res = $qit->getResults();
     $total = $res['aggregations'];
 
-    $qi->setType($type);
+    $qi->addTypeFilter($type);
     $res = $qi->getResults();
 
     return @createCards($res['hits']['hits'], $templates, $select_fields, $preset, $total);
@@ -249,6 +252,12 @@ class QueryIndex {
         'modern_countries' => 'modern_country_code'
     ];
 
+    /**
+     * QueryIndex constructor
+     * @param array $arguments key/value pairs that are tranformed into class properties
+     *
+     * @return void
+     */
     public function __construct(array $arguments = array()) {
         $this->es = ClientBuilder::create()
             ->setHosts([ELASTICSEARCH_URL])
@@ -281,6 +290,17 @@ class QueryIndex {
         }
     }
 
+    /**
+     * Single Aggregation Setter
+     *
+     * Sets a single term aggregation to params property.
+     *
+     * @param string $label front-end field name
+     * @param string $field index (es) field name
+     * @param string $type instance of type, used for front-end categorization
+     *
+     * @return void
+     */
     private function setSingleAggs($label, $field, $type = '') {
         if ($label == 'Gender') {
             $this->params['body']['aggs']['No Sex Recorded'] = [
@@ -301,6 +321,16 @@ class QueryIndex {
         ];
     }
 
+    /**
+     * Term Query
+     *
+     * Sets the query body to a term search, used for ref or id search.
+     *
+     * @param string $field index (es) field name
+     * @param string $value q number or id
+     *
+     * @return void
+     */
     private function setTermAsBody($field, $value) {
         $this->params['body']['query'] = [
             'term' => [
@@ -309,13 +339,32 @@ class QueryIndex {
         ];
     }
 
-    public function setType($type) {
+    /**
+     * Type Filter
+     *
+     * Appends a type filter to the bool query structure.
+     *
+     * @param string $type instance of type
+     *
+     * @return void
+     */
+    public function addTypeFilter($type) {
         array_push(
             $this->params['body']['query']['bool']['filter'],
             ['term' => ['type' => $type]]
         );
     }
 
+    /**
+     * Query String Query
+     *
+     * Sets the query body to a query string query.
+     * Appends query to should property to support multiple full-text queries.
+     *
+     * @param string $text word or phrase to be searched over
+     *
+     * @return void
+     */
     public function setQueryString($text) {
         $query = [
             'query_string' => [
@@ -354,21 +403,32 @@ class QueryIndex {
         array_push($this->should, $query);
     }
 
+    /**
+     * Sort
+     *
+     * Sets the result set order by field
+     *
+     * @param string $field index (es) field name
+     * @param string $order order - asc or desc
+     *
+     * @return void
+     */
     public function setSort($field, $order) {
         $this->params['body']['sort'] = [
             $field => ['order' => $order]
         ];
     }
 
-    // public function __call($method, $arguments) {
-    //     $arguments = array_merge(array("stdObject" => $this), $arguments); // Note: method argument 0 will always referred to the main class ($this).
-    //     if (isset($this->{$method}) && is_callable($this->{$method})) {
-    //         return call_user_func_array($this->{$method}, $arguments);
-    //     } else {
-    //         throw new Exception("Fatal error: Call to undefined method stdObject::{$method}()");
-    //     }
-    // }
-
+    /**
+     * Date Range Aggregation
+     *
+     * Sets the whole search body into a date range aggregation.
+     * Finds the earliest and latest year for date and end_date field.
+     * NOTE: this function should not be used in combination with other functions
+     * in this class since it overwrites the whole body.
+     *
+     * @return void
+     */
     public function setDateRange() {
         $this->params['body'] = [
             'size' => 0,
@@ -381,6 +441,16 @@ class QueryIndex {
         ];
     }
 
+    /**
+     * Type Count
+     *
+     * Sets the aggregation to find the number of records per type.
+     * NOTE: this function should not be used in combination with other functions
+     * that changes aggregations since this function
+     * overwrites the whole aggregation value.
+     *
+     * @return void
+     */
     public function setTypeCounts() {
         $this->params['body']['aggs'] = [
             'type' => [
@@ -391,11 +461,22 @@ class QueryIndex {
         ];
     }
 
-    public function setMatchQuery($field, $value) {
+    /**
+     * Match Query
+     *
+     * Sets the query body to a match query.
+     * Appends query to should property to support multiple full-text queries.
+     *
+     * @param string $field index (es) field name
+     * @param string $text word or phrase to be searched over
+     *
+     * @return void
+     */
+    public function setMatchQuery($field, $text) {
         $query = [
             'match' => [
                 $field => [
-                    'query' => $value
+                    'query' => $text
                 ]
             ]
         ];
@@ -403,20 +484,76 @@ class QueryIndex {
         array_push($this->should, $query);
     }
 
-    public function setFilteredAggs() {
-        if (property_exists($this, 'field')) {
-            $this->setSingleAggs($this->field, self::$EHFieldsToES[$this->field]);
-        } else {
-            foreach (self::$EHFieldsToES as $label => $field) {
-                $this->setSingleAggs($label, $field);
-            }
+    /**
+     * Single Field Aggregation
+     *
+     * Sets a single aggregation for a field.
+     * Using a front to index field translation constant.
+     *
+     * @param string $field index (es) field name
+     *
+     * @return void
+     */
+    public function setSingleFieldAggs($field) {
+        $this->setSingleAggs($field, self::$EHFieldsToES[$field]);
+    }
+
+    /**
+     * All Fields Aggregation
+     *
+     * Generate aggregations for all fields in translation constant.
+     *
+     * @return void
+     */
+    public function setAllFieldAggs() {
+        foreach (self::$EHFieldsToES as $label => $field) {
+            $this->setSingleAggs($label, $field);
         }
     }
 
+    /**
+     * All Fields Aggregation
+     *
+     * Generate aggregations per type in categorized translation constant.
+     *
+     * @param string $type instance of type
+     *
+     * @return void
+     */
     public function setCategorizedfilteredAggs($types) {
         foreach ($types as $type) {
             foreach (self::$categorizedEHFieldsToES[$type] as $label => $field) {
                 $this->setSingleAggs($label, $field, $type);
+            }
+        }
+    }
+
+    /**
+     * Reference Field Filter
+     *
+     * Generate aggregations per type in categorized translation constant.
+     *
+     * @param string $type instance of type
+     * @param string $value q number
+     *
+     * @return void
+     */
+    private function filterByRef($type, $id) {
+        $qi = new QueryIndex(['size' => 1]);
+        $qi->setTermAsBody('id', $id);
+        $res = $qi->getResults();
+        if (count($res['hits']['hits']) > 0) {
+            $ref_field = 'ref_' . $type;
+            $document = $res['hits']['hits'][0]['_source'];
+            if (array_key_exists($ref_field, $document)) {
+                array_push(
+                    $this->params['body']['query']['bool']['filter'],
+                    [
+                        'terms' => [
+                            'id' => $document[$ref_field]
+                        ]
+                    ]
+                );
             }
         }
     }
@@ -428,23 +565,7 @@ class QueryIndex {
             }
 
             if (in_array($key, ['person', 'event', 'place', 'source'])) {
-                $qi = new QueryIndex(['size' => 1]);
-                $qi->setTermAsBody('id', $value[0]);
-                $res = $qi->getResults();
-                if (count($res['hits']['hits']) > 0) {
-                    $ref_field = 'ref_' . $type;
-                    $document = $res['hits']['hits'][0]['_source'];
-                    if (array_key_exists($ref_field, $document)) {
-                        array_push(
-                            $this->params['body']['query']['bool']['filter'],
-                            [
-                                'terms' => [
-                                    'id' => $document[$ref_field]
-                                ]
-                            ]
-                        );
-                    }
-                }
+                $this->filterByRef($type, $value[0]);
             } else if ($key == 'date' | $key == 'age') {
                 $rf = new RangeFilter($value[0], $this);
                 if ($key == 'date')
