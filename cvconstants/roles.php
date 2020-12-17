@@ -30,7 +30,9 @@ const roleTypes=[
     'Rebel' => 'Q554',
     'Party' => 'Q555',
     'Captured Person' => 'Q568',
-    'Soldier' => 'Q598'
+    'Soldier' => 'Q598',
+    'Vessel Owner' => 'Q224574',
+    'Vessel Captain' => 'Q224573'
 ];
 
 const qroleTypes=[
@@ -61,5 +63,7 @@ const qroleTypes=[
   "Q373" => "Captured Person",
   "Q405" => "Soldier",
   "Q456" => "Child",
-  "Q458" => "Parent"
+  "Q458" => "Parent",
+  "Q224574" => "Vessel Owner",
+  "Q224573" => "Vessel Captain"
 ];
