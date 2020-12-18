@@ -169,7 +169,60 @@ HTML;
         $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventRoleLabels[$i]</a></div>";
     }
     $html .= '</div><br>';
-} else if ($label == "matches"){
+} else if($label === "DRolesA"){
+    //Multiple roles in the roles array so match them up with the participant
+    $lowerlabel = "descriptive roles";
+    $upperlabel = "Descriptive Roles";
+    //Array for Roles means there are participants and pQIDs to match
+    $roles = explode('||', $statement['droles']);
+    $participants = explode('||', $statement['dparticipant']);
+    $pq = explode('||', $statement['dpq']);
+
+    //Remove whitespace from end of arrays
+    if (end($roles) == '' || end($roles) == ' '){
+      array_pop($roles);
+    }
+    if (end($participants) == '' || end($participants) == ' '){
+      array_pop($participants);
+    }
+    if (end($pq) == '' || end($pq) == ' '){
+      array_pop($pq);
+    }
+
+    $html .= <<<HTML
+<div class="detail $lowerlabel">
+  <h3>$upperlabel</h3>
+HTML;
+
+    //Loop through and match up
+    $matched = '';
+    for($i=0; $i < sizeof($roles); $i++){
+      if (!isset($pq[$i]) || !isset($participants[$i]) || !isset($roles[$i])){
+        continue;
+      }
+
+      $explode = explode('/', $pq[$i]);
+      $pqid = end($explode);
+      $pqurl = $baseurl . 'record/event/' . $pqid;
+      $matched = $roles[$i] . ' - ' . $participants[$i];
+
+      $html .= <<<HTML
+<div class="detail-bottom">
+    <div>$roles[$i]
+HTML;
+
+      // roles tool tip
+      if(array_key_exists($roles[$i],controlledVocabulary)){
+
+          $detailinfo = ucfirst(controlledVocabulary[$roles[$i]]);
+          $html .= "<div class='detail-menu'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
+      }
+
+      $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
+    }
+    $html .= '</div><br>';
+
+}else if ($label == "matches"){
     $lowerlabel = "match";
     $upperlabel = "Match";
 
@@ -226,9 +279,9 @@ HTML;
 </div>
 </div>
 HTML;
-} else if ($label == "External References"){
-    $lowerlabel = "external references";
-    $upperlabel = "External References";
+} else if ($label == "Project References"){
+    $lowerlabel = "project references";
+    $upperlabel = "Project References";
     $references = explode('||', $statement);
 
     $html .= "<div class=\"detail $lowerlabel\">
@@ -679,12 +732,6 @@ function getFullRecordHtml(){
         $recordVars['Description'] = $s;
     }
 
-    // descriptions for items
-
-    if (isset($record['extref']) && isset($record['extref']['value']) && $record['extref']['value']!='' ){
-        $recordVars['External References'] = $record['extref']['value'];
-    }
-
     //Status
     if (isset($record['status']) && isset($record['status']['value']) && $record['status']['value'] != ''){
       if(isset($record['statusevent']) && isset($record['statusevent']['value']) &&
@@ -730,6 +777,14 @@ function getFullRecordHtml(){
     //Date
     if (isset($record['date']) && isset($record['date']['value']) && $record['date']['value'] != '' ){
       $recordVars['Date'] = $record['date']['value'];
+    }
+
+    //Date Range
+    if (isset($record['dateStart']) && isset($record['dateStart']['value']) && $record['dateStart']['value'] != '' ){
+      $recordVars['Date Range'] = $record['dateStart']['value'];
+      if (isset($record['endsAt']) && isset($record['endsAt']['value']) && $record['endsAt']['value'] != '' ){
+        $recordVars['Date Range'] .= " - " . $record['endsAt']['value'];
+      }
     }
 
     //Location
@@ -818,6 +873,19 @@ function getFullRecordHtml(){
         }
     }
 
+    // descriptions for items
+    if (isset($record['extref']) && isset($record['extref']['value']) && $record['extref']['value']!='' ){
+        $recordVars['Project References'] = $record['extref']['value'];
+    }
+
+    if (isset($record['projref']) && isset($record['projref']['value']) && $record['projref']['value']!='' ){
+        if(isset($recordVars['Project References'])){
+            $recordVars['Project References'] .= "||" . $record['projref']['value'];
+        }else{
+            $recordVars['Project References'] = $record['projref']['value'];
+        }
+    }
+
     if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])  && $record['locatedIn']['value'] != '' ){
       $locatedIn = [];
       foreach($result as $res){
@@ -883,6 +951,20 @@ function getFullRecordHtml(){
                       ];
           $recordVars['eventRolesA'] = $rolesArr;
         }
+    }
+
+    //descriptive Roles for events
+    //Gets the roles, participants, and pqID if they exist and matches them together
+    if (isset($record['droles']) && isset($record['droles']['value']) &&  $record['droles']['value'] != ''){
+      if(isset($record['droleevent']) && isset($record['droleevent']['value']) &&
+         $record['droleevent']['value'] != '' &&  $record['droleeventlabel']['value'] != '' ){
+        //There are participants to match with their roles and qIDs
+        $rolesArr = ['droles' => $record['droles']['value'],
+                     'dparticipant' => $record['droleeventlabel']['value'],
+                     'dpq' => $record['droleevent']['value']
+                    ];
+        $recordVars['DRolesA'] = $rolesArr;
+      }
     }
 
     // create the html based on the type of results
