@@ -27,7 +27,7 @@
 
   .pagination-next {
 	margin-left: 20px;
-	background-color: $base-dark;
+	background-color: #fff;
   }
 
   .pagination-prev {
@@ -41,7 +41,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	
+
 	.first-prev, .last-next {
 		display: flex;
 		margin-top: 20px;
