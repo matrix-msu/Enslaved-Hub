@@ -85,36 +85,36 @@ function scrollToTop(){
 }
 
 // Get params from url
-if(document.location.toString().indexOf('?') !== -1)
-{
+if(document.location.toString().indexOf('?') !== -1) {
     var query = document.location
         .toString()
-        // get the query string
         .replace(/^.*?\?/, '')
         .replace(/#.*$/, '')
         .split('&');
-    for(var i=0; i < query.length; i++)
-    {
-        var aux = decodeURIComponent(query[i]).split('=');
-        if(!aux || aux[0] == "" || aux[1] == "") continue;
-        aux[1] = decodeURIComponent(aux[1].replace(/\+/g, ' '));
 
-        if (aux[0] == "display"){
-            display = aux[1];
-            continue;
-        }
+    for (var i=0; i < query.length; i++) {
+        var aux = query[i].split('=');
+        if(!aux || aux[0] == "" || aux[1] == "") continue;
 
         if (typeof(filters[aux[0]]) == 'undefined'){
             filters[aux[0]] = []
         }
 
         // Get searchbar keywords
-        if(aux[0] == "searchbar")
-        {
-            filters[aux[0]] = aux[1].split('+');
-            continue;
+        if (aux[0] == "searchbar" || aux[0] == "display") {
+            value = decodeURIComponent(aux[1].replace(/\+/g, ' '));
+            if (aux[0] == "searchbar") {
+                filters[aux[0]] = value;
+            } else {
+                display = value;
+            }
+        } else {
+            // NOTE::must decode individual URI values if multiple exist
+            $.each(aux[1].split(','), function (_, value) {
+                filters[aux[0]] = filters[aux[0]].concat(decodeURIComponent(value.replace(/\+/g, ' ')));
+            });
         }
-        filters[aux[0]] = filters[aux[0]].concat(aux[1].split(','));
+
         // Delete sort from url after refresh
         if(aux[0] == "sort"){
           delete filters[aux[0]];
@@ -780,15 +780,13 @@ $(document).ready(function() {
     // searchbar
     $(".search-form").submit(function(e) {
         e.preventDefault();
-        // Get search key and value
         var pparam = decodeURIComponent($(this).serialize());
         var splitParam = pparam.split('=');
-        splitParam[1] = splitParam[1].replace(/\+/g, ' ');
-        filters[splitParam[0]] = splitParam[1].split(' ');
+        filters[splitParam[0]] = plain_value = splitParam[1].replace(/\+/g, ' ');
 
         // update views
-        $(".search-title h1").text(splitParam[1]);
-        $(".last-page-header #current-title").text("//" + splitParam[1]);
+        $(".search-title h1").text(plain_value);
+        $(".last-page-header #current-title").text("//" + plain_value);
         $(this).find("input").val("");
 
         // update URL
@@ -797,12 +795,19 @@ $(document).ready(function() {
         url_address = split_address[0] + '?';
 
         var counter = 0;
-        $.each(filters, function(key, value)
-        {
-            if(key && value && key != "limit" && key != "offset") {
-                value = encodeURIComponent(value);
-                if(!counter) url_address += key + '=' + value;
-                else url_address += '&' + key + '=' + value;
+        $.each(filters, function(key, values) {
+            if(key && values && key != "limit" && key != "offset") {
+                if (Array.isArray(values) && values.length > 1) {
+                    tmp_values = [];
+                    $.each(values, function(_,value) {
+                        tmp_values.push(encodeURIComponent(value));
+                    });
+                    values = tmp_values.join(',');
+                } else {
+                    values = encodeURIComponent(values);
+                }
+                if(!counter) url_address += key + '=' + values;
+                else url_address += '&' + key + '=' + values;
                 ++counter;
             }
         });
@@ -892,7 +897,7 @@ function updateURL(){
             split_url[0] = split_url[0].replace('/' + path, '/all');
             delete filters["categories"];
         }
-        else // multiple categorise selected
+        else // multiple categories selected
         {
             showPath = false;
             search_type = "categories";
@@ -919,12 +924,19 @@ function updateURL(){
 
     // updating url
     var counter = 0;
-    $.each(filters, function(key, value)
-    {
-        if(key && value && key != "limit" && key != "offset")
-        {
-            if(!counter) page_url += key + '=' + value;
-            else page_url += '&' + key + '=' + value;
+    $.each(filters, function(key, values) {
+        if(key && values && key != "limit" && key != "offset") {
+            if (Array.isArray(values) && values.length > 1) {
+                tmp_values = [];
+                $.each(values, function(_,value) {
+                    tmp_values.push(encodeURIComponent(value));
+                });
+                values = tmp_values.join(',');
+            } else {
+                values = encodeURIComponent(values);
+            }
+            if(!counter) page_url += key + '=' + values;
+            else page_url += '&' + key + '=' + values;
             ++counter;
         }
     });
