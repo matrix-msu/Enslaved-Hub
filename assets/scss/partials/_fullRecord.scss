@@ -171,7 +171,7 @@
     }
 }
 
-.record-connections{
+.record-connections, .story-connections {
     border-bottom: none;
     padding: 60px 0 30px;
     width: 90%;
@@ -182,7 +182,7 @@
         font-size: 30px;
         color: $base-dark;
     }
-    .categories{
+    .categories, .story-categories {
         margin-top: 25px;
 
         ul{
@@ -244,7 +244,7 @@
                     background-image: url(../images/Source-dark.svg);
                 }
             }
-            .selected{
+            .selected, .story-selected {
                 border-bottom: 2px solid $sub-base;
                 font-family: aleobold;
                 opacity: 1;
@@ -260,7 +260,7 @@
         }
     }
 
-    .connection-cards{
+    .connection-cards, .story-connection-cards {
 
         ul{
             display: flex;
@@ -336,7 +336,7 @@
                         }
                     }
                 }
-                .connectionswrap{
+                .connectionswrap, .story-connectionwrap {
                     width: 100%;
                     position: absolute;
                     bottom: 0;
