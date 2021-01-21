@@ -250,7 +250,13 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
         switch ($preset){
             case 'people':
                 //Person Name
-                $name = $record['name'][0];
+                $name = '';
+                if(is_array($record['name']) && count($record['name']) > 0) {
+                    $name = $record['name'][0];
+                } else {
+                    $name = $record['label'];
+                }
+
                 //Person QID
                 $personQ = $record['id'];
                 $person_url = BASE_URL . "record/person/" . $personQ;
@@ -411,7 +417,12 @@ HTML;
                 break;
             case 'places':
                 //Place name
-                $name = $record['label'];
+                $name = '';
+                if(is_array($record['name']) && count($record['name']) > 0) {
+                    $name = $record['name'][0];
+                } else {
+                    $name = $record['label'];
+                }
 
                 //Place URL
                 $placeQ = $record['id'];
@@ -532,7 +543,7 @@ HTML;
                         $card = "<tr class='tr' data-url='" . $place_url . "'>";
                         foreach ($select_fields[2] as $index => $field) {
                           if($field == "Name"){
-                            $value = $record['label'];
+                            $value = $name;
                           }if($field == "Project"){
                             $value = $record['generated_by'][0];
                           }if($field == "Location"){
@@ -551,7 +562,12 @@ HTML;
                 break;
             case 'events':
                 //Event name
-                $name = $record['label'];
+                $name = '';
+                if(is_array($record['name']) && count($record['name']) > 0) {
+                    $name = $record['name'][0];
+                } else {
+                    $name = $record['label'];
+                }
 
                 //Event URL
                 $eventQ = $record['id'];
@@ -691,7 +707,7 @@ HTML;
                         $card = "<tr class='tr' data-url='" . $event_url . "'>";
                         foreach ($select_fields[1] as $index => $field) {
                           if($field == "Name"){
-                            $value = $record['label'];
+                            $value = $name;
                           }if($field == "Event Type"){
                             $value = $record['event_type'][0];
                           }if($field == "Source Type"){
@@ -720,7 +736,12 @@ HTML;
                 break;
             case 'sources':
                 //Source name
-                $name = $record['label'];
+                $name = '';
+                if(is_array($record['name']) && count($record['name']) > 0) {
+                    $name = $record['name'][0];
+                } else {
+                    $name = $record['label'];
+                }
 
                 //Source URL
                 $sourceQ = $record['id'];

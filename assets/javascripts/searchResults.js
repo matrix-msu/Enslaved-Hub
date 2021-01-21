@@ -86,51 +86,44 @@ function scrollToTop(){
 }
 
 // Get params from url
-if(document.location.toString().indexOf('?') !== -1)
-{
+if(document.location.toString().indexOf('?') !== -1) {
     var query = document.location
         .toString()
-        // get the query string
         .replace(/^.*?\?/, '')
         .replace(/#.*$/, '')
         .split('&');
-    for(var i=0; i < query.length; i++)
-    {
-        var aux = decodeURIComponent(query[i]).split('=');
+
+    for (var i=0; i < query.length; i++) {
+        var aux = query[i].split('=');
         if(!aux || aux[0] == "" || aux[1] == "") continue;
         aux[1] = decodeURIComponent(aux[1].replace(/\+/g, ' '));
 
-        if (aux[0] == "display"){
-            display = aux[1];
-            continue;
-        }
-
         if (aux[0] == "offset"){
-            card_offset = parseInt(aux[1]);
-            url_page_change = true;
-            continue;
-        }
+             card_offset = parseInt(aux[1]);
+             url_page_change = true;
+             continue;
+         }
 
-        if (aux[0] == "limit"){
-            card_limit = parseInt(aux[1]);
-            url_page_change = true;
-            continue;
-        }
+         if (aux[0] == "limit"){
+             card_limit = parseInt(aux[1]);
+             url_page_change = true;
+             continue;
+         }
 
-        if (aux[0] == "sort"){
-            sort = aux[1];
-            continue;
-        }
+         if (aux[0] == "sort"){
+             sort = aux[1];
+             continue;
+         }
 
-        if (aux[0] == "sort_field"){
-            sort_field = aux[1];
-            continue;
-        }
+         if (aux[0] == "sort_field"){
+             sort_field = aux[1];
+             continue;
+         }
 
-        if (aux[0] == "display"){
-            display = aux[1];
-            continue;
-        }
+         if (aux[0] == "display"){
+             display = aux[1];
+             continue;
+         }
 
         if (typeof(filters[aux[0]]) == 'undefined'){
             filters[aux[0]] = []
@@ -139,10 +132,11 @@ if(document.location.toString().indexOf('?') !== -1)
         // Get searchbar keywords
         if(aux[0] == "searchbar")
         {
-            filters[aux[0]] = aux[1].split('+');
+            filters[aux[0]] = aux[1].replace(/\+/g, ' ');
             continue;
         }
         filters[aux[0]] = filters[aux[0]].concat(aux[1].split(',,'));
+
         // Delete sort from url after refresh
         if(aux[0] == "sort"){
           delete filters[aux[0]];
@@ -822,15 +816,13 @@ $(document).ready(function() {
     // searchbar
     $(".search-form").submit(function(e) {
         e.preventDefault();
-        // Get search key and value
         var pparam = decodeURIComponent($(this).serialize());
         var splitParam = pparam.split('=');
-        splitParam[1] = splitParam[1].replace(/\+/g, ' ');
-        filters[splitParam[0]] = splitParam[1].split(' ');
+        filters[splitParam[0]] = plain_value = splitParam[1].replace(/\+/g, ' ');
 
         // update views
-        $(".search-title h1").text(splitParam[1]);
-        $(".last-page-header #current-title").text("//" + splitParam[1]);
+        $(".search-title h1").text(plain_value);
+        $(".last-page-header #current-title").text("//" + plain_value);
         $(this).find("input").val("");
 
         // update URL
@@ -849,6 +841,7 @@ $(document).ready(function() {
             }
         });
         window.history.replaceState(0, "", url_address);
+
 
         // make ajax request
         searchResults(search_type);
@@ -934,7 +927,7 @@ function updateURL(){
             split_url[0] = split_url[0].replace('/' + path, '/all');
             delete filters["categories"];
         }
-        else // multiple categorise selected
+        else // multiple categories selected
         {
             showPath = false;
             search_type = "categories";
@@ -961,21 +954,22 @@ function updateURL(){
 
     // updating url
     var counter = 0;
-    $.each(filters, function(key, value)
-    {
-        if(key && value && key != "limit" && key != "offset")
-        {
-            if(Array.isArray(value)){
-                value = value.join(',,');
-            }
-            if(!counter) page_url += key + '=' + value;
-            else page_url += '&' + key + '=' + value;
-            ++counter;
-        }
-    });
+     $.each(filters, function(key, value)
+     {
+         if(key && value && key != "limit" && key != "offset")
+         {
+             if(Array.isArray(value)){
+                 value = value.join(',,');
+             }
+             if(!counter) page_url += key + '=' + value;
+             else page_url += '&' + key + '=' + value;
+             ++counter;
+         }
+     });
 
-    var newstate = (history.state || 0) + 1; // Can also passed data as state objects
-    window.history.replaceState(newstate, "", page_url);
+     var newstate = (history.state || 0) + 1; // Can also passed data as state objects
+     window.history.replaceState(newstate, "", page_url);
+
     // document.location = page_url; // reload the page to new url
 
     // make an ajax call now with the new filters

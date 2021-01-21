@@ -169,6 +169,23 @@ if (isset($story2Images[0])){
         </div>
     </section>
 
+    <section class="section section-news">
+        <div class="section-content">
+
+                    <h2 class="section-title">Featured News</h2>
+                    <div class="news-block">
+                      <a class="news-logo" target="_blank" href="https://msutoday.msu.edu/news/2020/enslaved-new-phase"><img src="<?php echo BASE_URL;?>/assets/images/news-msutoday.svg" /></a>
+                      <a class="news-logo" target="_blank" href="https://today.umd.edu/articles/reconstructing-fragmented-lives-88e94570-0f28-4604-ace2-777e74777e37"><img src="<?php echo BASE_URL;?>/assets/images/news-marylandtoday.png" /></a>
+                      <a class="news-logo" target="_blank" href="https://www.smithsonianmag.com/history/sweeping-new-digital-database-emphasizes-enslaved-peoples-individuality-180976513/"><img src="<?php echo BASE_URL;?>/assets/images/news-smithsonian.svg" /></a>
+                      <a class="news-logo" target="_blank" href="https://www.washingtonpost.com/history/2020/12/01/slavery-database-family-genealogy/"><img src="<?php echo BASE_URL;?>/assets/images/news-washingtonpost.svg" /></a>
+                      <a class="news-logo" target="_blank" href="https://www.npr.org/2020/12/09/944739710/enslaved-org-shares-lives-and-experiences-of-the-enslaved"><img src="<?php echo BASE_URL;?>/assets/images/news-npr.svg" /></a>
+                      <a class="news-logo" target="_blank" href="https://www.fastcompany.com/90582344/this-massive-database-reveals-the-names-and-stories-behind-the-history-of-slavery"><img src="<?php echo BASE_URL;?>/assets/images/news-fastcompany.svg" /></a>
+                    </div>
+                    <p class="mt-lg"><a class="text-link wrap" href="<?php echo BASE_URL."featuredNews";?>">View All Featured News</em></a></p>
+
+        </div>
+    </section>
+
     <div class="section-wrap visualize-hide">
         <div class="section-info">
             <a href="<?php echo BASE_URL;?>visualize"><h2>Visualize<img src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="arrow"/></h2></a>
