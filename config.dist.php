@@ -53,7 +53,8 @@ $GLOBALS['FILTER_ARRAY'] = Array(
         "Gender",
         "Age Category",
         "Ethnodescriptor",
-        "Role Types"
+        "Role Types",
+        "Occupation"
     ),
     "places" => array(
         "Place Type"

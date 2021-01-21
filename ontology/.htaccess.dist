@@ -68,6 +68,13 @@ RewriteBase /~username/enslaved/ontology/
 RewriteRule ^resources/.*$ - [PT]
 RewriteRule ^sections/.*$ - [PT]
 RewriteRule ^webvowl/.*$ - [PT]
+
+#download exceptions
+RewriteRule ^ontology.json - [PT]
+RewriteRule ^ontology.xml - [PT]
+RewriteRule ^ontology.nt - [PT]
+RewriteRule ^ontology.ttl - [PT]
+
 RewriteRule ^.*$ index-en.php [L]
 
 </IfModule>
