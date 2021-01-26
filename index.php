@@ -13,6 +13,19 @@
     <?=EXPLORE_JS_VARS?>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Link Previews -->
+    <meta property="og:title" content="Enslaved: Peoples of the Historical Slave Trade">
+    <meta property="og:description" content="Explore or reconstruct the lives of individuals who were enslaved, owned slaves, or participated in the historical trade.">
+    <meta property="og:image" content="<?php echo BASE_IMAGE_URL;?>link-preview.jpg">
+
+    <!-- Twitter Link Previews -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://enslaved.org">
+    <meta name="twitter:title" content="Enslaved: Peoples of the Historical Slave Trade">
+    <meta name="twitter:description" content="Explore or reconstruct the lives of individuals who were enslaved, owned slaves, or participated in the historical trade.">
+    <meta name="twitter:image" content="<?php echo BASE_IMAGE_URL;?>link-preview.jpg">
+
     <!-- favicon -->
     <link rel="icon" href="<?php echo BASE_IMAGE_URL;?>favicon.png">
     <!-- stylesheet -->
