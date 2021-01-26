@@ -671,7 +671,8 @@ function getFullRecordHtml(){
 
     //Name
     if (isset($record['name']) && isset($record['name']['value']) ){
-      $recordVars['Name'] = $record['name']['value'];
+      $recordVars['Name'] = str_replace('||', '<br>', $record['name']['value']);
+      $UntouchedName = $record['name']['value'];
     }
     // First Name
     if (isset($record['firstname']) && isset($record['firstname']['value']) ){
@@ -980,17 +981,19 @@ function getFullRecordHtml(){
     }
     $url = BASE_URL . "explore/" . $type;
     $recordform = ucfirst($type);
-    $name = $recordVars['Name'];
+    $name = $UntouchedName;
+    $nameNewline = str_replace('||','<br>',$name);
+    $nameSlash = str_replace('||',' | ',$name);
 
     $label= $recordVars['Label'];
     $dateRange = '';
     $html .= <<<HTML
 <h4 class='last-page-header'>
     <a id='last-page' href="$url"><span id=previous-title>$recordform / </span></a>
-    <span id='current-title'>$name</span>
+    <span id='current-title'>$nameSlash</span>
 
 </h4>
-<h1>$name</h1>
+<h1>$nameNewline</h1>
 <h2 class='date-range'><span>$dateRange</span></h2>
 HTML;
 
