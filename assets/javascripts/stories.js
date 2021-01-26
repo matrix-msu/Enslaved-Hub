@@ -31,4 +31,12 @@ $(document).ready(function(){
     });
 
     installFeaturedListeners('.featured-stories');
+
+    //If we used the search bar, then scroll down to the results
+    var isSearched = new RegExp('[\?&]searchbar=([^&#]*)').exec(window.location.href);
+    if(isSearched !== null) {
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#all-header-scroll").offset().top
+        }, 100);
+    }
 });
