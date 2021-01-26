@@ -20,6 +20,9 @@ SELECT ?label ?description ?project
 (group_concat(distinct ?roleslabel1; separator = "||") as ?roles)
 (group_concat(distinct ?roleevent1; separator = "||") as ?roleevent)
 (group_concat(distinct ?roleeventlabel1; separator = "||") as ?roleeventlabel)
+(group_concat(distinct ?drole; separator = "||") as ?droles)
+(group_concat(distinct ?droleevent1; separator = "||") as ?droleevent)
+(group_concat(distinct ?droleeventlabel1; separator = "||") as ?droleeventlabel)
 (group_concat(distinct ?statusevent1; separator = "||") as ?statusevent)
 (group_concat(distinct ?eventstatuslabel1; separator = "||") as ?eventstatuslabel)
 (group_concat(distinct ?allevents; separator = "||") as ?allevents1)
@@ -63,6 +66,12 @@ OPTIONAL {?agent $p:$hasParticipantRole ?staterole.
          ?role $rdfs:label ?roleslabel1.
          ?roleevent1 $wdt:$hasName ?roleeventlabel1.
          bind(?roleevent1 as ?allevents).
+      }.
+OPTIONAL {?agent $p:$hasDescriptiveRole ?dstaterole.
+         ?dstaterole $ps:$hasDescriptiveRole ?drole;
+                   $pq:$roleProvidedBy ?droleevent1.
+         ?droleevent1 $wdt:$hasName ?droleeventlabel1.
+         bind(?droleevent1 as ?allevents).
       }.
  OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
            ?statstatus $ps:$hasPersonStatus ?status1.

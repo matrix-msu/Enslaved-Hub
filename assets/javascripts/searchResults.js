@@ -8,7 +8,8 @@ var view;
 var result_array;
 var total_length = 0;
 var card_offset = 0;
-var card_limit = 12;
+var card_limit = 20;
+var url_page_change = false;
 var filters = {};
 var display = search_type;
 
@@ -96,6 +97,33 @@ if(document.location.toString().indexOf('?') !== -1) {
         var aux = query[i].split('=');
         if(!aux || aux[0] == "" || aux[1] == "") continue;
 
+        if (aux[0] == "offset"){
+            card_offset = parseInt(aux[1]);
+            url_page_change = true;
+            continue;
+        }
+
+        if (aux[0] == "limit"){
+            card_limit = parseInt(aux[1]);
+            url_page_change = true;
+            continue;
+        }
+
+        if (aux[0] == "sort"){
+            sort = aux[1];
+            continue;
+        }
+
+        if (aux[0] == "sort_field"){
+            sort_field = aux[1];
+            continue;
+        }
+
+        if (aux[0] == "display"){
+            display = aux[1];
+            continue;
+        }
+
         if (typeof(filters[aux[0]]) == 'undefined'){
             filters[aux[0]] = []
         }
@@ -114,6 +142,8 @@ if(document.location.toString().indexOf('?') !== -1) {
                 filters[aux[0]] = filters[aux[0]].concat(decodeURIComponent(value.replace(/\+/g, ' ')));
             });
         }
+
+        filters[aux[0]] = filters[aux[0]].concat(aux[1].split(',,'));
 
         // Delete sort from url after refresh
         if(aux[0] == "sort"){
@@ -152,6 +182,17 @@ function searchResults(preset, limit = 20, offset = 0)
     isSearching = true;
     card_limit = limit;
     card_offset = offset;
+
+    const params = new URLSearchParams(location.search);
+    params.set('limit', card_limit);
+    params.set('offset', card_offset);
+    params.set('sort_field', sort_field);
+    if(sort!=''){
+        params.set('sort', sort);
+    }
+    params.set('display', display);
+    var url = location.origin+location.pathname+'?'+params.toString();
+    window.history.replaceState(0, "", url);
 
     var templates = ['gridCard', 'tableCard'];
     var selected_fields = [selected_fields_people, selected_fields_events, selected_fields_places, selected_fields_source];
@@ -260,6 +301,7 @@ function searchResults(preset, limit = 20, offset = 0)
 
             appendCards();
             setPagination(total_length, card_limit, card_offset);
+            url_page_change = false;
 
             $.ajax({
                 url: BASE_URL + "api/searchFilterCounts",
@@ -329,7 +371,7 @@ function appendCards()
 }
 
 //Generate cards
-searchResults(search_type);
+searchResults(search_type, card_limit, card_offset);
 
 
 //Document load
@@ -463,7 +505,9 @@ $(document).ready(function() {
     $('#pagination .current-page').change(function(){
         var val = $('#pagination .current-page').val();
         //Call searchResults normally except calculate new offset
-        searchResults(search_type, card_limit, (val - 1) * card_limit);
+        if(!url_page_change){
+            searchResults(search_type, card_limit, (val - 1) * card_limit);
+        }
     });
 
     //SearchBar placeholder text
@@ -924,19 +968,16 @@ function updateURL(){
 
     // updating url
     var counter = 0;
-    $.each(filters, function(key, values) {
-        if(key && values && key != "limit" && key != "offset") {
-            if (Array.isArray(values) && values.length > 1) {
-                tmp_values = [];
-                $.each(values, function(_,value) {
-                    tmp_values.push(encodeURIComponent(value));
-                });
-                values = tmp_values.join(',');
-            } else {
-                values = encodeURIComponent(values);
+    
+    $.each(filters, function(key, value)
+    {
+        if(key && value && key != "limit" && key != "offset")
+        {
+            if(Array.isArray(value)){
+                value = value.join(',,');
             }
-            if(!counter) page_url += key + '=' + values;
-            else page_url += '&' + key + '=' + values;
+            if(!counter) page_url += key + '=' + value;
+            else page_url += '&' + key + '=' + value;
             ++counter;
         }
     });

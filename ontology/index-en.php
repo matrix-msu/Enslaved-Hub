@@ -84,8 +84,33 @@ function loadTOC(){
 
 
 <dl>
-<dt>Download serialization:</dt><dd><span><a href="ontology.json" target="_blank" download><img src="https://img.shields.io/badge/Format-JSON_LD-blue.svg" alt="JSON-LD" /></a> </span><span><a href="ontology.xml" target="_blank" download><img src="https://img.shields.io/badge/Format-RDF/XML-blue.svg" alt="RDF/XML" /></a> </span><span><a href="ontology.nt" target="_blank" download><img src="https://img.shields.io/badge/Format-N_Triples-blue.svg" alt="N-Triples" /></a> </span><span><a href="ontology.ttl" target="_blank" download><img src="https://img.shields.io/badge/Format-TTL-blue.svg" alt="TTL" /></a> </span></dd><dt>License: </dt><dd><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"><img src="https://img.shields.io/badge/License-%20CC%20by%204.0-blue.svg" alt="https://creativecommons.org/licenses/by/4.0/" /></a>
-</dd><dt>Visualization:</dt><dd><a href="webvowl/index.html#" target="_blank"><img src="https://img.shields.io/badge/Visualize_with-WebVowl-blue.svg" alt="Visualize with WebVowl" /></a></dd>
+    <dt>Download serialization:</dt>
+    <dd>
+        <span><a href="ontology.json" target="_blank" download>
+                <img src="https://img.shields.io/badge/Format-JSON_LD-blue.svg" alt="JSON-LD" />
+        </a></span>
+        <span><a href="ontology.xml" target="_blank" download>
+            <img src="https://img.shields.io/badge/Format-RDF/XML-blue.svg" alt="RDF/XML" />
+        </a></span>
+        <span><a href="ontology.nt" target="_blank" download>
+            <img src="https://img.shields.io/badge/Format-N_Triples-blue.svg" alt="N-Triples" />
+        </a></span>
+        <span><a href="ontology.ttl" target="_blank" download>
+            <img src="https://img.shields.io/badge/Format-TTL-blue.svg" alt="TTL" />
+        </a></span>
+    </dd>
+    <dt>License: </dt>
+    <dd>
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
+            <img src="https://img.shields.io/badge/License-%20CC%20by%204.0-blue.svg" alt="https://creativecommons.org/licenses/by/4.0/" />
+        </a>
+    </dd>
+    <dt>Visualization:</dt>
+    <dd>
+        <a href="webvowl/index.html#" target="_blank">
+            <img src="https://img.shields.io/badge/Visualize_with-WebVowl-blue.svg" alt="Visualize with WebVowl" />
+        </a>
+    </dd>
 </dl>
 </div>
 

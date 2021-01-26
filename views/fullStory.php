@@ -3,7 +3,7 @@ if (isset($_GET['kid']) && preg_match("/^[0-9A-F]+-[0-9A-F]+-[0-9A-F]+(-[0-9A-F]
     // $story = storyContent($_GET['kid']);
 
     // Getting Story using korawrappper
-    $fields = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Creator', 'Contributor', 'Timeline', 'Story_Associator','Contributing Institution'];
+    $fields = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Creator', 'Contributor', 'Timeline', 'Story_Associator','Contributing Institution', 'Connection'];
     $koraResult = koraWrapperSearch(STORY_SID, $fields, "kid", $_GET['kid']);
     $koraResult = json_decode($koraResult, true);
     if(!array_key_exists("error", $koraResult)) $story = $koraResult['records'][0][ $_GET['kid'] ];
@@ -183,50 +183,34 @@ else {
     </div>
 </main>
 <!-- Story Connections -->
-<!--<div class="record-connections">
-    <div class="connectionwrap">
+<?php
+    if(isset($story['Connection'])) {
+?>
+<script>
+    var storyConnectionData = <?php echo json_encode($story['Connection']) ?>;
+</script>
+<div class="story-connections">
+    <div class="story-connectionwrap">
     <h2>Story Connections</h2>
-    <div class="categories">
+    <div class="story-categories">
         <ul>
-            <li class="unselected selected" id="people"><div class="person-image"></div>10 People</li>
-            <li class="unselected" id="event"><div class="event-image"></div>3 Events</li>
-            <li class="unselected" id="place"><div class="place-image"></div>3 Places</li>
-            <li class="unselected" id="project"><div class="project-image"></div>2 Projects</li>
-            <li class="unselected" id="source"><div class="source-image"></div>15 Sources</li>
+            <li class="story-unselected story-selected" id="people"><div class="person-image"></div>People</li>
+            <li class="story-unselected" id="event"><div class="event-image"></div>Events</li>
+            <li class="story-unselected" id="place"><div class="place-image"></div>Places</li>
+            <li class="story-unselected" id="project"><div class="project-image"></div>Projects</li>
+            <li class="story-unselected" id="source"><div class="source-image"></div>Sources</li>
             <hr>
         </ul>
     </div>
-    <div class="connection-cards">
-        <ul class="connect-row">
-            <li class="card">
-                <div class="card-title">
-                <img src="<?php echo BASE_URL?>assets/images/Person-dark.svg" alt="Person Record Icon">
-                    <h3>Firstname Lastname</h3>
-                </div>
-              </li>
-              <li class="card">
-                <div class="card-title">
-                <img src="<?php echo BASE_URL?>assets/images/Place-dark.svg" alt="Place Record Icon">
-                    <h3>Place Title</h3>
-                </div>
-              </li>
-              <li class="card">
-                <div class="card-title">
-                <img src="<?php echo BASE_URL?>assets/images/Event-dark.svg" alt="Event Record Icon">
-                    <h3>Event Title</h3>
-                </div>
-              </li>
-              <li class="card">
-                <div class="card-title">
-                <img src="<?php echo BASE_URL?>assets/images/Source-dark.svg" alt="Source Record Icon">
-                    <h3>Source Title</h3>
-                </div>
-              </li>
+    <div class="story-connection-cards">
+        <ul class="story-connect-row">
         </ul>
-        <a class="search-all"></a>
     </div>
 </div>
-</div> -->
+</div>
+<?php
+    }
+?>
 
 <!-- Related Stories -->
 <!--<div class="container card-column related-card">
@@ -279,4 +263,4 @@ var recordform = "Story";
 </script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/slider.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/modal.js"></script>
-<script src="<?php echo BASE_URL;?>assets/javascripts/connections.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/storyConnections.js"></script>

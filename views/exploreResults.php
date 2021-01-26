@@ -117,7 +117,7 @@
 
                 <?php
                 $fullArray = $GLOBALS["FILTER_ARRAY"]['people'];
-                $extraCats = ['Status', 'Occupation'];
+                $extraCats = ['Status'];
                 foreach($extraCats as $extra){
                     $fullArray[] = $extra;
                 }
