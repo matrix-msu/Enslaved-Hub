@@ -303,7 +303,7 @@ ul.catmenu{
     }
 	#search-result-controls {
         font-size: 14px;
-		padding: 25px 0 20px;
+		padding: 0 0 20px;
 		position: relative;
         // text-align: center;
         width:100%;
@@ -391,7 +391,6 @@ ul.catmenu{
                 padding: 10px 15px;
                 position: absolute;
                 right: -4px;
-                width: max-content;
                 z-index: 1;
                 text-align: center;
                 min-width: 100px;
@@ -432,7 +431,7 @@ ul.catmenu{
     div.filter-cards{
         width: 100%;
         display: flex;
-        margin-bottom: 30px;
+        margin: 25px 0 25px;
 
         .option-wrap{
             width: fit-content;
@@ -471,10 +470,11 @@ ul.catmenu{
         #search-result-table {
             border-radius: 5px;
             margin-bottom: 35px;
+            margin-top: 20px;
             box-shadow: 0 7px 10px 0 rgba(0,0,0,0.05);
             overflow: auto;
             table {
-                background-color: rgba(13,18,48,0.05);
+                background-color: #fff;
                 border-collapse:collapse;
                 border: 1px solid rgba(13,18,48,0.03);
                 border-left: 0;
@@ -484,7 +484,7 @@ ul.catmenu{
                 color: $base-dark;
                 font-family: aleoregular;
                 th {
-                    background-color: #FFFDFA;
+                    background-color: #FFF;
                     font-weight: 500;
                 }
                 th, td {
@@ -521,7 +521,7 @@ ul.catmenu{
                     vertical-align: top;
                     color: $base-dark;
                     font-family: aleoregular;
-                    background-color: #F2EFE9;
+                    background-color: #FFF;
                     tr {
                         border: 2px solid rgba(26, 26, 26, 0.02);
                         td p {
@@ -529,7 +529,6 @@ ul.catmenu{
                             font-size: 12px;
                             max-width: 120px;
                             width: max-content;
-                            word-break: break-all;
                         }
                         span.first {
                             display:none;
@@ -542,10 +541,9 @@ ul.catmenu{
                         }
                         th:first-child,td:first-child {
                             background-color: #FFF;
-                            border: 2px solid rgba(13, 18, 48, 0.03);
+                            border: 1px solid rgba(13, 18, 48, 0.03);
                             border-top: 0;
                             border-right: 0;
-                            box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.03);
                             box-sizing: border-box;
                             margin-bottom: 1px;
                             max-width: 200px;
@@ -575,7 +573,7 @@ ul.catmenu{
                         &:hover {
                             box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.03);
                             td {
-                                background-color: rgba(194,79,60,0.3);
+                                background-color: #F1C4B4;
                             }
                         }
                     }
@@ -1085,12 +1083,58 @@ ul.catmenu{
                             align-items: center;
                             font-size: 12px;
                             margin-right: 25px;
+                            position: relative;
 
                             &:hover{
+
+                              .tooltip{
+                                  display: block;
+                                  background-color: $base-dark;
+                                  color: $base-light;
+                                  padding: 7px 10px 5px 10px;
+                                  border-radius: 5px;
+                                  font-size: 14px;
+                                  font-family: aleo;
+                                  font-family: aleoregular;
+                                  opacity: 1;
+
+                                  /* Position the tooltip */
+                                  position: absolute;
+                                  z-index: 100;
+                                  left: -40%;
+                                  top: -40px;
+
+                                  .head{
+                                      font-size: 15px;
+                                      font-family: aleobold;
+                                      display: block;
+                                      padding-bottom: 5px;
+                                      color: #FAF7F2;
+                                      text-align: center;
+                                      opacity: 1;
+                                  }
+                              }
+                              .tooltip::after {
+                                  content: " ";
+                                  position: absolute;
+                                  top: 100%; /* At the bottom of the tooltip */
+                                  left: 50%;
+                                  margin-left: -5px;
+                                  border-width: 5px;
+                                  border-style: solid;
+                                  border-color: $base-dark transparent transparent transparent;
+                              }
+
+
+
                                 .connection-menu{
                                     // display: block;
                                     display: none;
                                 }
+                            }
+
+                            .tooltip {
+                              display: none;
                             }
 
                             img{
@@ -1167,64 +1211,7 @@ ul.catmenu{
                                     }
                                 }
                             }
-                            #person{
-                              margin-left: -152px;
-                            }
-                            #place{
-                              margin-left: -88px;
-                            }
-                            #event{
-                              margin-left: -24px;
-                            }
-                            #source{
-                              margin-left: 40px;
-                            }
-                            .tooltip{
-                                visibility: hidden;
-                                width: 95px;
-                                background-color: $base-dark;
-                                color: $base-light;
-                                padding: 15px;
-                                border-radius: 5px;
-                                font-size: 14px;
-                                font-family: aleo;
-                                font-family: aleoregular;
-                                opacity: 1;
 
-                                /* Position the tooltip */
-                                position: absolute;
-                                z-index: 100;
-                                bottom: 60%;
-                                left: 33%;
-
-                                .head{
-                                    font-size: 15px;
-                                    font-style: italic;
-                                    font-family: aleobold;
-                                    display: block;
-                                    padding-bottom: 5px;
-                                    color: #FAF7F2;
-                                    text-align: center;
-                                    opacity: 1;
-                                }
-                            }
-                            .tooltip::after {
-                                content: " ";
-                                position: absolute;
-                                top: 100%; /* At the bottom of the tooltip */
-                                left: 50%;
-                                margin-left: -5px;
-                                border-width: 5px;
-                                border-style: solid;
-                                border-color: $base-dark transparent transparent transparent;
-                            }
-
-                            &:hover{
-
-                                .tooltip{
-                                    visibility: visible;
-                                }
-                            }
                         }
                     }
                 }
@@ -1251,6 +1238,7 @@ ul.catmenu{
     transition: 200ms;
     width: 100%;
     text-align: left;
+
     .config-table-modal {
         background: $base-light;
         box-shadow: 0 25px 33px 0 rgba(0,0,0,0.05);
@@ -1272,6 +1260,7 @@ ul.catmenu{
             padding-bottom: 0;
             margin: 0;
             width: unset;
+            overflow:scroll;
             div.close {
                 background: $base-dark;
                 border-radius: 5px;
@@ -1383,8 +1372,7 @@ ul.catmenu{
                             border-radius: 5px;
                             padding: 14px;
                             position: absolute;
-                            position: absolute;
-                            top: 50%;
+                            top: 100px;
                             right: 10px;
                             transition: 400ms;
                             height: 40px;
@@ -1392,7 +1380,7 @@ ul.catmenu{
                             transform: rotate(90deg);
                         }
                         img:last-child {
-                            top: 25%;
+                            top: 50px;
                             transform: rotate(-90deg);
                             margin-bottom: 10px;
 
@@ -1459,7 +1447,7 @@ ul.catmenu{
 }
 @media screen and (min-width: 1330px) {
     #search-result-wrap .column .cardwrap .row li {
-        margin: 10px!important;
+        margin: 20px 10px 10px!important;
         width: 23%!important;
     }
 }
@@ -1515,6 +1503,7 @@ ul.catmenu{
         height: 90%;
         div.config-table-modal-content-wrap {
             padding: 35px 45px;
+            height: 90vh;
             div.close {
                 top: 25px;
                 right: 25px;
@@ -1532,13 +1521,13 @@ ul.catmenu{
                 }
                 div.arrow-wrap {
                     margin: 30px 0 0;
-                    transform: rotate(-90deg);
+                    transform: rotate(-180deg);
                     width: 100%;
                     img:first-child {
-                        transform: rotate(90deg);
+                        transform: rotate(-90deg);
                     }
                     img:last-child {
-                        transform: rotate(-90deg);
+                        transform: rotate(90deg);
                     }
                 }
                 div.right-col {
@@ -1607,7 +1596,7 @@ ul.catmenu{
     .search-record-connections{
         .connectionwrap{
             .connection-cards{
-                display: none;
+
             }
         }
     }

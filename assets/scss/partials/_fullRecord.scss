@@ -611,6 +611,7 @@
         border-radius: 5px;
         background-color: $white;
         box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
+        margin-top: -30px;
 
         a{
             text-decoration: none;
@@ -834,7 +835,7 @@
 }
 
 .advanced-section{
-    padding: 40px 0 40px;
+    padding: 40px 0 0;
     width: 90%;
     max-width: 1000px;
     margin: 0 auto;

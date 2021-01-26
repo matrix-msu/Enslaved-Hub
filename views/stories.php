@@ -244,7 +244,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
             </ul>
 
             <div class="pagination-next btn-next no-select" data-page="<?php echo ($page < $page_count ? $page + 1 : ''); ?>">
-                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron-light.svg" alt="Next Featured Biography">
+                <img class="chevron" src="<?php echo BASE_URL;?>assets/images/chevron.svg" alt="Next Featured Biography">
             </div>
         </div>
     </div>

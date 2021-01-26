@@ -461,16 +461,16 @@ HTML;
 
                 $connections = '<div class="connectionswrap"><p>Place\'s Connections</p><div class="connections">';
                 	if (intval($countpeople) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span class="tooltip" id="person"><span class="head">Person</span></span><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
                     if (intval($countplace) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span class="tooltip" id="place"><span class="head">Place</span></span><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
                     }
                     if (intval($countevent) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span class="tooltip" id="event"><span class="head">Event</span></span><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
                     }
                     if (intval($countsource) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span class="tooltip" id="source"><span class="head">Source</span></span><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
                     }
                 $connections .= '</div></div>';
 
@@ -621,19 +621,22 @@ HTML;
                     '<h1>'.$countplace.' Connected Places</h1><ul><li>Place Name <div id="arrow"></div></li><li>Place Name is Longer<div id="arrow"></div></li><li>Place Name <div id="arrow"></div></li><li>View All Place Connections <div id="arrow"></div></li></ul>',
                     '<h1>'.$countsource.' Connected Sources</h1><ul><li>Source Name <div id="arrow"></div></li><li>Source Name is Longer<div id="arrow"></div></li><li>Source Name <div id="arrow"></div></li><li>View All Source Connections <div id="arrow"></div></li></ul>'
                 );
+
+
+
                 //'<h1>'.$countevent.' Connected Events</h1><ul><li>Event Name <div id="arrow"></div></li><li>Event Name is Longer<div id="arrow"></div></li><li>Event Name <div id="arrow"></div></li><li>View All Event Connections <div id="arrow"></div></li></ul>',
                 $connections = '<div class="connectionswrap"><p>Event\'s Connections</p><div class="connections">';
                 	if (intval($countpeople) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span class="tooltip" id="person"><span class="head">Person</span></span><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
                     if (intval($countplace) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span class="tooltip" id="place"><span class="head">Place</span></span><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
                     }
                     // if (intval($countevent) > 0){
                     //     $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
                     // }
                     if (intval($countsource) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span class="tooltip" id="source"><span class="head">Source</span></span><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
                     }
                 $connections .= '</div></div>';
 
@@ -776,13 +779,13 @@ HTML;
 
                 $connections = '<div class="connectionswrap"><p>Source\'s Connections</p><div class="connections">';
                 	if (intval($countpeople) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span class="tooltip" id="person"><span class="head">Person</span></span><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                     }
                     if (intval($countplace) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span class="tooltip" id="place"><span class="head">Place</span></span><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
                     }
                     if (intval($countevent) > 0){
-                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                        $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span class="tooltip" id="event"><span class="head">Event</span></span><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
                     }
                     // if (intval($countsource) > 0){
                     //     $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
@@ -1116,13 +1119,13 @@ HTML;
                         //     $connections .= '<div class="card-icons"><img src="../assets/images/Person-dark.svg"><span>'.$countpeople.'</span><div class="connection-menu">'.$connection_lists[0].'</div></div>';
                         // }
                         if (intval($countplace) > 0){
-                            $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
+                            $connections .= '<div class="card-icons"><img src="../assets/images/Place-dark.svg"><span class="tooltip" id="place"><span class="head">Place</span></span><span>'.$countplace.'</span><div class="connection-menu">'.$connection_lists[1].'</div></div>';
                         }
                         if (intval($countevent) > 0){
-                            $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
+                            $connections .= '<div class="card-icons"><img src="../assets/images/Event-dark.svg"><span class="tooltip" id="event"><span class="head">Event</span></span><span>'.$countevent.'</span><div class="connection-menu">'.$connection_lists[2].'</div></div>';
                         }
                         if (intval($countsource) > 0){
-                            $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
+                            $connections .= '<div class="card-icons"><img src="../assets/images/Source-dark.svg"><span class="tooltip" id="source"><span class="head">Source</span></span><span>'.$countsource.'</span><div class="connection-menu">'.$connection_lists[3].'</div></div>';
                         }
                     $connections .= '</div></div>';
 
