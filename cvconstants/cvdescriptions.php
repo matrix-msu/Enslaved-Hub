@@ -28,6 +28,7 @@ const controlledVocabulary=[
 "Crime" => "work that involves making a living from illegal and extralegal activities. For example, thief.",
 "Criminal Document" => "A document related to alleged violations of criminal law",
 "Death" => "Event in which a person dies",
+"Death or Burial" => "A document recording a human death or burial",
 "Deceased Person" => "person who ceases to live or is buried",
 "Disappearance" => "Event in which an enslaved person runs away, is kidnapped, or otherwise disappears",
 "Domestic Service" => "work involving the care of an employer's home.",
