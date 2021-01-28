@@ -294,21 +294,24 @@ function changeIframe(){
 
   var projLink = document.getElementById("search-records-link");
   if(proj == "Louisiana"){
-    projLink.setAttribute('href', BASE_URL+'search/all?projects=Louisiana%2BSlave%2BDatabase');
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Louisiana+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
   }
   if(proj == "Free"){
-    projLink.setAttribute('href', BASE_URL+'https://enslaved.org/search/all?projects=Free%20Blacks%20Database,Free%20Blacks%20Database%20New%20Orleans%201840-1860');
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Free+Blacks+Database+New+Orleans+1840-1860&limit=20&offset=0&sort_field=label.sort&display=people');
   }
   if(proj == "Voyages"){
-    projLink.setAttribute('href', BASE_URL+'search/all?projects=Voyages:%20The%20Trans-Atlantic%20Slave%20Trade%20Database');
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Voyages%3A+The+Trans-Atlantic+Slave+Trade+Database&limit=20&offset=0&sort_field=label.sort&display=people');
   }
   if(proj == "Legacies"){
-    projLink.setAttribute('href', BASE_URL+'search/all?projects=Legacies%20of%20British%20Slave-ownership');
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Legacies+of+British+Slave-ownership&limit=20&offset=0&sort_field=label.sort&display=people');
   }
   if(proj == "Hutchins"){
-    projLink.setAttribute('href', BASE_URL+'search/all?projects=Hutchins%20Center%20for%20African%20&%20African%20American%20Research');
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Hutchins+Center+for+African+%26+African+American+Research=&limit=20&offset=0&sort_field=label.sort&display=people');
   }
   if(proj == "Contested"){
-    projLink.setAttribute('href', BASE_URL+'search/all?projects=Contested%20Freedom');
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Contested+Freedom&limit=20&offset=0&sort_field=label.sort&display=people');
+  }
+  if(proj == "Maranhão"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhão+Inventories+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
   }
 }
