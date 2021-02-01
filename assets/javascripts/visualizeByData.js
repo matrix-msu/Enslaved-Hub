@@ -131,7 +131,7 @@ var projects = {
   'Legacies': "<option value='Legacies of British Slave-Ownership'>Legacies of British Slave-Ownership</option>",
   'Hutchins': "<option value='Hutchins Center for African & African American Research'>Hutchins Center for African & African American Research</option>",
   'Maranhão': "<option value='Maranhão Inventories Slave Database'>Maranhão Inventories Slave Database</option>",
-  'Contested': "<option value='Contested Freedom'>Contested Freedom</option>"
+  'Contested': "<option value='Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842'>Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842</option>"
 }
 
 $(document).ready( function() {
