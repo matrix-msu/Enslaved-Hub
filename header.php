@@ -1,7 +1,6 @@
 <!-- Header/Navigation -->
 <div class="universal-nav">
   <div class="universal-links">
-  <title>Enslaved.org</title>
     <a href="https://enslaved.org" class="universal-enslaved">Enslaved.org</a>
     <a href="https://jsdp.enslaved.org" class="universal-jsdp">Journal of Slavery and Data Preservation</a>
   </div>
