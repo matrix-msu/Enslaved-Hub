@@ -8,7 +8,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta name="google" content="notranslate" />
-    <title><?php echo BASE_URL;?></title>
+    <title>Enslaved.org</title>
     <?=JS_GLOBALS?>
     <?=EXPLORE_JS_VARS?>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
