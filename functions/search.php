@@ -393,7 +393,8 @@ class QueryIndex {
                     'participant_role',
                     'date',
                     'end_date',
-                    'age_category'
+                    'age_category',
+                    'has_description'
                 ],
                 'lenient' => true,
                 'default_operator' => 'AND',
