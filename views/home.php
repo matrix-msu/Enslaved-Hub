@@ -212,7 +212,7 @@ if (isset($story2Images[0])){
 
 
 
-    <div id='underDev' class='modal-preview'>
+    <!--<div id='underDev' class='modal-preview'>
       <div>
         <div class="modal-x-btn closeUnderDev">
           <img src='<?php echo BASE_URL;?>/assets/images/x-dark.svg' class="closeUnderDev" />
@@ -230,7 +230,7 @@ if (isset($story2Images[0])){
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
 
 </main>
 
