@@ -110,7 +110,7 @@ HTML;
       if(array_key_exists($roles[$i],controlledVocabulary)){
 
           $detailinfo = ucfirst(controlledVocabulary[$roles[$i]]);
-          $html .= "<div class='detail-menu'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
+          $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
       }
 
       $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
@@ -163,7 +163,7 @@ HTML;
         // roles tool tip
         if(array_key_exists($roles[$i],controlledVocabulary)){
             $detailinfo = ucfirst(controlledVocabulary[$roles[$i]]);
-            $html .= "<div class='detail-menu'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
+            $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
         }
 
         $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventRoleLabels[$i]</a></div>";
@@ -215,7 +215,7 @@ HTML;
       if(array_key_exists($roles[$i],controlledVocabulary)){
 
           $detailinfo = ucfirst(controlledVocabulary[$roles[$i]]);
-          $html .= "<div class='detail-menu'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
+          $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
       }
 
       $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
@@ -343,7 +343,7 @@ HTML;
         // relationship tool tip
         if(array_key_exists($relationships[$i],controlledVocabulary)){
             $detailinfo = ucfirst(controlledVocabulary[$relationships[$i]]);
-            $html .= "<div class='detail-menu'> <h1>$relationships[$i]</h1> <p>$detailinfo</p> </div>";
+            $html .= "<div class='detail-menu' id='tooltip'> <h1>$relationships[$i]</h1> <p>$detailinfo</p> </div>";
         }
 
         $html .= "</div> - <a href='$personUrl' class='highlight'>$relationshipLabels[$i]</a></div>";
@@ -418,7 +418,7 @@ HTML;
         // ecvo tool tip
         if(array_key_exists($ecvos[$i],controlledVocabulary)){
             $detailinfo = ucfirst(controlledVocabulary[$ecvos[$i]]);
-            $html .= "<div class='detail-menu'> <h1>$ecvos[$i]</h1> <p>$detailinfo</p> </div>";
+            $html .= "<div class='detail-menu' id='tooltip'> <h1>$ecvos[$i]</h1> <p>$detailinfo</p> </div>";
         }
 
         $html .= "</div> - <a href='$placeUrl' class='highlight'>$originLabels[$i]</a></div>";
@@ -469,7 +469,7 @@ HTML;
         // status tool tip
         if(array_key_exists($statuses[$i],controlledVocabulary)){
             $detailinfo = ucfirst(controlledVocabulary[$statuses[$i]]);
-            $html .= "<div class='detail-menu'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
+            $html .= "<div class='detail-menu' id='tooltip'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
         }
 
         $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventstatusLabels[$i]</a></div>";
@@ -520,7 +520,7 @@ HTML;
         // status tool tip
         if(array_key_exists($statuses[$i],controlledVocabulary)){
             $detailinfo = ucfirst(controlledVocabulary[$statuses[$i]]);
-            $html .= "<div class='detail-menu'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
+            $html .= "<div class='detail-menu' id='tooltip'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
         }
 
         $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventstatusLabels[$i]</a></div>";
@@ -587,7 +587,7 @@ HTML;
           $html .= "<div>" . $detailname;
           if(array_key_exists($detailname,controlledVocabulary)){
             $detailinfo = ucfirst(controlledVocabulary[$detailname]);
-            $html .= "<div class='detail-menu'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
+            $html .= "<div class='detail-menu' id='tooltip'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
           }
           $html .= "</div>";
           continue;
@@ -629,7 +629,7 @@ HTML;
         }
         if(array_key_exists($detailname,controlledVocabulary)){
           $detailinfo = ucfirst(controlledVocabulary[$detailname]);
-          $html .= "<div class='detail-menu'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
+          $html .= "<div class='detail-menu' id='tooltip'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
         }
         $html .= "</div></a>";
 
@@ -994,7 +994,7 @@ function getFullRecordHtml(){
 
 </h4>
 <h1>$nameNewline</h1>
-<h2 class='date-range'><span>$dateRange</span></h2>
+<!--<h2 class='date-range'><span>$dateRange</span></h2>-->
 HTML;
 
     $htmlArray['header'] = $html;
