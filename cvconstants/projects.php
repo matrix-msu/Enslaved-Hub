@@ -9,7 +9,8 @@ const projects=[
     "Contested Freedom" => "Q624610",
     "CSI Dixie" => "Q490726",
     "Free Africans of Brazil" => "Q624576",
-    "Fogel and Engerman" => "Q627623"
+    "Economics of American Negro Slavery Series" => "Q627623",
+    "Family Search" => "Q811272"
 ];
 
 const qprojects=[
@@ -22,6 +23,7 @@ const qprojects=[
   "Q624610" => "Contested Freedom",
   "Q490726" => "CSI Dixie",
   "Q624576" => "Free Africans of Brazil",
-  "Q627623" => "Fogel and Engerman"
+  "Q627623" => "Economics of American Negro Slavery Series",
+  "Q811272" => "Family Search"
 
 ];
