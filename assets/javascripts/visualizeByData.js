@@ -89,6 +89,7 @@ var dash_main_Legacies = "https://kibana.enslaved.org/app/kibana#/dashboard/6673
 var dash_main_Hutchins = "https://kibana.enslaved.org/app/kibana#/dashboard/c316dd50-e22e-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Free = "https://kibana.enslaved.org/app/kibana#/dashboard/95245570-e62b-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Contested = "https://kibana.enslaved.org/app/kibana#/dashboard/27034a40-331c-11eb-9912-5716c793fbae?embed=true&_g=(filters:!())";
+var dash_main_Family = "https://kibana.enslaved.org/app/kibana#/dashboard/63095a60-8b1a-11eb-a016-d9899afc47bd?embed=true&_g=(filters:!())";
 
 
 var concat_url = BASE_URL + "visualizedata";
@@ -131,7 +132,8 @@ var projects = {
   'Legacies': "<option value='Legacies of British Slave-Ownership'>Legacies of British Slave-Ownership</option>",
   'Hutchins': "<option value='Hutchins Center for African & African American Research'>Hutchins Center for African & African American Research</option>",
   'Maranhão': "<option value='Maranhão Inventories Slave Database'>Maranhão Inventories Slave Database</option>",
-  'Contested': "<option value='Contested Freedom'>Contested Freedom</option>"
+  'Contested': "<option value='Contested Freedom'>Contested Freedom</option>",
+  'Family': "<option value='Family Search'>Family Search</option>"
 }
 
 $(document).ready( function() {
@@ -313,5 +315,8 @@ function changeIframe(){
   }
   if(proj == "Maranhão"){
     projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhão+Inventories+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
+  }
+  if(proj == "Family"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Family+Search&limit=20&offset=0&sort_field=label.sort&display=people');
   }
 }
