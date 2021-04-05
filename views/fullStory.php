@@ -266,7 +266,7 @@ var recordform = "Story";
 <!-- Add Story Imagery and Kora Alt Text Caption + Slider Functionality -->
 <script>
 $.each(result_array,function ( index, value ) {
-    $('<img class="mySlides fade" src="'+value+'" alt="<?php if(isset($caption[0])) echo $caption[0]; ?>">').appendTo("div.slider"); //add images to the slider
+    $('<img class="mySlides fade" src="'+value+'" alt="'+captions[index]+'">').appendTo("div.slider"); //add images to the slider
     // $('<p class="key-events-text">Cation goes here</p>').appendTo("div.slider"); //add images to the slider
     if (result_array.length > 1){
         $('<span class="dot" onclick="currentSlide('+(index+1)+')"></span>').appendTo("div.dots");
