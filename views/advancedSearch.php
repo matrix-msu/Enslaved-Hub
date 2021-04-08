@@ -50,7 +50,7 @@
                     <input class="age-range" type="hidden" name="age" value=""/>
                 </div>
                 <div class="inputwrap">
-                    <label for="ethnodescriptor">Ethnodescriptor</label>
+                    <label for="ethno">Ethnodescriptor</label>
                     <input class="input-field" id="ethno" name="ethnodescriptor" type="text" placeholder="Enter Ethnodescriptor"/>
                 </div>
                 <div class="inputwrap">
@@ -89,7 +89,7 @@
             <h2>Place</h2>
             <div class="search-section">
                 <div class="inputwrap">
-                    <label for="place_name">Place Name</label>
+                    <label for="place">Place Name</label>
                     <input class="input-field" id="place" name="place_name" type="text" placeholder="Enter Place Name"/>
                 </div>
                 <div class="inputwrap">

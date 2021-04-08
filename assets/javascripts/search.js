@@ -12,21 +12,39 @@ $(document).ready(function() {
     $('#occupation').select2({
         placeholder: "Select Occupation"
     });
+    $('#occupation').next().find('input[placeholder="Select Occupation"]').attr('id', 'occupation');
+    $('#occupation').removeAttr('id');
+
     $('#event-type').select2({
         placeholder: "Select Event Type"
     });
+    $('#event-type').next().find('input[placeholder="Select Event Type"]').attr('id', 'event_type');
+    $('#event-type').removeAttr('id');
+
     $('#place-type').select2({
         placeholder: "Select Place Type"
     });
+    $('#place-type').next().find('input[placeholder="Select Place Type"]').attr('id', 'place_type');
+    $('#place-type').removeAttr('id');
+
     $('#country').select2({
         placeholder: "Select Country"
     });
+    $('#country').next().find('input[placeholder="Select Country"]').attr('id', 'country_code');
+    $('#country').removeAttr('id');
+
     $('#source-type').select2({
         placeholder: "Select Source Type"
     });
+    $('#source-type').next().find('input[placeholder="Select Source Type"]').attr('id', 'source_type');
+    $('#source-type').removeAttr('id');
+
     $('#project').select2({
         placeholder: "Select Project"
     });
+    $('#project').next().find('input[placeholder="Select Project"]').attr('id', 'projects');
+    $('#project').removeAttr('id');
+
     $('#startYear').select2({
         placeholder: "Select or Input the Start Year"
     });
@@ -36,9 +54,14 @@ $(document).ready(function() {
     $('#event-from').select2({
         placeholder: "Enter Start Year"
     });
+    $('#event-from').next().find('input[placeholder="Enter Start Year"]').attr('id', 'event-from');
+    $('#event-from').removeAttr('id');
+
     $('#event-to').select2({
         placeholder: "Enter End Year"
     });
+    $('#event-to').next().find('input[placeholder="Enter End Year"]').attr('id', 'event-to');
+    $('#event-to').removeAttr('id');
 
     //Basic search page
     $('#life-event').select2({

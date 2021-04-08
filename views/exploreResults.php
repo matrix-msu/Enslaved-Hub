@@ -74,7 +74,7 @@
                     <span id="previous-title"><?php echo $upperForm ?></span>
                 </a>
                 <a id="last-page" class="prev2" href="<?php echo $link2 ?>">
-                    <span id="previous-title"><?php echo ($typeTitle != "") ? "/ " . $typeTitle : "" ?></span>
+                    <span id="previous-title"><span class="sr-only">Secondary Breadcrumb Link</span><?php echo ($typeTitle != "") ? "/ " . $typeTitle : "" ?></span>
                 </a>
                 <span id="current-title"><?php echo ($currentTitle != "") ? "/ " . $currentTitle : "" ?></span>
             </h4>
@@ -170,12 +170,12 @@
                         <?php }
                         if ($catLower == 'date'){
                             echo '<div class="inputwrap">
-                                <label for="startYear">Start Year</label>
+                                <label for="startyear">Start Year</label>
                                 <input class="nofold" type="number" onKeyPress="if(this.value.length==4) return false;" id="startyear" placeholder="Year"/>
                                 </div>
                                 <div class="to-field">To</div>
                                 <div class="inputwrap">
-                                <label for="endYear">End Year </label>
+                                <label for="endyear">End Year </label>
                                 <input class="nofold" type="number" onKeyPress="if(this.value.length==4) return false;" id="endyear" placeholder="Year"/>
                                 </div>
                                 <input id="date-go-btn" type="button" value="Go">';
