@@ -1,4 +1,3 @@
-<!-- Author: Drew Schineller-->
 <!-- Main page-->
 <!-- Heading image and title container-->
 <div class="container header">
@@ -30,7 +29,7 @@
                     <select class="s2-single" id="status" name="status">
                         <option value=""></option>
                         <?php foreach (personstatus as $type => $qid) { ?>
-                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -39,7 +38,7 @@
                     <select class="s2-single" name="gender" id="sex">
                         <option value=""></option>
                         <?php foreach (sexTypes as $type => $qid) { ?>
-                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -51,14 +50,14 @@
                     <input class="age-range" type="hidden" name="age" value=""/>
                 </div>
                 <div class="inputwrap">
-                    <label for="ethnodescriptor">Ethnodescriptor</label>
+                    <label for="ethno">Ethnodescriptor</label>
                     <input class="input-field" id="ethno" name="ethnodescriptor" type="text" placeholder="Enter Ethnodescriptor"/>
                 </div>
                 <div class="inputwrap">
                     <label for="occupation">Occupation</label>
                     <select class="s2-multiple" id="occupation" name="occupation" multiple="multiple">
                         <?php foreach (occupation as $type => $qid) { ?>
-                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -70,7 +69,7 @@
                     <label for="event_type">Type</label>
                     <select class="s2-multiple" name="event_type" id="event-type" multiple="multiple">
                         <?php foreach (eventTypes as $type => $qid) { ?>
-                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -90,14 +89,14 @@
             <h2>Place</h2>
             <div class="search-section">
                 <div class="inputwrap">
-                    <label for="place_name">Place Name</label>
+                    <label for="place">Place Name</label>
                     <input class="input-field" id="place" name="place_name" type="text" placeholder="Enter Place Name"/>
                 </div>
                 <div class="inputwrap">
                     <label for="place_type">Place Type</label>
                     <select class="s2-multiple" id="place-type" name="place_type" multiple="multiple">
                         <?php foreach (placeTypes as $type => $qid) { ?>
-                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -121,7 +120,7 @@
                     <label for="source_type">Source Type</label>
                     <select class="s2-multiple" id="source-type" name="source_type" multiple="multiple">
                         <?php foreach (sourceTypes as $type => $qid) { ?>
-                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -129,7 +128,7 @@
                     <label for="projects">Projects</label>
                     <select class="s2-multiple" id="project" name="projects" multiple="multiple">
                         <?php foreach (projects as $type => $qid) { ?>
-                            <option value="<?php echo urlencode($type); ?>"><?php echo $type; ?></option>
+                            <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
                         <?php } ?>
                     </select>
                 </div>
