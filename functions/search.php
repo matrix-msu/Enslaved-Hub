@@ -14,7 +14,7 @@ function set_text_query($filters, $qi) {
     }
 
     if (array_key_exists('searchbar', $filters)) {
-        $str = preg_replace('/\PL/u', '', $filters['searchbar']);
+        $str = preg_replace('/\PLs/u', '', $filters['searchbar']);
         $qi->setQueryString($str);
         unset($filters['searchbar']);
     }
