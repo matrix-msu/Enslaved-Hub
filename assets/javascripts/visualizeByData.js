@@ -90,6 +90,7 @@ var dash_main_Hutchins = "https://kibana.enslaved.org/app/kibana#/dashboard/c316
 var dash_main_Free = "https://kibana.enslaved.org/app/kibana#/dashboard/95245570-e62b-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Contested = "https://kibana.enslaved.org/app/kibana#/dashboard/27034a40-331c-11eb-9912-5716c793fbae?embed=true&_g=(filters:!())";
 var dash_main_Family = "https://kibana.enslaved.org/app/kibana#/dashboard/63095a60-8b1a-11eb-a016-d9899afc47bd?embed=true&_g=(filters:!())";
+var dash_main_Mortality = "https://kibana.enslaved.org/app/kibana#/dashboard/dffbe0b0-a848-11eb-969a-3f1d64906898?embed=true&_g=(filters:!())";
 
 
 var concat_url = BASE_URL + "visualizedata";
@@ -133,7 +134,8 @@ var projects = {
   'Hutchins': "<option value='Hutchins Center for African & African American Research'>Hutchins Center for African & African American Research</option>",
   'Maranhão': "<option value='Maranhão Inventories Slave Database'>Maranhão Inventories Slave Database</option>",
   'Contested': "<option value='Contested Freedom'>Contested Freedom</option>",
-  'Family': "<option value='Family Search'>Family Search</option>"
+  'Family': "<option value='Family Search'>Family Search</option>",
+  'Mortality': "<option value='Mortality in the South'>Mortality in the South</option>"
 }
 
 $(document).ready( function() {
@@ -318,5 +320,8 @@ function changeIframe(){
   }
   if(proj == "Family"){
     projLink.setAttribute('href', BASE_URL+'search/all?projects=Family+Search&limit=20&offset=0&sort_field=label.sort&display=people');
+  }
+  if(proj == "Mortality"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Mortality+in+the+South%2C+1850&limit=20&offset=0&sort_field=label.sort&display=people');
   }
 }
