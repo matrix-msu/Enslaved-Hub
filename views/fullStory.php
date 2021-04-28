@@ -263,6 +263,59 @@ var captions = <?php echo json_encode($caption); ?>;
 var result_array = <?php echo json_encode($images); ?>;
 var recordform = "Story";
 </script>
-<script src="<?php echo BASE_URL;?>assets/javascripts/slider.js"></script>
+
+
+<!-- Add Story Imagery and Kora Alt Text Caption + Slider Functionality -->
+<script>
+$.each(result_array,function ( index, value ) {
+    $('<img class="mySlides fade" src="'+value+'" alt="'+captions[index]+'">').appendTo("div.slider"); //add images to the slider
+    // $('<p class="key-events-text">Cation goes here</p>').appendTo("div.slider"); //add images to the slider
+    if (result_array.length > 1){
+        $('<span class="dot" onclick="currentSlide('+(index+1)+')"></span>').appendTo("div.dots");
+    } else{
+        $('div.image-pagination').css('display','none');
+    }
+});
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    if(slideIndex <= captions.length){$(".caption-text").text(captions[slideIndex-1])}
+    // console.log(slideIndex);
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+
+    for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+
+    slides[slideIndex-1].style.display = "block";
+
+    if (result_array.length > 1){
+        dots[slideIndex-1].className += " active";
+    }
+
+}
+</script>
+
+
 <script src="<?php echo BASE_URL;?>assets/javascripts/modal.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/storyConnections.js"></script>

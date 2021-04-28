@@ -27,7 +27,7 @@ function closeModal () {
 * saved and set to expire 7 days from creation
 * Anything with class='closeUnderDev' closes the modal on click event and
 * creates the cookie if the user has checked the "DONT SHOW AGAIN" box
-==========================================================================*/
+==========================================================================
 window.onload = function() {
     if ($('#home').length > 0 && Cookies.get('show_modal') != 'false') {
         $('#underDev').addClass('displayModal');
@@ -51,3 +51,5 @@ $('.modal-content').scroll(function(){
         $('.modal-x-btn').removeClass('modal-x-btn-bdr');
     }
 });
+
+*/

@@ -624,6 +624,24 @@
             position: relative;
             width: 100%;
 
+            &.surname, &.first, &.name {
+              .detail-bottom {
+                div.detail-text {
+                  text-decoration: none !important;
+                  &[aria-describedby='tooltip']{
+                      &:hover, &:focus, &:active{
+                          color: $base-dark;
+                          outline: none;
+
+                          .detail-menu{
+                              display: none !important;
+                          }
+                      }
+                  }
+                }
+              }
+            }
+
             &:nth-child(3n-2){
                 margin-right: 2%;
             }

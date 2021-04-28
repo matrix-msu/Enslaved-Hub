@@ -14,7 +14,7 @@ function set_text_query($filters, $qi) {
     }
 
     if (array_key_exists('searchbar', $filters)) {
-        $str = preg_replace("/[^A-Za-z0-9. ]/", '', $filters['searchbar']);
+        $str = preg_replace('/\PLs/u', '', $filters['searchbar']);
         $qi->setQueryString($str);
         unset($filters['searchbar']);
     }
@@ -393,7 +393,8 @@ class QueryIndex {
                     'participant_role',
                     'date',
                     'end_date',
-                    'age_category'
+                    'age_category',
+                    'has_description'
                 ],
                 'lenient' => true,
                 'default_operator' => 'AND',
