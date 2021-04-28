@@ -660,6 +660,15 @@
 
             .detail-bottom{
 
+                .search-all{
+                    color: $base-dark;
+                    text-decoration: none;
+                    font-size: 16px;
+                    font-style: italic;
+                    line-height: 18px;
+                    border-bottom: 3px solid $accent;
+                }
+
                 div {
                   display: inline;
                   font-family: aleoregular;

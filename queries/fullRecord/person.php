@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?label ?description ?project
+SELECT ?label ?description ?project ?roles
 (group_concat(distinct ?name1; separator = "||") as ?name)
 (group_concat(distinct ?altname1; separator = "||") as ?altname)
 (group_concat(distinct ?age1; separator = "||") as ?age)
@@ -17,7 +17,6 @@ SELECT ?label ?description ?project
 (group_concat(distinct ?placeOriginlabel1; separator = "||") as ?placeOriginlabel)
 (group_concat(distinct ?occupationlabel; separator = "||") as ?occupation)
 (group_concat(distinct ?descOccupation; separator = "||") as ?descriptive_Occupation)
-(group_concat(distinct ?roleslabel1; separator = "||") as ?roles)
 (group_concat(distinct ?roleevent1; separator = "||") as ?roleevent)
 (group_concat(distinct ?roleeventlabel1; separator = "||") as ?roleeventlabel)
 (group_concat(distinct ?drole; separator = "||") as ?droles)
@@ -63,7 +62,7 @@ OPTIONAL {?agent $wdt:$descriptiveOccupation ?descOccupation}.
 OPTIONAL {?agent $p:$hasParticipantRole ?staterole.
          ?staterole $ps:$hasParticipantRole ?role;
                    $pq:$roleProvidedBy ?roleevent1.
-         ?role $rdfs:label ?roleslabel1.
+         ?role $rdfs:label ?roles.
          ?roleevent1 $wdt:$hasName ?roleeventlabel1.
          bind(?roleevent1 as ?allevents).
       }.
@@ -103,6 +102,6 @@ OPTIONAL {?agent $p:$hasName ?object .
           OPTIONAL {?provenance $pr:$hasExternalReference ?extref1}}.
 
 
-}GROUP BY ?label ?description ?project
+}GROUP BY ?label ?description ?project ?roles
 QUERY;
 ?>

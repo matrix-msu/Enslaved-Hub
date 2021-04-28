@@ -65,55 +65,69 @@ function createDetailHtml($statement,$label,$link=''){
   }
 
   if($label === "RolesA"){
+      // echo json_encode($statement);die;
     //Multiple roles in the roles array so match them up with the participant
     $lowerlabel = "roles";
     $upperlabel = "Roles";
-    //Array for Roles means there are participants and pQIDs to match
-    $roles = explode('||', $statement['roles']);
-    $participants = explode('||', $statement['participant']);
-    $pq = explode('||', $statement['pq']);
-
-    //Remove whitespace from end of arrays
-    if (end($roles) == '' || end($roles) == ' '){
-      array_pop($roles);
-    }
-    if (end($participants) == '' || end($participants) == ' '){
-      array_pop($participants);
-    }
-    if (end($pq) == '' || end($pq) == ' '){
-      array_pop($pq);
-    }
 
     $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-HTML;
+    <div class="detail $lowerlabel">
+      <h3>$upperlabel</h3>
+    HTML;
 
-    //Loop through and match up
-    $matched = '';
-    for($i=0; $i < sizeof($roles); $i++){
-      if (!isset($pq[$i]) || !isset($participants[$i]) || !isset($roles[$i])){
-        continue;
-      }
+    foreach($statement as $statementArr){
 
-      $explode = explode('/', $pq[$i]);
-      $pqid = end($explode);
-      $pqurl = $baseurl . 'record/event/' . $pqid;
-      $matched = $roles[$i] . ' - ' . $participants[$i];
+        //Array for Roles means there are participants and pQIDs to match
+        $roles = explode('||', $statementArr['roles']);
+        $participants = explode('||', $statementArr['participant']);
+        $pq = explode('||', $statementArr['pq']);
 
-      $html .= <<<HTML
-<div class="detail-bottom">
-    <div>$roles[$i]
-HTML;
+        //Remove whitespace from end of arrays
+        if (end($roles) == '' || end($roles) == ' '){
+          array_pop($roles);
+        }
+        if (end($participants) == '' || end($participants) == ' '){
+          array_pop($participants);
+        }
+        if (end($pq) == '' || end($pq) == ' '){
+          array_pop($pq);
+        }
 
-      // roles tool tip
-      if(array_key_exists($roles[$i],controlledVocabulary)){
+        //Loop through and match up
+        $matched = '';
+        for($i=0; $i < sizeof($participants); $i++){
+            if (!isset($pq[$i]) || !isset($participants[$i]) ){
+                continue;
+            }
 
-          $detailinfo = ucfirst(controlledVocabulary[$roles[$i]]);
-          $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
-      }
+            $explode = explode('/', $pq[$i]);
+            $pqid = end($explode);
+            $pqurl = $baseurl . 'record/event/' . $pqid;
+            $matched = $roles[$i] . ' - ' . $participants[$i];
 
-      $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
+            $hiddenStyle = '';
+            if($i > 0){
+                $hiddenStyle = ' style="visibility:hidden"';
+            }
+
+            $html .= <<<HTML
+            <div class="detail-bottom">
+                <div$hiddenStyle>$roles[0]
+            HTML;
+
+            // roles tool tip
+            if(array_key_exists($roles[0],controlledVocabulary)){
+              $detailinfo = ucfirst(controlledVocabulary[$roles[0]]);
+              $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[0]</h1> <p>$detailinfo</p> </div>";
+            }
+
+            if($i >= 8){
+                $html .= '</div> &nbsp; <a class="search-all" href="'.BASE_URL.'search/events?person='.$_REQUEST['QID'].'">View All Events</a>';
+                break;
+            }
+
+            $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
+        }
     }
     $html .= '</div><br>';
 
@@ -173,52 +187,66 @@ HTML;
     //Multiple roles in the roles array so match them up with the participant
     $lowerlabel = "descriptive roles";
     $upperlabel = "Descriptive Roles";
-    //Array for Roles means there are participants and pQIDs to match
-    $roles = explode('||', $statement['droles']);
-    $participants = explode('||', $statement['dparticipant']);
-    $pq = explode('||', $statement['dpq']);
-
-    //Remove whitespace from end of arrays
-    if (end($roles) == '' || end($roles) == ' '){
-      array_pop($roles);
-    }
-    if (end($participants) == '' || end($participants) == ' '){
-      array_pop($participants);
-    }
-    if (end($pq) == '' || end($pq) == ' '){
-      array_pop($pq);
-    }
 
     $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-HTML;
+    <div class="detail $lowerlabel">
+        <h3>$upperlabel</h3>
+    HTML;
 
-    //Loop through and match up
-    $matched = '';
-    for($i=0; $i < sizeof($roles); $i++){
-      if (!isset($pq[$i]) || !isset($participants[$i]) || !isset($roles[$i])){
-        continue;
-      }
+    foreach($statement as $statementArr){
 
-      $explode = explode('/', $pq[$i]);
-      $pqid = end($explode);
-      $pqurl = $baseurl . 'record/event/' . $pqid;
-      $matched = $roles[$i] . ' - ' . $participants[$i];
+        //Array for Roles means there are participants and pQIDs to match
+        $roles = explode('||', $statementArr['droles']);
+        $participants = explode('||', $statementArr['dparticipant']);
+        $pq = explode('||', $statementArr['dpq']);
 
-      $html .= <<<HTML
-<div class="detail-bottom">
-    <div>$roles[$i]
-HTML;
+        //Remove whitespace from end of arrays
+        if (end($roles) == '' || end($roles) == ' '){
+          array_pop($roles);
+        }
+        if (end($participants) == '' || end($participants) == ' '){
+          array_pop($participants);
+        }
+        if (end($pq) == '' || end($pq) == ' '){
+          array_pop($pq);
+        }
 
-      // roles tool tip
-      if(array_key_exists($roles[$i],controlledVocabulary)){
 
-          $detailinfo = ucfirst(controlledVocabulary[$roles[$i]]);
-          $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
-      }
+        //Loop through and match up
+        $matched = '';
+        for($i=0; $i < sizeof($participants); $i++){
+            if (!isset($pq[$i]) || !isset($participants[$i]) ){
+                continue;
+            }
 
-      $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
+            $explode = explode('/', $pq[$i]);
+            $pqid = end($explode);
+            $pqurl = $baseurl . 'record/event/' . $pqid;
+            $matched = $roles[0] . ' - ' . $participants[$i];
+
+            $hiddenStyle = '';
+            if($i > 0){
+                $hiddenStyle = ' style="visibility:hidden"';
+            }
+
+            $html .= <<<HTML
+            <div class="detail-bottom">
+                <div$hiddenStyle>$roles[0]
+            HTML;
+
+            // roles tool tip
+            if(array_key_exists($roles[0],controlledVocabulary)){
+              $detailinfo = ucfirst(controlledVocabulary[$roles[0]]);
+              $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[0]</h1> <p>$detailinfo</p> </div>";
+            }
+
+            if($i >= 8){
+                $html .= '</div> &nbsp; <a class="search-all" href="'.BASE_URL.'search/events?person='.$_REQUEST['QID'].'">View All Events</a>';
+                break;
+            }
+
+            $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
+        }
     }
     $html .= '</div><br>';
 
@@ -663,7 +691,7 @@ function getFullRecordHtml(){
       die;
     }
     $record = $result[0];
-    // var_dump($record);die;
+    // echo json_encode($result);die;
     //Get variables from query
     $recordVars = [];
 
@@ -932,40 +960,44 @@ function getFullRecordHtml(){
 
     //Roles for events
     //Gets the roles, participants, and pqID if they exist and matches them together
-    if (isset($record['roles']) && isset($record['roles']['value']) &&  $record['roles']['value'] != ''){
-      if(isset($record['roleevent']) && isset($record['roleevent']['value']) &&
-         $record['roleevent']['value'] != '' &&  $record['roleeventlabel']['value'] != '' ){
-        //There are participants to match with their roles and qIDs
-        $rolesArr = ['roles' => $record['roles']['value'],
-                     'participant' => $record['roleeventlabel']['value'],
-                     'pq' => $record['roleevent']['value']
-                    ];
-        $recordVars['RolesA'] = $rolesArr;
-      }
-    } else if(isset($record['roleevent']) && isset($record['roleevent']['value'])){
-        if(isset($record['roleeventlabel']) && isset($record['roleeventlabel']['value']) &&
-            $record['roleeventlabel']['value'] != '' && $record['roleevent']['value'] != '' ){
-          //There are participants to match with their roles and qIDs
-          $rolesArr = ['roles' => $record['roles']['value'],
-                        'eventRoles' => $record['roleevent']['value'],
-                        'eventRoleLabels' => $record['roleeventlabel']['value']
-                      ];
-          $recordVars['eventRolesA'] = $rolesArr;
+    foreach($result as $r){
+        if (isset($r['roles']) && isset($r['roles']['value']) &&  $r['roles']['value'] != ''){
+          if(isset($r['roleevent']) && isset($r['roleevent']['value']) &&
+             $r['roleevent']['value'] != '' &&  $r['roleeventlabel']['value'] != '' ){
+            //There are participants to match with their roles and qIDs
+            $rolesArr = ['roles' => $r['roles']['value'],
+                         'participant' => $r['roleeventlabel']['value'],
+                         'pq' => $r['roleevent']['value']
+                        ];
+            $recordVars['RolesA'][] = $rolesArr;
+          }
+        } else if(isset($r['roleevent']) && isset($r['roleevent']['value'])){
+            if(isset($r['roleeventlabel']) && isset($r['roleeventlabel']['value']) &&
+                $r['roleeventlabel']['value'] != '' && $r['roleevent']['value'] != '' ){
+              //There are participants to match with their roles and qIDs
+              $rolesArr = ['roles' => $r['roles']['value'],
+                            'eventRoles' => $r['roleevent']['value'],
+                            'eventRoleLabels' => $r['roleeventlabel']['value']
+                          ];
+              $recordVars['eventRolesA'][] = $rolesArr;
+            }
         }
     }
 
     //descriptive Roles for events
     //Gets the roles, participants, and pqID if they exist and matches them together
-    if (isset($record['droles']) && isset($record['droles']['value']) &&  $record['droles']['value'] != ''){
-      if(isset($record['droleevent']) && isset($record['droleevent']['value']) &&
-         $record['droleevent']['value'] != '' &&  $record['droleeventlabel']['value'] != '' ){
-        //There are participants to match with their roles and qIDs
-        $rolesArr = ['droles' => $record['droles']['value'],
-                     'dparticipant' => $record['droleeventlabel']['value'],
-                     'dpq' => $record['droleevent']['value']
-                    ];
-        $recordVars['DRolesA'] = $rolesArr;
-      }
+    foreach($result as $r){
+        if (isset($r['droles']) && isset($r['droles']['value']) &&  $r['droles']['value'] != ''){
+          if(isset($r['droleevent']) && isset($r['droleevent']['value']) &&
+             $r['droleevent']['value'] != '' &&  $r['droleeventlabel']['value'] != '' ){
+            //There are participants to match with their roles and qIDs
+            $rolesArr = ['droles' => $r['droles']['value'],
+                         'dparticipant' => $r['droleeventlabel']['value'],
+                         'dpq' => $r['droleevent']['value']
+                        ];
+            $recordVars['DRolesA'][] = $rolesArr;
+          }
+        }
     }
 
     // create the html based on the type of results
@@ -1642,16 +1674,15 @@ union{
            ?statementrole $ps:$hasParticipantRole ?roles.
            ?statementrole $pq:$roleProvidedBy ?event.
              ?event $wdt:$hasName ?eventlabel.}.
-}
-union{
  OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
            ?statstatus $ps:$hasPersonStatus ?status.
            ?statstatus $pq:$hasStatusGeneratingEvent ?event.
            ?event $wdt:$hasName ?eventlabel.}.
 }
-}LIMIT 8
+}
 
 QUERY;
+    // echo $eventQuery['query'];die;
     $result = blazegraphSearch($eventQuery);
     if (empty($result[0])) $result=array();
     $connections['Event-count'] = count($result);
