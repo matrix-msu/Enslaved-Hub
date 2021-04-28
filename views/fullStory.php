@@ -149,6 +149,36 @@ else {
                 </div>
             <?php } ?>
 
+            <!-- Story Connections -->
+            <?php
+                if(isset($story['Connection'])) {
+            ?>
+            <script>
+                var storyConnectionData = <?php echo json_encode($story['Connection']) ?>;
+            </script>
+            <div class="story-connections">
+                <div class="story-connectionwrap">
+                <h2>Story Connections</h2>
+                <div class="story-categories">
+                    <ul>
+                        <li class="story-unselected story-selected" id="people"><div class="person-image"></div>People</li>
+                        <li class="story-unselected" id="event"><div class="event-image"></div>Events</li>
+                        <li class="story-unselected" id="place"><div class="place-image"></div>Places</li>
+                        <li class="story-unselected" id="project"><div class="project-image"></div>Projects</li>
+                        <li class="story-unselected" id="source"><div class="source-image"></div>Sources</li>
+                        <hr>
+                    </ul>
+                </div>
+                <div class="story-connection-cards">
+                    <ul class="story-connect-row">
+                    </ul>
+                </div>
+            </div>
+            </div>
+            <?php
+                }
+            ?>
+
             <div class="key-events">
                 <?php
                 if (isset($story['Timeline'])) {
@@ -182,35 +212,7 @@ else {
         </article>
     </div>
 </main>
-<!-- Story Connections -->
-<?php
-    if(isset($story['Connection'])) {
-?>
-<script>
-    var storyConnectionData = <?php echo json_encode($story['Connection']) ?>;
-</script>
-<div class="story-connections">
-    <div class="story-connectionwrap">
-    <h2>Story Connections</h2>
-    <div class="story-categories">
-        <ul>
-            <li class="story-unselected story-selected" id="people"><div class="person-image"></div>People</li>
-            <li class="story-unselected" id="event"><div class="event-image"></div>Events</li>
-            <li class="story-unselected" id="place"><div class="place-image"></div>Places</li>
-            <li class="story-unselected" id="project"><div class="project-image"></div>Projects</li>
-            <li class="story-unselected" id="source"><div class="source-image"></div>Sources</li>
-            <hr>
-        </ul>
-    </div>
-    <div class="story-connection-cards">
-        <ul class="story-connect-row">
-        </ul>
-    </div>
-</div>
-</div>
-<?php
-    }
-?>
+
 
 <!-- Related Stories -->
 <!--<div class="container card-column related-card">

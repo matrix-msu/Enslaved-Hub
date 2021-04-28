@@ -170,19 +170,21 @@
         }
     }
 }
+.record-connections {
+  padding: 60px 0 30px;
+  width: 90%;
+  max-width: 1000px;
+}
 
 .record-connections, .story-connections {
     border-bottom: none;
-    padding: 60px 0 30px;
-    width: 90%;
-    max-width: 1000px;
     margin: 0 auto;
 
     h2{
         font-size: 30px;
         color: $base-dark;
     }
-    .categories, .story-categories {
+    .categories {
         margin-top: 25px;
 
         ul{
@@ -260,7 +262,7 @@
         }
     }
 
-    .connection-cards, .story-connection-cards {
+    .connection-cards {
 
         ul{
             display: flex;
