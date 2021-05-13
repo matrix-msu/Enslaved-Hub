@@ -11,7 +11,8 @@ const projects=[
     "Free Africans of Brazil" => "Q624576",
     "Economics of American Negro Slavery Series" => "Q627623",
     "Family Search" => "Q811272",
-    "Mortality in the South, 1850" =>"Q856062"
+    "Mortality in the South, 1850" =>"Q856062",
+    "African Burials and Residences in Rio de Janeiro, 1874-1899" => "Q871865"
 ];
 
 const qprojects=[
@@ -26,6 +27,7 @@ const qprojects=[
   "Q624576" => "Free Africans of Brazil",
   "Q627623" => "Economics of American Negro Slavery Series",
   "Q811272" => "Family Search",
-  "Q856062" => "Mortality in the South, 1850"
+  "Q856062" => "Mortality in the South, 1850",
+  "Q871865" => "African Burials and Residences in Rio de Janeiro, 1874-1899"
 
 ];
