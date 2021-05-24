@@ -134,10 +134,11 @@ var projects = {
   'Legacies': "<option value='Legacies of British Slave-Ownership'>Legacies of British Slave-Ownership</option>",
   'Hutchins': "<option value='Hutchins Center for African & African American Research'>Hutchins Center for African & African American Research</option>",
   'Maranhão': "<option value='Maranhão Inventories Slave Database'>Maranhão Inventories Slave Database</option>",
-  'Contested': "<option value='Contested Freedom'>Contested Freedom</option>",
+  'Contested': "<option value='Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842'>Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842</option>",
   'Family': "<option value='Family Search'>Family Search</option>",
   'Mortality': "<option value='Mortality in the South'>Mortality in the South</option>",
   'African': "<option value='African Burials and Residences in Rio de Janeiro'>African Burials and Residences in Rio de Janeiro, 1874-1899</option>"
+
 }
 
 $(document).ready( function() {
