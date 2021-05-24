@@ -149,6 +149,36 @@ else {
                 </div>
             <?php } ?>
 
+            <!-- Story Connections -->
+            <?php
+                if(isset($story['Connection'])) {
+            ?>
+            <script>
+                var storyConnectionData = <?php echo json_encode($story['Connection']) ?>;
+            </script>
+            <div class="story-connections">
+                <div class="story-connectionwrap">
+                <h2>Story Connections</h2>
+                <div class="story-categories">
+                    <ul>
+                        <li class="story-unselected story-selected" id="people"><div class="person-image"></div>People</li>
+                        <li class="story-unselected" id="event"><div class="event-image"></div>Events</li>
+                        <li class="story-unselected" id="place"><div class="place-image"></div>Places</li>
+                        <li class="story-unselected" id="project"><div class="project-image"></div>Projects</li>
+                        <li class="story-unselected" id="source"><div class="source-image"></div>Sources</li>
+                        <hr>
+                    </ul>
+                </div>
+                <div class="story-connection-cards">
+                    <ul class="story-connect-row">
+                    </ul>
+                </div>
+            </div>
+            </div>
+            <?php
+                }
+            ?>
+
             <div class="key-events">
                 <?php
                 if (isset($story['Timeline'])) {
@@ -182,35 +212,7 @@ else {
         </article>
     </div>
 </main>
-<!-- Story Connections -->
-<?php
-    if(isset($story['Connection'])) {
-?>
-<script>
-    var storyConnectionData = <?php echo json_encode($story['Connection']) ?>;
-</script>
-<div class="story-connections">
-    <div class="story-connectionwrap">
-    <h2>Story Connections</h2>
-    <div class="story-categories">
-        <ul>
-            <li class="story-unselected story-selected" id="people"><div class="person-image"></div>People</li>
-            <li class="story-unselected" id="event"><div class="event-image"></div>Events</li>
-            <li class="story-unselected" id="place"><div class="place-image"></div>Places</li>
-            <li class="story-unselected" id="project"><div class="project-image"></div>Projects</li>
-            <li class="story-unselected" id="source"><div class="source-image"></div>Sources</li>
-            <hr>
-        </ul>
-    </div>
-    <div class="story-connection-cards">
-        <ul class="story-connect-row">
-        </ul>
-    </div>
-</div>
-</div>
-<?php
-    }
-?>
+
 
 <!-- Related Stories -->
 <!--<div class="container card-column related-card">
@@ -261,6 +263,59 @@ var captions = <?php echo json_encode($caption); ?>;
 var result_array = <?php echo json_encode($images); ?>;
 var recordform = "Story";
 </script>
-<script src="<?php echo BASE_URL;?>assets/javascripts/slider.js"></script>
+
+
+<!-- Add Story Imagery and Kora Alt Text Caption + Slider Functionality -->
+<script>
+$.each(result_array,function ( index, value ) {
+    $('<img class="mySlides fade" src="'+value+'" alt="'+captions[index]+'">').appendTo("div.slider"); //add images to the slider
+    // $('<p class="key-events-text">Cation goes here</p>').appendTo("div.slider"); //add images to the slider
+    if (result_array.length > 1){
+        $('<span class="dot" onclick="currentSlide('+(index+1)+')"></span>').appendTo("div.dots");
+    } else{
+        $('div.image-pagination').css('display','none');
+    }
+});
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    if(slideIndex <= captions.length){$(".caption-text").text(captions[slideIndex-1])}
+    // console.log(slideIndex);
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+
+    for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+
+    slides[slideIndex-1].style.display = "block";
+
+    if (result_array.length > 1){
+        dots[slideIndex-1].className += " active";
+    }
+
+}
+</script>
+
+
 <script src="<?php echo BASE_URL;?>assets/javascripts/modal.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/storyConnections.js"></script>

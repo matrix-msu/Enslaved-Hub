@@ -89,6 +89,9 @@ var dash_main_Legacies = "https://kibana.enslaved.org/app/kibana#/dashboard/6673
 var dash_main_Hutchins = "https://kibana.enslaved.org/app/kibana#/dashboard/c316dd50-e22e-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Free = "https://kibana.enslaved.org/app/kibana#/dashboard/95245570-e62b-11ea-b8f5-e93fc24f4b7d?embed=true&_g=(filters:!())";
 var dash_main_Contested = "https://kibana.enslaved.org/app/kibana#/dashboard/27034a40-331c-11eb-9912-5716c793fbae?embed=true&_g=(filters:!())";
+var dash_main_Family = "https://kibana.enslaved.org/app/kibana#/dashboard/63095a60-8b1a-11eb-a016-d9899afc47bd?embed=true&_g=(filters:!())";
+var dash_main_Mortality = "https://kibana.enslaved.org/app/kibana#/dashboard/dffbe0b0-a848-11eb-969a-3f1d64906898?embed=true&_g=(filters:!())";
+var dash_main_African = "https://kibana.enslaved.org/app/kibana#/dashboard/ca4ec2b0-b72e-11eb-969a-3f1d64906898?embed=true&_g=(filters:!())";
 
 
 var concat_url = BASE_URL + "visualizedata";
@@ -131,7 +134,11 @@ var projects = {
   'Legacies': "<option value='Legacies of British Slave-Ownership'>Legacies of British Slave-Ownership</option>",
   'Hutchins': "<option value='Hutchins Center for African & African American Research'>Hutchins Center for African & African American Research</option>",
   'Maranhão': "<option value='Maranhão Inventories Slave Database'>Maranhão Inventories Slave Database</option>",
-  'Contested': "<option value='Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842'>Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842</option>"
+  'Contested': "<option value='Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842'>Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842</option>",
+  'Family': "<option value='Family Search'>Family Search</option>",
+  'Mortality': "<option value='Mortality in the South'>Mortality in the South</option>",
+  'African': "<option value='African Burials and Residences in Rio de Janeiro'>African Burials and Residences in Rio de Janeiro, 1874-1899</option>"
+
 }
 
 $(document).ready( function() {
@@ -313,5 +320,14 @@ function changeIframe(){
   }
   if(proj == "Maranhão"){
     projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhão+Inventories+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
+  }
+  if(proj == "Family"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Family+Search&limit=20&offset=0&sort_field=label.sort&display=people');
+  }
+  if(proj == "Mortality"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Mortality+in+the+South%2C+1850&limit=20&offset=0&sort_field=label.sort&display=people');
+  }
+  if(proj == "African"){
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=African+Burials+and+Residences+in+Rio+de+Janeiro%2C+1874-1899&limit=20&offset=0&sort_field=label.sort&display=people');
   }
 }

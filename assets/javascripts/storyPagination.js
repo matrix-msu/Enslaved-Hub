@@ -40,6 +40,13 @@ function updateUrlParams() {
     var directionUrlParam = getUrlParameter('direction');
     var perPageUrlParam = getUrlParameter('count');
     var pageUrlParam = getUrlParameter('page');
+    var searchbarParam = getUrlParameter('searchbar');
+
+    if (searchbarParam && searchbarParam != "") {
+        urlParams['searchbar'] = searchbarParam;
+    } else {
+        urlParams['searchbar'] = '';
+    }
 
     if (fieldUrlParam && fieldUrlParam != "") {
         urlParams['field'] = fieldUrlParam;

@@ -23,11 +23,9 @@ SELECT
       ?source $wdt:$hasOriginalSourceType ?sourcetype.
       ?sourcetype $rdfs:label ?type
   }.
-  OPTIONAL{?source $wdt:$reportsOn ?event}.
 
   OPTIONAL{?source $wdt:$availableFrom ?availableFrom}.
   OPTIONAL {?source $wdt:$hasName ?name}.
-  OPTIONAL {?event $wdt:$atPlace ?place.}
 
   OPTIONAL{
   ?source $wdt:$startsAt ?datetime.

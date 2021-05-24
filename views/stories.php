@@ -1,4 +1,3 @@
-<!-- Page author: Drew Schineller-->
 <?php
 include_once( BASE_LIB_PATH . "koraSearchRemote.php" );
 
@@ -11,6 +10,9 @@ $page = (isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : '1'
 // Making sure search keyword(s) are provided
 $searchString = (!empty($_GET['searchbar']) ? htmlspecialchars($_GET['searchbar']) : "");
 $keywords = !empty($searchString) ? explode(" ",$searchString) : [];
+// $keywords = !empty($searchString) ? [$searchString] : [];
+
+$clause = new KORA_Clause("Display", "=", "True");
 
 // Getting Stories using KORA_Search
 $fields =  ['Title', 'Featured', 'Images'];
@@ -18,16 +20,22 @@ $startIndex = ($page - 1) * $storiesPerPage;
 
 
 $clause = new KORA_Clause("Display", "=", "True");
+$searchFields = ['Title', 'Text'];
+$clauseBuild;
 if(!empty($keywords)) {
-  $other_clause;
-  foreach ($keywords as $keyword) {
-    if(empty($other_clause)) $other_clause = new KORA_Clause("Title", "LIKE", $keyword);
-    else $other_clause = new KORA_Clause($other_clause, "OR" ,new KORA_Clause("Title", "LIKE", $keyword));
-
-    $other_clause = new KORA_Clause($other_clause, "OR" ,new KORA_Clause("Text", "LIKE", $keyword));
-  }
-  $clause = new KORA_Clause($clause, "AND", $other_clause);
+    foreach ($searchFields as $searchField) {
+        $other_clause = 0;
+        foreach ($keywords as $keyword) {
+            if(empty($other_clause)) $other_clause = new KORA_Clause($searchField, "LIKE", $keyword);
+            else $other_clause = new KORA_Clause($other_clause, "AND" ,new KORA_Clause($searchField, "LIKE", $keyword));
+        }
+        if(empty($clauseBuild)) $clauseBuild = $other_clause;
+        else $clauseBuild = new KORA_Clause($clauseBuild, "OR" ,$other_clause);
+    }
+    $clause = new KORA_Clause($clause, "AND", $clauseBuild);
 }
+// echo "<br><br><br><br><br><br><br><br><br><br><br><br><br>";
+// echo json_encode($clause);die;
 $sort = array(array("field" => $sortField, "direction" => $sortDirection == "ASC" ? SORT_ASC : SORT_DESC));
 $stories = KORA_Search(TOKEN, PID, STORY_SID, $clause, $fields, $sort, $startIndex, $storiesPerPage);
 
@@ -148,8 +156,8 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                 <ul id="submenu" class="sorting-menu">
                     <li class="sort-option" data-field="title" data-direction="asc">Alphabetically (A-Z)</li>
                     <li class="sort-option" data-field="title" data-direction="desc">Alphabetically (Z-A)</li>
-                    <li class="sort-option" data-field="start date" data-direction="desc">Date (Newest First)</li>
-                    <li class="sort-option" data-field="start date" data-direction="asc">Date (Oldest First)</li>
+                    <li class="sort-option" data-field="start date" data-direction="asc">Date (Newest First)</li>
+                    <li class="sort-option" data-field="start date" data-direction="desc">Date (Oldest First)</li>
                 </ul>
             </div>
           </div>

@@ -477,8 +477,7 @@
 // }
 .story-connections{
     border-bottom: none;
-    padding: 80px 0 70px;
-    width: 90%;
+    padding: 0 0 20px;
     max-width: 1000px;
     margin: 0 auto;
 
@@ -486,8 +485,9 @@
         font-size: 30px;
         color: $base-dark;
     }
-    .categories{
-        margin-top: 47px;
+    
+    .story-categories{
+        margin-top: 10px;
 
         ul{
             list-style-type: none;
@@ -503,12 +503,12 @@
                 display: inline;
                 cursor: pointer;
                 font-size: 16px;
+                font-family: aleobold;
                 color: rgb(37, 52, 73);
                 opacity: .25;
                 padding-bottom: 20px;
                 padding-left: 40px;
-                margin-right: 45px;
-                margin-bottom: 20px;
+                margin-right: 35px;
                 position: relative;
                 transition: opacity .3s;
 
@@ -517,8 +517,8 @@
                 }
                 div{
                     padding-right: 10px;
-                    left: 0;
-                    top: -5px;
+                    left: 5px;
+                    top: -2px;
                     background-repeat: no-repeat;
                     position: absolute;
                 }
@@ -548,34 +548,35 @@
                     background-image: url(../images/Source-dark.svg);
                 }
             }
-            .selected{
+            .selected, .story-selected {
                 border-bottom: 2px solid $sub-base;
+                font-family: aleobold;
                 opacity: 1;
             }
 
             hr{
-                margin-top: 20px;
+                margin-top: 17px;
                 border: none;
-                border-bottom: 1px solid #E4DED5;
+                border-bottom: 2px solid #E4DED5;
                 width: 100%;
                 min-width: 740px;
             }
         }
     }
 
-    .connection-cards{
+    .story-connection-cards{
 
         ul{
             display: flex;
             flex-wrap: wrap;
             list-style-type: none;
-            margin: 32px 0 30px;
+            margin: 15px 0 30px;
             padding: 0;
 
             li.card{
                 cursor: pointer;
-                width: 48%;
-                margin-right: 2%;
+                width: 100%;
+                margin-right: 0;
                 margin-bottom: 15px;
                 box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
                 border-radius: 5px;
@@ -603,12 +604,14 @@
 
                     img{
                         margin-right: 15px;
+                        margin-top: -3px;
                     }
 
                     h3{
                         color: $base-dark;
                         font-size: 24px;
                         margin-right: 10px;
+                        height: 28px;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         display: -webkit-box;
