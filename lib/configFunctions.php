@@ -18,7 +18,7 @@ function Kora_GetNavigationData()
 			['Sub Navigation Order' => 'ASC']
 		)
 	);
-	
+
 	// Error checking
 	if(!$koraResults) return json_encode("failed");
 	$decode_results = json_decode($koraResults, true);
@@ -65,10 +65,14 @@ function Kora_GetNavigationData()
 
 		foreach ($navs as $index => $subArray){
 			if ($subArray[0] == $nav){
-				array_push($navs[$index][1], $result["SubNavigation"]);
+				$navs[$index][1][$result["Sub Navigation Order"]] = $result["SubNavigation"];
+				ksort($navs[$index][1]);
 				break;
 			}
 		}
+	}
+	foreach($navs as $index => $nav){
+		$navs[$index][1] = array_values($navs[$index][1]);
 	}
 	// put navigations to navContents.json file
 	file_put_contents( BASE_PATH . "cache/navContents.json", json_encode($navs));
