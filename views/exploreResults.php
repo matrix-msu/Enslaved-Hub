@@ -272,12 +272,17 @@
                             $typeCats = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
                         }
 
-                        foreach ($typeCats as $category => $qid) { ?>
+                        foreach ($typeCats as $category => $qid) {
+                            $prettyLabel = $category;
+                            if(isset(projectsPrettyLabels[$category])){
+                                $prettyLabel = projectsPrettyLabels[$category];
+                            }
+                            ?>
                             <li>
                                 <label class="<?php echo $catLower; ?>">
                                     <input id="checkBox" type="checkbox" value="<?php echo $category; ?>" data-qid="<?php echo $qid; ?>"
                                     data-category="<?php echo $type; ?>">
-                                    <p><?php echo $category; ?> <em></em></p>
+                                    <p><?php echo $prettyLabel; ?> <em></em></p>
                                     <span></span>
                                 </label>
                             </li>
