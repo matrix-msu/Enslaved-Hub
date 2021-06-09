@@ -1,5 +1,5 @@
 <!-- Author: Drew Schineller-->
-<?php $cache_data = Json_GetData_ByTitle("Ethics Statement");
+<?php $cache_data = Json_GetData_ByTitle("Statement of Ethics");
  ?>
 <!-- About page-->
 <!-- Heading image and title container-->
