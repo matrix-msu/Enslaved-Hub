@@ -319,7 +319,7 @@ function changeIframe(){
     projLink.setAttribute('href', BASE_URL+'search/all?projects=Contested+Freedom&limit=20&offset=0&sort_field=label.sort&display=people');
   }
   if(proj == "Maranhão"){
-    projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhão+Inventories+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
+    projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhao+Inventories+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
   }
   if(proj == "Family"){
     projLink.setAttribute('href', BASE_URL+'search/all?projects=Family+Search&limit=20&offset=0&sort_field=label.sort&display=people');
