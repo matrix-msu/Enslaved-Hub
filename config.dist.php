@@ -37,7 +37,7 @@ define('ELASTICSEARCH_URL', 'enslaved-es:9200');
 define('ELASTICSEARCH_INDEX_NAME', 'enslaved-index');
 
 //kora project information - change these for your project
-define('TOKEN', 'FjOx8EcNE2HS1y3rJiJJ7ha4');
+define('TOKEN', 'SECRETTOKENGOESHERE');
 define('STORY_SID', 23);
 define('PID', 16);
 define('WEBPAGES_FORM', 49);
