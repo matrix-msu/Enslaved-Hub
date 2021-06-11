@@ -1,5 +1,5 @@
 <?php
-define("Host", "rush.matrix.msu.edu");
-define("Username", "schleusener_dev");
-define("DBName", "schleusener_dev");
-define("Password","u8xzh4isos");
+define("Host", "localhost");
+define("Username", "USER");
+define("DBName", "DB");
+define("Password","PASS");
