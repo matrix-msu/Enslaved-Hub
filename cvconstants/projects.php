@@ -6,7 +6,7 @@ const projects=[
     'Voyages: The Trans-Atlantic Slave Trade Database' => 'Q9866',
     'Maranhao Inventories Slave Database' => 'Q11585',
     "Legacies of British Slave-ownership" => "Q376",
-    "Contested Freedom" => "Q624610",
+    "Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842" => "Q624610",
     "CSI Dixie" => "Q490726",
     "Free Africans of Brazil" => "Q624576",
     "Economics of American Negro Slavery Series" => "Q627623",
@@ -23,7 +23,7 @@ const qprojects=[
   "Q280811" => "Hutchins Center for African & African American Research",
   "Q376" => "Legacies of British Slave-ownership",
   "Q11585" => "Maranhao Inventories Slave Database",
-  "Q624610" => "Contested Freedom",
+  "Q624610" => "Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842",
   "Q490726" => "CSI Dixie",
   "Q886231" => "They Had Names: Representations of the Enslaved in Liberty County, Georgia, Estate Inventories, 1762-1865",
   "Q624576" => "Free Africans of Brazil",
@@ -34,6 +34,5 @@ const qprojects=[
 ];
 
 const projectsPrettyLabels=[
-    'Maranhao Inventories Slave Database' => 'Maranhão Inventories Slave Database',
-    'Contested Freedom' => 'Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842'
+    'Maranhao Inventories Slave Database' => 'Maranhão Inventories Slave Database'
 ];
