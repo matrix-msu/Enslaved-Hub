@@ -237,15 +237,26 @@ function searchResults(preset, limit = 20, offset = 0)
                 });
 
                 if (preset == "all") {
+                    var firstShow = false;
+                    var firstShowType = '';
                     $.each(count_per_type, function (type, count) {
                         var $tab = $('.categories #'+type);
                         $tab.find('span').html(count+" ");
                         if (count <= 0){
+                            if(type == display){
+                                firstShow = true;
+                            }
                             $tab.hide();
                         } else {
                             $tab.show();
+                            if(firstShowType == ''){
+                                firstShowType = type;
+                            }
                         }
                     });
+                    if(firstShow){
+                        $('.categories #'+firstShowType).click();
+                    }
                 }
 
                 numberOfShownResults = card_limit + offset;
