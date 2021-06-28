@@ -103,13 +103,19 @@ $(document).ready(function(){
 		else if(tab_type == "seeds"){
 			type['get_seeds'] = 'ok';
 			count_type = 'count_seeds';
-			$('.create-seed').addClass('show');
+			$('.create-seed').addClass('show').html('Add Seed');
 			$('.sorting-dropdowns').css('padding-right', '0');
 		}
 		else if(tab_type == "results_visible"){
 			type['get_results_visible'] = 'ok';
 			count_type = 'count_results_visible';
 			$('.create-seed').removeClass('show');
+		}
+		else if(tab_type == "tags"){
+			type['get_tags'] = 'ok';
+			count_type = 'count_tags';
+			$('.create-seed').addClass('show').html('Add Tag');
+			$('.sorting-dropdowns').css('padding-right', '0');
 		}
 
 		showResults(type, count_type);
@@ -166,10 +172,14 @@ $(document).ready(function(){
 //Need to uniform with original code
 $('.create-seed').click(function(){
 	$('.error-message').remove();
-	$('.create-seed-modal').css("display", "flex");
+	var modal = '.create-seed-modal';
+	if($(this).html() == 'Add Tag'){
+		modal = '.create-tag-modal';
+	}
+	$(modal).css("display", "flex");
 	setTimeout(function(){
-		$('.create-seed-modal .canvas').css('opacity', '1');
-		$('.create-seed-modal').css('background', 'rgba(0, 0, 0, 0.7)');
+		$(modal+' .canvas').css('opacity', '1');
+		$(modal).css('background', 'rgba(0, 0, 0, 0.7)');
 	}, 50);
 });
 
@@ -254,6 +264,8 @@ function getResults(get_data)
 					html = populateCrawlerSeeds(data);
 				if (tab_type === 'broken')
 					html = populateCrawlerBrokenLinks(data);
+				if (tab_type === 'tags')
+					html = populateCrawlerTags(data);
 				$(".result-container").append(html);
 				installModalListeners(data); //install the modal listeners after content is generated
 				$(document).ready(function(){
@@ -344,6 +356,32 @@ function populateCrawlerSeeds(data) {
 	return html;
 }
 
+function populateCrawlerTags(data) {
+	html = '';
+	for (var i = 0; i < data.length; i++) {
+		result = data[i];
+		var visibilityCss = '';
+		if(result['tag_name'] == 'No Display'||result['tag_name'] == 'Review'){
+			visibilityCss = ' style="visibility:hidden"';
+		}
+		html += `
+		<div class="result" id="r${i+1}">
+			<div class="link-wrap">
+				<p class="tag-name" id="${result['tag_id']}">${result['tag_name']}</p>
+				<div class="right"${visibilityCss}>
+					<div class="update crawler-modal-open" id="update-tag">
+						<p>Update Tag</p>
+					</div>
+					<div class="trash crawler-modal-open" id="delete-tag">
+						<img class="trash-icon" src="./assets/images/Delete.svg">
+					</div>
+				</div>
+			</div>
+		</div>`;
+	}
+	return html;
+}
+
 function populateCrawlerResults(data) {
 	html = '';
 	for (var i = 0; i < data['keywords'].length; i++) {
@@ -366,6 +404,9 @@ function populateCrawlerResults(data) {
 				</div>
 				<div class="link-wrap">
 					<a class="link" target="_blank" href="${result['url']}">${result['url']}</a>`;
+					if(typeof(result['date_created']) != 'undefined'){
+						html += `<div class="date">${result['date_created']}</div>`;
+					}
 		if (location.href.match(/crawler/)) {
 	        html += `
 						<div class="update crawler-modal-open" id="update-link">
@@ -478,6 +519,19 @@ function installModalListeners(data){
 			// $('.'+ modalType +'-modal input#twitter').val(twitter);
 			// $('.'+ modalType +'-modal input#rss').val(rss);
 			$('.'+ modalType +'-modal .id').attr('value', seedid);
+		}
+		else if(modalType == "delete-tag"){
+			var name = $(this).parent().parent().parent().find('p.tag-name').text();
+			var tagid = $(this).parent().parent().parent().find('p.tag-name').attr('id');
+			$('.'+ modalType +'-modal p').text(name);
+			$('.'+ modalType +'-modal .tag_name').attr('value', name);
+			$('.'+ modalType +'-modal .id').attr('value', tagid);
+		}
+		else if(modalType == "update-tag"){
+			var name = $(this).parent().parent().parent().find('p.tag-name').text();
+			var tagid = $(this).parent().parent().parent().find('p.tag-name').attr('id');
+			$('.'+ modalType +'-modal input#name').val(name);
+			$('.'+ modalType +'-modal .id').attr('value', tagid);
 		}
 
 		//Display modal after setting info

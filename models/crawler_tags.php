@@ -58,7 +58,7 @@ class crawler_tags {
             $stmt->execute();
             $result = $stmt->get_result();
             $stmt->close();
-            
+
 			$assoc[$id] = mysqli_fetch_all($result, MYSQLI_ASSOC);
 		}
 
@@ -98,6 +98,63 @@ class crawler_tags {
 
 		mysqli_close($link);
 	}
+
+    public function get_count()
+    {
+        $link = $this->connect();
+        $query = "SELECT * FROM crawler_tags";
+        $result = $link->query($query);
+        mysqli_close($link);
+        return $result->num_rows;
+    }
+
+    //adding seed for URL with Name/Title fields automatically updated
+    public function add_tag($name)
+    {
+        $link = $this->connect();
+        $query = "SELECT * FROM crawler_tags WHERE tag_name = '$name'";
+        $validationResult = $link->query($query);
+        //insert seed only if url not duplicate
+        if( !$validationResult || mysqli_num_rows($validationResult) == 0 ){
+            if ($stmt = mysqli_prepare($link, "INSERT IGNORE INTO crawler_tags (tag_name) VALUES ( ? )")) {
+                mysqli_stmt_bind_param($stmt, "s", $name);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+            }
+        mysqli_close($link);
+        }
+    }
+
+    public function update_tag($id, $new_name)
+    {
+        $link = $this->connect();
+        $query = "UPDATE crawler_tags set tag_name=? WHERE tag_id=?";
+        $stmt = mysqli_prepare($link, $query);
+        $stmt->bind_param("ss", $new_name, $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        mysqli_close($link);
+    }
+
+    public function delete_tag($id, $name)
+    {
+        $link=$this->connect();
+        $query = "DELETE FROM crawler_tags WHERE tag_name=?";
+        $stmt = mysqli_prepare($link, $query);
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+
+        if ($stmt = mysqli_prepare($link, "DELETE FROM crawler_keyword_tags_assoc WHERE tag_id=?")) {
+			mysqli_stmt_bind_param($stmt, "s", $id);
+    		mysqli_stmt_execute($stmt);
+    		mysqli_stmt_close($stmt);
+		}
+
+        $result = $stmt->get_result();
+        $stmt->close();
+        mysqli_close($link);
+    }
 }
 
 ?>

@@ -30,6 +30,7 @@
             <li class="tabbed" id="results">Results</li>
             <li id="broken">Broken Links</li>
             <li id="seeds">Seeds</li>
+            <li id="tags">Tags</li>
             <hr>
         </ul>
     </div>
@@ -79,6 +80,9 @@
     </div>
 
     <div class="seed-wrap result-container" id="seeds">
+    </div>
+
+    <div class="tag-wrap seed-wrap result-container" id="tags">
     </div>
 
     <?php } else { ?>
@@ -207,6 +211,66 @@
                 </div>
                 <div class="confirm-wrap">
                         <input class="confirm" id="create" type="submit" value="Create Seed">
+                </div>
+            </form>
+            <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
+        </div>
+    </div>
+</div>
+<div class="crawler-modal create-tag-modal">
+    <div class="canvas">
+        <div class="body">
+            <h1 class="title">Create Tag</h1>
+            <p class="link"></p>
+            <form action="" method="post">
+                <input type="hidden" class="link-info" name="add_tag" value="">
+                <div class="info-inputs">
+                    <div class="input-wrap url-input">
+                        <label for="tag_name">Enter the new Tag Name here</label>
+                        <input id="tag_name" type="text" name="tag_name" placeholder="Enter Name">
+                    </div>
+                </div>
+                <div class="confirm-wrap">
+                        <input class="confirm" id="create-tag" type="submit" value="Create Tag">
+                </div>
+            </form>
+            <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
+        </div>
+    </div>
+</div>
+<div class="crawler-modal delete-tag-modal">
+    <div class="canvas">
+        <div class="body">
+            <h1 class="title">Delete Tag?</h1>
+            <form action="" method="post">
+                <p>www.nameoflinkgoeshere.com</p>
+                <input type="hidden" class="link-info" name="delete_tag" value="">
+                <input type="hidden" class="id" name="id" value="">
+                <input type="hidden" class="tag_name" name="tag_name" value="">
+                <div class="confirm-wrap">
+                    <input class="confirm" id="delete-tag" type="submit" value="Delete Tag">
+                </div>
+            </form>
+            <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>
+        </div>
+    </div>
+</div>
+<div class="crawler-modal update-tag-modal">
+    <div class="canvas">
+        <div class="body">
+            <h1 class="title">Update Tag</h1>
+            <p class="link"></p>
+            <form action="" method="post">
+                <input type="hidden" class="link-info" name="update_tag" value="">
+                <input type="hidden" class="id" name="id" value="">
+                <div class="info-inputs">
+                    <div class="input-wrap">
+                        <label for="name">Name</label>
+                        <input id="name" type="text" name="name" placeholder="Enter updated Name">
+                    </div>
+                </div>
+                <div class="confirm-wrap">
+                        <input class="confirm" id="update-tag" type="submit" value="Update Tag">
                 </div>
             </form>
             <div class="close"><img src="<?php echo BASE_IMAGE_URL?>x.svg"/></div>

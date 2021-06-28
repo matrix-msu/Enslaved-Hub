@@ -1,4 +1,5 @@
 <?php
+// var_dump($_POST);die;
 //******************************************************************************   Keywords Queries
 // initialize connection
 require_once(BASE_PATH . "models/crawler_keywords.php");
@@ -73,6 +74,31 @@ if(isset($_POST["get_tags"]))
 	echo(json_encode($results));
 }
 
+//get results count
+if(isset($_POST["count_tags"]))
+{
+	$result = $crawler_tags->get_count();
+	echo(json_encode($result));
+}
+
+if(isset($_POST['add_tag']))
+{
+	$crawler_tags->add_tag($_POST['tag_name']);
+	echo(json_encode("true"));
+}
+
+if(isset($_POST['update_tag']))
+{
+	$crawler_tags->update_tag($_POST['id'], $_POST['name']);
+	echo(json_encode("true"));
+}
+
+if(isset($_POST['delete_tag']))
+{
+	$crawler_tags->delete_tag($_POST['id'], $_POST['tag_name']);
+	echo(json_encode("true"));
+}
+
 //Load more button
 if (isset($_POST["more"]))
 {
@@ -94,9 +120,8 @@ if(isset($_POST["count_results"]))
 	echo(json_encode($result));
 }
 
-
 //Gets results for results tab for visible results
-if(isset($_POST["get_results_visible"]))
+if(isset($_POST["get_results_visible"]) || isset($_POST["count_results_visible"]))
 {
 	$results = $keyword_ids = [];
 	$results['keywords'] = $crawler_keywords->get_keywords_visible($limit,$offset,$sort,$terms,$tagIds);
@@ -104,15 +129,34 @@ if(isset($_POST["get_results_visible"]))
 		array_push($keyword_ids, $value['keyword_id']);
 	}
 	$results['tags'] = $crawler_tags->get_tag_name_per_keyword_ids($keyword_ids);
+
+	$keywords = array();
+	foreach($results['keywords'] as $kw){
+		$keywords[$kw['keyword_id']] = $kw;
+	}
+
+	foreach($results['tags'] as $kwid => $tagArray){
+		foreach($tagArray as $tag){
+			if(in_array($tag['tag_name'], array('No Display', 'Review'))){
+				unset($keywords[$kwid]);
+				unset($results['tags'][$kwid]);
+			}
+		}
+	}
+	if(isset($_POST["count_results_visible"])){
+		echo(json_encode(count($keywords)));
+		return;
+	}
+	$results['keywords'] = array_slice(array_values($keywords),$offset,$limit);
 	echo(json_encode($results));
 }
 
 //get results count
-if(isset($_POST["count_results_visible"]))
-{
-	$result = $crawler_keywords->get_count_visible();
-	echo(json_encode($result));
-}
+// if(isset($_POST["count_results_visible"]))
+// {
+// 	$result = $crawler_keywords->get_count_visible();
+// 	echo(json_encode($result));
+// }
 
 //**********************************************************************************   Broken Links Queries
 // this function gets broken links

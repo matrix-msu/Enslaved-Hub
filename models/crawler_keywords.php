@@ -59,7 +59,8 @@ class crawler_keywords {
             "SELECT
                 ck.keyword_id,
                 ck.keyword,
-                ck.url
+                ck.url,
+                ck.date_created
             FROM
                 crawler_keywords ck
             LEFT JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id = ckta.keyword_id
@@ -201,7 +202,7 @@ class crawler_keywords {
         if (count($tagIds) > 0)
 			$filter = " AND ct.tag_id IN (" . implode(', ', $tagIds) . ")";
         $link = $this->connect();
-        $query = "SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created AS date_sort FROM crawler_keywords ck LEFT OUTER JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id=ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id=ckta.tag_id WHERE ct.tag_name!='No Display' AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword)".$search.$filter.")AS a UNION SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created FROM crawler_keywords ck WHERE ck.keyword_id NOT IN(SELECT ckta.keyword_id FROM crawler_keyword_tags_assoc ckta)AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword)".$search.")AS b ORDER BY date_sort ".$sort." LIMIT ".$limit." OFFSET ".$offset;
+        $query = "SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created AS date_sort FROM crawler_keywords ck LEFT OUTER JOIN crawler_keyword_tags_assoc ckta ON ck.keyword_id=ckta.keyword_id LEFT JOIN crawler_tags ct ON ct.tag_id=ckta.tag_id WHERE ct.tag_name!='No Display' AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword)".$search.$filter.")AS a UNION SELECT*FROM(SELECT ck.keyword_id,ck.keyword,ck.url,ck.date_created FROM crawler_keywords ck WHERE ck.keyword_id NOT IN(SELECT ckta.keyword_id FROM crawler_keyword_tags_assoc ckta)AND NOT EXISTS(SELECT dk.keyword FROM deleted_keywords dk WHERE ck.keyword=dk.keyword)".$search.")AS b ORDER BY date_sort ".$sort;
 		$result = mysqli_query($link, $query);
 		mysqli_close($link);
 		return mysqli_fetch_all($result, MYSQLI_ASSOC);
