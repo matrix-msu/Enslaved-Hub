@@ -2,15 +2,6 @@ image:
   name: dock.matrix.msu.edu/matrix/triton-job-runner:latest
 
 
-before_script:
-    - mkdir -p ~/.ssh || true
-    - chmod 700 ~/.ssh
-    - eval $(ssh-agent -s)
-    - echo "$TRITON_KEY" | tr -d '\r' | ssh-add -
-    - echo "Key loaded"
-    - function cleanup() { kill $SSH_AGENT_PID;  }
-    - trap cleanup EXIT
-  
 stages:
   - build
   - deploy
@@ -32,6 +23,13 @@ build:
 deploy-staging:
   stage: deploy
   script:
+   - mkdir -p ~/.ssh || true
+   - chmod 700 ~/.ssh
+   - eval $(ssh-agent -s)
+   - echo "$TRITON_KEY" | tr -d '\r' | ssh-add -
+   - echo "Key loaded"
+   - function cleanup() { kill $SSH_AGENT_PID;  }
+   - trap cleanup EXIT
    - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' public/config.php
    - ansible-playbook ansible/deploy-website.yml 
   artifacts:
