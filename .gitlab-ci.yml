@@ -30,6 +30,7 @@ deploy-staging:
    - echo "Key loaded"
    - function cleanup() { kill $SSH_AGENT_PID;  }
    - trap cleanup EXIT
+   - cp public/config.dist.php public/config.php
    - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' public/config.php
    - ansible-playbook ansible/deploy-website.yml 
   artifacts:
