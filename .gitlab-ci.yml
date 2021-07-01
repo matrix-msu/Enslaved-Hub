@@ -1,0 +1,46 @@
+image:
+  name: dock.matrix.msu.edu/matrix/triton-job-runner:latest
+
+
+before_script:
+    - mkdir -p ~/.ssh || true
+    - chmod 700 ~/.ssh
+    - eval $(ssh-agent -s)
+    - echo "$TRITON_KEY" | tr -d '\r' | ssh-add -
+    - echo "Key loaded"
+    - function cleanup() { kill $SSH_AGENT_PID;  }
+    - trap cleanup EXIT
+  
+stages:
+  - build
+  - deploy
+
+variables:
+  ANSIBLE_PYTHON_INTERPRETER: '/opt/local/bin/python3'
+  ANSIBLE_HOST_KEY_CHECKING: 'False'
+
+build:
+  stage: build
+  script:
+   - rsync -avx src/ public/
+   - cd public; compass compile --trace ; cd ..
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - public/
+
+deploy-staging:
+  stage: deploy
+  script:
+   - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' public/config.php
+   - ansible-playbook ansible/deploy-website.yml 
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - public/
+  environment:
+    name: staging
+    url: https://enslaved.dev.matrix.msu.edu/
+  variables:
+    ANSIBLE_INVENTORY: 'ansible/staging.hosts'
+

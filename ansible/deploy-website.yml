@@ -1,0 +1,22 @@
+- hosts: webservers
+  tasks:
+  - pkgin:
+     update_cache: true
+  - pkgin:
+     state: present
+     name: 
+       - ap24-php73
+       - php73-extensions
+  - name: Deploy file
+    copy:
+      src: config/httpd.conf
+      dest: /opt/local/etc/httpd/httpd.conf 
+  - command: svcadm enable apache
+  - command: svcadm restart apache
+  - synchronize:
+     mode: push 
+     delete: true
+     src: ../public/ 
+     dest: /opt/local/share/httpd/htdocs/
+
+ 
