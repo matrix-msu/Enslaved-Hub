@@ -13,17 +13,7 @@ variables:
 build:
   stage: build
   script:
-   - cd src/source/; composer install --no-dev ; cd ..
-   - composer install --no-dev
-   - npm install
-   - cp config.dist.php config.php
-   - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local#' config.php
-   - cp source/config.dist.php source/config.php
-   - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' source/config.php
-   - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local/#' source/config.php
-   - php -v
-   - npm run dev ; cd ..
-   - cp -r src/build_local/ public/
+   - cp -r src/ public/
   artifacts:
     expire_in: 1 day
     paths:
@@ -39,6 +29,16 @@ deploy-staging:
    - echo "Key loaded"
    - function cleanup() { kill $SSH_AGENT_PID;  }
    - trap cleanup EXIT
+   - cd src/source/; composer install --no-dev ; cd ..
+   - composer install --no-dev
+   - npm install
+   - cp config.dist.php config.php
+   - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local#' config.php
+   - cp source/config.dist.php source/config.php
+   - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' source/config.php
+   - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local/#' source/config.php
+   - npm run dev ; cd ..
+   - cp -r src/build_local/ public/
    - ansible-playbook ansible/deploy-website.yml
   artifacts:
     expire_in: 1 day
