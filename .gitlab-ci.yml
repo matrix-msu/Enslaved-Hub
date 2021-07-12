@@ -37,8 +37,6 @@ deploy-staging:
   stage: deploy
   script:
    - mkdir -p ~/.ssh || true
-   - php -v
-   - php -m
    - chmod 700 ~/.ssh
    - eval $(ssh-agent -s)
    - echo "$TRITON_KEY" | tr -d '\r' | ssh-add -
@@ -46,7 +44,7 @@ deploy-staging:
    - function cleanup() { kill $SSH_AGENT_PID;  }
    - trap cleanup EXIT
    - sed -i 's#/builds/matrix/enslaved/src/build_local/#/opt/local/share/httpd/htdocs/#' public/config.php
-   - sed -i 's#ENVIRONMENTBASEPATH#/opt/local/share/httpd/htdocs/#' public/.htaccess
+   - sed -i 's#ENVIRONMENTBASEPATH#/#' public/.htaccess
    - ansible-playbook ansible/deploy-website.yml
   artifacts:
     expire_in: 1 day
