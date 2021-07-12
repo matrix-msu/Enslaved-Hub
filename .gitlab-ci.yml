@@ -13,8 +13,8 @@ variables:
 build:
   stage: build
   script:
-   - cd src/source/; php composer.phar install --no-dev ; cd ..
-   - php composer.phar install --no-dev ; npm install ; npm run dev ; cd ..
+   - cd src/source/; composer install --no-dev ; cd ..
+   - composer install --no-dev ; npm install ; npm run dev ; cd ..
    - cp -r src/build_local/ public/
   artifacts:
     expire_in: 1 day
