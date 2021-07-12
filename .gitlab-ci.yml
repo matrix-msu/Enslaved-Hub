@@ -19,6 +19,7 @@ build:
    - cp config.dist.php config.php
    - cp source/config.dist.php source/config.php
    - npm run dev ; cd ..
+   - pwd
    - cp -r src/build_local/ public/
   artifacts:
     expire_in: 1 day

@@ -1,7 +1,7 @@
 <?php
 //user defined
-define("BASE_URL",  "https://robbie.dev.matrix.msu.edu/~christj2/enslaved-static/build_local/");
-define("BASE_PATH",  "/home/christj2/website/enslaved-static/build_local/");
+define("BASE_URL",  "ENVIRONMENTBASEURL");
+define("BASE_PATH",  "ENVIRONMENTBASEPATH");
 define("KORA_BASE_URL", "https://kora.enslaved.org/");
 define("BASE_WIKI_URL", "https://lod.enslaved.org/");
 define("BASE_BLAZEGRAPH_URL", "https://bg1.dev.matrix.msu.edu/bigdata/");
