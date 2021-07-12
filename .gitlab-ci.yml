@@ -24,6 +24,7 @@ build:
    - cp source/config.dist.php source/config.php
    - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' source/config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local/#' source/config.php
+   - sed -i "s#SECRETTOKENGOESHERE#$KORA_TOKEN#" source/config.php
    - cp source/.dist.htaccess source/.htaccess
    - cp source/database-config.dist.php source/database-config.php
    - npm run dev ; cd ..
@@ -45,7 +46,6 @@ deploy-staging:
    - trap cleanup EXIT
    - sed -i 's#/builds/matrix/enslaved/src/build_local/#/opt/local/share/httpd/htdocs/#' public/config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/#' public/.htaccess
-   - sed -i "s#SECRETTOKENGOESHERE#$KORA_TOKEN#" public/config.php
    - ansible-playbook ansible/deploy-website.yml
   artifacts:
     expire_in: 1 day
