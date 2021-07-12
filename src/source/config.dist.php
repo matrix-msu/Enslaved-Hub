@@ -1,7 +1,7 @@
 <?php
 //user defined
-define("BASE_URL",  "https://robbie.dev.matrix.msu.edu/~christj2/enslaved/");
-define("BASE_PATH",  "/home/christj2/website/enslaved/");
+define("BASE_URL",  "https://robbie.dev.matrix.msu.edu/~christj2/enslaved-static/build_local/");
+define("BASE_PATH",  "/home/christj2/website/enslaved-static/build_local/");
 define("KORA_BASE_URL", "https://kora.enslaved.org/");
 define("BASE_WIKI_URL", "https://lod.enslaved.org/");
 define("BASE_BLAZEGRAPH_URL", "https://bg1.dev.matrix.msu.edu/bigdata/");
@@ -107,40 +107,9 @@ define("JS_GLOBALS",
     "</script>\n"
 );
 
-//includes all the php files from constants directory
-foreach(glob($GLOBALS['CONSTANTS_FILE_ARRAY'][LOD_CONFIG] . "/*.php") as $file){
-    require_once $file;
-}
-
-$GLOBALS['FILTER_TO_FILE_MAP'] = Array(
-    "Gender" => sexTypes,
-    "Age Category" => ageCategory,
-    "Ethnodescriptor" => ethnodescriptor,
-    "Role Types" => roleTypes,
-    "Place" => places,
-    "Event Type" => eventTypes,
-    "Place Type" => placeTypes,
-    "City" => cities,
-    "Province" => provinces,
-    "Source Type" => sourceTypes,
-    "Status" => personstatus,
-    "Occupation" => occupation,
-    "Projects" => projects,
-    "Modern Countries" => countrycode
-);
-
-$GLOBALS['bg'] = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
+$bg = ['enslaved-header-bg.jpg','enslaved-header-bg2.jpg',
         'enslaved-header-bg3.jpg','enslaved-header-bg4.jpg',
         'enslaved-header-bg5.jpg','enslaved-header-bg6.jpg',
         'enslaved-header-bg7.jpg'];
-
+$GLOBALS['bg'] = $bg;
 $GLOBALS['randIndex'] = array_rand($bg);
-
-//include the lib files
-require_once( BASE_LIB_PATH . "configFunctions.php" );
-require_once( BASE_LIB_PATH . "koraWrapper.php" );
-require_once( BASE_LIB_PATH . "mySqlWrapper.php" );
-require_once( BASE_FUNCTIONS_PATH . "explorefunctions.php");
-require_once( BASE_FUNCTIONS_PATH . "storyfunctions.php");
-require_once( BASE_FUNCTIONS_PATH . "functions.php");
-require_once( BASE_FUNCTIONS_PATH . "search.php");
