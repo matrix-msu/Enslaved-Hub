@@ -44,7 +44,8 @@ deploy-staging:
    - echo "Key loaded"
    - function cleanup() { kill $SSH_AGENT_PID;  }
    - trap cleanup EXIT
-   - pwd
+   - sed -i 's#ENVIRONMENTBASEPATH#/opt/local/share/httpd/htdocs/#' public/config.php
+   - sed -i 's#ENVIRONMENTBASEPATH#/opt/local/share/httpd/htdocs/#' public/.htaccess
    - ansible-playbook ansible/deploy-website.yml
   artifacts:
     expire_in: 1 day
