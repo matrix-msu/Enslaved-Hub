@@ -43,6 +43,7 @@ deploy-staging:
    - echo "Key loaded"
    - function cleanup() { kill $SSH_AGENT_PID;  }
    - trap cleanup EXIT
+   - pwd
    - ansible-playbook ansible/deploy-website.yml
   artifacts:
     expire_in: 1 day
