@@ -13,7 +13,8 @@ variables:
 build:
   stage: build
   script:
-   - rsync -avx src/ public/
+   - cp -r src/ public/
+   - composer
    - cd public; compass compile --trace ; cd ..
   artifacts:
     expire_in: 1 day
@@ -32,7 +33,7 @@ deploy-staging:
    - trap cleanup EXIT
    - cp public/config.dist.php public/config.php
    - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' public/config.php
-   - ansible-playbook ansible/deploy-website.yml 
+   - ansible-playbook ansible/deploy-website.yml
   artifacts:
     expire_in: 1 day
     paths:
@@ -42,4 +43,3 @@ deploy-staging:
     url: https://enslaved.dev.matrix.msu.edu/
   variables:
     ANSIBLE_INVENTORY: 'ansible/staging.hosts'
-
