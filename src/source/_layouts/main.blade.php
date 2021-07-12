@@ -41,6 +41,5 @@
     @include('_partials.header')
     @yield('body')
     @include('_partials.footer')
-    <script language="JavaScript" type="text/javascript" src="<?php echo BASE_JS_URL;?>navContents.js"></script>
 </body>
 </html>
