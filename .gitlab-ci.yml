@@ -17,10 +17,10 @@ build:
    - composer install --no-dev
    - npm install
    - cp config.dist.php config.php
-   - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/build_local#' config.php
+   - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local#' config.php
    - cp source/config.dist.php source/config.php
    - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' source/config.php
-   - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/build_local/#' source/config.php
+   - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local/#' source/config.php
    - npm run dev ; cd ..
    - pwd
    - cp -r src/build_local/ public/
