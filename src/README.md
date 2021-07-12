@@ -1,31 +1,24 @@
-# Enslaved
+# Enslaved Project Suite / Static Site Builder
 
-Requirements
------------------------
-[Composer](https://getcomposer.org/)
+### Installation instructions for development
+1. Clone repository
 
+        git clone git@direct.gitlab.matrix.msu.edu:matrix/enslaved-project-suite.git
 
-Install
------------------------
-```
-curl -s http://getcomposer.org/installer | php
-php composer.phar install --no-dev
-compass compile
-```
+2. Copy config and modify needed values:
 
+        cp enslaved-project-suite/config.dist.php enslaved-project-suite/config.php
 
-Configure
------------------------
-```
-cp config.dist.php config.php
-cp database-config.dist.php database-config.php
-cp .dist.htaccess .htaccess
-```
+3. Install composer files:
 
-Cache
-----------------------
-```
-chmod 777 cache
-load webpage twice
-chmod 775 cache
-```
+        composer install
+
+4. Install NPM files:
+
+        npm install
+
+5. To build site, run:
+
+        npm run dev
+
+Site will currently build at `enslaved-project-suite/build_local`

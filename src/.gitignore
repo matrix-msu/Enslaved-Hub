@@ -1,13 +1,23 @@
-# bootstrap
+/build_local/
+/build_local2/
+/build_production/
+/cache/
+/node_modules/
+/vendor/
+/.idea/
+/.vscode/
+npm-debug.log
+
+# User defined ignores
 config.php
-database-config.php
-config.json
+/source/config.php
+/source/.htaccess
+/source/database-config.php
+/source/config.json
 
-# htaccess files
-.htaccess
-
-# compiled css
-assets/stylesheets/style.css
+# Built data ignores
+/source/cache/navContents.json
+/source/cache/webPages.json
 
 # Directories
 /.idea
@@ -21,6 +31,8 @@ assets/stylesheets/style.css
 # composer
 composer.phar
 /vendor/
+/source/composer.phar
+/source/vendor/
 
 # os specific
 ._.DS_Store

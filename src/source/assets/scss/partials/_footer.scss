@@ -1,0 +1,80 @@
+#footer{
+    background-color: $base-dark;
+    
+    .footerwrap{
+        max-width: 1120px;
+        padding: 40px;
+        margin: 50px auto 0;
+        display: flex;
+        justify-content: space-between;
+        
+        a {
+          display: flex;
+          justify-content: space-around;
+          padding: 40px 20px;
+        }
+        
+        img {
+          width: 100%;
+        }
+
+        .top-button{
+            height: 60px;
+            width: 330px;
+            border: 1px solid rgba(255,253,251,0.35);
+            border-radius: 100px;
+            background-color: #122E46;
+            box-shadow: 0 4px 16px 0 rgba(0,0,0,0.05);
+            cursor: pointer;
+            color: #FFFFFF;
+            font-family: aleoregular;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+
+            &:focus{
+                outline: none;
+            }
+        }
+        //FIX to flip background arrow without flipping text
+        .top-button:before{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: url(../images/Arrow.svg);
+            background-repeat: no-repeat;
+            background-position: 90% 50%;
+            -webkit-transform: scaleY(-1);
+            transform: scaleY(-1);
+        }
+    }
+}
+
+@media screen and (max-width: 850px){
+    #footer{
+        .footerwrap{
+            flex-wrap: wrap;
+            padding: 60px;
+            a {
+              width: 42%;
+              padding: 40px 4%;
+            }
+             img {
+              width: auto;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px){
+    #footer{
+        .footerwrap{
+            a {
+              width: 100%;
+            }
+        }
+    }
+}
