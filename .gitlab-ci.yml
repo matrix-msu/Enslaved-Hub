@@ -16,6 +16,7 @@ build:
    - cd src/source/; composer install --no-dev ; cd ..
    - composer install --no-dev
    - npm install
+   - cp config.dist.php config.php
    - npm run dev ; cd ..
    - cp -r src/build_local/ public/
   artifacts:
