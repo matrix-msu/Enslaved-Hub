@@ -24,6 +24,7 @@ build:
    - cp source/config.dist.php source/config.php
    - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' source/config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local/#' source/config.php
+   - cp .dist.htaccess .htaccess
    - npm run dev ; cd ..
    - cp -r src/build_local/ public/
   artifacts:

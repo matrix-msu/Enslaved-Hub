@@ -1,13 +1,36 @@
 <IfModule mod_rewrite.c>
 
     RewriteEngine on
-    RewriteBase /~christj2/enslaved/
+    RewriteBase ENVIRONMENTBASEPATH
 
     #RewriteCond %{REQUEST_URI} !\.(png|jpg|jpeg|gif|css|js|svg)$ [NC]
     RewriteRule ^assets/.*$ - [PT]
     RewriteRule ^ontology/.*$ - [PT]
 	RewriteRule ^modules/.*$ - [PT]
     RewriteRule ^newticket.php$ newticket.php [L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^.*$ index.php [L]
 
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Serve gzip compressed JS files if they exist
+    # and the client accepts gzip.
+    RewriteCond "%{HTTP:Accept-encoding}" "gzip"
+    RewriteCond "%{REQUEST_FILENAME}\.gz" -s
+    RewriteRule "^(.*)\.js" "$1\.js\.gz" [QSA]
+
+    # Serve correct content types, and prevent mod_deflate double gzip.
+    RewriteRule "\.js\.gz$" "-" [T=text/javascript,E=no-gzip:1]
+
+    <FilesMatch "(\.js\.gz)$">
+      # Serve correct encoding type.
+      Header append Content-Encoding gzip
+
+      # Force proxies to cache gzipped &
+      # non-gzipped css/js files separately.
+      Header append Vary Accept-Encoding
+    </FilesMatch>
 </IfModule>
