@@ -14,7 +14,7 @@ require_once( "./source/lib/koraSearchRemote.php");
 // require_once( "./source/functions/search.php");
 
 //generate the webpages file
-$response = Kora_GetNavigationData();
+Kora_GetNavigationData();
 
 return [
     'production' => false,

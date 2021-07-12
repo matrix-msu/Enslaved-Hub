@@ -56,6 +56,7 @@ function Kora_GetNavigationData()
 	// put navigations to navContents.json file
 	file_put_contents( "./source/cache/navContents.json", json_encode($navs));
 	define("NAV_CONTENT", json_encode($navs));
+	echo NAV_CONTENT;die;
 
 	return json_encode("updated");
 }
@@ -66,8 +67,10 @@ function Json_GetNavigationData()
 	// Read data from Json cache File
 	if(file_exists(BASE_PATH . "cache/navContents.json") ){ //exists
 		$navContents = file_get_contents(BASE_PATH . "cache/navContents.json");
+		echo 'file exits';die;
 	}else{  //doesn't exist
 		$navContents = NAV_CONTENT;
+		echo 'file not exits';die;
 	}
 	$navContents = json_decode($navContents, true);
 	$formattedContents = array();
