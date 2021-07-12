@@ -22,7 +22,9 @@ build:
    - sed -i 's#ENVIRONMENTBASEURL#https://enslaved.dev.matrix.msu.edu/#' source/config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local/#' source/config.php
    - npm run dev ; cd ..
-   - pwd
+   - ls
+   - ls src/
+   - ls src/build_local/
    - cp -r src/build_local/ public/
   artifacts:
     expire_in: 1 day
