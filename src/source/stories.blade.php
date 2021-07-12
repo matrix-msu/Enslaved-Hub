@@ -3,8 +3,6 @@
 @section('body')
 
 <?php
-include_once( BASE_LIB_PATH . "koraSearchRemote.php" );
-
 // Get all Stories using KORA_Search
 $fields =  ['Title', 'Featured', 'Images'];
 $clause = new KORA_Clause("Display", "=", "True");

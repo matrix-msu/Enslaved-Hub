@@ -10,6 +10,7 @@ require_once( "./source/lib/mySqlWrapper.php" );
 require_once( "./source/functions/explorefunctions.php");
 require_once( "./source/functions/storyfunctions.php");
 require_once( "./source/functions/functions.php");
+require_once( "./source/lib/koraSearchRemote.php");
 // require_once( "./source/functions/search.php");
 
 //generate the webpages file

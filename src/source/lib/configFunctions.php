@@ -24,10 +24,6 @@ function Kora_GetNavigationData()
 	$decode_results = json_decode($koraResults, true);
 	if(array_key_exists("error", $decode_results)) return json_encode("failed");
 
-	// Read from the webPages file and compare to the kora results
-	$cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
-	if($cached_data == json_encode(json_decode($koraResults)->records[0])) return json_encode("similar");
-
 	// put content to webPages.json file
 	file_put_contents( "./source/cache/webPages.json", json_encode(json_decode($koraResults)->records[0]));
 
