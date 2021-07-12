@@ -14,7 +14,6 @@ build:
   stage: build
   script:
    - cp -r src/ public/
-   - php -m
   artifacts:
     expire_in: 1 day
     paths:
@@ -24,6 +23,8 @@ deploy-staging:
   stage: deploy
   script:
    - mkdir -p ~/.ssh || true
+   - php -v
+   - php -m
    - chmod 700 ~/.ssh
    - eval $(ssh-agent -s)
    - echo "$TRITON_KEY" | tr -d '\r' | ssh-add -
