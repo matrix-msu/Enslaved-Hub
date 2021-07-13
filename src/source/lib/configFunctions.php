@@ -26,6 +26,7 @@ function Kora_GetNavigationData()
 
 	// put content to webPages.json file
 	file_put_contents( "./source/cache/webPages.json", json_encode(json_decode($koraResults)->records[0]));
+	define("DATA_BY_TITLE", json_encode(json_decode($koraResults)->records[0]));
 
 	$navs = [];
 	$found = [];
@@ -83,7 +84,11 @@ function Json_GetNavigationData()
 function Json_GetData_ByTitle($title, $all_matches = false)
 {
 	// Dynamically pull data from cache file (webPages.json)
-	$cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
+	if(file_exists(BASE_PATH . "cache/webPages.json") ){ //exists
+		$cached_data = file_get_contents(BASE_PATH . "cache/webPages.json");
+	}else{  //doesn't exist
+		$cached_data = DATA_BY_TITLE;
+	}
 	$cached_data = json_decode($cached_data, true); // Convert the json string to a php array
 
 	$output = ['title' => $title, 'descr' => ""];
