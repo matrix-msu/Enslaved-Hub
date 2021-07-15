@@ -19,6 +19,9 @@ config.php
 /source/cache/navContents.json
 /source/cache/webPages.json
 
+# visualizeCountsBuilder
+/visualizeCountsBuilder/latest.wikibase.dump.json
+
 # Directories
 /.idea
 /.sass-cache
