@@ -13,7 +13,7 @@ const projects=[
     "Family Search" => "Q811272",
     "Mortality in the South, 1850" =>"Q856062",
     "African Burials and Residences in Rio de Janeiro, 1874-1899" => "Q871865",
-    "Take Them In Families" =>"Q734407",
+    "Take Them in Families: The Enslaved People of Casa Bianca Plantation, Florida" =>"Q734407",
     "They Had Names: Representations of the Enslaved in Liberty County, Georgia, Estate Inventories, 1762-1865" => "Q886231"
 ];
 
@@ -31,6 +31,6 @@ const qprojects=[
   "Q811272" => "Family Search",
   "Q856062" => "Mortality in the South, 1850",
   "Q871865" => "African Burials and Residences in Rio de Janeiro, 1874-1899",
-  "Q734407" => "Take Them In Families",
+  "Q734407" => "Take Them in Families: The Enslaved People of Casa Bianca Plantation, Florida",
   "Q886231" => "They Had Names: Representations of the Enslaved in Liberty County, Georgia, Estate Inventories, 1762-1865"
 ];
