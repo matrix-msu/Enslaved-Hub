@@ -1,6 +1,5 @@
-<!-- Author: Izzy Barraza-->
-<!-- Visualize by data page-->
-<?php $cache_data = Json_GetData_ByTitle("Visualize");
+<?php
+    $cache_data = Json_GetData_ByTitle("Visualize");
 ?>
 
 <div class="container header visualizeByData-header">
@@ -19,16 +18,17 @@
     <div class="inputwrap">
       <label for="chart_type">Chart Type</label>
       <select class="s2-single" id="chart-type" name="chart_type">
-        <option value="dash">Dashboard</option>
-        <option value="bar">Bar</option>
-        <option value="pie">Pie</option>
-        <option value="tab">Table</option>
+        <option value="Dashboard">Dashboard</option>
+        <option value="BarChart">Bar</option>
+        <option value="PieChart">Pie</option>
+        <option value="Table">Table</option>
         <!-- <option value="line">Line</option> -->
       </select>
     </div>
     <div class="inputwrap">
       <label for="chart_field">Chart Field</label>
       <select class="s2-single" id="chart-field" name="chart_field">
+        <option value="po">Project Overview</option>
         <option value="ef">Enslaved Female Records</option>
         <option value="ec">Enslaved Child Records</option>
         <option value="em">Enslaved Male Records</option>
@@ -38,8 +38,9 @@
       </select>
     </div>
     <div class="inputwrap">
-      <label for="chart_field">Project</label>
+      <label for="chart_project">Project</label>
       <select class="s2-single" id="chart-project" name="chart_project">
+          <option value="All Projects">All Projects</option>
         <?php foreach (projects as $type => $qid) { ?>
             <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
         <?php } ?>
@@ -48,8 +49,14 @@
     </div>
   </div>
   <div class="container datawrap">
-    <iframe id="data-frame"></iframe>
   </div>
   <p class="container info infowrap">Learn more about the <a href="https://docs.enslaved.org/controlledVocabulary/" target="_blank"/>Enslaved Controlled Vocabulary</a></p>
 </div>
+<script type="text/javascript">
+    var counts = String.raw`<?php echo file_get_contents('./visualizeCounts/counts.json');?>`;
+    counts = JSON.parse(counts);
+    var config = `<?php echo file_get_contents('./visualizeCounts/config.json');?>`;
+    config = JSON.parse(config);
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/visualizeByData.js"></script>

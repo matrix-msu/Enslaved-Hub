@@ -2,11 +2,11 @@ const mix = require('laravel-mix');
 require('laravel-mix-jigsaw');
 
 mix.disableSuccessNotifications();
-mix.setPublicPath('source/assets/build');
+mix.setPublicPath('source/assets');
 
 mix.jigsaw()
     // .js('source/_assets/js/main.js', 'js')
-    // .sass('source/_assets/scss/app.scss', 'css')
+    .sass('source/assets/scss/style.scss', 'stylesheets')
     .options({
         processCssUrls: false,
     })

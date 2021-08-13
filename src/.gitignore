@@ -19,12 +19,12 @@ config.php
 /source/cache/navContents.json
 /source/cache/webPages.json
 
-# visualizeCountsBuilder
-/visualizeCountsBuilder/latest.wikibase.dump.json
+# visualizeCounts
+/source/visualizeCounts/latest.wikibase.dump.json
 
 # Directories
 /.idea
-/.sass-cache
+/source/.sass-cache
 /assets/Widoco
 
 # Editor files

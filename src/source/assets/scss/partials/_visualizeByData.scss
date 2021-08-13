@@ -236,10 +236,10 @@
   }
 
   .datawrap{
-    max-width: 1000px;
+    width: 1000px;
     margin: 0 auto;
     display: block;
-    height   : 450px;
+    // height   : 450px;
     overflow : hidden;
     position : relative;
     border: 2px solid #FFF;
@@ -263,6 +263,46 @@
           background: #FFF!important;
         }
       }
+    }
+    .pcontainer{
+        // width: 980px;
+        /* height: 570px; */
+        // border: 2px solid black;
+        // margin: 0 auto;
+    }
+    .chartcontainer{
+        display: inline-block;
+        margin: 7px;
+        border: 1px solid lightgray;
+        vertical-align: top;
+        box-shadow: 0 0 2px 0px grey;
+    }
+    .customChartTitle{
+        font-size: 10pt;
+        font-weight: bold;
+        margin-bottom: 13px;
+        margin-left: 8px;
+        margin-top: 3px;
+    }
+    .totalNum{
+        text-align: center;
+        font-weight: bold;
+        font-size: 27px;
+    }
+    .totalLabel{
+        text-align: center;
+    }
+    .typeNum{
+        width: 25%;
+        display: inline-block;
+        text-align: center;
+        font-weight: bold;
+        font-size: 27px;
+    }
+    .typeLabel{
+        width: 25%;
+        display: inline-block;
+        text-align: center;
     }
   }
 }
