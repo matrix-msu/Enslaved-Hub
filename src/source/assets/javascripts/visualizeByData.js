@@ -209,5 +209,7 @@ function changeIframe(){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Take+Them+In+Families&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "CSI"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=CSI+Dixie&limit=20&offset=0&sort_field=label.sort&display=people');
+    }else if(proj == "Advertising"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Advertising%20Gender%20Slave%20Database:%20Escravos%20de%20ganho%20in%20Rio%20de%20Janeiro,%201850-1880');
     }
 }
