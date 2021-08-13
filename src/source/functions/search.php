@@ -389,6 +389,7 @@ class QueryIndex {
                     'relationships',
                     'ethnodescriptor',
                     'ethnonym_variant',
+                    'ethnonym_related_term',
                     'participant_role',
                     'date',
                     'end_date',
