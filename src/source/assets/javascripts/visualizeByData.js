@@ -203,5 +203,11 @@ function changeIframe(){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Mortality+in+the+South%2C+1850&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "African"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=African+Burials+and+Residences+in+Rio+de+Janeiro%2C+1874-1899&limit=20&offset=0&sort_field=label.sort&display=people');
+    }else if(proj == "They"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=They+Had+Names%3A+Representations+of+the+Enslaved+in+Liberty+County%2C+Georgia%2C+Estate+Inventories%2C+1762-1865&limit=20&offset=0&sort_field=label.sort&display=people');
+    }else if(proj == "Take"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Take+Them+In+Families&limit=20&offset=0&sort_field=label.sort&display=people');
+    }else if(proj == "CSI"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=CSI+Dixie&limit=20&offset=0&sort_field=label.sort&display=people');
     }
 }
