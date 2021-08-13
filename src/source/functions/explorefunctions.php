@@ -1,4 +1,5 @@
 <?php
+require_once('createDetailHtml.php');
 
 function callAPI($url,$limit,$offset){
   $url.='&format=json';
@@ -53,625 +54,11 @@ function getProjectFullInfo() {
     }
 }
 
-function createDetailHtml($statement,$label,$link=''){
-  $baseurl = BASE_URL;
-  $upperlabel = $label;
-  $lowerlabel = strtolower($label);
-  $html = '';
-
-  // don't show the label if it is empty
-  if (empty($statement)){
-    return "";
-  }
-
-  if($label === "RolesA"){
-      // echo json_encode($statement);die;
-    //Multiple roles in the roles array so match them up with the participant
-    $lowerlabel = "roles";
-    $upperlabel = "Roles";
-
-    $html .= <<<HTML
-    <div class="detail $lowerlabel">
-      <h3>$upperlabel</h3>
-    HTML;
-
-    foreach($statement as $statementArr){
-
-        //Array for Roles means there are participants and pQIDs to match
-        $roles = explode('||', $statementArr['roles']);
-        $participants = explode('||', $statementArr['participant']);
-        $pq = explode('||', $statementArr['pq']);
-
-        //Remove whitespace from end of arrays
-        if (end($roles) == '' || end($roles) == ' '){
-          array_pop($roles);
-        }
-        if (end($participants) == '' || end($participants) == ' '){
-          array_pop($participants);
-        }
-        if (end($pq) == '' || end($pq) == ' '){
-          array_pop($pq);
-        }
-
-        //Loop through and match up
-        $matched = '';
-        for($i=0; $i < sizeof($participants); $i++){
-            if (!isset($pq[$i]) || !isset($participants[$i]) ){
-                continue;
-            }
-
-            $explode = explode('/', $pq[$i]);
-            $pqid = end($explode);
-            $pqurl = $baseurl . 'record/event/' . $pqid;
-            $matched = $roles[$i] . ' - ' . $participants[$i];
-
-            $hiddenStyle = '';
-            if($i > 0){
-                $hiddenStyle = ' style="visibility:hidden"';
-            }
-
-            $html .= <<<HTML
-            <div class="detail-bottom">
-                <div$hiddenStyle>$roles[0]
-            HTML;
-
-            // roles tool tip
-            if(array_key_exists($roles[0],controlledVocabulary)){
-              $detailinfo = ucfirst(controlledVocabulary[$roles[0]]);
-              $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[0]</h1> <p>$detailinfo</p> </div>";
-            }
-
-            if($i >= 8){
-                $html .= '</div> &nbsp; <a class="search-all" href="'.BASE_URL.'search/events?person='.$_REQUEST['QID'].'">View All Events</a>';
-                break;
-            }
-
-            $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
-        }
+function valueNotEmpty($record, $name){
+    if (isset($record[$name]) && isset($record[$name]['value']) && $record[$name]['value'] != '' ){
+        return true;
     }
-    $html .= '</div><br>';
-
-} else if ($label == "eventRolesA"){
-    // match roles with events
-
-    //Multiple roles in the roles array so match them up with the participant
-    $lowerlabel = "roles";
-    $upperlabel = "Roles";
-    //Array for Roles means there are participants and pQIDs to match
-    $roles = explode('||', $statement['roles']);
-    $eventRoleUrls = explode('||', $statement['eventRoles']);
-    $eventRoleLabels = explode('||', $statement['eventRoleLabels']);
-
-    //Remove whitespace from end of arrays
-    if (end($roles) == '' || end($roles) == ' '){
-      array_pop($roles);
-    }
-    if (end($eventRoleUrls) == '' || end($eventRoleUrls) == ' '){
-      array_pop($eventRoleUrls);
-    }
-    if (end($eventRoleLabels) == '' || end($eventRoleLabels) == ' '){
-      array_pop($eventRoleLabels);
-    }
-
-    $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-HTML;
-
-    //Loop through and match up
-    $matched = '';
-    for($i=0; $i < sizeof($roles); $i++){
-        if (!isset($eventRoleUrls[$i]) || !isset($eventRoleLabels[$i]) ){
-          continue;
-        }
-        $explode = explode('/', $eventRoleUrls[$i]);
-        $eventQid = end($explode);
-        $eventUrl = $baseurl . 'record/event/' . $eventQid;
-        $matched = $roles[$i] . ' - ' . $eventRoleLabels[$i];
-
-        $html .= <<<HTML
-<div class="detail-bottom">
-    <div>$roles[$i]
-HTML;
-
-        // roles tool tip
-        if(array_key_exists($roles[$i],controlledVocabulary)){
-            $detailinfo = ucfirst(controlledVocabulary[$roles[$i]]);
-            $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[$i]</h1> <p>$detailinfo</p> </div>";
-        }
-
-        $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventRoleLabels[$i]</a></div>";
-    }
-    $html .= '</div><br>';
-} else if($label === "DRolesA"){
-    //Multiple roles in the roles array so match them up with the participant
-    $lowerlabel = "descriptive roles";
-    $upperlabel = "Descriptive Roles";
-
-    $html .= <<<HTML
-    <div class="detail $lowerlabel">
-        <h3>$upperlabel</h3>
-    HTML;
-
-    foreach($statement as $statementArr){
-
-        //Array for Roles means there are participants and pQIDs to match
-        $roles = explode('||', $statementArr['droles']);
-        $participants = explode('||', $statementArr['dparticipant']);
-        $pq = explode('||', $statementArr['dpq']);
-
-        //Remove whitespace from end of arrays
-        if (end($roles) == '' || end($roles) == ' '){
-          array_pop($roles);
-        }
-        if (end($participants) == '' || end($participants) == ' '){
-          array_pop($participants);
-        }
-        if (end($pq) == '' || end($pq) == ' '){
-          array_pop($pq);
-        }
-
-
-        //Loop through and match up
-        $matched = '';
-        for($i=0; $i < sizeof($participants); $i++){
-            if (!isset($pq[$i]) || !isset($participants[$i]) ){
-                continue;
-            }
-
-            $explode = explode('/', $pq[$i]);
-            $pqid = end($explode);
-            $pqurl = $baseurl . 'record/event/' . $pqid;
-            $matched = $roles[0] . ' - ' . $participants[$i];
-
-            $hiddenStyle = '';
-            if($i > 0){
-                $hiddenStyle = ' style="visibility:hidden"';
-            }
-
-            $html .= <<<HTML
-            <div class="detail-bottom">
-                <div$hiddenStyle>$roles[0]
-            HTML;
-
-            // roles tool tip
-            if(array_key_exists($roles[0],controlledVocabulary)){
-              $detailinfo = ucfirst(controlledVocabulary[$roles[0]]);
-              $html .= "<div class='detail-menu' id='tooltip'> <h1>$roles[0]</h1> <p>$detailinfo</p> </div>";
-            }
-
-            if($i >= 8){
-                $html .= '</div> &nbsp; <a class="search-all" href="'.BASE_URL.'search/events?person='.$_REQUEST['QID'].'">View All Events</a>';
-                break;
-            }
-
-            $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
-        }
-    }
-    $html .= '</div><br>';
-
-}else if ($label == "matches"){
-    $lowerlabel = "match";
-    $upperlabel = "Match";
-
-    $matchUrls = explode('||', $statement['matchUrls']);
-    $matchLabels = explode('||', $statement['matchLabels']);
-      $matchtype = explode('||', $statement['matchtype']);
-
-    if (end($matchUrls) == '' || end($matchUrls) == ' '){
-      array_pop($matchUrls);
-    }
-    if (end($matchLabels) == '' || end($matchLabels) == ' '){
-      array_pop($matchLabels);
-    }
-    if (end($matchtype) == '' || end($matchtype) == ' '){
-      array_pop($matchtype);
-    }
-    $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-HTML;
-
-    //Loop through and match up
-    $matched = '';
-    for($i=0; $i < sizeof($matchLabels); $i++){
-        if (!isset($matchLabels[$i]) ){
-          continue;
-        }
-
-        $explode = explode('/', $matchUrls[$i]);
-        $personQ = end($explode);
-        $matchUrl = $baseurl . 'record/person/' . $personQ;
-        $matched = $matchLabels[$i];
-
-        $html .= <<<HTML
-<div class="detail-bottom">
-    <a href='$matchUrl' class='highlight'>$matchtype[$i]$matchLabels[$i]</a>
-</div>
-HTML;
-
-    }
-    $html .= '</div>';
-} else if ($label == "Secondary Source"){
-    $lowerlabel = "source";
-    $upperlabel = "Source";
-
-    $source = $statement;
-
-    $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-
-<div class="detail-bottom">
-    <a>$source</a>
-</div>
-</div>
-HTML;
-} else if ($label == "Project References"){
-    $lowerlabel = "project references";
-    $upperlabel = "Project References";
-    $references = explode('||', $statement);
-
-    $html .= "<div class=\"detail $lowerlabel\">
-            <h3>$upperlabel</h3>
-            <div class='detail-bottom'>
-            ";
-
-foreach ($references as $ref) {
-    $html .= "<a href=\"$ref\" target='_blank'>$ref<a>
-        <br>";
-}
-    $html .= "</div>
-    </div>";
-} else if ($label == "relationshipsA"){
-    // match relationships with people
-
-    //Multiple roles in the roles array so match them up with the participant
-    $lowerlabel = "relationships";
-    $upperlabel = "Relationships";
-    //Array for relationships means there are people to match
-    $relationships = explode('||', $statement['relationships']);
-    $relationshipUrls = explode('||', $statement['qrelationUrls']);
-    $relationshipLabels = explode('||', $statement['relationshipLabels']);
-
-    //Remove whitespace from end of arrays
-    if (end($relationships) == '' || end($relationships) == ' '){
-      array_pop($relationships);
-    }
-    if (end($relationshipUrls) == '' || end($relationshipUrls) == ' '){
-      array_pop($relationshipUrls);
-    }
-    if (end($relationshipLabels) == '' || end($relationshipLabels) == ' '){
-      array_pop($relationshipLabels);
-    }
-
-    $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-HTML;
-
-
-    //Loop through and match up
-    $matched = '';
-    for($i=0; $i < sizeof($relationships); $i++){
-        if (!isset($relationshipUrls[$i]) || !isset($relationshipLabels[$i])){
-          continue;
-        }
-
-        $explode = explode('/', $relationshipUrls[$i]);
-        $personQ = end($explode);
-        $personUrl = $baseurl . 'record/person/' . $personQ;
-        $matched = $relationships[$i] . ' - ' . $relationshipLabels[$i];
-
-        $html .= <<<HTML
-<div class="detail-bottom">
-    <div>$relationships[$i]
-HTML;
-
-        // relationship tool tip
-        if(array_key_exists($relationships[$i],controlledVocabulary)){
-            $detailinfo = ucfirst(controlledVocabulary[$relationships[$i]]);
-            $html .= "<div class='detail-menu' id='tooltip'> <h1>$relationships[$i]</h1> <p>$detailinfo</p> </div>";
-        }
-
-        $html .= "</div> - <a href='$personUrl' class='highlight'>$relationshipLabels[$i]</a></div>";
-    }
-    $html .= '</div>';
-} else if ($label == "projectsA"){
-    $lowerlabel = "contributing project(s)";
-    $upperlabel = "Contributing Project(s)";
-
-    $projectUrls = explode('||', $statement['projectUrl']);
-    $projectNames = explode('||', $statement['projectName']);
-
-    if (end($projectUrls) == '' || end($projectUrls) == ' '){
-      array_pop($projectUrls);
-    }
-    if (end($projectNames) == '' || end($projectNames) == ' '){
-      array_pop($projectNames);
-    }
-
-    $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-HTML;
-
-    //Loop through and match up
-    $matched = '';
-    foreach($projectNames as $projectName){
-            $html .= <<<HTML
-    <div class="detail-bottom">
-        <p>$projectName</p>
-    HTML;
-    }
-    $html .= '</div></div>';
-} else if ($label == "ecvoA"){
-    $lowerlabel = "ethnolinguistic descriptor - place of origin";
-    $upperlabel = "Ethnolinguistic Descriptor - Place Of Origin";
-
-    $ecvos = explode('||', $statement['ecvo']);
-    $originUrls = explode('||', $statement['placeofOrigin']);
-    $originLabels = explode('||', $statement['placeOriginlabel']);
-
-    if (end($ecvos) == '' || end($ecvos) == ' '){
-      array_pop($ecvos);
-    }
-    if (end($originUrls) == '' || end($originUrls) == ' '){
-      array_pop($originUrls);
-    }
-    if (end($originLabels) == '' || end($originLabels) == ' '){
-      array_pop($originLabels);
-    }
-
-    $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-HTML;
-
-    //Loop through and match up
-    for($i=0; $i < sizeof($originUrls); $i++){
-        if (!isset($originLabels[$i]) ){
-          continue;
-        }
-
-        $explode = explode('/', $originUrls[$i]);
-        $originQ = end($explode);
-        $placeUrl = $baseurl . 'record/place/' . $originQ;
-
-        $html .= <<<HTML
-<div class="detail-bottom">
-    <div>$ecvos[$i]
-HTML;
-
-        // ecvo tool tip
-        if(array_key_exists($ecvos[$i],controlledVocabulary)){
-            $detailinfo = ucfirst(controlledVocabulary[$ecvos[$i]]);
-            $html .= "<div class='detail-menu' id='tooltip'> <h1>$ecvos[$i]</h1> <p>$detailinfo</p> </div>";
-        }
-
-        $html .= "</div> - <a href='$placeUrl' class='highlight'>$originLabels[$i]</a></div>";
-    }
-    $html .= '</div>';
-}else if ($label == "AgeA"){
-    // match statuses with events
-    $lowerlabel = "age";
-    $upperlabel = "Age";
-
-    //Array for ststueses means there are events and labels match
-    $statuses = explode('||', $statement['ages']);
-    $statusEventUrls = explode('||', $statement['ageEvents']);
-    $eventstatusLabels = explode('||', $statement['agestatusLabels']);
-
-    //Remove whitespace from end of arrays
-    if (end($statuses) == '' || end($statuses) == ' '){
-      array_pop($statuses);
-    }
-    if (end($statusEventUrls) == '' || end($statusEventUrls) == ' '){
-      array_pop($statusEventUrls);
-    }
-    if (end($eventstatusLabels) == '' || end($eventstatusLabels) == ' '){
-      array_pop($eventstatusLabels);
-    }
-
-    $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-HTML;
-    //Loop through and match up
-    $matched = '';
-    for($i=0; $i < sizeof($statusEventUrls); $i++){
-      if (!isset($eventstatusLabels[$i]) || !isset($statuses[$i])){
-        continue;
-      }
-
-        $explode = explode('/', $statusEventUrls[$i]);
-        $eventQid = end($explode);
-        $eventUrl = $baseurl . 'record/event/' . $eventQid;
-        $matched = $statuses[$i] . ' - ' . $eventstatusLabels[$i];
-
-        $html .= <<<HTML
-<div class="detail-bottom">
-    <div>$statuses[$i]
-HTML;
-
-        // status tool tip
-        if(array_key_exists($statuses[$i],controlledVocabulary)){
-            $detailinfo = ucfirst(controlledVocabulary[$statuses[$i]]);
-            $html .= "<div class='detail-menu' id='tooltip'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
-        }
-
-        $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventstatusLabels[$i]</a></div>";
-    }
-    $html .= '</div>';
-}else if ($label == "StatusA"){
-    // match statuses with events
-    $lowerlabel = "status";
-    $upperlabel = "Status";
-
-    //Array for ststueses means there are events and labels match
-    $statuses = explode('||', $statement['statuses']);
-    $statusEventUrls = explode('||', $statement['statusEvents']);
-    $eventstatusLabels = explode('||', $statement['eventstatusLabels']);
-
-    //Remove whitespace from end of arrays
-    if (end($statuses) == '' || end($statuses) == ' '){
-      array_pop($statuses);
-    }
-    if (end($statusEventUrls) == '' || end($statusEventUrls) == ' '){
-      array_pop($statusEventUrls);
-    }
-    if (end($eventstatusLabels) == '' || end($eventstatusLabels) == ' '){
-      array_pop($eventstatusLabels);
-    }
-
-    $html .= <<<HTML
-<div class="detail $lowerlabel">
-  <h3>$upperlabel</h3>
-HTML;
-    //Loop through and match up
-    $matched = '';
-    for($i=0; $i < sizeof($statusEventUrls); $i++){
-      if (!isset($eventstatusLabels[$i]) || !isset($statuses[$i])){
-        continue;
-      }
-
-        $explode = explode('/', $statusEventUrls[$i]);
-        $eventQid = end($explode);
-        $eventUrl = $baseurl . 'record/event/' . $eventQid;
-        $matched = $statuses[$i] . ' - ' . $eventstatusLabels[$i];
-
-        $html .= <<<HTML
-<div class="detail-bottom">
-    <div>$statuses[$i]
-HTML;
-
-        // status tool tip
-        if(array_key_exists($statuses[$i],controlledVocabulary)){
-            $detailinfo = ucfirst(controlledVocabulary[$statuses[$i]]);
-            $html .= "<div class='detail-menu' id='tooltip'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
-        }
-
-        $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventstatusLabels[$i]</a></div>";
-    }
-    $html .= '</div>';
-} else{
-    //Default for details without special behavior
-    //QID given for sources and projects to link to them
-    if($label === "Sources" || $label === "Contributing Projects"){
-
-      $statementArr = explode('||', $statement['label']);
-      if (end($statementArr) == '' || end($statementArr) == ' '){
-        array_pop($statementArr);
-      }
-
-      $qidArr = [];
-      $qidurlArr = explode('||', $statement['qid']);
-      if (end($qidurlArr) == '' || end($qidurlArr) == ' '){
-        array_pop($qidurlArr);
-      }
-      //Loop through urls and get the qids from the end
-      foreach($qidurlArr as $qidurl){
-        $urlArr = explode('/', $qidurl);
-        $qid = end($urlArr);
-        array_push($qidArr, $qid);
-      }
-    } elseif($label == "Occupation")
-    {
-        $statementArr = explode('||', $statement);
-      if (end($statementArr) == '' || end($statementArr) == ' '){
-        array_pop($statementArr);
-      }
-    }elseif($label == "Descriptive Occupation")
-    {
-        $statementArr = explode('||', $statement);
-        $upperlabel = 'Other Information';
-      if (end($statementArr) == '' || end($statementArr) == ' '){
-        array_pop($statementArr);
-      }
-
-    }
-    else{
-      //Splits the statement(detail) up into multiple parts for multiple details, also trims whitespace off end
-      $statementArr = explode('||', $statement);
-      if (end($statementArr) == '' || end($statementArr) == ' '){
-        array_pop($statementArr);
-      }
-      if($label === "Located In"){
-        $statementArr = $statement;
-      }
-    }
-
-    $html .= <<<HTML
-  <div class="detail $lowerlabel">
-    <h3>$upperlabel</h3>
-    <div class="detail-bottom">
-HTML;
-
-    //For each detail to add create it in seperate divs with a detail menu in each
-    for ($x = 0; $x <= (count($statementArr) - 1); $x++){
-
-        if($label === "Name"){
-          $detailname = $statementArr[$x];
-          $html .= "<div>" . $detailname;
-          if(array_key_exists($detailname,controlledVocabulary)){
-            $detailinfo = ucfirst(controlledVocabulary[$detailname]);
-            $html .= "<div class='detail-menu' id='tooltip'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
-          }
-          $html .= "</div>";
-          continue;
-        }
-        else if($label === "Geoname Identifier"){
-          $html .= '<a target="_blank" href="http://www.geonames.org/' . $statementArr[0] . '/">';
-        }
-        else if($label === "Sources"){
-          $html .= '<a href="' . $baseurl . 'record/source/' . $qidArr[$x] . '">';
-        }
-        else if($label === "Contributing Projects"){
-          $html .= '<a href="' . $baseurl . 'project/' . $qidArr[$x] . '">';
-        }
-        else if($label === "Location"){
-          $locationQ = '';
-          $locationName = $statementArr[$x];
-
-          if (array_key_exists($locationName, places) ){
-            $locationQ = places[$locationName];
-          }
-
-          if ($locationQ != ''){
-            $html .= '<a href="' . $baseurl . 'record/place/' . $locationQ . '">' . $statementArr[$x] . "</a>";
-            continue;
-          }
-        }
-
-        $detailname = $statementArr[$x];
-        if($label == 'Located In'){
-          $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[$x] . "'>" . $detailname . "</a></div><br>";
-          continue;
-        }
-        else{
-
-          $html .= "<div>" . $detailname;
-        }
-        if($label == 'Geoname Identifier'){
-          $html .= "<div><a></a></div><br>";
-        }
-        if(array_key_exists($detailname,controlledVocabulary)){
-          $detailinfo = ucfirst(controlledVocabulary[$detailname]);
-          $html .= "<div class='detail-menu' id='tooltip'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
-        }
-        $html .= "</div></a>";
-
-        if( ($label=="Descriptive Occupation"||$label=="Coordinates") && $x != (count($statementArr) - 1 )){
-            $html.= "<br>";
-        }
-        else if ($x != (count($statementArr) - 1)){
-            $html.= "<h4> | </h4>";
-        }
-    }
-
-    $html .= '</div></div>';
-  }
-  return $html;
+    return false;
 }
 
 function getFullRecordHtml(){
@@ -683,7 +70,6 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$type.".php";
     $query['query'] = $tempQuery;
-    // echo ($query['query']);die;
     $result = blazegraphSearch($query);
 
     if(empty($result)){
@@ -691,312 +77,160 @@ function getFullRecordHtml(){
       die;
     }
     $record = $result[0];
-    // echo json_encode($result);die;
-    //Get variables from query
     $recordVars = [];
+
+    $prettyNames = array(
+        'name' => ['name','Name'],
+        'firstname' => ['standard','First Name'],
+        'surname' => ['standard','Surname'],
+        'altname' => ['standard','Alternate Name'],
+        'sextype' => ['standard','Sex'],
+        'age' => ['standardArray','Age','AgeA',['agerecordedat','agerecordedatlabel'],['ages','ageEvents','agestatusLabels']],
+        'occupation' => ['standard','Occupation'],
+        'descriptive_Occupation' => ['standard','Descriptive Occupation'],
+        'race' => ['standard','Race'],
+        'description' => ['description','Description'],
+        'status' => ['standardArray','Status','StatusA',['statusevent','eventstatuslabel'],['statuses','statusEvents','eventstatusLabels']],
+        'ecvo' => ['standardArray','Ethnolisguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
+        'date' => ['standard','Date'],
+        'dateStart' => ['dateRange','Date Range'],
+        'located' => ['standard','Location'],
+        'type' => ['standard','Type'],
+        'availableFrom' => ['standard','Available From'],
+        'geonames' => ['standard','Geoname Identifier'],
+        'code' => ['standard','Modern Country Code'],
+        'coordinates' => ['coordinates','Coordinates'],
+        'sourceLabel' => ['sourceLabel','Sources'],
+        'match' => ['standardArray','Match','closeMatchA',['matchlabel','matchtype'],['matchUrls','matchLabels','matchtype']],
+        'projectlabel' => ['project','Contributing Projects'],
+        'extref' => ['standard','Project References'],
+        'projref' => ['projref','Project References'],
+        'locatedIn' => ['locatedIn','Located In'],
+        'locIn' => ['locatedIn','Loc In'],
+        'occursbefore' => ['standard','Occurs Before'],
+        'occursafter' => ['standard','Occurs After'],
+        'circa' => ['standard','Circa'],
+        'roles' => ['roles','roles'],
+        'droles' => ['droles','droles'],
+
+    );
+    // echo json_encode($record);die;
 
     $recordVars['Label'] = $record['label']['value'];
 
-    //Name
-    if (isset($record['name']) && isset($record['name']['value']) ){
-      $recordVars['Name'] = str_replace('||', '<br>', $record['name']['value']);
-      $UntouchedName = $record['name']['value'];
-    }
-    // First Name
-    if (isset($record['firstname']) && isset($record['firstname']['value']) ){
-        $recordVars['First Name'] = $record['firstname']['value'];
-    }
+    foreach($prettyNames as $name => $config){
+        $type = $config[0];
+        $prettyName = $config[1];
 
-    // Surname
-    if (isset($record['surname']) && isset($record['surname']['value']) ){
-        $recordVars['Surname'] = $record['surname']['value'];
-    }
-
-    // Alternate name
-    if (isset($record['altname']) && isset($record['altname']['value']) ){
-        $recordVars['Alternate Name'] = $record['altname']['value'];
-    }
-
-    //Sex
-    if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
-      $recordVars['Sex'] = $record['sextype']['value'];
-    }
-    //AGE
-    if (isset($record['age']) && isset($record['age']['value']) && $record['age']['value'] != ''){
-      if(isset($record['agerecordedat']) && isset($record['agerecordedat']['value']) &&
-         isset($record['agerecordedatlabel']) && isset($record['agerecordedatlabel']['value']) &&
-         $record['agerecordedatlabel']['value'] != '' && $record['agerecordedat']['value'] ){
-        if (empty($record['age']['value'])) {
-          $recordVars['AgeA'] = [];
-        } else {
-          $ageArr = ['ages' => $record['age']['value'],
-                        'ageEvents' => $record['agerecordedat']['value'],
-                        'agestatusLabels' => $record['agerecordedatlabel']['value']
-                      ];
-          $recordVars['AgeA'] = $ageArr;
-        }
-      }
-      else{
-        $recordVars['Age'] = $record['age']['value'];
-      }
-    }
-    //occupation
-
-    if (isset($record['occupation']) && isset($record['occupation']['value']) && $record['occupation']['value'] != '' ){
-      $recordVars['Occupation'] = $record['occupation']['value'];
-    }
-    // descriptive occupation
-    if (isset($record['descriptive_Occupation']) && isset($record['descriptive_Occupation']['value']) ){
-        $recordVars['Descriptive Occupation'] = $record['descriptive_Occupation']['value'];
-    }
-
-    //Race
-    if (isset($record['race']) && isset($record['race']['value']) && $record['race']['value'] != '' ){
-      $recordVars['Race'] = $record['race']['value'];
-    }
-
-    // descriptions for items
-    if (isset($record['description']) && isset($record['description']['value']) ){
-        $s = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $record['description']['value']);
-        $recordVars['Description'] = $s;
-    }
-
-    //Status
-    if (isset($record['status']) && isset($record['status']['value']) && $record['status']['value'] != ''){
-      if(isset($record['statusevent']) && isset($record['statusevent']['value']) &&
-         isset($record['eventstatuslabel']) && isset($record['eventstatuslabel']['value']) &&
-         $record['eventstatuslabel']['value'] != '' && $record['statusevent']['value'] ){
-        if (empty($record['status']['value'])) {
-          $recordVars['StatusA'] = [];
-        } else {
-          $statusArr = ['statuses' => $record['status']['value'],
-                        'statusEvents' => $record['statusevent']['value'],
-                        'eventstatusLabels' => $record['eventstatuslabel']['value']
-                      ];
-          $recordVars['StatusA'] = $statusArr;
-        }
-      }
-      else{
-        $recordVars['Status'] = $record['status']['value'];
-      }
-    }
-
-
-
-    //ECVO
-    if (isset($record['ecvo']) && isset($record['ecvo']['value']) && $record['ecvo']['value'] != ''){
-      if(isset($record['placeofOrigin']) && isset($record['placeofOrigin']['value']) &&
-         isset($record['placeOriginlabel']) && isset($record['placeOriginlabel']['value']) &&
-         $record['placeofOrigin']['value'] != '' && $record['placeOriginlabel']['value'] ){
-        if (empty($record['ecvo']['value'])) {
-          $recordVars['ecvoA'] = [];
-        } else {
-          $ecvoArr = ['ecvo' => $record['ecvo']['value'],
-                        'placeofOrigin' => $record['placeofOrigin']['value'],
-                        'placeOriginlabel' => $record['placeOriginlabel']['value']
-                      ];
-          $recordVars['ecvoA'] = $ecvoArr;
-        }
-      }
-      else{
-        $recordVars['Ethnolisguistic Descriptor'] = $record['ecvo']['value'];
-      }
-    }
-
-    //Date
-    if (isset($record['date']) && isset($record['date']['value']) && $record['date']['value'] != '' ){
-      $recordVars['Date'] = $record['date']['value'];
-    }
-
-    //Date Range
-    if (isset($record['dateStart']) && isset($record['dateStart']['value']) && $record['dateStart']['value'] != '' ){
-      $recordVars['Date Range'] = $record['dateStart']['value'];
-      if (isset($record['endsAt']) && isset($record['endsAt']['value']) && $record['endsAt']['value'] != '' ){
-        $recordVars['Date Range'] .= " - " . $record['endsAt']['value'];
-      }
-    }
-
-    //Location
-    if (isset($record['located']) && isset($record['located']['value']) && $record['located']['value'] != '' ){
-      $recordVars['Location'] = $record['located']['value'];
-    }
-
-    //Type
-    if (isset($record['type']) && isset($record['type']['value']) && $record['type']['value'] != '' ){
-      $recordVars['Type'] = $record['type']['value'];
-    }
-
-    //available from
-    if (isset($record['availableFrom']) && isset($record['availableFrom']['value']) && $record['availableFrom']['value'] != '' ){
-      $recordVars['Available From'] = $record['availableFrom']['value'];
-    }
-
-    //Geonames
-    if (isset($record['geonames']) && isset($record['geonames']['value']) && $record['geonames']['value'] != '' ){
-      $recordVars['Geoname Identifier'] = $record['geonames']['value'];
-    }
-
-    //Code
-    if (isset($record['code']) && isset($record['code']['value']) && $record['code']['value'] != ''){
-      $recordVars['Modern Country Code'] = $record['code']['value'];
-    }
-
-    //Coordinates
-    if (isset($record['coordinates']) && isset($record['coordinates']['value']) && $record['coordinates']['value'] != ''){
-        $coors = explode('||',$record['coordinates']['value']);
-        foreach($coors as $i => $cor){
-            $cor = explode(' ', $cor);
-            $lat = $cor[1];
-            $lat = substr($lat,0,-1);
-            $long = $cor[0];
-            $long = substr($long,6);
-            $coors[$i] = "Point($lat $long)";
-        }
-        $coors = implode('||',$coors);
-      $recordVars['Coordinates'] = $coors;
-    }
-
-    //Source
-    if (isset($record['sourceLabel']) && isset($record['sourceLabel']['value']) && $record['sourceLabel']['value'] != '' ){
-      if(isset($record['source']['value'])){
-        $sourceArr = ['label' => $record['sourceLabel']['value'],
-                      'qid' => $record['source']['value']
-                     ];
-        $recordVars['Sources'] = $sourceArr;
-      }
-      else{
-        $recordVars['Sources'] = $record['sourceLabel']['value'];
-      }
-    }
-
-    //CloseMatch
-    if (isset($record['match']) && isset($record['match']['value']) && $record['match']['value'] != ''  ){
-      if(isset($record['matchlabel']) && isset($record['matchlabel']['value']) &&
-         $record['matchlabel']['value'] != '' ){
-        $closeMatchArr = ['matchLabels' => $record['matchlabel']['value'],
-                           'matchUrls' => $record['match']['value'],
-                           'matchtype' => $record['matchtype']['value']
-                          ];
-        $recordVars['closeMatchA'] = $closeMatchArr;
-      }
-
-    }
-
-    //Project
-    if (isset($record['projectlabel']) && isset($record['projectlabel']['value'])  && $record['projectlabel']['value'] != '' ){
-        if(isset($record['project']) && isset($record['project']['value'])  && $record['project']['value'] != '' ){
-            $projectArr = ['label' => $record['projectlabel']['value'],
-                           'qid' => $record['project']['value']
-                          ];
-            $recordVars['Contributing Projects'] = $projectArr;
-        }
-        else{
-            $recordVars['Contributing Projects'] = $record['projectlabel']['value'];
-        }
-    } else if (isset($record['project']) && isset($record['project']['value'])  && $record['project']['value'] != '' ){     // projects for source page
-        if (isset($record['pname']) && isset($record['pname']['value'])  && $record['pname']['value'] != '' ) {
-            $projectArr = ['projectUrl' => $record['project']['value'],
-                           'projectName' => $record['pname']['value']
-                          ];
-            $recordVars['projectsA'] = $projectArr;
-        }
-    }
-
-    // descriptions for items
-    if (isset($record['extref']) && isset($record['extref']['value']) && $record['extref']['value']!='' ){
-        $recordVars['Project References'] = $record['extref']['value'];
-    }
-
-    if (isset($record['projref']) && isset($record['projref']['value']) && $record['projref']['value']!='' ){
-        if(isset($recordVars['Project References'])){
-            $recordVars['Project References'] .= "||" . $record['projref']['value'];
-        }else{
-            $recordVars['Project References'] = $record['projref']['value'];
-        }
-    }
-
-    if (isset($record['locatedIn']) && isset($record['locatedIn']['value'])  && $record['locatedIn']['value'] != '' ){
-      $locatedIn = [];
-      foreach($result as $res){
-        if (strpos($res['locatedIn']['value'], '||') !== false) {
-          $locatedIn = array_merge($locatedIn, explode('||', $res['locatedIn']['value']));
-        } else
-          array_push($locatedIn, $res['locatedIn']['value']);
-      }
-      $locatedIn = array_unique($locatedIn);
-      $recordVars['Located In'] = $locatedIn;
-    }
-
-    if (isset($record['locIn']) && isset($record['locIn']['value'])  && $record['locIn']['value'] != '' ){
-      $locIn = [];
-      foreach($result as $res){
-        if (strpos($res['locIn']['value'], '||') !== false) {
-          $locIn = array_merge($locIn, explode('||', $res['locIn']['value']));
-        } else
-          array_push($locIn, $res['locIn']['value']);
-      }
-      $recordVars['Loc In'] = $locIn;
-    }
-
-    //Sex
-    if (isset($record['sextype']) && isset($record['sextype']['value']) && $record['sextype']['value'] != '' ){
-      $recordVars['Sex'] = $record['sextype']['value'];
-    }
-
-    //Occurs Before
-    if (isset($record['occursbefore']) && isset($record['occursbefore']['value']) && $record['occursbefore']['value'] != '' ){
-      $recordVars['Occurs Before'] = $record['occursbefore']['value'];
-    }
-
-    //Occurs Before
-    if (isset($record['occursafter']) && isset($record['occursafter']['value']) && $record['occursafter']['value'] != '' ){
-      $recordVars['Occurs After'] = $record['occursafter']['value'];
-    }
-
-    //Circa
-    if (isset($record['circa']) && isset($record['circa']['value']) && $record['circa']['value'] != '' ){
-      $recordVars['Circa'] = $record['circa']['value'];
-    }
-
-    //Roles for events
-    //Gets the roles, participants, and pqID if they exist and matches them together
-    foreach($result as $r){
-        if (isset($r['roles']) && isset($r['roles']['value']) &&  $r['roles']['value'] != ''){
-          if(isset($r['roleevent']) && isset($r['roleevent']['value']) &&
-             $r['roleevent']['value'] != '' &&  $r['roleeventlabel']['value'] != '' ){
-            //There are participants to match with their roles and qIDs
-            $rolesArr = ['roles' => $r['roles']['value'],
-                         'participant' => $r['roleeventlabel']['value'],
-                         'pq' => $r['roleevent']['value']
+        if($type == 'standard' && valueNotEmpty($record, $name)){
+            $recordVars[$prettyName] = $record[$name]['value'];
+        }elseif($type == 'name' && valueNotEmpty($record, $name)){
+            $UntouchedName = $record[$name]['value'];
+            $recordVars[$prettyName] = str_replace('||', '<br>', $record[$name]['value']);
+        }elseif($type == 'standardArray' && valueNotEmpty($record, $name)){
+            $term2 = $config[3][0];
+            $term3 = $config[3][1];
+            if(valueNotEmpty($record,$term2) && valueNotEmpty($record,$term3) && !empty($record[$name]['value'])){
+                $recordVars[$config[2]] = [
+                    $config[4][0] => $record[$name]['value'],
+                    $config[4][1] => $record[$term2]['value'],
+                    $config[4][2] => $record[$term3]['value']
+                ];
+            }else{
+                $recordVars[$prettyName] = $record[$name]['value'];
+            }
+        }elseif($type == 'description' && valueNotEmpty($record, $name)){
+            $s = preg_replace('/(?<!href="|">)(?<!src=\")((http|ftp)+(s)?:\/\/[^<>\s]+)/is', '<a href="\\1" target="_blank">\\1</a>', $record['description']['value']);
+            $recordVars[$prettyName] = $s;
+        }elseif($type == 'dateRange' && valueNotEmpty($record, $name)){
+            $recordVars[$prettyName] = $record[$name]['value'];
+            if(valueNotEmpty($record, 'endsAt')){
+              $recordVars[$prettyName] .= " - " . $record['endsAt']['value'];
+            }
+        }elseif($type == 'coordinates' && valueNotEmpty($record, $name)){
+            $coors = explode('||',$record['coordinates']['value']);
+            foreach($coors as $i => $cor){
+                $cor = explode(' ', $cor);
+                $lat = $cor[1];
+                $lat = substr($lat,0,-1);
+                $long = $cor[0];
+                $long = substr($long,6);
+                $coors[$i] = "Point($lat $long)";
+            }
+            $recordVars[$prettyName] = implode('||',$coors);
+        }elseif($type == 'sourceLabel' && valueNotEmpty($record, $name)){
+            if(valueNotEmpty($record, 'source')){
+                $recordVars[$prettyName] = [
+                    'label' => $record[$name]['value'],
+                    'qid' => $record['source']['value']
+                ];
+            }else{
+                $recordVars[$prettyName] = $record[$name]['value'];
+            }
+        }elseif($type == 'project'){
+            if(valueNotEmpty($record, 'projectlabel')){
+                if(valueNotEmpty($record, 'project')){
+                    $recordVars[$prettyName] = [
+                        'label' => $record['projectlabel']['value'],
+                        'qid' => $record['project']['value']
+                    ];
+                }else{
+                    $recordVars[$prettyName] = $record['projectlabel']['value'];
+                }
+            }elseif(valueNotEmpty($record, 'project') && valueNotEmpty($record, 'pname')){
+                $recordVars['projectsA'] = [
+                    'projectUrl' => $record['project']['value'],
+                    'projectName' => $record['pname']['value']
+                ];
+            }
+        }elseif($type == 'projref' && valueNotEmpty($record, $name)){
+            if(isset($recordVars[$prettyName])){
+                $recordVars[$prettyName] .= "||" . $record[$name]['value'];
+            }else{
+                $recordVars[$prettyName] = $record[$name]['value'];
+            }
+        }elseif($type == 'locatedIn' && valueNotEmpty($record, $name)){
+            $values = [];
+            foreach($result as $res){
+                if (strpos($res[$name]['value'], '||') !== false) {
+                    $values = array_merge($values, explode('||', $res[$name]['value']));
+                }else{
+                    array_push($values, $res[$name]['value']);
+                }
+            }
+            $recordVars[$prettyName] = array_unique($values);
+        }elseif($type == 'roles'){
+            foreach($result as $r){
+                if(valueNotEmpty($r, 'roles')){
+                    if(valueNotEmpty($r,'roleevent') && valueNotEmpty($r,'roleeventlabel')){
+                        $recordVars['RolesA'][] = [
+                            'roles' => $r['roles']['value'],
+                            'participant' => $r['roleeventlabel']['value'],
+                            'pq' => $r['roleevent']['value']
                         ];
-            $recordVars['RolesA'][] = $rolesArr;
-          }
-        } else if(isset($r['roleevent']) && isset($r['roleevent']['value'])){
-            if(isset($r['roleeventlabel']) && isset($r['roleeventlabel']['value']) &&
-                $r['roleeventlabel']['value'] != '' && $r['roleevent']['value'] != '' ){
-              //There are participants to match with their roles and qIDs
-              $rolesArr = ['roles' => $r['roles']['value'],
+                    }
+                }elseif(valueNotEmpty($r,'roleevent')){
+                    if(ivalueNotEmpty($r,'roleeventlabel')){
+                        $recordVars['eventRolesA'][] = [
+                            'roles' => $r['roles']['value'],
                             'eventRoles' => $r['roleevent']['value'],
                             'eventRoleLabels' => $r['roleeventlabel']['value']
-                          ];
-              $recordVars['eventRolesA'][] = $rolesArr;
-            }
-        }
-    }
-
-    //descriptive Roles for events
-    //Gets the roles, participants, and pqID if they exist and matches them together
-    foreach($result as $r){
-        if (isset($r['droles']) && isset($r['droles']['value']) &&  $r['droles']['value'] != ''){
-          if(isset($r['droleevent']) && isset($r['droleevent']['value']) &&
-             $r['droleevent']['value'] != '' &&  $r['droleeventlabel']['value'] != '' ){
-            //There are participants to match with their roles and qIDs
-            $rolesArr = ['droles' => $r['droles']['value'],
-                         'dparticipant' => $r['droleeventlabel']['value'],
-                         'dpq' => $r['droleevent']['value']
                         ];
-            $recordVars['DRolesA'][] = $rolesArr;
-          }
+                    }
+                }
+            }
+        }elseif($type == 'droles'){
+            foreach($result as $r){
+                if(valueNotEmpty($r, 'droles')){
+                    if(valueNotEmpty($r,'droleevent') && valueNotEmpty($r,'droleeventlabel')){
+                        $recordVars['DRolesA'][] = [
+                            'droles' => $r['droles']['value'],
+                            'dparticipant' => $r['droleeventlabel']['value'],
+                            'dpq' => $r['droleevent']['value']
+                        ];
+                    }
+                }
+            }
         }
     }
 
@@ -1066,489 +300,6 @@ HTML;
 
     $htmlArray['details'] = $html;
 
-    //Timeline section
-
-    //Timeline
-    // Code for creating events on Timeline
-    // Replace with Kora 3 events
-    $events = [];
-
-    //Creating the events array for the timeline
-    if (isset($record['allevents']) && isset($record['allevents']['value']) &&  $record['allevents']['value'] != '' ){
-        if(isset($record['alleventslabel']) && isset($record['alleventslabel']['value']) && $record['alleventslabel']['value'] != ''){
-            $allEventUrls = explode('||', $record['allevents']['value']);
-            $allEventLabels = explode('||', $record['alleventslabel']['value']);
-
-            $allEventQids = array();
-            foreach($allEventUrls as $url){
-                $explode = explode('/', $url);
-                $eventQ = end($explode);
-                array_push($allEventQids, $eventQ);
-            }
-
-            $allEventStartYears = array();
-            $allEventTypes = array();
-
-            $eventsAndStartYears = array();
-            if (isset($record['startyear']) && isset($record['startyear']['value']) && $record['startyear']['value'] != '' ){
-                $eventsAndStartYears = explode('||', $record['startyear']['value']);
-            }
-
-            //placeTypes
-            if (isset($record['placetype']) && isset($record['placetype']['value']) && $record['placetype']['value'] != ''  ){
-                $placeTypes = explode('||', $record['placetype']['value']);
-                $allPlacesToTypesMap = array();
-                foreach($placeTypes as $matchString){
-                    $parts = explode(' - ', $matchString);
-                    $placeUrl = $parts[0];
-                    $placeQ = explode('/', $placeUrl);
-                    $placeQ = end($placeQ);
-                    $placeType = $parts[1];
-
-                    // group the place Qids with their types
-                    $allPlacesToTypesMap[$placeQ] = array('placeQ' => $placeQ, 'placeType' => $placeType);
-                }
-            }
-
-            // all places
-            if (isset($record['allplaces']) && isset($record['allplaces']['value']) && $record['allplaces']['value'] != ''  ){
-                if (isset($record['allplaceslabel']) && isset($record['allplaceslabel']['value']) && $record['allplaceslabel']['value'] != '' ){
-                    $allPlaceLabels = explode('||', $record['allplaceslabel']['value']);
-                    $allPlaceUrls = explode('||', $record['allplaces']['value']);
-
-                    $allEventPlaces = explode('||', $record['eventplace']['value']);
-                    $allEventToPlaceMap = array();
-                    foreach($allEventPlaces as $matchString){
-                        $parts = explode(' - ', $matchString);
-                        $eventUrl = $parts[0];
-                        $eventQ = explode('/', $eventUrl);
-                        $eventQ = end($eventQ);
-                        $placeName = $parts[1];
-
-                        $placeUrlIndex = array_search($placeName, $allPlaceLabels);
-                        $placeUrl = $allPlaceUrls[$placeUrlIndex];
-                        $placeQ = explode('/', $placeUrl);
-                        $placeQ = end($placeQ);
-
-                        $placeType = "";
-                        if (isset($allPlacesToTypesMap[$placeQ]) && isset($allPlacesToTypesMap[$placeQ]['placeType'])){
-                            $placeType = $allPlacesToTypesMap[$placeQ]['placeType'];
-                        }
-
-                        // group the place name and q value with their events
-                        $allEventToPlaceMap[$eventQ] = array('name' => $placeName, 'placeQ' => $placeQ, 'placeType' => $placeType);
-                    }
-                }
-            }
-
-            // match events to start years
-            // there is also an event type in this string but its not being used right now
-            foreach ($eventsAndStartYears as $eventInfo){
-                $pieces = explode(' - ', $eventInfo);
-                $eName = $pieces[0];
-                $eType = $pieces[1];
-                $year = end($pieces);
-                $allEventStartYears[$eName] = $year;
-                $allEventTypes[$eName] = $eType;
-            }
-
-            // end year stuff hasn't been tested or working yet
-            if (isset($record['endyear']) && isset($record['endyear']['value']) ){
-            $allEventEndYears = explode('||', $record['endyear']['value']);
-            }
-
-            // descriptions for timeline events
-            if (isset($record['desc']) && isset($record['desc']['value']) ){
-            $allEventDescritions = explode('||', $record['desc']['value']);
-            }
-
-            // roles per event
-            if (isset($recordVars['eventRolesA'])){
-                $allRoles = explode('||', $recordVars['eventRolesA']['roles']);
-                $allLabels = explode('||', $recordVars['eventRolesA']['eventRoleLabels']);
-                $allEventRoles = array();
-
-                // match roles with event labels
-                for($i=0; $i < sizeof($allRoles); $i++){
-                    if (isset($allLabels[$i]) && isset($allRoles[$i])){
-                        $allEventRoles[$allLabels[$i]] = $allRoles[$i];
-                    }
-                }
-            }
-
-            // statuses per event
-            if (isset($recordVars['StatusA'])){
-                $allStatuses= explode('||', $recordVars['StatusA']['statuses']);
-                $allLabels = explode('||', $recordVars['StatusA']['eventstatusLabels']);
-                $allEventStatuses = array();
-
-                // match statuses with event labels
-                for($i=0; $i < sizeof($allStatuses); $i++){
-                    if (isset($allLabels[$i]) && isset($allStatuses[$i])){
-                        $allEventStatuses[$allLabels[$i]] = $allStatuses[$i];
-                    }
-                }
-            }
-
-            // create the events array
-            foreach($allEventQids as $i => $eventQ){
-                if (!isset($allEventLabels[$i])){
-                  continue;
-                }
-
-                // event label
-                $eventLabel = '';
-                if (isset($allEventLabels[$i])){
-                    $eventLabel = $allEventLabels[$i];
-                }
-
-                // start year
-                $eventStartYear = '';
-                if (isset($allEventStartYears[$eventLabel])){
-                    $eventStartYear = $allEventStartYears[$eventLabel];
-                    if ($eventStartYear == 1854){ $eventStartYear = '';}
-                }
-                // end year
-                $eventEndYear = '';
-                if (isset($allEventEndYears[$eventLabel])){
-                    $eventEndYear = $allEventEndYears[$eventLabel];
-                }
-                // event type
-                $eventType = '';
-                if (isset($allEventTypes[$eventLabel])){
-                    $eventType = $allEventTypes[$eventLabel];
-                }
-                // event descriptions
-                $eventDesc = '';
-                if (isset($allEventDescritions[$eventLabel])){
-                    $eventDesc = $allEventDescritions[$eventLabel];
-                }
-                // event roles
-                $eventRole = '';
-                if (isset($allEventRoles[$eventLabel])){
-                    $eventRole = $allEventRoles[$eventLabel];
-                }
-
-                // event status
-                $eventStatus = '';
-                if (isset($allEventStatuses[$eventLabel])){
-                    $eventStatus = $allEventStatuses[$eventLabel];
-                }
-
-                // event places
-                $eventPlaces = '';
-                if (isset($allEventToPlaceMap[$eventQ])){
-                    $eventPlaces = $allEventToPlaceMap[$eventQ];
-                }
-
-                // save info per event
-                $eventArray = [
-                    'kid' => $eventQ,
-                    'title' => $eventLabel,
-                    'description' => $eventDesc,
-                    'startYear' => $eventStartYear,
-                    'endYear' => $eventEndYear,
-                    'type' => $eventType,
-                    'role' => $eventRole,
-                    'status' => $eventStatus,
-                    'place' => $eventPlaces
-                ];
-                array_push($events, $eventArray);
-            }
-        }
-    }
-
-
-    // dont do timeline stuff if there are less than 3 events
-    if (count($events) < 3){
-        return json_encode($htmlArray);
-    }
-
-    $timeline_event_dates = [];
-    $unknownEvents = [];    // events without dates
-
-    foreach ($events as $event) {
-        // If there are months and days, put the year into decimal format
-        // Ex: March 6, 1805 = 1805.18
-        if (isset($event['startYear']) && $event['startYear'] != ''){
-            array_push($timeline_event_dates, $event['startYear']);
-
-        } else {
-            array_push($unknownEvents, $event);
-        }
-    }
-
-    if (!empty($timeline_event_dates)){
-        $first_date = min($timeline_event_dates);
-        $final_date = max($timeline_event_dates);
-        $diff = $final_date - $first_date;
-
-        if ($diff < 10) {
-            $increment = 1;
-        } elseif ($diff < 20) {
-            $increment = 2;
-        } elseif ($diff < 40) {
-            $increment = 5;
-        } elseif ($diff < 90) {
-            $increment = 10;
-        } else {
-            $increment = 20;
-        }
-
-        // Hash starts at year that is divisible by incrememnt and before the first event
-        $first_date_hash = floor($first_date) - (floor($first_date) % $increment) - $increment;
-        $final_date_hash = ceil($final_date) - (ceil($final_date) % $increment) + $increment;
-
-        $hashes = range($first_date_hash, $final_date_hash, $increment);
-        $hash_count = count($hashes);
-        $hash_range = end($hashes) - $hashes[0];
-    }
-
-    $html = '
-    <div class="timelinewrap">
-    <section class="fr-section timeline-section">
-    <h2 class="section-title">Person Timeline</h2>
-
-    <div class="timeline-info-container">
-    <div class="arrow-pointer-bottom"></div>
-    <div class="arrow-pointer-top"></div>';
-
-    $html .= '<div class="info-header">';
-    $timeline_event_dates = array_unique($timeline_event_dates);
-    foreach ($timeline_event_dates as $year) {
-        $yearUniquePlaces = array(); // all of the places for this year
-
-        // set the event info select buttons
-        foreach ($events as $event) {
-            if (isset($event['startYear']) && $event['startYear'] == $year) {
-                $kid = $event['kid'];
-
-                $html .= '
-                    <div
-                    class="info-select info-select-event"
-                    data-select="event"
-                    data-year="'.$year.'"
-                    data-kid="'.$kid.'"
-                    >
-                    <p>Event</p>
-                    <p class="large-text">'.$event['type'].'</p>
-                    </div>';
-
-
-                //get all unique places for this year
-                $eventPlace = $event['place'];
-                if (is_array($eventPlace)){
-                    $yearUniquePlaces[$eventPlace['name']] = $eventPlace['placeQ'];
-                }
-            }
-        }
-
-    }
-
-    foreach ($events as $index => $event) {
-        if ($event['startYear'] == '') {
-            unset($events[$index]);
-        }
-    }
-
-    $unknownPlaces = array();
-    foreach ($unknownEvents as $event) {
-        $kid = $event['kid'];
-        $typeText = "Event";
-
-        $html .= '
-            <div
-            class="info-select info-select-event"
-            data-select="event"
-            data-kid="'.$kid.'"
-            >';
-
-        if ($event['type'] != ''){
-            $html .= '
-                <p>Event</p>
-                <p class="large-text">'.$event['type'].'</p>
-            ';
-        } else {
-            $html .= '
-                <p class="large-text">Event</p>
-            ';
-        }
-
-        $html .= '</div>';
-
-
-        //get all unique places for this year
-        $eventPlace = $event['place'];
-        if (is_array($eventPlace)){
-            $unknownPlaces[$eventPlace['name']] = $eventPlace['placeQ'];
-        }
-    }
-    $html .= '</div>';
-
-    // put the events in order to be displayed
-    $dates = array_column($events, 'startYear');
-    array_multisort($dates, SORT_ASC, $events);
-    $events = array_merge($events, $unknownEvents);
-
-    $activeSet = false; // set the first event with a date as active
-
-    foreach($events as $index => $event) {
-        $eventQ = $event['kid'];
-
-        if (!$activeSet && isset($event['startYear']) && $event['startYear'] != ''){
-            $html .= '<div class="event-info-'.$eventQ.' infowrap active">';
-            $activeSet = true;
-        } else {
-            $html .= '<div class="event-info-'.$eventQ.' infowrap">';
-        }
-
-
-        // title html
-        $titleHtml = "";
-        if (isset($event['title']) && $event['title'] != ''){
-            $titleHtml = "<p class='large-text'>".$event['f']."</p>";
-        }
-        // date html
-        $dateHtml = "";
-        if (isset($event['startYear']) && $event['startYear'] != ''){
-            if (isset($event['endYear']) && $event['endYear'] != ''){
-                $dateHtml = "
-                    <p><span class='bold'>Start Date: </span>".$event['startYear']."</p>
-                    <p><span class='bold'>End Date: </span>".$event['endYear']."</p>";
-            } else {
-                $dateHtml = "<p><span class='bold'>Date: </span>".$event['startYear']."</p>";
-            }
-        }
-        // event type html
-        $eventTypeHtml = "";
-        if (isset($event['type']) && $event['type'] != ''){
-            $eventTypeHtml = "<p><span class='bold'>Event Type: </span>".$event['type']."</p>";
-        }
-        // event description html
-        $eventDescHtml = "";
-        if (isset($event['description']) && $event['description'] != ''){
-            $eventDescHtml = "<p><span class='bold'>Description: </span>".$event['description']."</p>";
-        }
-        // event role html
-        $eventRoleHtml = "";
-        if (isset($event['role']) && $event['role'] != ''){
-            $eventRoleHtml = "<p><span class='bold'>Role: </span>".$event['role']."</p>";
-        }
-        // event status html
-        $eventStatusHtml = "";
-        if (isset($event['status']) && $event['status'] != ''){
-            $eventStatusHtml = "<p><span class='bold'>Status: </span>".$event['status']."</p>";
-        }
-        // event place html
-        $eventPlaceHtml = "";
-        $placeTypeHtml = "";
-        if (isset($allEventToPlaceMap[$eventQ]) && $allEventToPlaceMap[$eventQ]['name'] != ''){
-            $placeName = $allEventToPlaceMap[$eventQ]['name'];
-            $placeQ = $allEventToPlaceMap[$eventQ]['placeQ'];
-            $placeUrl = BASE_URL . 'record/place/' . $placeQ;
-            $eventPlaceHtml = "<p><span class='bold'>Place: </span><a id='place-associator' target='_blank' href='$placeUrl' data-placeqid='$placeQ'>".$placeName."</a></p>";
-
-            if (isset($allEventToPlaceMap[$eventQ]['placeType'])){
-                $placeType = $allEventToPlaceMap[$eventQ]['placeType'];
-                $placeTypeHtml = "<p><span class='bold'>Place Type: </span>".$placeType."</p>";
-            }
-        }
-
-        $html .= '<div class="info-column">';
-        $html .= "
-                $titleHtml
-                $dateHtml
-                $eventTypeHtml
-                $eventDescHtml";
-        $html .= '
-            </div><div class="info-column">
-            '.$eventRoleHtml.'
-            '.$eventStatusHtml.'
-            '.$eventPlaceHtml.'
-            '.$placeTypeHtml.'
-            </div>
-        </div>';
-    }
-
-    $html .= '</div>';
-
-    $html .= '<div class="timeline-container">';
-
-    $timelineIndex = 0;
-
-    if (!empty($timeline_event_dates)){
-        $html .= '<div class="timeline">
-          <div class="line"></div>
-          <div class="hash-container" data-start="'.$first_date_hash.'" data-end="'.$final_date_hash.'">';
-
-
-        foreach ($hashes as $index => $year) {
-            $html .= '<div class="hash" style="left:calc('.($index / ($hash_count - 1)) * 100 .'% - 14px)"><p>'.$year.'</p></div>';
-        }
-
-        $html .= '
-            </div>
-            <div class="points-container">';
-
-            $yearsFound = array();  // make sure no duplicate years
-            foreach ($events as $index => $event) {
-                if (in_array($event['startYear'], $yearsFound) || $event['startYear'] == ''){
-                    continue;
-                }
-                $yearsFound[] = $event['startYear'];
-                // Convert year, month, day into decimal form
-                $left = ($event['startYear'] - $first_date_hash) * 100 / $hash_range;
-
-                $html .= '
-                <div class="event-point no-select '.($index == 0 ? 'active' : '').'"
-                style="left:calc('.$left.'% - 5px)"
-                data-kid="'.$event['kid'].'"
-                data-year="'.$event['startYear'].'"
-                data-index="'.$index.'">
-                <span class="event-title">'.$event['title'].' - '.$event['startYear'].'</span>
-                </div>';
-
-                $timelineIndex++;
-          }
-
-        $html .= '</div>
-                </div>';
-    }
-
-    // events with unknown dates todo
-    $html .= '
-        <div class="timeline dates-unknown">
-            <div class="line"></div>
-            <div class="points-container">';
-
-    foreach ($unknownEvents as $event) {
-        $kid = $event['kid'];
-
-        $html .= '
-            <div
-                class="event-point no-select '.($timelineIndex == 0 ? 'active' : '').'"
-                data-index="'.$timelineIndex.'"
-                data-kid="'.$kid.'"
-            >
-                <span class="event-title">Unknown Events</span>
-            </div>';
-        $timelineIndex++;
-    }
-
-    $html .= '
-    </div></div>
-    <div class="timeline-controls">
-      <div class="timeline-prev no-select"><img src="'.BASE_URL.'assets/images/chevron.svg" alt="Previous Arrow"></div>
-      <div class="timeline-next no-select"><img src="'.BASE_URL.'assets/images/chevron.svg" alt="Next Arrow"></div>
-    </div>
-    </div>
-
-    </section>
-    </div>';
-
-    $htmlArray['timeline'] = $html;
-
-    // return $htmlArray;
     return json_encode($htmlArray);
 }
 
