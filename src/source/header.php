@@ -33,25 +33,25 @@
                 if(count($nav[1]) > 0 && $nav[1][0] != null) {
                   $link = ($nav[0] == "Explore") ? BASE_URL."explore/people" : BASE_URL.strtolower($nav[0]);?>
                 <li class="nav-item drop-link">
-                    <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo $link?>"><?php echo $nav[0]?></a>
+                    <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo $link?>/"><?php echo $nav[0]?></a>
                     <span class="drop-carat"><img src="<?php echo BASE_IMAGE_URL;?>Arrow.svg" alt="dropdown carrat"/></span>
                     <ul class="sub-list">
                         <li class="subwrap" id="explore-sub">
                             <?php foreach ($nav[1] as $sub_nav) { ?>
-                                <a class="nav-sublink" href="<?php echo $toUrl.lcfirst(str_replace(' ', "", $sub_nav))?>"><?php echo $sub_nav ?></a>
+                                <a class="nav-sublink" href="<?php echo $toUrl.lcfirst(str_replace(' ', "", $sub_nav))?>/"><?php echo $sub_nav ?></a>
                             <?php } ?>
                         </li>
                     </ul>
                 </li>
                 <?php continue;} ?>
                 <li class="nav-item">
-                    <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo BASE_URL.lcfirst($nav[0])?>"><?php echo $nav[0]?></a>
+                    <a class="nav-link unselected" id="<?php echo strtolower($nav[0])?>" href="<?php echo BASE_URL.lcfirst($nav[0])?>/"><?php echo $nav[0]?></a>
                     <?php echo ($nav[0] == "Search") ? '<img class="search-icon" src="'.BASE_IMAGE_URL.'search.svg" alt="search icon" />' : "" ?>
                 </li>
             <?php } ?>
 
             		<li class="nav-item donate">
-                    <a class="nav-link donate unselected" href="<?php echo BASE_URL;?>support-our-mission">Support Our Mission</a>
+                    <a class="nav-link donate unselected" href="<?php echo BASE_URL;?>support-our-mission/">Support Our Mission</a>
                 </li>
 
             </ul>
