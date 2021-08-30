@@ -15,7 +15,7 @@ $female = 'Q294';
 $hasAge = 'P42';
 $propertiesToCount = array(
     'P33',$hasAge,'P46',$hasSex,$instanceOfPid,'P22','P23',
-    'P30',$sourceToProjectConnector, 'P77', 'P24', 'P32'
+    'P30',$sourceToProjectConnector, 'P77', 'P24', 'P32', 'P17'
 );
 
 $formattedData = array();
@@ -88,6 +88,7 @@ foreach($projectToSources as $projectQid => $sources){ //create project to items
     foreach($sources as $sourceQid){
         if(isset($sourceToItems[$sourceQid])){
             $projectToItems[$projectQid] = array_merge($projectToItems[$projectQid], $sourceToItems[$sourceQid]);
+            $projectToItems[$projectQid][] = $sourceQid;
         }
     }
 }

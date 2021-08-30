@@ -97,7 +97,7 @@ function drawChart() {
             $(`#pcontainer_${escapedProject}`).append('<div class="chartcontainer" id="chart_div_'+escapedProject+escapedPid+'"></div>');
             if(typeConfig['type'] == 'TotalRecords'){
                 var totalRecords = 0;
-                var recordsToCount = ['Place','Event','Person'];
+                var recordsToCount = ['Place','Event','Person','Entity with Provenance'];
                 $.each(counts[project]['instance of'], function(index,valueCount){
                     if(recordsToCount.includes(valueCount[0])){
                         totalRecords += valueCount[1];
@@ -109,8 +109,8 @@ function drawChart() {
                 $('#chart_div_'+escapedProject+escapedPid).css({width:typeConfig['width'],height:typeConfig['height']});
                 return;
             }else if(typeConfig['type'] == 'RecordTypes'){
-                var typeCounts = {Person:0, Event:0, Place:0, Source:0};
-                var recordsToCount = ['Person','Event','Place'];
+                var typeCounts = {Person:0, Event:0, Place:0, 'Entity with Provenance':0};
+                var recordsToCount = ['Person','Event','Place','Entity with Provenance'];
                 $.each(counts[project]['instance of'], function(index,valueCount){
                     if(recordsToCount.includes(valueCount[0])){
                         typeCounts[valueCount[0]] += valueCount[1];
@@ -118,7 +118,7 @@ function drawChart() {
                 });
                 $('#chart_div_'+escapedProject+escapedPid).append(
                     `<p class="customChartTitle">${title}</p>`+
-                    `<p class="typeNum">${typeCounts.Person}</p><p class="typeNum">${typeCounts.Event}</p><p class="typeNum">${typeCounts.Place}</p><p class="typeNum">${typeCounts.Source}</p>`+
+                    `<p class="typeNum">${typeCounts.Person}</p><p class="typeNum">${typeCounts.Event}</p><p class="typeNum">${typeCounts.Place}</p><p class="typeNum">${typeCounts['Entity with Provenance']}</p>`+
                     `<br><p class="typeLabel">People -</p><p class="typeLabel">Events -</p><p class="typeLabel">Places -</p><p class="typeLabel">Sources -</p>`
                 );
                 $('#chart_div_'+escapedProject+escapedPid).css({width:typeConfig['width'],height:typeConfig['height']});
