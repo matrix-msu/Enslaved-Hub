@@ -546,12 +546,14 @@ function createDetailHtml($statement,$label,$link=''){
       }
       else{
         //Splits the statement(detail) up into multiple parts for multiple details, also trims whitespace off end
-        $statementArr = explode('||', $statement);
-        if (end($statementArr) == '' || end($statementArr) == ' '){
-          array_pop($statementArr);
+        if(is_string($statement)){
+            $statementArr = explode('||', $statement);
         }
         if($label === "Located In"){
-          $statementArr = $statement;
+            $statementArr = $statement;
+        }
+        if (end($statementArr) == '' || end($statementArr) == ' '){
+          array_pop($statementArr);
         }
       }
 

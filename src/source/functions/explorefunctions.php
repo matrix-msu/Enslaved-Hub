@@ -116,8 +116,9 @@ function getFullRecordHtml(){
 
     );
     // echo json_encode($record);die;
-
-    $recordVars['Label'] = $record['label']['value'];
+    if(isset($record['label'])){
+        $recordVars['Label'] = $record['label']['value'];
+    }
 
     foreach($prettyNames as $name => $config){
         $type = $config[0];
@@ -252,7 +253,6 @@ function getFullRecordHtml(){
     $nameNewline = str_replace('||','<br>',$name);
     $nameSlash = str_replace('||',' | ',$name);
 
-    $label= $recordVars['Label'];
     $dateRange = '';
     $html .= <<<HTML
 <h4 class='last-page-header'>
