@@ -1,13 +1,15 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?name ?type ?date ?endDate ?occursbefore ?occursafter ?circa ?description ?project
+SELECT ?name ?type ?endDate ?occursbefore ?occursafter ?circa ?project
 (group_concat(distinct ?rolename; separator = "||") as ?roles)
 (group_concat(distinct ?participantname; separator = "||") as ?participant)
 (group_concat(distinct ?part; separator = "||") as ?pq)
 (group_concat(distinct ?extref1; separator = "||") as ?extref)
 (group_concat(distinct ?place; separator = "||") as ?locIn)
 (group_concat(distinct ?located; separator = "||") as ?locatedIn)
+(group_concat(distinct ?date; separator = "||") as ?eventDates)
+(group_concat(distinct ?description; separator = "||") as ?eventDescriptions)
 WHERE
 {
 VALUES ?event { $wd:$qid }.
@@ -61,5 +63,5 @@ OPTIONAL{
 ?statement $pq:$hasParticipantRole ?part.
 ?part $rdfs:label ?participantname}.
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?type ?date ?endDate ?occursbefore ?occursafter ?circa ?description ?project
+}GROUP BY ?name ?type ?endDate ?occursbefore ?occursafter ?circa ?project
 QUERY;

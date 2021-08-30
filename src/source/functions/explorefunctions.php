@@ -94,6 +94,8 @@ function getFullRecordHtml(){
         'status' => ['standardArray','Status','StatusA',['statusevent','eventstatuslabel'],['statuses','statusEvents','eventstatusLabels']],
         'ecvo' => ['standardArray','Ethnolisguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
         'date' => ['standard','Date'],
+        'eventDates' => ['standard','Date'],
+        'eventDescriptions' => ['standard','Description'],
         'dateStart' => ['dateRange','Date Range'],
         'located' => ['standard','Location'],
         'type' => ['standard','Type'],

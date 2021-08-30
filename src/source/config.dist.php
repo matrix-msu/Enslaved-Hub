@@ -4,7 +4,7 @@ define("BASE_URL",  "ENVIRONMENTBASEURL");
 define("BASE_PATH",  "ENVIRONMENTBASEPATH");
 define("KORA_BASE_URL", "https://kora.enslaved.org/");
 define("BASE_WIKI_URL", "https://lod.enslaved.org/");
-define("BASE_BLAZEGRAPH_URL", "https://bg1.dev.matrix.msu.edu/bigdata/");
+define("BASE_BLAZEGRAPH_URL", "https://bg1.enslaved.org/bigdata/");
 
 
 //project specific urls - you should never use relative paths
