@@ -90,7 +90,7 @@
             <div class="search-section">
                 <div class="inputwrap">
                     <label for="place">Place Name</label>
-                    <input class="input-field" id="place" name="place_name" type="text" placeholder="Enter Place Name"/>
+                    <input class="input-field" id="place" name="name" type="text" placeholder="Enter Place Name"/>
                 </div>
                 <div class="inputwrap">
                     <label for="place_type">Place Type</label>

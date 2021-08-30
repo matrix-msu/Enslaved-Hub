@@ -147,7 +147,7 @@ function combineDates() {
     if($('select#person-from').val() !== '' || $('select#person-to').val() !== ''){
         var personDate = $('select#person-from').val() + '-' + $('select#person-to').val();
     }
-    if($('select#event-from').val() !== null || $('select#event-to').val() !== null){
+    if(typeof($('select#event-from').val()) != "undefined" || typeof($('select#event-to').val()) != "undefined"){
         var eventDate = $('select#event-from').val() + '-' + $('select#event-to').val();
     }
     if($('select#place-from').val() !== '' || $('select#place-to').val() !== ''){
