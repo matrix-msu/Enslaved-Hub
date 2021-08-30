@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
+    <meta charset="UTF-8">
     <meta name="google" content="notranslate" />
     <title>Enslaved.org</title>
     <?=JS_GLOBALS?>

@@ -3,18 +3,6 @@
 @section('body')
 
 <?php
-// Get all Stories using KORA_Search
-$fields =  ['Title', 'Featured', 'Images'];
-$clause = new KORA_Clause("Display", "=", "True");
-$stories = KORA_Search(TOKEN, PID, STORY_SID, $clause, $fields);
-unset($stories["count"]);
-
-$fileName= "./source/assets/javascripts/searchData.js";
-$script = "var allStoriesRecords = JSON.parse('".addslashes(json_encode(array_values($stories), true))."');";
-file_put_contents($fileName, $script);
-$gzScript = gzencode($script);
-file_put_contents($fileName.'.gz', $gzScript);
-
 // Gettting featured records
 $clause = new KORA_Clause("Display", "=", "True");
 $clause = new KORA_Clause($clause, "AND", new KORA_Clause("Featured", "=", "TRUE"));
@@ -65,7 +53,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                     }
 
                     echo '<li class="card card-story" style="background-image: url('.$storyImage.')">';
-                    echo '<a href="'.BASE_URL.'fullStory?kid='.$kid.'">';
+                    echo '<a href="'.BASE_URL.'fullStory/'.$kid.'/">';
                     echo '<h2 class="card-title">'.$story['Title'].'</h2>';
                     echo '</a><div class="overlay"></div></li>';
                 }

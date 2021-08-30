@@ -159,7 +159,7 @@ function createSearchCards(paginatedRecords){
                 var randomImage = bg[Math.floor(Math.random() * bg.length)];
                 storyImage = BASE_IMAGE_URL+randomImage;
             }
-            searchCardHtml += '<li class="card" style="background-image: url('+storyImage+')"><a href="'+BASE_URL+'fullStory?kid='+record.kid+'">';
+            searchCardHtml += '<li class="card" style="background-image: url('+storyImage+')"><a href="'+BASE_URL+'fullStory/'+record.kid+'/">';
             searchCardHtml += '<h2 class="card-title">'+record['Title']+'</h2>';
             searchCardHtml += '</a><div class="overlay"></div></li>';
         });
