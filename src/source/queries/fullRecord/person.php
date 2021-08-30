@@ -4,7 +4,7 @@ $tempQuery = <<<QUERY
 SELECT ?label ?description ?project ?roles
 (group_concat(distinct ?name1; separator = "||") as ?name)
 (group_concat(distinct ?altname1; separator = "||") as ?altname)
-(group_concat(distinct ?age1; separator = "||") as ?age)
+(group_concat(distinct ?agelabel; separator = "||") as ?age)
 (group_concat(distinct ?agerecordedat1; separator = "||") as ?agerecordedat)
 (group_concat(distinct ?agerecordedatlabel1; separator = "||") as ?agerecordedatlabel)
 (group_concat(distinct ?firstname1; separator = "||") as ?firstname)
@@ -47,6 +47,7 @@ SELECT ?label ?description ?project ?roles
  OPTIONAL{ ?agent $p:$hasAge ?ageuri.
             ?ageuri $ps:$hasAge ?ageuri2.
             ?ageuri2 $wdt:$hasAgeValue ?age1.
+            ?ageuri2 $rdfs:label ?agelabel.
             ?ageuri $pq:$recordedAt ?agerecordedat1.
             ?agerecordedat1 $wdt:$hasName ?agerecordedatlabel1}.
  OPTIONAL{?agent $wdt:$hasSex ?sex.
