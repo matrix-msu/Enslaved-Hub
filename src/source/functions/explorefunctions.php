@@ -87,6 +87,7 @@ function getFullRecordHtml(){
         'sextype' => ['standard','Sex'],
         'age' => ['standardArray','Age','AgeA',['agerecordedat','agerecordedatlabel'],['ages','ageEvents','agestatusLabels']],
         'occupation' => ['standard','Occupation'],
+        'ageCategory' => ['standard','Age_Category'],
         'descriptive_Occupation' => ['standard','Descriptive Occupation'],
         'race' => ['standard','Race'],
         'description' => ['description','Description'],

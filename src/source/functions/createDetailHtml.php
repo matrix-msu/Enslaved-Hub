@@ -248,7 +248,7 @@ function createDetailHtml($statement,$label,$link=''){
       $html .= <<<HTML
     <div class="detail $lowerlabel">
     <h3>$upperlabel</h3>
-    
+
     <div class="detail-bottom">
       <a>$source</a>
     </div>
@@ -528,6 +528,13 @@ function createDetailHtml($statement,$label,$link=''){
         if (end($statementArr) == '' || end($statementArr) == ' '){
           array_pop($statementArr);
         }
+      } elseif($label == "Age Category")
+      {
+          $statementArr = explode('||', $statement);
+        if (end($statementArr) == '' || end($statementArr) == ' '){
+          array_pop($statementArr);
+        }
+        $upperlabel = "Age Category";
       }elseif($label == "Descriptive Occupation")
       {
           $statementArr = explode('||', $statement);

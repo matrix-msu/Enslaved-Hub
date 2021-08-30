@@ -17,6 +17,8 @@ SELECT ?label ?description ?project ?roles
 (group_concat(distinct ?placeOriginlabel1; separator = "||") as ?placeOriginlabel)
 (group_concat(distinct ?occupationlabel; separator = "||") as ?occupation)
 (group_concat(distinct ?descOccupation; separator = "||") as ?descriptive_Occupation)
+(group_concat(distinct ?ageCategorylabel1; separator = "||") as ?ageCategory)
+(group_concat(distinct ?hasAgeCategory1; separator = "||") as ?hasAgeCategory)
 (group_concat(distinct ?roleevent1; separator = "||") as ?roleevent)
 (group_concat(distinct ?roleeventlabel1; separator = "||") as ?roleeventlabel)
 (group_concat(distinct ?drole; separator = "||") as ?droles)
@@ -58,6 +60,8 @@ SELECT ?label ?description ?project ?roles
           }.
  OPTIONAL {?agent $wdt:$hasOccupation ?occupation1.
          ?occupation1 $rdfs:label ?occupationlabel}.
+ OPTIONAL {?agent $wdt:$hasAgeCategory ?agecategory1.
+         ?agecategory1 $rdfs:label ?ageCategorylabel1}.
 OPTIONAL {?agent $wdt:$descriptiveOccupation ?descOccupation}.
 OPTIONAL {?agent $p:$hasParticipantRole ?staterole.
          ?staterole $ps:$hasParticipantRole ?role;
