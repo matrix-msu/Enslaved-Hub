@@ -55,7 +55,7 @@
           "title":"Ethnolinguistic Descriptors"
         },
         "hasRaceorColor":{
-           "type":"PieChart",
+           "type":"Table",
            "width":"480",
            "height":"400",
            "title":"Race"
@@ -89,818 +89,1112 @@
           "width":"480",
           "height":"400",
           "title":"Male Ages"
-       }
+       },
+        "hasParticipantRole":{
+           "type":"Table",
+           "width":"480",
+           "height":"400",
+           "title":"Participant Role"
+        }
     },
    "Free Blacks Database New Orleans 1840-1860":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasPersonStatus":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Person Status"
+     },
       "hasOccupation":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Occupation"
+      },
+      "hasEthnolinguisticDescriptor":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Ethnolinguistic Descriptors"
+      },
+      "hasRaceorColor":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Race"
+      },
+      "hasAge":{
+         "type":"BarChart",
+         "width":"976",
+         "height":"400",
+         "title":"Age"
+      },
+      "Female_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Female Ages"
+      },
+      "Male_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Male Ages"
+      },
+      "hasSex":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Sex"
       },
       "hasDescriptiveRole":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Descriptive Role"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
       },
       "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Event Types"
       },
-      "hasPersonStatus":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "Female_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasAge":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasEthnolinguisticDescriptor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasSex":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasRaceorColor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "Male_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      }
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Voyages: The Trans-Atlantic Slave Trade Database":{
-      "instance of":{
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasOccupation":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Occupation"
+     },
+     "hasEthnolinguisticDescriptor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Ethnolinguistic Descriptors"
+     },
+     "hasAge":{
+        "type":"BarChart",
+        "width":"976",
+        "height":"400",
+        "title":"Age"
+     },
+     "Male_Ages":{
+        "type":"BarChart",
+        "width":"480",
+        "height":"400",
+        "title":"Male Ages"
+     },
+     "Female_Ages":{
+        "type":"BarChart",
+        "width":"480",
+        "height":"400",
+        "title":"Female Ages"
+     },
+     "hasSex":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Sex"
+     },
+      "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
       },
       "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Event Types"
       },
-      "hasOccupation":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasPersonStatus":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "Female_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasAge":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasSex":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasEthnolinguisticDescriptor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "Male_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      }
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Maranhao Inventories Slave Database":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasOccupation":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Occupation"
+     },
+     "hasEthnolinguisticDescriptor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Ethnolinguistic Descriptors"
+     },
+      "hasAge":{
+         "type":"BarChart",
+         "width":"976",
          "height":"400",
-         "title":""
-      },
-      "hasEventType":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasPersonStatus":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Age"
       },
       "Female_Ages":{
-         "type":"PieChart",
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Female Ages"
       },
-      "hasAge":{
-         "type":"PieChart",
+      "Male_Ages":{
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "hasEthnolinguisticDescriptor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Male Ages"
       },
       "hasSex":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "Male_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasOccupation":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Sex"
       },
       "hasRaceorColor":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      }
+         "title":"Race"
+      },
+      "hasPersonStatus":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Status"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Event Types"
+      },
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Louisiana Slave Database":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasEventType":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasPersonStatus":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasRaceorColor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Race"
+     },
+     "hasEthnolinguisticDescriptor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Ethnolinguistic Descriptors"
+     },
+     "hasSex":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Sex"
+     },
+     "hasPersonStatus":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Person Status"
+     },
+     "hasAge":{
+        "type":"BarChart",
+        "width":"976",
+        "height":"400",
+        "title":"Age"
+     },
       "Male_Ages":{
-         "type":"PieChart",
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "hasAge":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasSex":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasRaceorColor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Male Ages"
       },
       "Female_Ages":{
-         "type":"PieChart",
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "hasEthnolinguisticDescriptor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Female Ages"
       },
       "hasOccupation":{
-         "type":"PieChart",
+         "type":"Table",
          "width":"480",
          "height":"400",
-         "title":""
-      }
+         "title":"Occupation"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Event Type"
+      },
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Legacies of British Slave-ownership":{
-      "instance of":{
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasSex":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Sex"
+     },
+     "hasRaceorColor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Race"
+     },
+      "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
       },
       "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Event Types"
       },
-      "hasPersonStatus":{
-         "type":"PieChart",
+      "instance of":{
+         "type":"none",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Record Types"
       },
-      "hasSex":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasRaceorColor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      }
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Biographies of the Enslaved Era":{
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasSex":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Sex"
+     },
       "instance of":{
-         "type":"PieChart",
+         "type":"none",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Record Types"
       },
       "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Event Types"
       },
-      "hasSex":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      }
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "CSI Dixie":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasEventType":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
       "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
       },
       "hasSex":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Sex"
       },
       "hasRaceorColor":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Race"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Event Types"
+      },
+      "hasParticipantRole":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Descriptive Role"
       }
    },
    "Free Africans of Brazil":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasEventType":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
       "hasEthnolinguisticDescriptor":{
-         "type":"PieChart",
+         "type":"Table",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Ethnolinguistic Descriptors"
+      },
+      "Descriptive Ethnonym":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Descriptive Ethnonym"
       },
       "hasSex":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "Descriptive Ethnonym":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Sex"
       },
       "hasDescriptiveRole":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      }
+         "title":"Descriptive Role"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Event Types"
+      },
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842":{
-      "instance of":{
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+      "hasSex":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Sex"
       },
-      "hasEventType":{
-         "type":"PieChart",
+      "hasOccupation":{
+         "type":"Table",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Occupation"
       },
-      "hasDescriptiveRole":{
-         "type":"PieChart",
+      "hasAge":{
+         "type":"BarChart",
+         "width":"976",
+         "height":"400",
+         "title":"Age"
+      },
+      "Male_Ages":{
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Male Ages"
+      },
+      "Female_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Female Ages"
       },
       "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
       },
-      "hasSex":{
+      "hasDescriptiveRole":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Role"
       },
-      "hasOccupation":{
+      "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Event Types"
       },
-      "Male_Ages":{
-         "type":"PieChart",
+      "instance of":{
+         "type":"none",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Record Types"
       },
-      "hasAge":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "Female_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      }
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Economics of American Negro Slavery Series":{
-      "instance of":{
-         "type":"PieChart",
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+      "hasRaceorColor":{
+         "type":"Table",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Race"
       },
-      "hasEventType":{
+      "hasEthnolinguisticDescriptor":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Ethnolinguistic Descriptors"
+      },
+      "hasAge":{
+         "type":"BarChart",
+         "width":"976",
+         "height":"400",
+         "title":"Age"
+      },
+      "Male_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Male Ages"
+      },
+      "Female_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Female Ages"
+      },
+      "hasSex":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Sex"
       },
       "hasOccupation":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Occupation"
       },
       "hasDescriptiveRole":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "hasEthnolinguisticDescriptor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Descriptive Role"
       },
       "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
       },
-      "Male_Ages":{
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Event Types"
       },
-      "hasAge":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasSex":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasRaceorColor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "Female_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      }
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Take Them In Families":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasEventType":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
       "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
       },
       "hasSex":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "Female_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Sex"
       },
       "hasAge":{
-         "type":"PieChart",
+         "type":"BarChart",
+         "width":"976",
+         "height":"400",
+         "title":"Age"
+      },
+      "Female_Ages":{
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Female Ages"
       },
       "Male_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Male Ages"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      }
+         "title":"Event Types"
+      },
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Family Search":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasSex":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Sex"
+     },
+     "hasRaceorColor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Race"
+     },
+      "hasAge":{
+         "type":"BarChart",
+         "width":"976",
          "height":"400",
-         "title":""
+         "title":"Age"
       },
-      "hasEventType":{
-         "type":"PieChart",
+      "Male_Ages":{
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Male Ages"
+      },
+      "Female_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Female Ages"
       },
       "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
       },
-      "Male_Ages":{
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Event Types"
       },
-      "hasAge":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasSex":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasRaceorColor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "Female_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      }
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "Mortality in the South, 1850":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasEventType":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
       "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "Male_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasAge":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Status"
       },
       "hasSex":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Sex"
+      },
+      "hasAge":{
+         "type":"BarChart",
+         "width":"976",
+         "height":"400",
+         "title":"Age"
+      },
+      "Male_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Male Ages"
+      },
+      "Female_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Female Ages"
       },
       "hasRaceorColor":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "Female_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Race"
       },
       "hasEthnolinguisticDescriptor":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      }
+         "title":"Ethnolinguistic Descriptors"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Event Types"
+      },
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "African Burials and Residences in Rio de Janeiro, 1874-1899":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasEventType":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "Descriptive Ethnonym":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Descriptive Ethnonym"
+     },
+     "hasEthnolinguisticDescriptor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Ethnolinguistic Descriptors"
+     },
       "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
       },
       "hasSex":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "Male_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Sex"
       },
       "hasAge":{
-         "type":"PieChart",
-         "width":"480",
+         "type":"BarChart",
+         "width":"976",
          "height":"400",
-         "title":""
+         "title":"Age"
       },
-      "hasEthnolinguisticDescriptor":{
-         "type":"PieChart",
+      "Male_Ages":{
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Male Ages"
       },
       "Female_Ages":{
-         "type":"PieChart",
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Female Ages"
       },
       "hasRaceorColor":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Race"
       },
-      "Descriptive Ethnonym":{
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      }
+         "title":"Event Types"
+      },
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
    },
    "They Had Names: Representations of the Enslaved in Liberty County, Georgia, Estate Inventories, 1762-1865":{
-      "instance of":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
-      "hasEventType":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
-      },
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
       "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
       },
       "hasSex":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "Male_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Sex"
       },
       "hasAge":{
-         "type":"PieChart",
-         "width":"480",
+         "type":"BarChart",
+         "width":"976",
          "height":"400",
-         "title":""
+         "title":"Age"
       },
       "Female_Ages":{
-         "type":"PieChart",
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Female Ages"
+      },
+      "Male_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Male Ages"
       },
       "hasRaceorColor":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
-      }
-   },
-   "Advertising Gender Slave Database: Escravos de ganho in Rio de Janeiro, 1850-1880":{
+         "title":"Race"
+      },
       "instance of":{
-         "type":"PieChart",
+         "type":"none",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Record Types"
       },
       "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Event Types"
       },
+       "hasParticipantRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Participant Role"
+       }
+   },
+   "Advertising Gender Slave Database: Escravos de ganho in Rio de Janeiro, 1850-1880":{
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
       "hasPersonStatus":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Status"
       },
       "hasSex":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Sex"
       },
       "hasDescriptiveRole":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Descriptive Role"
       },
       "hasRaceorColor":{
-         "type":"PieChart",
+         "type":"Table",
          "width":"480",
          "height":"400",
-         "title":""
-      },
-      "Male_Ages":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":""
+         "title":"Race"
       },
       "hasAge":{
-         "type":"PieChart",
+         "type":"BarChart",
+         "width":"976",
+         "height":"400",
+         "title":"Age"
+      },
+      "Male_Ages":{
+         "type":"BarChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Male Ages"
       },
       "Female_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Female Ages"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      },
+      "hasEventType":{
          "type":"PieChart",
          "width":"480",
          "height":"400",
-         "title":""
+         "title":"Event Types"
+     },
+      "hasParticipantRole":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Participant Role"
       }
    }
 }

@@ -119,7 +119,7 @@ function drawChart() {
                 $('#chart_div_'+escapedProject+escapedPid).append(
                     `<p class="customChartTitle">${title}</p>`+
                     `<p class="typeNum">${typeCounts.Person}</p><p class="typeNum">${typeCounts.Event}</p><p class="typeNum">${typeCounts.Place}</p><p class="typeNum">${typeCounts['Entity with Provenance']}</p>`+
-                    `<br><p class="typeLabel">People -</p><p class="typeLabel">Events -</p><p class="typeLabel">Places -</p><p class="typeLabel">Sources -</p>`
+                    `<br><p class="typeLabel">People</p><p class="typeLabel">Events</p><p class="typeLabel">Places</p><p class="typeLabel">Sources</p>`
                 );
                 $('#chart_div_'+escapedProject+escapedPid).css({width:typeConfig['width'],height:typeConfig['height']});
                 return;
