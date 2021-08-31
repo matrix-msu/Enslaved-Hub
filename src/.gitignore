@@ -12,6 +12,7 @@ npm-debug.log
 config.php
 /source/config.php
 /source/.htaccess
+/source/ontology/.htaccess
 /source/database-config.php
 /source/config.json
 

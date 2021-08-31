@@ -63,7 +63,7 @@
 
 RewriteEngine on
 
-RewriteBase /~username/enslaved/ontology/
+RewriteBase ENVIRONMENTBASEPATH
 
 RewriteRule ^resources/.*$ - [PT]
 RewriteRule ^sections/.*$ - [PT]
