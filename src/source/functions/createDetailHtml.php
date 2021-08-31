@@ -528,7 +528,7 @@ function createDetailHtml($statement,$label,$link=''){
         if (end($statementArr) == '' || end($statementArr) == ' '){
           array_pop($statementArr);
         }
-      } elseif($label == "Age Category")
+    } elseif($label == "Age_Category")
       {
           $statementArr = explode('||', $statement);
         if (end($statementArr) == '' || end($statementArr) == ' '){
