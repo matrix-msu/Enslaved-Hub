@@ -153,8 +153,8 @@ function createSearchCards(paginatedRecords){
             var record = item['item'];
             var storyImage = '';
             //get images from records
-            if (record["Images"] != ""){
-                storyImage = record["Images"]["localName"];
+            if (record["Images"] != null){
+                storyImage = record["Images"][0]["url"];
             } else {
                 var randomImage = bg[Math.floor(Math.random() * bg.length)];
                 storyImage = BASE_IMAGE_URL+randomImage;
