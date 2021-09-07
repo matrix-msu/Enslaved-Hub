@@ -38,7 +38,7 @@
                     <ul class="sub-list">
                         <li class="subwrap" id="explore-sub">
                             <?php foreach ($nav[1] as $sub_nav) { ?>
-                                <a class="nav-sublink" href="<?php echo $toUrl.lcfirst(str_replace(' ', "", $sub_nav))?>"><?php echo $sub_nav ?></a>
+                                <a class="nav-sublink" href="<?php echo $toUrl.lcfirst(str_replace(' ', "", $sub_nav))?>/"><?php echo $sub_nav ?></a>
                             <?php } ?>
                         </li>
                     </ul>

@@ -5,14 +5,14 @@ use Elasticsearch\ClientBuilder;
 
 function set_text_query($filters, $qi) {
     foreach (['name' => 'name', 'place_name' => 'place'] as $key => $field) {
-        if (array_key_exists($key, $filters)) {
+        if (is_array($filters) && array_key_exists($key, $filters)) {
             $str = preg_replace("/[^A-Za-z0-9. ]/", '', $filters[$key][0]);
             $qi->setMatchQuery($field, $str);
             unset($filters[$key]);
         }
     }
 
-    if (array_key_exists('searchbar', $filters)) {
+    if (is_array($filters) && array_key_exists('searchbar', $filters)) {
         $str = preg_replace('/\PLs/u', '', $filters['searchbar']);
         $qi->setQueryString($str);
         unset($filters['searchbar']);
