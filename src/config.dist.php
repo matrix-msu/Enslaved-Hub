@@ -19,9 +19,14 @@ Kora_GetNavigationData();
 // Get all Stories using KORA_Search
 // $fields =  ['Title', 'Featured', 'Images'];
 // $fields = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Creator', 'Contributor', 'Timeline', 'Story_Associator','Contributing Institution', 'Connection'];
-$clause = new KORA_Clause("Display", "=", "True");
-$stories = KORA_Search(TOKEN, PID, STORY_SID, $clause, "ALL");
-unset($stories["count"]);
+// $clause = new KORA_Clause("Display", "=", "True");
+// $stories = KORA_Search(TOKEN, PID, STORY_SID, $clause, "ALL");
+// unset($stories["count"]);
+
+// $fields = ['Title', 'Images', 'Caption', 'Text', 'Resources', 'Source', 'Creator', 'Contributor', 'Timeline', 'Story_Associator','Contributing Institution', 'Connection'];
+$stories = koraWrapperSearch(STORY_SID, 'ALL', "Display", 'True');
+$stories = json_decode($stories, true);
+$stories = $stories['records'][0];
 
 $fileName= "./source/assets/javascripts/searchData.js";
 $script = "var allStoriesRecords = JSON.parse('".addslashes(json_encode(array_values($stories), true))."');";
