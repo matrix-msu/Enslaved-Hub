@@ -128,7 +128,7 @@ function drawChart() {
             data.addColumn('string', title);
             data.addColumn('number', 'Count');
             // var options = {'title':title,'width':typeConfig['width'],'height':typeConfig['height'],'sliceVisibilityThreshold':.001,is3D:true};
-            var options = {'title':title,'width':typeConfig['width'],'height':typeConfig['height'],'sliceVisibilityThreshold':0,is3D:true};
+            var options = {'title':title,'width':typeConfig['width'],'height':typeConfig['height'],'sliceVisibilityThreshold':0};
             counts[project][pid].sort(function(a, b) {
                 return b[1] - a[1];
             });

@@ -245,7 +245,7 @@
     border: 2px solid #FFF;
     border-radius:  5px;
     outline: none;
-    background-color: #FFF;
+    background-color: #F8F9FC;
     box-shadow: 0 3px 10px 0 rgba(0,0,0,0.1);
     iframe{
       width: 1030px;
@@ -273,20 +273,34 @@
     .chartcontainer{
         display: inline-block;
         margin: 7px;
-        border: 1px solid lightgray;
         vertical-align: top;
-        box-shadow: 0 0 2px 0px grey;
+        box-shadow: 0 2px 2px -1px rgba(152, 162, 179, 0.2), 0 1px 5px -2px rgba(152, 162, 179, 0.2);
+        background-color: #FFF;
+        border: 1px solid #D3DAE6;
+        border-radius: 4px;
+
+        svg {
+          border-radius: 4px;
+
+          text {
+            font-family: aleobold !important;
+            font-weight: normal;
+            font-size: 12px;
+          }
+        }
     }
     .customChartTitle{
         font-size: 10pt;
-        font-weight: bold;
+        font-family: aleobold !important;
+        font-weight: normal;
         margin-bottom: 13px;
         margin-left: 8px;
         margin-top: 3px;
     }
     .totalNum{
         text-align: center;
-        font-weight: bold;
+        font-family: aleobold !important;
+        font-weight: normal;
         font-size: 27px;
     }
     .totalLabel{
@@ -296,7 +310,8 @@
         width: 25%;
         display: inline-block;
         text-align: center;
-        font-weight: bold;
+        font-family: aleobold !important;
+        font-weight: normal;
         font-size: 27px;
     }
     .typeLabel{
@@ -305,4 +320,34 @@
         text-align: center;
     }
   }
+}
+
+// GOOGLE CHART OVERRIDES //
+.google-visualization-table-tr-head {
+  font-family: aleobold !important;
+  background-color: #E5EAEC !important;
+
+   th {
+     font-weight: normal !important;
+     padding: 10px 5px !important;
+   }
+}
+
+.google-visualization-table .gradient {
+  background-image: none !important;
+}
+
+.google-visualization-table-table tr {
+  &:hover {
+    background-color: #F1C4B4 !important;
+  }
+}
+
+.google-visualization-table-table td {
+  font-family: aleoregular !important;
+  padding: 10px 15px !important;
+}
+
+.google-visualization-table>div:first-child {
+  border-radius: 4px !important;
 }
