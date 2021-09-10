@@ -394,7 +394,8 @@ class QueryIndex {
                     'date',
                     'end_date',
                     'age_category',
-                    'has_description'
+                    'has_description',
+                    'display_event'
                 ],
                 'lenient' => true,
                 'default_operator' => 'AND',

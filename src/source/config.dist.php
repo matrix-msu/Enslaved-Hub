@@ -35,6 +35,8 @@ define('API_URL', BASE_BLAZEGRAPH_URL.'sparql?query=');
 //elasticsearch
 define('ELASTICSEARCH_URL', 'enslaved-es:9200');
 define('ELASTICSEARCH_INDEX_NAME', 'enslaved-index');
+// define('ELASTICSEARCH_URL', 'elasticsearch1-dev:9200');
+// define('ELASTICSEARCH_INDEX_NAME', 'enslaved-test-index');
 
 //kora project information - change these for your project
 define('TOKEN', 'SECRETTOKENGOESHERE');
