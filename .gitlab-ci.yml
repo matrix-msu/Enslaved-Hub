@@ -57,4 +57,4 @@ deploy-staging:
     name: staging
     url: https://enslaved.dev.matrix.msu.edu/
   variables:
-    ANSIBLE_INVENTORY: 'ansible/staging.hosts'
+    ANSIBLE_INVENTORY: 'ansible/$TARGET.hosts'
