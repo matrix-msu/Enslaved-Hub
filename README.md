@@ -37,7 +37,7 @@
 Site will build at `/build_local`
 
 #### Update the dev site instructions
-Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new?ref=master&var[TARGET]=development and click Run pipeline
+Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new?ref=master&var[TARGET]=development&var[URL]=https://enslaved.dev.matrix.msu.edu/ and click Run pipeline
 
 #### Update the live site instructions
-Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new?ref=master&var[TARGET]=live and click Run pipeline
+Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new?ref=master&var[TARGET]=live&var[URL]=https://enslaved.org/ and click Run pipeline
