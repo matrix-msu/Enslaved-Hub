@@ -1,4 +1,4 @@
-# The curent working branch for development is the automation branch.<br />Make sure you've switched over using the install instructions below.
+# The curent working branch for development is now the master branch.<br />Make sure you've switched over.
 
 ## Enslaved Hub / Static Site Builder
 
