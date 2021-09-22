@@ -10,7 +10,7 @@
   <div class="image-container learn-page image-only">
     <img class="header-background contributors-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $GLOBALS['bg'][$GLOBALS['randIndex']];?>" alt="Enslaved Background Image">
       <div class="container middlewrap">
-          <h1><?php echo $cache_data['title'] ?>2</h1>
+          <h1><?php echo $cache_data['title'] ?></h1>
       </div>
       <div class="image-background-overlay"></div>
   </div>
