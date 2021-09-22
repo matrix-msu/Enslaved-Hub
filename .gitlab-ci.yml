@@ -22,7 +22,7 @@ build:
    - cp config.dist.php config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local#' config.php
    - cp source/config.dist.php source/config.php
-   - sed -i 's#ENVIRONMENTBASEURL#$TARGET_URL#' source/config.php
+   - sed -i 's#ENVIRONMENTBASEURL#https://$TARGET_URL/#' source/config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local/#' source/config.php
    - sed -i "s#SECRETTOKENGOESHERE#$KORA_TOKEN#" source/config.php
    - cp source/.dist.htaccess source/.htaccess
