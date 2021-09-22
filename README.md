@@ -35,3 +35,11 @@
         npm run dev
 
 Site will build at `/build_local`
+
+#### Update the live site instructions
+```
+cd ~/enslaved/src/
+npm run dev
+rm -rf ~/website/*
+cp -r ~/enslaved/src/build_local/* ~/website/
+```
