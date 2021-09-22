@@ -23,7 +23,7 @@ build:
    - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local#' config.php
    - cp source/config.dist.php source/config.php
    - if [ "$TARGET" == "live" ]; then URL="https://enslaved.org/"; else URL="https://enslaved.dev.matrix.msu.edu/"; fi
-   - sed -i "s#ENVIRONMENTBASEURL#https://${URL}/#" source/config.php
+   - sed -i "s#ENVIRONMENTBASEURL#${URL}#" source/config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local/#' source/config.php
    - sed -i "s#SECRETTOKENGOESHERE#$KORA_TOKEN#" source/config.php
    - cp source/.dist.htaccess source/.htaccess
