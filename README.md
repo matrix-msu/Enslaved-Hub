@@ -43,6 +43,8 @@ rm latest.wikibase.dump.json
 wget https://manta.matrix.msu.edu/msumatrix/public/exports/wikibase/2bde7b5b/latest.wikibase.dump.json.gz
 gzip -d latest.wikibase.dump.json.gz
 php script.php
+cd ~/enslaved/src
+npm run dev
 ```
 
 #### Update the dev site instructions
