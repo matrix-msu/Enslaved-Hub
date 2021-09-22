@@ -20,13 +20,13 @@
 
 2. Configure following files:
 
-        src/source/config.php ENVIRONMENTBASEURL : 
+        src/source/config.php ENVIRONMENTBASEURL :
                 https://robbie.dev.matrix.msu.edu/~christj2/enslaved/src/build_local/
-        src/source/config.php ENVIRONMENTBASEPATH : 
+        src/source/config.php ENVIRONMENTBASEPATH :
                 /home/christj2/website/enslaved/src/build_local/
-        src/source/config.php TOKEN : 
+        src/source/config.php TOKEN :
                 Copy from kora.enslaved.org
-        src/source/.htaccess ENVIRONMENTBASEPATH : 
+        src/source/.htaccess ENVIRONMENTBASEPATH :
                 /~christj2/enslaved/src/build_local/
 
 
@@ -35,6 +35,15 @@
         npm run dev
 
 Site will build at `/build_local`
+
+#### Rebuild visualization counts instructions
+```
+cd ~/enslaved/src/source/visualizeCounts
+rm latest.wikibase.dump.json
+wget https://manta.matrix.msu.edu/msumatrix/public/exports/wikibase/2bde7b5b/latest.wikibase.dump.json.gz
+gzip -d latest.wikibase.dump.json.gz
+php script.php
+```
 
 #### Update the dev site instructions
 Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new?ref=master&var[TARGET]=development and click Run pipeline
