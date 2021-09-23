@@ -212,4 +212,7 @@ function changeIframe(){
     }else if(proj == "Advertising"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Advertising%20Gender%20Slave%20Database:%20Escravos%20de%20ganho%20in%20Rio%20de%20Janeiro,%201850-1880');
     }
+    else if(proj == "A"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=A+Year+of+Slavery%3A+Jornal+do+Commercio%2C+1840&limit=20&offset=0&sort_field=label.sort&display=people');
+    } 
 }
