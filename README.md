@@ -38,12 +38,12 @@ Site will build at `/build_local`
 
 #### Rebuild visualization counts instructions
 ```
-cd ~/enslaved/src/source/visualizeCounts
+cd ~/website/enslaved/src/source/visualizeCounts
 rm latest.wikibase.dump.json
 wget https://manta.matrix.msu.edu/msumatrix/public/exports/wikibase/2bde7b5b/latest.wikibase.dump.json.gz
 gzip -d latest.wikibase.dump.json.gz
 php script.php
-cd ~/enslaved/src
+cd ~/website/enslaved/src
 npm run dev
 ```
 
