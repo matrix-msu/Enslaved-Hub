@@ -214,5 +214,5 @@ function changeIframe(){
     }
     else if(proj == "A"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=A+Year+of+Slavery%3A+Jornal+do+Commercio%2C+1840&limit=20&offset=0&sort_field=label.sort&display=people');
-    } 
+    }
 }

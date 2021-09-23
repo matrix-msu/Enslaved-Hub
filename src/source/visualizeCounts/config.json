@@ -1235,14 +1235,14 @@
          "title":"Participant Role"
       },
       "Descriptive Occupation":{
-         "type":"PieChart",
-         "width":"976",
+         "type":"Table",
+         "width":"480",
          "height":"400",
-         "title":"Occupation"
+         "title":"Descriptive Occupation"
       },
       "hasAge":{
          "type":"BarChart",
-         "width":"976",
+         "width":"480",
          "height":"400",
          "title":"Age"
       },
