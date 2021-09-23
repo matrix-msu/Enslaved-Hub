@@ -15,7 +15,7 @@ $female = 'Q294';
 $hasAge = 'P42';
 $propertiesToCount = array(
     'P33',$hasAge,'P46',$hasSex,$instanceOfPid,'P22','P23',
-    'P30',$sourceToProjectConnector, 'P77', 'P24', 'P32', 'P17'
+    'P30',$sourceToProjectConnector, 'P77', 'P24', 'P32', 'P17', 'P78'
 );
 
 $formattedData = array();
