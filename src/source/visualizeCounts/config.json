@@ -1196,5 +1196,73 @@
          "height":"400",
          "title":"Participant Role"
       }
+   },
+   "A Year of Slavery: Jornal do Commercio, 1840":{
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+      "hasPersonStatus":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Status"
+      },
+      "hasSex":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Sex"
+      },
+      "hasRaceorColor":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Race"
+      },
+      "hasParticipantRole":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Participant Role"
+      },
+      "Descriptive Occupation":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Descriptive Occupation"
+      },
+      "hasAge":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Age"
+      },
+      "Male_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Male Ages"
+      },
+      "Female_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Female Ages"
+      },
+      "instance of":{
+         "type":"none",
+         "width":"480",
+         "height":"400",
+         "title":"Record Types"
+      }
    }
 }
