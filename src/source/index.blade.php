@@ -32,16 +32,16 @@ $story1Images = $featuredResults[$randomStory1]["Images"];
 if (isset($story1Images[0])){
     $story1Image = $story1Images[0]['url'];
 } else {
-    $story1Index = array_rand($bg);
-    $story1Image = BASE_URL.'assets/images/'.$bg[$story1Index];
+    $story1Index = array_rand($GLOBALS['bg']);
+    $story1Image = BASE_URL.'assets/images/'.$GLOBALS['bg'][$story1Index];
 }
 
 $story2Images = $featuredResults[$randomStory2]["Images"];
 if (isset($story2Images[0])){
     $story2Image = $story2Images[0]['url'];
 } else {
-    $story2Index = array_rand($bg);
-    $story2Image = BASE_URL.'assets/images/'.$bg[$story2Index];
+    $story2Index = array_rand($GLOBALS['bg']);
+    $story2Image = BASE_URL.'assets/images/'.$GLOBALS['bg'][$story2Index];
 }
 ?>
 <!-- Main page-->
