@@ -34,3 +34,7 @@
       Header append Vary Accept-Encoding
     </FilesMatch>
 </IfModule>
+
+<IfModule dir_module>
+    DirectoryIndex index.html index.php
+</IfModule>
