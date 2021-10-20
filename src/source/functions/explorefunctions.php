@@ -64,11 +64,11 @@ function valueNotEmpty($record, $name){
 function getFullRecordHtml(){
     include BASE_LIB_PATH."variableIncluder.php";
     $qid = $_REQUEST['QID'];
-    $type = $_REQUEST['type'];
+    $formType = $_REQUEST['type'];
 
     //QUERY FOR RECORD INFO
     $query = [];
-    include BASE_PATH."queries/fullRecord/".$type.".php";
+    include BASE_PATH."queries/fullRecord/".$formType.".php";
     $query['query'] = $tempQuery;
     $result = blazegraphSearch($query);
 
@@ -243,14 +243,14 @@ function getFullRecordHtml(){
 
     //Header w/ date range
     $html = '';
-    if($type == "person"){
-      $type = "people";
+    if($formType == "person"){
+      $formType = "people";
     }
     else{
-      $type = $type . 's';
+      $formType = $formType . 's';
     }
-    $url = BASE_URL . "explore/" . $type;
-    $recordform = ucfirst($type);
+    $url = BASE_URL . "explore/" . $formType;
+    $recordform = ucfirst($formType);
     $name = $UntouchedName;
     $nameNewline = str_replace('||','<br>',$name);
     $nameSlash = str_replace('||',' | ',$name);
