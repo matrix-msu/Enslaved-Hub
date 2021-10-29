@@ -1,4 +1,4 @@
-var limit = 10;
+var limit=10;
 var offset = 1;
 var result = {};
 var searchQuery = '';
@@ -104,7 +104,14 @@ function sortResults(){
         result = result.sort(compareAtoZ(sortField));
     }else if(sort == "Z - A"){
         result = result.sort(compareZtoA(sortField));
+    }else if(sort == "Newestdate"){
+        sortField = "Start Date";
+        result = result.sort(compareNewdate(sortField));
+    }else if(sort == "Oldestdate"){
+        sortField = "Start Date";
+        result = result.sort(compareOlddate(sortField));
     }
+
 }
 
 function compareAtoZ(sortField) {
@@ -115,7 +122,7 @@ function compareAtoZ(sortField) {
         if ( a.item[sortField] > b.item[sortField] ){
             return 1;
         }
-            return 0;
+        return 0;
     }
 }
 
@@ -127,7 +134,67 @@ function compareZtoA(sortField) {
         if ( a.item[sortField] < b.item[sortField] ){
             return 1;
         }
-            return 0;
+        return 0;
+    }
+}
+
+function compareNewdate(sortField) {
+    return function( a, b ){
+
+        var sortFieldA = sortField;
+        var sortFieldB = sortField;
+        if (a.item[sortField] == null){
+            sortFieldA = "End Date";
+        }
+        if (b.item[sortField] == null){
+            sortFieldB = "End Date";
+        }
+
+        if (a.item[sortFieldA] == null && b.item[sortFieldB] == null){
+             return 0;
+        }else if (a.item[sortFieldA] == null){
+             return 1;
+        }else if (b.item[sortFieldB] == null){
+             return -1;
+        }
+
+        if ( a.item[sortFieldA].sort > b.item[sortFieldB].sort ){
+            return -1;
+        }
+        if ( a.item[sortFieldA].sort < b.item[sortFieldB].sort ){
+            return 1;
+        }
+        return 0;
+    }
+}
+
+function compareOlddate(sortField) {
+    return function( a, b ){
+
+        var sortFieldA = sortField;
+        var sortFieldB = sortField;
+        if (a.item[sortField] == null){
+            sortFieldA = "End Date";
+        }
+        if (b.item[sortField] == null){
+            sortFieldB = "End Date";
+        }
+
+        if (a.item[sortFieldA] == null && b.item[sortFieldB] == null){
+             return 0;
+        }else if (a.item[sortFieldA] == null){
+             return 1;
+        }else if (b.item[sortFieldB] == null){
+             return -1;
+        }
+
+        if ( a.item[sortFieldA].sort < b.item[sortFieldB].sort ){
+            return -1;
+        }
+        if ( a.item[sortFieldA].sort > b.item[sortFieldB].sort ){
+            return 1;
+        }
+        return 0;
     }
 }
 
@@ -193,7 +260,18 @@ $(".sort-pages p").click(function (e) { // toggle show/hide per-page submenu
     $(this).next().toggleClass('show');
 });
 
-$('.count-option').click(function(){
+$('.count-option').click(function(e){
     limit = $(this).find('span').html();
-    $('.categories').find('li.selected').click();
+    $('.per-page-text').html(limit);
+    $('.pagi-first').click();
+    setPagination(result.length, limit, 0);
+});
+
+$('.sort-option').click(function(e){
+    sort = $(this).attr('data-sort');
+    sortResults();
+    pickShowTypeAndCreateHtml();
+    $('.pagi-first').click();
+    console.log(result)
+    console.log(sort)
 });
