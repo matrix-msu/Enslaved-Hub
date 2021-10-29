@@ -107,10 +107,10 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                 ?>
                 <span class="sort-stories-text"><span style="white-space: nowrap;"> <?= $sort_text; ?> </span><img class="sort-arrow" src="<?php echo BASE_URL?>assets/images/chevron.svg" alt="sort stories button"></span>
                 <ul id="submenu" class="sorting-menu">
-                    <li class="sort-option" data-field="title" data-direction="asc">Alphabetically (A-Z)</li>
-                    <li class="sort-option" data-field="title" data-direction="desc">Alphabetically (Z-A)</li>
-                    <li class="sort-option" data-field="start date" data-direction="asc">Date (Newest First)</li>
-                    <li class="sort-option" data-field="start date" data-direction="desc">Date (Oldest First)</li>
+                    <li class="sort-option" data-field="title" data-direction="asc" data-sort="A - Z">Alphabetically (A-Z)</li>
+                    <li class="sort-option" data-field="title" data-direction="desc" data-sort="Z - A">Alphabetically (Z-A)</li>
+                    <li class="sort-option" data-field="start date" data-direction="asc" data-sort="Newestdate">Date (Newest First)</li>
+                    <li class="sort-option" data-field="start date" data-direction="desc" data-sort="Oldestdate">Date (Oldest First)</li>
                 </ul>
             </div>
           </div>
