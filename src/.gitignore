@@ -19,6 +19,9 @@ config.php
 # Built data ignores
 /source/cache/navContents.json
 /source/cache/webPages.json
+/source/assets/javascripts/searchData.js
+/source/assets/javascripts/searchData.js.gz
+
 
 # visualizeCounts
 /source/visualizeCounts/latest.wikibase.dump.json

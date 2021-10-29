@@ -4256,6 +4256,23 @@ a.modal {
   background-position: 90% 50%;
   transform: scaleY(-1);
 }
+#footer .bottom {
+  background-color: #0A2828;
+  padding: 10px;
+  color: #FFF;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+#footer .bottom .statement-of-ethics {
+  color: #fff;
+  margin-right: 50px;
+  text-decoration: underline;
+  transition: all 0.2s ease;
+}
+#footer .bottom .statement-of-ethics:hover {
+  color: #C24F3C;
+}
 
 @media screen and (max-width: 850px) {
   #footer .footerwrap {

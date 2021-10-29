@@ -7,6 +7,7 @@
 
 
     </div>
+    <div class="bottom"><a class="statement-of-ethics" href="<?php echo BASE_URL;?>statementofEthics">Statement of Ethics</a></div>
 </footer>
 
 <!--JS to jump the page back up to top with the Back to Top Button
