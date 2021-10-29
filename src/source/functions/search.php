@@ -12,9 +12,16 @@ function set_text_query($filters, $qi) {
         }
     }
 
-    if (is_array($filters) && array_key_exists('searchbar', $filters)) {
+    if (
+        is_array($filters) &&
+        array_key_exists('searchbar', $filters) &&
+        $filters['searchbar'] != NULL
+    ) {
         $str = preg_replace('/\PLs/u', '', $filters['searchbar']);
         $qi->setQueryString($str);
+    }
+
+    if (is_array($filters) && array_key_exists('searchbar', $filters)) {
         unset($filters['searchbar']);
     }
 
