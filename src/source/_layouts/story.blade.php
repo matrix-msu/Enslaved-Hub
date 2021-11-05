@@ -92,7 +92,7 @@
              <section>
                  <?php
                  if (isset($story['Text'])) {
-                     echo $story['Text'];
+                     echo '<p>'.$story['Text'].'</p>';
                  }
                  ?>
              </section>
