@@ -1,0 +1,20 @@
+{
+    "version": "1.0",
+    "mediawiki": {
+        "name": "Enslaved.org",
+        "root": "https://lod.enslaved.org/wiki/",
+        "main_page": "https://lod.enslaved.org/wiki/Meta:Main_Page",
+        "api": "https://lod.enslaved.org/w/api.php"
+    },
+    "wikibase": {
+        "site_iri": "https://lod.enslaved.org/entity/",
+        "maxlag": 5,
+        "properties": {
+            "instance_of": "P1",
+            "subclass_of": "P2"
+        }
+    },
+    "reconciliation": {
+        "endpoint": "https://wikirefine.enslaved.org/${lang}/api"
+    }
+}
