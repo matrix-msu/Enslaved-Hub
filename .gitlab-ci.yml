@@ -1,17 +1,15 @@
 image:
   name: dock.matrix.msu.edu/matrix/triton-job-runner:latest
 
-
 stages:
-  - build
-  - deploy
+  - build_and_deploy
 
 variables:
   ANSIBLE_PYTHON_INTERPRETER: '/opt/local/bin/python3'
   ANSIBLE_HOST_KEY_CHECKING: 'False'
 
-build:
-  stage: build
+deploy-dev:
+  stage: build_and_deploy
   script:
    - apk add php7-tokenizer
    - php -v
@@ -22,8 +20,7 @@ build:
    - cp config.dist.php config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local#' config.php
    - cp source/config.dist.php source/config.php
-   - if [ "$TARGET" == "live" ]; then URL="https://enslaved.org/"; else URL="https://enslaved.dev.matrix.msu.edu/"; fi
-   - sed -i "s#ENVIRONMENTBASEURL#${URL}#" source/config.php
+   - sed -i "s#ENVIRONMENTBASEURL#$CI_ENVIRONMENT_URL#" source/config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/builds/matrix/enslaved/src/build_local/#' source/config.php
    - sed -i "s#SECRETTOKENGOESHERE#$KORA_TOKEN#" source/config.php
    - cp source/.dist.htaccess source/.htaccess
@@ -31,14 +28,9 @@ build:
    - cp source/database-config.dist.php source/database-config.php
    - npm run dev ; cd ..
    - cp -r src/build_local/ public/
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - public/
-
-deploy:
-  stage: deploy
-  script:
+   - sed -i 's#/builds/matrix/enslaved/src/build_local/#/opt/local/share/httpd/htdocs/#' public/config.php
+   - sed -i 's#ENVIRONMENTBASEPATH#/#' public/.htaccess
+   - sed -i 's#ENVIRONMENTBASEPATH#/ontology/#' public/ontology/.htaccess
    - mkdir -p ~/.ssh || true
    - chmod 700 ~/.ssh
    - eval $(ssh-agent -s)
@@ -46,16 +38,17 @@ deploy:
    - echo "Key loaded"
    - function cleanup() { kill $SSH_AGENT_PID;  }
    - trap cleanup EXIT
-   - sed -i 's#/builds/matrix/enslaved/src/build_local/#/opt/local/share/httpd/htdocs/#' public/config.php
-   - sed -i 's#ENVIRONMENTBASEPATH#/#' public/.htaccess
-   - sed -i 's#ENVIRONMENTBASEPATH#/ontology/#' public/ontology/.htaccess
    - ansible-playbook ansible/deploy-website.yml
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - public/
   environment:
     name: staging
     url: https://enslaved.dev.matrix.msu.edu/
   variables:
-    ANSIBLE_INVENTORY: 'ansible/$TARGET.hosts'
+    ANSIBLE_INVENTORY: 'ansible/$CI_ENVIRONMENT_NAME.hosts'
+    
+deploy-production:
+  stage: build_and_deploy
+  extends: deploy-dev
+  environment:
+    name: production
+    url: https://enslaved.org/
+  when: manual
