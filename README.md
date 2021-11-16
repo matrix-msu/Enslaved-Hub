@@ -1,5 +1,3 @@
-# The curent working branch for development is now the master branch.<br />Make sure you've switched over.
-
 ## Enslaved Hub / Static Site Builder
 
 ### Installation instructions for development
@@ -48,7 +46,7 @@ npm run dev
 ```
 
 #### Update the dev site instructions
-Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new?ref=master&var[TARGET]=development and click Run pipeline
+Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new and click Run pipeline
 
 #### Update the live site instructions
-Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new?ref=master&var[TARGET]=live and click Run pipeline
+Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new and click Run pipeline. After the deploy-dev job finishes and looks good, run the deploy-production job within the same pipeline.
