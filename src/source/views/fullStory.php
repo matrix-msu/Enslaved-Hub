@@ -62,8 +62,8 @@ else {
   </div>
 </div>
 <!-- Main content (left/right columns)-->
-<main class="story-content">
-    <div class="container columnwrap">
+<main class="story-content info">
+    <div class="container columnwrap infowrap"> 
         <article class="left-column">
             <section>
                 <?php
