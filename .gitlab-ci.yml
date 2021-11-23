@@ -51,4 +51,7 @@ deploy-production:
   environment:
     name: production
     url: https://enslaved.org/
-  when: manual
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $WEEKLY_PRODUCTION_DEPLOY == "true"'
+      when: always
+    - when: manual
