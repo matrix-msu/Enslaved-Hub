@@ -4,7 +4,7 @@ var result = {};
 var searchQuery = '';
 var filters = '';
 var lastCategory = '';
-var sort = "A - Z";
+var sort = "latest";
 
 var href = window.location.href
 var hrefSplit = href.split('/')
@@ -110,8 +110,22 @@ function sortResults(){
     }else if(sort == "Oldestdate"){
         sortField = "Start Date";
         result = result.sort(compareOlddate(sortField));
+    }else if(sort == "latest"){
+        result = result.sort(compareLatest("updated_at"));
     }
 
+}
+
+function compareLatest(sortField) {
+    return function( a, b ){
+		var d1 = new Date(a.item[sortField]);
+		var d2 = new Date(b.item[sortField]);
+		
+        if ( d1.getTime() > d2.getTime()){
+            return -1;
+        }
+        return 1;
+    }
 }
 
 function compareAtoZ(sortField) {
