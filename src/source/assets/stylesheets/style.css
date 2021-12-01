@@ -7411,6 +7411,9 @@ a.modal {
   height: auto;
   padding: 60px 0 20px;
   width: 100%;
+  font-family: aleoregular;
+  font-size: 18px;
+  line-height: 1.5;
 }
 .info .infowrap {
   margin: 0 auto;
@@ -8977,6 +8980,9 @@ a.modal {
 }
 .timeline-section .infowrap {
   display: none;
+  font-family: aleoregular;
+  font-size: 18px;
+  line-height: 1.5;
 }
 .timeline-section .infowrap .info-column {
   box-sizing: border-box;

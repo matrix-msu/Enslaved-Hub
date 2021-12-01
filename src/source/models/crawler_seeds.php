@@ -33,9 +33,32 @@ class crawler_seeds {
 	public function get_seeds($limit, $offset)
 	{
 		$link = $this->connect();
-		$query = "SELECT * FROM crawler_seeds LIMIT ? OFFSET ?";
+		$search = "";
+		$terms = '';
+		if (isset($_POST['terms']) && $_POST['terms'] != '') {
+			$terms = $_POST['terms'];
+		}
+		
+		if ($terms) {
+			$terms = "%$terms%";
+			$search = " WHERE 
+				htmlURL LIKE ? OR
+				text_name LIKE ? OR
+				title LIKE ? OR
+				twitter_handle LIKE ? OR
+				xmlURL LIKE ?
+			";
+		}
+		$query = 
+			"SELECT * FROM crawler_seeds
+			$search
+			LIMIT ? OFFSET ?";
         $stmt = mysqli_prepare($link, $query);
-        $stmt->bind_param("ii", $limit, $offset);
+		if ($terms) {
+			$stmt->bind_param("sssssii", $terms, $terms, $terms, $terms, $terms, $limit, $offset);
+		}else{
+			$stmt->bind_param("ii", $limit, $offset);
+		}
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
@@ -119,10 +142,36 @@ class crawler_seeds {
     public function get_count()
 	{
 		$link = $this->connect();
-		$query = "SELECT * FROM crawler_seeds";
-		$result = $link->query($query);
+		$search = "";
+		$terms = "";
+		if (isset($_POST['terms']) && $_POST['terms'] != '') {
+			$terms = $_POST['terms'];
+		}
+		
+		if ($terms) {
+			$terms = $_POST['terms'];
+			$terms = "%$terms%";
+			$search = " WHERE 
+				htmlURL LIKE ? OR
+				text_name LIKE ? OR
+				title LIKE ? OR
+				twitter_handle LIKE ? OR
+				xmlURL LIKE ?
+			";
+		}
+		$query = 
+			"SELECT * FROM crawler_seeds
+			$search";
+		$stmt = mysqli_prepare($link, $query);
+		if ($terms) {
+			$stmt->bind_param("sssss", $terms, $terms, $terms, $terms, $terms);
+		}		
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_store_result($stmt); 
+		$rows = mysqli_stmt_num_rows($stmt);
+		$stmt->close();
 		mysqli_close($link);
-		return $result->num_rows;
+		return $rows;
 	}
 
     //adding seed for URL with Name/Title fields automatically updated

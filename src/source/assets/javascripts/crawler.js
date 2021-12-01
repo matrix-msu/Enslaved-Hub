@@ -187,6 +187,7 @@ function showResults(result_type, count_type)
 	//Data to send for count
 	var count_data = {};
 	count_data[count_type] = 'ok';
+	count_data['terms'] = search_terms;
 
 	//Start with ajax call to get count for total length of selected tab
 	$.ajax({
