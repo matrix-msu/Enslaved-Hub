@@ -133,6 +133,7 @@ if(document.location.toString().indexOf('?') !== -1) {
         if(aux[0] == "searchbar")
         {
             filters[aux[0]] = aux[1].replace(/\+/g, ' ');
+			$(".search-title h1").text(filters[aux[0]]);
             continue;
         }
         filters[aux[0]] = filters[aux[0]].concat(aux[1].split(',,'));
@@ -822,7 +823,7 @@ $(document).ready(function() {
 
         // update views
         $(".search-title h1").text(plain_value);
-        $(".last-page-header #current-title").text("//" + plain_value);
+        // $(".last-page-header #current-title").text("/ " + plain_value);
         $(this).find("input").val("");
 
         // update URL
@@ -899,6 +900,7 @@ $(document).ready(function() {
 
 function updateURL(){
     var page_url = document.location.href;
+	showPath = true;
 
     // Split all parameter
     var split_url = page_url.split('?');
@@ -940,14 +942,20 @@ function updateURL(){
     if(showPath)
     {
         $(".last-page-header").show();
+		
+		var formatted = upperForm;
+		if(formatted == 'All') formatted = 'Home';
 
-        if(upperForm != "") $(".last-page-header .prev1 span").text(upperForm).show();
+        if(upperForm != "") $(".last-page-header .prev1 span").text(formatted).show();
         else $(".last-page-header .prev1 span").hide();
 
-        if(titleType != "") $(".last-page-header .prev2 span").text("//" + titleType).show();
+        if(titleType != "") $(".last-page-header .prev2 span").text("/ " + titleType).show();
         else $(".last-page-header .prev2 span").hide();
+		
+		var formatted = currentTitle;
+		if(formatted == 'Search') formatted = 'Results';
 
-        if(currentTitle != "") $(".last-page-header #current-title").text("//" + currentTitle).show();
+        if(currentTitle != "") $(".last-page-header #current-title").text("/ " + formatted).show();
         else $(".last-page-header #current-title").hide();
 
     } else $(".last-page-header").hide();
@@ -1017,8 +1025,9 @@ function generateFilterCards(){
         if(fcat == "sort"){
           delete filters[fcat];
           sort = '';
-        }
-        else{
+	  	}else if(fcat == "searchbar"){
+          filters[fcat] = '';
+        }else{
           filters[fcat] = filters[fcat].filter(function(value, index, arr) { return value != fname; });
           if(filters[fcat].length == 0) delete filters[fcat];
         }
@@ -1028,6 +1037,10 @@ function generateFilterCards(){
         updateURL();
         //Trigger the selector in the filter side menu
         $('label.'+fcat+' input[value="'+fname+'"]').trigger('click');
+		
+		if(fcat == "searchbar"){
+			$('.search-title h1').html('Search Results');
+        }
     });
 }
 
