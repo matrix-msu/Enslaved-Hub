@@ -20,6 +20,6 @@
 
 <div class="container info">
 <div class="container infowrap">
-        <p><?php echo $cache_data['descr'] ?></p>
+        <?php echo $cache_data['descr'] ?>
 </div>
 </div>

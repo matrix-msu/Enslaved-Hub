@@ -16,7 +16,6 @@
         padding-bottom: 50px;
 
         .last-page-header{
-            margin-bottom: 90px;
 
             #last-page {
                 color: $base-light;
@@ -64,15 +63,12 @@
         padding-bottom: 64px;
 	}
 	.left-column {
-        line-height: 2;
         transition: 400ms;
 		width:60%;
 
 		section {
 			margin-bottom: 25px;
             overflow: auto;
-            font-size: 14px;
-            font-family: aleobold;
 
             &:last-child{
                 padding-bottom: 0!important;
@@ -485,7 +481,7 @@
         font-size: 30px;
         color: $base-dark;
     }
-    
+
     .story-categories{
         margin-top: 10px;
 

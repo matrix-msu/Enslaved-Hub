@@ -74,7 +74,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p><?php echo $cache_Data['descr'] ?></p>
+        <?php echo $cache_Data['descr'] ?>
     </div>
 </div>
 <!-- featured stories container-->
