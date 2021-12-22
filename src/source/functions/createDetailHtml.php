@@ -5,6 +5,7 @@ function createDetailHtml($statement,$label,$link=''){
     $upperlabel = $label;
     $lowerlabel = strtolower($label);
     $html = '';
+	$link = '';
 
     // don't show the label if it is empty
     if (empty($statement)){
@@ -56,10 +57,14 @@ function createDetailHtml($statement,$label,$link=''){
               if($i > 0){
                   $hiddenStyle = ' style="visibility:hidden"';
               }
+			  
+			  $link = LINKSTOSEARCH[$label];
+			  $link = str_replace('REPLACE', $roles[0], $link);  
+			  $linkHtml = "<div".$hiddenStyle."><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $roles[0] . "</a>";
 
               $html .= <<<HTML
               <div class="detail-bottom">
-                  <div$hiddenStyle>$roles[0]
+                  $linkHtml
               HTML;
 
               // roles tool tip
@@ -353,6 +358,7 @@ function createDetailHtml($statement,$label,$link=''){
       }
       $html .= '</div></div>';
     } else if ($label == "ecvoA"){
+		return;
       $lowerlabel = "ethnolinguistic descriptor - place of origin";
       $upperlabel = "Ethnolinguistic Descriptor - Place Of Origin";
 
@@ -384,10 +390,14 @@ function createDetailHtml($statement,$label,$link=''){
           $explode = explode('/', $originUrls[$i]);
           $originQ = end($explode);
           $placeUrl = $baseurl . 'record/place/' . $originQ;
+		  
+		  $link = LINKSTOSEARCH[$label];
+		  $link = str_replace('REPLACE', $ecvos[$i], $link);  
+		  $linkHtml = "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $ecvos[$i] . "</a>";
 
           $html .= <<<HTML
     <div class="detail-bottom">
-      <div>$ecvos[$i]
+      $linkHtml
     HTML;
 
           // ecvo tool tip
@@ -435,10 +445,30 @@ function createDetailHtml($statement,$label,$link=''){
           $eventQid = end($explode);
           $eventUrl = $baseurl . 'record/event/' . $eventQid;
           $matched = $statuses[$i] . ' - ' . $eventstatusLabels[$i];
+		  
+		  $age = $statuses[$i];
+		  $age = str_replace('Age ', '', $age);
+		  if(strpos($age, 'Month') !== false){
+			  $age = '1';
+		  }
+		  $age = intval($age);
+		  
+		  if($age <= 2)
+		  	$ageGroup = 'Infant+Age+Group';
+		  elseif($age <= 14)
+		  	$ageGroup = 'Child+Age+Group';
+		  elseif($age <= 40)
+		  	$ageGroup = 'Adult+Age+Group';
+		  elseif($age >= 40)
+		  	$ageGroup = 'Older+Person+Age+Group';
+		  
+		  $link = LINKSTOSEARCH[$label];
+		  $link = str_replace('REPLACE', $ageGroup, $link);  
+		  $linkHtml = "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $statuses[$i] . "</a>";
 
           $html .= <<<HTML
     <div class="detail-bottom">
-      <div>$statuses[$i]
+      $linkHtml
     HTML;
 
           // status tool tip
@@ -486,10 +516,14 @@ function createDetailHtml($statement,$label,$link=''){
           $eventQid = end($explode);
           $eventUrl = $baseurl . 'record/event/' . $eventQid;
           $matched = $statuses[$i] . ' - ' . $eventstatusLabels[$i];
+		  
+		  $link = LINKSTOSEARCH[$label];
+		  $link = str_replace('REPLACE', $statuses[$i], $link);  
+		  $linkHtml = "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $statuses[$i] . "</a>";
 
           $html .= <<<HTML
     <div class="detail-bottom">
-      <div>$statuses[$i]
+      $linkHtml
     HTML;
 
           // status tool tip
@@ -568,12 +602,14 @@ function createDetailHtml($statement,$label,$link=''){
 
           if($label === "Name"){
             $detailname = $statementArr[$x];
-            $html .= "<div>" . $detailname;
+			$link = LINKSTOSEARCH[$label];
+			$link = str_replace('REPLACE', $detailname, $link);
+            $html .= "<a class='detail-text' href='".BASE_URL.$link."'>" . $detailname;
             if(array_key_exists($detailname,controlledVocabulary)){
               $detailinfo = ucfirst(controlledVocabulary[$detailname]);
               $html .= "<div class='detail-menu' id='tooltip'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
             }
-            $html .= "</div>";
+            $html .= "</a>";
             continue;
           }
           else if($label === "Geoname Identifier"){
@@ -605,8 +641,20 @@ function createDetailHtml($statement,$label,$link=''){
             continue;
           }
           else{
-
-            $html .= "<div>" . $detailname;
+			  if(isset(LINKSTOSEARCH[$label])){
+				  $link = LINKSTOSEARCH[$label];
+				  if($label == 'Type' && isset(placeTypes[$detailname]))
+				  	  $link = LINKSTOSEARCH['Place Type'];
+				  elseif($label == 'Type' && isset(sourceTypes[$detailname]))
+				  	  $link = LINKSTOSEARCH['Source Type'];
+				  if($label == "date")
+					  $link = str_replace('REPLACE', $detailname.'-'.$detailname, $link);  
+				  else
+				  	  $link = str_replace('REPLACE', $detailname, $link);  
+				  $html .= "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $detailname . "</a>";
+			  }else{
+				  $html .= "<div>" . $detailname;
+			  }
           }
           if($label == 'Geoname Identifier'){
             $html .= "<div><a></a></div><br>";

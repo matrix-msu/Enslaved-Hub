@@ -681,7 +681,7 @@
                     font-family: aleobold;
                 }
 
-                div.detail-text{
+                .detail-text{
                     font-size: 16px;
                     color: $base-dark;
                     line-height: 18px;
@@ -690,7 +690,7 @@
                     font-family: aleoregular;
                     transition: color 0.3s;
 
-                    a{
+                    a:not(.link-to-search){
                         font-size: 16px;
                         color: $sub-base;
                         line-height: 18px;
@@ -733,6 +733,7 @@
                     bottom: 150%;
                     left: -20%;
                     z-index: 404;
+					text-decoration: none !important;
 
                     // &.hovered{
                     //     display: block;

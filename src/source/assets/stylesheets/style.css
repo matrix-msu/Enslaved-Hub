@@ -8764,7 +8764,7 @@ a.modal {
   color: #C24F3C;
   font-family: aleobold;
 }
-.detail-section .detailwrap .detail .detail-bottom div.detail-text {
+.detail-section .detailwrap .detail .detail-bottom .detail-text {
   font-size: 16px;
   color: #0E3232;
   line-height: 18px;
@@ -8773,7 +8773,7 @@ a.modal {
   font-family: aleoregular;
   transition: color 0.3s;
 }
-.detail-section .detailwrap .detail .detail-bottom div.detail-text a {
+.detail-section .detailwrap .detail .detail-bottom .detail-text a:not(.link-to-search) {
   font-size: 16px;
   color: #C24F3C;
   line-height: 18px;
@@ -8781,10 +8781,10 @@ a.modal {
   position: relative;
   font-family: aleobold;
 }
-.detail-section .detailwrap .detail .detail-bottom div.detail-text[aria-describedby=tooltip]:hover, .detail-section .detailwrap .detail .detail-bottom div.detail-text[aria-describedby=tooltip]:focus {
+.detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:hover, .detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:focus {
   color: rgba(14, 50, 50, 0.7);
 }
-.detail-section .detailwrap .detail .detail-bottom div.detail-text[aria-describedby=tooltip]:hover .detail-menu, .detail-section .detailwrap .detail .detail-bottom div.detail-text[aria-describedby=tooltip]:focus .detail-menu {
+.detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:hover .detail-menu, .detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:focus .detail-menu {
   display: block !important;
 }
 .detail-section .detailwrap .detail .detail-bottom h4 {
@@ -8809,6 +8809,7 @@ a.modal {
   bottom: 150%;
   left: -20%;
   z-index: 404;
+  text-decoration: none !important;
 }
 .detail-section .detailwrap .detail .detail-bottom .detail-menu h1 {
   font-size: 18px;

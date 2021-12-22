@@ -115,8 +115,22 @@ function getFullRecordHtml(){
         'circa' => ['standard','Circa'],
         'roles' => ['roles','roles'],
         'droles' => ['droles','droles'],
-
     );
+    $linksToSearch = array(
+		'Name' => 'search/all?searchbar=REPLACE&display=people',
+		'Sex' => 'search/all?gender=REPLACE&display=people',
+		'AgeA' => 'search/all?age_category=REPLACE&display=people',
+		'StatusA' => 'search/all?status=REPLACE&display=people',
+		'StatusA' => 'search/all?status=REPLACE&display=people',
+		'RolesA' => 'search/all?role_types=REPLACE&display=people',
+		'Occupation' => 'search/all?occupation=REPLACE&display=people',
+		'Ethnolisguistic Descriptor' => 'search/all?ethnodescriptor=REPLACE&display=people',
+		'Type' => 'search/all?event_type=REPLACE&display=events',
+		'Date' => 'search/all?date=REPLACE&display=events',
+		'Place Type' => 'search/all?place_type=REPLACE&display=places',
+		'Source Type' => 'search/all?source_type=REPLACE&display=sources',
+	);
+	define('LINKSTOSEARCH', $linksToSearch);
     // echo json_encode($record);die;
     if(isset($record['label'])){
         $recordVars['Label'] = $record['label']['value'];
