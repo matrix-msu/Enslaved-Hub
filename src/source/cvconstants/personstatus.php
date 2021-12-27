@@ -6,5 +6,6 @@ const personstatus=[
     'Enslaved Person'         => 'Q199',
     'Master or Owner'     => 'Q200',
     'Indentured, Apprentice, or Pawn' => 'Q201',
-    'Person with Liminal Status' => ''
+    'Person with Liminal Status' => 'Q192'
+    'Liberated African' => 'Q159275'
 ];
