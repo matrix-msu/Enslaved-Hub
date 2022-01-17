@@ -253,7 +253,6 @@ function createDetailHtml($statement,$label,$link=''){
       $html .= <<<HTML
     <div class="detail $lowerlabel">
     <h3>$upperlabel</h3>
-
     <div class="detail-bottom">
       <a>$source</a>
     </div>
