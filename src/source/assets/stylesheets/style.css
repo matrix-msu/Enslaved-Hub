@@ -64,7 +64,7 @@ h1, h2, h3 {
   font-family: ebgaramond;
 }
 
-h4, h5, p, a, span, li, label, input {
+h4, h5, a, span, li, label, input {
   font-family: aleobold;
   font-weight: 300;
 }
@@ -6493,9 +6493,6 @@ a.modal {
 .fullstory .middlewrap {
   padding-bottom: 50px;
 }
-.fullstory .middlewrap .last-page-header {
-  margin-bottom: 90px;
-}
 .fullstory .middlewrap .last-page-header #last-page {
   color: #FAF7F2;
   font-size: 17px;
@@ -6535,15 +6532,12 @@ a.modal {
   padding-bottom: 64px;
 }
 .story-content .left-column {
-  line-height: 2;
   transition: 400ms;
   width: 60%;
 }
 .story-content .left-column section {
   margin-bottom: 25px;
   overflow: auto;
-  font-size: 14px;
-  font-family: aleobold;
 }
 .story-content .left-column section:last-child {
   padding-bottom: 0 !important;

@@ -70,6 +70,7 @@ function getFullRecordHtml(){
     $query = [];
     include BASE_PATH."queries/fullRecord/".$formType.".php";
     $query['query'] = $tempQuery;
+    // echo $query['query'];die;
     $result = blazegraphSearch($query);
 
     if(empty($result)){
@@ -91,7 +92,7 @@ function getFullRecordHtml(){
         'descriptive_Occupation' => ['standard','Descriptive Occupation'],
         'race' => ['standard','Race'],
         'description' => ['description','Description'],
-        'status' => ['standardArray','Status','StatusA',['statusevent','eventstatuslabel'],['statuses','statusEvents','eventstatusLabels']],
+        'status' => ['status','status'],
         'ecvo' => ['standardArray','Ethnolisguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
         'date' => ['standard','Date'],
         'eventDates' => ['standard','Date'],
@@ -237,7 +238,20 @@ function getFullRecordHtml(){
                     }
                 }
             }
-        }elseif($type == 'droles'){
+          }elseif($type == 'status'){
+            // 'standardArray','Status','StatusA',['statusevent','eventstatuslabel'],['statuses','statusEvents','eventstatusLabels']
+              foreach($result as $r){
+                  if(valueNotEmpty($r, 'status')){
+                      if(valueNotEmpty($r,'statusevent') && valueNotEmpty($r,'eventstatuslabel')){
+                          $recordVars['StatusA'][] = [
+                              'statuses' => $r['status']['value'],
+                              'statusEvents' => $r['statusevent']['value'],
+                              'eventstatusLabels' => $r['eventstatuslabel']['value']
+                          ];
+                      }
+                  }
+              }
+          }elseif($type == 'droles'){
             foreach($result as $r){
                 if(valueNotEmpty($r, 'droles')){
                     if(valueNotEmpty($r,'droleevent') && valueNotEmpty($r,'droleeventlabel')){
@@ -289,6 +303,8 @@ HTML;
     //Detail section
     $html = '';
     $html .= '<div class="detailwrap">';
+
+    // echo json_encode($recordVars);return;
 
     foreach($recordVars as $key => $value){
       if($key == "Label") continue;

@@ -57,9 +57,9 @@ function createDetailHtml($statement,$label,$link=''){
               if($i > 0){
                   $hiddenStyle = ' style="visibility:hidden"';
               }
-			  
+
 			  $link = LINKSTOSEARCH[$label];
-			  $link = str_replace('REPLACE', $roles[0], $link);  
+			  $link = str_replace('REPLACE', $roles[0], $link);
 			  $linkHtml = "<div".$hiddenStyle."><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $roles[0] . "</a>";
 
               $html .= <<<HTML
@@ -253,7 +253,7 @@ function createDetailHtml($statement,$label,$link=''){
       $html .= <<<HTML
     <div class="detail $lowerlabel">
     <h3>$upperlabel</h3>
-    
+
     <div class="detail-bottom">
       <a>$source</a>
     </div>
@@ -390,9 +390,9 @@ function createDetailHtml($statement,$label,$link=''){
           $explode = explode('/', $originUrls[$i]);
           $originQ = end($explode);
           $placeUrl = $baseurl . 'record/place/' . $originQ;
-		  
+
 		  $link = LINKSTOSEARCH[$label];
-		  $link = str_replace('REPLACE', $ecvos[$i], $link);  
+		  $link = str_replace('REPLACE', $ecvos[$i], $link);
 		  $linkHtml = "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $ecvos[$i] . "</a>";
 
           $html .= <<<HTML
@@ -445,14 +445,14 @@ function createDetailHtml($statement,$label,$link=''){
           $eventQid = end($explode);
           $eventUrl = $baseurl . 'record/event/' . $eventQid;
           $matched = $statuses[$i] . ' - ' . $eventstatusLabels[$i];
-		  
+
 		  $age = $statuses[$i];
 		  $age = str_replace('Age ', '', $age);
 		  if(strpos($age, 'Month') !== false){
 			  $age = '1';
 		  }
 		  $age = intval($age);
-		  
+
 		  if($age <= 2)
 		  	$ageGroup = 'Infant+Age+Group';
 		  elseif($age <= 14)
@@ -461,9 +461,9 @@ function createDetailHtml($statement,$label,$link=''){
 		  	$ageGroup = 'Adult+Age+Group';
 		  elseif($age >= 40)
 		  	$ageGroup = 'Older+Person+Age+Group';
-		  
+
 		  $link = LINKSTOSEARCH[$label];
-		  $link = str_replace('REPLACE', $ageGroup, $link);  
+		  $link = str_replace('REPLACE', $ageGroup, $link);
 		  $linkHtml = "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $statuses[$i] . "</a>";
 
           $html .= <<<HTML
@@ -485,55 +485,60 @@ function createDetailHtml($statement,$label,$link=''){
       $lowerlabel = "status";
       $upperlabel = "Status";
 
-      //Array for ststueses means there are events and labels match
-      $statuses = explode('||', $statement['statuses']);
-      $statusEventUrls = explode('||', $statement['statusEvents']);
-      $eventstatusLabels = explode('||', $statement['eventstatusLabels']);
-
-      //Remove whitespace from end of arrays
-      if (end($statuses) == '' || end($statuses) == ' '){
-        array_pop($statuses);
-      }
-      if (end($statusEventUrls) == '' || end($statusEventUrls) == ' '){
-        array_pop($statusEventUrls);
-      }
-      if (end($eventstatusLabels) == '' || end($eventstatusLabels) == ' '){
-        array_pop($eventstatusLabels);
-      }
-
       $html .= <<<HTML
-    <div class="detail $lowerlabel">
-    <h3>$upperlabel</h3>
-    HTML;
-      //Loop through and match up
-      $matched = '';
-      for($i=0; $i < sizeof($statusEventUrls); $i++){
-        if (!isset($eventstatusLabels[$i]) || !isset($statuses[$i])){
-          continue;
+      <div class="detail $lowerlabel">
+        <h3>$upperlabel</h3>
+      HTML;
+
+      foreach($statement as $statementArr){
+
+        //Array for ststueses means there are events and labels match
+        $statuses = explode('||', $statementArr['statuses']);
+        $statusEventUrls = explode('||', $statementArr['statusEvents']);
+        $eventstatusLabels = explode('||', $statementArr['eventstatusLabels']);
+
+        //Remove whitespace from end of arrays
+        if (end($statuses) == '' || end($statuses) == ' '){
+          array_pop($statuses);
+        }
+        if (end($statusEventUrls) == '' || end($statusEventUrls) == ' '){
+          array_pop($statusEventUrls);
+        }
+        if (end($eventstatusLabels) == '' || end($eventstatusLabels) == ' '){
+          array_pop($eventstatusLabels);
         }
 
-          $explode = explode('/', $statusEventUrls[$i]);
-          $eventQid = end($explode);
-          $eventUrl = $baseurl . 'record/event/' . $eventQid;
-          $matched = $statuses[$i] . ' - ' . $eventstatusLabels[$i];
-		  
-		  $link = LINKSTOSEARCH[$label];
-		  $link = str_replace('REPLACE', $statuses[$i], $link);  
-		  $linkHtml = "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $statuses[$i] . "</a>";
 
-          $html .= <<<HTML
-    <div class="detail-bottom">
-      $linkHtml
-    HTML;
-
-          // status tool tip
-          if(array_key_exists($statuses[$i],controlledVocabulary)){
-              $detailinfo = ucfirst(controlledVocabulary[$statuses[$i]]);
-              $html .= "<div class='detail-menu' id='tooltip'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
+        //Loop through and match up
+        $matched = '';
+        for($i=0; $i < sizeof($statusEventUrls); $i++){
+          if (!isset($eventstatusLabels[$i]) || !isset($statuses[$i])){
+            continue;
           }
 
-          $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventstatusLabels[$i]</a></div>";
+            $explode = explode('/', $statusEventUrls[$i]);
+            $eventQid = end($explode);
+            $eventUrl = $baseurl . 'record/event/' . $eventQid;
+            $matched = $statuses[$i] . ' - ' . $eventstatusLabels[$i];
+
+  		  $link = LINKSTOSEARCH[$label];
+  		  $link = str_replace('REPLACE', $statuses[$i], $link);
+  		  $linkHtml = "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $statuses[$i] . "</a>";
+
+            $html .= <<<HTML
+      <div class="detail-bottom">
+        $linkHtml
+      HTML;
+
+            // status tool tip
+            if(array_key_exists($statuses[$i],controlledVocabulary)){
+                $detailinfo = ucfirst(controlledVocabulary[$statuses[$i]]);
+                $html .= "<div class='detail-menu' id='tooltip'> <h1>$statuses[$i]</h1> <p>$detailinfo</p> </div>";
+            }
+
+            $html .= "</div> - <a href='$eventUrl' class='highlight'>$eventstatusLabels[$i]</a></div>";
       }
+    }
       $html .= '</div>';
     } else{
       //Default for details without special behavior
@@ -648,9 +653,9 @@ function createDetailHtml($statement,$label,$link=''){
 				  elseif($label == 'Type' && isset(sourceTypes[$detailname]))
 				  	  $link = LINKSTOSEARCH['Source Type'];
 				  if($label == "date")
-					  $link = str_replace('REPLACE', $detailname.'-'.$detailname, $link);  
+					  $link = str_replace('REPLACE', $detailname.'-'.$detailname, $link);
 				  else
-				  	  $link = str_replace('REPLACE', $detailname, $link);  
+				  	  $link = str_replace('REPLACE', $detailname, $link);
 				  $html .= "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $detailname . "</a>";
 			  }else{
 				  $html .= "<div>" . $detailname;
