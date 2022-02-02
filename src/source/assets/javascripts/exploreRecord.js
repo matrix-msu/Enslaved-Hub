@@ -52,7 +52,6 @@ function underlineTooltips(){
             $(this).find('.detail-bottom .detail-menu').attr('role', 'tooltip');
             $(this).find('.detail-bottom .detail-menu').css('display', 'none');
             $(this).find('.detail-bottom div').attr('aria-describedby','tooltip');
-            $(this).find('.detail-bottom div').css('text-decoration','underline');
         }
     });
 }
