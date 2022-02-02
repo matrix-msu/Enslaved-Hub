@@ -617,12 +617,30 @@
 
         a{
             text-decoration: none;
+            transition: all .2s ease;
+
+            &:hover {
+              text-decoration: underline;
+              opacity: .9;
+            }
+
+            h3 {
+              text-decoration: none !important;
+
+              &:hover {
+                text-decoration: none !important;
+              }
+            }
         }
 
         .detail{
             margin-bottom: 20px;
             position: relative;
             width: 100%;
+
+            &.roles > a {
+              text-decoration: none !important;
+            }
 
             &.surname, &.first, &.name {
               .detail-bottom {
@@ -679,6 +697,21 @@
                 .highlight {
                     color: $sub-base;
                     font-family: aleobold;
+                    transition: all .2s ease;
+
+                    &:hover {
+                      opacity: .9;
+                      text-decoration: underline;
+                    }
+                }
+
+                a.detail-text {
+                  text-decoration: underline;
+                  transition: all .2s ease;
+
+                  &:hover {
+                    opacity: .8;
+                  }
                 }
 
                 .detail-text{
@@ -707,7 +740,23 @@
                                 display: block !important;
                             }
                         }
+                        .detail-text:after {
+                            content: "";
+                            background-image: url(../images/tooltip-info.svg);
+                            background-size: 13px;
+                            background-repeat: no-repeat;
+                            display: inline-block;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                            width: 15px;
+                            height: 13px;
+                            opacity: .8;
+                          }
                     }
+                }
+
+                #tooltip:after {
+                    display: none;
                 }
 
                 h4{
