@@ -194,7 +194,7 @@ function changeIframe(){
     }else if(proj == "Hutchins"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Hutchins+Center+for+African+%26+African+American+Research=&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Contested"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Contested+Freedom&limit=20&offset=0&sort_field=label.sort&display=people');
+        projLink.setAttribute('href', BASE_URL+'search/people?projects=Contested+Freedom%3A+Free+Persons+of+Color+in+Savannah%2C+GA%2C+1823-1842&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Maranhão"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhão+Inventories+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Family"){
