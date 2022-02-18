@@ -5,8 +5,8 @@
   - pkgin:
      state: present
      name: 
-       - ap24-php73
-       - php73-extensions
+       - ap24-php74
+       - php74-extensions
   - name: Deploy file
     copy:
       src: config/httpd.conf
