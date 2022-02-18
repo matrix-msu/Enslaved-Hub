@@ -18,6 +18,7 @@ const projects=[
     "Advertising Gender Slave Database: Escravos de ganho in Rio de Janeiro, 1850-1880" => "Q907421",
     "A Year of Slavery: Jornal do Commercio, 1840" => "Q912129"
     "Slaves in Post-Mortem Estate Inventories" => "Q549379"
+    "Missouri Bills of Sale" => "Q961205"
 
 ];
 
@@ -40,6 +41,7 @@ const qprojects=[
   "Q907421" => "Advertising Gender Slave Database: Escravos de ganho in Rio de Janeiro, 1850-1880",
   "Q912129" => "A Year of Slavery: Jornal do Commercio, 1840"
   "Q549379" => "Slaves in Post-Mortem Estate Inventories"
+  "Q961205" => "Missouri Bills of Sale"
 ];
 
 const projectsPrettyLabels=[
