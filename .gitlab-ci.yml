@@ -39,6 +39,7 @@ deploy-dev:
    - function cleanup() { kill $SSH_AGENT_PID;  }
    - trap cleanup EXIT
    - ansible-playbook ansible/deploy-website.yml
+   - sleep 600
   environment:
     name: staging
     url: https://enslaved.dev.matrix.msu.edu/
