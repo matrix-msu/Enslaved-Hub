@@ -11,6 +11,10 @@
     copy:
       src: config/httpd.conf
       dest: /opt/local/etc/httpd/httpd.conf 
+  - name: Deploy file
+    copy:
+      src: config/resolv.conf
+      dest: /resolv.conf 
   - command: svcadm enable apache
   - command: svcadm restart apache
   - synchronize:
