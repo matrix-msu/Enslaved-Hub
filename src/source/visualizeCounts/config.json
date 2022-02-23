@@ -467,6 +467,130 @@
           "title":"Participant Role"
        }
    },
+   "Slaves in Post-Mortem Estate Inventories":{ 
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasParticipantRole":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Participant Role"
+     },
+     "hasPersonStatus":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Status"
+     },
+     "hasRaceorColor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Race"
+     },
+     "hasSex":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Sex"
+     },
+     "hasAge":{
+        "type":"BarChart",
+        "width":"976",
+        "height":"400",
+        "title":"Age"
+     },
+      "Male_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Male Ages"
+      },
+      "Female_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Female Ages"
+      },
+      "hasEthnolinguisticDescriptor":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Ethnolinguistic Descriptors"
+      },
+      "hasOriginalSourceType":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Original Source Type"
+      },
+      "hasEventType":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Event Types"
+      }
+   },
+   "Missouri Bills of Sale":{
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasParticipantRole":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Participant Role"
+     },
+     "hasPersonStatus":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Status"
+     },
+     "hasAge":{
+        "type":"BarChart",
+        "width":"976",
+        "height":"400",
+        "title":"Age"
+     },
+      "Male_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Male Ages"
+      },
+      "Female_Ages":{
+         "type":"BarChart",
+         "width":"480",
+         "height":"400",
+         "title":"Female Ages"
+      },
+      "hasSex":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Sex"
+      }
+   },
    "Biographies of the Enslaved Era":{
      "TotalRecords":{
        "type":"TotalRecords",
