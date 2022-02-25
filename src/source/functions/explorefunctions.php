@@ -93,7 +93,7 @@ function getFullRecordHtml(){
         'race' => ['standard','Race'],
         'description' => ['description','Description'],
         'status' => ['status','status'],
-        'ecvo' => ['standardArray','Ethnolisguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
+        'ecvo' => ['standardArray','Ethnolinguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
         'date' => ['standard','Date'],
         'eventDates' => ['standard','Date'],
         'eventDescriptions' => ['standard','Description'],

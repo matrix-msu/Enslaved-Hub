@@ -1,3 +1,5 @@
+# The curent working branch for development is the automation branch.<br />Make sure you've switched over using the install instructions below.
+
 ## Enslaved Hub / Static Site Builder
 
 ### Installation instructions for development
@@ -34,19 +36,10 @@
 
 Site will build at `/build_local`
 
-#### Rebuild visualization counts instructions
-```
-cd ~/website/enslaved/src/source/visualizeCounts
-rm latest.wikibase.dump.json
-wget https://manta.matrix.msu.edu/msumatrix/public/exports/wikibase/2bde7b5b/latest.wikibase.dump.json.gz
-gzip -d latest.wikibase.dump.json.gz
-php script.php
-cd ~/website/enslaved/src
-npm run dev
-```
-
-#### Update the dev site instructions
-Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new and click Run pipeline
-
 #### Update the live site instructions
-Go to https://gitlab.matrix.msu.edu/matrix/enslaved/-/pipelines/new and click Run pipeline. After the deploy-dev job finishes and looks good, run the deploy-production job within the same pipeline.
+```
+cd ~/enslaved/src/
+npm run dev
+rm -rf ~/website/*
+cp -r ~/enslaved/src/build_local/* ~/website/
+```

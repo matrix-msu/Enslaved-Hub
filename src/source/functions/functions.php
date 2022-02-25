@@ -275,6 +275,15 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
                     $status = implode(', ', $record['person_status']);
                 }
 
+                //Person Ethnodescriptor
+                $ethnodescriptor = "";
+                $ethnodescriptorCount = 0;
+                if (is_array($record['ethnodescriptor']) && count($record['ethnodescriptor']) > 0){
+                    $ethnodescriptorCount = count($record['ethnodescriptor']);
+                    $ethnodescriptor = implode(', ', $record['ethnodescriptor']);
+                }
+
+
                 //Person location
                 $places = '';
                 $placesCount = 0;
@@ -337,6 +346,18 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
                             $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Places</span>$places</span></p></div>";
                         }
 
+                        $ethnodescriptorHtml = '';
+                        if ($ethnodescriptorCount == 1){
+                            //$ethnodescriptorHtml = "<div class='detail'><p class='detail-title'>Ethnodescriptor</p?<p>$ethnodescriptor</p></div>";
+                            $ethnodescriptorHtml = "<div class='detail'><p class='detail-title'>Ethnodescriptor</p><p>$ethnodescriptor</p></div>";
+                        }
+                        if ($ethnodescriptorCount > 1){
+                            $ethnodescriptor = str_replace(",", " / ", $ethnodescriptor);
+                            $ethnodescriptorHtml = "<div class='detail'><p class='detail-title'>Ethnodescriptor</p><p>$ethnodescriptor</p></div>";
+                        }
+
+
+
                         $dateRangeHtml = '';
                         if ($dateRange != ''){
                             $dateName = strpos($dateRange, '-') ? "Date Range" : "Date";
@@ -357,6 +378,7 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
             $statusHtml
             $placesHtml
             $dateRangeHtml
+            $ethnodescriptorHtml
         </div>
         $connections
     </a>

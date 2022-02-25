@@ -8711,11 +8711,25 @@ a.modal {
 }
 .detail-section .detailwrap a {
   text-decoration: none;
+  transition: all 0.2s ease;
+}
+.detail-section .detailwrap a:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+.detail-section .detailwrap a h3 {
+  text-decoration: none !important;
+}
+.detail-section .detailwrap a h3:hover {
+  text-decoration: none !important;
 }
 .detail-section .detailwrap .detail {
   margin-bottom: 20px;
   position: relative;
   width: 100%;
+}
+.detail-section .detailwrap .detail.roles > a {
+  text-decoration: none !important;
 }
 .detail-section .detailwrap .detail.surname .detail-bottom div.detail-text, .detail-section .detailwrap .detail.first .detail-bottom div.detail-text, .detail-section .detailwrap .detail.name .detail-bottom div.detail-text {
   text-decoration: none !important;
@@ -8757,6 +8771,18 @@ a.modal {
 .detail-section .detailwrap .detail .detail-bottom .highlight {
   color: #C24F3C;
   font-family: aleobold;
+  transition: all 0.2s ease;
+}
+.detail-section .detailwrap .detail .detail-bottom .highlight:hover {
+  opacity: 0.9;
+  text-decoration: underline;
+}
+.detail-section .detailwrap .detail .detail-bottom a.detail-text {
+  text-decoration: underline;
+  transition: all 0.2s ease;
+}
+.detail-section .detailwrap .detail .detail-bottom a.detail-text:hover {
+  opacity: 0.8;
 }
 .detail-section .detailwrap .detail .detail-bottom .detail-text {
   font-size: 16px;
@@ -8780,6 +8806,21 @@ a.modal {
 }
 .detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:hover .detail-menu, .detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:focus .detail-menu {
   display: block !important;
+}
+.detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip] .detail-text:after {
+  content: "";
+  background-image: url(../images/tooltip-info.svg);
+  background-size: 13px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-left: 3px;
+  vertical-align: middle;
+  width: 15px;
+  height: 13px;
+  opacity: 0.8;
+}
+.detail-section .detailwrap .detail .detail-bottom #tooltip:after {
+  display: none;
 }
 .detail-section .detailwrap .detail .detail-bottom h4 {
   font-size: 18px;

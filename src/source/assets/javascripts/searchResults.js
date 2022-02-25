@@ -14,7 +14,7 @@ var filters = {};
 var display = search_type;
 
 var has_data = false;
-var selected_fields_people = ['Name', 'Sex', 'Person Status', 'Place', 'Date'];
+var selected_fields_people = ['Name', 'Sex', 'Person Status', 'Ethnodescriptor', 'Place', 'Date'];
 var selected_fields_events = ['Name', 'Event Type', 'Source Type', 'Date', 'Place Type', 'Place'];
 var selected_fields_places = ['Name', 'Project', 'Location', 'Place Type'];
 var selected_fields_source = ['Name', 'Project', 'Source Type'];
@@ -942,7 +942,7 @@ function updateURL(){
     if(showPath)
     {
         $(".last-page-header").show();
-		
+
 		var formatted = upperForm;
 		if(formatted == 'All') formatted = 'Home';
 
@@ -951,7 +951,7 @@ function updateURL(){
 
         if(titleType != "") $(".last-page-header .prev2 span").text("/ " + titleType).show();
         else $(".last-page-header .prev2 span").hide();
-		
+
 		var formatted = currentTitle;
 		if(formatted == 'Search') formatted = 'Results';
 
@@ -1037,7 +1037,7 @@ function generateFilterCards(){
         updateURL();
         //Trigger the selector in the filter side menu
         $('label.'+fcat+' input[value="'+fname+'"]').trigger('click');
-		
+
 		if(fcat == "searchbar"){
 			$('.search-title h1').html('Search Results');
         }
