@@ -1,7 +1,7 @@
 <?php
 const roleTypes=[
     'Spouse' => 'Q37',
-    'Master or Owner' => 'Q200',
+    'Enslaver or Owner' => 'Q112',
     'Registered Person' => 'Q259',
     'Emancipated Person' => 'Q263',
     'Relocated Person' => 'Q272',
@@ -36,7 +36,7 @@ const roleTypes=[
 ];
 
 const qroleTypes=[
-  "Q112" => "Master or Owner",
+  "Q112" => "Enslaver or Owner",
   "Q169" => "Registered Person",
   "Q171" => "Emancipated Person",
   "Q179" => "Relocated Person",
