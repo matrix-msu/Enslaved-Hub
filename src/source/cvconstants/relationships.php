@@ -2,7 +2,7 @@
 
 const relationship =[
   "Enslaved Person" => "Q109",
-  "Master or Owner" => "Q112",
+  "Enslaver or Owner" => "Q112",
   "Employer" => "Q218",
   "Employee" => "Q220",
   "Spouse" => "Q253",
