@@ -1,5 +1,4 @@
 <?php
-//Q numbers are all wrong
 const eventTypes=[
   "Advertisement" => "Q907443",
   "Appraisal" => "Q647904",
