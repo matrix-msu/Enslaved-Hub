@@ -1,6 +1,6 @@
 <?php
 const doctype=[
-  "Auction Notice" => "Q140",
+  "Auction or Sale Notice" => "Q140",
   "Bill of Sale or Receipt" => "Q145",
   "Census or Register" => "Q111",
   "Civil Document" => "Q134",
