@@ -9,10 +9,10 @@ const personstatus=[
 ];
 
 const qpersonstatus=[
-    "Q109" => "Enslaved Person"
-    "Q112" => "Enslaver or Owner"
-    "Q117" => "Free Person"
-    "Q386" => "Freed Person"
-    "Q159275" => "Liberated African"
+    "Q109" => "Enslaved Person",
+    "Q112" => "Enslaver or Owner",
+    "Q117" => "Free Person",
+    "Q386" => "Freed Person",
+    "Q159275" => "Liberated African",
     "Q192" => "Person with Liminal Status"
 ];
