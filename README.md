@@ -7,7 +7,6 @@
 
         git clone git@direct.gitlab.matrix.msu.edu:matrix/enslaved.git
         cd enslaved
-        git checkout automation
         cp src/config.dist.php src/config.php
         cp src/source/config.dist.php src/source/config.php
         cp src/source/database-config.dist.php src/source/database-config.php
@@ -36,10 +35,13 @@
 
 Site will build at `/build_local`
 
-#### Update the live site instructions
+#### Rebuild visualization counts instructions
 ```
-cd ~/enslaved/src/
+cd ~/website/enslaved/src/source/visualizeCounts
+rm latest.wikibase.dump.json
+wget https://manta.matrix.msu.edu/msumatrix/public/exports/wikibase/2bde7b5b/latest.wikibase.dump.json.gz
+gzip -d latest.wikibase.dump.json.gz
+php script.php
+cd ~/website/enslaved/src
 npm run dev
-rm -rf ~/website/*
-cp -r ~/enslaved/src/build_local/* ~/website/
 ```
