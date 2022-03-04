@@ -125,7 +125,7 @@ function getFullRecordHtml(){
 		'StatusA' => 'search/all?status=REPLACE&display=people',
 		'RolesA' => 'search/all?role_types=REPLACE&display=people',
 		'Occupation' => 'search/all?occupation=REPLACE&display=people',
-		'Ethnolisguistic Descriptor' => 'search/all?ethnodescriptor=REPLACE&display=people',
+		'Ethnolinguistic Descriptor' => 'search/all?ethnodescriptor=REPLACE&display=people',
 		'Type' => 'search/all?event_type=REPLACE&display=events',
 		'Date' => 'search/all?date=REPLACE&display=events',
 		'Place Type' => 'search/all?place_type=REPLACE&display=places',

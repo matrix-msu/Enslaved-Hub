@@ -349,11 +349,11 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
                         $ethnodescriptorHtml = '';
                         if ($ethnodescriptorCount == 1){
                             //$ethnodescriptorHtml = "<div class='detail'><p class='detail-title'>Ethnodescriptor</p?<p>$ethnodescriptor</p></div>";
-                            $ethnodescriptorHtml = "<div class='detail'><p class='detail-title'>Ethnodescriptor</p><p>$ethnodescriptor</p></div>";
+                            $ethnodescriptorHtml = "<div class='detail'><p class='detail-title'>Ethnolinguistic Descriptor</p><p>$ethnodescriptor</p></div>";
                         }
                         if ($ethnodescriptorCount > 1){
-                            $ethnodescriptor = str_replace(",", " / ", $ethnodescriptor);
-                            $ethnodescriptorHtml = "<div class='detail'><p class='detail-title'>Ethnodescriptor</p><p>$ethnodescriptor</p></div>";
+                            $ethnodescriptor = str_replace(",", "/", $ethnodescriptor);
+                            $ethnodescriptorHtml = "<div class='detail'><p class='detail-title'>Ethnolinguistic Descriptor</p><p>$ethnodescriptor</p></div>";
                         }
 
 
