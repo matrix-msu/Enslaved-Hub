@@ -401,10 +401,10 @@ function createDetailHtml($statement,$label,$link=''){
 
           // ecvo tool tip
           if(array_key_exists($ecvos[$i],controlledVocabulary)){
+
               $detailinfo = ucfirst(controlledVocabulary[$ecvos[$i]]);
               $html .= "<div class='detail-menu' id='tooltip'> <h1>$ecvos[$i]</h1> <p>$detailinfo</p> </div>";
           }
-
           $html .= "</div> - <a href='$placeUrl' class='highlight'>$originLabels[$i]</a></div>";
       }
       $html .= '</div>';
@@ -645,20 +645,20 @@ function createDetailHtml($statement,$label,$link=''){
             continue;
           }
           else{
-			  if(isset(LINKSTOSEARCH[$label])){
-				  $link = LINKSTOSEARCH[$label];
-				  if($label == 'Type' && isset(placeTypes[$detailname]))
-				  	  $link = LINKSTOSEARCH['Place Type'];
-				  elseif($label == 'Type' && isset(sourceTypes[$detailname]))
-				  	  $link = LINKSTOSEARCH['Source Type'];
-				  if($label == "date")
-					  $link = str_replace('REPLACE', $detailname.'-'.$detailname, $link);
-				  else
-				  	  $link = str_replace('REPLACE', $detailname, $link);
-				  $html .= "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $detailname . "</a>";
-			  }else{
-				  $html .= "<div>" . $detailname;
-			  }
+    			  if(isset(LINKSTOSEARCH[$label])){
+    				  $link = LINKSTOSEARCH[$label];
+    				  if($label == 'Type' && isset(placeTypes[$detailname]))
+    				  	  $link = LINKSTOSEARCH['Place Type'];
+    				  elseif($label == 'Type' && isset(sourceTypes[$detailname]))
+    				  	  $link = LINKSTOSEARCH['Source Type'];
+    				  if($label == "date")
+    					  $link = str_replace('REPLACE', $detailname.'-'.$detailname, $link);
+    				  else
+    				  	  $link = str_replace('REPLACE', $detailname, $link);
+    				  $html .= "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $detailname . "</a>";
+    			  }else{
+    				  $html .= "<div>" . $detailname;
+    			  }
           }
           if($label == 'Geoname Identifier'){
             $html .= "<div><a></a></div><br>";
@@ -669,7 +669,7 @@ function createDetailHtml($statement,$label,$link=''){
           }
           $html .= "</div></a>";
 
-          if( ($label=="Descriptive Occupation"||$label=="Coordinates"||$label=="Description"||$label=="Date") && $x != (count($statementArr) - 1 )){
+          if( ($label=="Ethnolinguistic Descriptor"||$label=="Descriptive Occupation"||$label=="Coordinates"||$label=="Description"||$label=="Date") && $x != (count($statementArr) - 1 )){
               $html.= "<br>";
           }
           else if ($x != (count($statementArr) - 1)){
