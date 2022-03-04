@@ -7,6 +7,7 @@
         margin: 50px auto 0;
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
 
         a {
           display: flex;
@@ -51,49 +52,138 @@
             transform: scaleY(-1);
         }
     }
+    .top {
+      display: flex;
+      justify-content: center;
+    }
     .bottom {
-	    background-color: #0A2828;
+      align-items: flex-end;
 	    padding: 10px;
 	    color: #FFF;
 	    text-align: center;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      width: 100%;
+      text-align: left;
+      margin-bottom: 30px;
 
-      .statement-of-ethics {
-        color: #fff;
-        margin-right: 50px;
-        text-decoration: underline;
-        transition: all .2s ease;
+      .first {
+        display: flex;
+        gap: 100px;
+        margin-bottom: 5px;
 
-        &:hover {
-          color: $accent;
+        h6 {
+          opacity: 0.5;
+          font-family: aleobold;
+          font-size: 14px;
+          font-weight: normal;
+          color: $white;
+          letter-spacing: 2.75px;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+        }
+
+        .contact {
+          a {
+            color: $white;
+            text-decoration: none;
+            padding: 0;
+            transition: all .2s ease;
+
+            &:hover {
+              color: $accent;
+            }
+          }
+        }
+
+        .follow {
+          .social-icons {
+            display: flex;
+            gap: 15px;
+
+            a {
+              padding: 0;
+              opacity: .8;
+              transition: all .2s ease;
+
+              &:hover {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+
+      .footer-buttons {
+        display: flex;
+        gap: 20px;
+
+        a {
+          border-radius: 5px;
+          color: #fff;
+          height: 55px;
+          padding: 19px;
+          text-decoration: none;
+          transition: all .2s ease;
+        }
+
+        .statement-of-ethics {
+          background-color: rgba(255,255,255,.10);
+
+          &:hover {
+            background-color: rgba(255,255,255,.15);
+          }
+        }
+
+        .support {
+          background-color: $accent;
+
+          &:hover {
+            background-color: #CF5440;
+          }
         }
       }
     }
 }
 
-@media screen and (max-width: 850px){
+@media screen and (max-width: 900px){
     #footer{
-        .footerwrap{
+        .footerwrap .top{
             flex-wrap: wrap;
-            padding: 60px;
+            margin-bottom: 30px;
+
             a {
-              width: 42%;
-              padding: 40px 4%;
-            }
-             img {
-              width: auto;
+              padding: 20px;
             }
         }
+        .footerwrap .bottom {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+          }
     }
 }
 
 @media screen and (max-width: 600px){
-    #footer{
-        .footerwrap{
-            a {
-              width: 100%;
-            }
+  #footer{
+    .footerwrap .bottom {
+      .first {
+        flex-wrap: wrap;
+        gap: 10px;
+
+        div {
+          width: 100%;
+          justify-content: center;
+          text-align: center;
         }
+      }
+      .footer-buttons {
+        flex-wrap: wrap;
+
+        a {
+          width: 100%;
+        }
+      }
     }
+  }
 }
