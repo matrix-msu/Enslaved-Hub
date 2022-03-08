@@ -31,6 +31,8 @@ deploy-dev:
    - sed -i 's#/builds/matrix/enslaved/src/build_local/#/opt/local/share/httpd/htdocs/#' public/config.php
    - sed -i 's#ENVIRONMENTBASEPATH#/#' public/.htaccess
    - sed -i 's#ENVIRONMENTBASEPATH#/ontology/#' public/ontology/.htaccess
+   - json -n -f src/source/visualizeCounts/config.json
+   - json -n -f src/source/visualizeCounts/counts.json
    - mkdir -p ~/.ssh || true
    - chmod 700 ~/.ssh
    - eval $(ssh-agent -s)
