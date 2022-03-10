@@ -53,7 +53,7 @@
   <p class="container info infowrap">Learn more about the <a href="https://docs.enslaved.org/controlledVocabulary/" target="_blank"/>Enslaved Controlled Vocabulary</a></p>
 </div>
 <script type="text/javascript">
-    var counts = String.raw`<?php echo file_get_contents('./visualizeCounts/counts.json');?>`;
+    var counts = String.raw`<?php echo file_get_contents('https://manta.matrix.msu.edu/msumatrix/public/exports/enslaved.org/visualizeCounts/counts.json');?>`;
     counts = JSON.parse(counts);
     var config = `<?php echo file_get_contents('./visualizeCounts/config.json');?>`;
     config = JSON.parse(config);

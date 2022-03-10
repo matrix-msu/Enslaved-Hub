@@ -8,7 +8,7 @@
     google.charts.load('current', {'packages':['corechart','table']});
     google.charts.setOnLoadCallback(drawChart);
 
-    var counts = String.raw`<?php echo file_get_contents('counts.json');?>`;
+    var counts = String.raw`<?php echo file_get_contents('https://manta.matrix.msu.edu/msumatrix/public/exports/enslaved.org/visualizeCounts/counts.json');?>`;
     counts = JSON.parse(counts);
     var config = `<?php echo file_get_contents('config.json');?>`;
     config = JSON.parse(config);
