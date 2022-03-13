@@ -4218,6 +4218,7 @@ a.modal {
   margin: 50px auto 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 #footer .footerwrap a {
   display: flex;
@@ -4256,39 +4257,110 @@ a.modal {
   background-position: 90% 50%;
   transform: scaleY(-1);
 }
+#footer .top {
+  display: flex;
+  justify-content: center;
+}
 #footer .bottom {
-  background-color: #0A2828;
+  align-items: flex-end;
   padding: 10px;
   color: #FFF;
   text-align: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 30px;
 }
-#footer .bottom .statement-of-ethics {
+#footer .bottom .first {
+  display: flex;
+  gap: 100px;
+  margin-bottom: 5px;
+}
+#footer .bottom .first h6 {
+  opacity: 0.5;
+  font-family: aleobold;
+  font-size: 14px;
+  font-weight: normal;
   color: #fff;
-  margin-right: 50px;
-  text-decoration: underline;
+  letter-spacing: 2.75px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+#footer .bottom .first .contact a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0;
   transition: all 0.2s ease;
 }
-#footer .bottom .statement-of-ethics:hover {
+#footer .bottom .first .contact a:hover {
   color: #C24F3C;
 }
+#footer .bottom .first .follow .social-icons {
+  display: flex;
+  gap: 15px;
+}
+#footer .bottom .first .follow .social-icons a {
+  padding: 0;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+#footer .bottom .first .follow .social-icons a:hover {
+  opacity: 1;
+}
+#footer .bottom .footer-buttons {
+  display: flex;
+  gap: 20px;
+}
+#footer .bottom .footer-buttons a {
+  border-radius: 5px;
+  color: #fff;
+  height: 55px;
+  padding: 19px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+#footer .bottom .footer-buttons .statement-of-ethics {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+#footer .bottom .footer-buttons .statement-of-ethics:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+#footer .bottom .footer-buttons .support {
+  background-color: #C24F3C;
+}
+#footer .bottom .footer-buttons .support:hover {
+  background-color: #CF5440;
+}
 
-@media screen and (max-width: 850px) {
-  #footer .footerwrap {
+@media screen and (max-width: 900px) {
+  #footer .footerwrap .top {
     flex-wrap: wrap;
-    padding: 60px;
+    margin-bottom: 30px;
   }
-  #footer .footerwrap a {
-    width: 42%;
-    padding: 40px 4%;
+  #footer .footerwrap .top a {
+    padding: 20px;
   }
-  #footer .footerwrap img {
-    width: auto;
+  #footer .footerwrap .bottom {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
   }
 }
 @media screen and (max-width: 600px) {
-  #footer .footerwrap a {
+  #footer .footerwrap .bottom .first {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  #footer .footerwrap .bottom .first div {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  #footer .footerwrap .bottom .footer-buttons {
+    flex-wrap: wrap;
+  }
+  #footer .footerwrap .bottom .footer-buttons a {
     width: 100%;
   }
 }
