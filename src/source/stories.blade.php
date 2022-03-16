@@ -27,7 +27,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p><?php echo $cache_Data['descr'] ?></p>
+        <p>Enslaved.org contains information on hundreds of thousands of individuals involved in the historical slave trade — including enslaved people, slave owners, and slave traders. For most of these individuals, we can offer little more than fragmentary evidence, however, for some individuals, we can tell a more complex story.</p>
     </div>
 </div>
 <!-- featured stories container-->
@@ -154,6 +154,14 @@ $cache_Data = Json_GetData_ByTitle("Stories");
         </div>
     </div>
 </div>
+<!-- info container-->
+<div class="container info stories">
+    <div class="container infowrap">
+      <!--  <h2 style="font-size:40px;margin-bottom:20px;">Story Contributors</h2>-->
+        <p><?php echo $cache_Data['descr'] ?></p>
+    </div>
+</div>
+
 
 <script src="<?php echo BASE_URL;?>assets/javascripts/fuse.min.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/cardSlider.js"></script>
