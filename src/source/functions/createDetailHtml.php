@@ -595,9 +595,17 @@ function createDetailHtml($statement,$label,$link=''){
         }
       }
 
+      $upperlabelID = "";
+	  $modal = "";
+      if($upperlabel == "Ethnolinguistic Descriptor"){
+          $upperlabelID = "id = 'upperlabelToolTip' ";
+		  $ethnoInfo = controlledVocabulary[$upperlabel];
+		  $modal = "<div class='detail-menu detail-text' id='tooltip'> <h1>$upperlabel</h1> <p>$ethnoInfo</p> </div>";
+      }
+
       $html .= <<<HTML
     <div class="detail $lowerlabel">
-      <h3>$upperlabel</h3>
+      <h3 $upperlabelID >$upperlabel $modal</h3>
       <div class="detail-bottom">
     HTML;
 
@@ -663,6 +671,7 @@ function createDetailHtml($statement,$label,$link=''){
           if($label == 'Geoname Identifier'){
             $html .= "<div><a></a></div><br>";
           }
+
           if(array_key_exists($detailname,controlledVocabulary)){
             $detailinfo = ucfirst(controlledVocabulary[$detailname]);
             $html .= "<div class='detail-menu' id='tooltip'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";

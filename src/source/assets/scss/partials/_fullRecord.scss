@@ -615,6 +615,19 @@
         box-shadow: 0 3px 10px 0 rgba(44,44,44,0.1);
         margin-top: -30px;
 
+        #upperlabelToolTip:after{
+			content: "";
+			background-image: url(../images/tooltip-info.svg);
+			background-size: 13px;
+			background-repeat: no-repeat;
+			display: inline-block;
+			margin-left: 3px;
+			vertical-align: middle;
+			width: 15px;
+			height: 13px;
+			opacity: .8;
+        }
+
         a{
             text-decoration: none;
             transition: all .2s ease;
@@ -678,7 +691,16 @@
                 //transition: all .3s ease;
             }
 
-            .detail-bottom{
+           #upperlabelToolTip{
+			   cursor: pointer!important;
+                &:hover, &:focus{
+                    .detail-menu{
+                        display: block !important;
+                    }
+                }
+            }
+
+            // .detail-bottom{
 
                 .search-all{
                     color: $base-dark;
@@ -780,9 +802,12 @@
                     position: absolute !important;
                     padding: 20px;
                     bottom: 150%;
-                    left: -20%;
+                    // left: -20%;
+                    left: 0;
                     z-index: 404;
 					text-decoration: none !important;
+					font-family: aleoregular !important;
+    				font-style: initial !important;
 
                     // &.hovered{
                     //     display: block;
@@ -798,7 +823,7 @@
                         color: $base-light;
                         line-height: 20px;
                     }
-                }
+                // }
                 // .detail-menu:after {
                 //     content: '';
                 //     position: absolute;

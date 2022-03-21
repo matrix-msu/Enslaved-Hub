@@ -7494,6 +7494,13 @@ a.modal {
   position: relative;
   text-align: left;
 }
+.info.stories {
+  padding: 0 0 60px;
+}
+.info.stories h2 {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
 
 .explore {
   max-width: 1000px;
@@ -8781,6 +8788,18 @@ a.modal {
   box-shadow: 0 3px 10px 0 rgba(44, 44, 44, 0.1);
   margin-top: -30px;
 }
+.detail-section .detailwrap #upperlabelToolTip:after {
+  content: "";
+  background-image: url(../images/tooltip-info.svg);
+  background-size: 13px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-left: 3px;
+  vertical-align: middle;
+  width: 15px;
+  height: 13px;
+  opacity: 0.8;
+}
 .detail-section .detailwrap a {
   text-decoration: none;
   transition: all 0.2s ease;
@@ -8828,7 +8847,13 @@ a.modal {
   font-weight: unset;
   margin-bottom: 5px;
 }
-.detail-section .detailwrap .detail .detail-bottom .search-all {
+.detail-section .detailwrap .detail #upperlabelToolTip {
+  cursor: pointer !important;
+}
+.detail-section .detailwrap .detail #upperlabelToolTip:hover .detail-menu, .detail-section .detailwrap .detail #upperlabelToolTip:focus .detail-menu {
+  display: block !important;
+}
+.detail-section .detailwrap .detail .search-all {
   color: #0E3232;
   text-decoration: none;
   font-size: 16px;
@@ -8836,27 +8861,27 @@ a.modal {
   line-height: 18px;
   border-bottom: 3px solid #C24F3C;
 }
-.detail-section .detailwrap .detail .detail-bottom div {
+.detail-section .detailwrap .detail div {
   display: inline;
   font-family: aleoregular;
 }
-.detail-section .detailwrap .detail .detail-bottom .highlight {
+.detail-section .detailwrap .detail .highlight {
   color: #C24F3C;
   font-family: aleobold;
   transition: all 0.2s ease;
 }
-.detail-section .detailwrap .detail .detail-bottom .highlight:hover {
+.detail-section .detailwrap .detail .highlight:hover {
   opacity: 0.9;
   text-decoration: underline;
 }
-.detail-section .detailwrap .detail .detail-bottom a.detail-text {
+.detail-section .detailwrap .detail a.detail-text {
   text-decoration: underline;
   transition: all 0.2s ease;
 }
-.detail-section .detailwrap .detail .detail-bottom a.detail-text:hover {
+.detail-section .detailwrap .detail a.detail-text:hover {
   opacity: 0.8;
 }
-.detail-section .detailwrap .detail .detail-bottom .detail-text {
+.detail-section .detailwrap .detail .detail-text {
   font-size: 16px;
   color: #0E3232;
   line-height: 18px;
@@ -8865,7 +8890,7 @@ a.modal {
   font-family: aleoregular;
   transition: color 0.3s;
 }
-.detail-section .detailwrap .detail .detail-bottom .detail-text a:not(.link-to-search) {
+.detail-section .detailwrap .detail .detail-text a:not(.link-to-search) {
   font-size: 16px;
   color: #C24F3C;
   line-height: 18px;
@@ -8873,13 +8898,13 @@ a.modal {
   position: relative;
   font-family: aleobold;
 }
-.detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:hover, .detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:focus {
+.detail-section .detailwrap .detail .detail-text[aria-describedby=tooltip]:hover, .detail-section .detailwrap .detail .detail-text[aria-describedby=tooltip]:focus {
   color: rgba(14, 50, 50, 0.7);
 }
-.detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:hover .detail-menu, .detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip]:focus .detail-menu {
+.detail-section .detailwrap .detail .detail-text[aria-describedby=tooltip]:hover .detail-menu, .detail-section .detailwrap .detail .detail-text[aria-describedby=tooltip]:focus .detail-menu {
   display: block !important;
 }
-.detail-section .detailwrap .detail .detail-bottom .detail-text[aria-describedby=tooltip] .detail-text:after {
+.detail-section .detailwrap .detail .detail-text[aria-describedby=tooltip] .detail-text:after {
   content: "";
   background-image: url(../images/tooltip-info.svg);
   background-size: 13px;
@@ -8891,10 +8916,10 @@ a.modal {
   height: 13px;
   opacity: 0.8;
 }
-.detail-section .detailwrap .detail .detail-bottom #tooltip:after {
+.detail-section .detailwrap .detail #tooltip:after {
   display: none;
 }
-.detail-section .detailwrap .detail .detail-bottom h4 {
+.detail-section .detailwrap .detail h4 {
   font-size: 18px;
   color: #0E3232;
   line-height: 26px;
@@ -8902,7 +8927,7 @@ a.modal {
   font-style: italic;
   display: inline;
 }
-.detail-section .detailwrap .detail .detail-bottom .detail-menu {
+.detail-section .detailwrap .detail .detail-menu {
   display: none;
   width: 27vw;
   min-width: 160px;
@@ -8914,21 +8939,23 @@ a.modal {
   position: absolute !important;
   padding: 20px;
   bottom: 150%;
-  left: -20%;
+  left: 0;
   z-index: 404;
   text-decoration: none !important;
+  font-family: aleoregular !important;
+  font-style: initial !important;
 }
-.detail-section .detailwrap .detail .detail-bottom .detail-menu h1 {
+.detail-section .detailwrap .detail .detail-menu h1 {
   font-size: 18px;
   margin-bottom: 10px;
   color: #FAF7F2;
 }
-.detail-section .detailwrap .detail .detail-bottom .detail-menu p {
+.detail-section .detailwrap .detail .detail-menu p {
   font-size: 14px;
   color: #FAF7F2;
   line-height: 20px;
 }
-.detail-section .detailwrap .detail .detail-bottom.hide {
+.detail-section .detailwrap .detail .detail-menu.hide {
   display: none;
 }
 .detail-section .detailwrap .detail .show-all {

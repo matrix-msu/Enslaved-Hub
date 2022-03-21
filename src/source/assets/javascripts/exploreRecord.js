@@ -46,6 +46,9 @@ function changeSize(){
 
 function underlineTooltips(){
     $('.detailwrap .detail').each(function(){
+		if($(this).hasClass('ethnolinguistic') && $(this).hasClass('descriptor')){
+			return;
+		}
         $(this).find('.detail-bottom div').addClass('detail-text');
         if ($(this).find('.detail-menu').length > 0 ) {
             $(this).find('.detail-bottom div').attr('tabindex', '0');

@@ -43,6 +43,7 @@ const controlledVocabulary=[
 "Enslaved Person" => "Person whose body, labor, and reproductive rights are owned by or fall under the dominion of another person or organization in a social or legal system of involuntary servitude.",
 "Enslavement" => "Event in which a person is involuntarily bound to servitude by another person or an organization.",
 "Enslaver or Owner" => "Person or organization who owns or has dominion over the body, labor, and reproductive rights of another person in a social or legal system of involuntary servitude. Includes prior enslaver and owner.",
+"Ethnolinguistic Descriptor" => "An identity that is stated by a person or attributed to her/him and that is sometimes linked to the language that the person speaks; in historical records, often interpreted as an African ethnic group/language (e.g. Mandinka), Native American tribe/nation/language (e.g. Cherokee), and New World identity/language (e.g. Creole); in some historical documents, a person’s “nationality” or “naturalidade”; can sometimes be used to infer a person’s origin.",
 "Female" => "Person identified to be female.",
 "Fishing, Gathering, and Hunting" => "Work involving catching fish or shellfish; collecting wild plants; or pursuing animals for food, recreation, or trade.",
 "Freedom Suit" => "A document or documents related to a legal proceeding, most often initiated by an enslaved person, to establish the right to outright freedom or the terms of manumission.",
