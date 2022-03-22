@@ -86,6 +86,7 @@ const controlledVocabulary=[
 "Parent" => "The biological or adopted mother or father of a child.",
 "Participant" => "Person or organization involved in an event in an unspecified way or in a non-primary role.",
 "Party" => "A person or organization in a lawsuit or other legal proceeding. Includes plaintiff or defendant and their legal representation, as well as petitioner, respondent, witness, etc.",
+"Place of Origin" = > "Physical location of a person’s family or ancestors; a person’s place of birth; where someone comes from originally; inferred or stated home or homeland; answer to questions such as “Where are you from?”, “Where is she/he from?”, and “Where are they from?”; scale could be large (e.g. a continent or region) or small (e.g. a village, town, or city).",
 "Plantation, Estate, or Ranch" => "A landed property of medium- to  large-scale agro-pastoral production run by a variety of labor regimes including chattel slavery.",
 "Policing and Corrections" => "Work involving law enforcement and civil order, property protection, bounty hunting, and the pursuit, confinement, and punishment of fugitives, law-breakers, and rebels. Includes jailer, executioner, sheriff, slave-catcher, and warden.",
 "Port" => "A defined place on a coast, shore, harbor, or riverbank where ships dock.",
