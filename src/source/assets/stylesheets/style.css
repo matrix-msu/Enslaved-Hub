@@ -8861,7 +8861,7 @@ a.modal {
   line-height: 18px;
   border-bottom: 3px solid #C24F3C;
 }
-.detail-section .detailwrap .detail div {
+.detail-section .detailwrap .detail .detail-bottom div {
   display: inline;
   font-family: aleoregular;
 }

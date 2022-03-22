@@ -711,10 +711,13 @@
                     border-bottom: 3px solid $accent;
                 }
 
-                div {
-                  display: inline;
-                  font-family: aleoregular;
-                }
+				.detail-bottom{
+
+	                div {
+	                  display: inline;
+	                  font-family: aleoregular;
+	                }
+				}
 
                 .highlight {
                     color: $sub-base;
