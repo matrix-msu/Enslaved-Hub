@@ -5,7 +5,6 @@ function createDetailHtml($statement,$label,$link=''){
     $upperlabel = $label;
     $lowerlabel = strtolower($label);
     $html = '';
-	$link = '';
 
     // don't show the label if it is empty
     if (empty($statement)){
@@ -649,7 +648,7 @@ function createDetailHtml($statement,$label,$link=''){
 
           $detailname = $statementArr[$x];
           if($label == 'Located In'){
-            $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[$x] . "'>" . $detailname . "</a></div><br>";
+            $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[0] . "'>" . $detailname . "</a></div><br>";
             continue;
           }
           else{
