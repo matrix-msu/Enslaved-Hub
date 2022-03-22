@@ -1,8 +1,9 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?label ?description ?project ?roles
+SELECT ?label ?project ?roles
 (group_concat(distinct ?name1; separator = "||") as ?name)
+(group_concat(distinct ?description1; separator = "||") as ?description)
 (group_concat(distinct ?altname1; separator = "||") as ?altname)
 (group_concat(distinct ?agelabel; separator = "||") as ?age)
 (group_concat(distinct ?agerecordedat1; separator = "||") as ?agerecordedat)
@@ -43,7 +44,7 @@ SELECT ?label ?description ?project ?roles
  OPTIONAL{ ?agent $wdt:$hasAlternateName ?altname1}.
  OPTIONAL{ ?agent $wdt:$hasFirstName ?firstname1}.
  OPTIONAL{ ?agent $wdt:$hasSurname ?surname1}.
- OPTIONAL{ ?agent $wdt:$hasDescription ?description}.
+ OPTIONAL{ ?agent $wdt:$hasDescription ?description1}.
  OPTIONAL{ ?agent $p:$hasAge ?ageuri.
             ?ageuri $ps:$hasAge ?ageuri2.
             ?ageuri2 $wdt:$hasAgeValue ?age1.
@@ -107,6 +108,6 @@ OPTIONAL {?agent $p:$hasName ?object .
           OPTIONAL {?provenance $pr:$hasExternalReference ?extref1}}.
 
 
-}GROUP BY ?label ?description ?project ?roles
+}GROUP BY ?label ?project ?roles
 QUERY;
 ?>
