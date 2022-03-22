@@ -94,6 +94,7 @@ function getFullRecordHtml(){
         'description' => ['description','Description'],
         'status' => ['status','status'],
         'ecvo' => ['standard','Ethnolinguistic Descriptor'],
+        'placeOriginlabel' => ['standard','Place of Origin'],
         // 'ecvo' => ['standardArray','Ethnolinguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
         'date' => ['standard','Date'],
         'eventDates' => ['standard','Date'],
@@ -321,6 +322,17 @@ HTML;
 
         $html .= createDetailHtml($value, $key, $Qid);
       }
+	  else if($key == "Place of Origin"){
+		  if(isset($record['placeofOrigin'])){
+			  $originUrl = $record['placeofOrigin']['value'];
+	          $urlQ = explode("/", $originUrl);
+	          $urlQ = end($urlQ);
+			  $urlQ = array($urlQ);
+	          $html .= createDetailHtml($value, $key, $urlQ);
+		  }else{
+			  $html .= createDetailHtml($value, $key);
+		  }
+        }
       else if($key == "Loc In"){
         continue;
       }

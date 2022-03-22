@@ -596,7 +596,7 @@ function createDetailHtml($statement,$label,$link=''){
 
       $upperlabelID = "";
 	  $modal = "";
-      if($upperlabel == "Ethnolinguistic Descriptor"){
+      if($upperlabel == "Ethnolinguistic Descriptor" || $upperlabel == "Place of Origin"){
           $upperlabelID = "id = 'upperlabelToolTip' ";
 		  $ethnoInfo = controlledVocabulary[$upperlabel];
 		  $modal = "<div class='detail-menu detail-text' id='tooltip'> <h1>$upperlabel</h1> <p>$ethnoInfo</p> </div>";
@@ -647,7 +647,7 @@ function createDetailHtml($statement,$label,$link=''){
           }
 
           $detailname = $statementArr[$x];
-          if($label == 'Located In'){
+          if($label == 'Located In'||$upperlabel == "Place of Origin"){
             $html .= "<div><a href='" . BASE_URL . "record/place/" . $link[0] . "'>" . $detailname . "</a></div><br>";
             continue;
           }
