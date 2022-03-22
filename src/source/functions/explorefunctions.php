@@ -93,7 +93,8 @@ function getFullRecordHtml(){
         'race' => ['standard','Race'],
         'description' => ['description','Description'],
         'status' => ['status','status'],
-        'ecvo' => ['standardArray','Ethnolinguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
+        'ecvo' => ['standard','Ethnolinguistic Descriptor'],
+        // 'ecvo' => ['standardArray','Ethnolinguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
         'date' => ['standard','Date'],
         'eventDates' => ['standard','Date'],
         'eventDescriptions' => ['standard','Description'],
@@ -265,6 +266,7 @@ function getFullRecordHtml(){
             }
         }
     }
+	// echo json_encode($recordVars);die;
 
     // create the html based on the type of results
     $htmlArray = [];
