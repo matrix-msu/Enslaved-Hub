@@ -80,6 +80,9 @@ function createDetailHtml($statement,$label,$link=''){
 
               $html .= "</div> - <a class='highlight' href='$pqurl'>$participants[$i]</a></div>";
           }
+		  if($i > 0){
+			  $html .= "<br>";
+		  }
       }
       $html .= '</div><br>';
 
