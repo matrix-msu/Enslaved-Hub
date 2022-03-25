@@ -677,9 +677,6 @@ QUERY;
 function getPlacePageConnections($QID) {
     include BASE_LIB_PATH."variableIncluder.php";
     $connections = array();
-	ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
   // people connections
   $peoplecounter['query'] = <<<QUERY
