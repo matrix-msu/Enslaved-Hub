@@ -677,6 +677,9 @@ QUERY;
 function getPlacePageConnections($QID) {
     include BASE_LIB_PATH."variableIncluder.php";
     $connections = array();
+	ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
   // people connections
   $peoplecounter['query'] = <<<QUERY
@@ -709,6 +712,37 @@ QUERY;
 
     $connections['Person-count'] = $result_counter[0]['counter']['value'];
     $connections['Person'] = $result;  // return the first 8 results
+
+	// people connections through ethnodescriptor
+	$peoplecounter['query'] = <<<QUERY
+	SELECT DISTINCT (COUNT(?people) as ?counter)
+	{
+		VALUES ?place { $wd:$QID }.
+		?people $wdt:$instanceOf $wd:$person.
+		?people $p:$hasEthnolinguisticDescriptor ?ethnodesc.
+		?ethnodesc  $pq:$referstoPlaceofOrigin ?place2.
+		FILTER (?place2 = ?place).
+		?people $wdt:$hasName ?peoplename
+	}
+	QUERY;
+	$peopleQuery['query'] = <<<QUERY
+	SELECT DISTINCT ?people ?peoplename
+	{
+		VALUES ?place { $wd:$QID }.
+		?people $wdt:$instanceOf $wd:$person.
+		?people $p:$hasEthnolinguisticDescriptor ?ethnodesc.
+		?ethnodesc  $pq:$referstoPlaceofOrigin ?place2.
+		FILTER (?place2 = ?place).
+		?people $wdt:$hasName ?peoplename
+	}LIMIT 8
+	QUERY;
+
+	if($connections['Person-count'] < 8){         //only grab more people if the
+		$result += blazegraphSearch($peopleQuery);//other query had less than 8
+		$connections['Person'] = $result;
+	}
+	$result_counter2 = blazegraphSearch($peoplecounter); //add them to count reguardless
+	$connections['Person-count'] += $result_counter2[0]['counter']['value'];
 
    // events connections
    $eventsCounter['query'] = <<<QUERY
