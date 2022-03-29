@@ -104,6 +104,7 @@ const controlledVocabulary=[
 "Runaway Advertisement" => "A public notice seeking the capture and return of a fugitive or missing person, often on promise of compensation.",
 "Sacramental or Religious Registry" => "An ecclesiastical document recording a religious ceremony or sacramental rite, such as a baptism or marriage.",
 "Sale or Transfer" => "Event in which one or more enslaved persons are proffered for purchase or exchange, or are bought, bartered, gifted, inherited, or exchanged. Includes auctioning and self-purchase.",
+"Secondary Source" => "Written work that analyzes, interprets, and asses an historical event, person, phenomenon, etc., based on primary source materials; includes scholarly books and articles.",
 "Seller" => "A person or organization authorized to sell an enslaved person or commodities, goods, and services.",
 "Ship Registry, Log, or Manifest" => "A document listing the cargo, crew, itinerary, nationality, ownership, and/or passengers of a vessel.",
 "Sibling" => "A person having one or both parents in common.",
