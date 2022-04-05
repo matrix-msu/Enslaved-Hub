@@ -1428,13 +1428,13 @@
       },
        "hasOccupation":{
           "type":"PieChart",
-          "width":"480",
+          "width":"976",
           "height":"400",
           "title":"Occupation"
        },
       "hasEventType":{
          "type":"PieChart",
-         "width":"480",
+         "width":"976",
          "height":"400",
          "title":"Event Types"
       }
