@@ -33,6 +33,7 @@ const roleTypes=[
 ];
 
 const qroleTypes=[
+    "Q907444" => "Advertiser",
     "Q647905" => "Appraised Person",
     "Q196" => "Baptized Person/Initiate",
     "Q188" => "Buyer",
