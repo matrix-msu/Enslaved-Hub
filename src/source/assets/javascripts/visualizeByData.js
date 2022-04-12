@@ -221,4 +221,7 @@ function changeIframe(){
     else if(proj == "Missouri"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Missouri+Bills+of+Sale&limit=20&offset=0&sort_field=label.sort&display=people');
     }
+    else if(proj == "Black"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Black+Virginians+in+Blue&limit=20&offset=0&sort_field=label.sort&display=people');
+    }
 }
