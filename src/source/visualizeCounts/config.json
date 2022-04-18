@@ -467,7 +467,7 @@
           "title":"Participant Role"
        }
    },
-   "Slaves in Post-Mortem Estate Inventories":{ 
+   "Slaves in Post-Mortem Estate Inventories":{
      "TotalRecords":{
        "type":"TotalRecords",
        "width":"244",
@@ -1112,12 +1112,6 @@
        "height":"120",
        "title":"Record Types"
      },
-     "Descriptive Ethnonym":{
-        "type":"Table",
-        "width":"480",
-        "height":"400",
-        "title":"Descriptive Ethnonym"
-     },
      "hasEthnolinguisticDescriptor":{
         "type":"Table",
         "width":"480",
@@ -1136,6 +1130,12 @@
          "height":"400",
          "title":"Sex"
       },
+      "hasRaceorColor":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Race"
+      },
       "hasAge":{
          "type":"BarChart",
          "width":"976",
@@ -1153,12 +1153,6 @@
          "width":"480",
          "height":"400",
          "title":"Female Ages"
-      },
-      "hasRaceorColor":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":"Race"
       },
       "instance of":{
          "type":"none",
@@ -1389,7 +1383,7 @@
          "title":"Record Types"
       }
    },
-   "Black Virginians in Blue":{ 
+   "Black Virginians in Blue":{
      "TotalRecords":{
        "type":"TotalRecords",
        "width":"244",
