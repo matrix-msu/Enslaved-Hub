@@ -1,26 +1,26 @@
 <?php
 const projects=[
-    "Advertising Gender Slave Database: Escravos de ganho in Rio de Janeiro, 1850-1880" => "Q907421",
-    "African Burials and Residences in Rio de Janeiro, 1874-1899" => "Q871865",
+    "Advertising Gender Slave Database" => "Q907421",
+    "African Burials and Residences in Rio de Janeiro" => "Q871865",
     'Biographies of the Enslaved Era' => 'Q280811',
     "Black Virginians in Blue" => "Q961213",
-    "Contested Freedom: Free Persons of Color in Savannah, GA, 1823-1842" => "Q624610",
+    "Contested Freedom" => "Q624610",
     "CSI Dixie" => "Q490726",
     "Economics of American Negro Slavery Series" => "Q627623",
     "Free Africans of Brazil" => "Q624576",
-    'Free Blacks Database New Orleans 1840-1860' => 'Q455',
-    "Legacies of British Slave-ownership" => "Q376",
+    'Free Blacks Database' => 'Q455',
+    "Legacies of British Slave ownership" => "Q376",
     'Louisiana Slave Database' => 'Q11586',
     'Maranhao Inventories Slave Database' => 'Q11585',
     // "Family Search" => "Q811272",
-    "Mortality in the South, 1850" =>"Q856062",
+    "Mortality in the South" =>"Q856062",
     "Missouri Bills of Sale" => "Q961205",
-    "Newspaper-Brokered Slave Trade Advertisements in North America" => "Q503896",
-    "Slaves in Post-Mortem Estate Inventories" => "Q549379",
+    "Newspaper Brokered Slave Trade Advertisements in North America" => "Q503896",
+    "Slaves in Post Mortem Estate Inventories" => "Q549379",
     "Take Them In Families" =>"Q734407",
-    "They Had Names: Representations of the Enslaved in Liberty County, Georgia, Estate Inventories, 1762-1865" => "Q886231",
-    'Voyages: The Trans-Atlantic Slave Trade Database' => 'Q9866',
-    "A Year of Slavery: Jornal do Commercio, 1840" => "Q912129"
+    "They Had Names" => "Q886231",
+    'Trans-Atlantic Slave Trade Database' => 'Q9866',
+    "Year of Slavery" => "Q912129"
 ];
 
 const qprojects=[
