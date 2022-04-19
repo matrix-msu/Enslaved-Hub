@@ -186,37 +186,37 @@ function changeIframe(){
     if(proj == "Louisiana"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Louisiana+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Free"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Free+Blacks+Database+New+Orleans+1840-1860&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Voyages"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Voyages%3A+The+Trans-Atlantic+Slave+Trade+Database&limit=20&offset=0&sort_field=label.sort&display=people');
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Free+Blacks+Database&limit=20&offset=0&sort_field=label.sort&display=people');
+    }else if(proj == "Trans"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Trans+Atlantic+Slave+Trade+Database&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Legacies"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Legacies+of+British+Slave-ownership&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Hutchins"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Hutchins+Center+for+African+%26+African+American+Research=&limit=20&offset=0&sort_field=label.sort&display=people');
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Legacies+of+British+Slave+ownership&limit=20&offset=0&sort_field=label.sort&display=people');
+    }else if(proj == "Biographies"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Biographies+of+the+Enslaved+Era&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Contested"){
-        projLink.setAttribute('href', BASE_URL+'search/people?projects=Contested+Freedom%3A+Free+Persons+of+Color+in+Savannah%2C+GA%2C+1823-1842&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Maranhão"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhão+Inventories+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
+        projLink.setAttribute('href', BASE_URL+'search/people?projects=Contested+Freedom&limit=20&offset=0&sort_field=label.sort&display=people');
+    }else if(proj == "Maranhao"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhao+Inventories+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Family"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Family+Search&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Mortality"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Mortality+in+the+South%2C+1850&limit=20&offset=0&sort_field=label.sort&display=people');
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Mortality+in+the+South&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "African"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=African+Burials+and+Residences+in+Rio+de+Janeiro%2C+1874-1899&limit=20&offset=0&sort_field=label.sort&display=people');
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=African+Burials+and+Residences+in+Rio+de+Janeiro&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "They"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=They+Had+Names%3A+Representations+of+the+Enslaved+in+Liberty+County%2C+Georgia%2C+Estate+Inventories%2C+1762-1865&limit=20&offset=0&sort_field=label.sort&display=people');
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=They+Had+Names&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Take"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Take+Them+In+Families&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "CSI"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=CSI+Dixie&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Advertising"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Advertising%20Gender%20Slave%20Database:%20Escravos%20de%20ganho%20in%20Rio%20de%20Janeiro,%201850-1880');
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Advertising+Gender+Slave+Database');
     }
-    else if(proj == "A"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=A+Year+of+Slavery%3A+Jornal+do+Commercio%2C+1840&limit=20&offset=0&sort_field=label.sort&display=people');
+    else if(proj == "Year"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Year+of+Slavery&limit=20&offset=0&sort_field=label.sort&display=people');
     }
     else if(proj == "Slaves"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Slaves+in+Post-Mortem+Estate+Inventories&limit=20&offset=0&sort_field=label.sort&display=people');
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Slaves+in+Post+Mortem+Estate+Inventories&limit=20&offset=0&sort_field=label.sort&display=people');
     }
     else if(proj == "Missouri"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Missouri+Bills+of+Sale&limit=20&offset=0&sort_field=label.sort&display=people');
@@ -224,4 +224,7 @@ function changeIframe(){
     else if(proj == "Black"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Black+Virginians+in+Blue&limit=20&offset=0&sort_field=label.sort&display=people');
     }
+    else if(proj == "Newspaper"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Newspaper+Brokered+Slave+Trade+Advertisements+in+North+America&limit=20&offset=0&sort_field=label.sort&display=people');
+    }    
 }
