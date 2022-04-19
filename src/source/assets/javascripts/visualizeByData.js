@@ -129,6 +129,7 @@ function drawChart() {
             data.addColumn('number', 'Count');
             // var options = {'title':title,'width':typeConfig['width'],'height':typeConfig['height'],'sliceVisibilityThreshold':.001,is3D:true};
             var options = {'title':title,'width':typeConfig['width'],'height':typeConfig['height'],'sliceVisibilityThreshold':0};
+			console.log(project,pid)
             counts[project][pid].sort(function(a, b) {
                 return b[1] - a[1];
             });
@@ -161,10 +162,7 @@ function changeIframe(){
     var type = $('#chart-type').val();
     var field = $('#chart-field').val();
     var project = $('#chart-project').val()
-    var proj = project.split(" ")[0];
-    if(proj == "Voyages:"){
-        proj = "Voyages";
-    }
+
     //change url
     search_params.set('type', type);
     search_params.set('field', field);
@@ -176,55 +174,23 @@ function changeIframe(){
 
 
     //Add Dynamic 'View Project Records' Link
-    if(proj !== "All"){
+    if(project !== "All"){
         document.getElementById("search-records-link").style.display = "block";
     }else{
         document.getElementById("search-records-link").style.display = "none";
     }
 
     var projLink = document.getElementById("search-records-link");
-    if(proj == "Louisiana"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Louisiana+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Free"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Free+Blacks+Database&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Trans"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Trans+Atlantic+Slave+Trade+Database&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Legacies"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Legacies+of+British+Slave+ownership&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Biographies"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Biographies+of+the+Enslaved+Era&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Contested"){
-        projLink.setAttribute('href', BASE_URL+'search/people?projects=Contested+Freedom&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Maranhao"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Maranhao+Inventories+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Family"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Family+Search&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Mortality"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Mortality+in+the+South&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "African"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=African+Burials+and+Residences+in+Rio+de+Janeiro&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "They"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=They+Had+Names&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Take"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Take+Them+In+Families&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "CSI"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=CSI+Dixie&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Advertising"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Advertising+Gender+Slave+Database');
-    }
-    else if(proj == "Year"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Year+of+Slavery&limit=20&offset=0&sort_field=label.sort&display=people');
-    }
-    else if(proj == "Slaves"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Slaves+in+Post+Mortem+Estate+Inventories&limit=20&offset=0&sort_field=label.sort&display=people');
-    }
-    else if(proj == "Missouri"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Missouri+Bills+of+Sale&limit=20&offset=0&sort_field=label.sort&display=people');
-    }
-    else if(proj == "Black"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Black+Virginians+in+Blue&limit=20&offset=0&sort_field=label.sort&display=people');
-    }
-    else if(proj == "Newspaper"){
-        projLink.setAttribute('href', BASE_URL+'search/all?projects=Newspaper+Brokered+Slave+Trade+Advertisements+in+North+America&limit=20&offset=0&sort_field=label.sort&display=people');
-    }    
+
+	var link_params = new URLSearchParams();
+
+	link_params.set('projects', project);
+    link_params.set('limit', '20');
+    link_params.set('offset', '0');
+    link_params.set('sort_field', 'label.sort');
+    link_params.set('display', 'people');
+
+    var link_url = BASE_URL+'search/all?'+link_params.toString();
+
+	projLink.setAttribute('href', link_url);
 }

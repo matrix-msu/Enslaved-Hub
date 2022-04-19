@@ -417,7 +417,9 @@ HTML;
                           }if($field == "Place Type"){
                             $value = implode(', ', $record['place_type']);
                           }if($field == "Place"){
-                            $value = implode(', ', $record['place']);
+							  if(is_array($record['place'])){
+								  $value = implode(', ', $record['place']);
+							  }
                           }if($field == "Place of Origin"){
                             $value = implode(', ', $record['place_of_origin']);
                           }if($field == "Source Type"){

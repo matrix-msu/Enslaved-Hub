@@ -467,7 +467,7 @@
           "title":"Participant Role"
        }
    },
-   "Slaves in Post Mortem Estate Inventories":{ 
+   "Slaves in Post Mortem Estate Inventories":{
      "TotalRecords":{
        "type":"TotalRecords",
        "width":"244",
@@ -698,7 +698,7 @@
          "height":"400",
          "title":"Ethnolinguistic Descriptors"
       },
-      "Descriptive Ethnonym":{
+      "hasDescriptiveEthnonym":{
          "type":"Table",
          "width":"480",
          "height":"400",
@@ -1352,7 +1352,7 @@
          "height":"400",
          "title":"Participant Role"
       },
-      "Descriptive Occupation":{
+      "hasDescriptiveOccupation":{
          "type":"Table",
          "width":"480",
          "height":"400",
@@ -1433,7 +1433,7 @@
          "title":"Event Types"
       }
    },
-   "Newspaper Brokered Slave Trade Advertisements in North America":{ 
+   "Newspaper Brokered Slave Trade Advertisements in North America":{
      "TotalRecords":{
        "type":"TotalRecords",
        "width":"244",
@@ -1476,17 +1476,11 @@
         "height":"400",
         "title":"Original Source Type"
       },
-      "hasPlaceType":{
-         "type":"PieChart",
-         "width":"976",
-         "height":"400",
-         "title":"Place Types"
-      },
       "hasEventType":{
          "type":"PieChart",
          "width":"976",
          "height":"400",
          "title":"Event Types"
       }
-   }   
+   }
 }

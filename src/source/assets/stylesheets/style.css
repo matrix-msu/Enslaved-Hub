@@ -4213,8 +4213,8 @@ a.modal {
   background-color: #0E3232;
 }
 #footer .footerwrap {
-  max-width: 1120px;
-  padding: 40px;
+  max-width: 1200px;
+  padding: 80px;
   margin: 50px auto 0;
   display: flex;
   justify-content: space-between;
@@ -4259,7 +4259,11 @@ a.modal {
 }
 #footer .top {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+#footer .top a {
+  width: 27%;
 }
 #footer .bottom {
   align-items: flex-end;
@@ -4270,6 +4274,7 @@ a.modal {
   justify-content: space-between;
   width: 100%;
   text-align: left;
+  margin-top: 20px;
   margin-bottom: 30px;
 }
 #footer .bottom .first {
@@ -4337,14 +4342,17 @@ a.modal {
   #footer .footerwrap .top {
     flex-wrap: wrap;
     margin-bottom: 30px;
+    justify-content: space-around;
   }
   #footer .footerwrap .top a {
     padding: 20px;
+    width: 35%;
   }
   #footer .footerwrap .bottom {
     flex-wrap: wrap;
     justify-content: center;
     gap: 50px;
+    margin-top: 0;
   }
 }
 @media screen and (max-width: 600px) {
