@@ -19,7 +19,7 @@ const projects=[
     "Slaves in Post Mortem Estate Inventories" => "Q549379",
     "Take Them In Families" =>"Q734407",
     "They Had Names" => "Q886231",
-    'Trans-Atlantic Slave Trade Database' => 'Q9866',
+    'Trans Atlantic Slave Trade Database' => 'Q9866',
     "Year of Slavery" => "Q912129"
 ];
 
