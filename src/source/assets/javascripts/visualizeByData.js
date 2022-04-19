@@ -187,7 +187,7 @@ function changeIframe(){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Louisiana+Slave+Database&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Free"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Free+Blacks+Database&limit=20&offset=0&sort_field=label.sort&display=people');
-    }else if(proj == "Voyages"){
+    }else if(proj == "Trans"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Trans+Atlantic+Slave+Trade+Database&limit=20&offset=0&sort_field=label.sort&display=people');
     }else if(proj == "Legacies"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Legacies+of+British+Slave+ownership&limit=20&offset=0&sort_field=label.sort&display=people');
