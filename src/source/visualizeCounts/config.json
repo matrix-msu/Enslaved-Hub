@@ -72,7 +72,7 @@
           "height":"400",
           "title":"Descriptive Role"
        },
-       "Descriptive Ethnonym":{
+       "hasDescriptiveEthnonym":{
           "type":"Table",
           "width":"480",
           "height":"400",

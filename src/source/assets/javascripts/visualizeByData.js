@@ -129,7 +129,7 @@ function drawChart() {
             data.addColumn('number', 'Count');
             // var options = {'title':title,'width':typeConfig['width'],'height':typeConfig['height'],'sliceVisibilityThreshold':.001,is3D:true};
             var options = {'title':title,'width':typeConfig['width'],'height':typeConfig['height'],'sliceVisibilityThreshold':0};
-			console.log(project,pid)
+			// console.log(project,pid)
             counts[project][pid].sort(function(a, b) {
                 return b[1] - a[1];
             });
