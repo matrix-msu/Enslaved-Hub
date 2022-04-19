@@ -224,4 +224,7 @@ function changeIframe(){
     else if(proj == "Black"){
         projLink.setAttribute('href', BASE_URL+'search/all?projects=Black+Virginians+in+Blue&limit=20&offset=0&sort_field=label.sort&display=people');
     }
+    else if(proj == "Newspaper"){
+        projLink.setAttribute('href', BASE_URL+'search/all?projects=Newspaper+Brokered+Slave+Trade+Advertisements+in+North+America&limit=20&offset=0&sort_field=label.sort&display=people');
+    }    
 }
