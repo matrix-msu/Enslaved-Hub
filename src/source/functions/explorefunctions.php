@@ -480,11 +480,16 @@ union{
 }
 
 QUERY;
-    // echo $eventQuery['query'];die;
-    $result = blazegraphSearch($eventQuery);
-    if (empty($result[0])) $result=array();
-    $connections['Event-count'] = count($result);
-    $connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
+	// echo $eventQuery['query'];die;
+	$result = blazegraphSearch($eventQuery);
+	$filterEvents = array();
+	foreach($result as $array){
+		if(!empty($array)) $filterEvents[] = $array;
+	}
+	$result = $filterEvents;
+	// echo json_encode($result);die;
+	$connections['Event-count'] = count($result);
+	$connections['Event'] = array_slice($result, 0, 8);  // return the first 8 results
 
     //sources connected to a person
     $sourceQuery['query'] = <<<QUERY
