@@ -345,6 +345,150 @@
     }
 }
 
+// Search bars on data page--
+
+.data-search {
+  margin: 30px 0 50px;
+
+  form {
+    align-items: center;
+    display: flex;
+    width: 100%;
+
+    .input-field{
+          height: 50px;
+          border: 2px white solid;
+          border-radius: 5px;
+          outline: none;
+          background-color: #FFF;
+          box-shadow: 0 3px 10px 0 rgba(0,0,0,0.1);
+          padding-left: 20px;
+          font-size: 14px;
+          font-family: aleobold;
+          color: $base-dark;
+          transition: all 0.3s;
+
+          &:hover{
+              border: 2px solid $sub-base;
+          }
+          &:focus-within{
+              border: 2px solid $sub-base;
+          }
+      }
+
+      .data-search {
+        width: 48%;
+        margin: 0;
+      }
+
+      .start-year {
+        width: 15%;
+        margin-left: 30px;
+        margin-right: 10px;
+      }
+
+      p {
+        font-size: 15px;
+      }
+
+      .end-year {
+        width: 15%;
+        margin-left: 10px;
+        margin-right: 30px;
+      }
+
+      button {
+        cursor: pointer;
+        height: 50px;
+        min-width: 120px;
+        padding: 0 20px;
+        border: none;
+        border-radius: 5px;
+        color: #FFF;
+        font-size: 15px;
+        outline: none;
+        font-family: aleobold;
+        box-shadow: 0 5px 15px 0 rgba(115,47,35,0.2);
+        background: $base-dark;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: $base-dark-hover;
+        }
+      }
+
+      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: #0E3232;
+          opacity: .8; /* Firefox */
+          font-family: aleobolditalic;
+      }
+
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+          color: #0E3232;
+          opacity: .8;
+          font-family: aleobolditalic;
+      }
+
+      ::-ms-input-placeholder { /* Microsoft Edge */
+          color: #0E3232;
+          opacity: .8;
+          font-family: aleobolditalic;
+      }
+
+
+  }
+}
+
+
+@media screen and (max-width: 900px){
+  .data-search{
+          form{
+            flex-wrap: wrap;
+            gap: 20px;
+
+              .data-search{
+                width: 100%;
+              }
+
+              .start-year {
+                width: 35%;
+                margin-left: 0;
+                margin-right: 0;
+              }
+
+              .end-year {
+                width: 35%;
+                margin-left: 0;
+                margin-right: 0;
+              }
+
+              button {
+                width: calc(30% - 76px);
+                min-width: initial;
+              }
+          }
+      }
+}
+
+@media screen and (max-width: 600px){
+  .data-search{
+          form{
+
+              .start-year {
+                width: calc(50% - 28px);
+              }
+
+              .end-year {
+                width: calc(50% - 28px);
+              }
+
+              button {
+                width: 100%;
+              }
+          }
+      }
+}
+
 //safari hack to align the placeholder text of multiselect boxes
 @media not all and (min-resolution:.001dpcm) {
     @supports (-webkit-appearance:none){
