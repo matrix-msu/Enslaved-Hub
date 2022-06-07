@@ -13,9 +13,13 @@ constants_and_visualizations:
   stage: prepare
   trigger:
     project: matrix/enslaved-org-operations/visualize-counts-updater
+    strategy: depend
 
 deploy-dev:
   stage: build_and_deploy
+  needs: 
+    - constants_and_visualizations
+  when: on_success
   script:
    - apk add php7-tokenizer
    - php -v
