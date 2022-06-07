@@ -16,6 +16,9 @@ constants_and_visualizations:
 
 deploy-dev:
   stage: build_and_deploy
+  needs: 
+    - constants_and_visualizations
+  when: on_success
   script:
    - apk add php7-tokenizer
    - php -v
