@@ -99,7 +99,7 @@ function returnAllRecords(records){
 }
 
 function sortResults(){
-    var sortField = "Title";
+    var sortField = "Name";
     if(sort == "A - Z"){
         result = result.sort(compareAtoZ(sortField));
     }else if(sort == "Z - A"){
@@ -120,7 +120,7 @@ function compareLatest(sortField) {
     return function( a, b ){
 		var d1 = new Date(a.item[sortField]);
 		var d2 = new Date(b.item[sortField]);
-		
+
         if ( d1.getTime() > d2.getTime()){
             return -1;
         }

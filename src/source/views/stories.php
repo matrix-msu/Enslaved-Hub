@@ -136,7 +136,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
                 <?php
                 $sort_text = "Sort By";
                 if (isset($_GET['field']) && isset($_GET['direction'])) {
-                    if ($_GET['field'] == 'title') {
+                    if ($_GET['field'] == 'name') {
                         if ($_GET['direction'] == 'asc') {
                             $sort_text = "Alphabetical (A-Z)";
                         } else {
