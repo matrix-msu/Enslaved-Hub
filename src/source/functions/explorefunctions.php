@@ -787,7 +787,7 @@ QUERY;
       $result = blazegraphSearch($sourceQuery);
       $connections['Source-count'] = count($result);
       $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
-
+// echo $eventsQuery['query'];die;
       // place connections
       //placebucket query add a new tab
    $relatedPlaces['query'] = <<<QUERY
@@ -809,28 +809,61 @@ QUERY;
   $result = blazegraphSearch($relatedPlaces);
   $connections['RelatedPlace-count'] = count($result);
   $connections['RelatedPlace'] = array_slice($result, 0, 8);  // return the first 8 results
-/*
-  foreach ($result as $key => $value) {
-    $result[$key]['place'] = $result[$key]['otherp'];
-    unset($result[$key]['otherp']);
-    $result[$key]['placelabel'] = $result[$key]['relatedPlaces'];
-    unset($result[$key]['relatedPlaces']);
-  }*/
 
 
-  $placeQuery['query'] = <<<QUERY
-  SELECT ?place ?placelabel (SHA512(CONCAT(STR(?places), STR(RAND()))) as ?random)
-  WHERE{
-      	VALUES ?plid { $wd:$QID }.
-        ?place $wdt:$locatedIn ?plid.
-        ?place $wdt:$hasName ?placelabel.
-  }ORDER BY ?random
-  QUERY;
+	$placeQuery['query'] = <<<QUERY
+	SELECT ?place ?placelabel (SHA512(CONCAT(STR(?places), STR(RAND()))) as ?random)
+	WHERE{
+	VALUES ?plid { $wd:$QID }.
+	?place $wdt:$locatedIn ?plid.
+	?place $wdt:$hasName ?placelabel.
+	}ORDER BY ?random
+	QUERY;
 
-  $result = blazegraphSearch($placeQuery);
-  $connections['Place-count'] = count($result);
-  $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
-    return json_encode($connections);
+	$result = blazegraphSearch($placeQuery);
+	$connections['Place-count'] = count($result);
+	$connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
+
+	// var_dump($result);die;
+	foreach ($result as $key => $value) {
+		// $result[$key]['place'] = $result[$key]['otherp'];
+		// unset($result[$key]['otherp']);
+		// $result[$key]['placelabel'] = $result[$key]['relatedPlaces'];
+		// unset($result[$key]['relatedPlaces']);
+		$relatedQid = $value['place']['value'];
+		$relatedQid = explode('/', $relatedQid);
+		$relatedQid = array_pop($relatedQid);
+		// var_dump($relatedQid);die;
+		$eventsCounter['query'] = <<<QUERY
+		SELECT DISTINCT (COUNT(?event) as ?counter)
+
+		WHERE
+		{
+		VALUES ?place { $wd:$relatedQid }.
+		?event $wdt:$instanceOf $wd:$event.
+		?event $wdt:$atPlace ?place.
+		?event $wdt:$hasName ?eventlabel
+		}ORDER BY ?random
+		QUERY;
+		$eventsQuery['query'] = <<<QUERY
+		SELECT DISTINCT ?event ?eventlabel
+
+		WHERE
+		{
+		VALUES ?place { $wd:$relatedQid }.
+		?event $wdt:$instanceOf $wd:$event.
+		?event $wdt:$atPlace ?place.
+		?event $wdt:$hasName ?eventlabel
+		}LIMIT 8
+		QUERY;
+		$result = blazegraphSearch($eventsQuery);
+		$result_counter = blazegraphSearch($eventsCounter);
+		$connections['Event-count'] += $result_counter[0]['counter']['value'];
+		$connections['Event'] = array_merge($connections['Event'],$result);
+	}
+	$connections['Event'] = array_slice($connections['Event'], 0, 8);  // return the first 8 results
+
+	return json_encode($connections);
 }
 
 ?>
