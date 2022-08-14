@@ -6,15 +6,15 @@
   </div>
 </div>
 <header class="nav-header">
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-54531960-14"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-STMMX6RHTL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'UA-54531960-14');
-</script>
+    gtag('config', 'G-STMMX6RHTL');
+  </script>
     <div class="headerwrap">
         <div class="leftnav">
             <div class="logo"><a href="<?php echo BASE_URL;?>"><img src="<?php echo BASE_IMAGE_URL;?>Logo.svg" alt="Enslaved Peoples of Historical Slave Trade"/></a></div>

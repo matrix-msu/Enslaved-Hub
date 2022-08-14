@@ -42,8 +42,11 @@ foreach($stories as $kid => $record){
     );
 }
 
-
 define("ALL_STORIES", $stories);
+
+$generatedConstants = file_get_contents('https://manta.matrix.msu.edu/msumatrix/public/exports/enslaved.org/visualizeCounts/cvconstants.php');
+$fileName= "./source/generatedConstants.php";
+file_put_contents($fileName, $generatedConstants);
 
 return [
     'production' => false,

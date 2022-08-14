@@ -21,7 +21,7 @@
           <div class="follow">
             <h6>Follow</h6>
             <div class="social-icons">
-              <a href="https://twitter.com/Matrix_MSU" target="_blank"><img src="<?php echo BASE_IMAGE_URL;?>twitter.svg"  alt="Twitter Icon" /></a>
+              <a href="https://twitter.com/EnslavedOrg" target="_blank"><img src="<?php echo BASE_IMAGE_URL;?>twitter.svg"  alt="Twitter Icon" /></a>
               <a href="https://www.linkedin.com/company/75406866/admin/" target="_blank"><img src="<?php echo BASE_IMAGE_URL;?>linkedin.svg"  alt="LinkedIn Icon" /></a>
               <a href="https://www.instagram.com/msumatrix/" target="_blank"><img src="<?php echo BASE_IMAGE_URL;?>instagram.svg"  alt="Instagram Icon" /></a>
             </div>
