@@ -28,6 +28,13 @@ p, ol, ul, li {
 
 }
 
+hr {
+  margin: 70px 0;
+  border-color: $base-dark;
+  border-top-width: 2px;
+  opacity: 0.1;
+}
+
 strong {
   font-weight: normal;
   font-family: aleobold;

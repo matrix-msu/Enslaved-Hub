@@ -80,6 +80,13 @@ p, ol, ul, li {
   line-height: 1.5;
 }
 
+hr {
+  margin: 70px 0;
+  border-color: #0E3232;
+  border-top-width: 2px;
+  opacity: 0.1;
+}
+
 strong {
   font-weight: normal;
   font-family: aleobold;
@@ -2072,6 +2079,136 @@ input:not([type=image]), textarea {
   background: #CF5440;
 }
 
+.data-search {
+  margin: 30px 0 50px;
+}
+.data-search form {
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+.data-search form .input-field {
+  height: 50px;
+  border: 2px white solid;
+  border-radius: 5px;
+  outline: none;
+  background-color: #FFF;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+  padding-left: 20px;
+  font-size: 14px;
+  font-family: aleobold;
+  color: #0E3232;
+  transition: all 0.3s;
+}
+.data-search form .input-field:hover {
+  border: 2px solid #C24F3C;
+}
+.data-search form .input-field:focus-within {
+  border: 2px solid #C24F3C;
+}
+.data-search form .data-search {
+  width: 48%;
+  margin: 0;
+}
+.data-search form .start-year {
+  width: 15%;
+  margin-left: 30px;
+  margin-right: 10px;
+}
+.data-search form p {
+  font-size: 15px;
+}
+.data-search form .end-year {
+  width: 15%;
+  margin-left: 10px;
+  margin-right: 30px;
+}
+.data-search form button {
+  cursor: pointer;
+  height: 50px;
+  min-width: 120px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 5px;
+  color: #FFF;
+  font-size: 15px;
+  outline: none;
+  font-family: aleobold;
+  box-shadow: 0 5px 15px 0 rgba(115, 47, 35, 0.2);
+  background: #0E3232;
+  transition: all 0.3s ease;
+}
+.data-search form button:hover {
+  background: #124040;
+}
+.data-search form ::-moz-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #0E3232;
+  opacity: 0.8;
+  /* Firefox */
+  font-family: aleobolditalic;
+}
+.data-search form :-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #0E3232;
+  opacity: 0.8;
+  /* Firefox */
+  font-family: aleobolditalic;
+}
+.data-search form ::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #0E3232;
+  opacity: 0.8;
+  /* Firefox */
+  font-family: aleobolditalic;
+}
+.data-search form :-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #0E3232;
+  opacity: 0.8;
+  font-family: aleobolditalic;
+}
+.data-search form ::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #0E3232;
+  opacity: 0.8;
+  font-family: aleobolditalic;
+}
+
+@media screen and (max-width: 900px) {
+  .data-search form {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .data-search form .data-search {
+    width: 100%;
+  }
+  .data-search form .start-year {
+    width: 35%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .data-search form .end-year {
+    width: 35%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .data-search form button {
+    width: calc(30% - 76px);
+    min-width: initial;
+  }
+}
+@media screen and (max-width: 600px) {
+  .data-search form .start-year {
+    width: calc(50% - 28px);
+  }
+  .data-search form .end-year {
+    width: calc(50% - 28px);
+  }
+  .data-search form button {
+    width: 100%;
+  }
+}
 @media not all and (-webkit-min-device-pixel-ratio: 0), not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
     .direct-search .searchwrap form .search-section .inputwrap .select2-container .select2-selection--multiple .select2-selection__rendered .select2-search--inline .select2-search__field {
@@ -4158,7 +4295,7 @@ a.modal {
   background-color: #fff;
   transition: all 0.3s;
   position: relative;
-  padding: 20px;
+  padding: 20px 25px 23px;
 }
 .card.contributor h2 {
   line-height: 1;
@@ -4176,6 +4313,108 @@ a.modal {
 .card.contributor ul {
   margin: 0;
   padding: 0 25px;
+}
+.card.contributor .details {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 35px 0;
+  gap: 10px;
+}
+.card.contributor .details .detail {
+  margin-right: 25px;
+}
+.card.contributor .details .detail p {
+  color: #0E3232;
+  font-size: 14px;
+  font-family: aleoregular;
+}
+.card.contributor .details .detail h5 {
+  font-size: 14px;
+  font-style: italic;
+  font-family: aleobold;
+}
+.card.contributor .bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  grid-gap: 30px;
+}
+.card.contributor .bottom h5 {
+  font-size: 14px;
+  font-style: italic;
+  font-family: aleobold;
+}
+.card.contributor .bottom .connectionswrap .connections {
+  min-height: 30px;
+  max-width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: start;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-right: 25px;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons:hover .connection-menu {
+  display: block;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons img {
+  margin-right: 10px;
+  height: 22px;
+  opacity: 0.8;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons span {
+  font-size: 14px;
+  color: #0E3232;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons .tooltip {
+  visibility: hidden;
+  background-color: #0E3232;
+  color: #FAF7F2;
+  padding: 8px 13px 9px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: aleo;
+  font-family: aleobold;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 100;
+  bottom: 145%;
+  left: -25%;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons .tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #0E3232 transparent transparent transparent;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons:hover .tooltip {
+  visibility: visible;
+}
+.card.contributor .bottom .buttons {
+  display: flex;
+  gap: 20px;
+  align-items: end;
+}
+.card.contributor .bottom .buttons .button {
+  border-radius: 5px;
+  background-color: rgba(14, 50, 50, 0.1);
+  color: #0E3232;
+  text-decoration: none;
+  padding: 12px 17px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+.card.contributor .bottom .buttons .button:hover {
+  background-color: rgba(14, 50, 50, 0.2);
 }
 
 .card.partner {

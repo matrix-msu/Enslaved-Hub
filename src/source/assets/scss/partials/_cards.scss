@@ -210,7 +210,7 @@
     background-color: $white;
     transition: all .3s;
     position: relative;
-    padding: 20px;
+    padding: 20px 25px 23px;
 
     h2 {
       line-height: 1;
@@ -230,6 +230,130 @@
 	    margin: 0;
 		padding: 0 25px;
     }
+
+    .details{
+        display: flex;
+        flex-wrap: wrap;
+        margin: 35px 0;
+        gap: 10px;
+
+        .detail{
+            margin-right: 25px;
+
+            p{
+                color: $base-dark;
+                font-size: 14px;
+                font-family: aleoregular;
+            }
+            h5{
+                font-size: 14px;
+                font-style: italic;
+                font-family: aleobold;
+            }
+        }
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      grid-gap: 30px;
+
+      h5{
+          font-size: 14px;
+          font-style: italic;
+          font-family: aleobold;
+      }
+
+    .connectionswrap{
+
+        .connections{
+            min-height: 30px;
+            max-width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: start;
+
+            .card-icons{
+                position: relative;
+                display: flex;
+                align-items: center;
+                font-size: 12px;
+                margin-right: 25px;
+
+                &:hover{
+                    .connection-menu{
+                        display: block;
+                    }
+                }
+
+                img{
+                    margin-right: 10px;
+                    height: 22px;
+                    opacity: .8;
+                }
+                span{
+                    font-size: 14px;
+                    color: $base-dark;
+                }
+                .tooltip{
+                    visibility: hidden;
+                    background-color: $base-dark;
+                    color: $base-light;
+                    padding: 8px 13px 9px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    font-family: aleo;
+                    font-family: aleobold;
+
+                    /* Position the tooltip */
+                    position: absolute;
+                    z-index: 100;
+                    bottom: 145%;
+                    left: -25%;
+
+                }
+                .tooltip::after {
+                    content: " ";
+                    position: absolute;
+                    top: 100%; /* At the bottom of the tooltip */
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: $base-dark transparent transparent transparent;
+                }
+
+                &:hover{
+
+                    .tooltip{
+                        visibility: visible;
+                    }
+                }
+            }
+        }
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      align-items: end;
+
+      .button {
+        border-radius: 5px;
+        background-color: rgba(14,50,50,0.1);
+        color: $base-dark;
+        text-decoration: none;
+        padding: 12px 17px;
+        font-size: 15px;
+        transition: all .2s ease;
+
+        &:hover {
+          background-color: rgba(14,50,50,0.2);
+        }
+      }
+    }
+  }
 }
 
 // Partner Cards
