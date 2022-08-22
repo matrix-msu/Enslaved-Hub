@@ -63,6 +63,7 @@ function search(searchQuery){
 			});
 		}
 		var personNum = 0; var placeNum = 0;var eventNum = 0;var sourceNum = 0;
+		if(!record['instance of']) return;
 		$.each(record['instance of'], function(index,item){
 			var label = item[0];
 			var number = item[1];
