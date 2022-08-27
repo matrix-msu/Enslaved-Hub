@@ -18,7 +18,8 @@ $GLOBALS['api_routes'] = array(
     'api/filteredCounts' => array('search.php', 'get_field_counts'),
     'api/searchFilterCounts' => array('search.php', 'get_search_filters'),
     'api/getFeatured' => array('search.php', 'get_featured_records'),
-    'api/getColumns' => array('search.php', 'get_columns')
+    'api/getColumns' => array('search.php', 'get_columns'),
+    'api/status' => array('status.php', 'status'),
 );
 
 $GLOBALS['routes'] = array(
