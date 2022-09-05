@@ -1507,6 +1507,12 @@
          "width":"976",
          "height":"400",
          "title":"Event Types"
+      },
+      "hasInterAgentRelationshipTypeTo":{
+         "type":"Table",
+         "width":"976",
+         "height":"400",
+         "title":"Relationships"
       }
    }
 }
