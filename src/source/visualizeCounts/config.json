@@ -1546,17 +1546,17 @@
         "height":"400",
         "title":"Participant Role"
      },
-      "hasEventType":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":"Event Types"
-      },
       "hasInterAgentRelationshipTypeTo":{
          "type":"Table",
-         "width":"976",
+         "width":"480",
          "height":"400",
          "title":"Relationships"
+      },
+      "hasEventType":{
+         "type":"PieChart",
+         "width":"976",
+         "height":"400",
+         "title":"Event Types"
       }
    }   
 }
