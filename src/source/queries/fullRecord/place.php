@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?label ?geonames ?code ?description ?locIn ?project
+SELECT ?label ?geonames ?wikidataID ?code ?description ?locIn ?project
 (group_concat(distinct ?name1; separator = "||") as ?name)
 (group_concat(distinct ?alternativename; separator = "||") as ?altname)
 (group_concat(distinct ?Ptype; separator = "||") as ?type)
@@ -23,10 +23,11 @@ SELECT ?label ?geonames ?code ?description ?locIn ?project
   OPTIONAL{?place $wdt:$locatedIn ?locIn.
           ?locIn $rdfs:label ?locatedLabel}.
   OPTIONAL{ ?place $wdt:$geonamesID ?geonames.}
+  OPTIONAL{ ?place $wdt:$wikidataID ?wikidataID.}
   OPTIONAL{ ?place $wdt:$modernCountryCode ?code.}
   OPTIONAL{?place $wdt:$hasName ?name1}.
   OPTIONAL{?place $wdt:$hasAlternateName ?alternativename}.
   OPTIONAL{?place $wdt:$hasCoordinates ?coordinate}.
 
-}GROUP BY ?label ?geonames ?code ?description ?locIn ?project
+}GROUP BY ?label ?geonames ?wikidataID ?code ?description ?locIn ?project
 QUERY;

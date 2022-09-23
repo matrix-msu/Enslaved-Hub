@@ -104,6 +104,7 @@ function getFullRecordHtml(){
         'type' => ['standard','Type'],
         'availableFrom' => ['standard','Available From'],
         'geonames' => ['standard','Geoname Identifier'],
+        'wikidataID' => ['standard','Wikidata ID'],
         'code' => ['standard','Modern Country Code'],
         'coordinates' => ['coordinates','Coordinates'],
         'sourceLabel' => ['sourceLabel','Sources'],
