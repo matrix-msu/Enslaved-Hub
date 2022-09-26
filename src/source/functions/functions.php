@@ -467,6 +467,10 @@ HTML;
                 if (is_array($record['geoname_id']) && count($record['geoname_id']) > 0)
                     $geonames = $record['geoname_id'][0];
 
+                $wikidataID = '';
+                if (is_array($record['wikidataid']) && count($record['wikidataid']) > 0)
+                    $wikidataID = $record['wikidataid'][0];
+
                 $code = '';
                 if (is_array($record['modern_country_code']) && count($record['modern_country_code']) > 0)
                     $code = $record['modern_country_code'][0];
@@ -522,6 +526,11 @@ HTML;
                             $geonames = "<div class='detail'><p class='detail-title'>Geoname Identifier&nbsp;</p><p>$geonames</p></div>";
                         }
 
+                        $wikidataIDHtml = '';
+                        if ($wikidataID != ''){
+                            $wikidataID = "<div class='detail'><p class='detail-title'>Wikidata Identifier&nbsp;</p><p>$wikidataID</p></div>";
+                        }
+
                         $countryHtml = '';
                         if ($country != ''){
                             $countryHtml = "<div class='detail'><p class='detail-title'>Modern Country</p><p>$country</p></div>";
@@ -541,6 +550,7 @@ HTML;
             $typeHtml
             $locatedInHtml
             $geonamesHtml
+            $wikidataIDHtml
             $countryHtml
         </div>
         $connections

@@ -626,6 +626,9 @@ function createDetailHtml($statement,$label,$link=''){
           else if($label === "Geoname Identifier"){
             $html .= '<a target="_blank" href="http://www.geonames.org/' . $statementArr[0] . '/">';
           }
+          else if($label === "Wikidata ID"){
+            $html .= '<a target="_blank" href="https://www.wikidata.org/wiki/' . $statementArr[0] . '">';
+          }
           else if($label === "Sources"){
             $html .= '<a href="' . $baseurl . 'record/source/' . $qidArr[$x] . '">';
           }
@@ -668,6 +671,10 @@ function createDetailHtml($statement,$label,$link=''){
     			  }
           }
           if($label == 'Geoname Identifier'){
+            $html .= "<div><a></a></div><br>";
+          }
+
+          if($label == 'Wikidata ID'){
             $html .= "<div><a></a></div><br>";
           }
 
