@@ -1590,17 +1590,17 @@
         "height":"400",
         "title":"Participant Role"
      },
-        "hasEthnolinguisticDescriptor":{
-          "type":"PieChart",
-          "width":"480",
-          "height":"400",
-          "title":"Ethnolinguistic Descriptors"
-      },
       "hasEventType":{
          "type":"PieChart",
-         "width":"976",
+         "width":"480",
          "height":"400",
          "title":"Event Types"
+      },
+     "hasEthnolinguisticDescriptor":{
+          "type":"PieChart",
+          "width":"976",
+          "height":"400",
+          "title":"Ethnolinguistic Descriptors"
       }
    }    
 }
