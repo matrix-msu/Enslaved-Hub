@@ -70,6 +70,16 @@ if (isset($story2Images[0])){
     <img class="header-background home-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $GLOBALS['bg'][$GLOBALS['randIndex']];?>" alt="Enslaved Background Image"></div>
 </div>
 <main id="home" class="home">
+  <section class="section section-ethics">
+      <div class="section-content">
+          <div class="row">
+                  <h2 class="section-title">Statement of Ethics</h2>
+                  <p class="paragraph">Enslaved frames the ethics of our project around inclusive and reparative scholarship about historical slavery and responsible stewardship of historical data about enslaved people in digital spaces.</p>
+                  <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL;?>statementofEthics">View Our Statment of Ethics</a></p>
+          </div>
+      </div>
+  </section>
+
     <section class="section section-explore">
         <div class="section-content">
             <div class="row">
@@ -78,7 +88,7 @@ if (isset($story2Images[0])){
                     <p class="paragraph"><?php echo array_key_exists("Explore", $cache_data) ? $cache_data["Explore"] : "" ?></p>
                 </div>
 
-                <div class="col">
+                <div class="col explore-box">
                     <a class="content-link" href="<?php echo BASE_URL;?>search/people">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                         <p class="type">People</p>
@@ -152,7 +162,7 @@ if (isset($story2Images[0])){
                 <div class="col">
                   <h2 class="section-title">About</h2>
                     <p class="paragraph"><?php echo array_key_exists("About", $cache_data) ? $cache_data["About"] : "" ?></p>
-                    <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL."about";?>">Learn More</a></p>
+                    <p class="mt-lg"><a class="text-link" href="<?php echo BASE_URL."about";?>">Learn More and View Our Ethics Statement</a></p>
                 </div>
 
                 <div class="col">

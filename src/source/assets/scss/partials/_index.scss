@@ -161,11 +161,22 @@
         }
     }
 
+    .section-ethics {
+       background: url('../images/bg-map.jpg');
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
+       box-shadow: 0 20px 30px 0 rgba(0,0,0,0.07);
+       padding: 90px 0 70px 0;
+       position: relative;
+       z-index: 2;
+   }
+
     .section-explore {
-        background: url('../images/bg-map.jpg');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+      .explore-box {
+        box-shadow: 0 5px 10px 0 rgba(0,0,0,0.05);
+        padding: 0;
+      }
     }
 
      .section-epp {
