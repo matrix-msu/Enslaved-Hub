@@ -104,7 +104,6 @@ function getFullRecordHtml(){
         'type' => ['standard','Type'],
         'availableFrom' => ['standard','Available From'],
         'geonames' => ['standard','Geoname Identifier'],
-        'wikidataID' => ['standard','Wikidata ID'],
         'code' => ['standard','Modern Country Code'],
         'coordinates' => ['coordinates','Coordinates'],
         'sourceLabel' => ['sourceLabel','Sources'],
@@ -709,7 +708,7 @@ function getPlacePageConnections($QID) {
     	?people $wdt:$hasName ?peoplename
   }LIMIT 8
 QUERY;
-
+	// echo $peopleQuery['query'];die;
    $result = blazegraphSearch($peopleQuery);
    $result_counter = blazegraphSearch($peoplecounter);
 
@@ -861,8 +860,38 @@ QUERY;
 		$result_counter = blazegraphSearch($eventsCounter);
 		$connections['Event-count'] += $result_counter[0]['counter']['value'];
 		$connections['Event'] = array_merge($connections['Event'],$result);
+
+		$peoplecounter['query'] = <<<QUERY
+		SELECT DISTINCT (COUNT(?people) as ?counter)
+		{
+		VALUES ?place { $wd:$relatedQid }.
+		?event $wdt:$instanceOf $wd:$event.
+		?event $wdt:$atPlace ?place.
+		?event $p:$providesParticipantRole ?role.
+		?role  $ps:$providesParticipantRole ?participant.
+		?role  $pq:$hasParticipantRole ?people.
+		?people $wdt:$hasName ?peoplename
+		}
+		QUERY;
+		$peopleQuery['query'] = <<<QUERY
+		SELECT DISTINCT ?people ?peoplename
+		{
+		VALUES ?place { $wd:$relatedQid }.
+		?event $wdt:$instanceOf $wd:$event.
+		?event $wdt:$atPlace ?place.
+		?event $p:$providesParticipantRole ?role.
+		?role  $ps:$providesParticipantRole ?participant.
+		?role  $pq:$hasParticipantRole ?people.
+		?people $wdt:$hasName ?peoplename
+		}LIMIT 8
+		QUERY;
+		$result = blazegraphSearch($peopleQuery);
+		$result_counter = blazegraphSearch($peoplecounter);
+		$connections['Person-count'] += $result_counter[0]['counter']['value'];
+		$connections['Person'] = array_merge($connections['Person'],$result);
 	}
 	$connections['Event'] = array_slice($connections['Event'], 0, 8);  // return the first 8 results
+	$connections['Person'] = array_slice($connections['Person'], 0, 8);  // return the first 8 results
 
 	return json_encode($connections);
 }
