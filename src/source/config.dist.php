@@ -63,6 +63,11 @@ $GLOBALS['FILTER_ARRAY'] = Array(
     ),
     "sources" => array(
         "Source Type"
+    ),
+    "stories" => array(
+      "Places",
+      "Gender",
+      "Life Events"
     )
 );
 
