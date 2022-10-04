@@ -37,6 +37,7 @@ $GLOBALS['routes'] = array(
     'fAQ' => 'faq.php',
     'featuredNews' => 'news.php',
     'statementofEthics' => 'ethicsStatement.php',
+    'statement%20of%20Ethics' => 'ethicsStatement.php',
     'forEducators' => 'educators.php',
     'drawers' => 'drawers.php',
     'fullRecord' => 'fullrecord.php',
