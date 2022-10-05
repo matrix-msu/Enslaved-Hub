@@ -1602,5 +1602,61 @@
           "height":"400",
           "title":"Ethnolinguistic Descriptors"
       }
-   }    
+   },
+   "Louisiana Slave Conspiracies":{
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasParticipantRole":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Participant Role"
+     },
+      "hasEventType":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Event Types"
+      },
+      "hasInterAgentRelationshipTypeTo":{
+         "type":"Table",
+         "width":"480",
+         "height":"400",
+         "title":"Relationships"
+      },
+     "hasSex":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Sex"
+      },
+     "hasEthnolinguisticDescriptor":{
+          "type":"PieChart",
+          "width":"976",
+          "height":"400",
+          "title":"Ethnolinguistic Descriptors"
+      },
+        "hasOriginalSourceType":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Original Source Type"
+        },
+        "hasPlaceType":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Place Type"
+        }              
+   }       
 }
