@@ -1645,18 +1645,6 @@
           "width":"976",
           "height":"400",
           "title":"Ethnolinguistic Descriptors"
-      },
-        "hasOriginalSourceType":{
-          "type":"Table",
-          "width":"480",
-          "height":"400",
-          "title":"Original Source Type"
-        },
-        "hasPlaceType":{
-          "type":"Table",
-          "width":"480",
-          "height":"400",
-          "title":"Place Type"
-        }              
+      }              
    }       
 }
