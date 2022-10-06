@@ -1,7 +1,12 @@
 <?php
     $cache_data = Json_GetData_ByTitle("Visualize");
 ?>
-
+<style>
+    body {
+        /* disabling horizontal body scrolling for the visualize page */
+        overflow-x: hidden;
+    }
+</style>
 <div class="container header visualizeByData-header">
   <div class="image-container visualizeByData-page image-only">
     <img class="header-background visualizeByData-page" src="<?php echo BASE_URL;?>assets/images/<?php echo $bg[$randIndex];?>" alt="Enslaved Background Image">

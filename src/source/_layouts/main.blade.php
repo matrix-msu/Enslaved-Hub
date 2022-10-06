@@ -8,6 +8,7 @@
     <?php if(defined('EXPLORE_JS_VARS')){echo EXPLORE_JS_VARS;}?>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#0E3232">
 
     <!-- Link Previews -->
     <meta property="og:title" content="Enslaved: Peoples of the Historical Slave Trade">

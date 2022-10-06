@@ -1,6 +1,7 @@
 .info{
   .search-section{
-      max-width: 1000px;
+      max-width: 1030px;
+      padding: 0 15px;
       margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
@@ -240,7 +241,6 @@
     margin: 0 auto;
     display: block;
     // height   : 450px;
-    overflow : hidden;
     position : relative;
     border: 2px solid #FFF;
     border-radius:  5px;
@@ -350,4 +350,34 @@
 
 .google-visualization-table>div:first-child {
   border-radius: 4px !important;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .info {
+    .search-section {
+      padding-bottom: 30px;
+        .inputwrap {
+        width: 100%;
+      }
+    }
+    .datawrap {
+      width: 95%;
+
+      .chartcontainer{
+        width: 97% !important;
+        overflow: auto;
+
+        &#chart_div_All_ProjectsRecordTypes {
+          .typeNum {
+            font-size: 22px;
+          }
+        }
+
+        .google-visualization-table {
+          width: 100% !important;
+        }
+      }
+    }
+  }
 }
