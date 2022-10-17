@@ -14,10 +14,6 @@ constants_and_visualizations:
   trigger:
     project: matrix/enslaved-org-operations/visualize-counts-updater
     strategy: depend
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule" && $WEEKLY_PRODUCTION_DEPLOY == "true"'
-      when: always
-    - when: never
 
 deploy-dev:
   stage: build_and_deploy
