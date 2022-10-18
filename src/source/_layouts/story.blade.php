@@ -125,6 +125,14 @@
                  }
                  ?>
              </section>
+             <section class="creator">
+                 <?php
+                 if (isset($story['Creator'])) {
+                     echo '<h2>Author</h2>';
+                     echo '<p>'.$story['Creator'].'</p>';
+                 }
+                 ?>
+             </section>
              <section class="editor">
                  <?php
                  if (isset($story['Contributor'])) {
