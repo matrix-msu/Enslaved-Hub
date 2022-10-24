@@ -25,6 +25,9 @@ SELECT ?label ?project ?roles
 (group_concat(distinct ?drole; separator = "||") as ?droles)
 (group_concat(distinct ?droleevent1; separator = "||") as ?droleevent)
 (group_concat(distinct ?droleeventlabel1; separator = "||") as ?droleeventlabel)
+(group_concat(distinct ?relationshiplabel1; separator = "||") as ?relationships)
+(group_concat(distinct ?relationshipperson1; separator = "||") as ?relationshipperson)
+(group_concat(distinct ?relationshippersonlabel1; separator = "||") as ?relationshippersonlabel)
 (group_concat(distinct ?statusevent1; separator = "||") as ?statusevent)
 (group_concat(distinct ?eventstatuslabel1; separator = "||") as ?eventstatuslabel)
 (group_concat(distinct ?allevents; separator = "||") as ?allevents1)
@@ -35,6 +38,7 @@ SELECT ?label ?project ?roles
 (group_concat(distinct ?startyear1; separator = "||") as ?startyear)
 (group_concat(distinct ?endyear1; separator = "||") as ?endyear)
 (group_concat(distinct ?extref1; separator = "||") as ?extref)
+(group_concat(distinct ?raceorcolor1; separator = "||") as ?raceorcolor)
 
  WHERE
 {
@@ -45,6 +49,7 @@ SELECT ?label ?project ?roles
  OPTIONAL{ ?agent $wdt:$hasFirstName ?firstname1}.
  OPTIONAL{ ?agent $wdt:$hasSurname ?surname1}.
  OPTIONAL{ ?agent $wdt:$hasDescription ?description1}.
+ OPTIONAL{ ?agent $wdt:$hasRaceorColor ?raceorcolor1}.
  OPTIONAL{ ?agent $p:$hasAge ?ageuri.
             ?ageuri $ps:$hasAge ?ageuri2.
             ?ageuri2 $wdt:$hasAgeValue ?age1.
@@ -78,6 +83,12 @@ OPTIONAL {?agent $p:$hasDescriptiveRole ?dstaterole.
          ?droleevent1 $wdt:$hasName ?droleeventlabel1.
          bind(?droleevent1 as ?allevents).
       }.
+OPTIONAL {?agent $p:$hasInterAgentRelationshipTypeTo ?relationship1.
+		 ?relationship1 $ps:$hasInterAgentRelationshipTypeTo ?relationship;
+		         $pq:$isRelationshipTo ?relationshipperson1.
+		 ?relationship $rdfs:label ?relationshiplabel1.
+		 ?relationshipperson1 $wdt:$hasName ?relationshippersonlabel1.
+	  }.
  OPTIONAL {?agent $p:$hasPersonStatus ?statstatus.
            ?statstatus $ps:$hasPersonStatus ?status1.
            ?statstatus $pq:$hasStatusGeneratingEvent ?statusevent1.

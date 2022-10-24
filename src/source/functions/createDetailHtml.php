@@ -273,59 +273,62 @@ function createDetailHtml($statement,$label,$link=''){
     }
       $html .= "</div>
       </div>";
-    } else if ($label == "relationshipsA"){
+    } else if ($label == "RelationshipsA"){
       // match relationships with people
 
       //Multiple roles in the roles array so match them up with the participant
       $lowerlabel = "relationships";
       $upperlabel = "Relationships";
-      //Array for relationships means there are people to match
-      $relationships = explode('||', $statement['relationships']);
-      $relationshipUrls = explode('||', $statement['qrelationUrls']);
-      $relationshipLabels = explode('||', $statement['relationshipLabels']);
 
-      //Remove whitespace from end of arrays
-      if (end($relationships) == '' || end($relationships) == ' '){
-        array_pop($relationships);
-      }
-      if (end($relationshipUrls) == '' || end($relationshipUrls) == ' '){
-        array_pop($relationshipUrls);
-      }
-      if (end($relationshipLabels) == '' || end($relationshipLabels) == ' '){
-        array_pop($relationshipLabels);
-      }
+	$html .= <<<HTML
+	<div class="detail $lowerlabel">
+	<h3>$upperlabel</h3>
+	HTML;
+	  foreach($statement as $statementArr){
+	      //Array for relationships means there are people to match
+	      $relationships = explode('||', $statementArr['relationships']);
+	      $relationshipUrls = explode('||', $statementArr['relationshipperson']);
+	      $relationshipLabels = explode('||', $statementArr['relationshippersonlabel']);
 
-      $html .= <<<HTML
-    <div class="detail $lowerlabel">
-    <h3>$upperlabel</h3>
-    HTML;
+	      //Remove whitespace from end of arrays
+	      if (end($relationships) == '' || end($relationships) == ' '){
+	        array_pop($relationships);
+	      }
+	      if (end($relationshipUrls) == '' || end($relationshipUrls) == ' '){
+	        array_pop($relationshipUrls);
+	      }
+	      if (end($relationshipLabels) == '' || end($relationshipLabels) == ' '){
+	        array_pop($relationshipLabels);
+	      }
 
+	      //Loop through and match up
+	      $matched = '';
+	      for($i=0; $i < sizeof($relationships); $i++){
+	          if (!isset($relationshipUrls[$i]) || !isset($relationshipLabels[$i])){
+	            continue;
+	          }
 
-      //Loop through and match up
-      $matched = '';
-      for($i=0; $i < sizeof($relationships); $i++){
-          if (!isset($relationshipUrls[$i]) || !isset($relationshipLabels[$i])){
-            continue;
-          }
+	          $explode = explode('/', $relationshipUrls[$i]);
+	          $personQ = end($explode);
+	          $personUrl = $baseurl . 'record/person/' . $personQ;
+	          $matched = $relationships[$i] . ' - ' . $relationshipLabels[$i];
 
-          $explode = explode('/', $relationshipUrls[$i]);
-          $personQ = end($explode);
-          $personUrl = $baseurl . 'record/person/' . $personQ;
-          $matched = $relationships[$i] . ' - ' . $relationshipLabels[$i];
+	  		  $linkHtml = "<div><a class='detail-text link-to-search'>" . $relationships[$i] . "</a>";
 
-          $html .= <<<HTML
-    <div class="detail-bottom">
-      <div>$relationships[$i]
-    HTML;
+		$html .= <<<HTML
+		<div class="detail-bottom">
+		$linkHtml
+		HTML;
 
-          // relationship tool tip
-          if(array_key_exists($relationships[$i],controlledVocabulary)){
-              $detailinfo = ucfirst(controlledVocabulary[$relationships[$i]]);
-              $html .= "<div class='detail-menu' id='tooltip'> <h1>$relationships[$i]</h1> <p>$detailinfo</p> </div>";
-          }
+	          // relationship tool tip
+	          if(array_key_exists($relationships[$i],controlledVocabulary)){
+	              $detailinfo = ucfirst(controlledVocabulary[$relationships[$i]]);
+	              $html .= "<div class='detail-menu' id='tooltip'> <h1>$relationships[$i]</h1> <p>$detailinfo</p> </div>";
+	          }
 
-          $html .= "</div> - <a href='$personUrl' class='highlight'>$relationshipLabels[$i]</a></div>";
-      }
+	          $html .= "</div> - <a href='$personUrl' class='highlight'>$relationshipLabels[$i]</a></div>";
+	      }
+	  }
       $html .= '</div>';
     } else if ($label == "projectsA"){
       $lowerlabel = "contributing project(s)";

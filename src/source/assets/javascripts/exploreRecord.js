@@ -30,7 +30,7 @@ $(document).ready(function () {
             console.log(`Error: ${error}`);
         },
         'complete': function() {
-            $('.spinner').hide();
+            $('.spinner1').hide();
             $('#overlay').css('display', 'none');
         }
     });

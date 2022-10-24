@@ -28,6 +28,16 @@
     transform: translateX(-50%);
 }
 
+.spinner2{
+	display: inline-flex;
+	margin-left: 20px;
+	margin-top: -20px;
+	left: unset;
+	transform: unset;
+	position: absolute;
+	padding: 40px;
+}
+
 .double-bounce1, .double-bounce2 {
     width: 70%;
     height: 70%;

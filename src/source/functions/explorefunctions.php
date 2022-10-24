@@ -79,6 +79,7 @@ function getFullRecordHtml(){
     }
     $record = $result[0];
     $recordVars = [];
+	// echo json_encode($record);die;
 
     $prettyNames = array(
         'name' => ['name','Name'],
@@ -95,6 +96,7 @@ function getFullRecordHtml(){
         'status' => ['status','status'],
         'ecvo' => ['standard','Ethnolinguistic Descriptor'],
         'placeOriginlabel' => ['standard','Place of Origin'],
+        'raceorcolor' => ['standard','Race or Color'],
         // 'ecvo' => ['standardArray','Ethnolinguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
         'date' => ['standard','Date'],
         'eventDates' => ['standard','Date'],
@@ -116,6 +118,7 @@ function getFullRecordHtml(){
         'occursbefore' => ['standard','Occurs Before'],
         'occursafter' => ['standard','Occurs After'],
         'circa' => ['standard','Circa'],
+		'relationships' => ['relationships','Relationships'],
         'roles' => ['roles','roles'],
         'droles' => ['droles','droles'],
     );
@@ -134,7 +137,6 @@ function getFullRecordHtml(){
 		'Source Type' => 'search/all?source_type=REPLACE&display=sources',
 	);
 	define('LINKSTOSEARCH', $linksToSearch);
-    // echo json_encode($record);die;
     if(isset($record['label'])){
         $recordVars['Label'] = $record['label']['value'];
     }
@@ -251,6 +253,16 @@ function getFullRecordHtml(){
                               'eventstatusLabels' => $r['eventstatuslabel']['value']
                           ];
                       }
+                  }
+              }
+		  }elseif($type == 'relationships'){
+              if(valueNotEmpty($r, 'relationships')){
+                  if(valueNotEmpty($r,'relationshipperson') && valueNotEmpty($r,'relationshippersonlabel')){
+                      $recordVars['RelationshipsA'][] = [
+                          'relationships' => $r['relationships']['value'],
+                          'relationshipperson' => $r['relationshipperson']['value'],
+                          'relationshippersonlabel' => $r['relationshippersonlabel']['value']
+                      ];
                   }
               }
           }elseif($type == 'droles'){
@@ -439,8 +451,8 @@ SELECT DISTINCT ?match ?matchlabel ?matchtype (SHA512(CONCAT(STR(?match), STR(RA
  WHERE
 {
  VALUES ?agent { $wd:$QID}. #Q number needs to be changed for every person.
- ?agent $p:$hasMatch ?statementname.
-  ?statementname $ps:$hasMatch ?matcht.
+ ?agent $p:$hasMatchType ?statementname.
+  ?statementname $ps:$hasMatchType ?matcht.
   ?matcht $rdfs:label ?matchtype.
   ?statementname $pq:$matches ?match.
   ?match $wdt:$hasName ?matchlabel
@@ -452,6 +464,7 @@ QUERY;
     $connections['CloseMatch-count'] = count($result);
     $connections['CloseMatch'] = array_slice($result, 0, 8);  // return the first 8 results
   //print_r($result);
+  // echo $closeMatchQuery['query'];die;
     //events connected to a person
     $eventQuery['query'] = <<<QUERY
 SELECT DISTINCT ?event ?eventlabel

@@ -1434,6 +1434,12 @@ input:not([type=image]), textarea {
   border-bottom: 4px solid #C24F3C;
   box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.07);
 }
+.home .section-ethics {
+  box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.07);
+  padding: 90px 0 70px 0;
+  position: relative;
+  z-index: 2;
+}
 .home .section-explore {
   background: url("../images/bg-map.jpg");
   background-position: center;
@@ -8502,6 +8508,16 @@ a.modal {
   transform: translateX(-50%);
 }
 
+.spinner2 {
+  display: inline-flex;
+  margin-left: 20px;
+  margin-top: -20px;
+  left: unset;
+  transform: unset;
+  position: absolute;
+  padding: 40px;
+}
+
 .double-bounce1, .double-bounce2 {
   width: 70%;
   height: 70%;
@@ -9109,7 +9125,6 @@ a.modal {
   border-bottom: 3px solid #C24F3C;
 }
 .detail-section .detailwrap .detail .detail-bottom div {
-  display: inline;
   font-family: aleoregular;
 }
 .detail-section .detailwrap .detail .highlight {
@@ -10875,7 +10890,8 @@ a.modal {
   }
 }
 .info .search-section {
-  max-width: 1000px;
+  max-width: 1030px;
+  padding: 0 15px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -11092,7 +11108,6 @@ a.modal {
   width: 1000px;
   margin: 0 auto;
   display: block;
-  overflow: hidden;
   position: relative;
   border: 2px solid #FFF;
   border-radius: 5px;
@@ -11192,6 +11207,27 @@ a.modal {
   border-radius: 4px !important;
 }
 
+@media screen and (max-width: 1000px) {
+  .info .search-section {
+    padding-bottom: 30px;
+  }
+  .info .search-section .inputwrap {
+    width: 100%;
+  }
+  .info .datawrap {
+    width: 95%;
+  }
+  .info .datawrap .chartcontainer {
+    width: 97% !important;
+    overflow: auto;
+  }
+  .info .datawrap .chartcontainer#chart_div_All_ProjectsRecordTypes .typeNum {
+    font-size: 22px;
+  }
+  .info .datawrap .chartcontainer .google-visualization-table {
+    width: 100% !important;
+  }
+}
 .container.ontology {
   background: #FAF7F2;
   margin: 60px auto;

@@ -24,7 +24,7 @@
     </div>
 </div>
 <!-- loading spinner -->
-<div class="spinner sk-center" hidden>
+<div class="spinner spinner1 sk-center" hidden>
   <div class="double-bounce1"></div>
   <div class="double-bounce2"></div>
 </div>
@@ -58,7 +58,12 @@
 <!-- Related Records / Connections -->
 <div class="record-connections">
     <div class="connectionwrap">
-        <h2>Related Records</h2>
+        <h2>Related Records
+			<div class="spinner spinner2 sk-center" hidden>
+			  <div class="double-bounce1"></div>
+			  <div class="double-bounce2"></div>
+			</div>
+		</h2>
         <div class="categories">
             <ul>
             <?php

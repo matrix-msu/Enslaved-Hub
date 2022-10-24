@@ -254,7 +254,7 @@ function loadConnections(){
                     clickedFirst = true;
                 }
             })
-
+			$('.spinner2').hide();
         }
     });
 }
