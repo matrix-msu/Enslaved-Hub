@@ -1574,9 +1574,15 @@
       },
      "hasEthnolinguisticDescriptor":{
           "type":"PieChart",
-          "width":"976",
+          "width":"480",
           "height":"400",
           "title":"Ethnolinguistic Descriptors"
-      }              
-   }       
+      },
+	  "hasPlaceType":{
+           "type":"PieChart",
+           "width":"480",
+           "height":"400",
+           "title":"Place Types"
+       }
+   }
 }

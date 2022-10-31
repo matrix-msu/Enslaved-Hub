@@ -446,7 +446,7 @@ QUERY;
 
 
   $closeMatchQuery['query'] = <<<QUERY
-SELECT DISTINCT ?match ?matchlabel ?matchtype (SHA512(CONCAT(STR(?match), STR(RAND()))) as ?random)
+SELECT DISTINCT ?people ?peoplename ?matchtype (SHA512(CONCAT(STR(?match), STR(RAND()))) as ?random)
 
  WHERE
 {
@@ -454,15 +454,18 @@ SELECT DISTINCT ?match ?matchlabel ?matchtype (SHA512(CONCAT(STR(?match), STR(RA
  ?agent $p:$hasMatchType ?statementname.
   ?statementname $ps:$hasMatchType ?matcht.
   ?matcht $rdfs:label ?matchtype.
-  ?statementname $pq:$matches ?match.
-  ?match $wdt:$hasName ?matchlabel
+  ?statementname $pq:$matches ?people.
+  ?people $wdt:$hasName ?peoplename
 
 }ORDER BY ?random
 QUERY;
 
     $result = blazegraphSearch($closeMatchQuery);
-    $connections['CloseMatch-count'] = count($result);
-    $connections['CloseMatch'] = array_slice($result, 0, 8);  // return the first 8 results
+    // $connections['CloseMatch-count'] = count($result);
+    // $connections['CloseMatch'] = array_slice($result, 0, 8);  // return the first 8 results
+	$connections['Person-count'] += count($result);
+    $connections['Person'] += $result;
+    $connections['Person'] = array_slice($connections['Person'], 0, 8);
   //print_r($result);
   // echo $closeMatchQuery['query'];die;
     //events connected to a person
