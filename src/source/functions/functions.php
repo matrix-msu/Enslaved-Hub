@@ -329,21 +329,13 @@ function createCards($results, $templates, $select_fields = array(), $preset = '
                         }
 
                         $statusHtml = '';
-                        // if a person has multiple statuses, display them in a tooltip
-                        if ($statusCount == 1){
+                        if ($statusCount >=1){
                             $statusHtml = "<div class='detail'><p class='detail-title'>Person Status</p><p>$status</p></div>";
-                        }
-                        if ($statusCount > 1){
-                            $statusHtml = "<div class='detail'><p class='detail-title'>Person Status</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Statuses</span>$status</span></p></div>";
                         }
 
                         $placesHtml = '';
-                        if ($placesCount == 1){
+                        if ($placesCount >= 1){
                             $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p>$places</p></div>";
-                        }
-                        if ($placesCount > 1){
-                            $places = str_replace(",", ";", $places);
-                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Places</span>$places</span></p></div>";
                         }
 
                         $ethnodescriptorHtml = '';
@@ -513,12 +505,8 @@ HTML;
                         }
 
                         $locatedInHtml = '';
-                        if ($locatedInCount == 1){
+                        if ($locatedInCount >= 1){
                             $locatedInHtml = "<div class='detail'><p class='detail-title'>Located In</p><p>$locatedIn</p></div>";
-                        }
-                        if ($locatedInCount > 1){
-                            $locatedIn = str_replace(",", ";", $locatedIn);
-                            $locatedInHtml = "<div class='detail'><p class='detail-title'>Located In</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Located In</span>$locatedIn</span></p></div>";
                         }
 
                         $geonamesHtml = '';
@@ -681,20 +669,13 @@ HTML;
                         $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p>$type</p></div>";
 
                         $rolesHtml = '';
-                        // Check for multiple roles
-                        if ($rolesCount == 1){
+                        if ($rolesCount >= 1){
                             $rolesHtml = "<div class='detail'><p class='detail-title'>Role</p><p>$roles</p></div>";
                         }
-                        if ($rolesCount > 1){
-                            $rolesHtml = "<div class='detail'><p class='detail-title'>Role</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Roles</span>$roles</span></p></div>";
-                        }
-                        // Check for multiple places
+
                         $placesHtml = '';
-                        if ($placesCount == 1){
+                        if ($placesCount >= 1){
                             $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p>$places</p></div>";
-                        }
-                        if ($placesCount > 1){
-                            $placesHtml = "<div class='detail'><p class='detail-title'>Place</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Places</span>$places</span></p></div>";
                         }
 
                         $dateRangeHtml = '';
@@ -832,12 +813,8 @@ HTML;
                     if ($template == 'gridCard'){
 
                         $typeHtml = '';
-                        // if a source has multiple types, display them in a tooltip
-                        if ($typeCount == 1){
+                        if ($typeCount >= 1){
                             $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p>$type</p></div>";
-                        }
-                        if ($typeCount > 1){
-                            $typeHtml = "<div class='detail'><p class='detail-title'>Type</p><p class='multiple'>Multiple<span class='tooltip'><span class='head'>Multiple Types</span>$type</span></p></div>";
                         }
 
                         $projectHtml = '';
