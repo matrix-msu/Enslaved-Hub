@@ -115,9 +115,11 @@ OPTIONAL {?agent $p:$hasName ?object .
           ?object $prov:wasDerivedFrom ?provenance .
           ?provenance $pr:$isDirectlyBasedOn ?source .
           ?source $wdt:$generatedBy ?proj.
-          ?proj $rdfs:label ?project.
-          OPTIONAL {?provenance $pr:$hasExternalReference ?extref1}}.
-
+          ?proj $rdfs:label ?project}.
+          
+OPTIONAL {?agent $p:$hasName ?object2 .
+          ?object2 $prov:wasDerivedFrom ?provenance2 .
+          ?provenance2 $pr:$hasExternalReference ?extref1}.
 
 }GROUP BY ?label ?project ?roles
 QUERY;
