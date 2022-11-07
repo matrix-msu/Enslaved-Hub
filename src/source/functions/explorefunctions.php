@@ -695,9 +695,54 @@ QUERY;
 
 
 // connections for the place full record page
-function getPlacePageConnections($QID) {
+function getPlacePageConnections($tempQID) {
     include BASE_LIB_PATH."variableIncluder.php";
     $connections = array();
+	$connections['Event'] = array();
+	$connections['Event-count'] = 0;
+	$connections['Person'] = array();
+	$connections['Person-count'] = 0;
+	$connections['Place'] = array();
+	$connections['Place-count'] = 0;
+	$connections['RelatedPlace'] = array();
+	$connections['RelatedPlace-count'] = 0;
+	$connections['Source'] = array();
+	$connections['Source-count'] = 0;
+	$qidArray = array($tempQID);
+
+	$placeNameQuery['query'] = <<<QUERY
+	SELECT DISTINCT ?s ?typelabel
+	{
+		VALUES ?place { $wd:$tempQID }.
+		?place rdfs:label ?label.
+		?place $wdt:$instanceOf ?type.
+		?type rdfs:label ?typelabel.
+		?s ?p ?place
+	}
+	QUERY;
+	$result = blazegraphSearch($placeNameQuery);
+	// var_dump($result);die;
+	// var_dump($result[0]['typelabel']['value']);die;
+	if( isset($result[0]) &&
+		isset($result[0]['typelabel']) &&
+		$result[0]['typelabel']['value'] == 'Place Name'
+	){
+		$qidArray = array();
+		foreach($result as $item){
+			$connection = $item['s']['value'];
+			$split = explode('/',$connection);
+			$itemQid = array_pop($split);
+			$itemCheck = array_pop($split);
+			// var_dump($itemQid);
+			// var_dump($itemCheck);die;
+			if($itemCheck != "statement"){
+				$qidArray[] = $itemQid;
+			}
+		}
+	}
+	// var_dump($qidArray);die;
+	// $qidArray
+	foreach($qidArray as $QID){
 
   // people connections
   $peoplecounter['query'] = <<<QUERY
@@ -728,8 +773,9 @@ QUERY;
    $result = blazegraphSearch($peopleQuery);
    $result_counter = blazegraphSearch($peoplecounter);
 
-    $connections['Person-count'] = $result_counter[0]['counter']['value'];
-    $connections['Person'] = $result;  // return the first 8 results
+    $connections['Person-count'] += $result_counter[0]['counter']['value'];
+    $connections['Person'] = array_merge($connections['Person'],$result);  // return the first 8 results
+	$connections['Person'] = array_slice($connections['Person'], 0, 8);  // return the first 8 results
 
 	// people connections through ethnodescriptor
 	$peoplecounter['query'] = <<<QUERY
@@ -757,7 +803,8 @@ QUERY;
 
 	if($connections['Person-count'] < 8){         //only grab more people if the
 		$result += blazegraphSearch($peopleQuery);//other query had less than 8
-		$connections['Person'] = $result;
+		$connections['Person'] = array_merge($connections['Person'],$result);
+		$connections['Person'] = array_slice($connections['Person'], 0, 8);  // return the first 8 results
 	}
 	$result_counter2 = blazegraphSearch($peoplecounter); //add them to count reguardless
 	$connections['Person-count'] += $result_counter2[0]['counter']['value'];
@@ -787,8 +834,9 @@ QUERY;
    QUERY;
       $result = blazegraphSearch($eventsQuery);
       $result_counter = blazegraphSearch($eventsCounter);
-      $connections['Event-count'] = $result_counter[0]['counter']['value'];
-      $connections['Event'] =$result;  // return the first 8 results
+      $connections['Event-count'] += $result_counter[0]['counter']['value'];
+      $connections['Event'] = array_merge($connections['Event'],$result);  // return the first 8 results
+	  $connections['Event'] = array_slice($connections['Event'], 0, 8);  // return the first 8 results
 
       // source connections
     $sourceQuery['query'] = <<<QUERY
@@ -801,8 +849,9 @@ QUERY;
     }ORDER BY ?random
   QUERY;
       $result = blazegraphSearch($sourceQuery);
-      $connections['Source-count'] = count($result);
-      $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
+      $connections['Source-count'] += count($result);
+      $connections['Source'] = array_merge($connections['Source'],$result);  // return the first 8 results
+      $connections['Source'] = array_slice($connections['Source'], 0, 8);  // return the first 8 results
 // echo $eventsQuery['query'];die;
       // place connections
       //placebucket query add a new tab
@@ -823,8 +872,9 @@ QUERY;
     }ORDER BY ?random
   QUERY;
   $result = blazegraphSearch($relatedPlaces);
-  $connections['RelatedPlace-count'] = count($result);
-  $connections['RelatedPlace'] = array_slice($result, 0, 8);  // return the first 8 results
+  $connections['RelatedPlace-count'] += count($result);
+  $connections['RelatedPlace'] = array_merge($connections['RelatedPlace'],$result);  // return the first 8 results
+  $connections['RelatedPlace'] = array_slice($connections['RelatedPlace'], 0, 8);  // return the first 8 results
 
 
 	$placeQuery['query'] = <<<QUERY
@@ -837,8 +887,9 @@ QUERY;
 	QUERY;
 
 	$result = blazegraphSearch($placeQuery);
-	$connections['Place-count'] = count($result);
-	$connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
+	$connections['Place-count'] += count($result);
+	$connections['Place'] = array_merge($connections['Place'], $result);  // return the first 8 results
+	$connections['Place'] = array_slice($connections['Place'], 0, 8);  // return the first 8 results
 
 	// var_dump($result);die;
 	foreach ($result as $key => $value) {
@@ -909,6 +960,7 @@ QUERY;
 	$connections['Event'] = array_slice($connections['Event'], 0, 8);  // return the first 8 results
 	$connections['Person'] = array_slice($connections['Person'], 0, 8);  // return the first 8 results
 
+}
 	return json_encode($connections);
 }
 
