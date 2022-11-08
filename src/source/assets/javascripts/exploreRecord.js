@@ -22,6 +22,11 @@ $(document).ready(function () {
                 $('.timeline-holder').html(timelineStr);
                 initializeTimeline(); //function in timeline.js
             }
+            if (recordform == 'event') {
+              $('.name h3').text("Event Name");
+              $('.type h3').text("Event Type");
+              $('.located.in h3').text("Place");
+            }
             // condenseRoles();
             changeSize();
             underlineTooltips();
