@@ -665,6 +665,10 @@
               text-decoration: none !important;
             }
 
+            &.located.in > a {
+              text-decoration: none !important;
+            }
+
             &.surname, &.first, &.name {
               .detail-bottom {
                 div.detail-text {
