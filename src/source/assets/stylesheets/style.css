@@ -9085,6 +9085,9 @@ a.modal {
 .detail-section .detailwrap .detail.roles > a {
   text-decoration: none !important;
 }
+.detail-section .detailwrap .detail.located.in > a {
+  text-decoration: none !important;
+}
 .detail-section .detailwrap .detail.surname .detail-bottom div.detail-text, .detail-section .detailwrap .detail.first .detail-bottom div.detail-text, .detail-section .detailwrap .detail.name .detail-bottom div.detail-text {
   text-decoration: none !important;
 }

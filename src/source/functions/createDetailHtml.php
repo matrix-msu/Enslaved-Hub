@@ -664,9 +664,10 @@ function createDetailHtml($statement,$label,$link=''){
     				  	  $link = LINKSTOSEARCH['Place Type'];
     				  elseif($label == 'Type' && isset(sourceTypes[$detailname]))
     				  	  $link = LINKSTOSEARCH['Source Type'];
-    				  if($label == "date")
-    					  $link = str_replace('REPLACE', $detailname.'-'.$detailname, $link);
-    				  else
+    				  if($label == "Date" || $label == "End Date"){
+						  $temp = explode('-',$detailname)[0];
+						  $link = str_replace('REPLACE', $temp.'-'.$temp, $link);
+					  }else
     				  	  $link = str_replace('REPLACE', $detailname, $link);
     				  $html .= "<div><a class='detail-text link-to-search' href='".BASE_URL.$link."'>" . $detailname . "</a>";
     			  }else{

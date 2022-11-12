@@ -99,6 +99,7 @@ function getFullRecordHtml(){
         'raceorcolor' => ['standard','Race or Color'],
         // 'ecvo' => ['standardArray','Ethnolinguistic Descriptor','ecvoA',['placeofOrigin','placeOriginlabel'],['ecvo','placeofOrigin','placeOriginlabel']],
         'date' => ['standard','Date'],
+        'endDate' => ['standard','End Date'],
         'eventDates' => ['standard','Date'],
         'eventDescriptions' => ['standard','Description'],
         'dateStart' => ['dateRange','Date Range'],
@@ -134,6 +135,7 @@ function getFullRecordHtml(){
 		'Ethnolinguistic Descriptor' => 'search/all?ethnodescriptor=REPLACE&display=people',
 		'Type' => 'search/all?event_type=REPLACE&display=events',
 		'Date' => 'search/all?date=REPLACE&display=events',
+		'End Date' => 'search/all?date=REPLACE&display=events',
 		'Place Type' => 'search/all?place_type=REPLACE&display=places',
 		'Source Type' => 'search/all?source_type=REPLACE&display=sources',
 	);

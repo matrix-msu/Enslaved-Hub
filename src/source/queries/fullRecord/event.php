@@ -1,7 +1,7 @@
 <?php
 
 $tempQuery = <<<QUERY
-SELECT ?name ?type ?endDate ?occursbefore ?occursafter ?circa ?project
+SELECT ?name ?type ?endDate ?occursbefore ?occursafter ?circa ?project ?date
 (group_concat(distinct ?rolename; separator = "||") as ?roles)
 (group_concat(distinct ?participantname; separator = "||") as ?participant)
 (group_concat(distinct ?part; separator = "||") as ?pq)
@@ -25,37 +25,38 @@ OPTIONAL {?event $wdt:$hasEventType ?eventtype.
 OPTIONAL{ ?event $wdt:$hasDescription ?description}.
 OPTIONAL{?event $wdt:$atPlace ?place.
 ?place $rdfs:label ?located}.
+
 OPTIONAL{
 ?event $wdt:$startsAt ?datetime.
-?event $p:$startsAt/$psv:$startsAt ?node.
-?node wikibase:timePrecision ?precision .
+?event $p:$startsAt/$psv:$startsAt ?node1.
+?node1 wikibase:timePrecision ?precision .
+BIND(IF(?precision=9,YEAR(?datetime),IF(?precision=10,MONTH(?datetime),xsd:date(?datetime))) AS ?startDate)}.
 
-BIND(IF(?precision=9,YEAR(?datetime),IF(?precision=10,MONTH(?datetime),xsd:date(?datetime))) AS ?date)}.
 OPTIONAL{ ?event $wdt:$endsAt ?endDatetime.
-?event $p:$endsAt/$psv:$endsAt ?node.
-?node wikibase:timePrecision ?precision.
+?event $p:$endsAt/$psv:$endsAt ?node2.
+?node2 wikibase:timePrecision ?precision.
+BIND(IF(?precision=9,YEAR(?endDatetime),IF(?precision=10,MONTH(?endDatetime),xsd:date(?endDatetime))) AS ?endDate)}.
 
-BIND(IF(?precision=9,YEAR(?endDatetime),IF(?precision=10,MONTH(?endDatetime),xsd:date(?endDatetime))) AS ?endDate)
-}
+OPTIONAL{ ?event $wdt:$date ?eventdate.
+?event $p:$date/$psv:$date ?node3.
+?node3 wikibase:timePrecision ?precision.
+BIND(IF(?precision=9,YEAR(?eventdate),IF(?precision=10,MONTH(?eventdate),xsd:date(?eventdate))) AS ?date)}.
+
 OPTIONAL{ ?event $wdt:$occursBefore ?ob.
-?event $p:$occursBefore/$psv:$occursBefore ?node.
-?node wikibase:timePrecision ?precision.
+?event $p:$occursBefore/$psv:$occursBefore ?node4.
+?node4 wikibase:timePrecision ?precision.
+BIND(IF(?precision=9,YEAR(?ob),IF(?precision=10,MONTH(?ob),xsd:date(?ob))) AS ?occursbefore)}.
 
-BIND(IF(?precision=9,YEAR(?ob),IF(?precision=10,MONTH(?ob),xsd:date(?ob))) AS ?occursbefore)
-}
 OPTIONAL{ ?event $wdt:$occursAfter ?oa.
-?event $p:$occursAfter/$psv:$occursAfter ?node.
-?node wikibase:timePrecision ?precision.
-
-BIND(IF(?precision=9,YEAR(?oa),IF(?precision=10,MONTH(?oa),xsd:date(?oa))) AS ?occursafter)
-}
+?event $p:$occursAfter/$psv:$occursAfter ?node5.
+?node5 wikibase:timePrecision ?precision.
+BIND(IF(?precision=9,YEAR(?oa),IF(?precision=10,MONTH(?oa),xsd:date(?oa))) AS ?occursafter)}.
 
 OPTIONAL{ ?event $wdt:P75 ?c.
-?event $p:P75/$psv:P75 ?node.
-?node wikibase:timePrecision ?precision.
+?event $p:P75/$psv:P75 ?node6.
+?node6 wikibase:timePrecision ?precision.
+BIND(IF(?precision=9,YEAR(?c),IF(?precision=10,MONTH(?c),xsd:date(?c))) AS ?circa)}.
 
-BIND(IF(?precision=9,YEAR(?c),IF(?precision=10,MONTH(?c),xsd:date(?c))) AS ?circa)
-}
 OPTIONAL{
 ?event $p:$providesParticipantRole ?statement .
 ?statement $ps:$providesParticipantRole ?role.
@@ -63,5 +64,5 @@ OPTIONAL{
 ?statement $pq:$hasParticipantRole ?part.
 ?part $rdfs:label ?participantname}.
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-}GROUP BY ?name ?type ?endDate ?occursbefore ?occursafter ?circa ?project
+}GROUP BY ?name ?type ?endDate ?occursbefore ?occursafter ?circa ?project ?date
 QUERY;
