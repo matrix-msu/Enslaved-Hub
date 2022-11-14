@@ -1,8 +1,16 @@
+const advancedRecordOptions = {
+	includeScore: true,
+	useExtendedSearch: true,
+	keys: ['Sex','Place','Life Events']
+};
+const advancedFuse = new Fuse(allStoriesRecords, advancedRecordOptions);
+
+
 var limit=10;
 var offset = 1;
 var result = {};
 var searchQuery = '';
-var filters = '';
+var filters = {};
 var lastCategory = '';
 var sort = "latest";
 
@@ -12,6 +20,7 @@ var address = hrefSplit[hrefSplit.length-1]
 var addressSplit = address.split('?')
 var keyword = '';
 var searchString = addressSplit[1]
+var showFirstFilters = false;
 if(searchString != undefined){
     var searches = searchString.split('&')
     var advanced = '';
@@ -31,6 +40,7 @@ if(searchString != undefined){
             sort = eachSearch[1].replaceAll('_', ' ');
         }
         if(eachSearch[0] == 'filters'){
+			showFirstFilters = true;
             filters = JSON.parse(unescape(eachSearch[1]).replace('+', ' '));
         }
         if(eachSearch[0] == 'advanced'){
@@ -60,10 +70,110 @@ function search(searchQuery){
     }else{
         result = returnAllRecords(allStoriesRecords);
     }
+	result = advancedSearch(result, advancedFuse, filters, searchQuery);
+
     setPagination(result.length, limit, 0);
     sortResults();
     pickShowTypeAndCreateHtml();
     // updateUrlParams();
+	createFilters();
+}
+
+function advancedSearch(searchResults, advancedFuse, groupedFilters, searchString){
+	if(!$.isEmptyObject(groupedFilters)){
+		var formattedFilters = [];
+		for(var key in groupedFilters){
+			var fieldFilters = [];
+			$.each(groupedFilters[key], function(i, filter){
+				var valueFilter = {};
+				var searchType = '=';
+				// if(filterTextFields.includes(key)){
+				// 	searchType = "'";
+				// }
+				valueFilter[key] = searchType+'"'+filter+'"';
+				fieldFilters.push(valueFilter);
+			});
+			formattedFilters.push({$or: fieldFilters})
+		}
+		formattedFilters = {$and: formattedFilters};
+		var advancedJson = advancedFuse.search( formattedFilters );
+		// for(let key in advancedJson)
+		// 	advancedJson[key] = advancedJson[key].item;
+		if(searchString != ""){
+			searchResults = findIntersection(searchResults, advancedJson);
+		}else{
+			searchResults = advancedJson;
+		}
+	}
+	return searchResults;
+}
+
+function findIntersection(array1, array2){
+    return array1.filter(function(n) {
+        for(var i=0; i < array2.length; i++){
+            if(n.kid == array2[i].kid){
+                return true;
+            }
+        }
+        return false;
+    });
+}
+
+function createFilters(){
+	var options = {'Sex':[],'Life_Events':[],'Place':[]};
+	$.each(result, function(index,item){
+		var gender = item.item['Sex'];
+		if(!options['Sex'].includes(gender) && gender != null)
+			options['Sex'].push(gender);
+		var lifeEvents = item.item['Life Events'];
+		if(lifeEvents){
+			$.each(lifeEvents, function(i,option){
+				if(!options['Life_Events'].includes(option))
+					options['Life_Events'].push(option);
+			});
+		}
+		var places = item.item['Place'];
+		if(places){
+			$.each(places, function(i,option){
+				if(!options['Place'].includes(option))
+					options['Place'].push(option);
+			});
+		}
+	});
+	options['Sex'].sort();
+	options['Life_Events'].sort();
+	options['Place'].sort();
+	var html = '';
+	for(var cat in options){
+		var show = '';
+		var prettyName = cat;
+		if( prettyName == 'Life_Events') prettyName = "Life Events";
+		if( prettyName == 'Sex') prettyName = "Gender";
+		if($(`#${cat}`).find('.align-right').hasClass('show')) show = ' show';
+		if(showFirstFilters && (cat in filters || prettyName in filters)) show = ' show';
+		html += `
+			<li class="filter-cat" id="${cat}" name="${cat}">
+			${prettyName}
+			<span class="align-right${show}">
+			<img src="https://enslaved.org/assets/images/chevron.svg" alt="drop arrow"></span>
+			<ul id="submenu" class="${show}">`;
+		$.each(options[cat], function(i,option){
+			var checked = '';
+			if( prettyName == 'Gender') prettyName = "Sex";
+			if(prettyName in filters && filters[prettyName].includes(option)) checked = ' checked="checked"';
+			html += `
+				<li class="">
+					<label class="${cat}">
+						<input class="checkBox" type="checkbox" value="${option}" data-category="${cat}"${checked}>
+						<p>${option} <em></em></p>
+						<span></span>
+					</label>
+				</li>`;
+		});
+		html += `</ul></li>`;
+	}
+	showFirstFilters = false;
+	$('#mainmenu').html(html);
 }
 
 $('.page-numbers').on('click', '.num', function(){
@@ -213,7 +323,7 @@ function compareOlddate(sortField) {
 }
 
 function pickShowTypeAndCreateHtml(){
-    $('#AllStoriesContainer').empty();
+    $('.card-row').empty();
     var page_num = $('.page-numbers').find('.active').html();
     var paginatedRecords = paginateResults(result, limit, page_num);
     createSearchCards(paginatedRecords);
@@ -245,13 +355,19 @@ function createSearchCards(paginatedRecords){
             searchCardHtml += '</a><div class="overlay"></div></li>';
         });
     }
-    $('#AllStoriesContainer').append(searchCardHtml);
+    $('.card-row').append(searchCardHtml);
 }
 
 $('form').submit(function(e){
     e.preventDefault();
     console.log('form submit')
-    searchQuery = $('.search-field').val();
+	searchQuery = $('.search-field').val();
+	var html = `
+		<div class="option-wrap">
+			<p>${searchQuery}</p>
+		</div>`;
+	if(searchQuery == '') html = '';
+	$('.filter-cards').html(html);
     search(searchQuery);
 });
 
@@ -262,16 +378,40 @@ $(document).click(function () { // close things with clicked-off
     $('.sort-pages p').next().removeClass('show');
 });
 
-$("span.sort-stories-text").click(function (e) { // toggle show/hide page category submenu
+$(".sort-by").click(function (e) { // toggle show/hide page category submenu
     e.stopPropagation();
     $(this).find("img:first").toggleClass('show');
-    $(this).next().toggleClass('show');
+    $(this).find('ul').toggleClass('show');
 });
 
-$(".sort-pages p").click(function (e) { // toggle show/hide per-page submenu
+$(".results-per-page").click(function (e) { // toggle show/hide per-page submenu
     e.stopPropagation();
     $(this).find("img:first").toggleClass('show');
-    $(this).next().toggleClass('show');
+    $(this).find('ul').toggleClass('show');
+});
+
+$("#mainmenu").on('click','.checkBox',function (e) { // toggle show/hide per-page submenu
+	e.stopPropagation();
+	filters = {};
+	$('.checkBox').each(function(){
+		if($(this)[0].checked){
+			var cat = $(this).data('category');
+			if(cat == "Life_Events") cat = "Life Events";
+			var value = $(this).attr('value');
+			if(!(cat in filters)){
+				filters[cat] = [];
+			}
+			filters[cat].push(value);
+		}
+	});
+	searchQuery = $('.search-field').val();
+	search(searchQuery);
+});
+
+$("#mainmenu").on('click','li',function (e) { // toggle show/hide per-page submenu
+    e.stopPropagation();
+    $(this).find(".align-right").toggleClass('show');
+    $(this).find('ul').toggleClass('show');
 });
 
 $('.count-option').click(function(e){
@@ -286,6 +426,4 @@ $('.sort-option').click(function(e){
     sortResults();
     pickShowTypeAndCreateHtml();
     $('.pagi-first').click();
-    console.log(result)
-    console.log(sort)
 });

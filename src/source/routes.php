@@ -166,6 +166,9 @@ if ($fileArray[0] == 'explore' && count($fileArray) > 2){ //filter
     define('EXPLORE_FORM', $fileArray[1]);
     $currentFile = 'exploreResults';
     $EXPLORE_JS_VARS = "<script type='text/javascript'>var JS_EXPLORE_FORM = '".ucwords(str_replace("_", " ", EXPLORE_FORM))."';</script>\n";
+	if($fileArray[1] == 'stories'){
+		$currentFile = 'searchStories';
+	}
 }
 define('EXPLORE_JS_VARS', $EXPLORE_JS_VARS);
 

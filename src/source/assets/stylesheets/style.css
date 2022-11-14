@@ -6781,6 +6781,10 @@ a.modal {
   display: block;
 }
 
+.info.stories {
+  padding: 70px 0 !important;
+}
+
 @media screen and (max-width: 712px) {
   .storycard #all-header {
     margin-bottom: 30px;

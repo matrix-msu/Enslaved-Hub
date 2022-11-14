@@ -37,52 +37,25 @@ $cache_Data = Json_GetData_ByTitle("Stories");
 <div class="container info">
     <div class="container infowrap">
         <p>Enslaved.org contains information on hundreds of thousands of individuals involved in the historical slave trade — including enslaved people, slave owners, and slave traders. For most of these individuals, we can offer little more than fragmentary evidence in datasets; for some individuals, however, we can tell fuller life stories from across Africa and the Americas, of enslaved people fighting for their freedom, of the shifting boundaries between enslavement and liberation, and of the dynamics of slave trading, raiding, and life. Through these biographies, we can better understand the complexities of people’s lives and the role of slavery and freedom in shaping them.</p>
-        <a href="<?php echo BASE_URL;?>search/<?php echo EXPLORE_FORM ?>" class="view-more">View All Stories</a>
+        <a href="<?php echo BASE_URL;?>stories/all/" class="view-more">View All Stories</a>
     </div>
 </div>
 <!-- explore by -->
 <div class="container explore-by">
     <h1>Explore By</h1>
     <ul class="cards">
-        <?php foreach ($GLOBALS["FILTER_ARRAY"][EXPLORE_FORM] as $type) {
-            if($type == 'Source Type' || $type == 'Place Type'){
-                if($type == 'Source Type'){
-                    $explore_filter = 'source_type';
-                }
-                else{
-                    $explore_filter = 'place_type';
-                }
-                $upperWithSpaces = ucwords(str_replace("_", " ", $explore_filter));
-                $typeCategories = array();
-                if (array_key_exists($type, $GLOBALS['FILTER_TO_FILE_MAP'])){
-
-                    $typeCategories = $GLOBALS['FILTER_TO_FILE_MAP'][$type];
-                    ksort($typeCategories);
-                }
-                foreach ($typeCategories as $category => $qid) {
-                    ?>
-                    <li class="hide-category">
-                        <a href="<?php echo BASE_URL;?>search/<?php echo EXPLORE_FORM?>?<?php echo $explore_filter;?>=<?php echo $category;?>">
-                            <p class='type-title'><?php echo $category;?></p>
-                            <div id="arrow"></div><span id="<?php echo $category;?>">0</span>
-                        </a>
-                    </li>
-                <?php }
-            }
-            else{
-                // TODO::Not sure if we want this showing, will disable for now.
-                if ($type != 'Modern Countries') {
-            ?>
-                    <li>
-                        <a href="">
-                            <p class='type-title'><?php echo $type?></p>
-                            <div id="arrow"></div>
-                        </a>
-                    </li>
-            <?php }
-            }
-        }
-        ?>
+        <li><a href="<?=BASE_URL?>explore_stories/places/">
+			<p class="type-title">Place</p>
+			<div id="arrow"></div>
+		</a></li>
+        <li><a href="<?=BASE_URL?>explore_stories/gender/">
+			<p class="type-title">Gender</p>
+			<div id="arrow"></div>
+		</a></li>
+        <li><a href="<?=BASE_URL?>explore_stories/life_events/">
+			<p class="type-title">Life Events</p>
+			<div id="arrow"></div>
+		</a></li>
     </ul>
 </div>
 <!-- featured stories container-->
