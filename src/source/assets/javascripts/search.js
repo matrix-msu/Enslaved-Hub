@@ -51,17 +51,6 @@ $(document).ready(function() {
     $('#endYear').select2({
         placeholder: "Select or Input the End Year"
     });
-    $('#event-from').select2({
-        placeholder: "Enter Start Year"
-    });
-    $('#event-from').next().find('input[placeholder="Enter Start Year"]').attr('id', 'event-from');
-    $('#event-from').removeAttr('id');
-
-    $('#event-to').select2({
-        placeholder: "Enter End Year"
-    });
-    $('#event-to').next().find('input[placeholder="Enter End Year"]').attr('id', 'event-to');
-    $('#event-to').removeAttr('id');
 
     //Basic search page
     $('#life-event').select2({

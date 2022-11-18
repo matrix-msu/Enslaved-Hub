@@ -38,6 +38,38 @@ $(document).ready(function(){
                     });
                     var min = Math.min.apply(Math, dates);
                     var max = Math.max.apply(Math, dates);
+					// Doing this for safety purposes
+                    if (min <= max) {
+                        for (var i = min; i <= max; i++) {
+                            $("#event-from").append("<option value='"+i+"'>"+i+"</option>");
+                            $("#event-to").append("<option value='"+i+"'>"+i+"</option>");
+                        }
+						$('#event-from').select2({
+					        placeholder: "Enter Start Year"
+					    });
+					    $('#event-from').next().find('input[placeholder="Enter Start Year"]').attr('id', 'event-from');
+					    $('#event-from').removeAttr('id');
+
+					    $('#event-to').select2({
+					        placeholder: "Enter End Year"
+					    });
+					    $('#event-to').next().find('input[placeholder="Enter End Year"]').attr('id', 'event-to');
+					    $('#event-to').removeAttr('id');
+
+						$('.select2-selection--multiple').append('<span class="select2-selection__arrow" role="presentation"></span>');
+
+						$("form").submit(function(e){
+							var date = [];
+							$('.select2-selection__choice').each(function(){
+								date.push($(this).attr('title'));
+							})
+							var url = $("form").attr('action');
+							url += '?date='+date.join('-');
+							location.href = url;
+							return false;
+						});
+                    }
+
                 }
             });
             return;

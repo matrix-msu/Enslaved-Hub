@@ -52,5 +52,5 @@ if (isset($_GET['prev'])){
         </form>
     </div>
 </main>
-<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/explore.js"></script>
+<script src="<?php echo BASE_URL;?>assets/javascripts/search.js"></script>
