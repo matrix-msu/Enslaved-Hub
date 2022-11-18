@@ -30,6 +30,18 @@
           "height":"400",
           "title":"Event Type"
         },
+        "hasPlaceType":{
+             "type":"Table",
+             "width":"480",
+             "height":"400",
+             "title":"Place Types"
+         },
+         "hasRaceorColor":{
+            "type":"Table",
+            "width":"480",
+            "height":"400",
+            "title":"Race"
+         },
         "hasPersonStatus":{
           "type":"PieChart",
           "width":"480",
@@ -54,11 +66,11 @@
           "height":"400",
           "title":"Ethnolinguistic Descriptors"
         },
-        "hasRaceorColor":{
+        "hasParticipantRole":{
            "type":"Table",
            "width":"480",
            "height":"400",
-           "title":"Race"
+           "title":"Participant Role"
         },
        "hasOccupation":{
           "type":"PieChart",
@@ -89,13 +101,7 @@
           "width":"480",
           "height":"400",
           "title":"Male Ages"
-       },
-        "hasParticipantRole":{
-           "type":"Table",
-           "width":"480",
-           "height":"400",
-           "title":"Participant Role"
-        }
+       }
     },
    "Free Blacks Database":{
      "TotalRecords":{
