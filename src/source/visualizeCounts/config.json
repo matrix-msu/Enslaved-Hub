@@ -1472,11 +1472,11 @@
         "height":"400",
         "title":"Status"
      },
-     "hasSex":{
-         "type":"PieChart",
+      "hasInterAgentRelationshipTypeTo":{
+         "type":"Table",
          "width":"480",
          "height":"400",
-         "title":"Sex"
+         "title":"Relationships"
       },
      "hasParticipantRole":{
         "type":"Table",
@@ -1484,19 +1484,19 @@
         "height":"400",
         "title":"Participant Role"
      },
-      "hasInterAgentRelationshipTypeTo":{
-         "type":"Table",
-         "width":"480",
-         "height":"400",
-         "title":"Relationships"
-      },
       "hasEventType":{
          "type":"PieChart",
-         "width":"976",
+         "width":"480",
          "height":"400",
          "title":"Event Types"
       }
    },
+     "hasSex":{
+         "type":"PieChart",
+         "width":"976",
+         "height":"400",
+         "title":"Sex"
+      },
    "Fugitives from Slavery in Jamaica":{
      "TotalRecords":{
        "type":"TotalRecords",
