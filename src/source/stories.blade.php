@@ -36,7 +36,7 @@ $cache_Data = Json_GetData_ByTitle("Stories");
 <!-- info container-->
 <div class="container info">
     <div class="container infowrap">
-        <p>Enslaved.org contains information on hundreds of thousands of individuals involved in the historical slave trade — including enslaved people, slave owners, and slave traders. For most of these individuals, we can offer little more than fragmentary evidence in datasets; for some individuals, however, we can tell fuller life stories from across Africa and the Americas, of enslaved people fighting for their freedom, of the shifting boundaries between enslavement and liberation, and of the dynamics of slave trading, raiding, and life. Through these biographies, we can better understand the complexities of people’s lives and the role of slavery and freedom in shaping them.</p>
+        <p>Enslaved.org contains information about hundreds of thousands of individuals involved in the historical slave trade — including enslaved people, enslavers, and slave traders. For most of these individuals, we can offer little more than fragmentary evidence in datasets; for some individuals, however, we can tell fuller life Stories from across Africa and the Americas, of enslaved people fighting for their freedom, of the shifting boundaries between enslavement and liberation, and of the dynamics of slave trading, raiding, and everday life. Through these biographies, we can better understand the complexities of people's lives and the role of slavery and freedom in shaping them.</p>
         <a href="<?php echo BASE_URL;?>stories/all/" class="view-more">View All Stories</a>
     </div>
 </div>
