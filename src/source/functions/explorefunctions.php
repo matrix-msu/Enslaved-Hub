@@ -698,8 +698,12 @@ QUERY;
 
 
 // connections for the place full record page
-function getPlacePageConnections($tempQID) {
-    include BASE_LIB_PATH."variableIncluder.php";
+function getPlacePageConnections($tempQID, $script=false) {
+	if($script){
+		include "./src/source/lib/variableIncluder.php";
+	}else{
+	    include BASE_LIB_PATH."variableIncluder.php";
+	}
     $connections = array();
 	$connections['Event'] = array();
 	$connections['Event-count'] = 0;

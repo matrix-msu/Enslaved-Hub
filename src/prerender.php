@@ -1,10 +1,10 @@
 <?php
-// echo getcwd();
-
+// require_once('src/source/config.php');
+// require_once('src/source/functionIncluder.php');
 require_once('src/source/config.php');
-// require_once('source/functions/functions.php');
-// require_once('source/functions/explorefunctions.php');
-require_once('src/source/functionIncluder.php');
+require_once('src/source/functions/functions.php');
+require_once('src/source/generatedConstants.php');
+require_once('src/source/functions/explorefunctions.php');
 
 $placeQuery['query'] = <<<QUERY
 SELECT ?place ?label
@@ -25,7 +25,7 @@ foreach($results as $result){
 		echo 'skipping'.PHP_EOL.PHP_EOL;
 		continue;
 	}
-	$placeResults[$qid] = getPlacePageConnections($qid);
+	$placeResults[$qid] = getPlacePageConnections($qid, true);
 	echo PHP_EOL.PHP_EOL;
 }
 
