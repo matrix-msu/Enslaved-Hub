@@ -1,4 +1,6 @@
 <?php
+echo getcwd();
+
 require_once('source/config.php');
 // require_once('source/functions/functions.php');
 // require_once('source/functions/explorefunctions.php');
