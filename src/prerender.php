@@ -14,7 +14,8 @@ WHERE {
 }
 QUERY;
 
-$skipQids = array("Q311","Q343","Q303406","Q487732","Q487684");
+// $skipQids = array("Q311","Q343","Q303406","Q487732","Q487684");
+$skipQids = array();
 $results = blazegraphSearch($placeQuery);
 $placeResults = array();
 foreach($results as $result){
