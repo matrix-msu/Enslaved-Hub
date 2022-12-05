@@ -1,10 +1,10 @@
 <?php
-echo getcwd();
+// echo getcwd();
 
-require_once('source/config.php');
+require_once('src/source/config.php');
 // require_once('source/functions/functions.php');
 // require_once('source/functions/explorefunctions.php');
-require_once('source/functionIncluder.php');
+require_once('src/source/functionIncluder.php');
 
 $placeQuery['query'] = <<<QUERY
 SELECT ?place ?label
