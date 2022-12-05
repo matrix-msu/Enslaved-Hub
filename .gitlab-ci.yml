@@ -3,6 +3,7 @@ image:
 
 stages:
   - build_and_deploy
+  - prerender-places
 
 variables:
   ANSIBLE_PYTHON_INTERPRETER: '/opt/local/bin/python3'
@@ -59,7 +60,7 @@ deploy-production:
     - when: manual
 
 prerender-places:
-  stage: build_and_deploy
+  stage: prerender-places
   when: manual
   artifacts:
     paths:
