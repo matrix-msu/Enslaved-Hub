@@ -699,6 +699,11 @@ QUERY;
 
 // connections for the place full record page
 function getPlacePageConnections($tempQID, $script=false) {
+	$prerendered = file_get_contents("https://manta.matrix.msu.edu/msumatrix/public/exports/enslaved.org/visualizeCounts/prerenderedPlaces.json");
+	$prerendered = json_decode($prerendered,true);
+	if(isset($prerendered[$tempQID])){
+		return $prerendered[$tempQID];
+	}
 	if($script){
 		include "./src/source/lib/variableIncluder.php";
 	}else{
