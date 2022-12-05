@@ -1,4 +1,5 @@
 <?php
+echo getcwd();
 // require_once('src/source/config.php');
 // require_once('src/source/functionIncluder.php');
 require_once('src/source/config.php');
