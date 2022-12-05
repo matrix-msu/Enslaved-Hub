@@ -25,5 +25,5 @@ $GLOBALS['FILTER_TO_FILE_MAP'] = Array(
     "Status" => personstatus,
     "Occupation" => occupation,
     "Projects" => projects,
-    "Modern Countries" => countrycode
+    // "Modern Countries" => countrycode
 );

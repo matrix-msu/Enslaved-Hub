@@ -46,7 +46,7 @@ deploy-dev:
     url: https://enslaved.dev.matrix.msu.edu/
   variables:
     ANSIBLE_INVENTORY: 'ansible/$CI_ENVIRONMENT_NAME.hosts'
-    
+
 deploy-production:
   stage: build_and_deploy
   extends: deploy-dev
@@ -57,3 +57,22 @@ deploy-production:
     - if: '$CI_PIPELINE_SOURCE == "schedule" && $WEEKLY_PRODUCTION_DEPLOY == "true"'
       when: always
     - when: manual
+
+prerender-places:
+  stage: prerender-places
+  artifacts:
+    paths:
+    - src/prerenderedPlaces.json
+  script:
+   - apk add php7-tokenizer
+   - php -v
+   - php -m
+   - php src/prerender.php
+   - mkdir -p ~/.ssh || true
+   - chmod 700 ~/.ssh
+   - eval $(ssh-agent -s)
+   - echo "$TRITON_KEY" | tr -d '\r' | ssh-add -
+   - echo "Key loaded"
+   - function cleanup() { kill $SSH_AGENT_PID;  }
+   - trap cleanup EXIT
+   - mput -f src/prerenderedPlaces.json ~~/public/exports/enslaved.org/visualizeCounts/prerenderedPlaces.json
