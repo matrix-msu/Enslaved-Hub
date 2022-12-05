@@ -1,8 +1,7 @@
 <?php
-echo getcwd();
 // require_once('src/source/config.php');
 // require_once('src/source/functionIncluder.php');
-require_once('src/source/config.php');
+require_once('src/source/config.dist.php');
 require_once('src/source/functions/functions.php');
 require_once('src/source/generatedConstants.php');
 require_once('src/source/functions/explorefunctions.php');
