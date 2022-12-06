@@ -64,7 +64,7 @@ prerender-places:
   timeout: 24 hours
   artifacts:
     paths:
-    - src/prerenderedPlaces.json
+    - prerenderedPlaces.json
   script:
    - apk add php7-tokenizer
    - php -v
@@ -77,4 +77,4 @@ prerender-places:
    - echo "Key loaded"
    - function cleanup() { kill $SSH_AGENT_PID;  }
    - trap cleanup EXIT
-   - mput -f src/prerenderedPlaces.json ~~/public/exports/enslaved.org/visualizeCounts/prerenderedPlaces.json
+   - mput -f prerenderedPlaces.json ~~/public/exports/enslaved.org/visualizeCounts/prerenderedPlaces.json
