@@ -57,6 +57,13 @@ $(document).ready( function() {
             displayConnections(CARDT);
             $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Matches');
         }
+		//Project
+		if ($("#project").hasClass("selected")) {
+            CARDT = "Project";
+            SEARCHTYPE = "project";
+            displayConnections(CARDT);
+            $('.search-all').html('View All ' + connectionsArray[CARDT + '-count'] + ' Project');
+        }
         // set the search all button url
         $('.search-all').attr('href', BASE_URL + 'search/' + SEARCHTYPE + '?' + recordform + '=' + QID);
     });
@@ -168,6 +175,16 @@ function displayConnections(cardType){
 
             $('.connect-row').append('<li class="card"><a href=' + matchUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + matchType+" - "+name + '</h3></div>'+'</a></li>');
         }
+    } else if (cardType == "Project") {
+        for (var i in connections){
+            var conn = connections[i];
+            var name = conn['projectLabel']['value'];
+            var eventQ = conn['project']['value'];
+            var scheme = conn['scheme'];
+            eventQ = eventQ.substring(eventQ.lastIndexOf('/') + 1);
+            var eventUrl = BASE_URL + 'search/all?projects='+name.replaceAll(' ','+')+'&limit=20&offset=0&sort_field=label.sort&display='+scheme;
+            $('.connect-row').append('<li class="card"><a href=' + eventUrl + '><div class="card-title"><img src="' + BASE_IMAGE_URL + cardType + '-dark.svg" alt="' + cardType + ' icon"><h3>' + name +'</h3></div>'+'</a></li>');
+        }
     } else {
 
     }
@@ -223,6 +240,8 @@ function loadConnections(){
                     $('#relatedPlace').html('<div class="place-image"></div>' + connectionsArray['RelatedPlace-count'] + ' Related Places');
                 } else if (form == 'CloseMatch') {
                     $('#match').html('<div class="person-image"></div>' + connectionsArray['CloseMatch-count'] + ' Matches');
+                } else if (form == 'Project') {
+                    $('#project').html('<div class="project-image"></div>' + connectionsArray['Project-count'] + ' Project');
                 }
             }
 
@@ -245,6 +264,9 @@ function loadConnections(){
             if (!connectionsArray['RelatedPlace-count']) {
                 $('#relatedPlace').hide();
             }
+			if (!connectionsArray['Project-count']) {
+				$('#project').hide();
+			}
 
             // select the first tab with content
             var clickedFirst = false;

@@ -512,23 +512,28 @@ QUERY;
 
     //sources connected to a person
     $sourceQuery['query'] = <<<QUERY
-    SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random)
+    SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random) ?project ?projectLabel
      WHERE
     {
      VALUES ?agent { $wd:$QID} #Q number needs to be changed for every person.
       ?agent ?property  ?object .
       ?object prov:wasDerivedFrom ?provenance .
       ?provenance $pr:$isDirectlyBasedOn ?source .
-    	?source $wdt:$hasName ?sourcelabel
+      ?source $wdt:$hasName ?sourcelabel .
+	  ?source $wdt:$generatedBy ?project.
+      ?project rdfs:label ?projectLabel
   }ORDER BY ?random
 
 QUERY;
-
+// echo $sourceQuery['query'];die;
     $result = blazegraphSearch($sourceQuery);
-      //print_r($result);
+      // print_r($result);die;
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
 
+	$result[0]['scheme'] = 'people';
+	$connections['Project-count'] = 1;
+    $connections['Project'] = array($result[0]);
 
     return json_encode($connections);
 }
@@ -620,6 +625,21 @@ QUERY;
     $connections['Place-count'] = count($result);
     $connections['Place'] = array_slice($result, 0, 8);  // return the first 8 results
 
+	$projectQuery['query'] = <<<QUERY
+	SELECT ?project ?projectLabel
+	WHERE
+	{
+	VALUES ?source { $wd:$QID} #Q number needs to be changed for every source.
+	?source $wdt:$generatedBy ?project .
+	?project rdfs:label ?projectLabel
+	}
+	QUERY;
+	$result = blazegraphSearch($projectQuery);
+	// echo ($projectQuery['query']);die;
+	$result[0]['scheme'] = 'sources';
+	$connections['Project-count'] = 1;
+	$connections['Project'] = array($result[0]);  // return the first 8 results
+
     return json_encode($connections);
 }
 
@@ -671,7 +691,7 @@ QUERY;
 
     // source connections
   $sourceQuery['query'] = <<<QUERY
-SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random)
+SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random) ?project ?projectLabel
 
  WHERE
 {
@@ -680,7 +700,9 @@ SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) 
           ?property  ?object .
   	?object $prov:wasDerivedFrom ?provenance .
   	?provenance $pr:$isDirectlyBasedOn ?source .
-	?source $wdt:$hasName ?sourcelabel
+	?source $wdt:$hasName ?sourcelabel.
+	?source $wdt:$generatedBy ?project.
+	?project rdfs:label ?projectLabel
 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
 }ORDER BY ?random
@@ -690,7 +712,9 @@ QUERY;
     $connections['Source-count'] = count($result);
     $connections['Source'] = array_slice($result, 0, 8);  // return the first 8 results
 
-
+	$result[0]['scheme'] = 'events';
+	$connections['Project-count'] = 1;
+	$connections['Project'] = array($result[0]);
 
     return json_encode($connections);
 }
@@ -851,19 +875,25 @@ QUERY;
 	  $connections['Event'] = array_slice($connections['Event'], 0, 8);  // return the first 8 results
 
       // source connections
-    $sourceQuery['query'] = <<<QUERY
-    SELECT DISTINCT ?source ?sourcelabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random) {
-    	VALUES ?place { $wd:$QID }.
-        ?place $p:$hasName  ?object .
-     	 ?object $prov:wasDerivedFrom ?provenance .
-      	 ?provenance $pr:$isDirectlyBasedOn ?source.
-      ?source $wdt:$hasName ?sourcelabel
-    }ORDER BY ?random
-  QUERY;
+		$sourceQuery['query'] = <<<QUERY
+		SELECT DISTINCT ?source ?sourcelabel ?project ?projectLabel (SHA512(CONCAT(STR(?source), STR(RAND()))) as ?random) {
+		VALUES ?place { $wd:$QID }.
+		?place $p:$hasName  ?object .
+		?object $prov:wasDerivedFrom ?provenance .
+		?provenance $pr:$isDirectlyBasedOn ?source.
+		?source $wdt:$hasName ?sourcelabel.
+		?source $wdt:$generatedBy ?project.
+		?project rdfs:label ?projectLabel
+		}ORDER BY ?random
+		QUERY;
       $result = blazegraphSearch($sourceQuery);
       $connections['Source-count'] += count($result);
       $connections['Source'] = array_merge($connections['Source'],$result);  // return the first 8 results
       $connections['Source'] = array_slice($connections['Source'], 0, 8);  // return the first 8 results
+
+	  $result[0]['scheme'] = 'places';
+	  $connections['Project-count'] = 1;
+	  $connections['Project'] = array($result[0]);
 // echo $eventsQuery['query'];die;
       // place connections
       //placebucket query add a new tab
