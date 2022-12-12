@@ -79,6 +79,9 @@ function search(searchQuery){
 		});
 		var visualizeUrl = BASE_URL+"visualizedata?type=Dashboard&field=po&proj="+record.label.replaceAll(' ','+');
 		var dataUrl = BASE_URL+"search/all?projects="+record.label.replaceAll(' ','+')+"&limit=20&offset=0&sort_field=label.sort&display=people";
+		var placeSearchUrl = BASE_URL+"search/all?projects="+record.label.replaceAll(' ','+')+"&limit=20&offset=0&sort_field=label.sort&display=places";
+		var eventSearchUrl = BASE_URL+"search/all?projects="+record.label.replaceAll(' ','+')+"&limit=20&offset=0&sort_field=label.sort&display=events";
+		var sourceSearchUrl = BASE_URL+"search/all?projects="+record.label.replaceAll(' ','+')+"&limit=20&offset=0&sort_field=label.sort&display=sources";
 
         searchCardHtml += `
 		<div class="card contributor">
@@ -102,22 +105,22 @@ function search(searchQuery){
 		          <h5>Project Connections</h5>
 		          <div class="connections">
 		            <div class="card-icons">
-		              <img src="../assets/images/Person-dark.svg">
+		              <a href="${dataUrl}"><img src="../assets/images/Person-dark.svg"></a>
 		              <span class="tooltip">Person</span>
 		              <span>${personNum}</span>
 		          </div>
 		          <div class="card-icons">
-		            <img src="../assets/images/Place-dark.svg">
+		            <a href="${placeSearchUrl}"><img src="../assets/images/Place-dark.svg"></a>
 		            <span class="tooltip">Place</span>
 		            <span>${placeNum}</span>
 		          </div>
 		          <div class="card-icons">
-		            <img src="../assets/images/Event-dark.svg">
+		            <a href="${eventSearchUrl}"><img src="../assets/images/Event-dark.svg"></a>
 		            <span class="tooltip">Event</span>
 		            <span>${eventNum}</span>
 		          </div>
 		          <div class="card-icons">
-		            <img src="../assets/images/Source-dark.svg">
+		            <a href="${sourceSearchUrl}"><img src="../assets/images/Source-dark.svg"></a>
 		            <span class="tooltip">Source</span>
 		            <span>${sourceNum}</span>
 		          </div>
