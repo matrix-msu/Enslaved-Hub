@@ -62,18 +62,24 @@ $(document).ready(function() {
 
     // TODO::not sure what this is doing but it's just throwing an error
     // $(".s2-multiple").on('select2:select', function(e){
-        // var id = e.params.data.id;
-        // console.log(id)
-        // var option = $(e.target).children(`[value=${id}]`);
-        // option.detach();
-        // $(e.target).append(option).change();
-      // });
+    //     var id = e.params.data.id;
+    //     console.log(id)
+    //     var option = $(e.target).children(`[value=${id}]`);
+    //     option.detach();
+    //     $(e.target).append(option).change();
+    //   });
 
     // Fill dates from elasticsearch
     $.ajax({
         url: BASE_URL + 'api/getDateRange',
         method: "GET",
         'success': function (data) {
+			var action = $('form').attr('action');
+			action = action.split('/').pop();
+			if(action == 'events'){
+				return;
+			}
+
             data = JSON.parse(data);
             dates = []
             $.each(data, function(_, date) {
@@ -87,8 +93,23 @@ $(document).ready(function() {
                 for (var i = min; i <= max; i++) {
                     $("#event-from").append("<option value='"+i+"'>"+i+"</option>");
                     $("#event-to").append("<option value='"+i+"'>"+i+"</option>");
+
                 }
             }
+
+			$('#event-from').select2({
+				placeholder: "Enter Start Year"
+			});
+			$('#event-from').next().find('input[placeholder="Enter Start Year"]').attr('id', 'event-from');
+			$('#event-from').removeAttr('id');
+
+			$('#event-to').select2({
+				placeholder: "Enter End Year"
+			});
+			$('#event-to').next().find('input[placeholder="Enter End Year"]').attr('id', 'event-to');
+			$('#event-to').removeAttr('id');
+
+			$('.select2-selection--multiple').append('<span class="select2-selection__arrow" role="presentation"></span>');
         }
     });
 });
@@ -136,8 +157,8 @@ function combineDates() {
     if($('select#person-from').val() !== '' || $('select#person-to').val() !== ''){
         var personDate = $('select#person-from').val() + '-' + $('select#person-to').val();
     }
-    if(typeof($('select#event-from').val()) != "undefined" || typeof($('select#event-to').val()) != "undefined"){
-        var eventDate = $('select#event-from').val() + '-' + $('select#event-to').val();
+    if($('#event-from').parent().prev().attr('title') && $('#event-to').parent().prev().attr('title')){
+        var eventDate = $('#event-from').parent().prev().attr('title') + '-' + $('#event-to').parent().prev().attr('title');
     }
     if($('select#place-from').val() !== '' || $('select#place-to').val() !== ''){
         var placeDate = $('select#place-from').val() + '-' + $('select#place-to').val();
@@ -157,7 +178,7 @@ function combineAgeRange() {
 }
 
 //Calls the removeEmpty function and combineDates function
-function handleSubmit(){
+function handleSubmit(e){
     combineDates();
     combineAgeRange();
     removeEmpty();
