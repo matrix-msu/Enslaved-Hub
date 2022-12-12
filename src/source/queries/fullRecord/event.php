@@ -23,8 +23,6 @@ OPTIONAL {?provenance $pr:$hasExternalReference ?extref1}}.
 OPTIONAL {?event $wdt:$hasEventType ?eventtype.
 ?eventtype $rdfs:label ?type}.
 OPTIONAL{ ?event $wdt:$hasDescription ?description}.
-OPTIONAL{?event $wdt:$atPlace ?place.
-?place $rdfs:label ?located}.
 
 OPTIONAL{
 ?event $wdt:$startsAt ?datetime.
