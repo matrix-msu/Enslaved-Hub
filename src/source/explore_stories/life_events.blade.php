@@ -39,9 +39,11 @@ ksort($options);
 <div class="explore-by">
     <ul class="cards">
       <?php
-      foreach ($options as $option => $count) { ?>
+      foreach ($options as $option => $count) {
+		  $htmlOption = str_replace("'","%27",$option);
+		  ?>
           <li>
-              <a href='<?php echo BASE_URL;?>stories/all/?filters={"Life Events":["<?=$option?>"]}'>
+              <a href='<?php echo BASE_URL;?>stories/all/?filters={"Life Events":["<?=$htmlOption?>"]}'>
                   <p class='type-title'><?=$option?></p>
                   <div id="arrow"></div><span id="<?=$option?>"><?=$count?></span>
               </a>
