@@ -575,6 +575,7 @@ const controlledVocabulary = array (
   'Ewe' => '',
   'Fada' => '',
   'Falupo' => '',
+  'Female' => 'Person identified to be female.',
   'Fishing, Gathering, and Hunting' => 'Work involving catching fish or shellfish; collecting wild plants; or pursuing animals for food, recreation, or trade.',
   'Floup' => '',
   'Folupo' => '',
@@ -730,6 +731,7 @@ const controlledVocabulary = array (
   'Makwa' => '',
   'Malagas' => '',
   'Malagasy' => '',
+  'Male' => 'Person identified to be male.',
   'Mamba' => '',
   'Mambo' => '',
   'Mandinga' => '',
@@ -2740,6 +2742,11 @@ const qpersonstatus = array (
   'Q166' => 'Indentured Person or Pawn',
   'Q159275' => 'Liberated African',
   'Q192' => 'Liminal Status Person',
+);
+
+const tempSexTypes = array (
+  'Female' => 'Q294',
+  'Male' => 'Q296',
 );
 
 const projectsPrettyLabels = [];
