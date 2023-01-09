@@ -725,7 +725,7 @@ QUERY;
 function getPlacePageConnections($tempQID, $script=false) {
 	$prerendered = file_get_contents("https://manta.matrix.msu.edu/msumatrix/public/exports/enslaved.org/visualizeCounts/prerenderedPlaces.json");
 	$prerendered = json_decode($prerendered,true);
-	if($script==false && isset($prerendered[$tempQID])){
+	if(false==true && $script==false && isset($prerendered[$tempQID])){
 		return $prerendered[$tempQID];
 	}
 	if($script){
@@ -747,13 +747,15 @@ function getPlacePageConnections($tempQID, $script=false) {
 	$qidArray = array($tempQID);
 
 	$placeNameQuery['query'] = <<<QUERY
-	SELECT DISTINCT ?s ?typelabel
+	SELECT DISTINCT ?s ?typelabel ?innertypelabel
 	{
 		VALUES ?place { $wd:$tempQID }.
 		?place rdfs:label ?label.
 		?place $wdt:$instanceOf ?type.
 		?type rdfs:label ?typelabel.
-		?s ?p ?place
+		?s ?p ?place.
+		?s $wdt:$instanceOf ?innertype.
+		?innertype rdfs:label ?innertypelabel.
 	}
 	QUERY;
 	$result = blazegraphSearch($placeNameQuery);
@@ -769,10 +771,36 @@ function getPlacePageConnections($tempQID, $script=false) {
 			$split = explode('/',$connection);
 			$itemQid = array_pop($split);
 			$itemCheck = array_pop($split);
-			// var_dump($itemQid);
-			// var_dump($itemCheck);die;
 			if($itemCheck != "statement"){
-				$qidArray[] = $itemQid;
+				if($item['innertypelabel']['value'] == 'Place Name'){
+					$placeNameQuery['query'] = <<<QUERY
+					SELECT DISTINCT ?s ?typelabel
+					{
+						VALUES ?place { $wd:$itemQid }.
+						?place rdfs:label ?label.
+						?place $wdt:$instanceOf ?type.
+						?type rdfs:label ?typelabel.
+						?s ?p ?place
+					}
+					QUERY;
+					$result2 = blazegraphSearch($placeNameQuery);
+					if( isset($result2[0]) &&
+						isset($result2[0]['typelabel']) &&
+						$result2[0]['typelabel']['value'] == 'Place Name'
+					){
+						foreach($result2 as $item2){
+							$connection2 = $item2['s']['value'];
+							$split2 = explode('/',$connection2);
+							$itemQid2 = array_pop($split2);
+							$itemCheck2 = array_pop($split2);
+							if($itemCheck2 != "statement"){
+								$qidArray[] = $itemQid2;
+							}
+						}
+					}
+				}else{
+					$qidArray[] = $itemQid;
+				}
 			}
 		}
 	}
