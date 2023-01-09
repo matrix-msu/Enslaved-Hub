@@ -725,7 +725,7 @@ QUERY;
 function getPlacePageConnections($tempQID, $script=false) {
 	$prerendered = file_get_contents("https://manta.matrix.msu.edu/msumatrix/public/exports/enslaved.org/visualizeCounts/prerenderedPlaces.json");
 	$prerendered = json_decode($prerendered,true);
-	if(false==true && $script==false && isset($prerendered[$tempQID])){
+	if($script==false && isset($prerendered[$tempQID])){
 		return $prerendered[$tempQID];
 	}
 	if($script){
