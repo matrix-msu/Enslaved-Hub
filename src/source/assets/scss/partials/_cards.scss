@@ -280,11 +280,26 @@
                 align-items: center;
                 font-size: 12px;
                 margin-right: 25px;
+                transition: all .2s ease;
 
                 &:hover{
                     .connection-menu{
                         display: block;
                     }
+                    
+                    img {
+                      opacity: 1;
+                    }
+                    
+                    text-decoration: underline;
+                    transform: scale(1.025);
+                }
+                
+                a {
+                  text-decoration: none;
+                  display: flex;
+                  align-items: center;
+                  color: $base-dark;
                 }
 
                 img{
@@ -302,16 +317,18 @@
                     color: $base-light;
                     padding: 8px 13px 9px;
                     border-radius: 5px;
-                    font-size: 14px;
+                    font-size: 12px;
                     font-family: aleo;
                     font-family: aleobold;
+                    width: 130px;
+                    text-align: center;
+                    line-height: 1.3;
 
                     /* Position the tooltip */
                     position: absolute;
                     z-index: 100;
                     bottom: 145%;
-                    left: -25%;
-
+                    left: -55px;
                 }
                 .tooltip::after {
                     content: " ";

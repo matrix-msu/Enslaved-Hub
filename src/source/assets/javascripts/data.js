@@ -110,24 +110,24 @@ function search(searchQuery){
 		          <h5>Project Connections</h5>
 		          <div class="connections">
 		            <div class="card-icons">
-		              <a href="${dataUrl}"><img src="../assets/images/Person-dark.svg"></a>
-		              <span class="tooltip">Person</span>
-		              <span>${personNum}</span>
+		              <a href="${dataUrl}"><img src="../assets/images/Person-dark.svg">
+		              <span class="tooltip">View All Connected People</span>
+		              <span>${personNum}</span></a>
 		          </div>
 		          <div class="card-icons">
-		            <a href="${placeSearchUrl}"><img src="../assets/images/Place-dark.svg"></a>
-		            <span class="tooltip">Place</span>
-		            <span>${placeNum}</span>
+		            <a href="${placeSearchUrl}"><img src="../assets/images/Place-dark.svg">
+		            <span class="tooltip">View All Connected Places</span>
+		            <span>${placeNum}</span></a>
 		          </div>
 		          <div class="card-icons">
-		            <a href="${eventSearchUrl}"><img src="../assets/images/Event-dark.svg"></a>
-		            <span class="tooltip">Event</span>
-		            <span>${eventNum}</span>
+		            <a href="${eventSearchUrl}"><img src="../assets/images/Event-dark.svg">
+		            <span class="tooltip">View All Connected Events</span>
+		            <span>${eventNum}</span></a>
 		          </div>
 		          <div class="card-icons">
-		            <a href="${sourceSearchUrl}"><img src="../assets/images/Source-dark.svg"></a>
-		            <span class="tooltip">Source</span>
-		            <span>${sourceNum}</span>
+		            <a href="${sourceSearchUrl}"><img src="../assets/images/Source-dark.svg">
+		            <span class="tooltip">View All Connected Sources</span>
+		            <span>${sourceNum}</span></a>
 		          </div>
 		        </div>
 		      </div>
