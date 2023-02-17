@@ -618,7 +618,7 @@ function createDetailHtml($statement,$label,$link=''){
             $detailname = $statementArr[$x];
 			$link = LINKSTOSEARCH[$label];
 			$link = str_replace('REPLACE', $detailname, $link);
-            $html .= "<a class='detail-text' href='".BASE_URL.$link."'>" . $detailname;
+            $html .= "<p>$detailname</p>";
             if(array_key_exists($detailname,controlledVocabulary)){
               $detailinfo = ucfirst(controlledVocabulary[$detailname]);
               $html .= "<div class='detail-menu' id='tooltip'> <h1>$detailname</h1> <p>$detailinfo</p> </div>";
