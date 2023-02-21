@@ -98,6 +98,11 @@
             .text-link {
                 float: right;
                 margin-left: 20px;
+                
+                &.no-float {
+                   float: none;
+                   margin-left: 0;
+                }
             }
 
     }

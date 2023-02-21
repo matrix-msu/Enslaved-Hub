@@ -1,3 +1,17 @@
+.more-info {
+    float: right;
+    
+    a {
+        color: white !important;
+        font-size: 16px;
+        transition: all .2s ease;
+        
+        &:hover {
+            opacity: .8;
+        }
+    }
+}
+
 .explore-results{
     .middlewrap{
         .search-title{
@@ -1256,8 +1270,7 @@ ul.catmenu{
             font-size: 14px;
             height: unset;
             position: relative;
-            padding: 45px;
-            padding-bottom: 0;
+            padding: 35px 45px;
             margin: 0;
             width: unset;
             overflow:scroll;
@@ -1268,10 +1281,13 @@ ul.catmenu{
                 cursor: pointer;
                 padding: 15px;
                 position: absolute;
-                top: 45px;
-                right: 45px;
+                top: 15px;
+                right: 15px;
                 height: unset;
                 width: unset;
+            }
+            h1 {
+                text-align: left;
             }
             h4 {
                 font-size: 30px;
@@ -1282,9 +1298,9 @@ ul.catmenu{
             }
             p {
                 background: $base-light;
-                font-size: 15px;
+                font-size: 16px;
                 text-align: left;
-                padding-bottom: 10px;
+                padding-bottom: 20px;
                 font-family: aleobold;
                 select {
                     background: #FFFFFF url(../images/directory_chevron.svg) no-repeat;
@@ -1434,7 +1450,6 @@ ul.catmenu{
                 float: right;
                 height: unset;
                 margin-top: 15px;
-                margin-bottom: 40px;
                 padding: 15px 35px;
                 border-radius: 4px;
             }

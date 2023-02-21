@@ -77,10 +77,16 @@
                     <span id="previous-title"><span class="sr-only">Secondary Breadcrumb Link</span><?php echo ($typeTitle != "") ? "/ " . $typeTitle : "" ?></span>
                 </a>
                 <span id="current-title"><?php echo ($currentTitle != "") ? "/ " . $currentTitle : "" ?></span>
+                
+                <div class="more-info">
+                    <a class="modal">How Does Searching Work?</a>
+                </div>
             </h4>
+            
             <div class="search-title">
                 <h1>Search Results<?php //echo $currentTitle;?></h1>
             </div>
+            
             <?php //if(!$fromBrowse) { ?>
             <div class="heading-search">
                 <!-- use all counts instead of counterofAllitems() -->
@@ -102,6 +108,25 @@
 </div>
 
 <main class="search-results">
+    
+    
+    <div class="modal-view">
+        <div class="config-table-modal">
+            <div class="config-table-modal-content-wrap">
+            <div class="close"><img src="<?php echo BASE_URL;?>assets/images/x.svg" alt="close modal button"></div>
+            <h1 class="mb-20">Searching & Search Results on Enslaved.org</h2>
+            <p> It is important to understand that each record represented as a card or row within the search results shown is a representation of a person, event, place, or source within the many datasets that are contributed to Enslaved.org. Multiple projects may have records for the same person, event, or place. </p>
+                
+                <p>Enslaved.org is doing the hard work to make links between possibly connected records through the use of the controlled vocabularies, “match,” which indicates the same entity across multiple records, and “close match,” which indicates a possible connection between two or more entities. These connections can be found within the Related Records section of the person record. </p>
+                
+                <p>To see an example of these connections, we suggest you search the name “Valentin LeBlanc.” </p>
+                
+                <p>We are always inviting subject area experts to review these connections between their data and other records within Enslaved.org. If you are interested in contributing to this work please contact us! </p>
+                
+                <p>Because many records cover and represent the same geospatial places, the Enslaved.org ontology leverages the use of the predicate “hasBroader” to link to a connecting place record. We use this broader record to connect the place records from the many, many datasets that have contributed places to Enslaved.org like Cuba, Africa, Rio de Janeiro, New Orleans, et al. This feature can be used to jump between projects or datasets that cover the same geospatial location or have the same place name.</p>
+            </div>
+        </div>
+    </div>
     <div class="filter-menu show">
         <ul>
             <?php if(!$fromBrowse) { ?>

@@ -16,6 +16,9 @@
 </div>
 <main class="direct-search">
     <div class="searchwrap">
+        
+        <p class="mb-50">Use the form below to set up a specific search parameter. All of the inputs are optional. Once filled out, select the “Search” button at the bottom of the page to view results based on the inputted parameters. Keep in mind that this search uses an ‘AND’ boolean operation, showing only the results that include all the parameters entered.</p>
+        
         <form action="<?php echo BASE_URL;?>search/all" method="get" onsubmit="handleSubmit()" autocomplete="off">
             <!-- PERSON -->
             <h2>Person</h2>

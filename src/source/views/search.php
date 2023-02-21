@@ -8,8 +8,7 @@
             </div>
             <div class="heading-search">
                 <!-- use all counts instead of counterofAllitems() -->
-                <p>Start a search across <?php //echo counterofAllitems();?> records from the historical slave trade <a class="text-link show-desktop-only" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
-                <p class="hide-desktop-only mt-xs"><a class="text-link" href="<?php echo BASE_URL;?>advancedSearch">Go to Advanced Search</a></p>
+                <p>Start a search across <?php //echo counterofAllitems();?> records from the historical slave trade. Search for a name, an event, a place, or another keyword to find records accordingly. If you are not sure what to search for, head to the Explore pages to begin a more guided search experience. If you have a certain search parameter in mind, head to the <a class="text-link no-float" href="<?php echo BASE_URL;?>advancedSearch">Advanced Search</a> page to filter results more specifically.</p>
                 <form class="search-form" action="<?= BASE_URL ?>search/all">
                     <label for="searchbar" class="sr-only">searchbar</label>
                     <input id="searchbar" class="search-field main-search" type="text" name="searchbar" placeholder="Search People, Events, and Places"/>
