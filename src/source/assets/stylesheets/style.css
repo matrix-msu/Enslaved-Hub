@@ -816,6 +816,14 @@ input:not([type=image]), textarea {
   width: 90%;
 }
 
+.mb-50 {
+  margin-bottom: 50px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
 .hide {
   display: none;
 }
@@ -1387,6 +1395,10 @@ input:not([type=image]), textarea {
 .header .heading-search .text-link, .header .heading-search .heading-text p a, .header .heading-text p .heading-search a {
   float: right;
   margin-left: 20px;
+}
+.header .heading-search .text-link.no-float, .header .heading-search .heading-text p a.no-float, .header .heading-text p .heading-search a.no-float {
+  float: none;
+  margin-left: 0;
 }
 @media screen and (max-width: 900px) {
   .header .middlewrap .heading-search .text-link, .header .middlewrap .heading-search .heading-text p a, .header .heading-text p .middlewrap .heading-search a {
@@ -2325,6 +2337,18 @@ input:not([type=image]), textarea {
 }
 .search-icon-2:hover {
   background: #C24F3C;
+}
+
+.more-info {
+  float: right;
+}
+.more-info a {
+  color: white !important;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+.more-info a:hover {
+  opacity: 0.8;
 }
 
 .explore-results .middlewrap .search-title {
@@ -3474,8 +3498,7 @@ ul.catmenu li label input:checked ~ p {
   font-size: 14px;
   height: unset;
   position: relative;
-  padding: 45px;
-  padding-bottom: 0;
+  padding: 35px 45px;
   margin: 0;
   width: unset;
   overflow: scroll;
@@ -3487,10 +3510,13 @@ ul.catmenu li label input:checked ~ p {
   cursor: pointer;
   padding: 15px;
   position: absolute;
-  top: 45px;
-  right: 45px;
+  top: 15px;
+  right: 15px;
   height: unset;
   width: unset;
+}
+.modal-view .config-table-modal div.config-table-modal-content-wrap h1 {
+  text-align: left;
 }
 .modal-view .config-table-modal div.config-table-modal-content-wrap h4 {
   font-size: 30px;
@@ -3501,9 +3527,9 @@ ul.catmenu li label input:checked ~ p {
 }
 .modal-view .config-table-modal div.config-table-modal-content-wrap p {
   background: #FAF7F2;
-  font-size: 15px;
+  font-size: 16px;
   text-align: left;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   font-family: aleobold;
 }
 .modal-view .config-table-modal div.config-table-modal-content-wrap p select {
@@ -3653,7 +3679,6 @@ ul.catmenu li label input:checked ~ p {
   float: right;
   height: unset;
   margin-top: 15px;
-  margin-bottom: 40px;
   padding: 15px 35px;
   border-radius: 4px;
 }
@@ -4363,9 +4388,23 @@ a.modal {
   align-items: center;
   font-size: 12px;
   margin-right: 25px;
+  transition: all 0.2s ease;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons:hover {
+  text-decoration: underline;
+  transform: scale(1.025);
 }
 .card.contributor .bottom .connectionswrap .connections .card-icons:hover .connection-menu {
   display: block;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons:hover img {
+  opacity: 1;
+}
+.card.contributor .bottom .connectionswrap .connections .card-icons a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: #0E3232;
 }
 .card.contributor .bottom .connectionswrap .connections .card-icons img {
   margin-right: 10px;
@@ -4382,14 +4421,17 @@ a.modal {
   color: #FAF7F2;
   padding: 8px 13px 9px;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 12px;
   font-family: aleo;
   font-family: aleobold;
+  width: 130px;
+  text-align: center;
+  line-height: 1.3;
   /* Position the tooltip */
   position: absolute;
   z-index: 100;
   bottom: 145%;
-  left: -25%;
+  left: -55px;
 }
 .card.contributor .bottom .connectionswrap .connections .card-icons .tooltip::after {
   content: " ";
