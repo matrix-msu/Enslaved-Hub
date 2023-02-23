@@ -76,11 +76,11 @@
     margin: 200px auto;
 
     p{
-        font-size: 18px;
-        font-family: aleobold;
-        color: $base-dark;
-        font-style: italic;
-        text-align: center;
+       font-size: 16px;
+       font-family: aleobold;
+       color: $base-dark;
+       line-height: 1.7;
+       text-align: center;
 
         a{
             color: $accent;
