@@ -43,6 +43,16 @@ if (isset($story2Images[0])){
     $story2Index = array_rand($GLOBALS['bg']);
     $story2Image = BASE_URL.'assets/images/'.$GLOBALS['bg'][$story2Index];
 }
+
+$jsonCounts = file_get_contents('https://manta.matrix.msu.edu/msumatrix/public/exports/enslaved.org/visualizeCounts/counts.json');
+$jsonCounts = json_decode($jsonCounts, true);
+$jsonCounts = $jsonCounts['All Projects']['instance of'];
+$formattedCounts = array('Person'=>0,'Place'=>0,'Event'=>0,'Entity with Provenance'=>0);
+foreach($jsonCounts as $itemArray){
+	if(isset($formattedCounts[$itemArray[0]])){
+		$formattedCounts[$itemArray[0]] = $itemArray[1];
+	}
+}
 ?>
 <!-- Main page-->
 <!-- Heading image and title container-->
@@ -92,25 +102,25 @@ if (isset($story2Images[0])){
                     <a class="content-link" href="<?php echo BASE_URL;?>search/people">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Person-dark.svg" alt="person icon"/>
                         <p class="type">People</p>
-                        <p class="count" id="count-people"></p>
+                        <p class="count" id="count-people"><?=$formattedCounts['Person']?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a  class="content-link"href="<?php echo BASE_URL;?>search/events">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Event-dark.svg" alt="event icon"/>
                         <p class="type">Events</p>
-                        <p class="count" id="count-event"></p>
+                        <p class="count" id="count-event"><?=$formattedCounts['Event']?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a class="content-link" href="<?php echo BASE_URL;?>search/places">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Place-dark.svg" alt="location icon"/>
                         <p class="type">Places</p>
-                        <p class="count" id="count-place"></p>
+                        <p class="count" id="count-place"><?=$formattedCounts['Place']?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                     <a class="content-link" href="<?php echo BASE_URL;?>search/sources">
                         <img class="icon" src="<?php echo BASE_URL;?>/assets/images/Source-dark.svg" alt="source icon"/>
                         <p class="type">Sources</p>
-                        <p class="count" id="count-source"></p>
+                        <p class="count" id="count-source"><?=$formattedCounts['Entity with Provenance']?></p>
                         <img class="arrow" src="<?php echo BASE_URL;?>/assets/images/Arrow3.svg" alt="link arrow"/>
                     </a>
                 </div>
@@ -247,9 +257,6 @@ if (isset($story2Images[0])){
 
 </main>
 
-
-
-<script src="<?php echo BASE_URL;?>assets/javascripts/home.js"></script>
 <script src="<?php echo BASE_URL;?>assets/javascripts/js.cookie.js"></script>
 
 @endsection
