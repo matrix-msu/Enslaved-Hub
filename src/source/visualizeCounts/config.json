@@ -1636,18 +1636,6 @@
        "height":"120",
        "title":"Record Types"
      },
-     "hasSex":{
-         "type":"PieChart",
-         "width":"480",
-         "height":"400",
-         "title":"Sex"
-      },
-     "hasRaceorColor":{
-        "type":"Table",
-        "width":"480",
-        "height":"400",
-        "title":"Race"
-     },     
      "hasPersonStatus":{
         "type":"PieChart",
         "width":"480",
@@ -1659,12 +1647,18 @@
           "width":"480",
           "height":"400",
           "title":"Descriptive Role"
-     }/* ,
-     "hasInterAgentRelationshipTypeTo":{
-         "type":"Table",
-         "width":"976",
+     },     
+     "hasSex":{
+         "type":"PieChart",
+         "width":"480",
          "height":"400",
-         "title":"Relationships"
-      },*/
+         "title":"Sex"
+      },
+     "hasRaceorColor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Race"
+     }     
    }   
 }
