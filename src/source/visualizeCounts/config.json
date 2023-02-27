@@ -1636,17 +1636,17 @@
        "height":"120",
        "title":"Record Types"
      },
-     "hasPersonStatus":{
-        "type":"PieChart",
-        "width":"480",
-        "height":"400",
-        "title":"Status"
-     },
        "hasDescriptiveRole":{
           "type":"Table",
           "width":"480",
           "height":"400",
           "title":"Descriptive Role"
+     },     
+     "hasPersonStatus":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Status"
      },     
      "hasSex":{
          "type":"PieChart",
