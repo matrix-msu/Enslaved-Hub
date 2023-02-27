@@ -120,7 +120,7 @@ function getFullRecordHtml(){
         'occursbefore' => ['standard','Occurs Before'],
         'occursafter' => ['standard','Occurs After'],
         'circa' => ['standard','Circa'],
-		'relationships' => ['relationships','Relationships'],
+		// 'relationships' => ['relationships','Relationships'],
         'roles' => ['roles','roles'],
         'droles' => ['droles','droles'],
     );
@@ -402,8 +402,8 @@ SELECT DISTINCT ?relationslabel ?people ?peoplename(SHA512(CONCAT(STR(?people), 
  WHERE
 {
  VALUES ?agent { $wd:$QID}.
- 	?agent $p:$hasInterAgentRelationship ?staterel .
-	?staterel $ps:$hasInterAgentRelationship ?relations .
+ 	?agent $p:$hasInterAgentRelationshipTypeTo ?staterel .
+	?staterel $ps:$hasInterAgentRelationshipTypeTo ?relations .
   	?relations $rdfs:label ?relationslabel.
 	?staterel $pq:$isRelationshipTo ?people.
   	?people $wdt:$hasName ?peoplename.
