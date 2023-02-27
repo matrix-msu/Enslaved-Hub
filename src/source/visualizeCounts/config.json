@@ -1622,5 +1622,49 @@
          "height":"400",
          "title":"Event Types"
       }
-   }
+   },
+   "Fairfax Circuit Court Historic Records":{
+     "TotalRecords":{
+       "type":"TotalRecords",
+       "width":"244",
+       "height":"120",
+       "title":"Total Records"
+     },
+     "RecordTypes":{
+       "type":"RecordTypes",
+       "width":"720",
+       "height":"120",
+       "title":"Record Types"
+     },
+     "hasSex":{
+         "type":"PieChart",
+         "width":"480",
+         "height":"400",
+         "title":"Sex"
+      },
+     "hasRaceorColor":{
+        "type":"Table",
+        "width":"480",
+        "height":"400",
+        "title":"Race"
+     },     
+     "hasPersonStatus":{
+        "type":"PieChart",
+        "width":"480",
+        "height":"400",
+        "title":"Status"
+     },
+       "hasDescriptiveRole":{
+          "type":"Table",
+          "width":"480",
+          "height":"400",
+          "title":"Descriptive Role"
+     }/* ,
+     "hasInterAgentRelationshipTypeTo":{
+         "type":"Table",
+         "width":"976",
+         "height":"400",
+         "title":"Relationships"
+      },*/
+   }   
 }
