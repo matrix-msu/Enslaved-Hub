@@ -62,8 +62,21 @@ function search(searchQuery){
 				exReferences += `<p><a href="${item}">${item}</a></p>`;
 			});
 		}
-		
-		
+		var description = '';
+		if('hasDescription' in record){
+			$.each(record['hasDescription'], function(index,item){
+				description += `<p>${item}</p>`;
+			});
+		}
+		var formattedDesc = `
+			<div class="detail">
+				  <h5>Description</h5>
+				  ${description}
+				</div>`;
+		if(description == ''){
+			formattedDesc = '';
+		}
+
 		var personNum = 0; var placeNum = 0;var eventNum = 0;var sourceNum = 0;
 		if(!record['instance of']) return;
 		$.each(record['instance of'], function(index,item){
@@ -84,10 +97,10 @@ function search(searchQuery){
 		var placeSearchUrl = BASE_URL+"search/all?projects="+record.label.replaceAll(' ','+')+"&limit=20&offset=0&sort_field=label.sort&display=places";
 		var eventSearchUrl = BASE_URL+"search/all?projects="+record.label.replaceAll(' ','+')+"&limit=20&offset=0&sort_field=label.sort&display=events";
 		var sourceSearchUrl = BASE_URL+"search/all?projects="+record.label.replaceAll(' ','+')+"&limit=20&offset=0&sort_field=label.sort&display=sources";
-		
 
-		
-		
+
+
+
         searchCardHtml += `
 		<div class="card contributor">
 		      <h2>${record.label}</h2>
@@ -104,6 +117,7 @@ function search(searchQuery){
 		          <h5>Related Data Resources</h5>
 		          ${exReferences}
 		        </div>
+				${formattedDesc}
 		      </div>
 		      <div class="bottom">
 		        <div class="connectionswrap">
